@@ -1,0 +1,4 @@
+# Optional subject-aware crop based on video_studio/toolkit/smartcrop.py
+numpy>=1.24
+Pillow>=9.0
+opencv-python-headless>=4.8

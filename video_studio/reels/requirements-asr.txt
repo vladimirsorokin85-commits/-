@@ -1,0 +1,2 @@
+# Optional local ASR backend for captions.py --transcribe
+faster-whisper>=1.1
