@@ -37,6 +37,9 @@ padding:18px;font:14px/1.55 ui-monospace,monospace;color:#d6d6d6}}
 {player}
 <div class="meta">7:26 · 1280×720 · {size:.1f} МБ</div>
 <a class="btn" href="/video.mp4" download>Скачать видео</a>
+<h2>Рилс 9:16 (44 с)</h2>
+<video src="/reel.mp4" controls preload="metadata" style="max-width:360px;display:block"></video>
+<a class="btn" href="/reel.mp4" download style="margin-top:10px">Скачать рилс</a>
 <h2>Название, описание, теги</h2>
 <pre>{html.escape(md)}</pre>
 </div></body></html>"""
@@ -91,6 +94,8 @@ class H(BaseHTTPRequestHandler):
             self.wfile.write(body)
         elif p == "/video.mp4":
             page(); self._file(VIDEO, "video/mp4")
+        elif p == "/reel.mp4":
+            self._file(os.path.join(ROOT, "reel_vokope.mp4"), "video/mp4")
         elif p == "/poster.jpg":
             self._file(os.path.join(ROOT, "video_studio/assets/smekalka_01.jpg"), "image/jpeg")
         else:
