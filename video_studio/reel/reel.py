@@ -17,7 +17,7 @@ TMP = Path("/tmp/reel")
 TMP.mkdir(parents=True, exist_ok=True)
 W, H, FPS, SR = 1080, 1920, 30, 44100
 TEMPO = 1.2
-SPLASH = 1.1  # music-only opening splash before the voice
+SPLASH = 4 * 60 / 174  # music-only opening splash before the voice
 GAP = 0.18
 YEL, RED, WHT, BLK, GRN = (255, 204, 0), (235, 40, 40), (255, 255, 255), (0, 0, 0), (132, 204, 22)
 
@@ -28,11 +28,11 @@ SEGS = [
     ("ЧУЛОК НА ПРИЦЕЛЕ", [(11, .42), (13, .32), (2, .5)],
      ["ЖЕНСКИЙ ЧУЛОК", "НА ПРИЦЕЛЕ", "БЛИКА НЕТ", "СНАЙПЕР НЕ ВИДИТ!"]),
     ("ПЕНОФОЛ В БЛИНДАЖЕ", [(15, .62), (17, .5), (16, .5)],
-     ["ПЕНОФОЛ", "ВНУТРИ БЛИНДАЖА", "ТЕПЛОВИЗОР СЛЕПНЕТ!"]),
+     ["ПЕНОФОЛ", "ВНУТРИ БЛИНДАЖА", "ТЕПЛОВИЗОР НЕ ВИДИТ!"]),
     ("УДОЧКА ЗА 500 ₽", [(20, .5), (5, .42), (21, .3), (22, .5)],
      ["УДОЧКА ЗА 500 ₽", "МАЧТА ДЛЯ АНТЕННЫ", "САПЁРНЫЙ ЩУП", "ЛОЖНАЯ ЦЕЛЬ!"]),
     ("ЗЕРКАЛО ЗА УГОЛ", [(23, .58), (24, .58), (26, .5)],
-     ["АВТОЗЕРКАЛО", "НА ПАЛКЕ", "ЗАГЛЯНИ ЗА УГОЛ", "БЕЗ ПУЛИ!"]),
+     ["АВТОЗЕРКАЛО", "НА ПАЛКЕ", "ЗАГЛЯНУТЬ ЗА УГОЛ", "НЕ ПОЙМАТЬ ПУЛЮ!"]),
     ("РАБИЦА ПРОТИВ FPV", [(27, .6), (28, .62), (29, .62), (9, .55)],
      ["РАБИЦА", "+ МИКРОВОЛНОВКА", "FPV ВЗРЫВАЕТСЯ", "ДО КРЫШИ!"]),
     ("OUTRO", [(30, .5)], ["ПОЛНЫЙ ВЫПУСК", "ПО ССЫЛКЕ В ПРОФИЛЕ", "ПОДПИШИСЬ!"]),
@@ -59,52 +59,73 @@ def trim(x, thr=0.02):
     return x[max(0, idx[0] - int(.03 * SR)): idx[-1] + int(.08 * SR)]
 
 
+def squeeze_pauses(x, max_pause=0.24, thr_db=-40):
+    """Shorten long internal pauses (TTS sometimes leaves 0.5-1 s gaps)."""
+    w = int(0.02 * SR)
+    n = len(x) // w
+    e = 20 * np.log10(np.sqrt(np.mean(x[: n * w].reshape(n, w) ** 2, 1)) + 1e-9)
+    quiet = e < thr_db
+    out, i = [], 0
+    while i < n:
+        j = i
+        while j < n and quiet[j] == quiet[i]:
+            j += 1
+        chunk = x[i * w: j * w]
+        if quiet[i] and 0 < i and j < n and (j - i) * w > max_pause * SR:
+            keep = int(max_pause * SR)
+            chunk = np.concatenate([chunk[: keep // 2], chunk[-keep // 2:]])
+        out.append(chunk)
+        i = j
+    return np.concatenate(out + [x[n * w:]])
+
+
 def build_audio():
-    voices = [trim(load(REEL / f"r{i}.mp3", TEMPO)) for i in range(7)]
+    from voice_level import level
+    from music_reel import make_music, BEAT, BAR
+    import pyloudnorm as pyln
+    from scipy.signal import butter, sosfilt
+    from scipy.ndimage import uniform_filter1d
+    voices = [level(squeeze_pauses(trim(load(REEL / f"n{i}.mp3", TEMPO))), target_db=-17) for i in range(7)]
     starts, t = [], SPLASH
     for v in voices:
+        q = BEAT / 2  # quantise every phrase start to the next 8th note -> hits land on the grid
+        t = math.ceil(t / q - 1e-6) * q
         starts.append(t)
         t += len(v) / SR + GAP
-    total = t + 2.2
+    total = t + 2.4
     n = int(total * SR)
-    voice = np.zeros(n, np.float32)
+    voice = np.zeros(n)
     for s, v in zip(starts, voices):
         voice[int(s * SR): int(s * SR) + len(v)] += v
-    voice /= np.percentile(np.abs(voice), 99.9) + 1e-9
-    music = load(ROOT / "music_catalog" / "jungle_hoover_174.ogg")
-    off = int(22.0 * SR)
-    music = np.resize(music[off:], n)
-    music /= np.percentile(np.abs(music), 99.9) + 1e-9
-    # ducking envelope from voice activity
-    env = np.abs(voice)
-    k = int(.12 * SR)
-    env = np.convolve(env, np.ones(k) / k, "same")
-    act = np.clip(env / 0.05, 0, 1)
-    duck = 1.0 - 0.72 * act
-    # sidechain smoothing
-    s = int(.08 * SR)
-    duck = np.convolve(duck, np.ones(s) / s, "same")
-    mus = music * duck * 0.55
-    # impacts: boom + noise whoosh at each segment start
-    rng = np.random.default_rng(3)
-    for i, st in enumerate([0.0] + starts[1:]):
-        p = int(max(0, st - 0.06) * SR)
-        L = int(.6 * SR)
-        tt = np.arange(L) / SR
-        boom = np.sin(2 * np.pi * (55 * tt + 40 * np.exp(-tt * 18) / 18 * 0)) * np.exp(-tt * 7) * 0.9
-        nz = rng.standard_normal(L) * np.exp(-tt * 14) * 0.25
-        seg = (boom + nz)[: max(0, min(L, n - p))]
-        mus[p: p + len(seg)] += seg
-        if i:  # whoosh rising into the cut
-            L2 = int(.35 * SR)
-            q = max(0, p - L2)
-            w = rng.standard_normal(p - q) * np.linspace(0, 1, p - q) ** 2 * 0.18
-            mus[q:p] += w
-    # end tail fade
-    fade = int(1.5 * SR)
-    mus[-fade:] *= np.linspace(1, 0, fade)
-    mix = voice * 0.95 + mus
-    mix = np.tanh(mix / np.percentile(np.abs(mix), 99.95) * 1.1) * 0.92
+    music = make_music(total, [0.0] + starts[1:], drop_from=starts[-1])
+    # carve the speech band out of the music (static EQ, no pumping)
+    mid = sosfilt(butter(2, [700, 4000], "bandpass", fs=SR, output="sos"), music)
+    music = music - 0.5 * mid
+    # gentle, slow ducking: -5 dB while speaking, 250 ms attack / 700 ms release
+    act = (uniform_filter1d(np.abs(voice), int(0.2 * SR)) > 0.01).astype(float)
+    g = np.empty(n)
+    prev, aa, ar = 0.0, np.exp(-1 / (0.25 * SR)), np.exp(-1 / (0.7 * SR))
+    for i in range(0, n, 64):  # block-wise smoothing (fast, smooth enough)
+        v = act[i]
+        c = aa if v > prev else ar
+        prev = v + (prev - v) * c ** 64
+        g[i:i + 64] = prev
+    music = music * 10 ** (-5 * g / 20)
+    meter = pyln.Meter(SR)
+    lv = meter.integrated_loudness(voice[voice != 0] if np.any(voice) else voice)
+    lm = meter.integrated_loudness(music)
+    voice *= 10 ** ((-16 - lv) / 20)
+    music *= 10 ** ((-25 - lm) / 20)  # music sits ~9 LU under the voice
+    mix = voice + music
+    lt = meter.integrated_loudness(mix)
+    mix *= 10 ** ((-14 - lt) / 20)  # final: -14 LUFS (Reels/Shorts/YouTube)
+    from scipy.ndimage import maximum_filter1d
+    lim = 10 ** (-1.0 / 20)
+    pk = maximum_filter1d(np.abs(mix), int(0.004 * SR))
+    gl = np.minimum(1.0, lim / np.maximum(pk, 1e-9))
+    gl = uniform_filter1d(gl, int(0.004 * SR))
+    mix = np.clip(mix * gl, -lim, lim)
+    print("LUFS final", round(meter.integrated_loudness(mix), 1), "voice", round(lv, 1))
     pcm = (mix * 32767).astype("<i2")
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "s16le", "-ar", str(SR), "-ac", "1", "-i", "-",
                     str(TMP / "mix.wav")], input=pcm.tobytes(), check=True)
