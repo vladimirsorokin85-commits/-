@@ -95,7 +95,7 @@ class H(BaseHTTPRequestHandler):
         elif p == "/video.mp4":
             page(); self._file(VIDEO, "video/mp4")
         elif p == "/reel.mp4":
-            self._file(os.path.join(ROOT, "reel_vokope.mp4"), "video/mp4")
+            self._file("/tmp/reel/reel_final.mp4", "video/mp4")
         elif p == "/poster.jpg":
             self._file(os.path.join(ROOT, "video_studio/assets/smekalka_01.jpg"), "image/jpeg")
         else:
