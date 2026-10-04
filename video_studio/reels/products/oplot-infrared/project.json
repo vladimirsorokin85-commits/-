@@ -2,11 +2,11 @@
   "title": "Оплот Infrared — характеристики и проверка документов",
   "audio": "narration.mp3",
   "visuals": [
-    {"path": "media/photo_1_2026-10-04_15-43-26.jpg", "fit_mode": "blur"},
-    {"path": "media/photo_2_2026-10-04_15-43-26.jpg", "fit_mode": "blur"},
-    {"path": "media/photo_3_2026-10-04_15-43-26.jpg", "fit_mode": "blur"},
-    {"path": "media/photo_4_2026-10-04_15-43-26.jpg", "fit_mode": "blur"},
-    {"path": "media/photo_5_2026-10-04_15-43-26.jpg", "fit_mode": "blur"}
+    {"path": "photo_1_2026-10-04_15-43-26.jpg", "fit_mode": "blur"},
+    {"path": "photo_2_2026-10-04_15-43-26.jpg", "fit_mode": "blur"},
+    {"path": "photo_3_2026-10-04_15-43-26.jpg", "fit_mode": "blur"},
+    {"path": "photo_4_2026-10-04_15-43-26.jpg", "fit_mode": "blur"},
+    {"path": "photo_5_2026-10-04_15-43-26.jpg", "fit_mode": "blur"}
   ],
   "music": null,
   "captions": "captions.srt",

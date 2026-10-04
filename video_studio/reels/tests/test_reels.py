@@ -15,7 +15,10 @@ from video_studio.reels.build import (
     _autofocus_visuals,
     _expand_visuals,
     _filter_for_scene,
+    _fit_font_size,
     _has_filter,
+    _srt_cues,
+    _write_ass_from_srt,
     load_project,
     scene_plan,
     verify_output,
@@ -106,6 +109,16 @@ class ScenePlanTests(unittest.TestCase):
         self.assertIn("boxblur=20:2", filter_text)
         self.assertIn("overlay=(W-w)/2:(H-h)/2", filter_text)
         self.assertIn("zoompan=", filter_text)
+
+    def test_still_input_keeps_one_frame_of_slack_for_the_blur_chain(self):
+        from video_studio.reels.build import Scene, _scene_input_seconds
+
+        still = Scene(Path("photo.jpg"), "image", frames=105, focus_x=0.5, focus_y=0.5,
+                      start_seconds=0.0, loop=False, zoom_in=True, fit_mode="blur")
+        video = Scene(Path("clip.mp4"), "video", frames=105, focus_x=0.5, focus_y=0.5,
+                      start_seconds=0.0, loop=False, zoom_in=False)
+        self.assertEqual(_scene_input_seconds(still, 30) * 30, 106)
+        self.assertGreaterEqual(_scene_input_seconds(video, 30) * 30, 105 + 3)
 
 
 class ProjectTests(unittest.TestCase):
@@ -298,3 +311,61 @@ class CaptionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CaptionRenderTests(unittest.TestCase):
+    """Burned-in captions must stay inside the frame and near its bottom edge."""
+
+    def _write(self, text: str) -> Path:
+        handle = tempfile.NamedTemporaryFile("w", suffix=".srt", delete=False, encoding="utf-8")
+        handle.write("1\n00:00:00,000 --> 00:00:02,000\n" + text + "\n\n")
+        handle.close()
+        return Path(handle.name)
+
+    def test_ass_script_pins_style_to_the_frame_resolution(self):
+        srt = self._write("документа перед\nпокупкой.")
+        ass = srt.with_suffix(".ass")
+        try:
+            _write_ass_from_srt(srt, ass, width=1080, height=1920)
+            script = ass.read_text(encoding="utf-8")
+        finally:
+            srt.unlink(missing_ok=True)
+        # PlayResX/PlayResY are what stop libass from scaling FontSize/MarginV ~6.7x.
+        self.assertIn("PlayResX: 1080", script)
+        self.assertIn("PlayResY: 1920", script)
+        self.assertIn("ScriptType: v4.00+", script)
+        self.assertIn("Alignment, MarginL, MarginR, MarginV", script)
+        # Two bottom-anchored cues with real timestamps and preserved line breaks.
+        self.assertEqual(script.count("Dialogue: 0,"), 1)
+        self.assertIn(r"документа перед\Nпокупкой.", script)
+        self.assertIn("0:00:00.00,0:00:02.00", script)
+
+    def test_long_caption_line_selects_a_smaller_font_that_still_fits(self):
+        short = [(0.0, 1.0, "короткий текст")]
+        long = [(0.0, 1.0, "340 сантиметров, заявлена в полный")]
+        wider = [(0.0, 1.0, "а" * 40)]
+        self.assertGreater(_fit_font_size(short, 1080), _fit_font_size(long, 1080))
+        self.assertGreater(_fit_font_size(long, 1080), _fit_font_size(wider, 1080))
+        # 34 Cyrillic characters must stay inside 1080 px with the default margins.
+        self.assertLessEqual(_fit_font_size(long, 1080) * 0.55 * 34, 1080 - 60)
+        self.assertGreaterEqual(_fit_font_size(long, 1080), 32)
+
+    def test_srt_cues_keep_manual_line_breaks_and_reject_empty_files(self):
+        srt = self._write("первая строка\nвторая строка")
+        try:
+            cues = _srt_cues(srt)
+        finally:
+            srt.unlink(missing_ok=True)
+        self.assertEqual(len(cues), 1)
+        start, end, text = cues[0]
+        self.assertEqual((start, end), (0.0, 2.0))
+        self.assertEqual(text, r"первая строка\Nвторая строка")
+
+        empty = tempfile.NamedTemporaryFile("w", suffix=".srt", delete=False, encoding="utf-8")
+        empty.write("нет таймкодов здесь\n")
+        empty.close()
+        try:
+            with self.assertRaises(ReelBuildError):
+                _srt_cues(Path(empty.name))
+        finally:
+            Path(empty.name).unlink(missing_ok=True)

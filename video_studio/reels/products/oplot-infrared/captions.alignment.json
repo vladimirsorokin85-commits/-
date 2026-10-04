@@ -1,0 +1,31 @@
+{
+  "audio_duration_seconds": 93.309,
+  "cues": 39,
+  "pauses_detected": 40,
+  "boundaries_moved": 17,
+  "max_shift_seconds": 0.762,
+  "sentence_ends": {
+    "count": 15,
+    "median_distance_to_pause_before": 0.599,
+    "median_distance_to_pause_after": 0.1,
+    "within_0.25s_before": 4,
+    "within_0.25s_after": 11
+  },
+  "silence_inside_cues_percent": {
+    "before": 15.77,
+    "after": 12.16
+  },
+  "cue_duration_seconds": {
+    "min": 0.71,
+    "median": 2.349,
+    "max": 3.317
+  },
+  "method": "silence-aware boundary snap (no ASR); text blocks preserved from the draft SRT",
+  "parameters": {
+    "noise_db": -35,
+    "min_pause_seconds": 0.22,
+    "penalty_sentence_seconds": 0.9,
+    "penalty_middle_seconds": 0.3,
+    "min_cue_seconds": 0.45
+  }
+}

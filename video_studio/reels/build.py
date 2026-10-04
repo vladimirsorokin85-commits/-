@@ -12,6 +12,7 @@ import io
 import json
 import math
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -557,6 +558,20 @@ def _filter_for_scene(scene: Scene, index: int, *, width: int, height: int, fps:
     return filters + base_label + ",".join(post_filters) + f"[v{index}]"
 
 
+def _scene_input_seconds(scene: Scene, fps: int) -> float:
+    """How much source material one scene needs before trim=end_frame.
+
+    Stills get one extra frame: the blur chain splits the frame, re-inserts it via
+    overlay and then passes through the fps filter, which drops the last frame of
+    that chain. Without the slack every still would render one frame short, and a
+    27-scene reel would lose ~0.9 s and fail the duration check in verify_output.
+    The surplus is removed again by trim=end_frame={scene.frames}.
+    """
+    if scene.kind == "image":
+        return (scene.frames + 1) / fps
+    return scene.frames / fps + 0.12
+
+
 def _render_scene_chunk(
     scenes: list[Scene], output: Path, *, width: int, height: int, fps: int, preset: str, crf: int
 ) -> None:
@@ -565,7 +580,7 @@ def _render_scene_chunk(
     for scene in scenes:
         # Bound every input. In particular, a still-image loop or looped B-roll
         # must not leave an unbounded demuxer running behind the concat filter.
-        input_seconds = scene.frames / fps + (0.12 if scene.kind == "video" else 0.0)
+        input_seconds = _scene_input_seconds(scene, fps)
         if scene.kind == "image":
             cmd += ["-loop", "1", "-framerate", str(fps), "-t", f"{input_seconds:.6f}", "-i", str(scene.path)]
         else:
@@ -641,6 +656,91 @@ def _audio_filter(project: Project, duration: float, *, has_music: bool, ducking
 def _caption_filter_path(path: Path) -> str:
     # The caption is copied into a plain temporary path, avoiding filtergraph escaping issues.
     return os.fspath(path).replace("\\", "\\\\").replace(":", r"\:").replace("'", r"\'")
+
+
+SRT_TIMING = re.compile(
+    r"(\d{2}):(\d{2}):(\d{2})[,.](\d{3})\s*-->\s*(\d{2}):(\d{2}):(\d{2})[,.](\d{3})"
+)
+
+
+def _ass_timestamp(seconds: float) -> str:
+    centiseconds = max(0, int(round(seconds * 100)))
+    hours, centiseconds = divmod(centiseconds, 360_000)
+    minutes, centiseconds = divmod(centiseconds, 6_000)
+    secs, centiseconds = divmod(centiseconds, 100)
+    return f"{hours}:{minutes:02d}:{secs:02d}.{centiseconds:02d}"
+
+
+def _srt_cues(path: Path) -> list[tuple[float, float, str]]:
+    """Read cues as (start, end, text), keeping the draft's manual line breaks."""
+    raw = path.read_text(encoding="utf-8")
+    cues: list[tuple[float, float, str]] = []
+    for block in re.split(r"\r?\n\r?\n", raw.strip()):
+        lines = block.splitlines()
+        if len(lines) < 3:
+            continue
+        match = SRT_TIMING.search(lines[1])
+        if not match:
+            continue
+        head = [int(value) for value in match.groups()[:4]]
+        tail = [int(value) for value in match.groups()[4:]]
+
+        def to_seconds(hours: int, minutes: int, secs: int, millis: int) -> float:
+            return hours * 3600 + minutes * 60 + secs + millis / 1000
+
+        text = "\\N".join(line.strip() for line in lines[2:] if line.strip())
+        if text:
+            cues.append((to_seconds(*head), to_seconds(*tail), text))
+    if not cues:
+        raise ReelBuildError(f"В файле субтитров нет пригодных реплик: {path}")
+    return cues
+
+
+def _fit_font_size(cues: list[tuple[float, float, str]], width: int, *, margin_lr: int = 30) -> int:
+    """Choose a font size whose widest caption line still fits inside the frame.
+
+    The average advance of DejaVu Sans Cyrillic is about 0.55 em, so the estimate is
+    deliberately conservative: a slightly small caption is better than a clipped one.
+    """
+    longest = max((len(line) for _, _, text in cues for line in text.split("\\N")), default=1)
+    available = max(1, width - 2 * margin_lr)
+    size = available / (0.55 * max(1, longest))
+    return int(max(32.0, min(96.0, size)))
+
+
+def _write_ass_from_srt(srt: Path, ass: Path, *, width: int, height: int) -> None:
+    """Convert an SRT into an ASS script pinned to the frame resolution.
+
+    Pointing the subtitles filter straight at an SRT makes libass assume a 384x288
+    script resolution. On a 1080x1920 frame every style value is then scaled ~6.7x:
+    FontSize 50 becomes a huge caption that overflows the sides and climbs to the
+    top edge, so only the tail of a line stays visible. Writing PlayResX/PlayResY
+    keeps FontSize and MarginV in real pixels.
+    """
+    cues = _srt_cues(srt)
+    font_size = _fit_font_size(cues, width)
+    margin_lr, margin_v = 30, 250
+    header = (
+        "[Script Info]\n"
+        "ScriptType: v4.00+\n"
+        f"PlayResX: {width}\n"
+        f"PlayResY: {height}\n"
+        "ScaledBorderAndShadow: yes\n"
+        "WrapStyle: 2\n\n"
+        "[V4+ Styles]\n"
+        "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, "
+        "Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, "
+        "Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n"
+        f"Style: Default,DejaVu Sans,{font_size},&H00FFFFFF,&H00FFFFFF,&H80000000,&H70000000,"
+        f"0,0,0,0,100,100,0,0,1,3,1,2,{margin_lr},{margin_lr},{margin_v},1\n\n"
+        "[Events]\n"
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n"
+    )
+    events = [
+        f"Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},Default,,0,0,0,,{text}"
+        for start, end, text in cues
+    ]
+    ass.write_text(header + "\n".join(events) + "\n", encoding="utf-8")
 
 
 def _write_timeline(path: Path, project: Project, scenes: list[Scene], duration: float) -> None:
@@ -774,18 +874,18 @@ def build(project: Project, *, dry_run: bool = False) -> tuple[float, int]:
                 captions_index = 3 if music_index is not None else 2
                 final_cmd += ["-i", str(project.captions)]
             elif project.captions and project.settings.caption_mode == "burn":
-                captions_for_filter = temp / "captions.srt"
-                shutil.copyfile(project.captions, captions_for_filter)
+                captions_for_filter = temp / "captions.ass"
+                _write_ass_from_srt(
+                    project.captions,
+                    captions_for_filter,
+                    width=project.settings.width,
+                    height=project.settings.height,
+                )
 
             filter_parts: list[str] = []
             if captions_for_filter:
                 subtitle_path = _caption_filter_path(captions_for_filter)
-                style = (
-                    "FontName=DejaVu Sans,FontSize=50,PrimaryColour=&H00FFFFFF,"
-                    "OutlineColour=&H80000000,BackColour=&H70000000,BorderStyle=1,"
-                    "Outline=3,Shadow=1,MarginV=250,Alignment=2"
-                )
-                filter_parts.append(f"[0:v]subtitles=filename='{subtitle_path}':force_style='{style}'[vout]")
+                filter_parts.append(f"[0:v]subtitles=filename='{subtitle_path}'[vout]")
             filter_parts.append(_audio_filter(project, duration, has_music=music_index is not None, ducking=ducking))
             final_cmd += ["-filter_complex", ";".join(filter_parts), "-map", "[aout]"]
             if captions_for_filter:
