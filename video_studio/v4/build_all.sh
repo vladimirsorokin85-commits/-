@@ -14,5 +14,5 @@ ffmpeg -y -v error -f concat -safe 0 -i /tmp/smk4/parts.txt -i /tmp/smk4/mix.wav
 # workspace copy is size-capped (snapshot limit) — 2-pass ~720 kbit/s video
 ffmpeg -y -v error -i /tmp/smk4/full_hq.mp4 -c:v libx264 -preset medium -b:v 590k -pass 1 -passlogfile /tmp/smk4/x264 -an -f mp4 /dev/null
 ffmpeg -y -v error -i /tmp/smk4/full_hq.mp4 -c:v libx264 -preset medium -b:v 590k -maxrate 1500k -bufsize 3000k \
-  -pass 2 -passlogfile /tmp/smk4/x264 -c:a aac -b:a 112k -movflags +faststart /home/user/-/smekalka_video.mp4
-echo "done: /home/user/-/smekalka_video.mp4"
+  -pass 2 -passlogfile /tmp/smk4/x264 -c:a aac -b:a 112k -movflags +faststart ${OUT:-/tmp/smk4/smekalka_video.mp4}
+echo "done: ${OUT:-/tmp/smk4/smekalka_video.mp4}"

@@ -4,7 +4,7 @@ import html, os, re
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-VIDEO = os.path.join(ROOT, "smekalka_video.mp4")
+VIDEO = next((c for c in (os.path.join(ROOT, "smekalka_video.mp4"), "/tmp/smk4/smekalka_video.mp4") if os.path.exists(c)), "/tmp/smk4/smekalka_video.mp4")
 DESC = os.path.join(ROOT, "youtube_smekalka_description.md")
 
 
@@ -12,7 +12,11 @@ def page():
     md = open(DESC, encoding="utf-8").read() if os.path.exists(DESC) else ""
     title = re.search(r"\*\*(.+?)\*\*", md.split("## Название (основное)")[-1])
     title = title.group(1) if title else "Окопная смекалка"
+    global VIDEO
+    VIDEO = next((c for c in (os.path.join(ROOT, "smekalka_video.mp4"), "/tmp/smk4/smekalka_video.mp4") if os.path.exists(c)), VIDEO)
     size = os.path.getsize(VIDEO) / 1e6 if os.path.exists(VIDEO) else 0
+    player = ('<video src="/video.mp4" controls preload="metadata" poster="/poster.jpg"></video>' if os.path.exists(VIDEO)
+              else '<div style="padding:80px;text-align:center;background:#181b19;border-radius:10px">⏳ Видео рендерится — обновите страницу через несколько минут</div>')
     return f"""<!doctype html><html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title>
@@ -30,7 +34,7 @@ padding:18px;font:14px/1.55 ui-monospace,monospace;color:#d6d6d6}}
 </style></head><body><div class="wrap">
 <div class="brand">МАГАЗИН «В ОКОПЕ» · СПЕЦВЫПУСК</div>
 <h1>{html.escape(title)}</h1>
-<video src="/video.mp4" controls preload="metadata" poster="/poster.jpg"></video>
+{player}
 <div class="meta">7:26 · 1280×720 · {size:.1f} МБ</div>
 <a class="btn" href="/video.mp4" download>Скачать видео</a>
 <h2>Название, описание, теги</h2>
@@ -86,7 +90,7 @@ class H(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
         elif p == "/video.mp4":
-            self._file(VIDEO, "video/mp4")
+            page(); self._file(VIDEO, "video/mp4")
         elif p == "/poster.jpg":
             self._file(os.path.join(ROOT, "video_studio/assets/smekalka_01.jpg"), "image/jpeg")
         else:
