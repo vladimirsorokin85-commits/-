@@ -1,0 +1,3 @@
+# large rendered outputs stay out of git
+*.mp4
+__pycache__/
