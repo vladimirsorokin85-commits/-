@@ -1,3 +1,10 @@
-# large rendered outputs stay out of git
+# Large rendered outputs and local project media stay out of git
 *.mp4
+video_studio/reels/output/
+video_studio/reels/media/
+video_studio/reels/products/*/media/
+video_studio/reels/narration.*
+video_studio/reels/captions.srt
+*.timeline.json
+*.qc.json
 __pycache__/

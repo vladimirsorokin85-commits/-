@@ -1,0 +1,22 @@
+{
+  "title": "Название выпуска",
+  "audio": "narration.wav",
+  "visuals": [
+    "../assets/*.jpg"
+  ],
+  "music": null,
+  "captions": null,
+  "output": "output/reel.mp4",
+  "duration_seconds": null,
+  "settings": {
+    "resolution": [1080, 1920],
+    "fps": 30,
+    "shot_seconds": 4,
+    "chunk_scenes": 12,
+    "crf": 20,
+    "preset": "medium",
+    "music_gain": 0.12,
+    "caption_mode": "burn",
+    "smart_crop": false
+  }
+}

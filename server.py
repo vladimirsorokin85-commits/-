@@ -5,7 +5,16 @@ from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 VIDEO = next((c for c in (os.path.join(ROOT, "smekalka_video.mp4"), "/tmp/smk4/smekalka_video.mp4") if os.path.exists(c)), "/tmp/smk4/smekalka_video.mp4")
+REEL_CANDIDATES = (
+    os.environ.get("REEL_PATH", os.path.join(ROOT, "video_studio", "reels", "output", "reel.mp4")),
+    "/tmp/reel/reel_final.mp4",
+    "/tmp/reel/reel.mp4",
+)
 DESC = os.path.join(ROOT, "youtube_smekalka_description.md")
+
+
+def current_reel():
+    return next((path for path in REEL_CANDIDATES if os.path.exists(path)), None)
 
 
 def page():
@@ -17,6 +26,16 @@ def page():
     size = os.path.getsize(VIDEO) / 1e6 if os.path.exists(VIDEO) else 0
     player = ('<video src="/video.mp4" controls preload="metadata" poster="/poster.jpg"></video>' if os.path.exists(VIDEO)
               else '<div style="padding:80px;text-align:center;background:#181b19;border-radius:10px">⏳ Видео рендерится — обновите страницу через несколько минут</div>')
+    reel = current_reel()
+    reel_player = (
+        '<video src="/reel.mp4" controls preload="metadata" style="max-width:360px;display:block"></video>'
+        f'<div class="meta">Вертикальный MP4 9:16 · {os.path.getsize(reel) / 1e6:.1f} МБ</div>'
+        '<a class="btn" href="/reel.mp4" download>Скачать рилс</a>'
+        if reel else
+        '<div style="padding:28px;text-align:center;background:#181b19;border-radius:10px">'
+        'Добавьте озвучку и запустите сборку из <code>video_studio/reels/</code> — рилс появится здесь.'
+        '</div>'
+    )
     return f"""<!doctype html><html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title>
@@ -37,9 +56,8 @@ padding:18px;font:14px/1.55 ui-monospace,monospace;color:#d6d6d6}}
 {player}
 <div class="meta">7:26 · 1280×720 · {size:.1f} МБ</div>
 <a class="btn" href="/video.mp4" download>Скачать видео</a>
-<h2>Рилс 9:16 (42 с)</h2>
-<video src="/reel.mp4" controls preload="metadata" style="max-width:360px;display:block"></video>
-<a class="btn" href="/reel.mp4" download style="margin-top:10px">Скачать рилс</a>
+<h2>Вертикальный Reels 9:16 · 1–20 минут</h2>
+{reel_player}
 <h2>Название, описание, теги</h2>
 <pre>{html.escape(md)}</pre>
 </div></body></html>"""
@@ -95,7 +113,11 @@ class H(BaseHTTPRequestHandler):
         elif p == "/video.mp4":
             page(); self._file(VIDEO, "video/mp4")
         elif p == "/reel.mp4":
-            self._file("/tmp/reel/reel_final.mp4", "video/mp4")
+            reel = current_reel()
+            if reel:
+                self._file(reel, "video/mp4")
+            else:
+                self.send_error(404)
         elif p == "/poster.jpg":
             self._file(os.path.join(ROOT, "video_studio/assets/smekalka_01.jpg"), "image/jpeg")
         else:
