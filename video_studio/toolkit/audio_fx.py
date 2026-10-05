@@ -69,7 +69,7 @@ def level_words(x, target_db=-18.0, max_boost=16.0, max_cut=12.0, gate_rel=34.0,
 
 def voice_chain(x, sr=SR, presence=3.0, warmth=1.5):
     from pedalboard import (Pedalboard, HighpassFilter, PeakFilter, LowShelfFilter, HighShelfFilter,
-                            Compressor, Limiter, Gain)
+                            Compressor, Gain)
     x = level_words(x, sr=sr)
     board = Pedalboard([
         HighpassFilter(80),
@@ -80,9 +80,8 @@ def voice_chain(x, sr=SR, presence=3.0, warmth=1.5):
         Compressor(threshold_db=-20, ratio=3.0, attack_ms=8, release_ms=90),
         Compressor(threshold_db=-10, ratio=6.0, attack_ms=2, release_ms=50),
         Gain(4.0),
-        Limiter(threshold_db=-1.5, release_ms=60),
     ])
-    y = board(x.astype(np.float32)[None, :], sr)[0]
+    y = limit(board(x.astype(np.float32)[None, :], sr)[0], -1.5, sr=sr)
     # simple de-esser: compress 5–9 kHz band only when it spikes
     from scipy.signal import butter, sosfilt
     band = sosfilt(butter(2, [5000, 9000], "bandpass", fs=sr, output="sos"), y)
@@ -153,9 +152,33 @@ def carve(music, sr=SR, amount=0.5):
     return music - amount * sosfilt(butter(2, [700, 4000], "bandpass", fs=sr, output="sos"), music)
 
 
+def limit(x, ceiling_db=-1.0, lookahead=0.005, release=0.08, sr=SR):
+    """Transparent look-ahead peak limiter (numpy). Works on (n,) or (ch, n). No make-up gain."""
+    x = np.asarray(x, np.float32)
+    st = x if x.ndim == 2 else x[None]
+    c = 10 ** (ceiling_db / 20)
+    peak = np.abs(st).max(0)
+    la = max(1, int(lookahead * sr))
+    need = np.minimum(1.0, c / np.maximum(maximum_filter1d(peak, 2 * la + 1), 1e-9))
+    g = np.empty_like(need)
+    p, ar = 1.0, np.exp(-1 / (release * sr))
+    blk = 16
+    for i in range(0, len(need), blk):
+        v = need[i:i + blk].min()
+        p = v if v < p else v + (p - v) * ar ** blk
+        g[i:i + blk] = p
+    g = uniform_filter1d(g, la)            # smooth attack ramp across the look-ahead window
+    g = np.minimum(g, need)                # guarantee
+    out = np.clip(st * g, -c, c)
+    return out if x.ndim == 2 else out[0]
+
+
 def lufs(x, sr=SR):
     import pyloudnorm as pyln
-    return pyln.Meter(sr).integrated_loudness(np.asarray(x, np.float64))
+    x = np.asarray(x, np.float64)
+    if x.ndim == 2 and x.shape[0] < x.shape[1]:   # (ch, n) -> (n, ch)
+        x = x.T
+    return pyln.Meter(sr).integrated_loudness(x)
 
 
 def gain_to(x, target, sr=SR):
@@ -163,8 +186,8 @@ def gain_to(x, target, sr=SR):
 
 
 def master(mix, target=-14.0, ceiling_db=-1.0, sr=SR):
-    from pedalboard import Pedalboard, Limiter
-    y = gain_to(mix, target, sr).astype(np.float32)
-    y = Pedalboard([Limiter(threshold_db=ceiling_db, release_ms=80)])(y[None, :] if y.ndim == 1 else y, sr)
-    y = y[0] if mix.ndim == 1 else y
-    return np.clip(y, -10 ** (ceiling_db / 20), 10 ** (ceiling_db / 20))
+    """Gain to target LUFS, then look-ahead limit; re-check (limiting lowers loudness slightly)."""
+    y = np.asarray(mix, np.float32)
+    for _ in range(3):
+        y = limit(gain_to(y, target, sr).astype(np.float32), ceiling_db, sr=sr)
+    return y

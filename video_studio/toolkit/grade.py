@@ -100,8 +100,8 @@ def thermal(img):
 
 def look(img, name="frontline", seed=0):
     if name == "frontline":   # плёнка Kodak 2383 + лёгкий teal/orange, ореолы, зерно
-        img = apply_lut(img, "kodak_2383_constlmap", 0.7)
-        img = teal_orange(img, 0.3)
+        img = apply_lut(img, "kodak_2383_constlmap", 0.5)
+        img = teal_orange(img, 0.22)
         img = halation(img, amt=0.35)
         img = vignette(img, 0.3)
         return grain(img, 0.035, seed)
