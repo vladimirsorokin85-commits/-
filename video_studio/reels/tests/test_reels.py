@@ -1,4 +1,5 @@
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -7,18 +8,22 @@ from types import ModuleType, SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 from video_studio.reels.build import (
+    Overlay,
     Project,
     ReelBuildError,
     Settings,
     VisualSpec,
     _audio_filter,
+    _overlay_inputs_and_filters,
     _autofocus_visuals,
+    _expand_overlays,
     _expand_visuals,
     _filter_for_scene,
     _fit_font_size,
     _has_filter,
     _srt_cues,
     _write_ass_from_srt,
+    build,
     load_project,
     scene_plan,
     verify_output,
@@ -369,3 +374,190 @@ class CaptionRenderTests(unittest.TestCase):
                 _srt_cues(Path(empty.name))
         finally:
             Path(empty.name).unlink(missing_ok=True)
+
+
+class FilterGraphTests(unittest.TestCase):
+    """Filter labels must be unique, or ffmpeg silently mis-resolves the graph."""
+
+    def test_crop_mode_does_not_reuse_its_input_label(self):
+        from video_studio.reels.build import Scene, _filter_for_scene
+
+        scene = Scene(Path("photo.jpg"), "image", frames=62, focus_x=0.46, focus_y=0.17,
+                      start_seconds=0.0, loop=False, zoom_in=False, fit_mode="crop")
+        text = _filter_for_scene(scene, 1, width=1080, height=1920, fps=30)
+        # [1:v] is the input stream label; reusing it as an output label made every
+        # crop scene fail with "Picture size 0x0 is invalid".
+        self.assertIn("[1:v]scale=", text)
+        self.assertIn("[base1]", text)
+        self.assertNotIn("[1:v]scale=1080:1920:force_original_aspect_ratio=increase:flags=lanczos,"
+                         "crop=1080:1920:(iw-ow)*0.46000:(ih-oh)*0.17000[1:v]", text)
+        self.assertTrue(text.rstrip().endswith("[v1]"))
+
+    def test_every_scene_label_is_unique(self):
+        from video_studio.reels.build import Scene, _filter_for_scene
+
+        scenes = [
+            Scene(Path("a.jpg"), "image", frames=62, focus_x=0.5, focus_y=0.5, start_seconds=0.0,
+                  loop=False, zoom_in=True, fit_mode="crop"),
+            Scene(Path("b.jpg"), "image", frames=62, focus_x=0.5, focus_y=0.5, start_seconds=0.0,
+                  loop=False, zoom_in=False, fit_mode="blur"),
+            Scene(Path("c.jpg"), "image", frames=41, focus_x=0.2, focus_y=0.8, start_seconds=0.0,
+                  loop=False, zoom_in=True, fit_mode="crop"),
+        ]
+        # In a filtergraph segment the first label is the input and the last is the
+        # output; only outputs must be unique, internal ones legitimately repeat.
+        outputs: list[str] = []
+        for index, scene in enumerate(scenes):
+            for segment in _filter_for_scene(scene, index, width=1080, height=1920, fps=30).split(";"):
+                found = re.findall(r"\[([a-zA-Z_][\w]*)\]", segment)
+                if len(found) >= 2:
+                    outputs.append(found[-1])
+        duplicates = {label for label in outputs if outputs.count(label) > 1}
+        self.assertEqual(duplicates, set(), f"duplicate output labels: {duplicates}")
+        self.assertTrue(outputs, "no output labels produced")
+
+
+class OverlayTests(unittest.TestCase):
+    def _manifest(self, root: Path, overlays: object) -> Path:
+        card = root / "card.png"
+        card.write_bytes(b"\x89PNG\r\n\x1a\n")
+        payload = {
+            "title": "t",
+            "audio": "voice.wav",
+            "visuals": [{"path": "still.jpg"}],
+            "overlays": overlays,
+        }
+        (root / "voice.wav").write_bytes(b"RIFF")
+        (root / "still.jpg").write_bytes(b"\xff\xd8\xff")
+        (root / "project.json").write_text(json.dumps(payload), encoding="utf-8")
+        return root / "project.json"
+
+    def test_overlays_parse_with_keyword_and_pixel_positions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "a.png").write_bytes(b"x")
+            (root / "b.png").write_bytes(b"x")
+            overlays = _expand_overlays(
+                [
+                    {"path": "a.png", "start_seconds": 0.0, "end_seconds": 8.3, "y": 210},
+                    {"path": "b.png", "start_seconds": 8.3, "end_seconds": 16.0, "x": "left", "y": "top"},
+                ],
+                root,
+            )
+        self.assertEqual(len(overlays), 2)
+        self.assertEqual(overlays[0].x, "center")
+        self.assertEqual(overlays[0].y, 210)
+        self.assertEqual(overlays[0].fade_seconds, 0.3)
+        self.assertEqual(overlays[1].x, "left")
+        self.assertEqual(overlays[1].y, "top")
+
+    def test_overlay_rejects_inverted_window_and_bad_position(self):
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "a.png").write_bytes(b"x")
+            with self.assertRaises(ReelBuildError):
+                _expand_overlays([{"path": "a.png", "start_seconds": 5, "end_seconds": 5}], root)
+            with self.assertRaises(ReelBuildError):
+                _expand_overlays([{"path": "a.png", "start_seconds": 9, "end_seconds": 5}], root)
+            with self.assertRaises(ReelBuildError):
+                _expand_overlays([{"path": "a.png", "start_seconds": 0, "end_seconds": 5, "x": "middle"}], root)
+
+    def test_overlay_graph_uses_chunk_local_time_and_unique_labels(self):
+        overlays = (
+            Overlay(Path("a.png"), 0.0, 8.3, "center", 210, 0.3),
+            Overlay(Path("b.png"), 8.3, 16.0, "center", 240, 0.3),
+        )
+        inputs, filters, label = _overlay_inputs_and_filters(
+            overlays, fps=30, duration=30.0, first_input=12, source="[concat]"
+        )
+        self.assertEqual(label, "[vlay1]")
+        # One looped still input per overlay, indexed after the scene streams.
+        self.assertEqual(inputs.count("-loop"), 2)
+        self.assertEqual(inputs.count("-i"), 2)
+        joined = ";".join(filters)
+        self.assertIn("[12:v]format=rgba,fade=t=in:st=0.000:d=0.300:alpha=1", joined)
+        self.assertIn("fade=t=out:st=8.000:d=0.300:alpha=1", joined)
+        self.assertIn("[13:v]format=rgba,fade=t=in:st=8.300:d=0.300:alpha=1", joined)
+        self.assertIn("[concat][ov0]overlay=x=(W-w)/2:y=210:enable='between(t,0.000,8.350)'[vlay0]", joined)
+        self.assertIn("[vlay0][ov1]overlay=x=(W-w)/2:y=240:enable='between(t,8.250,16.050)'[vlay1]", joined)
+        # The window never goes negative even when the fade would reach before t=0.
+        self.assertNotIn("-0.0", joined)
+        self.assertEqual(joined.count("[ov0]"), 2)  # defined once, consumed once
+        self.assertEqual(joined.count("[ov1]"), 2)
+
+    def test_overlay_window_spanning_a_chunk_boundary_is_clipped(self):
+        # A card that starts before the chunk and ends inside it must be trimmed to
+        # the chunk, and its fade-out must move with the clipped end.
+        overlays = (Overlay(Path("a.png"), 25.0, 40.0, "center", 210, 0.3),)
+        inputs, filters, label = _overlay_inputs_and_filters(
+            overlays, fps=30, duration=30.0, first_input=12, offset=30.0, source="[concat]"
+        )
+        joined = ";".join(filters)
+        self.assertIn("fade=t=in:st=0.000:d=0.300:alpha=1", joined)
+        self.assertIn("fade=t=out:st=9.700:d=0.300:alpha=1", joined)
+        self.assertEqual(inputs[inputs.index("-t") + 1], "10.000000")
+        self.assertEqual(label, "[vlay0]")
+
+    def test_overlay_outside_the_chunk_is_dropped_entirely(self):
+        overlays = (Overlay(Path("a.png"), 60.0, 70.0, "center", 210, 0.3),)
+        inputs, filters, label = _overlay_inputs_and_filters(
+            overlays, fps=30, duration=30.0, first_input=12, offset=0.0, source="[concat]"
+        )
+        self.assertEqual((inputs, filters, label), ([], [], "[concat]"))
+
+    def test_render_scene_chunk_composites_only_overlapping_overlays(self):
+        from video_studio.reels.build import Scene, _render_scene_chunk
+
+        scenes = [
+            Scene(Path("a.jpg"), "image", frames=60, focus_x=0.5, focus_y=0.5,
+                  start_seconds=0.0, loop=False, zoom_in=True),
+            Scene(Path("b.jpg"), "image", frames=60, focus_x=0.5, focus_y=0.5,
+                  start_seconds=0.0, loop=False, zoom_in=False),
+        ]
+        captured: dict[str, object] = {}
+
+        def fake_run(cmd, *, what):
+            captured["cmd"] = cmd
+            return CompletedProcess(cmd, 0, stdout="", stderr="")
+
+        overlays = (
+            Overlay(Path("inside.png"), 0.0, 1.5, "center", 210, 0.3),
+            Overlay(Path("outside.png"), 9.0, 12.0, "center", 210, 0.3),
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch("video_studio.reels.build._run", side_effect=fake_run), patch(
+                "video_studio.reels.build._which", return_value="ffmpeg"
+            ):
+                _render_scene_chunk(
+                    scenes, Path(tmp) / "chunk.mp4", width=1080, height=1920, fps=30,
+                    preset="ultrafast", crf=20, overlays=overlays, chunk_start=0.0,
+                )
+        cmd = captured["cmd"]
+        self.assertIn("inside.png", cmd)
+        self.assertNotIn("outside.png", cmd)
+        graph = cmd[cmd.index("-filter_complex") + 1]
+        self.assertIn("concat=n=2:v=1:a=0[concat]", graph)
+        self.assertIn("overlay=x=(W-w)/2:y=210", graph)
+        self.assertIn("[vlay0]", graph)
+        # The overlay chain must terminate on the mapped output label.
+        self.assertIn("[vlay0]", cmd[cmd.index("-map") + 1])
+
+
+    def test_timeline_records_overlays_clamped_to_reel_length(self):
+        from video_studio.reels.build import Scene, _write_timeline
+
+        project = SimpleNamespace(
+            title="t",
+            settings=SimpleNamespace(fps=30, width=1080, height=1920),
+            overlays=(Overlay(Path("card.png"), 80.0, 200.0, "center", 210, 0.3),),
+        )
+        scenes = [Scene(Path("a.jpg"), "image", frames=60, focus_x=0.5, focus_y=0.5,
+                        start_seconds=0.0, loop=False, zoom_in=True)]
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "timeline.json"
+            _write_timeline(out, project, scenes, 93.3)
+            payload = json.loads(out.read_text(encoding="utf-8"))
+        self.assertEqual(len(payload["overlays"]), 1)
+        self.assertEqual(payload["overlays"][0]["start_seconds"], 80.0)
+        self.assertEqual(payload["overlays"][0]["end_seconds"], 93.3)

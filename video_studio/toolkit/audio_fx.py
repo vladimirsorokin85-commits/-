@@ -163,8 +163,16 @@ def gain_to(x, target, sr=SR):
 
 
 def master(mix, target=-14.0, ceiling_db=-1.0, sr=SR):
+    """Loudness-match to `target` and brickwall at `ceiling_db`.
+
+    pedalboard >= 0.9 gives Limiter an automatic makeup gain that pushes the signal
+    back up by several dB, which silently undoes the staging done by gain_to (a
+    -14 LUFS target came out at -9 LUFS). Limit first, then trim to the target again
+    so the ceiling still catches peaks without moving the delivery loudness.
+    """
     from pedalboard import Pedalboard, Limiter
     y = gain_to(mix, target, sr).astype(np.float32)
     y = Pedalboard([Limiter(threshold_db=ceiling_db, release_ms=80)])(y[None, :] if y.ndim == 1 else y, sr)
     y = y[0] if mix.ndim == 1 else y
+    y = gain_to(y, target, sr).astype(np.float32)
     return np.clip(y, -10 ** (ceiling_db / 20), 10 ** (ceiling_db / 20))

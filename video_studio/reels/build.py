@@ -48,6 +48,18 @@ class VisualSpec:
 
 
 @dataclass(frozen=True)
+class Overlay:
+    """A still graphic (title card, badge, lower third) composited over the picture."""
+
+    path: Path
+    start_seconds: float
+    end_seconds: float
+    x: str = "center"
+    y: str | float = 0
+    fade_seconds: float = 0.3
+
+
+@dataclass(frozen=True)
 class Scene:
     path: Path
     kind: str
@@ -86,6 +98,7 @@ class Project:
     captions: Path | None
     duration_seconds: float | None
     settings: Settings
+    overlays: tuple[Overlay, ...] = ()
 
 
 def _which(binary: str) -> str:
@@ -294,6 +307,60 @@ def _expand_visuals(raw_visuals: Any, base: Path) -> tuple[VisualSpec, ...]:
     return tuple(result)
 
 
+def _expand_overlays(raw: Any, base: Path) -> tuple[Overlay, ...]:
+    if raw is None:
+        return ()
+    if not isinstance(raw, list):
+        raise ReelBuildError("Поле «overlays» должно быть JSON-массивом.")
+    overlays: list[Overlay] = []
+    for position, item in enumerate(raw, start=1):
+        if not isinstance(item, dict):
+            raise ReelBuildError(f"overlays[{position}] должен быть JSON-объектом.")
+        path = _resolve_file(item.get("path"), base, f"overlays[{position}].path")
+        assert path is not None
+        if path.suffix.lower() not in {".png", ".webp", ".gif", ".jpg", ".jpeg"}:
+            raise ReelBuildError(
+                f"overlays[{position}].path должен быть изображением с прозрачностью (png или webp)."
+            )
+        start = _number(item.get("start_seconds", 0.0), f"overlays[{position}].start_seconds", low=0.0, high=3600.0)
+        end = _number(item.get("end_seconds", 0.0), f"overlays[{position}].end_seconds", low=0.0, high=3600.0)
+        if end <= start:
+            raise ReelBuildError(
+                f"overlays[{position}]: end_seconds ({end}) должен быть больше start_seconds ({start})."
+            )
+        x = item.get("x", "center")
+        if not isinstance(x, str) or x not in {"left", "center", "right"}:
+            if isinstance(x, bool) or not isinstance(x, (int, float)):
+                raise ReelBuildError(f"overlays[{position}].x должен быть left, center, right или числом.")
+            x = int(x)
+        y = item.get("y", 0)
+        if not isinstance(y, str) or y not in {"top", "center", "bottom"}:
+            if isinstance(y, bool) or not isinstance(y, (int, float)):
+                raise ReelBuildError(f"overlays[{position}].y должен быть top, center, bottom или числом.")
+            y = int(y)
+        fade = _number(item.get("fade_seconds", 0.3), f"overlays[{position}].fade_seconds", low=0.0, high=5.0)
+        overlays.append(
+            Overlay(
+                path=path,
+                start_seconds=start,
+                end_seconds=end,
+                x=x,
+                y=y,
+                fade_seconds=fade,
+            )
+        )
+    return tuple(overlays)
+
+
+def _overlay_position(value: str | int | float, axis: str) -> str:
+    """Translate a friendly position keyword into an ffmpeg expression."""
+    if isinstance(value, str):
+        if axis == "x":
+            return {"left": "0", "center": "(W-w)/2", "right": "W-w"}[value]
+        return {"top": "0", "center": "(H-h)/2", "bottom": "H-h"}[value]
+    return str(int(value))
+
+
 def load_project(manifest: Path) -> Project:
     manifest = manifest.expanduser().resolve()
     if not manifest.is_file():
@@ -319,6 +386,7 @@ def load_project(manifest: Path) -> Project:
 
     music = _resolve_file(payload.get("music"), base, "music", optional=True)
     captions = _resolve_file(payload.get("captions"), base, "captions", optional=True)
+    overlays = _expand_overlays(payload.get("overlays"), base)
     duration = payload.get("duration_seconds")
     if duration is not None:
         duration = _number(duration, "duration_seconds", low=MIN_DURATION_SECONDS, high=MAX_DURATION_SECONDS)
@@ -352,7 +420,7 @@ def load_project(manifest: Path) -> Project:
     if not isinstance(smart_crop, bool):
         raise ReelBuildError("settings.smart_crop должен быть true или false.")
 
-    inputs = {audio, *(v.path for v in visuals)}
+    inputs = {audio, *(v.path for v in visuals), *(o.path for o in overlays)}
     if music:
         inputs.add(music)
     if captions:
@@ -368,6 +436,7 @@ def load_project(manifest: Path) -> Project:
         output=output,
         music=music,
         captions=captions,
+        overlays=overlays,
         duration_seconds=duration,
         settings=Settings(
             width=width,
@@ -530,13 +599,15 @@ def _filter_for_scene(scene: Scene, index: int, *, width: int, height: int, fps:
             f"[bg{index}][fg{index}]overlay=(W-w)/2:(H-h)/2{base_label};"
         )
     else:
-        base_label = input_label
-        filters = ""
+        # The crop chain needs its own output label: reusing the input label
+        # ([1:v]scale...[1:v]) makes the filtergraph ambiguous and every scene
+        # rendered in crop mode fails with "Picture size 0x0 is invalid".
+        base_label = f"[base{index}]"
         base_filters = [
             f"scale={width}:{height}:force_original_aspect_ratio=increase:flags=lanczos",
             f"crop={width}:{height}:(iw-ow)*{scene.focus_x:.5f}:(ih-oh)*{scene.focus_y:.5f}",
         ]
-        filters += f"{input_label}" + ",".join(base_filters) + f"{base_label};"
+        filters = f"{input_label}" + ",".join(base_filters) + f"{base_label};"
 
     post_filters = [f"fps={fps}"]
     if scene.kind == "image":
@@ -573,7 +644,16 @@ def _scene_input_seconds(scene: Scene, fps: int) -> float:
 
 
 def _render_scene_chunk(
-    scenes: list[Scene], output: Path, *, width: int, height: int, fps: int, preset: str, crf: int
+    scenes: list[Scene],
+    output: Path,
+    *,
+    width: int,
+    height: int,
+    fps: int,
+    preset: str,
+    crf: int,
+    overlays: tuple[Overlay, ...] = (),
+    chunk_start: float = 0.0,
 ) -> None:
     ffmpeg = _which("ffmpeg")
     cmd = [ffmpeg, "-hide_banner", "-loglevel", "error", "-y", "-filter_complex_threads", "2"]
@@ -589,12 +669,23 @@ def _render_scene_chunk(
             cmd += ["-ss", f"{scene.start_seconds:.6f}", "-t", f"{input_seconds:.6f}", "-i", str(scene.path)]
     filters = [_filter_for_scene(s, i, width=width, height=height, fps=fps) for i, s in enumerate(scenes)]
     inputs = "".join(f"[v{i}]" for i in range(len(scenes)))
-    filters.append(f"{inputs}concat=n={len(scenes)}:v=1:a=0[outv]")
+    chunk_seconds = sum(scene.frames for scene in scenes) / fps
+    overlay_inputs, overlay_filters, video_label = _overlay_inputs_and_filters(
+        overlays,
+        fps=fps,
+        duration=chunk_seconds,
+        first_input=len(scenes),
+        offset=chunk_start,
+        source="[concat]",
+    )
+    filters.append(f"{inputs}concat=n={len(scenes)}:v=1:a=0[concat]")
+    filters.extend(overlay_filters)
+    cmd += overlay_inputs
     cmd += [
         "-filter_complex",
         ";".join(filters),
         "-map",
-        "[outv]",
+        video_label,
         "-an",
         "-c:v",
         "libx264",
@@ -633,6 +724,52 @@ def _has_filter(ffmpeg: str, name: str) -> bool:
     # FFmpeg writes its filter list to stderr on many builds.
     listing = result.stdout + "\n" + result.stderr
     return any(len(fields := line.split()) >= 2 and fields[1] == name for line in listing.splitlines())
+
+
+def _overlay_inputs_and_filters(
+    overlays: tuple[Overlay, ...],
+    *,
+    fps: int,
+    duration: float,
+    first_input: int,
+    offset: float = 0.0,
+    source: str = "[0:v]",
+) -> tuple[list[str], list[str], str]:
+    """Build ffmpeg inputs and filtergraph segments for overlay graphics.
+
+    Each overlay becomes its own looped still input, and every window is expressed in
+    the local time of the video being composited. That lets one overlay span several
+    scenes while the input only lives as long as the chunk it belongs to: chaining
+    thirteen full-length overlay stages in a single pass exhausts memory, because each
+    stage costs far more than the frame it draws.
+
+    `offset` is the chunk's start time in the reel, `duration` the chunk's length.
+    """
+    inputs: list[str] = []
+    filters: list[str] = []
+    label = source
+    for position, overlay in enumerate(overlays):
+        index = first_input + position
+        local_start = max(0.0, overlay.start_seconds - offset)
+        local_end = min(duration, overlay.end_seconds - offset)
+        if local_end <= local_start:
+            continue
+        inputs += ["-loop", "1", "-framerate", str(fps), "-t", f"{local_end:.6f}", "-i", str(overlay.path)]
+        graphic = [f"[{index}:v]format=rgba"]
+        fade = overlay.fade_seconds
+        if fade > 0:
+            graphic.append(f"fade=t=in:st={local_start:.3f}:d={fade:.3f}:alpha=1")
+            graphic.append(f"fade=t=out:st={max(0.0, local_end - fade):.3f}:d={fade:.3f}:alpha=1")
+        graphic_label = f"[ov{position}]"
+        filters.append(",".join(graphic) + graphic_label)
+        x = _overlay_position(overlay.x, "x")
+        y = _overlay_position(overlay.y, "y")
+        # `enable` guarantees the graphic is gone outside its window even when
+        # fade_seconds is 0, because the overlay input stops at local_end.
+        window = f"between(t,{max(0.0, local_start - 0.05):.3f},{local_end + 0.05:.3f})"
+        filters.append(f"{label}{graphic_label}overlay=x={x}:y={y}:enable='{window}'[vlay{position}]")
+        label = f"[vlay{position}]"
+    return inputs, filters, label
 
 
 def _audio_filter(project: Project, duration: float, *, has_music: bool, ducking: bool) -> str:
@@ -770,6 +907,17 @@ def _write_timeline(path: Path, project: Project, scenes: list[Scene], duration:
                 "resolution": [project.settings.width, project.settings.height],
                 "fps": fps,
                 "scenes": items,
+                "overlays": [
+                    {
+                        "start_seconds": round(o.start_seconds, 3),
+                        "end_seconds": round(min(o.end_seconds, duration), 3),
+                        "source": o.path.name,
+                        "x": o.x,
+                        "y": o.y,
+                        "fade_seconds": o.fade_seconds,
+                    }
+                    for o in project.overlays
+                ],
             },
             ensure_ascii=False,
             indent=2,
@@ -792,6 +940,12 @@ def build(project: Project, *, dry_run: bool = False) -> tuple[float, int]:
         raise ReelBuildError(
             f"Длительность Reels должна быть от 1 до 20 минут; аудио/таймкод проекта: {duration / 60:.2f} мин."
         )
+    for position, overlay in enumerate(project.overlays, start=1):
+        if overlay.start_seconds >= duration:
+            raise ReelBuildError(
+                f"overlays[{position}] начинается на {overlay.start_seconds:.2f} с, "
+                f"но ролик длится {duration:.2f} с — плашка не попадёт в кадр."
+            )
 
     visuals = _with_source_durations(project)
     if project.settings.smart_crop:
@@ -830,9 +984,20 @@ def build(project: Project, *, dry_run: bool = False) -> tuple[float, int]:
             chunks: list[Path] = []
             chunk_size = project.settings.chunk_scenes
             groups = [scenes[i : i + chunk_size] for i in range(0, len(scenes), chunk_size)]
+            elapsed_frames = 0
             for i, group in enumerate(groups, start=1):
                 chunk = temp / f"visual_{i:04d}.mp4"
-                print(f"[{i}/{len(groups)}] Рендер сцен {sum(len(g) for g in groups[:i-1]) + 1}–{sum(len(g) for g in groups[:i])}…", flush=True)
+                chunk_start = elapsed_frames / project.settings.fps
+                chunk_end = (elapsed_frames + sum(s.frames for s in group)) / project.settings.fps
+                # Only the overlays that actually overlap this chunk are fed to it, so
+                # the compositing chain stays a couple of stages long per invocation.
+                chunk_overlays = tuple(
+                    o for o in project.overlays if o.start_seconds < chunk_end and o.end_seconds > chunk_start
+                )
+                print(
+                    f"[{i}/{len(groups)}] Рендер сцен {sum(len(g) for g in groups[:i-1]) + 1}–{sum(len(g) for g in groups[:i])}…",
+                    flush=True,
+                )
                 _render_scene_chunk(
                     group,
                     chunk,
@@ -841,7 +1006,10 @@ def build(project: Project, *, dry_run: bool = False) -> tuple[float, int]:
                     fps=project.settings.fps,
                     preset=project.settings.preset,
                     crf=project.settings.crf,
+                    overlays=chunk_overlays,
+                    chunk_start=chunk_start,
                 )
+                elapsed_frames += sum(s.frames for s in group)
                 chunks.append(chunk)
 
             concat_file = temp / "scenes.ffconcat"

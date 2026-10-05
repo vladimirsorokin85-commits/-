@@ -8,3 +8,4 @@ video_studio/reels/captions.srt
 *.timeline.json
 *.qc.json
 __pycache__/
+video_studio/reels/products/*/build/
