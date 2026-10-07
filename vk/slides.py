@@ -160,9 +160,10 @@ def slide_product(spec, n, total):
                     ty += 34
             ty += 8
             fb = font("PTSans-Regular.ttf", 26)
+            limit = min(y + BOX, H - 310)
             for b in (it.get("facts") or [])[:2]:
                 for ln in wrap(b, fb, W - 2 * M - BOX - 40)[:2]:
-                    if ty + 34 > y + BOX:
+                    if ty + 34 > limit:
                         break
                     d.text((tx, ty), "• " + ln, font=fb, fill=TEXT)
                     ty += 34
@@ -173,7 +174,7 @@ def slide_product(spec, n, total):
             y += BOX + 34
     else:
         it = items[0]
-        facts_reserve = 180
+        facts_reserve = 300
         name = it.get("name", "")
         f, lines = _wrap_fit(name, W - 2 * M, (52, 44, 40), 2)
         for ln in lines:
@@ -184,7 +185,7 @@ def slide_product(spec, n, total):
             y += 40
         y += 12
         if it.get("photo"):
-            box_h = int(max(260, min(600, (H - 300) - y - facts_reserve)))
+            box_h = int(max(240, min(470, (H - 300) - y - facts_reserve)))
             d.rectangle([M, y, W - M, y + box_h], fill=WHITE, outline=FRAME, width=2)
             im = Image.open(it["photo"] if os.path.isabs(it["photo"]) else os.path.join(ROOT, it["photo"])).convert("RGB")
             im.thumbnail((W - 2 * M - 24, box_h - 24), Image.LANCZOS)
@@ -227,17 +228,17 @@ def slide_summary(spec, n, total):
         y += f.size + 10
     y += 26
     rows = spec.get("rows", [])
-    avail = (H - 320) - y - 20
+    limit = (H - 320) - 16
     size = 32 if len(rows) <= 7 else (28 if len(rows) <= 9 else 25)
     fn = font("PTSans-Regular.ttf", size)
     for row in rows:
         name = row.get("name", "")
-        for ln in wrap(name, fn, W - 2 * M - 260)[:2]:
+        lines_ = wrap(name, fn, W - 2 * M - 260)[:2]
+        if y + len(lines_) * (size + 12) > limit:
+            break
+        for ln in lines_:
             d.text((M, y), ln, font=fn, fill=TEXT)
-            y += 42
-        if row.get("variant"):
-            d.text((M, y), row["variant"], font=font("PTSans-Regular.ttf", 24), fill=MUTED)
-            y += 34
+            y += size + 12
         y += 12
     y += 12
     bx = [M, H - 320, W - M, H - 150]
@@ -313,22 +314,25 @@ def build_spec(kit, card, resolved, story=None):
                        "photo": (main.get("photos") or [None])[0],
                        "facts": (main.get("sections") or [{}])[0].get("bullets", []),
                        "price": main.get("price")}]
-    for it in items:
+    kit_items = kit.get("items", [])
+    for i, it in enumerate(items):
+        k = kit_items[i] if i < len(kit_items) else {}
         product_slides.append({"name": it["name"], "variant": it.get("sub", ""),
-                               "photo": it.get("photo"), "facts": [it.get("sub", "")],
+                               "photo": it.get("photo"),
+                               "facts": k.get("facts") or [it.get("sub", "")],
                                "price": it.get("price")})
 
     # укладываемся в 10 слайдов: часть позиций — по две на слайд
     room = 10 - len(slides) - 2  # минус итог и призыв
-    packs = []
-    if len(product_slides) <= room:
+    need = max(0, len(product_slides) - room)
+    if need == 0:
         packs = [[p] for p in product_slides]
     else:
-        while len(product_slides) > room:
-            a = product_slides.pop()
-            b = product_slides.pop()
-            product_slides.append({"items": [a, b]})
-        packs = [[p] for p in product_slides]
+        # склеиваем хвост попарно: 2 позиции на один слайд
+        split = len(product_slides) - 2 * need
+        keep, tail = product_slides[:split], product_slides[split:]
+        merged = [{"items": [tail[i], tail[i + 1]]} for i in range(0, len(tail), 2)]
+        packs = [[p] for p in keep] + [[m] for m in merged]
     for pack in packs:
         if "items" in pack[0]:
             slides.append({"type": "product", "items": pack[0]["items"], "subtitle": "Комплект"})
@@ -336,7 +340,8 @@ def build_spec(kit, card, resolved, story=None):
             slides.append({"type": "product", **pack[0], "subtitle": "Комплект"})
 
     rows = [{"name": main["name"], "variant": main.get("sub", "")}]
-    rows += [{"name": it["name"], "variant": it.get("sub", "")} for it in items]
+    for it in items:
+        rows.append({"name": it.get("short") or it["name"], "variant": it.get("sub", "")})
     slides.append({"type": "summary", "title": "Что входит в комплект", "rows": rows,
                    "total_label": kit.get("kit", {}).get("label", "КОМПЛЕКТ"),
                    "price": kit.get("kit", {}).get("price")})
