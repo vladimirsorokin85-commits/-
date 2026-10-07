@@ -235,11 +235,19 @@ def main(argv=None):
     else:
         text = post_product(fams[0], price=args.price)
 
-    photo_files = []
+    # фото для поста: только годные (без полосок-сеток и превью)
+    man = {m["id"]: m for m in store.photos_manifest()}
+    photo_files, poor = [], []
     for fam in fams:
         for r in fam["rows"]:
-            photo_files += r.get("_photos", [])
-    photo_files = list(dict.fromkeys(photo_files))[: args.photo_limit]
+            for f in r.get("_photos", []):
+                det = next((d for d in (man.get(r["id"], {}).get("details") or []) if d["path"] == f), None)
+                if det and det.get("quality", "ok") != "ok":
+                    poor.append(f)
+                    continue
+                if f not in photo_files:
+                    photo_files.append(f)
+    photo_files = photo_files[: args.photo_limit]
 
     os.makedirs(args.out, exist_ok=True)
     base = slugify(fams[0]["family"] if args.template == "product" else (args.query or "подборка"))
@@ -262,6 +270,8 @@ def main(argv=None):
     print("\n" + "—" * 40)
     print(f"Источник: {store.source_line(meta)}")
     print(f"Текст: {txt_path}")
+    if poor:
+        print(f"Отброшено {len(poor)} фото как непригодные (полоски/превью): " + ", ".join(poor))
     if photo_files:
         print("Фото для поста (загрузи в ВК):")
         for p in photo_files:

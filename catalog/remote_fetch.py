@@ -227,6 +227,17 @@ def sniff_ext(blob: bytes, url: str = "") -> str:
     return ext if ext in IMG_EXT else ".jpg"
 
 
+def photo_quality(w: int, h: int, size_bytes: int) -> str:
+    """ok | preview | strip — чтобы в карточки не попадали полоски и превью."""
+    if not w or not h:
+        return "preview"
+    if min(w, h) < 400 and size_bytes < 40_000:
+        return "preview"
+    if max(w, h) / max(1, min(w, h)) >= 3.5:
+        return "strip"            # длинная узкая полоса (размерная сетка, логотип-линейка)
+    return "ok"
+
+
 def image_size(blob: bytes):
     """(ширина, высота) без внешних библиотек. None, если не распознали."""
     try:
@@ -376,8 +387,12 @@ def fetch_photos(idx, full_by_id):
                 got = save_image(ref, dest, f"{slug}_{i}", diag)
                 if got:
                     rel = os.path.relpath(got["path"], ROOT).replace(os.sep, "/")
+                    q = photo_quality(got["w"], got["h"], got["bytes"])
+                    if q != "ok":
+                        diag.append(f"· {rel}: помечено «{q}» ({got['w']}×{got['h']}) — в карточки не пойдёт")
                     files_l.append(rel)
-                    details_l.append({"path": rel, "bytes": got["bytes"], "w": got["w"], "h": got["h"]})
+                    details_l.append({"path": rel, "bytes": got["bytes"], "w": got["w"], "h": got["h"],
+                                      "quality": q})
             return files_l, details_l
 
         files, details = download(refs)

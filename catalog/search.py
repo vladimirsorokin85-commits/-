@@ -77,15 +77,68 @@ def sim(a: str, b: str) -> float:
         return 0.0
     if a == b:
         return 1.0
+    # быстрые отсечки: опечатка не меняет первую букву и длину радикально
+    if a[0] != b[0] or abs(len(a) - len(b)) > 4:
+        return 0.0
     if stem(a) == stem(b):
         return 0.95
     if min(len(a), len(b)) >= 5 and common_prefix(a, b) >= 5:
         return 0.9
     if min(len(a), len(b)) >= 5:
         r = SequenceMatcher(None, a, b).ratio()
-        if r >= 0.8:
-            return round(r * 0.9, 3)
+        if r >= 0.75:
+            return round(r, 3)
     return 0.0
+
+
+# Латинские названия в каталоге (PRABOS, GREYMAN) против русских запросов клиентов («прабос»).
+TRANSLIT = {
+    "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ж": "zh", "з": "z",
+    "и": "i", "й": "y", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "п": "p",
+    "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "c", "ч": "ch",
+    "ш": "sh", "щ": "sch", "ъ": "", "ы": "y", "ь": "", "э": "e", "ю": "yu", "я": "ya",
+}
+
+
+def translit(s: str) -> str:
+    return "".join(TRANSLIT.get(ch, ch) for ch in s or "")
+
+
+def best_in(qt: str, qtt: str, words, words_t) -> float:
+    """Лучшее совпадение токена среди слов поля: прямое и через транслит."""
+    best = 0.0
+    for i, w in enumerate(words):
+        s = sim(qt, w)
+        if s < 0.97 and qtt and i < len(words_t):
+            wt = words_t[i]
+            if wt and (wt != qt or w != qt):
+                s = max(s, sim(qtt, wt) * 0.95)
+        if s > best:
+            best = s
+            if best >= 1.0:
+                break
+    return best
+
+
+_HAY = {}
+
+
+def hay(row, desc_text=""):
+    """Кэш нормализованных слов: имя, категория, описание (ускоряет поиск в ~10 раз)."""
+    key = row.get("id")
+    h = _HAY.get(key)
+    if h is None:
+        nw = norm(row.get("name")).split()
+        cw = norm(row.get("category")).split()
+        h = {"name": nw, "name_t": [translit(w) for w in nw],
+             "cat": cw, "cat_t": [translit(w) for w in cw],
+             "desc": None, "desc_t": None}
+        _HAY[key] = h
+    if desc_text and h["desc"] is None:
+        dw = norm(desc_text)[:2500].split()
+        h["desc"] = dw
+        h["desc_t"] = [translit(w) for w in dw]
+    return h
 
 
 # ------------------------------------------------------------------ словари
@@ -102,7 +155,7 @@ def color_terms(syn, color: str):
     out = {norm(color)}
     for canon, alts in colors.items():
         group = {norm(canon)} | {norm(a) for a in alts}
-        if any(sim(norm(color), g) >= 0.9 for g in group):
+        if any(sim(norm(color), g) >= 0.8 for g in group):
             out |= group
     return {t for t in out if t}
 
@@ -116,7 +169,7 @@ def build_groups(qtoks, syn):
             continue
         g = None
         for grp in syn.get("groups", []):
-            if any(sim(t, norm(m)) >= 0.9 for m in grp):
+            if any(sim(t, norm(m)) >= 0.8 for m in grp):
                 g = [norm(m) for m in grp]
                 break
         if g is None:
@@ -168,46 +221,32 @@ def sizes_of(name: str):
 FIELD_WEIGHTS = {"name": 30.0, "category": 12.0, "code": 60.0, "desc": 3.0}
 
 
-def match_field(qtok: str, hay: str) -> float:
-    """Лучшее совпадение токена внутри строки."""
-    if not qtok or not hay:
-        return 0.0
-    words = hay.split()
-    best = 0.0
-    for w in words:
-        best = max(best, sim(qtok, w))
-        if best == 1.0:
-            break
-    return best
-
-
 def score_product(row, groups, desc_text="", use_desc=True):
     """(score, why) — score 0 значит «не подходит» (какую-то группу не нашли)."""
-    name = norm(row.get("name"))
-    cat = norm(row.get("category"))
+    h = hay(row, desc_text if use_desc else "")
     code = norm(str(row.get("code") or ""))
     art = norm(str(row.get("article") or ""))
-    desc = norm(desc_text)[:4000] if use_desc else ""
     total, why = 0.0, []
     for g in groups:
         best, hit = 0.0, ""
         for qtok in g:
-            s = match_field(qtok, name) * FIELD_WEIGHTS["name"]
+            qtt = translit(qtok)
+            s = best_in(qtok, qtt, h["name"], h["name_t"]) * FIELD_WEIGHTS["name"]
             if s > best:
                 best, hit = s, f"название:{qtok}"
-            s = match_field(qtok, cat) * FIELD_WEIGHTS["category"]
+            s = best_in(qtok, qtt, h["cat"], h["cat_t"]) * FIELD_WEIGHTS["category"]
             if s > best:
                 best, hit = s, f"категория:{qtok}"
-            if code and (qtok in code or code in qtok):
+            if len(qtok) >= 3 and code and (code == qtok or code.endswith(qtok)):
                 s = FIELD_WEIGHTS["code"]
                 if s > best:
                     best, hit = s, f"код:{qtok}"
-            if art and qtok in art:
+            if len(qtok) >= 4 and art and (qtok in art or (qtt and qtt in art)):
                 s = FIELD_WEIGHTS["code"] * 0.8
                 if s > best:
                     best, hit = s, f"артикул:{qtok}"
-            if desc:
-                s = match_field(qtok, desc) * FIELD_WEIGHTS["desc"]
+            if use_desc and h["desc"]:
+                s = best_in(qtok, qtt, h["desc"], h["desc_t"]) * FIELD_WEIGHTS["desc"]
                 if s > best:
                     best, hit = s, f"описание:{qtok}"
         if best <= 0:
@@ -268,6 +307,32 @@ def search(query, rows=None, args=None, syn=None, full=None, photos=None):
                        "_photos": ph.get("files", []), "_desc": desc})
     scored.sort(key=lambda r: (-r["_score"], r["name"]))
     return scored
+
+
+BUDGET_KEYWORDS = r"(?:до|дешевле|не\s+дороже|максимум|макс|бюджет|в\s+пределах|цена\s+до)"
+BUDGET_UNITS = r"(?:к|тыс\w*|тысяч\w*|р|руб\w*|₽)"
+
+
+def extract_budget(q: str):
+    """Достаёт бюджет из вольного текста: «бронежилет до 85к» -> (текст без бюджета, 85000)."""
+    if not q:
+        return q, None
+    m = re.search(rf"{BUDGET_KEYWORDS}\s*[:\-–]?\s*(\d[\d\s]*(?:[.,]\d+)?)\s*(?P<unit>{BUDGET_UNITS})?", q, re.I)
+    if not m:
+        m = re.search(rf"(\d[\d\s]*(?:[.,]\d+)?)\s*(?P<unit>{BUDGET_UNITS})\b", q, re.I)
+    if not m:
+        return q, None
+    try:
+        val = float(re.sub(r"\s+", "", m.group(1)).replace(",", "."))
+    except ValueError:
+        return q, None
+    unit = (m.group("unit") or "").lower()
+    if unit.startswith(("к", "тыс")):
+        val *= 1000
+    if not unit and not re.match(BUDGET_KEYWORDS, m.group(0), re.I):
+        return q, None
+    cleaned = re.sub(r"\s+", " ", q[: m.start()] + " " + q[m.end():]).strip()
+    return cleaned, val
 
 
 def group_families(rows):
@@ -341,9 +406,13 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     rows, meta = store.load_index()
+    raw = " ".join(args.query)
+    raw, auto_budget = extract_budget(raw)
+    if args.budget is None and auto_budget:
+        args.budget = auto_budget
     full = store.full_by_id() if (not args.no_desc and store.full_by_id()) else {}
     rows = filter_rows(rows, args, load_synonyms(), full, store.photos_by_id())
-    hits = search(" ".join(args.query), rows=rows, args=args, full=full)
+    hits = search(raw, rows=rows, args=args, full=full)
     if not args.no_desc:
         hits.sort(key=lambda r: (-r["_score"], r["name"]))
     fams = group_families(hits)[: args.limit]

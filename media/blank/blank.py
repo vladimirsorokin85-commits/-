@@ -101,6 +101,9 @@ def font(name, size, weight=None):
 
 
 def fmt_money(n):
+    """None = цену задаёт владелец в чате — так и пишем, ничего не выдумываем."""
+    if n is None:
+        return "по запросу"
     return f"{int(round(n)):,}".replace(",", " ") + " ₽"
 
 
@@ -317,19 +320,29 @@ def build(order, out_path):
             d.text((cx_photo + 22, ty + 4), sub, font=f_sub2, fill=MUTED)
 
         d.text(((cx_name + cx_qty) / 2, y + ROW_H / 2), f"{it['qty']} шт", font=f_qty, fill=TEXT, anchor="mm")
-        d.text((x1 - 22, y + ROW_H / 2), fmt_money(it["price"]), font=f_price, fill=INK, anchor="rm")
+        price = it.get("price")
+        if price is None:
+            f_ask = font("PTSans-Regular.ttf", 24)
+            d.text((x1 - 22, y + ROW_H / 2), "по запросу", font=f_ask, fill=MUTED, anchor="rm")
+        else:
+            d.text((x1 - 22, y + ROW_H / 2), fmt_money(price), font=f_price, fill=INK, anchor="rm")
         y += ROW_H
 
     for cx in (cx_photo, cx_name, cx_qty):
         d.line([(cx, T_TOP), (cx, T_BOTTOM)], fill=FRAME, width=1)
     d.rectangle([x0, T_TOP, x1, T_BOTTOM], outline=INK, width=3)
 
-    total = sum(it["qty"] * it["price"] for it in items)
+    priced = [it for it in items if it.get("price") is not None]
+    all_priced = len(priced) == len(items)
+    total = sum(it["qty"] * it["price"] for it in priced)
     bx0, by0, bx1, by1 = 545, BLOCK_Y + 8, x1, BLOCK_Y + 118
     d.rectangle([bx0, by0, bx1, by1], outline=INK, width=4)
     d.rectangle([bx0 + 7, by0 + 7, bx1 - 7, by1 - 7], outline=INK, width=1)
     d.text((bx0 + 26, (by0 + by1) / 2), "ИТОГО:", font=font("Oswald.ttf", 36, "Medium"), fill=INK, anchor="lm")
-    d.text((bx1 - 26, (by0 + by1) / 2), fmt_money(total), font=font("Oswald.ttf", 56, "Bold"), fill=INK, anchor="rm")
+    if all_priced:
+        d.text((bx1 - 26, (by0 + by1) / 2), fmt_money(total), font=font("Oswald.ttf", 56, "Bold"), fill=INK, anchor="rm")
+    else:
+        d.text((bx1 - 26, (by0 + by1) / 2), "уточняется", font=font("Oswald.ttf", 40, "Medium"), fill=MUTED, anchor="rm")
 
     st = stamp("В НАЛИЧИИ", date)
     img.paste(st, (M + 6, BLOCK_Y - 30), st)
@@ -341,7 +354,8 @@ def build(order, out_path):
         rivet(d, cx, cy)
 
     img.save(out_path, quality=92)
-    print("saved", out_path, img.size, "| ИТОГО", fmt_money(total))
+    print("saved", out_path, img.size, "| ИТОГО",
+          fmt_money(total) if all_priced else "уточняется (не все цены заданы)")
     return out_path
 
 
