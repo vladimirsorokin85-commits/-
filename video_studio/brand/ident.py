@@ -29,6 +29,9 @@ YEL = (255, 204, 0)
 SLAM = 0.30          # logo hits
 VOICE_AT = 0.55      # voice starts
 FFMPEG = str(Path.home() / ".local/bin/ffmpeg")
+LOGO_RGB = None
+import os
+KIND = os.environ.get("IDENT", "short")  # short: «В Окопе». Окопная смекалка. | full: Магазин … представляет …
 
 
 def dims(fmt):
@@ -52,6 +55,7 @@ def logo_mask():
         im = typo.render("В ОКОПЕ", typo.PRESETS["chrome"], 200)
         return im.split()[3], True
     im = Image.open(src).convert("RGBA")
+    global LOGO_RGB
     a = np.asarray(im).astype(np.float32)
     alpha = a[..., 3]
     lum = a[..., :3].mean(-1)
@@ -62,6 +66,8 @@ def logo_mask():
     m = np.clip((m - 20) * 255 / 215, 0, 255).astype(np.uint8)
     mask = Image.fromarray(m)
     bb = mask.getbbox()
+    if alpha.min() <= 250:
+        LOGO_RGB = im.convert("RGB").crop(bb)
     return mask.crop(bb), False
 
 
@@ -77,6 +83,9 @@ class Logo:
         g = np.linspace(0, 1, h)[:, None]
         base = np.stack([255 - 40 * g, 255 - 35 * g, 255 - 25 * g], -1).repeat(w, 1)
         self.fill = Image.fromarray(base.astype(np.uint8))
+        if LOGO_RGB is not None:  # real logo: its own colours x subtle steel gradient
+            own = np.asarray(LOGO_RGB.resize((w, h), Image.LANCZOS)).astype(np.float32)
+            self.fill = Image.fromarray(np.clip(own * (base / 255.0), 0, 255).astype(np.uint8))
         self.glow = Image.new("RGB", self.mask.size, (255, 190, 60))
         self.glow_mask = self.mask.filter(ImageFilter.GaussianBlur(18))
         self.shadow = self.mask.filter(ImageFilter.GaussianBlur(10))
@@ -145,7 +154,7 @@ def build_audio():
     from music_reel import load as sload, pitch, lp, hp, place
     import pyloudnorm as pyln
     from voice_level import level
-    v = load(BR / "ident_voice.mp3", tempo=1.1)
+    v = load(BR / ("ident_voice_short.mp3" if KIND == "short" else "ident_voice.mp3"), tempo=1.1)
     from reel import squeeze_pauses
     v = squeeze_pauses(v, max_pause=0.2, thr_db=-32)
     idx = np.where(np.abs(v) > 0.02)[0]
@@ -257,7 +266,7 @@ def build(fmt="9x16"):
                    input=(mix * 32767).astype("<i2").tobytes(), check=True)
     frame, ph = renderer(fmt, dur)
     W, H = dims(fmt)
-    out = TMP / f"ident_{fmt}.mp4"
+    out = TMP / f"ident_{fmt}_{KIND}.mp4"
     p = subprocess.Popen([FFMPEG, "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
                           "-r", str(FPS), "-i", "-", "-i", str(wav), "-c:v", "libx264", "-preset", "medium",
                           "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-ar", str(SR),
@@ -271,7 +280,7 @@ def build(fmt="9x16"):
 
 
 def prepend(body, out, fmt="9x16"):
-    ident = TMP / f"ident_{fmt}.mp4"
+    ident = TMP / f"ident_{fmt}_{KIND}.mp4"
     if not ident.exists():
         build(fmt)
     subprocess.run([FFMPEG, "-y", "-v", "error", "-i", str(ident), "-i", str(body), "-filter_complex",
