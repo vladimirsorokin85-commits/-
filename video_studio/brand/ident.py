@@ -43,6 +43,10 @@ def logo_mask():
         if (BR / name).exists():
             src = BR / name
             break
+    if src is None:  # any uploaded image in brand/ (e.g. «В окопе2 копия 2.png»)
+        cands = sorted([p for p in BR.iterdir() if p.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp")
+                        and not p.name.startswith("ident")])
+        src = cands[0] if cands else None
     if src is None:  # placeholder until the real logo is in the repo
         import typo
         im = typo.render("В ОКОПЕ", typo.PRESETS["chrome"], 200)
