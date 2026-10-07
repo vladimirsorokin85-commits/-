@@ -21,7 +21,7 @@
    }
   ],
   "price_label": "СУМКА",
-  "price": null
+  "price": 4900.0
  },
  "options": {
   "label": "В СУМКУ — НА ВЫБОР",
@@ -31,40 +31,40 @@
     "sub": "30+ наименований · отрывной подсумок",
     "sub2": "",
     "photo": "catalog/photos/00327/00327_1.jpg",
-    "price": null
+    "price": 7400.0
    },
    {
     "name": "Жгут-турникет FIRSTAR",
     "sub": "металлический вороток · одной рукой",
     "sub2": "",
     "photo": "catalog/photos/00111/00111_1.jpg",
-    "price": null
+    "price": 380.0
    },
    {
     "name": "Бинт каолиновый 7,5×375",
     "sub": "каолиновая пропитка · вакуумная упаковка",
     "sub2": "",
     "photo": "catalog/photos/00502/00502_1.jpg",
-    "price": null
+    "price": 430.0
    },
    {
     "name": "Турникет Rhino Rescue Gen2",
     "sub": "усиленный вороток · V-образный зажим",
     "sub2": "",
     "photo": "catalog/photos/00364/00364_1.jpg",
-    "price": null
+    "price": 1700.0
    },
    {
     "name": "Носилки бескаркасные",
     "sub": "до 150 кг · Cordura 800D",
     "sub2": "",
     "photo": "catalog/photos/00138/00138_1.jpg",
-    "price": null
+    "price": 1800.0
    }
   ]
  },
  "kit": {
   "label": "КОМПЛЕКТ: СУМКА + АПТЕЧКА + ЖГУТ + БИНТ КАОЛИНОВЫЙ",
-  "price": null
+  "price": 16610.0
  }
 }

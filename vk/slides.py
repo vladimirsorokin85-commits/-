@@ -262,6 +262,54 @@ def slide_summary(spec, n, total):
     return img
 
 
+def slide_offer(spec, n, total):
+    """Условие предложения: скидка за репост + призыв."""
+    img = paper(W, H)
+    d = ImageDraw.Draw(img)
+    y = _head(img, d, "", spec.get("subtitle", "Условие предложения"))
+
+    f, lines = _wrap_fit(spec.get("title", "СКИДКА ЗА РЕПОСТ"), W - 2 * M, (64, 56), 2)
+    for ln in lines:
+        d.text((M, y), ln, font=f, fill=INK)
+        y += f.size + 10
+    y += 16
+
+    # крупная цифра скидки в рамке
+    value = spec.get("value_label", "")
+    if value:
+        d.rectangle([M, y, W - M, y + 170], outline=INK, width=4)
+        d.rectangle([M + 7, y + 7, W - M - 7, y + 163], outline=INK, width=1)
+        fs = 96
+        while font("Oswald.ttf", fs, "Bold").getlength(value) > W - 2 * M - 80 and fs > 40:
+            fs -= 4
+        d.text((W / 2, y + 74), value, font=font("Oswald.ttf", fs, "Bold"), fill=INK, anchor="mm")
+        d.text((W / 2, y + 132), spec.get("value_note", "на комплект"),
+               font=font("PTSans-Regular.ttf", 26), fill=MUTED, anchor="mm")
+        y += 200
+
+    for i, st in enumerate(spec.get("steps", [])[:3], 1):
+        d.ellipse([M, y, M + 56, y + 56], outline=INK, width=3)
+        d.text((M + 28, y + 28), str(i), font=font("Oswald.ttf", 32, "Medium"), fill=INK, anchor="mm")
+        fl = font("PTSans-Regular.ttf", 32)
+        for ln in wrap(st, fl, W - 2 * M - 84):
+            d.text((M + 84, y + 6), ln, font=fl, fill=TEXT)
+            y += 44
+        y += 22
+
+    if spec.get("note"):
+        y += 10
+        for ln in wrap(spec["note"], font("PTSans-Regular.ttf", 24), W - 2 * M):
+            d.text((M, y), ln, font=font("PTSans-Regular.ttf", 24), fill=MUTED)
+            y += 34
+    if spec.get("cta"):
+        y += 16
+        for ln in wrap(spec["cta"], font("PTSans-Bold.ttf", 26), W - 2 * M):
+            d.text((M, y), ln, font=font("PTSans-Bold.ttf", 26), fill=INK)
+            y += 36
+    _foot(img, d, "В ОКОПЕ · МАГАЗИН БРОНИ", n, total)
+    return img
+
+
 def slide_cta(spec, n, total):
     img = paper(W, H)
     d = ImageDraw.Draw(img)
@@ -286,7 +334,7 @@ def slide_cta(spec, n, total):
 
 
 BUILDERS = {"cover": slide_cover, "text": slide_text, "product": slide_product,
-            "summary": slide_summary, "cta": slide_cta}
+            "summary": slide_summary, "offer": slide_offer, "cta": slide_cta}
 
 
 def build_spec(kit, card, resolved, story=None):
@@ -345,9 +393,18 @@ def build_spec(kit, card, resolved, story=None):
     slides.append({"type": "summary", "title": "Что входит в комплект", "rows": rows,
                    "total_label": kit.get("kit", {}).get("label", "КОМПЛЕКТ"),
                    "price": kit.get("kit", {}).get("price")})
-    slides.append({"type": "cta", "title": "Соберём под ваш размер и задачу",
-                   "bullets": ["СДЭК по России, оплата при получении",
-                               "Напишите в личные сообщения — подберём"]})
+    of = kit.get("offer")
+    if of:
+        slides.append({"type": "offer", "title": of.get("title", "СКИДКА ЗА РЕПОСТ"),
+                       "value_label": of.get("value_label", ""),
+                       "value_note": of.get("value_note", "на комплект целиком"),
+                       "steps": of.get("steps", []), "note": of.get("note", ""),
+                       "cta": of.get("cta", "Напишите в личные сообщения"),
+                       "subtitle": "Условие предложения"})
+    else:
+        slides.append({"type": "cta", "title": "Соберём под ваш размер и задачу",
+                       "bullets": ["СДЭК по России, оплата при получении",
+                                   "Напишите в личные сообщения — подберём"]})
     return slides[:10]
 
 

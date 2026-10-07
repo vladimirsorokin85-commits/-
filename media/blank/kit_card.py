@@ -134,8 +134,14 @@ def build(data, out_path):
     bx0, by0, bx1, by1 = 545, y + 8, x1, y + 118
     d.rectangle([bx0, by0, bx1, by1], outline=INK, width=4)
     d.rectangle([bx0 + 7, by0 + 7, bx1 - 7, by1 - 7], outline=INK, width=1)
-    d.text((bx0 + 26, (by0 + by1) / 2), str(prod.get("price_label", "ЦЕНА")) + ":",
-           font=font("Oswald.ttf", 32, "Medium"), fill=INK, anchor="lm")
+    # подпись слева: ужимаем, чтобы не наехать на цену
+    f_pl = font("Oswald.ttf", 32, "Medium")
+    label = str(prod.get("price_label", "ЦЕНА")) + ":"
+    f_pt = font("Oswald.ttf", 54 if prod.get("price") is not None else 40, "Bold")
+    while f_pl.size > 18 and (f_pl.getlength(label) + f_pt.getlength(price_text(prod.get("price"))) + 90
+                              > (bx1 - bx0)):
+        f_pl = font("Oswald.ttf", f_pl.size - 2, "Medium")
+    d.text((bx0 + 26, (by0 + by1) / 2), label, font=f_pl, fill=INK, anchor="lm")
     price_font = font("Oswald.ttf", 54 if prod.get("price") is not None else 40, "Bold")
     d.text((bx1 - 26, (by0 + by1) / 2), price_text(prod.get("price")),
            font=price_font, fill=INK if prod.get("price") is not None else MUTED, anchor="rm")
@@ -181,20 +187,26 @@ def build(data, out_path):
 
     # ---- итог по комплекту ----
     if kit:
+        of = kit.get("offer") or {}
+        box_h = 200 if of.get("value_label") else 140
         y += 26
-        d.rectangle([M, y, x1, y + 140], outline=INK, width=4)
-        d.rectangle([M + 7, y + 7, x1 - 7, y + 133], outline=INK, width=1)
+        d.rectangle([M, y, x1, y + box_h], outline=INK, width=4)
+        d.rectangle([M + 7, y + 7, x1 - 7, y + box_h - 7], outline=INK, width=1)
         f_kl = font("Oswald.ttf", 30, "Medium")
         kl = kit.get("label", "КОМПЛЕКТ")
         while f_kl.getlength(kl) > CW - 340 and f_kl.size > 20:
             f_kl = font("Oswald.ttf", f_kl.size - 2, "Medium")
-        d.text((M + 26, y + 46), kl, font=f_kl, fill=INK, anchor="lm")
-        d.text((M + 26, y + 100), "Все позиции в наличии · отправка СДЭК",
+        d.text((M + 26, y + 44), kl, font=f_kl, fill=INK, anchor="lm")
+        d.text((M + 26, y + 96), "Все позиции в наличии · отправка СДЭК",
                font=font("PTSans-Regular.ttf", 23), fill=MUTED, anchor="lm")
+        if of.get("value_label"):
+            d.text((M + 26, y + 156),
+                   f"{of.get('title', 'СКИДКА ЗА РЕПОСТ')} — {of['value_label']}",
+                   font=font("PTSans-Bold.ttf", 25), fill=INK, anchor="lm")
         f_kp = font("Oswald.ttf", 56 if kit.get("price") is not None else 40, "Bold")
-        d.text((x1 - 26, y + 70), price_text(kit.get("price")), font=f_kp,
+        d.text((x1 - 26, y + box_h / 2), price_text(kit.get("price")), font=f_kp,
                fill=INK if kit.get("price") is not None else MUTED, anchor="rm")
-        y += 140 + 34
+        y += box_h + 34
 
     y += 12
     dashed_h(d, M, x1, y, FRAME, width=1)

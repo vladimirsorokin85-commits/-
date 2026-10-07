@@ -21,7 +21,7 @@
    }
   ],
   "price_label": "БОТИНКИ",
-  "price": null
+  "price": 7500.0
  },
  "options": {
   "label": "К БОТИНКАМ — НА ВЫБОР",
@@ -31,40 +31,40 @@
     "sub": "полиэстер + эластан · Quick Dry",
     "sub2": "",
     "photo": "catalog/photos/01794/01794_1.jpg",
-    "price": null
+    "price": 6750.0
    },
    {
     "name": "Термоноски 5.11",
     "sub": "COOLMAX · one size (40–45)",
     "sub2": "",
     "photo": "catalog/photos/00321/00321_1.jpg",
-    "price": null
+    "price": 540.0
    },
    {
     "name": "Балаклава ВКПО",
     "sub": "70% шерсти · вырез на переносице",
     "sub2": "",
     "photo": "catalog/photos/00659/00659_1.jpg",
-    "price": null
+    "price": 500.0
    },
    {
     "name": "Шапка + бафф 5.11+",
     "sub": "мультикам · флис · универсальный",
     "sub2": "",
     "photo": "catalog/photos/00523/00523_1.jpg",
-    "price": null
+    "price": 950.0
    },
    {
     "name": "Перчатки зимние",
     "sub": "олива · сенсорные · TPR-защита",
     "sub2": "",
     "photo": "catalog/photos/00714/00714_1.jpg",
-    "price": null
+    "price": 900.0
    }
   ]
  },
  "kit": {
   "label": "КОМПЛЕКТ: БОТИНКИ + ТЕРМОБЕЛЬЁ + НОСКИ + БАЛАКЛАВА",
-  "price": null
+  "price": 17140.0
  }
 }

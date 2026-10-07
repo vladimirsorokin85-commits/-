@@ -61,7 +61,7 @@ def present_style(discount, retail):
     return "money", pct
 
 
-def draw(slug, kit, rows, retail, min_margin, example=False):
+def draw(slug, kit, rows, retail, min_margin, example=False, offer=None):
     buy_total = sum(r["buy"] for r in rows)
     retail_total = sum(retail)
     margin = retail_total - buy_total
@@ -143,9 +143,20 @@ def draw(slug, kit, rows, retail, min_margin, example=False):
     other = (f"({d_pct:.1f} % от цены)" if style == "money" else f"({rub_short(d_max)})")
     d.text((M, y), f"в скобках или мелким шрифтом — {other}", font=font("PTSans-Regular.ttf", 24), fill=MUTED)
     y += 50
-    d.text((M, y), f"Рабочий диапазон по вашему правилу (3–5 %): "
-                   f"{rub_short(work_lo)} – {rub_short(work_hi)}", font=font("PTSans-Regular.ttf", 26), fill=TEXT)
-    y += 46
+    d.text((M, y), f"Рабочий диапазон 3–5 %: {rub_short(work_lo)} – {rub_short(work_hi)}",
+           font=font("PTSans-Regular.ttf", 26), fill=TEXT)
+    y += 52
+    if offer:
+        left = margin - offer
+        ok = offer <= d_max + 0.5
+        d.rectangle([M - 12, y - 10, W - M + 12, y + 62],
+                    outline=INK if ok else FRAME, width=3)
+        d.text((M + 14, y + 26), f"Акция «скидка за репост»: −{rub_short(offer)}",
+               font=font("PTSans-Bold.ttf", 26), fill=INK, anchor="lm")
+        d.text((W - M - 14, y + 26), f"маржа после: {rub_short(left)}",
+               font=font("Oswald.ttf", 28, "Medium"), fill=INK if ok else FRAME, anchor="rm")
+        y += 76
+    y += 8
     for note in [
         "Скидка — только на комплект целиком; отдельные позиции считаем по столбцу «макс. скидка».",
         "В пост скидка идёт только после вашего «ок»; цену в текст поста не пишем (правило магазина).",
@@ -169,6 +180,7 @@ def main():
     ap.add_argument("--min-margin", type=float, default=12.0)
     ap.add_argument("--save", action="store_true", help="записать цены в vk/kits/<slug>.json")
     ap.add_argument("--example", action="store_true", help="пометить лист как пример")
+    ap.add_argument("--offer", type=float, default=None, help="акция «скидка за репост», ₽")
     a = ap.parse_args()
 
     retail = [float(x) for x in a.retail.replace(" ", "").split(",")]
@@ -176,7 +188,7 @@ def main():
     if len(retail) != len(rows):
         raise SystemExit(f"СТОП: цен {len(retail)}, а позиций {len(rows)}")
 
-    path, calc = draw(a.slug, kit, rows, retail, a.min_margin, example=a.example)
+    path, calc = draw(a.slug, kit, rows, retail, a.min_margin, example=a.example, offer=a.offer)
     print(f"лист: {path}")
     print(f"  розница: {money(calc['retail'])} | закупка: {money(calc['buy'])} | "
           f"маржа: {money(calc['margin'])} ({calc['margin_pct']:.1f} %)")

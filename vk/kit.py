@@ -168,17 +168,31 @@ def build_kit(kit_path):
         L.append("")
     L.append("Каждую позицию можно взять и отдельно — подберём по размеру.")
     L.append("")
+    offer_lines = []
+    of = kit.get("offer")
+    if of:
+        offer_lines = [f"🎁 {of.get('title', 'СКИДКА ЗА РЕПОСТ')} — {of.get('value_label', '').lstrip('−-')}".strip(), ""]
+        for i, st in enumerate(of.get("steps", []), 1):
+            offer_lines.append(f"{i}. {st}.")
+        offer_lines.append("")
+        if of.get("note"):
+            offer_lines += [of["note"] + ".", ""]
+        L += offer_lines
     L.append(post_cfg.get("cta", CTA))
     L.append("")
     names = " ".join(it.get("short_hashtag") or it.get("short") or "" for it in [main] + items)
     L.append(hashtags(names, kit.get("category", ""), extra=kit.get("hashtags") or ()))
     text = "\n".join(L).strip() + "\n"
 
-    # страховка: в публикуемом тексте не должно быть цен и внутренних слов
+    # страховка: в публикуемом тексте не должно быть цен и внутренних слов.
+    # скидка по акции (её дал владелец) из проверки исключается — это не цена товара
+    guard_text = text
+    for ln in [ln for ln in offer_lines if ln]:
+        guard_text = guard_text.replace(ln, "")
     for label, rx in (("цена", r"\d[\d\s]*(₽|руб)"), ("«у Димы»", r"\bДимы?\b"),
                       ("поставщик", r"поставщик"), ("склад", r"\b(на|со)\s+склад"),
                       ("остаток", r"\b\d+\s*(шт|компл|пар)\b")):
-        m = re.search(rx, text, re.I)
+        m = re.search(rx, guard_text, re.I)
         assert not m, f"в тексте комплекта запрещённое: {label} → {m.group(0)!r}"
 
     open(os.path.join(out_dir, "пост.txt"), "w", encoding="utf-8").write(text)
