@@ -110,6 +110,8 @@ def build_audio():
         voice[int(s * SR): int(s * SR) + len(v)] += v
     music = make_music_v6(total, [0.0] + starts[1:], drop_from=starts[-1], splash=starts[0])
     # carve the speech band out of the music (static EQ, no pumping)
+    # tame the sizzle/hiss band of the track (heard as «треск» under the voice): ~-8 dB above 6 kHz
+    music = music - 0.6 * sosfilt(butter(2, 6000, "hp", fs=SR, output="sos"), music)
     mid = sosfilt(butter(2, [700, 4000], "bandpass", fs=SR, output="sos"), music)
     music = music - 0.5 * mid
     # gentle, slow ducking: -5 dB while speaking, 250 ms attack / 700 ms release
