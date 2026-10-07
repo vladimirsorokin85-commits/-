@@ -466,41 +466,6 @@ def main(argv=None):
     for path in day_zips:
         shutil.copy2(path, dist)
 
-    # витрина для планшета: стартовая страница с прямыми ссылками на архивы
-    def human(day_):
-        return f"{day_['date']} ({day_['weekday']})"
-
-    cards = "".join(
-        f'<a class="card" href="{os.path.basename(p)}">'
-        f'<span class="d">{human(d)}</span>'
-        f'<span class="n">{len(d["posts"])} постов</span>'
-        f'<span class="s">{os.path.getsize(p) / 1024 / 1024:.1f} МБ</span></a>'
-        for (d, _dir, _t), p in zip(all_days, day_zips)
-    )
-    index = f"""<!doctype html>
-<html lang="ru"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Посты ВК — {plan['start']}</title>
-<style>
- body{{font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#0f1115;color:#eaeaea;margin:0;padding:20px}}
- h1{{font-size:22px;margin:0 0 4px}} p.sub{{color:#9aa0a6;margin:0 0 18px;font-size:14px}}
- a.big{{display:block;background:#2b6cb0;color:#fff;text-decoration:none;text-align:center;
-   padding:16px;border-radius:12px;font-size:17px;font-weight:600;margin-bottom:18px}}
- .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}}
- a.card{{display:block;background:#1a1d24;border:1px solid #2a2f3a;border-radius:12px;
-   padding:14px;text-decoration:none;color:#eaeaea}}
- a.card span{{display:block}} .d{{font-weight:600;font-size:15px}} .n{{color:#9aa0a6;font-size:13px;margin-top:4px}}
- .s{{color:#6b7280;font-size:12px;margin-top:2px}}
- .note{{margin-top:20px;color:#9aa0a6;font-size:13px;line-height:1.5}}
-</style></head><body>
-<h1>Посты «В ОКОПЕ» — {plan['start']} … {plan['days'][-1]['date']}</h1>
-<p class="sub">7 дней × 6 постов. Каждый день — отдельный архив: внутри фото поставщика и текст.</p>
-<a class="big" href="{os.path.basename(zip_path)}">⬇︎ Скачать всю неделю ({os.path.getsize(zip_path) / 1024 / 1024:.1f} МБ)</a>
-<div class="grid">{cards}</div>
-<div class="note">В архиве дня: папки постов, в каждой — фото (1.jpg, 2.jpg…), «обложка.jpg» с логотипом
-и заголовком, «пост.txt» и «ЧЕК-ЛИСТ_ДНЯ.txt». Цены и остатки в текстах отсутствуют.</div>
-</body></html>"""
-    open(os.path.join(dist, "index.html"), "w", encoding="utf-8").write(index)
 
     print(f"Постов собрано: {len(report)} из {sum(len(d['posts']) for d in plan['days'])}")
     print(f"Фото вложено: {sum(r['photos'] for r in report)}")
