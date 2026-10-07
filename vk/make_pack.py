@@ -179,22 +179,11 @@ def bullets_from_desc(desc: str, hook: str, n: int, name: str = ""):
     return out
 
 
-def stock_line(rows, sizes_note=None):
+def availability_line(sizes_note=None):
+    """Наличие — без количества: сколько осталось, в постах не пишем."""
     if sizes_note:
-        return f"В наличии: {sizes_note}"
-    parts, total = [], 0
-    for r in sorted(rows, key=lambda r: r["name"]):
-        st = int(r.get("stock") or 0)
-        if st <= 0:
-            continue
-        total += st
-        sizes = sizes_of(r["name"])
-        parts.append(f"{sizes[0]} — {st} шт" if sizes else f"{st} шт")
-    if not parts:
-        return "Наличие уточняется — напишите в личку."
-    if len(parts) == 1 and " " not in parts[0].replace(" шт", ""):
-        return f"В наличии: {parts[0]}"
-    return "В наличии: " + " · ".join(parts)
+        return f"{sizes_note} — есть на складе у Димы."
+    return "Есть на складе у Димы."
 
 
 def safe_slug(s: str, limit: int = 46) -> str:
@@ -215,7 +204,7 @@ def build_post_text(entry, item, rows, desc, idx, slot):
         body.append("Что важно:")
         body += [f"▪️ {b}" for b in bl]
         body.append("")
-    body.append(stock_line(rows, entry.get("sizes_note")))
+    body.append(availability_line(entry.get("sizes_note")))
     body.append("")
     body.append(CTA[slot % len(CTA)])
     body.append("")
@@ -327,7 +316,8 @@ def main(argv=None):
         "Правила, по которым собрано",
         "---------------------------",
         "• Цены в постах НЕ указываем — ни розницы, ни «цена в личку».",
-        "• Факты — только из описаний поставщика, ничего не досочинено.",
+        "• Сколько осталось на складе — в постах не пишем: наличие формулируем словами.",
+        "• Факты — из описаний поставщика и проверенных открытых источников, ничего не досочинено.",
         "• Фото — только от поставщика (каталог Димы).",
         "• Наличие проверено по живому каталогу на 07.10.2026.",
         "",
