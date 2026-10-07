@@ -170,6 +170,12 @@ def make_music_v6(total, cues, drop_from=None, splash=None):
     bed[s0: s0 + len(seg) - 0] = seg[: n - s0]
     fi = int(0.015 * SR)
     bed[s0: s0 + fi] *= np.linspace(0, 1, fi)
+    # filter-sweep entry: drums start muffled (no hi-hat «cicada» rattle) and open up over 2 bars
+    sw = int(2 * BAR * SR)
+    w = np.ones(n)
+    w[:s0] = 0.0
+    w[s0: s0 + sw] = np.linspace(0, 1, len(w[s0: s0 + sw])) ** 2
+    bed = w * bed + (1 - w) * lp(lp(bed, 500), 500)
     if drop_from:
         d0 = int(drop_from * SR)
         ramp = np.ones(n)
@@ -206,7 +212,7 @@ def make_music_v6(total, cues, drop_from=None, splash=None):
     for c in [0.0] + list(cues[1:]):
         for off, g in ((0, 1.0), (BEAT * 1.5, 0.55), (BEAT * 2, 0.7)):
             place(perc, taiko, c + off, g)
-        place(perc, lp(boom, 5000), max(0, c - 0.02), 0.6)
+        place(perc, lp(lp(boom, 1200), 1200), max(0, c - 0.02), 0.6)  # no hiss tail
     perc = perc[:n]
     pk = lambda x: np.percentile(np.abs(x), 99.99) + 1e-9
     ref = pk(seg)
