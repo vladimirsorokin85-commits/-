@@ -52,6 +52,20 @@ def hp(x, f, o=2):
     return sosfilt(butter(o, f, "hp", fs=SR, output="sos"), x)
 
 
+def clean_reese(f0, dur):
+    """Band-limited detuned-saw reese (additive, harmonics < 1.6 kHz): warm, no buzz/crackle."""
+    t = np.arange(int(dur * SR)) / SR
+    y = np.zeros_like(t)
+    for det in (-0.12, 0.12):
+        f = f0 * 2 ** (det / 12)
+        k = 1
+        while k * f < 1600:
+            y += np.sin(2 * np.pi * k * f * t + k * 0.7) / k * (1 - k * f / 1600) ** 2
+            k += 1
+    y *= 1 + 0.15 * np.sin(2 * np.pi * 0.5 * t)  # slow movement
+    return y / (np.abs(y).max() + 1e-9)
+
+
 def make_music(total, cues, drop_from=None):
     """cues: times (s) of section hits; drop_from: time after which drums stop (outro)."""
     n = int((total + 1) * SR)
@@ -105,7 +119,7 @@ def make_music(total, cues, drop_from=None):
     i = 0
     while t < total - 0.5:
         semi = prog[(i // 2) % 4] - 12
-        r = pitch(reese, semi)[: int(2 * BAR * SR)]
+        r = clean_reese(65.41 * 2 ** (prog[(i // 2) % 4] / 12), 2 * BAR)  # was gritty sample -> crackle
         env = np.ones(len(r))
         a = int(0.01 * SR)
         env[:a] = np.linspace(0, 1, a)
