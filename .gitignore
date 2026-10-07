@@ -1,4 +1,4 @@
-# Large rendered outputs and local project media stay out of git
+# Крупные рендеры и локальные медиа остаются вне git
 *.mp4
 video_studio/reels/output/
 video_studio/reels/media/
@@ -8,3 +8,14 @@ video_studio/reels/captions.srt
 *.timeline.json
 *.qc.json
 __pycache__/
+
+# --- «В ОКОПЕ»: рабочие данные и зависимости ---
+# Каталог поставщика приходит артефактом из GitHub Actions, в git его не кладём
+catalog/data/
+catalog/photos/
+# Результаты генераторов (карточки, посты) — рабочие, живут до ручной выгрузки
+vk/out/
+media/blank/out*
+media/blank/*.tmp
+# Локальные Python-зависимости (ставит tools/bootstrap.sh)
+vendor/

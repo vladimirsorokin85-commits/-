@@ -1,0 +1,57 @@
+name: Catalog fetch (МойСклад → снапшот + фото)
+
+# «Мост»: агент работает в песочнице без прямого доступа к b2b.moysklad.ru,
+# поэтому каталог и фото тянет этот workflow, а результат забирается артефактом:
+#   gh run download --repo <owner>/<repo> -n catalog-snapshot -D /tmp/catalog-snapshot
+#
+# Запуск:
+#   1) автоматически при изменении catalog/requests/** (см. requests/fetch.json)
+#   2) вручную: Actions → Catalog fetch → Run workflow
+
+on:
+  push:
+    paths:
+      - "catalog/requests/**"
+      - ".github/workflows/catalog-fetch.yml"
+      - "catalog/remote_fetch.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: catalog-fetch
+  cancel-in-progress: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Тянем каталог (и фото, если есть заявка)
+        run: python3 catalog/remote_fetch.py
+
+      - name: Сводка в лог
+        if: always()
+        run: cat catalog/data/report.md || echo "сводки нет"
+
+      - name: Диагностика фото в лог
+        if: always()
+        run: head -c 4000 catalog/data/diag_photos.txt || true
+
+      - name: Публикуем артефакт
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalog-snapshot
+          if-no-files-found: warn
+          retention-days: 30
+          path: |
+            catalog/data/
+            catalog/photos/
