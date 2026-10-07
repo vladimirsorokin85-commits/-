@@ -22,15 +22,15 @@ NO_GRADE = {"n07", "n09", "n41", "n42", "z01", "z02", "z05", "z09"}
 DIRS = {"z": (ROOT / "assets_zashity", "z_"), "n": (ROOT / "assets_nogi", "nogi_"), "s": (ROOT / "assets", "smekalka_")}
 TMP.mkdir(parents=True, exist_ok=True)
 W, H, FPS, SR = 1080, 1920, 30, 44100
-TEMPO = 1.2
+TEMPO = 1.08
 SPLASH = 4 * 60 / 174  # music-only opening splash before the voice
-GAP = 0.18
+GAP = 0.32
 YEL, RED, WHT, BLK, GRN = (255, 204, 0), (235, 40, 40), (255, 255, 255), (0, 0, 0), (132, 204, 22)
 
 # segment: heading, image plan [(img, focus_x)], subtitle chunks
 SEGS = [
     (None, [("z01", .65), ("z02", .35), ("z02", .72), ("z01", .22), ("s17", .5), ("n07", .5), ("z01", .45), ("z09", .3)],
-     ["МАГАЗИН «В ОКОПЕ»", "КОРЕЯ, 1952", "43 ДНЯ", "≈2 000 000 СНАРЯДОВ", "ВОДУ — СО СТЕН", "5 ЗАЩИТ УКРЫТИЯ", "ОПЫТ КОЛЛЕГ!"]),
+     ["КОРЕЯ, 1952", "43 ДНЯ", "≈2 000 000 СНАРЯДОВ", "ВОДУ — СО СТЕН", "5 ЗАЩИТ УКРЫТИЯ", "ОПЫТ КОЛЛЕГ!"]),
     ("СУШИЛЬНАЯ КОМНАТА", [("z03", .55), ("n41", .5), ("z03", .2), ("n09", .5), ("z03", .4), ("n09", .2), ("z03", .8)],
      ["ЗАКУТОК ПОД ФОРМУ", "ПЕЧЬ — ТРУБА НАРУЖУ", "ДАТЧИК CO!", "МОКРАЯ ФОРМА =", "МИНУС БОЕЦ!"]),
     ("КРОВАТЬ ИЗ ЯЩИКОВ", [("z04", .45), ("z05", .62), ("n42", .5), ("z04", .78), ("n42", .2), ("z05", .3), ("z04", .15)],
@@ -41,7 +41,7 @@ SEGS = [
      ["ЖЕСТЬ + ЗЕРКАЛО", "ДНЕВНОЙ СВЕТ ВНИЗ", "КОПТИЛКА → В БАНКУ", "ЧИЩЕ ВОЗДУХ!"]),
     ("ФИЛЬТР: ТКАНЬ + ПЕСОК", [("z09", .35), ("z09", .72), ("z10", .4), ("z10", .82), ("z09", .52), ("s29", .5), ("z10", .6)],
      ["РАНЬШЕ — ОТ ГАЗОВ", "СЕЙЧАС — ОТ ПЫЛИ", "ВЕНТИЛЯЦИЯ", "ТЕХНИКА НЕ ГЛОХНЕТ!"]),
-    ("OUTRO", [("s30", .5), ("n45", .5)], ["УКРЫТИЕ ДОЛЖНО ЖИТЬ", "ПОЛНЫЙ ВЫПУСК", "В ПРОФИЛЕ", "ПОДПИШИСЬ!"]),
+    ("OUTRO", [("s30", .5), ("n45", .5)], ["УКРЫТИЕ ДОЛЖНО ЖИТЬ", "БОЛЬШЕ СМЕКАЛКИ", "В ПРОФИЛЕ", "ПОДПИСЫВАЙСЯ!"]),
 ]
 
 
@@ -65,7 +65,7 @@ def trim(x, thr=0.02):
     return x[max(0, idx[0] - int(.03 * SR)): idx[-1] + int(.08 * SR)]
 
 
-def squeeze_pauses(x, max_pause=0.24, thr_db=-40):
+def squeeze_pauses(x, max_pause=0.34, thr_db=-40):
     """Shorten long internal pauses (TTS sometimes leaves 0.5-1 s gaps)."""
     w = int(0.02 * SR)
     n = len(x) // w
@@ -302,7 +302,7 @@ def render(t, segs, total, grain):
         d.rounded_rectangle((x, by, x + 140, by + 64), 14, fill=col)
         d.text((x + 70, by + 32), f"№{j}", font=font("Black", 36), fill=BLK if (cur or done) else (170, 170, 170), anchor="mm")
     if head != "OUTRO":
-        d.text((W // 2, by + 140), "ПОЛНЫЙ ВЫПУСК — В ПРОФИЛЕ", font=font("Bold", 38), fill=(200, 200, 200), anchor="mm")
+        d.text((W // 2, by + 140), "БОЛЬШЕ СМЕКАЛКИ — В ПРОФИЛЕ", font=font("Bold", 38), fill=(200, 200, 200), anchor="mm")
     # white flash on segment change + shake
     arr = np.asarray(frame, dtype=np.int16)
     fl = max(0, 1 - (t - s0) / 0.12) if i else 0
