@@ -49,11 +49,3 @@ PY
 else
   echo "Заявок на фото не было (catalog/requests/photos.json)"
 fi
-
-echo
-echo "=== Слежение за ценами закупки ==="
-if [ -f catalog/price_baseline.json ]; then
-  PYTHONPATH="${PYTHONPATH:-$PWD/vendor}" python3 catalog/price_watch.py check || true
-else
-  echo "Baseline пока не зафиксирован: PYTHONPATH=$PWD/vendor python3 catalog/price_watch.py snapshot"
-fi
