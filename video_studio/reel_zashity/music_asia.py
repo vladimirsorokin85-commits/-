@@ -1,0 +1,115 @@
+"""Asian-flavoured jungle bed: base amen/reese bed (reel/music_reel.py) + plucked guzheng lead
+in F minor pentatonic (physical string model with press-bends), taiko hits and a gong wash on cues."""
+import sys
+from pathlib import Path
+
+import numpy as np
+from scipy.signal import fftconvolve
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "reel"))
+import music_reel as base  # noqa: E402
+from music_reel import SR, BEAT, BAR, place, lp, hp, pitch, load  # noqa: E402,F401
+
+rng = np.random.default_rng(7)
+
+
+def ks_pluck(f, dur, bright=0.6):
+    """Karplus-Strong string, plucked near the bridge (guzheng-like)."""
+    n = int(dur * SR)
+    N = max(2, int(round(SR / f)))
+    buf = rng.uniform(-1, 1, N)
+    buf = lp(buf, 2000 + 6000 * bright, 1)
+    out = np.empty(n)
+    fb = 0.9965
+    for i in range(n):
+        j = i % N
+        out[i] = buf[j]
+        buf[j] = fb * 0.5 * (buf[j] + buf[(j + 1) % N])
+    return out
+
+
+def bend(x, semis_env):
+    """time-varying pitch via variable-rate reading (semis_env per-sample)."""
+    rate = 2 ** (semis_env / 12)
+    pos = np.cumsum(rate)
+    pos = pos[pos < len(x) - 1]
+    return np.interp(pos, np.arange(len(x)), x)
+
+
+def guzheng_note(midi, dur, kind=0):
+    f = 440 * 2 ** ((midi - 69) / 12)
+    x = ks_pluck(f, dur + 0.3)
+    n = len(x)
+    t = np.arange(n) / SR
+    env = np.zeros(n)
+    if kind == 1:  # press-bend up a whole tone after the attack
+        env = 2.0 * np.clip((t - 0.10) / 0.12, 0, 1)
+    elif kind == 2:  # slide down into the note
+        env = 2.0 * (1 - np.clip(t / 0.09, 0, 1))
+    env = env + 0.25 * np.sin(2 * np.pi * 5.5 * t) * np.clip((t - 0.25) / 0.3, 0, 1)  # vibrato
+    y = bend(x, env)
+    y = y[: int(dur * SR)]
+    fade = int(0.03 * SR)
+    y[-fade:] *= np.linspace(1, 0, fade)
+    # body resonance
+    return hp(y, 180) + 0.3 * lp(y, 900)
+
+
+PHRASES = [
+    [(77, 0), None, (75, 0), (72, 1), None, (70, 0), (72, 0), None, (68, 2), None, (70, 0), None, (65, 0), None, None, None],
+    [(72, 0), None, (75, 0), (77, 0), None, (80, 1), (77, 0), None, (75, 0), None, (72, 0), (75, 0), (77, 2), None, None, None],
+    [(65, 0), (68, 0), (70, 0), None, (72, 1), None, (70, 0), (68, 0), (65, 2), None, None, (63, 0), (65, 0), None, None, None],
+    [(84, 2), None, (80, 0), (77, 0), None, (75, 0), (77, 1), None, (72, 0), None, (75, 0), None, (77, 0), None, None, None],
+]
+
+
+def reverb(x, sec=1.4, wet=0.25):
+    n = int(sec * SR)
+    ir = rng.standard_normal(n) * np.exp(-np.arange(n) / (0.28 * SR))
+    ir = lp(ir, 5000)
+    ir /= np.sqrt(np.sum(ir ** 2))
+    return x + wet * fftconvolve(x, ir)[: len(x)]
+
+
+def make_music(total, cues, drop_from=None):
+    bed = base.make_music(total, cues, drop_from)
+    n = len(bed)
+    lead = np.zeros(n + SR)
+    eighth = BEAT / 2
+    t, k = 0.0, 0
+    cache = {}
+    while t < total:
+        ph = PHRASES[k % len(PHRASES)]
+        for s, note in enumerate(ph):
+            if note is None:
+                continue
+            # note length = until next note
+            nxt = next((j for j in range(s + 1, len(ph)) if ph[j] is not None), len(ph))
+            dur = min(1.6, (nxt - s) * eighth + 0.15)
+            key = (note, round(dur, 3))
+            if key not in cache:
+                cache[key] = guzheng_note(note[0], dur, note[1])
+            place(lead, cache[key], t + s * eighth, 0.8 if s % 4 == 0 else 0.6)
+        t += 2 * BAR
+        k += 1
+    lead = reverb(lead[:n])
+    # taiko: pitched-down heavy kick, low-passed, on cues (dum .. dum-dum) and an intro roll
+    kick = load("drums/one-shots/kick/drum_heavy_kick.flac")
+    taiko = lp(pitch(kick, -7), 260) * 1.0
+    perc = np.zeros(n + 4 * SR)
+    for c in [0.0] + list(cues[1:]):
+        for off, g in ((0, 1.0), (BEAT * 1.5, 0.55), (BEAT * 2, 0.7)):
+            place(perc, taiko, c + off, g)
+    # gong wash: splash cymbal down an octave + long tail
+    splash = load("drums/one-shots/other/drum_splash_hard.flac")
+    gong = lp(pitch(splash, -14), 3500)
+    gong = reverb(np.concatenate([gong, np.zeros(SR)]), 2.5, 0.5)
+    for c in [0.0] + list(cues[1:]) + ([drop_from] if drop_from else []):
+        place(perc, gong, c, 0.5)
+    perc = perc[:n]
+
+    def norm(x):
+        return x / (np.sqrt(np.mean(x ** 2)) + 1e-9)
+    mix = norm(bed) * 1.0 + norm(lead) * 0.42 + norm(perc) * 0.35
+    mix /= np.percentile(np.abs(mix), 99.9) + 1e-9
+    return np.tanh(mix) * 0.9
