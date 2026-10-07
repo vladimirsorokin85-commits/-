@@ -144,7 +144,7 @@ def ease_out(x):
 
 # ------------------------------------------------------------------ audio
 def load(path, tempo=1.0):
-    af = ["-af", f"atempo={tempo}"] if tempo != 1.0 else []
+    af = ["-af", "adeclick=w=55:o=75:t=2" + (f",atempo={tempo}" if tempo != 1.0 else "")]
     raw = subprocess.run([FFMPEG, "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(SR)] + af + ["-f", "f32le", "-"],
                          capture_output=True, check=True).stdout
     return np.frombuffer(raw, np.float32).astype(np.float64)

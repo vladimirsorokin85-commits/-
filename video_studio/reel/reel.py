@@ -73,7 +73,11 @@ def squeeze_pauses(x, max_pause=0.24, thr_db=-40):
         chunk = x[i * w: j * w]
         if quiet[i] and 0 < i and j < n and (j - i) * w > max_pause * SR:
             keep = int(max_pause * SR)
-            chunk = np.concatenate([chunk[: keep // 2], chunk[-keep // 2:]])
+            a_, b_ = chunk[: keep // 2].copy(), chunk[-keep // 2:].copy()
+            xf = min(len(a_), len(b_), int(0.01 * SR))
+            a_[-xf:] *= np.linspace(1, 0, xf)
+            b_[:xf] *= np.linspace(0, 1, xf)
+            chunk = np.concatenate([a_, b_])
         out.append(chunk)
         i = j
     return np.concatenate(out + [x[n * w:]])

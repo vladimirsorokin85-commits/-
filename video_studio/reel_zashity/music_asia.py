@@ -18,7 +18,8 @@ def ks_pluck(f, dur, bright=0.6):
     n = int(dur * SR)
     N = max(2, int(round(SR / f)))
     buf = rng.uniform(-1, 1, N)
-    buf = lp(buf, 2000 + 6000 * bright, 1)
+    buf = lp(buf, 1500 + 2500 * bright, 2)  # softer pluck: no harsh noise burst
+    buf -= buf.mean()
     out = np.empty(n)
     fb = 0.9965
     for i in range(n):
@@ -49,10 +50,12 @@ def guzheng_note(midi, dur, kind=0):
     env = env + 0.25 * np.sin(2 * np.pi * 5.5 * t) * np.clip((t - 0.25) / 0.3, 0, 1)  # vibrato
     y = bend(x, env)
     y = y[: int(dur * SR)]
-    fade = int(0.03 * SR)
-    y[-fade:] *= np.linspace(1, 0, fade)
-    # body resonance
-    return hp(y, 180) + 0.3 * lp(y, 900)
+    y = hp(y, 180) + 0.3 * lp(y, 900)  # body resonance (filter BEFORE the fades)
+    att = int(0.010 * SR)
+    y[:att] *= np.sin(np.linspace(0, np.pi / 2, att)) ** 2
+    fade = min(len(y) // 2, int(0.08 * SR))
+    y[-fade:] *= np.cos(np.linspace(0, np.pi / 2, fade)) ** 2
+    return y
 
 
 PHRASES = [

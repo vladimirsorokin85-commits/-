@@ -3,6 +3,7 @@
 usage: reel.py [preview t1 t2 ...]   -> renders /tmp/reel/reel.mp4 (or preview jpgs)
 """
 import math
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -52,8 +53,7 @@ def font(w, s):
 # ---------------------------------------------------------------- audio
 def load(path, tempo=1.0):
     cmd = ["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(SR)]
-    if tempo != 1.0:
-        cmd += ["-af", f"atempo={tempo}"]
+    cmd += ["-af", "adeclick=w=55:o=75:t=2" + (f",atempo={tempo}" if tempo != 1.0 else "")]
     raw = subprocess.run(cmd + ["-f", "f32le", "-"], capture_output=True, check=True).stdout
     return np.frombuffer(raw, np.float32).copy()
 
@@ -79,7 +79,11 @@ def squeeze_pauses(x, max_pause=0.34, thr_db=-40):
         chunk = x[i * w: j * w]
         if quiet[i] and 0 < i and j < n and (j - i) * w > max_pause * SR:
             keep = int(max_pause * SR)
-            chunk = np.concatenate([chunk[: keep // 2], chunk[-keep // 2:]])
+            a_, b_ = chunk[: keep // 2].copy(), chunk[-keep // 2:].copy()
+            xf = min(len(a_), len(b_), int(0.01 * SR))
+            a_[-xf:] *= np.linspace(1, 0, xf)
+            b_[:xf] *= np.linspace(0, 1, xf)
+            chunk = np.concatenate([a_, b_])
         out.append(chunk)
         i = j
     return np.concatenate(out + [x[n * w:]])
@@ -124,13 +128,16 @@ def build_audio():
     voice *= 10 ** ((-16 - lv) / 20)
     music *= 10 ** ((-25 - lm) / 20)  # music sits ~9 LU under the voice
     mix = voice + music
+    if os.environ.get("DUMP"):
+        np.save(TMP / "voice.npy", voice); np.save(TMP / "music.npy", music)
     lt = meter.integrated_loudness(mix)
     mix *= 10 ** ((-14 - lt) / 20)  # final: -14 LUFS (Reels/Shorts/YouTube)
     from scipy.ndimage import maximum_filter1d
-    lim = 10 ** (-1.0 / 20)
-    pk = maximum_filter1d(np.abs(mix), int(0.004 * SR))
+    lim = 10 ** (-1.5 / 20)
+    pk = maximum_filter1d(np.abs(mix), int(0.008 * SR))
     gl = np.minimum(1.0, lim / np.maximum(pk, 1e-9))
-    gl = uniform_filter1d(gl, int(0.004 * SR))
+    gl = uniform_filter1d(gl, int(0.008 * SR))
+    print("GR dB: min", round(20*np.log10(gl.min()),1), "time>3dB", round(float(np.mean(gl<10**(-3/20))),4), "time>1dB", round(float(np.mean(gl<10**(-1/20))),4))
     mix = np.clip(mix * gl, -lim, lim)
     print("LUFS final", round(meter.integrated_loudness(mix), 1), "voice", round(lv, 1))
     pcm = (mix * 32767).astype("<i2")

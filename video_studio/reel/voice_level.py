@@ -41,11 +41,14 @@ def level(x, target_db=-18.0, max_boost=14.0, max_cut=12.0, gate_db=-42.0, sr=SR
     # gentle compressor above target+4 dB
     env2 = _db(np.sqrt(uniform_filter1d(y ** 2, int(0.02 * sr)) + 1e-12))
     over = np.maximum(0, env2 - (target_db + 4))
-    y *= 10 ** (-(over * (1 - 1 / 3)) / 20)
+    cg = uniform_filter1d(-(over * (1 - 1 / 3)), int(0.01 * sr))  # smoothed gain: no crackle
+    y *= 10 ** (cg / 20)
     # lookahead limiter at -1 dBFS
     lim = 10 ** (-1 / 20)
-    pk = maximum_filter1d(np.abs(y), int(0.005 * sr))
-    y *= np.minimum(1.0, lim / np.maximum(pk, 1e-9))
+    pk = maximum_filter1d(np.abs(y), int(0.008 * sr))
+    gl = np.minimum(1.0, lim / np.maximum(pk, 1e-9))
+    gl = uniform_filter1d(gl, int(0.008 * sr))  # smooth gain changes (no stepwise crackle)
+    y = np.clip(y * gl, -lim, lim)
     return y.astype(np.float32)
 
 

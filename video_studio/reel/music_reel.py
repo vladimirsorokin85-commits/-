@@ -83,7 +83,7 @@ def make_music(total, cues, drop_from=None):
         else:
             v = amen
         seg = v[: int(min(len(v), (end_drums - t) * SR))]
-        fade = min(len(seg), int(0.01 * SR))
+        fade = min(len(seg), int(0.04 * SR))
         seg = seg.copy()
         seg[-fade:] *= np.linspace(1, 0, fade)
         place(drums, seg, t, 0.9)
