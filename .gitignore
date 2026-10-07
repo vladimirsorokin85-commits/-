@@ -19,3 +19,6 @@ media/blank/out*
 media/blank/*.tmp
 # Локальные Python-зависимости (ставит tools/bootstrap.sh)
 vendor/
+
+# Внешние файлы, скачанные через assets-inbox (докачка из интернета)
+assets/inbox/

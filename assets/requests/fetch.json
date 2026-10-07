@@ -1,0 +1,13 @@
+{
+  "_комментарий": "Заявка на внешние файлы: скачивается ПЕРВЫЙ удачный URL из списка. Расширение определяется по содержимому.",
+  "files": [
+    {
+      "name": "logo_vk",
+      "urls": [
+        "https://sun9-49.vkuserphoto.ru/s/v1/ig2/Xtud50oQhQGq-_Mr2sM4e7jZyLxBiwyGBYY4wsSMLKqdRa7AUEf8pZklt5xtaAb5M59QdUE0wz3-DscadBkrbuQc.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640&ava=1&u=A5k7qqWpp260kdFmbwJ3g_4gaAtX80NGdD9HZTLYfp4",
+        "https://sun9-49.vkuserphoto.ru/s/v1/ig2/Xtud50oQhQGq-_Mr2sM4e7jZyLxBiwyGBYY4wsSMLKqdRa7AUEf8pZklt5xtaAb5M59QdUE0wz3-DscadBkrbuQc.jpg?quality=95&crop=508,155,696,696&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640&ava=1&u=A5k7qqWpp260kdFmbwJ3g_4gaAtX80NGdD9HZTLYfp4&cs=640x640",
+        "https://sun9-49.vkuserphoto.ru/s/v1/ig2/Xtud50oQhQGq-_Mr2sM4e7jZyLxBiwyGBYY4wsSMLKqdRa7AUEf8pZklt5xtaAb5M59QdUE0wz3-DscadBkrbuQc.jpg?quality=95&crop=508,155,696,696&ava=1&u=A5k7qqWpp260kdFmbwJ3g_4gaAtX80NGdD9HZTLYfp4"
+      ]
+    }
+  ]
+}
