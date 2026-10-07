@@ -180,10 +180,13 @@ def bullets_from_desc(desc: str, hook: str, n: int, name: str = ""):
 
 
 def availability_line(sizes_note=None):
-    """Наличие — без количества: сколько осталось, в постах не пишем."""
+    """Наличие для ПУБЛИКАЦИИ: без количества и без внутренних формулировок.
+
+    «У Димы», «на складе», поставщик — это внутренняя информация, в пост не идёт.
+    """
     if sizes_note:
-        return f"{sizes_note} — есть на складе у Димы."
-    return "Есть на складе у Димы."
+        return f"В наличии: {sizes_note}."
+    return "В наличии."
 
 
 def safe_slug(s: str, limit: int = 46) -> str:
@@ -211,9 +214,24 @@ def build_post_text(entry, item, rows, desc, idx, slot):
     tags = hashtags(item["name"], item.get("category", ""), extra=entry.get("extra_tags") or ())
     body.append(tags)
     text = "\n".join(body).strip() + "\n"
-    # страховка: цены не должно быть в принципе
-    assert not re.search(r"\d[\d\s]*\s*(₽|руб)", text), "в тексте оказалась цена!"
+    check_public_text(text)
     return text
+
+
+FORBIDDEN_IN_PUBLIC = (
+    ("у Димы", r"\bДимы?\b"),
+    ("поставщик", r"поставщик"),
+    ("на складе / со склада", r"\b(на|со)\s+склад"),
+    ("наличие у поставщика", r"у поставщика"),
+    ("цена", r"\d[\d\s]*\s*(₽|руб)"),
+)
+
+
+def check_public_text(text: str) -> None:
+    """Жёсткая проверка перед публикацией: внутренние формулировки и цены недопустимы."""
+    for label, rx in FORBIDDEN_IN_PUBLIC:
+        m = re.search(rx, text, re.I)
+        assert not m, f"в публикуемом тексте запрещённое: {label} → {m.group(0)!r}"
 
 
 def save_photos(files, dest_dir, limit=3):

@@ -9,7 +9,8 @@
   • ЦЕНЫ В ПОСТАХ ВК НЕ УКАЗЫВАЕМ (правило владельца от 07.10.2026):
     в текст поста цена не попадает никогда. Флаг --price только сохраняет
     вашу розницу в JSON рядом с постом — для вашей же записи;
-  • наличие формулируем как «на складе у Димы» / «НЕТУ на складе у Димы».
+  • в ПУБЛИКУЕМЫЙ текст внутренние формулировки не попадают: наличие — «В наличии.»;
+    «у Димы», «на складе», поставщик — только для внутренних отчётов владельцу.
 
 Примеры:
   python3 -m vk.post --query "ботинки прабос greyman" --price 24900
@@ -117,6 +118,7 @@ def hashtags(name: str, category: str, extra=()):
 
 
 def availability_phrase(stock: int) -> str:
+    """Для внутреннего отчёта владельцу (в пост не идёт)."""
     return "на складе у Димы" if stock > 0 else "НЕТУ на складе у Димы"
 
 
@@ -178,14 +180,14 @@ def post_product(fam, price=None, sizes_show=True) -> str:
 
 
 def post_collection(fams, price_map=None) -> str:
-    lines = ["🪖 Подборка из наличия (проверено у поставщика)", ""]
+    lines = ["🪖 Подборка из наличия", ""]
     for i, fam in enumerate(fams, 1):
         rows = fam["rows"]
         st = stock_line(rows)
         lines.append(f"{i}. {fam['family']}")
         if st:
             lines.append(f"   в наличии: {st}")
-    lines += ["", "Всё со склада у Димы. Пишите в личку — забронирую и отправим СДЭК.",
+    lines += ["", "Всё в наличии. Пишите в личку — забронирую и отправим СДЭК.",
               "", hashtags(" ".join(f["family"] for f in fams), " ".join(f["category"] for f in fams))]
     return "\n".join(lines)
 
@@ -196,7 +198,7 @@ def post_stock(fams) -> str:
         st = stock_line(fam["rows"])
         if st:
             lines.append(f"▪️ {fam['family']}: {st}")
-    lines += ["", "Наличие проверено у поставщика. Пишите в личку — подскажу по размеру.",
+    lines += ["", "Всё в наличии. Пишите в личку — подскажу по размеру.",
               "", hashtags(" ".join(f["family"] for f in fams), " ".join(f["category"] for f in fams))]
     return "\n".join(lines)
 
