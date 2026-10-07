@@ -47,12 +47,22 @@
 
 **Поля:** `name, price, stock, code, article, category, categoryId, description, imageURL, id, uom`.
 
-Важно:
+Важно (проверено 07.10.2026 на живом API):
 - **Наличие = `stock > 0`.** Поле `available` врёт — всегда `true`.
-- `imageURL` — мусор (26×19). Реальные фото только через `/getFullImages`.
-- Каталог поставщик обновляет сам → **перед каждым ответом о наличии — живая проверка** (полный фетч ~80 с).
+- Публичная витрина отдаёт **только то, что в наличии** (1134 из 1134 позиций). Распроданое
+  из `/products.json` не приходит, поэтому «нет в наличии» = «нет в каталоге вообще».
+- **Фото — только `PUT /getFullImages`** с полным JSON товара. Ответ — массив **подписанных ссылок S3**
+  (`s3.ru-6.storage.selcloud.ru`), **без расширения файла в URL**, ссылки живут ~60 секунд.
+  `POST` и `GET` на этот эндпоинт дают 500 — использовать только `PUT`.
+- `imageURL` / `imageURLMiniature` — превьюшки (26×19 и подобные), в карточки не годятся.
+- Среди фото поставщика попадается мусор (узкие полоски с размерной сеткой) — фильтруем
+  автоматически: `quality: preview|strip` помечается в `catalog/photos/manifest.json`.
+- Каталог поставщик обновляет сам → **перед каждым ответом о наличии — свежий снапшот**
+  (fetched_at в `catalog/data/catalog_meta.json`; старше суток → обновить).
 - Формулировки в ответах клиенту: «**на складе у Димы**» / «**НЕТУ на складе у Димы**».
 - Синонимы из практики: «пиксель» = «цифра (ЕМР)» = «цифра/пиксель»; «мох» = «A-Tacs FG Camo / мох».
+  А также латиница↔кириллица: клиент пишет «прабос» — в каталоге `PRABOS` (умный поиск это умеет).
+- Бюджет из вольной фразы ловится автоматически: «бронежилет в пикселе до 85к» → фильтр «до 85 000 ₽».
 
 ### 2.2 Поставщик электростанций (EcoFlow / Jackery / DJI) — добавлен 06.10.2026
 
@@ -101,14 +111,18 @@ Delta 3 1500 — гарантирует. **Никогда не считать а
 
 | Задача | Команда |
 |---|---|
-| Снапшот каталога + фото из заявок | GitHub Actions «Catalog fetch» → артефакт `catalog-snapshot` (см. `docs/WORKFLOW.md`) |
-| Умный поиск по снапшоту | `python3 -m catalog.search "ботинки прабос 42" [--in-stock] [--budget 85000] [--json]` |
-| Проверка наличия (живьём) | `python3 catalog/query.py <слова> [--in-stock\|--no-stock\|--cat\|--json]` |
-| Бланк заказа | `python3 media/blank/blank.py media/blank/order.json media/blank/out.png` |
-| Карточка товара | `python3 media/blank/card.py media/blank/card.json media/blank/out.jpg` |
-| Пост для ВК | `python3 -m vk.post --query "ботинки prabos" --photo catalog/photos/00895/...` |
+| Обновить каталог + фото на месте | Actions «Catalog fetch» (сам запускается при правке `catalog/requests/**`) → `bash tools/catalog_pull.sh` |
+| Умный поиск | `python3 -m catalog.search "бронежилет в пикселе до 85к" [--in-stock] [--color мох] [--size 42] [--why]` |
+| Сводка и наличие | `python3 catalog/query.py [слова] [--in-stock\|--no-stock\|--cat Обувь\|--json]` |
+| Электростанции: подбор | `python3 -m catalog.power --pick 12h@62W` |
+| Карточка из каталога (авто) | `python3 media/blank/from_catalog.py --code 00895 --price 24900` |
+| Карточка из своего JSON | `python3 media/blank/card.py media/blank/card.json media/blank/out.jpg` |
+| Бланк заказа (несколько позиций) | `python3 media/blank/blank.py media/blank/order.json media/blank/out.png` |
+| Пост для ВК | `python3 -m vk.post --query "ботинки прабос" --price 24900` |
 
-Зависимости: `bash tools/bootstrap.sh` (Pillow в `vendor/`). Всё остальное — стандартная библиотека.
+Зависимости: `bash tools/bootstrap.sh` (Pillow в `vendor/`, только для картинок). Остальное — стандартная библиотека.
+Итоговый вид карточек — `media/blank/` (стиль «полевой бланк»): крафт-бумага, оливковые чернила,
+штамп «В НАЛИЧИИ» с датой проверки. Логотип берётся из `media/logo.png` (пока нет — рисуется заглушка).
 
 ## 5. Примеры выполненных задач (калибровка стиля)
 

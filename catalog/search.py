@@ -44,8 +44,17 @@ def norm(s: str) -> str:
     return re.sub(r"\s+", " ", s).strip()
 
 
+def unit_split(t: str) -> str:
+    """«40л» -> «40 л», «500d» -> «500 d»: единицы измерения в запросе и каталоге пишут по-разному."""
+    t = re.sub(r"(?<=\d)(?=[а-яa-z])", " ", t)
+    return re.sub(r"(?<=[а-яa-z])(?=\d)", " ", t)
+
+
 def toks(s: str):
-    return [t for t in norm(s).split() if t not in ("-", ".")]
+    out = []
+    for t in norm(s).split():
+        out.extend(unit_split(t).split())
+    return [t for t in out if t not in ("-", ".")]
 
 
 ENDINGS = ("ами", "ями", "ого", "его", "ому", "ему", "ыми", "ими", "ых", "их", "ый", "ий", "ой",
@@ -128,14 +137,14 @@ def hay(row, desc_text=""):
     key = row.get("id")
     h = _HAY.get(key)
     if h is None:
-        nw = norm(row.get("name")).split()
-        cw = norm(row.get("category")).split()
+        nw = [w for part in norm(row.get("name")).split() for w in unit_split(part).split()]
+        cw = [w for part in norm(row.get("category")).split() for w in unit_split(part).split()]
         h = {"name": nw, "name_t": [translit(w) for w in nw],
              "cat": cw, "cat_t": [translit(w) for w in cw],
              "desc": None, "desc_t": None}
         _HAY[key] = h
     if desc_text and h["desc"] is None:
-        dw = norm(desc_text)[:2500].split()
+        dw = [w for part in norm(desc_text)[:2500].split() for w in unit_split(part).split()]
         h["desc"] = dw
         h["desc_t"] = [translit(w) for w in dw]
     return h

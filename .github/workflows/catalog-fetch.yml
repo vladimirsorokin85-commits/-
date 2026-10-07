@@ -9,9 +9,8 @@ name: Catalog fetch (МойСклад → снапшот + фото)
 on:
   push:
     paths:
-      - "catalog/requests/**"
+      - "catalog/**"
       - ".github/workflows/catalog-fetch.yml"
-      - "catalog/remote_fetch.py"
   workflow_dispatch:
 
 permissions:

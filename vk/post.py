@@ -80,7 +80,8 @@ def split_description(desc: str):
         if low.startswith(("рекомендац", "внимание", "!!!", "важно")):
             mode = None
             continue
-        item = re.sub(r"^[\*\-\u2022•·\s]+", "", ln).strip()
+        # срезаем маркеры списков: *, -, •, 🔘, ▪️, ✔ и прочие символы/эмодзи в начале строки
+        item = re.sub(r"^[^\w(«\"А-Яа-яЁё0-9]+", "", ln).strip()
         if not item or item.endswith(":"):
             continue
         (feats if mode == "f" else specs if mode == "s" else feats).append(item)

@@ -120,8 +120,12 @@ def build(data, out_path):
     d.rectangle([bx0 + 7, by0 + 7, bx1 - 7, by1 - 7], outline=INK, width=1)
     d.text((bx0 + 26, (by0 + by1) / 2), str(prod.get("price_label", "ЦЕНА")) + ":",
            font=font("Oswald.ttf", 32, "Medium"), fill=INK, anchor="lm")
-    d.text((bx1 - 26, (by0 + by1) / 2), fmt_money(prod["price"]),
-           font=font("Oswald.ttf", 54, "Bold"), fill=INK, anchor="rm")
+    if prod.get("price") is None:
+        d.text((bx1 - 26, (by0 + by1) / 2), "по запросу",
+               font=font("Oswald.ttf", 40, "Medium"), fill=MUTED, anchor="rm")
+    else:
+        d.text((bx1 - 26, (by0 + by1) / 2), fmt_money(prod["price"]),
+               font=font("Oswald.ttf", 54, "Bold"), fill=INK, anchor="rm")
     st = stamp("В НАЛИЧИИ", date)
     img.paste(st, (M + 6, y - 26), st)
     y = by1 + 36
@@ -162,8 +166,13 @@ def build(data, out_path):
         d.rectangle([M + 7, y + 7, x1 - 7, y + 105], outline=INK, width=1)
         d.text((M + 26, y + 56), addon.get("bundle_label", "ИТОГО С ДОПОЛНЕНИЕМ") + ":",
                font=font("Oswald.ttf", 34, "Medium"), fill=INK, anchor="lm")
-        d.text((x1 - 26, y + 56), fmt_money(prod["price"] + addon["price"]),
-               font=font("Oswald.ttf", 56, "Bold"), fill=INK, anchor="rm")
+        total_price = prod.get("price")
+        if total_price is None or addon.get("price") is None:
+            d.text((x1 - 26, y + 56), "уточняется", font=font("Oswald.ttf", 44, "Medium"),
+                   fill=MUTED, anchor="rm")
+        else:
+            d.text((x1 - 26, y + 56), fmt_money(total_price + addon["price"]),
+                   font=font("Oswald.ttf", 56, "Bold"), fill=INK, anchor="rm")
         y += 112 + 34
 
     y += 12
@@ -181,8 +190,8 @@ def build(data, out_path):
         img.save(out_path, quality=90, optimize=True)
     else:
         img.save(out_path, quality=92)
-    total = prod["price"] + (addon["price"] if addon else 0)
-    print("saved", out_path, img.size, "| товар", fmt_money(prod["price"]), "| с доп.", fmt_money(total))
+    total = (prod.get("price") or 0) + ((addon.get("price") or 0) if addon else 0)
+    print("saved", out_path, img.size, "| товар", fmt_money(prod.get("price")), "| с доп.", fmt_money(total))
     return out_path
 
 
