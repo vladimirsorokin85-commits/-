@@ -21,7 +21,7 @@ import sys
 import zipfile
 import shutil
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -41,6 +41,76 @@ except ImportError:  # noqa: BLE001
 
 MAX_PX = 1600
 JPEG_Q = 85
+LOGO_REL = "media/logo.png"
+FONT_CANDIDATES = (
+    os.path.join(ROOT, "video_studio", "toolkit", "fonts", "Montserrat-VF.ttf"),
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+)
+
+
+def load_font(size: int):
+    """Шрифт с кириллицей для обложек (Montserrat, запасной — DejaVu)."""
+    for path in FONT_CANDIDATES:
+        if not os.path.exists(path):
+            continue
+        try:
+            f = ImageFont.truetype(path, size)
+            try:
+                f.set_variation_by_name("Bold")
+            except Exception:  # noqa: BLE001
+                pass
+            return f
+        except Exception:  # noqa: BLE001
+            continue
+    return None
+
+
+def make_cover(photo_rel: str, dest: str, headline: str) -> bool:
+    """Обложка 1200×800: фото поставщика целиком + наш логотип + заголовок.
+
+    Фото остаётся фотографией поставщика, мы только добавляем логотип магазина
+    и подпись — как в карточках. Отдельный файл, можно не использовать.
+    """
+    src = os.path.join(ROOT, photo_rel)
+    if not os.path.exists(src):
+        return False
+    W, H, BAR = 1200, 800, 116
+    im = Image.open(src).convert("RGB")
+
+    bg = im.copy()
+    scale = max(W / bg.width, H / bg.height)
+    bg = bg.resize((max(1, int(bg.width * scale)), max(1, int(bg.height * scale))), Image.LANCZOS)
+    left, top = (bg.width - W) // 2, (bg.height - H) // 2
+    bg = bg.crop((left, top, left + W, top + H)).filter(ImageFilter.GaussianBlur(20))
+    base = Image.blend(bg, Image.new("RGB", (W, H), (0, 0, 0)), 0.4)
+
+    fg = im.copy()
+    fg.thumbnail((W - 90, H - BAR - 60), Image.LANCZOS)
+    base.paste(fg, ((W - fg.width) // 2, (H - BAR - fg.height) // 2))
+
+    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(overlay).rectangle([0, H - BAR, W, H], fill=(12, 12, 12, 215))
+    base = Image.alpha_composite(base.convert("RGBA"), overlay).convert("RGB")
+    d = ImageDraw.Draw(base)
+
+    text = re.sub(r"[^\w\sА-Яа-яЁё0-9.,:;!?()«»\-—%+/×°№\"']+", " ", headline)
+    text = re.sub(r"\s+", " ", text).strip()
+    size = 50
+    font = load_font(size)
+    while font and size > 28 and d.textlength(text, font=font) > W - 80:
+        size -= 2
+        font = load_font(size)
+    if font:
+        d.text((40, H - BAR // 2), text, font=font, fill=(255, 255, 255), anchor="lm")
+
+    logo = os.path.join(ROOT, LOGO_REL)
+    if os.path.exists(logo):
+        lg = Image.open(logo).convert("RGBA")
+        lg.thumbnail((108, 108), Image.LANCZOS)
+        base.paste(lg, (W - lg.width - 26, 26), lg)
+
+    base.save(dest, quality=88, optimize=True)
+    return True
 CTA = [
     "Доставка по РФ. Напишите в личные сообщения — подберу под вашу задачу.",
     "Пишите в личные сообщения: подскажу по размеру и наличию.",
@@ -241,7 +311,7 @@ def save_photos(files, dest_dir, limit=3):
         src = os.path.join(ROOT, rel)
         if not os.path.exists(src):
             continue
-        out = os.path.join(dest_dir, f"фото {i}.jpg")
+        out = os.path.join(dest_dir, f"{i}.jpg")
         im = Image.open(src).convert("RGB")
         im.thumbnail((MAX_PX, MAX_PX), Image.LANCZOS)
         im.save(out, quality=JPEG_Q, optimize=True)
@@ -292,20 +362,26 @@ def main(argv=None):
 
             files = (manifest.get(item["id"], {}) or {}).get("files") or []
             saved = save_photos(files, folder)
+            if saved:
+                make_cover(files[0], os.path.join(folder, "обложка.jpg"), entry["headline"])
             if not saved:
                 missing.append(f"{day['date']} {code} «{item['name'][:40]}»: НЕТ ФОТО")
 
             day_texts.append(f"{'=' * 68}\n{slot:02d}. {entry['headline']}\n{'=' * 68}\n\n{text}\n")
             report.append({
                 "day": day["date"], "slot": slot, "code": code, "name": item["name"],
-                "stock": int(item["stock"] or 0), "photos": len(saved),
+                "photos": len(saved), "cover": os.path.exists(os.path.join(folder, "обложка.jpg")),
                 "bullets": text.count("▪️"), "chars": len(text),
             })
         open(os.path.join(day_dir, "ВСЕ_ПОСТЫ_ЗА_ДЕНЬ.txt"), "w", encoding="utf-8").write("\n".join(day_texts))
-        all_days.append((day, "\n".join(day_texts)))
+        day_chk = [f"{day['date']} ({day['weekday']}) — чек-лист", "=" * 40, ""]
+        for slot, entry in enumerate(day["posts"], 1):
+            day_chk.append(f"  [ ] {slot:02d}. {entry['headline']}")
+        open(os.path.join(day_dir, "ЧЕК-ЛИСТ_ДНЯ.txt"), "w", encoding="utf-8").write("\n".join(day_chk) + "\n")
+        all_days.append((day, day_dir, "\n".join(day_texts)))
 
     open(os.path.join(out_root, "ВСЕ_ПОСТЫ_НЕДЕЛЯ.txt"), "w", encoding="utf-8").write(
-        "\n".join(t for _, t in all_days))
+        "\n".join(t for _, _d, t in all_days))
 
     readme = [
         f"В ОКОПЕ — {plan['title']}",
@@ -325,7 +401,7 @@ def main(argv=None):
         "График на неделю",
         "----------------",
     ]
-    for day, _ in all_days:
+    for day, _dir, _t in all_days:
         readme.append(f"  {day['date']} ({day['weekday']}):")
         for slot, entry in enumerate(day["posts"], 1):
             readme.append(f"     {slot}. {entry['headline']}")
@@ -341,7 +417,24 @@ def main(argv=None):
         "",
         f"Всего постов: {sum(len(d['posts']) for d in plan['days'])}.",
     ]
+    readme += [
+        "",
+        "Файлы в каждой папке поста",
+        "--------------------------",
+        "  1.jpg, 2.jpg … — фото поставщика в порядке загрузки (1 — первым);",
+        "  обложка.jpg    — та же фотография с нашим логотипом и заголовком, по желанию;",
+        "  пост.txt       — текст, копируется целиком.",
+    ]
     open(os.path.join(out_root, "README.txt"), "w", encoding="utf-8").write("\n".join(readme) + "\n")
+
+    # чек-лист: отмечать выложенное
+    chk = ["ЧЕК-ЛИСТ ВЫКЛАДКИ — отмечайте, что уже выставлено", "=" * 50, ""]
+    for day, _dir, _t in all_days:
+        chk.append(f"{day['date']} ({day['weekday']})")
+        for slot, entry in enumerate(day["posts"], 1):
+            chk.append(f"  [ ] {slot:02d}. {entry['headline']}")
+        chk.append("")
+    open(os.path.join(out_root, "ЧЕК-ЛИСТ.txt"), "w", encoding="utf-8").write("\n".join(chk))
 
     os.makedirs(os.path.join(HERE, "out"), exist_ok=True)
     zip_name = f"V_OKOPE_posts_{plan['start'].replace('-', '')}_week.zip"
@@ -352,10 +445,69 @@ def main(argv=None):
                 full_path = os.path.join(root, f)
                 z.write(full_path, os.path.relpath(full_path, os.path.dirname(out_root)))
 
+    dist = os.path.join(HERE, "dist")
+    os.makedirs(dist, exist_ok=True)
+    shutil.copy2(zip_path, dist)
+
+
+    # архивы по дням — чтобы скачивать только нужный день
+    day_zips = []
+    for day, day_dir, _t in all_days:
+        short = day["date"][:5].replace(".", ".")  # 08.10
+        name = f"V_OKOPE_{short}_{day['weekday']}.zip"
+        path = os.path.join(HERE, "out", name)
+        with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
+            for root, _, files in os.walk(day_dir):
+                for f in sorted(files):
+                    full_path = os.path.join(root, f)
+                    z.write(full_path, os.path.relpath(full_path, os.path.dirname(day_dir)))
+        day_zips.append(path)
+
+    for path in day_zips:
+        shutil.copy2(path, dist)
+
+    # витрина для планшета: стартовая страница с прямыми ссылками на архивы
+    def human(day_):
+        return f"{day_['date']} ({day_['weekday']})"
+
+    cards = "".join(
+        f'<a class="card" href="{os.path.basename(p)}">'
+        f'<span class="d">{human(d)}</span>'
+        f'<span class="n">{len(d["posts"])} постов</span>'
+        f'<span class="s">{os.path.getsize(p) / 1024 / 1024:.1f} МБ</span></a>'
+        for (d, _dir, _t), p in zip(all_days, day_zips)
+    )
+    index = f"""<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Посты ВК — {plan['start']}</title>
+<style>
+ body{{font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#0f1115;color:#eaeaea;margin:0;padding:20px}}
+ h1{{font-size:22px;margin:0 0 4px}} p.sub{{color:#9aa0a6;margin:0 0 18px;font-size:14px}}
+ a.big{{display:block;background:#2b6cb0;color:#fff;text-decoration:none;text-align:center;
+   padding:16px;border-radius:12px;font-size:17px;font-weight:600;margin-bottom:18px}}
+ .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}}
+ a.card{{display:block;background:#1a1d24;border:1px solid #2a2f3a;border-radius:12px;
+   padding:14px;text-decoration:none;color:#eaeaea}}
+ a.card span{{display:block}} .d{{font-weight:600;font-size:15px}} .n{{color:#9aa0a6;font-size:13px;margin-top:4px}}
+ .s{{color:#6b7280;font-size:12px;margin-top:2px}}
+ .note{{margin-top:20px;color:#9aa0a6;font-size:13px;line-height:1.5}}
+</style></head><body>
+<h1>Посты «В ОКОПЕ» — {plan['start']} … {plan['days'][-1]['date']}</h1>
+<p class="sub">7 дней × 6 постов. Каждый день — отдельный архив: внутри фото поставщика и текст.</p>
+<a class="big" href="{os.path.basename(zip_path)}">⬇︎ Скачать всю неделю ({os.path.getsize(zip_path) / 1024 / 1024:.1f} МБ)</a>
+<div class="grid">{cards}</div>
+<div class="note">В архиве дня: папки постов, в каждой — фото (1.jpg, 2.jpg…), «обложка.jpg» с логотипом
+и заголовком, «пост.txt» и «ЧЕК-ЛИСТ_ДНЯ.txt». Цены и остатки в текстах отсутствуют.</div>
+</body></html>"""
+    open(os.path.join(dist, "index.html"), "w", encoding="utf-8").write(index)
+
     print(f"Постов собрано: {len(report)} из {sum(len(d['posts']) for d in plan['days'])}")
     print(f"Фото вложено: {sum(r['photos'] for r in report)}")
     print(f"Знаков в среднем: {sum(r['chars'] for r in report) // max(1, len(report))}")
-    print(f"ZIP: {zip_path} ({os.path.getsize(zip_path) / 1024 / 1024:.1f} МБ)")
+    print(f"ZIP недели: {zip_path} ({os.path.getsize(zip_path) / 1024 / 1024:.1f} МБ)")
+    for path in day_zips:
+        print(f"ZIP дня:    {os.path.basename(path)} ({os.path.getsize(path) / 1024 / 1024:.1f} МБ)")
     if missing:
         print("\n⚠ ПРОБЛЕМЫ:")
         for m in missing:
