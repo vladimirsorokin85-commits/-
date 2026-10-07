@@ -1,0 +1,55 @@
+{
+  "_комментарий": "Поставщики и прайсы. Цены поставщика = закуп. Розница для клиента — только от владельца (исключение: электростанции, +10%).",
+
+  "dima": {
+    "role": "основной поставщик каталога (броня, экипировка, тактика)",
+    "type": "moysklad-b2b",
+    "vitrina": "https://b2b.moysklad.ru/public/WDuXQTYGsuNZ/catalog",
+    "api_base": "https://b2b.moysklad.ru/desktop-api/public/WDuXQTYGsuNZ",
+    "stock_rule": "наличие = stock > 0 (поле available всегда true — не использовать)",
+    "photos": "PUT /getFullImages с полным JSON товара; [] = фото нет",
+    "wording": ["на складе у Димы", "НЕТУ на складе у Димы"]
+  },
+
+  "power": {
+    "role": "поставщик электростанций и панелей (EcoFlow / Jackery / DJI)",
+    "added": "2026-10-06",
+    "price_date": "2026-08-12",
+    "markup_rule": "розница = закуп +10%",
+    "must_check": ["наличие у поставщика перед обещанием клиенту", "EU-версия (евророзетки) — подтверждать"],
+    "photos": "только от поставщика (у Димы этих товаров нет)",
+    "logistics": "СДЭК, оплата переводом на карту (предоплата), доставку клиент платит при получении",
+    "items": [
+      {"model": "EcoFlow River 3", "wh": 245, "purchase": 27500, "retail": 30250, "line": "EcoFlow"},
+      {"model": "EcoFlow River 2 Max", "wh": 512, "purchase": 38500, "retail": 42350, "line": "EcoFlow"},
+      {"model": "EcoFlow River 3 Plus", "wh": 286, "purchase": 44000, "retail": 48400, "line": "EcoFlow"},
+      {"model": "EcoFlow Delta 2", "wh": 1024, "purchase": 60500, "retail": 66550, "line": "EcoFlow"},
+      {"model": "EcoFlow Delta 3 classic", "wh": 1024, "purchase": 66000, "retail": 72600, "line": "EcoFlow", "note": "12 ч на ~62 Вт НЕ гарантирует"},
+      {"model": "EcoFlow Delta 3 1500", "wh": 1536, "purchase": 110000, "retail": 121000, "line": "EcoFlow", "note": "12 ч на ~62 Вт гарантирует"},
+      {"model": "EcoFlow Delta 3 Plus", "wh": 1024, "purchase": 121000, "retail": 133100, "line": "EcoFlow"},
+      {"model": "Jackery 300W Plus", "wh": null, "purchase": 27500, "retail": 30250, "line": "Jackery"},
+      {"model": "Jackery 1000 Plus", "wh": 1264, "purchase": 99000, "retail": 108900, "line": "Jackery"},
+      {"model": "Jackery 2000 Pro 2", "wh": null, "purchase": 115500, "retail": 127050, "line": "Jackery"},
+      {"model": "Jackery 3000 v2", "wh": null, "purchase": 165000, "retail": 181500, "line": "Jackery"},
+      {"model": "Jackery Home 3600 Plus", "wh": null, "purchase": 192500, "retail": 211750, "line": "Jackery"},
+      {"model": "DJI Power 1000 v2", "wh": null, "purchase": 77000, "retail": 84700, "line": "DJI"},
+      {"model": "DJI Power 2000", "wh": null, "purchase": 115500, "retail": 127050, "line": "DJI"},
+      {"model": "Панель EcoFlow 220W", "purchase": 49500, "retail": 54450, "line": "EcoFlow", "panel": true},
+      {"model": "Панель Jackery 200W", "purchase": 49500, "retail": 54450, "line": "Jackery", "panel": true},
+      {"model": "Панель DJI 200W", "purchase": 49500, "retail": 54450, "line": "DJI", "panel": true},
+      {"model": "Панель EcoFlow 400W", "purchase": 66000, "retail": 72600, "line": "EcoFlow", "panel": true}
+    ],
+    "autonomy_facts": {
+      "self_consumption_w": [15, 25],
+      "efficiency": [0.80, 0.90],
+      "note": "Никогда не считать автономность по паспортной ёмкости. Для 12 ч на 62 Вт нужно >=1200–1500 Вт·ч."
+    }
+  },
+
+  "ositinov": {
+    "role": "Авито-поставщик",
+    "status": "ПАУЗА — не трогать, бесплатный парсинг Авито провалился (429 + hCaptcha)",
+    "channels": ["https://www.avito.ru/brands/i193975637", "https://www.avito.ru/brands/i26882369"],
+    "resume_when": "владелец даст платный residential-прокси или прайс"
+  }
+}
