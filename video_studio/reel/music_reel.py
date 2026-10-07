@@ -75,7 +75,7 @@ def make_music(total, cues, drop_from=None):
     fx = np.zeros(n)
 
     amen_src = load("drums/loops/loop_amen_full.flac")
-    src_bpm = 16 / (len(amen_src) / SR)
+    src_bpm = 16 * 60 / (len(amen_src) / SR)  # BEATS PER MINUTE (bug was beats/sec -> 75x squeeze = buzz/crackle)
     amen = load_ratio(amen_src, BPM / src_bpm)  # 4 bars at 174
     amen_len = len(amen) / SR
     slices = np.array_split(amen, 32)  # 8th-note slices for fills
