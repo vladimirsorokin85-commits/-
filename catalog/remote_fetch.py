@@ -178,51 +178,114 @@ def save_snapshot(prods, total):
 
 # ---------------------------------------------------------------- фото
 
-def looks_like_image_url(s):
+def looks_like_image_url(s, any_url=False):
+    """Ссылка на фото. any_url=True — доверяем ответу поставщика
+    (/getFullImages отдаёт подписанные ссылки S3 БЕЗ расширения файла)."""
     if not isinstance(s, str):
         return False
     low = s.split("?")[0].lower()
-    return low.startswith(("http://", "https://")) and low.endswith(IMG_EXT)
+    if not low.startswith(("http://", "https://")):
+        return False
+    if low.endswith(IMG_EXT):
+        return True
+    return any_url
 
-def collect_image_refs(obj, acc=None, depth=0):
+def collect_image_refs(obj, acc=None, depth=0, any_url=False):
     """Рекурсивно собираем всё, что похоже на фото: URL или data:base64."""
     if acc is None:
         acc = []
     if depth > 6:
         return acc
     if isinstance(obj, str):
-        if looks_like_image_url(obj):
+        if looks_like_image_url(obj, any_url):
             acc.append(("url", obj))
         elif obj.startswith("data:image") and ";base64," in obj:
             acc.append(("b64", obj.split(";base64,", 1)[1]))
     elif isinstance(obj, dict):
         for v in obj.values():
-            collect_image_refs(v, acc, depth + 1)
+            collect_image_refs(v, acc, depth + 1, any_url)
     elif isinstance(obj, (list, tuple)):
         for v in obj:
-            collect_image_refs(v, acc, depth + 1)
+            collect_image_refs(v, acc, depth + 1, any_url)
     return acc
 
-def save_image(ref, dest_dir, stem, diag):
+
+def sniff_ext(blob: bytes, url: str = "") -> str:
+    """Расширение по содержимому (надёжнее, чем по ссылке)."""
+    if blob[:3] == b"\xff\xd8\xff":
+        return ".jpg"
+    if blob[:8] == b"\x89PNG\r\n\x1a\n":
+        return ".png"
+    if blob[:4] == b"RIFF" and blob[8:12] == b"WEBP":
+        return ".webp"
+    if blob[:6] in (b"GIF87a", b"GIF89a"):
+        return ".gif"
+    m = re.search(r"filename=([^&]+?)(?:\.(jpg|jpeg|png|webp))", url or "", re.I)
+    if m:
+        return "." + m.group(2).lower()
+    ext = os.path.splitext((url or "").split("?")[0])[1].lower()
+    return ext if ext in IMG_EXT else ".jpg"
+
+
+def image_size(blob: bytes):
+    """(ширина, высота) без внешних библиотек. None, если не распознали."""
+    try:
+        if blob[:8] == b"\x89PNG\r\n\x1a\n":
+            return int.from_bytes(blob[16:20], "big"), int.from_bytes(blob[20:24], "big")
+        if blob[:3] == b"\xff\xd8\xff":
+            i = 2
+            while i < len(blob) - 9:
+                if blob[i] != 0xFF:
+                    i += 1
+                    continue
+                marker = blob[i + 1]
+                if marker in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB):
+                    h = int.from_bytes(blob[i + 5:i + 7], "big")
+                    w = int.from_bytes(blob[i + 7:i + 9], "big")
+                    return w, h
+                if marker in (0xD8, 0xD9) or 0xD0 <= marker <= 0xD7:
+                    i += 2
+                    continue
+                seg = int.from_bytes(blob[i + 2:i + 4], "big")
+                i += 2 + max(seg, 2)
+            return None
+        if blob[:4] == b"RIFF" and blob[8:12] == b"WEBP":
+            fourcc = blob[12:16]
+            if fourcc == b"VP8X":
+                w = int.from_bytes(blob[24:27], "little") + 1
+                h = int.from_bytes(blob[27:30], "little") + 1
+                return w, h
+            if fourcc == b"VP8 ":
+                w = int.from_bytes(blob[26:28], "little") & 0x3FFF
+                h = int.from_bytes(blob[28:30], "little") & 0x3FFF
+                return w, h
+    except Exception:  # noqa: BLE001
+        return None
+    return None
+
+def save_image(ref, dest_dir, stem, diag, min_bytes=5_000):
     kind, payload = ref
     if kind == "url":
-        st, blob = http(payload, timeout=90, raw=True)
+        st, blob = http(payload, timeout=120, raw=True)
         if st != 200 or not isinstance(blob, bytes) or len(blob) < 512:
-            diag.append(f"{payload} -> status={st}, bytes={len(blob) if isinstance(blob, bytes) else '?'}")
+            diag.append(f"{payload[:120]}… -> status={st}, bytes={len(blob) if isinstance(blob, bytes) else '?'}")
             return None
-        ext = os.path.splitext(payload.split("?")[0])[1].lower() or ".jpg"
+        url = payload
     else:
         try:
             blob = base64.b64decode(payload)
         except Exception as e:  # noqa: BLE001
             diag.append(f"b64 decode error: {e}")
             return None
-        ext = ".jpg"
-        if blob[:8] == b"\x89PNG\r\n\x1a\n":
-            ext = ".png"
+        url = ""
+    ext = sniff_ext(blob, url)
+    size = image_size(blob)
     path = os.path.join(dest_dir, f"{stem}{ext}")
     open(path, "wb").write(blob)
-    return path
+    w, h = size if size else (0, 0)
+    if len(blob) < min_bytes or (w and w < 400):
+        diag.append(f"⚠ МЕЛКОЕ фото {path}: {len(blob)} байт, {w}×{h} — похоже на превью, а не на товарное фото")
+    return {"path": path, "bytes": len(blob), "w": w, "h": h}
 
 def resolve_targets(idx, req):
     """Заявка -> список товаров (полные объекты индекса)."""
@@ -274,39 +337,68 @@ def fetch_photos(idx, full_by_id):
         product = full_by_id.get(row["id"], row)
         refs = []
         calls = []
-        # штатный путь по описанию поставщика: PUT /getFullImages с полным JSON товара
+        # Штатный путь: PUT /getFullImages с полным JSON товара.
+        # Ответ — массив ПОДПИСАННЫХ ссылок S3 (живут ~60 секунд), БЕЗ расширений в пути,
+        # поэтому любые http(s)-ссылки из ответа считаем ссылками на фото.
         for method in ("PUT", "POST"):
             st, txt = http(f"{BASE}/getFullImages", method=method, body=product, timeout=120)
-            calls.append(f"{method} /getFullImages -> status={st}; ответ[:600]: {str(txt)[:600]}")
+            calls.append(f"{method} /getFullImages -> status={st}; ответ[:700]: {str(txt)[:700]}")
             if st == 200 and txt:
                 try:
-                    refs = collect_image_refs(json.loads(txt))
+                    refs = collect_image_refs(json.loads(txt), any_url=True)
                 except Exception:  # noqa: BLE001
-                    refs = collect_image_refs(txt)
+                    refs = collect_image_refs(txt, any_url=True)
                 if refs:
                     break
+        src = "getFullImages" if refs else ""
         if not refs:
             st, txt = http(f"{BASE}/getFullImages?id={row['id']}")
-            calls.append(f"GET /getFullImages?id=... -> status={st}; ответ[:600]: {str(txt)[:600]}")
+            calls.append(f"GET /getFullImages?id=... -> status={st}; ответ[:700]: {str(txt)[:700]}")
             if st == 200 and txt:
                 try:
-                    refs = collect_image_refs(json.loads(txt))
+                    refs = collect_image_refs(json.loads(txt), any_url=True)
                 except Exception:  # noqa: BLE001
-                    refs = collect_image_refs(txt)
+                    refs = collect_image_refs(txt, any_url=True)
+                if refs:
+                    src = "getFullImages?id"
         if not refs:
+            # запасной путь — только если у поставщика нет полных фото
             refs = collect_image_refs(product)
+            src = "imageURL (превью, мусор)" if refs else ""
+            if refs:
+                diag.append(f"!! {row['name'][:60]}: /getFullImages пусто — беру только превью из API")
 
-        files = []
-        for i, ref in enumerate(refs[:limit], 1):
-            p = save_image(ref, dest, f"{slug}_{i}", diag)
-            if p:
-                files.append(os.path.relpath(p, ROOT).replace(os.sep, "/"))
+        files, details = [], []
+
+        def download(refs_list):
+            files_l, details_l = [], []
+            for i, ref in enumerate(refs_list[:limit], 1):
+                got = save_image(ref, dest, f"{slug}_{i}", diag)
+                if got:
+                    rel = os.path.relpath(got["path"], ROOT).replace(os.sep, "/")
+                    files_l.append(rel)
+                    details_l.append({"path": rel, "bytes": got["bytes"], "w": got["w"], "h": got["h"]})
+            return files_l, details_l
+
+        files, details = download(refs)
+        if not files and refs and src.startswith("getFullImages"):
+            # подписанные ссылки живут ~60 с — если не успели, берём свежие
+            diag.append("!! ссылки протухли — перезапрашиваю /getFullImages")
+            st, txt = http(f"{BASE}/getFullImages", method="PUT", body=product, timeout=120)
+            if st == 200 and txt:
+                try:
+                    refs = collect_image_refs(json.loads(txt), any_url=True)
+                except Exception:  # noqa: BLE001
+                    pass
+                files, details = download(refs)
         manifest.append({
             "id": row["id"], "code": row.get("code"), "name": row["name"],
             "category": row.get("category"), "stock": row.get("stock"),
-            "files": files, "image_refs_found": len(refs),
+            "files": files, "details": details, "source": src, "refs_found": len(refs),
         })
-        log(f"   {row['name'][:60]}: фото {len(files)} (найдено ссылок: {len(refs)})")
+        best = max((d["w"] for d in details), default=0)
+        log(f"   {row['name'][:60]}: фото {len(files)} (источник: {src or '—'}, "
+            f"лучшее {best}px, ссылок {len(refs)})")
         diag.extend([f"--- {row['name'][:70]} (code={code})"] + calls)
 
     json.dump(manifest, open(os.path.join(PHOTOS, "manifest.json"), "w", encoding="utf-8"),

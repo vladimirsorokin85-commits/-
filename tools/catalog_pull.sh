@@ -8,7 +8,8 @@ BRANCH="${CATALOG_BRANCH:-catalog-data}"
 REPO="${CATALOG_REPO:-$(git remote get-url origin | sed -E 's#.*[:/]([^/]+/[^/.]+)(\.git)?$#\1#')}"
 
 echo "Тяну ветку $BRANCH из $REPO …"
-if git fetch --quiet origin "$BRANCH" 2>/dev/null; then
+# явный refspec: клон может быть одно-бранчевым (тогда без него ref не создаётся)
+if git fetch --force --quiet origin "refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" 2>/dev/null; then
   got=0
   for p in catalog/data catalog/photos; do
     if git cat-file -e "origin/$BRANCH:$p" 2>/dev/null; then
