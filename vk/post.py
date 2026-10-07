@@ -6,7 +6,9 @@
 Принципы (нарушать нельзя):
   • факты — ТОЛЬКО из описания поставщика, ничего не выдумываем;
   • фото — только из каталога поставщика (catalog/photos/…), никаких картинок из интернета;
-  • цену пишет владелец: нет --price → в тексте «цена по запросу»;
+  • ЦЕНЫ В ПОСТАХ ВК НЕ УКАЗЫВАЕМ (правило владельца от 07.10.2026):
+    в текст поста цена не попадает никогда. Флаг --price только сохраняет
+    вашу розницу в JSON рядом с постом — для вашей же записи;
   • наличие формулируем как «на складе у Димы» / «НЕТУ на складе у Димы».
 
 Примеры:
@@ -169,7 +171,6 @@ def post_product(fam, price=None, sizes_show=True) -> str:
             body.append(f"В наличии: {st}")
 
     body.append("")
-    body.append(f"Цена: {money(price)}" if price else "Цена: по запросу (напишите в личку)")
     body.append("Доставка по РФ. Пишите в личные сообщения — подберём под вашу задачу.")
     body.append("")
     body.append(hashtags(name, row.get("category", "")))
@@ -181,9 +182,7 @@ def post_collection(fams, price_map=None) -> str:
     for i, fam in enumerate(fams, 1):
         rows = fam["rows"]
         st = stock_line(rows)
-        price = (price_map or {}).get(fam["family"])
-        price_s = f" — {money(price)}" if price else ""
-        lines.append(f"{i}. {fam['family']}{price_s}")
+        lines.append(f"{i}. {fam['family']}")
         if st:
             lines.append(f"   в наличии: {st}")
     lines += ["", "Всё со склада у Димы. Пишите в личку — забронирую и отправим СДЭК.",
@@ -213,7 +212,8 @@ def main(argv=None):
     ap.add_argument("--query", default="", help="слова запроса по каталогу")
     ap.add_argument("--code", help="код товара у поставщика")
     ap.add_argument("--id", dest="pid", help="id товара")
-    ap.add_argument("--price", type=float, help="розничная цена ВЛАДЕЛЬЦА (не закуп)")
+    ap.add_argument("--price", type=float,
+                    help="розница ВЛАДЕЛЬЦА — только для вашей записи в JSON; в текст поста НЕ попадает")
     ap.add_argument("--limit", type=int, default=1, help="сколько позиций (для подборки)")
     ap.add_argument("--template", choices=["product", "collection", "stock"], default="product")
     ap.add_argument("--photo-limit", type=int, default=3, help="сколько фото приложить")
@@ -289,8 +289,9 @@ def main(argv=None):
     else:
         print("⚠ Фото по этой позиции не выкачаны. Добавь товар в catalog/requests/photos.json "
               "(или укажи его код) — workflow притянет фото поставщика, потом повтори пост.")
-    if not args.price:
-        print("⚠ Цена не указана — в тексте стоит «по запросу» (правило: цены только от владельца).")
+    if args.price:
+        print("ℹ Цена записана только в JSON (для вашей записи). В текст поста она не попала — "
+              "правило магазина: в постах ВК цены не указываем.")
     return 0
 
 
