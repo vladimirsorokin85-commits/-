@@ -49,7 +49,25 @@ def level(x, target_db=-18.0, max_boost=14.0, max_cut=12.0, gate_db=-42.0, sr=SR
     gl = np.minimum(1.0, lim / np.maximum(pk, 1e-9))
     gl = uniform_filter1d(gl, int(0.008 * sr))  # smooth gain changes (no stepwise crackle)
     y = np.clip(y * gl, -lim, lim)
+    y = expand(y, sr)
     return y.astype(np.float32)
+
+
+def expand(y, sr=SR, below_db=30.0, depth_db=24.0):
+    """Downward expander: anything more than `below_db` under the speech level (TTS breaths, hiss,
+    crackly onsets) is smoothly pulled down by up to `depth_db`. 5 ms attack, 60 ms release."""
+    env = _db(np.sqrt(uniform_filter1d(y.astype(np.float64) ** 2, int(0.01 * sr)) + 1e-12))
+    speech = np.percentile(env[env > -60], 80) if np.any(env > -60) else -20
+    thr = speech - below_db
+    target = -np.clip((thr - env) * 2.0, 0, depth_db)  # 1:3 expansion below threshold
+    g = np.empty_like(target)
+    a_att, a_rel = np.exp(-1 / (0.005 * sr)), np.exp(-1 / (0.06 * sr))
+    prev = 0.0
+    for i, v in enumerate(target):
+        a = a_att if v > prev else a_rel   # open fast, close slowly
+        prev = a * prev + (1 - a) * v
+        g[i] = prev
+    return y * 10 ** (g / 20)
 
 
 def spread(x, sr=SR):

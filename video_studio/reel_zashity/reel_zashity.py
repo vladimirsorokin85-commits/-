@@ -53,7 +53,7 @@ def font(w, s):
 # ---------------------------------------------------------------- audio
 def load(path, tempo=1.0):
     cmd = ["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(SR)]
-    cmd += ["-af", "adeclick=w=55:o=75:t=2" + (f",atempo={tempo}" if tempo != 1.0 else "")]
+    cmd += ["-af", f"atempo={tempo}"]
     raw = subprocess.run(cmd + ["-f", "f32le", "-"], capture_output=True, check=True).stdout
     return np.frombuffer(raw, np.float32).copy()
 
@@ -92,7 +92,7 @@ def squeeze_pauses(x, max_pause=0.34, thr_db=-40):
 def build_audio():
     from voice_level import level
     sys.path.insert(0, str(REEL))
-    from music_asia import make_music, BEAT, BAR
+    from music_asia import make_music_v6, BEAT, BAR
     import pyloudnorm as pyln
     from scipy.signal import butter, sosfilt
     from scipy.ndimage import uniform_filter1d
@@ -108,7 +108,7 @@ def build_audio():
     voice = np.zeros(n)
     for s, v in zip(starts, voices):
         voice[int(s * SR): int(s * SR) + len(v)] += v
-    music = make_music(total, [0.0] + starts[1:], drop_from=starts[-1])
+    music = make_music_v6(total, [0.0] + starts[1:], drop_from=starts[-1], splash=starts[0])
     # carve the speech band out of the music (static EQ, no pumping)
     mid = sosfilt(butter(2, [700, 4000], "bandpass", fs=SR, output="sos"), music)
     music = music - 0.5 * mid

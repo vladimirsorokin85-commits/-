@@ -124,3 +124,90 @@ def make_music(total, cues, drop_from=None):
         g = np.minimum(1, 0.9 / np.maximum(maximum_filter1d(np.abs(m), 441), 1e-9))
         print("music limiter GR max dB", round(20 * np.log10(g.min()), 1), "time>2dB", round(float(np.mean(g < 0.794)), 4))
     return base.clean_limit(mix)
+
+
+# ---------------------------------------------------------------- v6: real catalog track as the bed
+CATALOG = Path(__file__).resolve().parent.parent / "music_catalog" / "dnb_neuro_174.ogg"
+
+
+def _load_any(path):
+    import subprocess
+    ff = str(Path.home() / ".local/bin/ffmpeg")
+    raw = subprocess.run([ff, "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
+                         capture_output=True, check=True).stdout
+    return np.frombuffer(raw, np.float32).astype(np.float64)
+
+
+def _downbeat_phase(x, start_s=8.0, span_s=30.0):
+    """Phase (s) of the strongest beat grid at 174 BPM (onset-strength fold)."""
+    seg = x[int(start_s * SR): int((start_s + span_s) * SR)]
+    hop = 256
+    n = len(seg) // hop
+    e = np.sqrt(np.mean(seg[: n * hop].reshape(n, hop) ** 2, 1))
+    on = np.maximum(0, np.diff(np.log(e + 1e-6)))
+    fr = SR / hop
+    best, bp = -1, 0.0
+    for ph in np.arange(0, BAR, 1 / fr):
+        idx = (np.arange(ph, span_s - 0.1, BEAT) * fr).astype(int)
+        idx = idx[idx < len(on)]
+        sc = on[idx].sum() + 0.5 * on[(np.arange(ph, span_s - 0.1, BAR) * fr).astype(int)].sum()
+        if sc > best:
+            best, bp = sc, ph
+    return start_s + bp
+
+
+def make_music_v6(total, cues, drop_from=None, splash=None):
+    """Intro (until first cue>0 / splash): guzheng + taiko + boom. Then the catalog DnB track (beat-aligned).
+    Outro (after drop_from): track fades to 35 %, guzheng returns."""
+    splash = splash if splash is not None else BAR
+    n = int(total * SR)
+    track = _load_any(CATALOG)
+    t0 = _downbeat_phase(track, 16.0)          # start inside an established groove
+    seg = track[int(t0 * SR): int(t0 * SR) + n]
+    bed = np.zeros(n)
+    s0 = int(splash * SR)
+    bed[s0: s0 + len(seg) - 0] = seg[: n - s0]
+    fi = int(0.015 * SR)
+    bed[s0: s0 + fi] *= np.linspace(0, 1, fi)
+    if drop_from:
+        d0 = int(drop_from * SR)
+        ramp = np.ones(n)
+        ramp[d0: d0 + int(0.6 * SR)] = np.linspace(1, 0.35, len(ramp[d0: d0 + int(0.6 * SR)]))
+        ramp[d0 + int(0.6 * SR):] = 0.35
+        bed *= ramp
+    # guzheng only in intro + outro (no key clash with the track)
+    lead = np.zeros(n + 2 * SR)
+    eighth = BEAT / 2
+    cache = {}
+
+    def phrase(t, ph, g=0.7):
+        for s, note in enumerate(ph):
+            if note is None:
+                continue
+            nxt = next((j for j in range(s + 1, len(ph)) if ph[j] is not None), len(ph))
+            dur = min(1.6, (nxt - s) * eighth + 0.15)
+            key = (note, round(dur, 3))
+            if key not in cache:
+                cache[key] = guzheng_note(note[0], dur, note[1])
+            place(lead, cache[key], t + s * eighth, g)
+    phrase(0.0, PHRASES[0][:8])                 # first bar = intro splash
+    if drop_from:
+        t, k = drop_from, 0
+        while t < total - 0.5:
+            phrase(t, PHRASES[k % 4], 0.6)
+            t += 2 * BAR
+            k += 1
+    lead = reverb(lead[:n], 1.2, 0.18)
+    kick = load("drums/one-shots/kick/drum_heavy_kick.flac")
+    boom = load("misc/misc_cineboom.flac")
+    taiko = lp(pitch(kick, -7), 260)
+    perc = np.zeros(n + 4 * SR)
+    for c in [0.0] + list(cues[1:]):
+        for off, g in ((0, 1.0), (BEAT * 1.5, 0.55), (BEAT * 2, 0.7)):
+            place(perc, taiko, c + off, g)
+        place(perc, lp(boom, 5000), max(0, c - 0.02), 0.6)
+    perc = perc[:n]
+    pk = lambda x: np.percentile(np.abs(x), 99.99) + 1e-9
+    ref = pk(seg)
+    mix = bed + lead / pk(lead) * ref * 0.45 + perc / pk(perc) * ref * 0.6
+    return base.clean_limit(mix)
