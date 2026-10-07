@@ -4,9 +4,16 @@
 
 | Файл | Что внутри |
 |---|---|
+| `V_OKOPE_posts_20261008_week.zip` | **42 поста на неделю 08–14.10.2026** (по 6 в день): папки по дням, «пост.txt» + фото поставщика, ВСЕ_ПОСТЫ_НЕДЕЛЯ.txt, README.txt — 128 файлов |
 | `V_OKOPE_posts_2026-10-07.zip` | 6 сезонных постов на 07.10.2026: текст + фото поставщика (21 файл) |
 
-Прямая ссылка на скачивание (кнопка «Download raw file»):
-`https://github.com/vladimirsorokin85-commits/-/blob/arena/26c1e78e-repo/vk/dist/V_OKOPE_posts_2026-10-07.zip`
+Прямые ссылки на скачивание (кнопка «Download raw file»):
 
-Собрать новый комплект: `python3 -m vk.post ...` для текста, затем упаковка (см. `vk/README.md`).
+- неделя: `https://github.com/vladimirsorokin85-commits/-/blob/arena/26c1e78e-repo/vk/dist/V_OKOPE_posts_20261008_week.zip`
+- 07.10: `https://github.com/vladimirsorokin85-commits/-/blob/arena/26c1e78e-repo/vk/dist/V_OKOPE_posts_2026-10-07.zip`
+
+Сборка недельного комплекта: `PYTHONPATH=$PWD/vendor python3 vk/make_pack.py`
+(план — `vk/posts/plan_2026-10-08_14.json`, генератор — `vk/make_pack.py`).
+
+Правила: цены в постах не указываем, факты только из описаний поставщика,
+фото только от поставщика (каталог Димы), наличие сверяется перед постом.
