@@ -1,4 +1,5 @@
 {
+ "hide_prices": true,
  "date": "07.10.2026",
  "title": "КОМПЛЕКТ «ШТУРМОВИК»",
  "subtitle": "Закрытая защита · собрано из наличия",
@@ -21,7 +22,7 @@
    }
   ],
   "price_label": "КОМПЛЕКС «ШТУРМ»",
-  "price": 133096.0
+  "price": null
  },
  "options": {
   "label": "К КОМПЛЕКСУ — НА ВЫБОР",
@@ -31,54 +32,54 @@
     "sub": "комплект 2 шт · 250×300 мм · керамика + СВМПЭ",
     "sub2": "",
     "photo": "catalog/photos/00242/00242_1.jpg",
-    "price": 13500.0
+    "price": null
    },
    {
     "name": "Керамические бронеплиты боковые Бр5",
     "sub": "200×150×20 мм · 1,4 кг · в камербанд",
     "sub2": "",
     "photo": "catalog/photos/00259/00259_1.jpg",
-    "price": 9500.0
+    "price": null
    },
    {
     "name": "Шлем СВМПЭ FAST",
     "sub": "СВМПЭ + арамид · рельсы ARC · крепление под ПНВ",
     "sub2": "",
     "photo": "catalog/photos/00755/00755_1.jpg",
-    "price": 12500.0
+    "price": null
    },
    {
     "name": "Наушники EARMOR M32",
     "sub": "NRR22 · разъём PTT (НАТО 7.0)",
     "sub2": "",
     "photo": "catalog/photos/00095/00095_1.jpg",
-    "price": 7800.0
+    "price": null
    },
    {
     "name": "Аптечка RHINO RESCUE SE Pro",
     "sub": "30+ наименований · отрывной подсумок",
     "sub2": "",
     "photo": "catalog/photos/00327/00327_1.jpg",
-    "price": 7400.0
+    "price": null
    },
    {
     "name": "Перчатки «АЛЛИГАТОР»",
     "sub": "олива, XL · вставка-кастет",
     "sub2": "",
     "photo": "catalog/photos/00767/00767_1.jpg",
-    "price": 1700.0
+    "price": null
    },
    {
     "name": "Подсумок под 3 магазина АК",
     "sub": "цифра/пиксель · MOLLE · резинка",
     "sub2": "",
     "photo": "catalog/photos/00370/00370_1.jpg",
-    "price": 900.0
+    "price": null
    }
   ]
  },
  "kit": {
   "label": "КОМПЛЕКТ: ШТУРМ + ПЛИТЫ Бр5 + КАСКА + СВЯЗЬ + МЕДИЦИНА",
-  "price": 186396.0
+  "price": null
  }
 }

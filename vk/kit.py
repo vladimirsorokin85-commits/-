@@ -104,7 +104,10 @@ def build_kit(kit_path):
     resol = {it["id"]: resolve(it, idx, full, manifest) for it in items}
 
     # ---------- карточка ----------
+    hide_prices = bool(kit.get("hide_prices"))
+    _main_price = None if hide_prices else main.get("price")
     card = {
+        "hide_prices": hide_prices,
         "date": kit.get("date", ""),
         "title": kit["title"],
         "subtitle": kit.get("subtitle", "Собрано из наличия"),
@@ -114,7 +117,7 @@ def build_kit(kit_path):
             "photos": main_res["photos"][:3],
             "sections": card_sections(main, main_res),
             "price_label": main.get("label", "ОСНОВА"),
-            "price": main.get("price"),
+            "price": _main_price,
         },
         "options": {
             "label": kit.get("options_label", "К НЕМУ — НА ВЫБОР"),
@@ -123,12 +126,13 @@ def build_kit(kit_path):
                 "sub": it.get("card_sub") or one_line_facts(it, resol[it["id"]]),
                 "sub2": it.get("card_sub2") or "",
                 "photo": resol[it["id"]]["photos"][0],
-                "price": it.get("price"),
+                "price": None if hide_prices else it.get("price"),
             } for it in items],
         },
     }
     if kit.get("kit"):
-        card["kit"] = {"label": kit["kit"]["label"], "price": kit["kit"].get("price")}
+        card["kit"] = {"label": kit["kit"]["label"],
+                       "price": None if hide_prices else kit["kit"].get("price")}
     json.dump(card, open(os.path.join(out_dir, "карточка.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
     card_path = os.path.join(out_dir, "карточка.jpg")

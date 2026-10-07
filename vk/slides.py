@@ -174,7 +174,7 @@ def slide_product(spec, n, total):
             y += BOX + 34
     else:
         it = items[0]
-        facts_reserve = 300
+        facts_reserve = 120 if spec.get("no_price") else 300
         name = it.get("name", "")
         f, lines = _wrap_fit(name, W - 2 * M, (52, 44, 40), 2)
         for ln in lines:
@@ -202,18 +202,19 @@ def slide_product(spec, n, total):
                 y += 40
             y += 8
 
-    price = spec.get("price")
-    bx = [M, H - 268, W - M, H - 150]
-    d.rectangle(bx, outline=INK, width=4)
-    d.rectangle([bx[0] + 7, bx[1] + 7, bx[2] - 7, bx[3] - 7], outline=INK, width=1)
-    d.text((bx[0] + 26, (bx[1] + bx[3]) / 2), "ЦЕНА:", font=font("Oswald.ttf", 32, "Medium"),
-           fill=INK, anchor="lm")
-    if price is None:
-        d.text((bx[2] - 26, (bx[1] + bx[3]) / 2), "по запросу",
-               font=font("Oswald.ttf", 38, "Medium"), fill=MUTED, anchor="rm")
-    else:
-        d.text((bx[2] - 26, (bx[1] + bx[3]) / 2), fmt_money(price),
-               font=font("Oswald.ttf", 52, "Bold"), fill=INK, anchor="rm")
+    if not spec.get("no_price"):
+        price = spec.get("price")
+        bx = [M, H - 268, W - M, H - 150]
+        d.rectangle(bx, outline=INK, width=4)
+        d.rectangle([bx[0] + 7, bx[1] + 7, bx[2] - 7, bx[3] - 7], outline=INK, width=1)
+        d.text((bx[0] + 26, (bx[1] + bx[3]) / 2), "ЦЕНА:", font=font("Oswald.ttf", 32, "Medium"),
+               fill=INK, anchor="lm")
+        if price is None:
+            d.text((bx[2] - 26, (bx[1] + bx[3]) / 2), "по запросу",
+                   font=font("Oswald.ttf", 38, "Medium"), fill=MUTED, anchor="rm")
+        else:
+            d.text((bx[2] - 26, (bx[1] + bx[3]) / 2), fmt_money(price),
+                   font=font("Oswald.ttf", 52, "Bold"), fill=INK, anchor="rm")
     _foot(img, d, spec.get("foot", "Все позиции в наличии"), n, total)
     return img
 
@@ -252,9 +253,9 @@ def slide_summary(spec, n, total):
     d.text((bx[0] + 26, bx[1] + 112), "Все позиции в наличии · отправка СДЭК",
            font=font("PTSans-Regular.ttf", 23), fill=MUTED, anchor="lm")
     price = spec.get("price")
-    if price is None:
-        d.text((bx[2] - 26, (bx[1] + bx[3]) / 2), "по запросу",
-               font=font("Oswald.ttf", 40, "Medium"), fill=MUTED, anchor="rm")
+    if price is None or spec.get("no_price"):
+        d.text((bx[2] - 26, (bx[1] + bx[3]) / 2), "цена — в личных сообщениях",
+               font=font("Oswald.ttf", 30, "Medium"), fill=MUTED, anchor="rm")
     else:
         d.text((bx[2] - 26, (bx[1] + bx[3]) / 2), fmt_money(price),
                font=font("Oswald.ttf", 54, "Bold"), fill=INK, anchor="rm")
@@ -371,6 +372,14 @@ def build_spec(kit, card, resolved, story=None):
                                "price": it.get("price")})
 
     # укладываемся в 10 слайдов: часть позиций — по две на слайд
+    no_price = bool(kit.get("hide_prices"))
+    if no_price:
+        for p in product_slides:
+            if "items" in p:
+                for q in p["items"]:
+                    q["no_price"] = True
+            else:
+                p["no_price"] = True
     room = 10 - len(slides) - 2  # минус итог и призыв
     need = max(0, len(product_slides) - room)
     if need == 0:
@@ -383,17 +392,19 @@ def build_spec(kit, card, resolved, story=None):
         packs = [[p] for p in keep] + [[m] for m in merged]
     for pack in packs:
         if "items" in pack[0]:
-            slides.append({"type": "product", "items": pack[0]["items"], "subtitle": "Комплект"})
+            slides.append({"type": "product", "items": pack[0]["items"], "subtitle": "Комплект",
+                           "no_price": no_price})
         else:
-            slides.append({"type": "product", **pack[0], "subtitle": "Комплект"})
+            slides.append({"type": "product", **pack[0], "subtitle": "Комплект",
+                           "no_price": no_price})
 
     rows = [{"name": main["name"], "variant": main.get("sub", "")}]
     for it in items:
         rows.append({"name": it.get("short") or it["name"], "variant": it.get("sub", "")})
-    slides.append({"type": "summary", "title": "Что входит в комплект", "rows": rows,
+    slides.append({"type": "summary", "title": "Что входит в комплект", "rows": rows, "no_price": no_price,
                    "total_label": kit.get("kit", {}).get("label", "КОМПЛЕКТ"),
                    "price": kit.get("kit", {}).get("price")})
-    of = kit.get("offer")
+    of = kit.get("offer") if not kit.get("hide_offer") else None
     if of:
         slides.append({"type": "offer", "title": of.get("title", "СКИДКА ЗА РЕПОСТ"),
                        "value_label": of.get("value_label", ""),

@@ -70,6 +70,7 @@ def price_text(price):
 
 
 def build(data, out_path):
+    hide_prices = bool(data.get("hide_prices"))
     prod = data["product"]
     options = data.get("options") or {}
     opt_items = options.get("items") or []
@@ -132,19 +133,23 @@ def build(data, out_path):
 
     y += 30
     bx0, by0, bx1, by1 = 545, y + 8, x1, y + 118
-    d.rectangle([bx0, by0, bx1, by1], outline=INK, width=4)
-    d.rectangle([bx0 + 7, by0 + 7, bx1 - 7, by1 - 7], outline=INK, width=1)
+    if not hide_prices:
+        d.rectangle([bx0, by0, bx1, by1], outline=INK, width=4)
+        d.rectangle([bx0 + 7, by0 + 7, bx1 - 7, by1 - 7], outline=INK, width=1)
     # подпись слева: ужимаем, чтобы не наехать на цену
     f_pl = font("Oswald.ttf", 32, "Medium")
+    if hide_prices:
+        f_pl, label = None, None
     label = str(prod.get("price_label", "ЦЕНА")) + ":"
     f_pt = font("Oswald.ttf", 54 if prod.get("price") is not None else 40, "Bold")
-    while f_pl.size > 18 and (f_pl.getlength(label) + f_pt.getlength(price_text(prod.get("price"))) + 90
-                              > (bx1 - bx0)):
-        f_pl = font("Oswald.ttf", f_pl.size - 2, "Medium")
-    d.text((bx0 + 26, (by0 + by1) / 2), label, font=f_pl, fill=INK, anchor="lm")
-    price_font = font("Oswald.ttf", 54 if prod.get("price") is not None else 40, "Bold")
-    d.text((bx1 - 26, (by0 + by1) / 2), price_text(prod.get("price")),
-           font=price_font, fill=INK if prod.get("price") is not None else MUTED, anchor="rm")
+    if not hide_prices:
+        while f_pl.size > 18 and (f_pl.getlength(label) + f_pt.getlength(price_text(prod.get("price"))) + 90
+                                  > (bx1 - bx0)):
+            f_pl = font("Oswald.ttf", f_pl.size - 2, "Medium")
+        d.text((bx0 + 26, (by0 + by1) / 2), label, font=f_pl, fill=INK, anchor="lm")
+        price_font = font("Oswald.ttf", 54 if prod.get("price") is not None else 40, "Bold")
+        d.text((bx1 - 26, (by0 + by1) / 2), price_text(prod.get("price")),
+               font=price_font, fill=INK if prod.get("price") is not None else MUTED, anchor="rm")
     st = stamp("В НАЛИЧИИ", data.get("date", ""))
     img.paste(st, (M + 6, y - 26), st)
     y = by1 + 36
@@ -163,7 +168,7 @@ def build(data, out_path):
             im.thumbnail((box - 14, ROW_H - 14), Image.LANCZOS)
             img.paste(im, (M + (box - im.width) // 2, y + (ROW_H - im.height) // 2))
             tx = M + box + 26
-            price_w = 230
+            price_w = 0 if hide_prices else 230
             tw = (x1 - 22 - price_w) - tx
             f_an, alines = fit_font("PTSans-Bold.ttf", it["name"], tw, (31, 28, 25))
             alh = f_an.size + 8
@@ -180,14 +185,15 @@ def build(data, out_path):
             for s in subs:
                 d.text((tx, ty + 4), s, font=f_as, fill=MUTED)
                 ty += 32
-            f_pr = font("Oswald.ttf", 40 if it.get("price") is not None else 32, "SemiBold")
-            d.text((x1 - 22, y + ROW_H / 2), price_text(it.get("price")), font=f_pr,
-                   fill=INK if it.get("price") is not None else MUTED, anchor="rm")
+            if not hide_prices:
+                f_pr = font("Oswald.ttf", 40 if it.get("price") is not None else 32, "SemiBold")
+                d.text((x1 - 22, y + ROW_H / 2), price_text(it.get("price")), font=f_pr,
+                       fill=INK if it.get("price") is not None else MUTED, anchor="rm")
             y += ROW_H + 18
 
     # ---- итог по комплекту ----
     if kit:
-        of = kit.get("offer") or {}
+        of = {} if hide_prices else (kit.get("offer") or {})
         box_h = 200 if of.get("value_label") else 140
         y += 26
         d.rectangle([M, y, x1, y + box_h], outline=INK, width=4)
@@ -203,9 +209,10 @@ def build(data, out_path):
             d.text((M + 26, y + 156),
                    f"{of.get('title', 'СКИДКА ЗА РЕПОСТ')} — {of['value_label']}",
                    font=font("PTSans-Bold.ttf", 25), fill=INK, anchor="lm")
-        f_kp = font("Oswald.ttf", 56 if kit.get("price") is not None else 40, "Bold")
-        d.text((x1 - 26, y + box_h / 2), price_text(kit.get("price")), font=f_kp,
-               fill=INK if kit.get("price") is not None else MUTED, anchor="rm")
+        if not hide_prices:
+            f_kp = font("Oswald.ttf", 56 if kit.get("price") is not None else 40, "Bold")
+            d.text((x1 - 26, y + box_h / 2), price_text(kit.get("price")), font=f_kp,
+                   fill=INK if kit.get("price") is not None else MUTED, anchor="rm")
         y += box_h + 34
 
     y += 12
