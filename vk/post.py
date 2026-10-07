@@ -70,7 +70,7 @@ def split_description(desc: str):
     subtitle = lines[0] if len(lines[0]) < 160 else ""
     feats, specs, mode = [], [], None
     for ln in lines[1:]:
-        low = ln.lower().rstrip(":")
+        low = re.sub(r"^[^\w«\"А-Яа-яЁё0-9]+", "", ln).lower().rstrip(":")
         if low.startswith(("особенност", "преимуществ", "плюсы", "ключевые")):
             mode = "f"
             continue
@@ -105,10 +105,8 @@ def short_fact(s: str, limit: int = 150) -> str:
 
 def hashtags(name: str, category: str, extra=()):
     base = list(SHOP_TAGS) + list(extra)
-    low = norm(f"{name} {category}")
-    for key, tags in CATEGORY_TAGS.items():
-        if key in low:
-            base += tags
+    tags_by_name = [t for key, tags in CATEGORY_TAGS.items() if key in norm(name) for t in tags]
+    base += tags_by_name or [t for key, tags in CATEGORY_TAGS.items() if key in norm(category) for t in tags]
     out = []
     for t in base:
         if t not in out:
@@ -129,9 +127,20 @@ def stock_line(rows):
         if n <= 0:
             continue
         sizes = sizes_of(r["name"])
-        label = sizes[0] if sizes else "—"
-        parts.append(f"{label} — {n} шт")
+        parts.append(f"{sizes[0]} — {n} шт" if sizes else f"{n} шт")
     return " · ".join(parts)
+
+
+def _repeats(line: str, name: str) -> bool:
+    """Первую строку описания часто дублирует название — в пост её не тащим."""
+    a, b = norm(line), norm(name)
+    if a in b:
+        return True
+    words = [w for w in a.split() if len(w) > 3]
+    if not words:
+        return True
+    hits = sum(1 for w in words if w[:5] in b)
+    return hits / len(words) >= 0.6
 
 
 def post_product(fam, price=None, sizes_show=True) -> str:
@@ -143,7 +152,7 @@ def post_product(fam, price=None, sizes_show=True) -> str:
 
     head = name
     body = []
-    if subtitle and norm(subtitle) not in norm(name):
+    if subtitle and not _repeats(subtitle, name):
         body.append(subtitle)
 
     facts = [short_fact(f) for f in feats[:5]] or [short_fact(s) for s in specs[:5]]

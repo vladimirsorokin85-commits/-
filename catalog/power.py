@@ -61,9 +61,12 @@ def pick(need_worst, capacity, budget=None):
     for it in capacity:
         if budget and it["retail"] and it["retail"] > budget:
             continue
-        if it["wh"] and it["wh"] >= need_worst:
+        if not it["wh"]:
+            # ёмкость в прайсе не указана — не выдумываем, отправляем уточнять
+            verdict = "ёмкость уточнить"
+        elif it["wh"] >= need_worst:
             verdict = "ТЯНЕТ с запасом"
-        elif it["wh"] and it["wh"] >= need_worst * 0.75:
+        elif it["wh"] >= need_worst * 0.75:
             verdict = "на грани — не гарантирую"
         else:
             verdict = "НЕ ТЯНЕТ"
@@ -113,6 +116,10 @@ def main(argv=None):
             print("\nПанели (заряд на солнце):")
             for it in panels:
                 print(f"  · {it['model']:<24} закуп {money(it['purchase'])}   розница {money(it['retail'])}")
+        unknown = [it["model"] for it in items if not it["wh"]]
+        if unknown:
+            print("\nЁмкость в прайсе не указана (уточнить у поставщика, не выдумывать): "
+                  + ", ".join(unknown))
         print("\n⚠ Наличие у поставщика подтвердить ПЕРЕД обещанием клиенту. "
               "Фото — только от поставщика. EU-версию подтверждать отдельно.")
     return 0
