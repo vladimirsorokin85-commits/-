@@ -192,13 +192,22 @@ def rounded_logo(size, radius):
             lg = Image.new("RGB", (size, size), PAPER)
             lg.paste(new, ((size - new.width) // 2, (size - new.height) // 2))
     else:
+        # логотип ещё не загружен — чистая времянка (без служебных надписей на клиентской карточке)
         lg = Image.new("RGB", (size, size), PAPER)
         dd = ImageDraw.Draw(lg)
         dd.ellipse([6, 6, size - 7, size - 7], outline=FRAME, width=4)
-        f1 = font("RussoOne.ttf", int(size * 0.30))
-        f2 = font("PTSans-Regular.ttf", max(9, int(size * 0.085)))
-        dd.text((size / 2, size * 0.42), "ВО", font=f1, fill=INK, anchor="mm")
-        dd.text((size / 2, size * 0.66), "НУЖЕН logo.png", font=f2, fill=MUTED, anchor="mm")
+        dd.ellipse([18, 18, size - 19, size - 19], outline=FRAME, width=1)
+        f1 = font("RussoOne.ttf", int(size * 0.34))
+        dd.text((size / 2, size * 0.46), "ВО", font=f1, fill=INK, anchor="mm")
+        # маленькая звезда под монограммой — намёк на эмблему
+        cx, cy, r = size / 2, size * 0.72, size * 0.055
+        pts = []
+        import math as _m
+        for i in range(10):
+            ang = -_m.pi / 2 + i * _m.pi / 5
+            rr = r if i % 2 == 0 else r * 0.45
+            pts.append((cx + rr * _m.cos(ang), cy + rr * _m.sin(ang)))
+        dd.polygon(pts, fill=INK)
     mask = Image.new("L", (size, size), 0)
     ImageDraw.Draw(mask).rounded_rectangle([0, 0, size - 1, size - 1], radius, fill=255)
     return lg, mask
