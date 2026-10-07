@@ -142,6 +142,16 @@ def make_music(total, cues, drop_from=None):
     drums = hp(drums, 40)
     mix = drums + bass + pad + fx
     mix = hp(mix, 30)
-    mix /= np.percentile(np.abs(mix), 99.9) + 1e-9
-    mix = np.tanh(mix * 1.0) * 0.9
-    return mix[: int(total * SR)]
+    return clean_limit(mix)[: int(total * SR)]
+
+
+def clean_limit(mix, ceiling=0.9):
+    """Peak-normalise + smooth look-ahead limiter. No waveshaping (tanh caused crackle on amen hits)."""
+    from scipy.ndimage import maximum_filter1d, uniform_filter1d
+    mix = mix / (np.percentile(np.abs(mix), 99.95) + 1e-9) * ceiling
+    w = int(0.010 * SR)
+    pk = maximum_filter1d(np.abs(mix), w)
+    g = np.minimum(1.0, ceiling / np.maximum(pk, 1e-9))
+    g = uniform_filter1d(np.minimum.accumulate(g[::-1])[::-1] if False else g, w)
+    g = uniform_filter1d(g, w)
+    return np.clip(mix * g, -ceiling, ceiling)

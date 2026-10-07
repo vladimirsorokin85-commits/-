@@ -1,5 +1,6 @@
 """Asian-flavoured jungle bed: base amen/reese bed (reel/music_reel.py) + plucked guzheng lead
 in F minor pentatonic (physical string model with press-bends), taiko hits and a gong wash on cues."""
+import os
 import sys
 from pathlib import Path
 
@@ -113,6 +114,13 @@ def make_music(total, cues, drop_from=None):
 
     def norm(x):
         return x / (np.sqrt(np.mean(x ** 2)) + 1e-9)
-    mix = norm(bed) * 1.0 + norm(lead) * 0.42 + norm(perc) * 0.35
-    mix /= np.percentile(np.abs(mix), 99.9) + 1e-9
-    return np.tanh(mix) * 0.9
+    # lead: RMS-matched (continuous); perc: PEAK-matched (sparse hits must not out-peak the bed)
+    pk = lambda x: np.percentile(np.abs(x), 99.99) + 1e-9
+    bedn = norm(bed)
+    mix = bedn + norm(lead) * 0.42 + perc / pk(perc) * pk(bedn) * 0.55
+    if os.environ.get("MUSIC_QC"):
+        from scipy.ndimage import maximum_filter1d
+        m = mix / (np.percentile(np.abs(mix), 99.95) + 1e-9) * 0.9
+        g = np.minimum(1, 0.9 / np.maximum(maximum_filter1d(np.abs(m), 441), 1e-9))
+        print("music limiter GR max dB", round(20 * np.log10(g.min()), 1), "time>2dB", round(float(np.mean(g < 0.794)), 4))
+    return base.clean_limit(mix)
