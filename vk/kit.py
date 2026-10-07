@@ -34,6 +34,7 @@ except ImportError:  # noqa: BLE001
 
 sys.path.insert(0, os.path.join(ROOT, "media", "blank"))
 from kit_card import build as build_card  # noqa: E402
+from vk.slides import build as build_slides, build_spec  # noqa: E402
 
 CTA = "СДЭК по России, оплата при получении. Напишите в личные сообщения — соберём под вашу задачу."
 
@@ -133,6 +134,14 @@ def build_kit(kit_path):
     card_path = os.path.join(out_dir, "карточка.jpg")
     build_card(card, card_path)
 
+    # ---------- слайды-карусель (пост-история) ----------
+    slides_dir = os.path.join(out_dir, "слайды")
+    spec = build_spec(kit, card, resol, story=kit.get("story"))
+    build_slides(spec, slides_dir)
+    open(os.path.join(out_dir, "слайды.txt"), "w", encoding="utf-8").write(
+        "\n".join(f"{i:02d}. {s['type']}: {s.get('title', s.get('name', ''))}"
+                   for i, s in enumerate(spec, 1)) + "\n")
+
     # ---------- пост ----------
     post_cfg = kit.get("post", {})
     L = []
@@ -210,6 +219,7 @@ def build_kit(kit_path):
     print(f"  архив: {os.path.relpath(zip_path, ROOT)} ({os.path.getsize(zip_path) / 1024 / 1024:.1f} МБ)")
     print(f"  пост: {os.path.join(out_dir, 'пост.txt')}")
     print(f"  по отдельности: {len(items)} шт → {single_dir}")
+    print(f"  слайды-карусель: {len(spec)} шт → {slides_dir}")
     return out_dir
 
 
