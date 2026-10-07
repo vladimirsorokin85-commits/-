@@ -156,15 +156,41 @@ def dashed_h(d, x0, x1, y, fill, dash=10, gap=7, width=2):
 
 # ---------------------------------------------------------------- логотип
 
+LOGO_CANDIDATES = ("logo.png", "logo.webp", "logo.jpg", "logo.jpeg", "logo.PNG", "logo.JPG")
+
+
 def logo_asset():
+    """Логотип магазина: media/logo.png (или .webp/.jpg — какой положили)."""
+    for name in LOGO_CANDIDATES:
+        p = os.path.join(MEDIA, name)
+        if os.path.exists(p):
+            return p
     return os.path.join(MEDIA, "logo.png")
 
 
 def rounded_logo(size, radius):
-    """Логотип; если файла нет — заметная заглушка, чтобы карточка всё равно собралась."""
+    """Логотип; если файла нет — заметная заглушка, чтобы карточка всё равно собралась.
+
+    Принимает любой logo.png: прозрачный фон подкладываем крафтом (а не чёрным),
+    не квадратный — вписываем по большей стороне и центрируем.
+    """
     lip = logo_asset()
     if os.path.exists(lip):
-        lg = Image.open(lip).convert("RGB").resize((size, size), Image.LANCZOS)
+        src = Image.open(lip)
+        has_alpha = src.mode in ("RGBA", "LA") or (src.mode == "P" and "transparency" in src.info)
+        src = src.convert("RGBA") if has_alpha else src.convert("RGB")
+        # вписываем в квадрат с полями, сохраняя пропорции
+        pad = int(size * 0.06)
+        inner = size - 2 * pad
+        k = min(inner / src.width, inner / src.height)
+        new = src.resize((max(1, int(src.width * k)), max(1, int(src.height * k))), Image.LANCZOS)
+        if has_alpha:
+            bg = Image.new("RGB", (size, size), PAPER)
+            bg.paste(new, ((size - new.width) // 2, (size - new.height) // 2), new)
+            lg = bg
+        else:
+            lg = Image.new("RGB", (size, size), PAPER)
+            lg.paste(new, ((size - new.width) // 2, (size - new.height) // 2))
     else:
         lg = Image.new("RGB", (size, size), PAPER)
         dd = ImageDraw.Draw(lg)
