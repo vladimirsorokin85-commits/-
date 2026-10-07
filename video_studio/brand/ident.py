@@ -172,8 +172,7 @@ def build_audio():
     place(fx, rev, 0.0, 0.5)                         # suck-in riser
     place(fx, boom, SLAM - 0.02, 1.0)                # logo slam
     place(fx, lp(pitch(kick, -5), 300), SLAM, 0.9)   # sub thump
-    place(fx, lp(pitch(splash, -12), 4000), SLAM, 0.35)
-    place(fx, hp(splash, 3000)[: int(0.4 * SR)], dur - 0.18, 0.25)  # tick into the cut
+    # (pitched-down cymbal + hp tick removed: they rattled like a cicada)
     fx = fx[:n]
     meter = pyln.Meter(SR)
     lv = meter.integrated_loudness(voice)

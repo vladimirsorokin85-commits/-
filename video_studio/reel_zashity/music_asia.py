@@ -52,6 +52,7 @@ def guzheng_note(midi, dur, kind=0):
     y = bend(x, env)
     y = y[: int(dur * SR)]
     y = hp(y, 180) + 0.3 * lp(y, 900)  # body resonance (filter BEFORE the fades)
+    y = lp(y, 2200, 4)  # dark, soft string: no ringing upper partials (they beat like a cicada)
     att = int(0.010 * SR)
     y[:att] *= np.sin(np.linspace(0, np.pi / 2, att)) ** 2
     fade = min(len(y) // 2, int(0.08 * SR))
@@ -89,7 +90,7 @@ def make_music(total, cues, drop_from=None):
                 continue
             # note length = until next note
             nxt = next((j for j in range(s + 1, len(ph)) if ph[j] is not None), len(ph))
-            dur = min(1.6, (nxt - s) * eighth + 0.15)
+            dur = min(1.6, (nxt - s) * eighth + 0.01)
             key = (note, round(dur, 3))
             if key not in cache:
                 cache[key] = guzheng_note(note[0], dur, note[1])
@@ -185,7 +186,7 @@ def make_music_v6(total, cues, drop_from=None, splash=None):
             if note is None:
                 continue
             nxt = next((j for j in range(s + 1, len(ph)) if ph[j] is not None), len(ph))
-            dur = min(1.6, (nxt - s) * eighth + 0.15)
+            dur = min(1.6, (nxt - s) * eighth + 0.01)
             key = (note, round(dur, 3))
             if key not in cache:
                 cache[key] = guzheng_note(note[0], dur, note[1])
