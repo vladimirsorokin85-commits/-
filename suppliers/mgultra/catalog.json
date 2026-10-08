@@ -38,7 +38,7 @@
     "https://mgultra.ru/images/update2/oriks_5.png",
     "https://mgultra.ru/images/update2/oriks_6.png"
    ],
-   "photos": 7,
+   "photos": 4,
    "video": [],
    "site_url": "https://mgultra.ru/#mg1",
    "price_site": 23000,
@@ -48,6 +48,12 @@
     "+ может быть укомплектован специальным переходником для любого карабина",
     "+ Видеообзор на ДТК Макси лонг ОРИКС",
     "+ Термочехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg1/1.jpg",
+    "suppliers/mgultra/photos/mg1/2.jpg",
+    "suppliers/mgultra/photos/mg1/3.jpg",
+    "suppliers/mgultra/photos/mg1/4.jpg"
    ]
   },
   {
@@ -81,7 +87,7 @@
     "https://mgultra.ru/images/prev_vid3.jpg",
     "https://mgultra.ru/images/product8.png"
    ],
-   "photos": 9,
+   "photos": 4,
    "video": [
     "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
    ],
@@ -93,6 +99,12 @@
     "+ может быть укомплектован специальным переходником для любого карабина",
     "+ Видеообзор на ДТК В-2 Макси лонг",
     "+ Термочехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg1v2/1.jpg",
+    "suppliers/mgultra/photos/mg1v2/2.jpg",
+    "suppliers/mgultra/photos/mg1v2/3.jpg",
+    "suppliers/mgultra/photos/mg1v2/4.jpg"
    ]
   },
   {
@@ -125,7 +137,7 @@
     "https://mgultra.ru/images/prev_vid1.jpg",
     "https://mgultra.ru/images/prev_vid2.jpg"
    ],
-   "photos": 8,
+   "photos": 4,
    "video": [
     "https://www.youtube.com/watch?v=mqUokH0QkUA",
     "https://www.youtube.com/watch?v=v-PmhNS8Umw"
@@ -138,6 +150,12 @@
     "+ готовый комплект для самостоятельной установки для карабина Тигр",
     "+ видеоинструкция по установке",
     "+ Термочехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg2_1/1.jpg",
+    "suppliers/mgultra/photos/mg2_1/2.jpg",
+    "suppliers/mgultra/photos/mg2_1/3.jpg",
+    "suppliers/mgultra/photos/mg2_1/4.jpg"
    ]
   },
   {
@@ -168,7 +186,7 @@
     "https://mgultra.ru/images/update/tg3_5.png",
     "https://mgultra.ru/images/update2/sks_1.png"
    ],
-   "photos": 6,
+   "photos": 4,
    "video": [
     "https://www.youtube.com/watch?v=v-PmhNS8Umw"
    ],
@@ -180,6 +198,12 @@
     "+ готовый комплект для самостоятельной установки для карабина ТГ-3",
     "+ видеоинструкция по установке",
     "+ Термочехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg2/1.jpg",
+    "suppliers/mgultra/photos/mg2/2.jpg",
+    "suppliers/mgultra/photos/mg2/3.jpg",
+    "suppliers/mgultra/photos/mg2/4.jpg"
    ]
   },
   {
@@ -212,7 +236,7 @@
     "https://mgultra.ru/images/update2/sks_6.png",
     "https://mgultra.ru/images/prev_vid3.jpg"
    ],
-   "photos": 8,
+   "photos": 4,
    "video": [
     "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb",
     "https://www.youtube.com/watch?v=OGvLut2rWpA"
@@ -225,6 +249,12 @@
     "+ готовый комплект для самостоятельной установки для СКС",
     "+ видеоинструкция по установке",
     "+ Термочехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg3/1.jpg",
+    "suppliers/mgultra/photos/mg3/2.jpg",
+    "suppliers/mgultra/photos/mg3/3.jpg",
+    "suppliers/mgultra/photos/mg3/4.jpg"
    ]
   },
   {
@@ -278,7 +308,7 @@
     "https://mgultra.ru/images/update2/tr3_5.png",
     "https://mgultra.ru/images/prev_vid4-1.jpg"
    ],
-   "photos": 29,
+   "photos": 4,
    "video": [
     "https://www.youtube.com/watch?v=B68AGYlAAQ8"
    ],
@@ -290,6 +320,12 @@
     "+ готовый комплект для самостоятельной установки для Вепрь",
     "+ видеоинструкция по установке",
     "+ Термочехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg4/1.jpg",
+    "suppliers/mgultra/photos/mg4/2.jpg",
+    "suppliers/mgultra/photos/mg4/3.jpg",
+    "suppliers/mgultra/photos/mg4/4.jpg"
    ]
   },
   {
@@ -318,7 +354,7 @@
     "https://mgultra.ru/images/update/z5_5.bmp",
     "https://mgultra.ru/images/update/z5_6.bmp"
    ],
-   "photos": 6,
+   "photos": 4,
    "video": [],
    "site_url": "https://mgultra.ru/#z5",
    "price_site": 23000,
@@ -328,6 +364,12 @@
     "Рекомендуется на калибры: 5,45*39, 223REM",
     "Закрытого типа (12 камер)",
     "Длина 200 мм"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/z5/1.jpg",
+    "suppliers/mgultra/photos/z5/2.jpg",
+    "suppliers/mgultra/photos/z5/3.jpg",
+    "suppliers/mgultra/photos/z5/4.jpg"
    ]
   },
   {
@@ -360,7 +402,7 @@
     "https://mgultra.ru/images/update/z7_6.png",
     "https://mgultra.ru/images/update/main_compact_mini.png"
    ],
-   "photos": 8,
+   "photos": 4,
    "video": [],
    "site_url": "https://mgultra.ru/#z7",
    "price_site": 23000,
@@ -368,6 +410,12 @@
    "card_props": [
     "Рекомендуется на калибры: 7,62*39, 7,62*51, 7,62*54",
     "Укомплектован чехлом-подсумком с креплением молли"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/z7/1.jpg",
+    "suppliers/mgultra/photos/z7/2.jpg",
+    "suppliers/mgultra/photos/z7/3.jpg",
+    "suppliers/mgultra/photos/z7/4.jpg"
    ]
   },
   {
@@ -399,7 +447,7 @@
     "https://mgultra.ru/images/cmini_6.jpg",
     "https://mgultra.ru/images/product5.png"
    ],
-   "photos": 7,
+   "photos": 4,
    "video": [
     "https://www.youtube.com/watch?v=ytE9h-_K8B8"
    ],
@@ -411,6 +459,12 @@
     "+ Может быть укомплектован переходником, для карабинов не имеющим резьбу на стволе--> <!--",
     "+ компактный--> <!--",
     "+ Чехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mgmini/1.jpg",
+    "suppliers/mgultra/photos/mgmini/2.jpg",
+    "suppliers/mgultra/photos/mgmini/3.jpg",
+    "suppliers/mgultra/photos/mgmini/4.jpg"
    ]
   },
   {
@@ -433,7 +487,7 @@
     "https://mgultra.ru/images/long4.jpg",
     "https://mgultra.ru/images/vid5.jpg"
    ],
-   "photos": 5,
+   "photos": 4,
    "video": [
     "https://www.youtube.com/watch?v=dlTI2Uzijf4"
    ],
@@ -444,6 +498,12 @@
     "Рекомендуется на: 410 калибр",
     "+ Видеоинструкция по установке",
     "+ Термочехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg5/1.jpg",
+    "suppliers/mgultra/photos/mg5/2.jpg",
+    "suppliers/mgultra/photos/mg5/3.jpg",
+    "suppliers/mgultra/photos/mg5/4.jpg"
    ]
   },
   {
@@ -472,6 +532,12 @@
    "card_props": [
     "Размеры: Длина : 220, 250, 300, 350",
     "для ДТКП диаметром 50мм"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg10/1.jpg",
+    "suppliers/mgultra/photos/mg10/2.jpg",
+    "suppliers/mgultra/photos/mg10/3.jpg",
+    "suppliers/mgultra/photos/mg10/4.jpg"
    ]
   },
   {
@@ -505,7 +571,13 @@
    ],
    "site_url": "https://mgultra.ru/#mg8",
    "price_site": null,
-   "card_props": []
+   "card_props": [],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg8/1.jpg",
+    "suppliers/mgultra/photos/mg8/2.jpg",
+    "suppliers/mgultra/photos/mg8/3.jpg",
+    "suppliers/mgultra/photos/mg8/4.jpg"
+   ]
   },
   {
    "id": "mg9_1",
@@ -532,13 +604,19 @@
     "https://mgultra.ru/images/z12_4_n.jpeg",
     "https://mgultra.ru/images/z12_5_n.jpeg"
    ],
-   "photos": 5,
+   "photos": 4,
    "video": [],
    "site_url": "https://mgultra.ru/#mg9_1",
    "price_site": 23000,
    "card_img": "https://mgultra.ru/images/update/main_z_12.png",
    "card_props": [
     "Рекомендуется на калибры: 5,45*39 Укомплектован чехлом подсумком с креплением молли"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg9_1/1.jpg",
+    "suppliers/mgultra/photos/mg9_1/2.jpg",
+    "suppliers/mgultra/photos/mg9_1/3.jpg",
+    "suppliers/mgultra/photos/mg9_1/4.jpg"
    ]
   },
   {
@@ -570,13 +648,19 @@
     "https://mgultra.ru/images/update/zsvd_4.png",
     "https://mgultra.ru/images/update/zsvd_5.png"
    ],
-   "photos": 7,
+   "photos": 4,
    "video": [],
    "site_url": "https://mgultra.ru/#mg9_2",
    "price_site": 31000,
    "card_img": "https://mgultra.ru/images/update/zsvd_1.png",
    "card_props": [
     "Рекомендуется на калибры: 7,62*54 Укомплектован чехлом подсумком с креплением молли"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg9_2/1.jpg",
+    "suppliers/mgultra/photos/mg9_2/2.jpg",
+    "suppliers/mgultra/photos/mg9_2/3.jpg",
+    "suppliers/mgultra/photos/mg9_2/4.jpg"
    ]
   },
   {
@@ -605,7 +689,7 @@
     "https://mgultra.ru/images/update/pi_4.png",
     "https://mgultra.ru/images/update/pi_5.png"
    ],
-   "photos": 6,
+   "photos": 4,
    "video": [
     "https://www.youtube.com/watch?v=lOOHecnFVds"
    ],
@@ -617,6 +701,12 @@
     "+ устанавливается на любой карабин без резьбы",
     "+ видеообзор на «Полуинтеграл»",
     "+ Термочехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg6/1.jpg",
+    "suppliers/mgultra/photos/mg6/2.jpg",
+    "suppliers/mgultra/photos/mg6/3.jpg",
+    "suppliers/mgultra/photos/mg6/4.jpg"
    ]
   },
   {
@@ -677,18 +767,24 @@
     "https://mgultra.ru/images/prev_vid3.jpg",
     "https://mgultra.ru/images/update/z5_1.bmp"
    ],
-   "photos": 35,
+   "photos": 4,
    "video": [
     "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb",
     "https://www.youtube.com/watch?v=lOOHecnFVds"
    ],
    "site_url": "https://mgultra.ru/#mg7",
    "price_site": 9000,
-   "card_props": []
+   "card_props": [],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg7/1.jpg",
+    "suppliers/mgultra/photos/mg7/2.jpg",
+    "suppliers/mgultra/photos/mg7/3.jpg",
+    "suppliers/mgultra/photos/mg7/4.jpg"
+   ]
   },
   {
    "id": "mg101",
-   "name": "Фирменный чехол для ДТКП серии ФОКС, НИТРО",
+   "name": "Фирменный чехол для ДТКП (ФОКС, НИТРО и др.)",
    "specs": {},
    "texts": [
     "Размеры:",
@@ -705,7 +801,7 @@
     "https://mgultra.ru/images/update/cfox_5.png",
     "https://mgultra.ru/images/update/cfox_6.png"
    ],
-   "photos": 6,
+   "photos": 4,
    "video": [],
    "site_url": "https://mgultra.ru/#mg101",
    "price_site": 2000,
@@ -713,6 +809,12 @@
    "card_props": [
     "Размеры: Длина : 170 мм",
     "для ДТКП диаметром 45мм, 48мм"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg101/1.jpg",
+    "suppliers/mgultra/photos/mg101/2.jpg",
+    "suppliers/mgultra/photos/mg101/3.jpg",
+    "suppliers/mgultra/photos/mg101/4.jpg"
    ]
   },
   {
@@ -743,7 +845,7 @@
     "https://mgultra.ru/images/update/fox_5.png",
     "https://mgultra.ru/images/prev_vid3.jpg"
    ],
-   "photos": 6,
+   "photos": 4,
    "video": [
     "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
    ],
@@ -754,6 +856,12 @@
     "Рекомендуется на калибры: 308, 30-06 Предназначен для карабинов иностранного производства, имеющих штатную заводскую резьбу",
     "+ видеообзор на «ФОКС»",
     "+ Чехол подсумок в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg522/1.jpg",
+    "suppliers/mgultra/photos/mg522/2.jpg",
+    "suppliers/mgultra/photos/mg522/3.jpg",
+    "suppliers/mgultra/photos/mg522/4.jpg"
    ]
   },
   {
@@ -785,7 +893,7 @@
     "https://mgultra.ru/images/update/norma_6.png",
     "https://mgultra.ru/images/prev_vid3.jpg"
    ],
-   "photos": 7,
+   "photos": 4,
    "video": [
     "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
    ],
@@ -796,6 +904,12 @@
     "Рекомендуется на калибры: 308, 30-06, 300WM Предназначен для карабинов иностранного производства, имеющих штатную заводскую резьбу",
     "+ видеообзор на «НОРМА»",
     "+ Чехол подсумок в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/norma/1.jpg",
+    "suppliers/mgultra/photos/norma/2.jpg",
+    "suppliers/mgultra/photos/norma/3.jpg",
+    "suppliers/mgultra/photos/norma/4.jpg"
    ]
   },
   {
@@ -826,7 +940,7 @@
     "https://mgultra.ru/images/update/nitro_5.png",
     "https://mgultra.ru/images/prev_vid3.jpg"
    ],
-   "photos": 6,
+   "photos": 4,
    "video": [
     "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
    ],
@@ -837,6 +951,12 @@
     "Рекомендуется на калибры: 223Rem, 22WMR Предназначен для карабинов иностранного производства, имеющих штатную заводскую резьбу",
     "+ видеообзор на «НИТРО»",
     "+ Чехол подсумок в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/nitro/1.jpg",
+    "suppliers/mgultra/photos/nitro/2.jpg",
+    "suppliers/mgultra/photos/nitro/3.jpg",
+    "suppliers/mgultra/photos/nitro/4.jpg"
    ]
   },
   {
@@ -866,7 +986,7 @@
     "https://mgultra.ru/images/update/kolibri_5.png",
     "https://mgultra.ru/images/prev_vid3.jpg"
    ],
-   "photos": 6,
+   "photos": 4,
    "video": [
     "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
    ],
@@ -877,6 +997,12 @@
     "Рекомендуется на калибры: 22LR",
     "+ видеообзор на «KOLIBRI»",
     "+ Чехол подсумок в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/mg525/1.jpg",
+    "suppliers/mgultra/photos/mg525/2.jpg",
+    "suppliers/mgultra/photos/mg525/3.jpg",
+    "suppliers/mgultra/photos/mg525/4.jpg"
    ]
   },
   {
@@ -909,7 +1035,7 @@
     "https://mgultra.ru/images/main/normator.png",
     "https://mgultra.ru/images/prev_vid3.jpg"
    ],
-   "photos": 8,
+   "photos": 4,
    "video": [
     "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb",
     "https://www.youtube.com/channel/UCSGJJQH6bpbvPsO2WaUHSig?view_as=subscriber"
@@ -921,6 +1047,12 @@
     "Рекомендуется на калибры: 6.5 CREEDMOOR, 243Win Предназначен для карабинов иностранного производства, имеющих штатную заводскую резьбу",
     "+видеообзор на «6,5 Кридмур»",
     "+ Фирменный термочехол в ПОДАРОК!"
+   ],
+   "photos_local": [
+    "suppliers/mgultra/photos/creedmoor/1.jpg",
+    "suppliers/mgultra/photos/creedmoor/2.jpg",
+    "suppliers/mgultra/photos/creedmoor/3.jpg",
+    "suppliers/mgultra/photos/creedmoor/4.jpg"
    ]
   },
   {
@@ -941,7 +1073,10 @@
    ],
    "photos": 1,
    "video": [],
-   "site_url": "https://mgultra.ru/#catalog"
+   "site_url": "https://mgultra.ru/#catalog",
+   "photos_local": [
+    "suppliers/mgultra/photos/card-тр3/1.jpg"
+   ]
   },
   {
    "id": "card-промакс",
@@ -961,7 +1096,10 @@
    ],
    "photos": 1,
    "video": [],
-   "site_url": "https://mgultra.ru/#catalog"
+   "site_url": "https://mgultra.ru/#catalog",
+   "photos_local": [
+    "suppliers/mgultra/photos/card-промакс/1.jpg"
+   ]
   },
   {
    "id": "card-спортсайга9tr9",
@@ -981,7 +1119,10 @@
    ],
    "photos": 1,
    "video": [],
-   "site_url": "https://mgultra.ru/#catalog"
+   "site_url": "https://mgultra.ru/#catalog",
+   "photos_local": [
+    "suppliers/mgultra/photos/card-спортсайга9tr9/1.jpg"
+   ]
   },
   {
    "id": "card-молотвпо185впо285",
@@ -999,7 +1140,10 @@
    ],
    "photos": 1,
    "video": [],
-   "site_url": "https://mgultra.ru/#catalog"
+   "site_url": "https://mgultra.ru/#catalog",
+   "photos_local": [
+    "suppliers/mgultra/photos/card-молотвпо185впо285/1.jpg"
+   ]
   },
   {
    "id": "card-омега5",
@@ -1017,7 +1161,10 @@
    ],
    "photos": 1,
    "video": [],
-   "site_url": "https://mgultra.ru/#catalog"
+   "site_url": "https://mgultra.ru/#catalog",
+   "photos_local": [
+    "suppliers/mgultra/photos/card-омега5/1.jpg"
+   ]
   },
   {
    "id": "card-omega7",
@@ -1035,7 +1182,10 @@
    ],
    "photos": 1,
    "video": [],
-   "site_url": "https://mgultra.ru/#catalog"
+   "site_url": "https://mgultra.ru/#catalog",
+   "photos_local": [
+    "suppliers/mgultra/photos/card-omega7/1.jpg"
+   ]
   },
   {
    "id": "card-омега12",
@@ -1053,7 +1203,10 @@
    ],
    "photos": 1,
    "video": [],
-   "site_url": "https://mgultra.ru/#catalog"
+   "site_url": "https://mgultra.ru/#catalog",
+   "photos_local": [
+    "suppliers/mgultra/photos/card-омега12/1.jpg"
+   ]
   },
   {
    "id": "card-новыйпереходникдляак",
@@ -1070,7 +1223,11 @@
    ],
    "photos": 1,
    "video": [],
-   "site_url": "https://mgultra.ru/#catalog"
+   "site_url": "https://mgultra.ru/#catalog",
+   "photos_local": [
+    "suppliers/mgultra/photos/card-новыйпереходникдляак/1.jpg"
+   ]
   }
- ]
+ ],
+ "photos_note": "Фото — только с mgultra.ru (скачаны мостом 07.10.2026). photos_local = локальные файлы."
 }
