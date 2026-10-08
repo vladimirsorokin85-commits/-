@@ -243,20 +243,34 @@ def looks_product(u):
 
 
 # ----------------------------------------------------------------- products
+try:
+    from PIL import Image  # noqa: E402  (ставится в workflow: pip install Pillow)
+    import io as _io
+except ImportError:  # noqa: BLE001
+    Image = None
+
+TARGET_PX = int(PLAN.get("target_px", 1400))
+TARGET_Q = int(PLAN.get("jpeg_quality", 82))
+
+
 def download_image(url, path_base, referer):
-    """Скачать фото; расширение — по содержимому. Возвращает имя файла или None."""
+    """Скачать фото → JPEG ≤ TARGET_PX. Возвращает имя файла или None."""
     raw, _ = fetch(url, binary=True, referer=referer)
-    if not raw or len(raw) > IMG_CAP or len(raw) < 1500:
+    if not raw or len(raw) < 1500:
         return None
-    if raw[:3] == b"\xff\xd8\xff":
-        ext = ".jpg"
-    elif raw[:8] == b"\x89PNG\r\n\x1a\n":
-        ext = ".png"
-    elif raw[:4] == b"RIFF" and raw[8:12] == b"WEBP":
-        ext = ".webp"
-    else:
-        ext = ".jpg"
-    path = path_base + ext
+    path = path_base + ".jpg"
+    if Image is not None:
+        try:
+            im = Image.open(_io.BytesIO(raw)).convert("RGB")
+            if max(im.size) > TARGET_PX:
+                im.thumbnail((TARGET_PX, TARGET_PX), Image.LANCZOS)
+            im.save(path, quality=TARGET_Q, optimize=True)
+            STATS["images"] += 1
+            return os.path.basename(path)
+        except Exception as e:  # noqa: BLE001
+            log(f"      ! ресайз не удался ({e}), сохраняю как есть")
+    if len(raw) > IMG_CAP:
+        return None
     with open(path, "wb") as f:
         f.write(raw)
     STATS["images"] += 1
@@ -312,10 +326,18 @@ def products():
 
 
 if __name__ == "__main__":
+    os.makedirs(DATA, exist_ok=True)
     log(f"=== front-ts.ru · режим {MODE} ===")
-    if MODE == "products":
-        products()
-    else:
-        discovery()
+    code = 0
+    try:
+        products() if MODE == "products" else discovery()
+    except Exception:  # noqa: BLE001
+        import traceback
+        tb = traceback.format_exc()
+        log(tb)
+        with open(os.path.join(DATA, "errors.log"), "w", encoding="utf-8") as f:
+            f.write(tb)
+        code = 0   # данные всё равно публикуем, ошибку видно в errors.log
     log(f"готово: скачано {STATS['ok']} (сбоев {STATS['fail']}), {STATS['bytes'] / 1e6:.1f} МБ, "
         f"фото {STATS['images']}")
+    raise SystemExit(code)

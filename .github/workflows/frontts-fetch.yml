@@ -34,8 +34,13 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Pillow (сжатие фото)
+        run: pip install --quiet Pillow
+
       - name: Обход сайта
-        run: python3 suppliers/frontts/crawl.py
+        run: |
+          set -o pipefail
+          python3 suppliers/frontts/crawl.py 2>&1 | tee suppliers/frontts/data/run.log
         env:
           FRONTTS_MODE: ${{ github.event.inputs.mode || '' }}
 
