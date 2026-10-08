@@ -1,0 +1,11 @@
+{
+ "_комментарий": "Поставщик «Фронт-ТС» (front-ts.ru). Режим разведки: обойти сайт и собрать структуру + список URL товаров. Потом mode=products по списку suppliers/frontts/data/urls.txt.",
+ "host": "front-ts.ru",
+ "mode": "discovery",
+ "listing_limit": 25,
+ "images_per_product": 8,
+ "image_cap_bytes": 2500000,
+ "page_cap_bytes": 4000000,
+ "raw_cap_bytes": 40000000,
+ "sleep": 0.4
+}
