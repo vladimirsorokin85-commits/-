@@ -1,0 +1,569 @@
+[
+ {
+  "slug": "bejsbolka-goliaf",
+  "label": "01_Бейсболка Голиаф",
+  "group": "odezhda",
+  "title": "Бейсболка тактическая Голиаф РЕВОРГ",
+  "photos": 6,
+  "price": 2200,
+  "chars": 943
+ },
+ {
+  "slug": "boevaya-rubashka-goliaf",
+  "label": "02_Боевая рубашка Голиаф летняя",
+  "group": "odezhda",
+  "title": "Боевая рубашка Голиаф (летняя) РЕВОРГ",
+  "photos": 8,
+  "price": 9900,
+  "chars": 1068
+ },
+ {
+  "slug": "boevye-brjuki-goliaf",
+  "label": "03_Боевые брюки Голиаф летние",
+  "group": "odezhda",
+  "title": "Боевые брюки Голиаф (летние) РЕВОРГ",
+  "photos": 8,
+  "price": 17700,
+  "chars": 1059
+ },
+ {
+  "slug": "brjuki-vetro-vlagozashhitnye-strazh",
+  "label": "04_Брюки ветро влагозащитные Страж",
+  "group": "odezhda",
+  "title": "Брюки SoftShell Страж ветро-влагозащитные",
+  "photos": 3,
+  "price": 28400,
+  "chars": 1017
+ },
+ {
+  "slug": "kurtka-goliaf-letnyaya",
+  "label": "05_Куртка Голиаф летняя",
+  "group": "odezhda",
+  "title": "Куртка боевая Голиаф (летняя) РЕВОРГ",
+  "photos": 7,
+  "price": 12500,
+  "chars": 950
+ },
+ {
+  "slug": "kurtka-strazh",
+  "label": "06_Куртка ветро влагозащитная Страж",
+  "group": "odezhda",
+  "title": "Куртка SoftShell Страж ветро-влагозащитная",
+  "photos": 3,
+  "price": 29100,
+  "chars": 1059
+ },
+ {
+  "slug": "rubashka-polo-softtaktikal",
+  "label": "07_Рубашка поло СофтТактикал",
+  "group": "odezhda",
+  "title": "Рубашка-поло тактическая СофтТактикал",
+  "photos": 4,
+  "price": 4250,
+  "chars": 813
+ },
+ {
+  "slug": "shapka-vors",
+  "label": "08_Шапка зимняя флисовая Ворс",
+  "group": "odezhda",
+  "title": "Шапка зимняя флисовая Ворс тактическая",
+  "photos": 4,
+  "price": 1470,
+  "chars": 751
+ },
+ {
+  "slug": "lyamki",
+  "label": "09_Лямки",
+  "group": "ragruzka",
+  "title": "Разгрузочные лямки тактические на пояс MOLLE",
+  "photos": 2,
+  "price": 1100,
+  "chars": 772
+ },
+ {
+  "slug": "mup-malyj-universalnyj-podsumok",
+  "label": "10_МУП малый универсальный подсумок",
+  "group": "ragruzka",
+  "title": "Подсумок МУП малый универсальный, Cordura 1000D",
+  "photos": 8,
+  "price": 1860,
+  "chars": 868
+ },
+ {
+  "slug": "nakolenniki-takticheskie",
+  "label": "11_Наколенники тактические",
+  "group": "ragruzka",
+  "title": "Наколенники тактические внутрь брюк",
+  "photos": 8,
+  "price": 3200,
+  "chars": 810
+ },
+ {
+  "slug": "nalokotniki-vnutrennie-takticheskie",
+  "label": "12_Налокотники внутренние тактические",
+  "group": "ragruzka",
+  "title": "Налокотники внутренние тактические",
+  "photos": 7,
+  "price": 2250,
+  "chars": 767
+ },
+ {
+  "slug": "pistoletnyj-podsumok-pm-pya-fonar",
+  "label": "13_Пистолетный подсумок ПМ ПЯ ФОНАРЬ",
+  "group": "ragruzka",
+  "title": "Подсумок для магазина ПМ/ПЯ и фонаря, MOLLE",
+  "photos": 3,
+  "price": 580,
+  "chars": 634
+ },
+ {
+  "slug": "podsumok-na-100-patronov",
+  "label": "14_Подсумок ПКМ 100 на 100 патронов",
+  "group": "ragruzka",
+  "title": "Подсумок ПКМ на 100 патронов, MOLLE",
+  "photos": 4,
+  "price": 2700,
+  "chars": 675
+ },
+ {
+  "slug": "podsumok-dlya-ak",
+  "label": "15_Подсумок для АК быстрый Одинарный",
+  "group": "ragruzka",
+  "title": "Подсумок для магазина АК одинарный, MOLLE",
+  "photos": 5,
+  "price": 920,
+  "chars": 643
+ },
+ {
+  "slug": "podsumok-dvojnoj",
+  "label": "16_Подсумок для АК х 2 быстрый Двойной",
+  "group": "ragruzka",
+  "title": "Подсумок двойной для 2 магазинов АК, быстрый",
+  "photos": 5,
+  "price": 1275,
+  "chars": 642
+ },
+ {
+  "slug": "podsumok-dlya-akh4",
+  "label": "17_Подсумок для АКх4",
+  "group": "ragruzka",
+  "title": "Подсумок четверной для 4 магазинов АК",
+  "photos": 8,
+  "price": 2050,
+  "chars": 664
+ },
+ {
+  "slug": "podsumok-dlya-granaty",
+  "label": "18_Подсумок для гранаты",
+  "group": "ragruzka",
+  "title": "Подсумок для гранаты на MOLLE, AEGIS",
+  "photos": 8,
+  "price": 2190,
+  "chars": 736
+ },
+ {
+  "slug": "podsumok-dlya-dokumentov",
+  "label": "19_Подсумок для напашника УНИВЕРСАЛ",
+  "group": "ragruzka",
+  "title": "Подсумок Универсал на напашник плитника",
+  "photos": 5,
+  "price": 2400,
+  "chars": 762
+ },
+ {
+  "slug": "podsumok-dlya-otstrelyannyh-magazinov",
+  "label": "20_Подсумок для отстрелянных магазинов СБРОС",
+  "group": "ragruzka",
+  "title": "Подсумок СБРОС для отстрелянных магазинов",
+  "photos": 2,
+  "price": 1500,
+  "chars": 785
+ },
+ {
+  "slug": "podsumok-dlya-protivogaza",
+  "label": "21_Подсумок для противогаза",
+  "group": "ragruzka",
+  "title": "Подсумок для противогаза, 3 способа носки",
+  "photos": 6,
+  "price": 8350,
+  "chars": 758
+ },
+ {
+  "slug": "podsumok-dlya-radiostancii",
+  "label": "22_Подсумок для радиостанции",
+  "group": "ragruzka",
+  "title": "Подсумок для радиостанции, доступ с двух сторон",
+  "photos": 8,
+  "price": 3050,
+  "chars": 764
+ },
+ {
+  "slug": "podsumok-dlya-ruchnoj-granaty",
+  "label": "23_Подсумок для ручной гранаты",
+  "group": "ragruzka",
+  "title": "Подсумок для ручной гранаты на MOLLE",
+  "photos": 3,
+  "price": 900,
+  "chars": 611
+ },
+ {
+  "slug": "podsumok-dlya-magazinov",
+  "label": "24_Подсумок для сброса пустых магазинов",
+  "group": "ragruzka",
+  "title": "Подсумок сброса пустых магазинов, AEGIS",
+  "photos": 8,
+  "price": 2900,
+  "chars": 730
+ },
+ {
+  "slug": "podsumok-2-magazinov",
+  "label": "25_Подсумок закрытого типа для 2 х магазинов",
+  "group": "ragruzka",
+  "title": "Подсумок закрытый для 2 магазинов АК, AEGIS",
+  "photos": 8,
+  "price": 2950,
+  "chars": 803
+ },
+ {
+  "slug": "podsumok-dlya-magazina",
+  "label": "26_Подсумок закрытого типа для магазина пистолета",
+  "group": "ragruzka",
+  "title": "Подсумок закрытый для магазина пистолета",
+  "photos": 3,
+  "price": 1950,
+  "chars": 681
+ },
+ {
+  "slug": "podsumok-dlya-1-magazina",
+  "label": "27_Подсумок открытого типа для одного магазина АК",
+  "group": "ragruzka",
+  "title": "Подсумок открытый для магазина АК, AEGIS",
+  "photos": 8,
+  "price": 1990,
+  "chars": 744
+ },
+ {
+  "slug": "podsumok-utilitarnyj-srednij",
+  "label": "28_Подсумок утилитарный средний",
+  "group": "ragruzka",
+  "title": "Подсумок утилитарный средний AEGIS",
+  "photos": 8,
+  "price": 2650,
+  "chars": 727
+ },
+ {
+  "slug": "poyas-razgruzochnyj",
+  "label": "29_Пояс разгрузочный",
+  "group": "ragruzka",
+  "title": "Пояс разгрузочный тактический, размеры M-XL",
+  "photos": 1,
+  "price": 7000,
+  "chars": 841
+ },
+ {
+  "slug": "poyas-takticheskij-anakonda",
+  "label": "30_Пояс тактический Анаконда",
+  "group": "ragruzka",
+  "title": "Пояс тактический Анаконда на MOLLE",
+  "photos": 8,
+  "price": 7500,
+  "chars": 820
+ },
+ {
+  "slug": "razgruzochno-poyasnaya-sistema-pulemetchika-skat",
+  "label": "31_Разгрузочно поясная система пулеметчика СКАТ",
+  "group": "ragruzka",
+  "title": "Разгрузочно-поясная система СКАТ для пулемётчика",
+  "photos": 4,
+  "price": 9500,
+  "chars": 858
+ },
+ {
+  "slug": "razgruzochnye-podtyazhki",
+  "label": "32_Разгрузочные подтяжки",
+  "group": "ragruzka",
+  "title": "Разгрузочные подтяжки к поясу Анаконда",
+  "photos": 6,
+  "price": 2250,
+  "chars": 806
+ },
+ {
+  "slug": "remen-brjuchnoj-takticheskij",
+  "label": "33_Ремень брючной тактический",
+  "group": "ragruzka",
+  "title": "Ремень тактический 38 мм с пряжкой Cobra",
+  "photos": 4,
+  "price": 3300,
+  "chars": 805
+ },
+ {
+  "slug": "remen-poyasnoj-takticheskij",
+  "label": "34_Ремень поясной тактический",
+  "group": "ragruzka",
+  "title": "Ремень поясной тактический 50 мм Cobra",
+  "photos": 4,
+  "price": 9400,
+  "chars": 748
+ },
+ {
+  "slug": "chehol-dlya-broneplit",
+  "label": "35_Чехол для бронеплит",
+  "group": "ragruzka",
+  "title": "Чехол для бронеплит SAPI, MOLLE, 46-60",
+  "photos": 6,
+  "price": 10500,
+  "chars": 967
+ },
+ {
+  "slug": "rassypnaya-pulemetnaya-lenta-spoloh",
+  "label": "36_Рассыпная пулеметная лента СПОЛОХ",
+  "group": "podacha",
+  "title": "Пулемётная лента полимерная рассыпная, 100 звеньев",
+  "photos": 1,
+  "price": 960,
+  "chars": 832
+ },
+ {
+  "slug": "skorpion",
+  "label": "37_Система бесперебойной подачи ленты Скорпион",
+  "group": "podacha",
+  "title": "Система подачи ленты Скорпион, 550 патронов",
+  "photos": 8,
+  "price": 96500,
+  "chars": 996
+ },
+ {
+  "slug": "sistema-podachi-boepripasov-mantikora",
+  "label": "38_Система подачи боеприпасов МАНТИКОРА для 30 мм автоматическо",
+  "group": "podacha",
+  "title": "Система подачи боеприпасов Мантикора для АГС-17",
+  "photos": 6,
+  "price": null,
+  "chars": 938
+ },
+ {
+  "slug": "sistema-podachi-boepripasov-piton",
+  "label": "39_Система подачи боеприпасов ПИТОН для КОРД УТЕС НСВ НСВТ кали",
+  "group": "podacha",
+  "title": "Система подачи ленты Питон для Корд, НСВ, Утёс",
+  "photos": 8,
+  "price": null,
+  "chars": 923
+ },
+ {
+  "slug": "sistema-podachi-boepripasov-skorpion",
+  "label": "40_Система подачи боеприпасов СКОРПИОН для ПКТ калибра 7 62 54 ",
+  "group": "podacha",
+  "title": "Система подачи ленты Скорпион для ПКТ 7,62×54",
+  "photos": 6,
+  "price": null,
+  "chars": 770
+ },
+ {
+  "slug": "rhino-rescue-4-bandazh-perevyazochnyj-individualnyj-bpi-4",
+  "label": "41_Rhino Rescue 4 бандаж перевязочный индивидуальный БПИ 4",
+  "group": "med",
+  "title": "Бандаж израильский RHINO RESCUE БПИ 4 дюйма",
+  "photos": 4,
+  "price": null,
+  "chars": 967
+ },
+ {
+  "slug": "rhino-rescue-6-bandazh-perevyazochnyj-individualnyj-bpi-6",
+  "label": "42_Rhino Rescue 6 бандаж перевязочный индивидуальный БПИ 6",
+  "group": "med",
+  "title": "Бандаж израильский RHINO RESCUE БПИ 6 дюймов",
+  "photos": 7,
+  "price": null,
+  "chars": 869
+ },
+ {
+  "slug": "bolshaya-takticheskaya-aptechka-rhino-rescue-ifak-pro",
+  "label": "43_Большая тактическая аптечка RHINO RESCUE IFAK PRO",
+  "group": "med",
+  "title": "Аптечка тактическая RHINO RESCUE IFAK PRO",
+  "photos": 6,
+  "price": null,
+  "chars": 1136
+ },
+ {
+  "slug": "vytyazhnaya-aptechka-vydra",
+  "label": "44_Вытяжная аптечка ВЫДРА",
+  "group": "med",
+  "title": "Вытяжная аптечка ВЫДРА на бронежилет/пояс",
+  "photos": 4,
+  "price": 2550,
+  "chars": 904
+ },
+ {
+  "slug": "podsumok-turniketa",
+  "label": "45_Подсумок универсальный для жгута турникета",
+  "group": "med",
+  "title": "Подсумок для жгута-турникета AEGIS, MOLLE",
+  "photos": 7,
+  "price": 1900,
+  "chars": 891
+ },
+ {
+  "slug": "podsumok-medicinskij",
+  "label": "46_Подсумок медицинский",
+  "group": "med",
+  "title": "Подсумок медицинский AEGIS на MOLLE",
+  "photos": 5,
+  "price": 2990,
+  "chars": 872
+ },
+ {
+  "slug": "takticheskaya-aptechka-rhino-ifak-qf-002m",
+  "label": "47_Тактическая аптечка RHINO IFAK QF 002M",
+  "group": "med",
+  "title": "Аптечка-подсумок RHINO IFAK QF-002M, Cordura",
+  "photos": 5,
+  "price": null,
+  "chars": 824
+ },
+ {
+  "slug": "takticheskij-turniketnyj-zhgut-rhinorescue",
+  "label": "48_Тактический турникетный жгут RHINORESCUE",
+  "group": "med",
+  "title": "Жгут-турникет тактический RHINO RESCUE",
+  "photos": 6,
+  "price": null,
+  "chars": 957
+ },
+ {
+  "slug": "rjukzak-minimap-minimap-9-litrov",
+  "label": "49_Рюкзак MINIMAP МИНИМАП 9 литров",
+  "group": "ryukzaki",
+  "title": "Рюкзак МИНИМАП 9 л тактический FRONT",
+  "photos": 3,
+  "price": 5900,
+  "chars": 850
+ },
+ {
+  "slug": "rjukzak-minimap-minimap",
+  "label": "50_Рюкзак Minimap МИНИМАП 6 литров",
+  "group": "ryukzaki",
+  "title": "Рюкзак МИНИМАП 6 л тактический FRONT",
+  "photos": 4,
+  "price": 4900,
+  "chars": 846
+ },
+ {
+  "slug": "rjukzak-optima-35-litrov",
+  "label": "51_Рюкзак ОПТИМА 35 литров",
+  "group": "ryukzaki",
+  "title": "Рюкзак тактический ОПТИМА 35 л FRONT",
+  "photos": 7,
+  "price": 12500,
+  "chars": 893
+ },
+ {
+  "slug": "ryukzak-dlya-rpg",
+  "label": "52_Рюкзак для РПГ Футляр",
+  "group": "ryukzaki",
+  "title": "Рюкзак для выстрелов РПГ Футляр, 50 л",
+  "photos": 8,
+  "price": 35800,
+  "chars": 882
+ },
+ {
+  "slug": "rjukzak-dlya-dronov-kvadrat",
+  "label": "53_Рюкзак для дронов КВАДРАТ",
+  "group": "ryukzaki",
+  "title": "Рюкзак для FPV-дронов КВАДРАТ, до 10 аппаратов",
+  "photos": 8,
+  "price": 37600,
+  "chars": 985
+ },
+ {
+  "slug": "rjukzak-takticheskij",
+  "label": "54_Рюкзак тактический объём 23 литра",
+  "group": "ryukzaki",
+  "title": "Рюкзак тактический 23 л AEGIS, MOLLE",
+  "photos": 8,
+  "price": 23500,
+  "chars": 899
+ },
+ {
+  "slug": "pozharnyi-lom",
+  "label": "55_Пожарный лом хулиган Бандит",
+  "group": "instrument",
+  "title": "Штурмовой лом Бандит с 3 наконечниками",
+  "photos": 6,
+  "price": 18900,
+  "chars": 930
+ },
+ {
+  "slug": "ruchnoj-taran",
+  "label": "56_Ручной таран Штопор Мини",
+  "group": "instrument",
+  "title": "Штурмовой таран Штопор Мини, 10-12 кг",
+  "photos": 4,
+  "price": 17500,
+  "chars": 870
+ },
+ {
+  "slug": "shturmovaya-kuvalda",
+  "label": "57_Штурмовая кувалда Шторм",
+  "group": "instrument",
+  "title": "Штурмовая кувалда Шторм, облегчённая ручка",
+  "photos": 4,
+  "price": 11900,
+  "chars": 734
+ },
+ {
+  "slug": "shturmovoj-boltorez",
+  "label": "58_Штурмовой болторез Дракон",
+  "group": "instrument",
+  "title": "Штурмовой болторез Дракон по арматуре",
+  "photos": 6,
+  "price": 7800,
+  "chars": 858
+ },
+ {
+  "slug": "shturmovoj-taran",
+  "label": "59_Штурмовой таран Штопор",
+  "group": "instrument",
+  "title": "Штурмовой таран Штопор, 18-20 кг",
+  "photos": 8,
+  "price": 23300,
+  "chars": 890
+ },
+ {
+  "slug": "adapter-priklada-pkm",
+  "label": "60_Адаптер приклада ПКМ Звено",
+  "group": "tunning",
+  "title": "Переходник адаптера приклада ПКМ Звено",
+  "photos": 6,
+  "price": 9900,
+  "chars": 926
+ },
+ {
+  "slug": "planka-pikatinni",
+  "label": "61_Планка Пикатинни Консоль",
+  "group": "tunning",
+  "title": "Планка Пикатинни Консоль на АК, ласточкин хвост",
+  "photos": 6,
+  "price": null,
+  "chars": 767
+ },
+ {
+  "slug": "takticheska-ruchka",
+  "label": "62_Тактическа ручка Шквал Z",
+  "group": "tunning",
+  "title": "Тактическая рукоятка Шквал Z, 45 градусов",
+  "photos": 4,
+  "price": 5600,
+  "chars": 801
+ },
+ {
+  "slug": "takticheskaya-rukoyatka",
+  "label": "63_Тактическая рукоятка Шквал",
+  "group": "tunning",
+  "title": "Тактическая рукоятка Шквал для пулемёта ПК",
+  "photos": 6,
+  "price": 5600,
+  "chars": 811
+ }
+]

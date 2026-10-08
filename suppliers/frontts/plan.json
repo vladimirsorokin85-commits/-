@@ -1,0 +1,14 @@
+{
+ "_комментарий": "Разбор всех 64 карточек front-ts.ru; фото сжимаются в Actions до 1400 px/q82.",
+ "host": "front-ts.ru",
+ "mode": "products",
+ "listing_limit": 25,
+ "images_per_product": 6,
+ "image_cap_bytes": 2500000,
+ "page_cap_bytes": 4000000,
+ "raw_cap_bytes": 40000000,
+ "sleep": 0.4,
+ "limit": 0,
+ "target_px": 1400,
+ "jpeg_quality": 82
+}

@@ -1,0 +1,73 @@
+name: Catalog fetch (МойСклад → снапшот + фото)
+
+# «МОСТ». Агент работает в песочнице, где b2b.moysklad.ru и CDN МойСклад закрыты,
+# поэтому каталог и фото тянет этот workflow, а результат публикует в ветку `catalog-data`.
+# Забрать к себе одной командой:  bash tools/catalog_pull.sh
+#
+# Запуск: автоматически при изменении catalog/requests/** либо вручную (Run workflow).
+
+on:
+  push:
+    paths:
+      - "catalog/**"
+      - ".github/workflows/catalog-fetch.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write           # нужно, чтобы опубликовать ветку catalog-data
+
+concurrency:
+  group: catalog-fetch
+  cancel-in-progress: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Тянем каталог (и фото, если есть заявка)
+        run: python3 catalog/remote_fetch.py
+
+      - name: Короткая сводка в лог
+        if: always()
+        run: |
+          cat catalog/data/report.md 2>/dev/null || echo "сводки нет"
+          echo "--- фото ---"
+          head -c 3000 catalog/data/diag_photos.txt 2>/dev/null || echo "заявок на фото не было"
+
+      - name: Публикуем снапшот в ветку catalog-data
+        if: always()
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          tmp=$(mktemp -d)
+          mkdir -p "$tmp/catalog"
+          cp -r catalog/data "$tmp/catalog/data"
+          if [ -d catalog/photos ]; then cp -r catalog/photos "$tmp/catalog/photos"; fi
+          cd "$tmp"
+          git init -q
+          git checkout -q -b catalog-data
+          git add -A
+          git -c user.name="catalog-bot" -c user.email="catalog-bot@users.noreply.github.com" \
+              commit -qm "Снапшот каталога $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push -q --force "https://x-access-token:${TOKEN}@github.com/${REPO}.git" catalog-data \
+            || echo "::warning::Не удалось опубликовать ветку catalog-data. Проверь Settings → Actions → General → Workflow permissions = 'Read and write permissions'."
+
+      - name: Артефакт (запасной канал, для владельца)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalog-snapshot
+          if-no-files-found: warn
+          retention-days: 30
+          path: |
+            catalog/data/
+            catalog/photos/
