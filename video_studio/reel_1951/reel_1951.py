@@ -162,6 +162,11 @@ class Shot:
             # crop for 1080x1350 at 1.25x headroom
             ar = IMG_W / IMG_H
             cw = im.height * ar
+            if cw > im.width:  # narrow source: crop height instead
+                chh = im.width / ar
+                y0 = int((im.height - chh) / 2)
+                im = im.crop((0, y0, im.width, y0 + int(chh)))
+                cw = im.height * ar
             x0 = int(min(max(0, fx * im.width - cw / 2), im.width - cw))
             big = im.crop((x0, 0, x0 + int(cw), im.height)).resize((int(IMG_W * 1.25), int(IMG_H * 1.25)), Image.LANCZOS)
             bg = im.resize((W, int(W / im.width * im.height))).crop((0, 0, W, int(W / im.width * im.height)))
