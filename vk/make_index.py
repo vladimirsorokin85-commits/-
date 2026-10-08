@@ -49,6 +49,7 @@ def main():
     days = [f for f in sorted(files) if re.match(r"V_OKOPE_\d{2}\.\d{2}_", f)]
 
     tuning = [f for f in sorted(files) if f.startswith("V_OKOPE_mgultra_")]
+    avito = [f for f in sorted(files) if f.startswith("V_OKOPE_avito_")]
     kit_cards = ""
     for f in kits:
         slug = f[len("V_OKOPE_kit_"):-4]
@@ -57,6 +58,8 @@ def main():
     tuning_cards = "".join(card(f, "Тюнинг: ДТКП MG Ultra — 5 постов",
                                 "дульные тормоза-компенсаторы закрытого типа, фото поставщика",
                                 files[f] / 1024 / 1024, badge="новое") for f in tuning)
+    avito_cards = "".join(card(f, "Авито: 20 объявлений", "папки по товарам: фото по порядку + готовый текст объявления",
+                                files[f] / 1024 / 1024, badge="для Авито") for f in avito)
     day_cards = "".join(card(f, day_title(f), "6 постов: фото + текст + чек-лист",
                              files[f] / 1024 / 1024) for f in days)
     week_cards = "".join(card(f, "Вся неделя 08–14.10", "42 поста одним архивом",
@@ -85,13 +88,17 @@ def main():
 <div class="grid">{kit_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Тюнинг (MG Ultra — ДТКП)</h2>
 <div class="grid">{tuning_cards or '<p class="sub">Пока пусто</p>'}</div>
+<h2>Авито (20 готовых объявлений)</h2>
+<div class="grid">{avito_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Посты по дням</h2>
 <div class="grid">{week_cards}{day_cards or '<p class="sub">Пока пусто</p>'}</div>
 <div class="note">В архивах комплектов: папка «слайды» — готовая карусель (01…10.jpg, листайте по порядку),
 «карточка.jpg» (один визуал, если удобнее им), «пост.txt» (текст про комплект),
 папка «по_отдельности» (тексты по каждой позиции) и «карточка.json».
 В архивах дней: папки постов с фото, обложкой и текстом, плюс чек-лист.<br>
-Цены в текстах не публикуются; на карточках стоят те, что дали вы.</div>
+Цены в текстах не публикуются; на карточках стоят те, что дали вы.<br>
+В архиве для Авито: папка на каждый товар — фото 1…N.jpg (грузятся по порядку) и «ОБЪЯВЛЕНИЕ.txt»
+(заголовок, готовое описание, категория и что заполнить в форме). Цена — в поле «Цена», не в тексте.</div>
 </body></html>"""
     out = os.path.join(DIST, "index.html")
     open(out, "w", encoding="utf-8").write(page)
