@@ -1,0 +1,1076 @@
+{
+ "_комментарий": "Каталог MG Ultra (ДТКП «Матильда», mgultra.ru) — разобран из HTML сайта 07.10.2026. price_site = цена с сайта поставщика (закуп; розницу назначает владелец). Фото берём ТОЛЬКО отсюда, интернет-картинки запрещены.",
+ "supplier": "mgultra",
+ "site": "https://mgultra.ru",
+ "contacts_page": "https://mgultra.ru/contacts/",
+ "contacts": {
+  "email": "mgultra@mail.ru",
+  "phone": "+7 (913) 98-00-090"
+ },
+ "parsed": "2026-10-07",
+ "models": [
+  {
+   "id": "mg1",
+   "name": "Макси лонг ОРИКС",
+   "specs": {
+    "Длина": "220 мм",
+    "Диаметр": "50 мм",
+    "Вес": "550 г"
+   },
+   "texts": [
+    "Закрытого типа (15 камер)",
+    "Для карабинов с резьбой 24х1,5 правая",
+    "Рекомендуется на калибры:",
+    "7,62х39, 308, 7,62х54, 30-06",
+    "+ может быть укомплектован специальным переходником для любого карабина",
+    "+ Термочехол в ПОДАРОК!",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "Рекомендуется на калибры: 7,62x39, 308, 7.62x54, 30.06"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update2/b2_1.png",
+    "https://mgultra.ru/images/update2/oriks_1.png",
+    "https://mgultra.ru/images/update2/oriks_2.png",
+    "https://mgultra.ru/images/update2/oriks_3.png",
+    "https://mgultra.ru/images/update2/oriks_4.png",
+    "https://mgultra.ru/images/update2/oriks_5.png",
+    "https://mgultra.ru/images/update2/oriks_6.png"
+   ],
+   "photos": 7,
+   "video": [],
+   "site_url": "https://mgultra.ru/#mg1",
+   "price_site": 23000,
+   "card_img": "https://mgultra.ru/images/update2/oriks_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 7,62x39, 308, 7,62x54,30-06",
+    "+ может быть укомплектован специальным переходником для любого карабина",
+    "+ Видеообзор на ДТК Макси лонг ОРИКС",
+    "+ Термочехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "mg1v2",
+   "name": "В-2 Макси лонг",
+   "specs": {
+    "Длина": "220 мм",
+    "Диаметр": "50 мм",
+    "Вес": "590 г"
+   },
+   "texts": [
+    "Для карабинов с резьбой 14x1 левая.",
+    "Рекомендуется на калибры:",
+    "7,62x39, 308, 7.62x54, 30.06",
+    "+ может быть укомплектован специальным переходником для любого карабина",
+    "+ Термочехол в ПОДАРОК!",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "--> <!--",
+    "--> <!--"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/tigr_0.png",
+    "https://mgultra.ru/images/update2/b2_1.png",
+    "https://mgultra.ru/images/update2/b2_2.png",
+    "https://mgultra.ru/images/update2/b2_3.png",
+    "https://mgultra.ru/images/update2/b2_4.png",
+    "https://mgultra.ru/images/update2/b2_5.png",
+    "https://mgultra.ru/images/update2/b2_6.png",
+    "https://mgultra.ru/images/prev_vid3.jpg",
+    "https://mgultra.ru/images/product8.png"
+   ],
+   "photos": 9,
+   "video": [
+    "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
+   ],
+   "site_url": "https://mgultra.ru/#mg1v2",
+   "price_site": 23000,
+   "card_img": "https://mgultra.ru/images/update2/b2_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 7,62x39, 308, 7.62x54, 30.06",
+    "+ может быть укомплектован специальным переходником для любого карабина",
+    "+ Видеообзор на ДТК В-2 Макси лонг",
+    "+ Термочехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "mg2_1",
+   "name": "ТИГР",
+   "specs": {
+    "Длина": "220 мм",
+    "Диаметр": "50 мм",
+    "Вес": "790 г"
+   },
+   "texts": [
+    "Быстросъёмный шариково-цанговый зажим, на пламегасители нового образца",
+    "Самый эффективный по снижению звука выстрела, имеет современный Газоразгруженный конструктив",
+    "Рекомендуется на калибры:",
+    "7.62-54",
+    "+ готовый комплект для самостоятельной установки для карабина Тигр + видеоинструкция по установке + Термочехол в ПОДАРОК!",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "Рекомендуется на калибры: 9,6х53 Ланкастер",
+    "+ готовый комплект для самостоятельной установки для карабина ТГ-3"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/tigr_1.jpeg",
+    "https://mgultra.ru/images/tigr_2.jpeg",
+    "https://mgultra.ru/images/tigr_3.jpeg",
+    "https://mgultra.ru/images/tigr_4.jpeg",
+    "https://mgultra.ru/images/tigr_5.jpeg",
+    "https://mgultra.ru/images/update/tg3_1.png",
+    "https://mgultra.ru/images/prev_vid1.jpg",
+    "https://mgultra.ru/images/prev_vid2.jpg"
+   ],
+   "photos": 8,
+   "video": [
+    "https://www.youtube.com/watch?v=mqUokH0QkUA",
+    "https://www.youtube.com/watch?v=v-PmhNS8Umw"
+   ],
+   "site_url": "https://mgultra.ru/#mg2_1",
+   "price_site": 31000,
+   "card_img": "https://mgultra.ru/images/tigr_0.png",
+   "card_props": [
+    "Рекомендуется на калибры: 7.62x54",
+    "+ готовый комплект для самостоятельной установки для карабина Тигр",
+    "+ видеоинструкция по установке",
+    "+ Термочехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "mg2",
+   "name": "ТГ-3",
+   "specs": {
+    "Длина": "250 мм",
+    "Диаметр": "50 мм",
+    "Вес": "870 г"
+   },
+   "texts": [
+    "Быстросъёмный шариково-цанговый зажим, на пламегасители нового образца",
+    "Закрытого типа (15 камер)",
+    "Рекомендуется на калибры:",
+    "9,6-53 Ланкастер",
+    "+ готовый комплект для самостоятельной установки для ТГ-3 + видеоинструкция по установке + Термочехол в ПОДАРОК!",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "Рекомендуется на калибры: 7,62х39",
+    "+ готовый комплект для самостоятельной установки для СКС"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/tg3_1.png",
+    "https://mgultra.ru/images/update/tg3_2.png",
+    "https://mgultra.ru/images/update/tg3_3.png",
+    "https://mgultra.ru/images/update/tg3_4.png",
+    "https://mgultra.ru/images/update/tg3_5.png",
+    "https://mgultra.ru/images/update2/sks_1.png"
+   ],
+   "photos": 6,
+   "video": [
+    "https://www.youtube.com/watch?v=v-PmhNS8Umw"
+   ],
+   "site_url": "https://mgultra.ru/#mg2",
+   "price_site": 31000,
+   "card_img": "https://mgultra.ru/images/update/tg3_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 9,6х53 Ланкастер",
+    "+ готовый комплект для самостоятельной установки для карабина ТГ-3",
+    "+ видеоинструкция по установке",
+    "+ Термочехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "mg3",
+   "name": "СКС",
+   "specs": {
+    "Длина": "220 мм",
+    "Диаметр": "50 мм",
+    "Вес": "550 г"
+   },
+   "texts": [
+    "Переходник в комплекте",
+    "Закрытого типа (15 камер)",
+    "Рекомендуется на калибры:",
+    "7,62х39",
+    "+ готовый комплект для самостоятельной установки для СКС + видеоинструкция по установке + Термочехол в ПОДАРОК!",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "Рекомендуется на калибры: 308 калибр, 7.62x54",
+    "+ готовый комплект для самостоятельной установки для Вепрь"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/sok_1.png",
+    "https://mgultra.ru/images/update2/sks_1.png",
+    "https://mgultra.ru/images/update2/sks_2.png",
+    "https://mgultra.ru/images/update2/sks_3.png",
+    "https://mgultra.ru/images/update2/sks_4.png",
+    "https://mgultra.ru/images/update2/sks_5.png",
+    "https://mgultra.ru/images/update2/sks_6.png",
+    "https://mgultra.ru/images/prev_vid3.jpg"
+   ],
+   "photos": 8,
+   "video": [
+    "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb",
+    "https://www.youtube.com/watch?v=OGvLut2rWpA"
+   ],
+   "site_url": "https://mgultra.ru/#mg3",
+   "price_site": 29000,
+   "card_img": "https://mgultra.ru/images/update2/sks_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 7,62х39",
+    "+ готовый комплект для самостоятельной установки для СКС",
+    "+ видеоинструкция по установке",
+    "+ Термочехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "mg4",
+   "name": "Макси лонг Вепрь СОК-95",
+   "specs": {
+    "Длина": "300 мм 100мм",
+    "Диаметр": "50 мм",
+    "Вес": "660 г"
+   },
+   "texts": [
+    "Переходник в комплекте",
+    "Закрытого типа (15 камер)",
+    "Рекомендуется на калибры:",
+    "308 калибр, 7.62x54",
+    "+ готовый комплект для самостоятельной установки для Вепрь + видеоинструкция по установке + Термочехол в ПОДАРОК!",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "Рекомендуется на калибры: 5,45, 7.62-39",
+    "+ Готовый комплект для самостоятельной установки на карабин ТР-3"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/kolibriper_1.png",
+    "https://mgultra.ru/images/update/kolibriper_2.png",
+    "https://mgultra.ru/images/update/kolibriper_3.png",
+    "https://mgultra.ru/images/update/kolibriper_4.png",
+    "https://mgultra.ru/images/update/kolibriper_5.png",
+    "https://mgultra.ru/images/update/molot_1.png",
+    "https://mgultra.ru/images/update/promax_1.png",
+    "https://mgultra.ru/images/update/promax_2.png",
+    "https://mgultra.ru/images/update/promax_3.png",
+    "https://mgultra.ru/images/update/promax_4.png",
+    "https://mgultra.ru/images/update/promax_5.png",
+    "https://mgultra.ru/images/update/sm_2.png",
+    "https://mgultra.ru/images/update/sm_3.png",
+    "https://mgultra.ru/images/update/sm_4.png",
+    "https://mgultra.ru/images/update/sm_5.png",
+    "https://mgultra.ru/images/update/sm_6.png",
+    "https://mgultra.ru/images/update/sok_1.png",
+    "https://mgultra.ru/images/update/sok_2.png",
+    "https://mgultra.ru/images/update/sok_3.png",
+    "https://mgultra.ru/images/update/sok_4.png",
+    "https://mgultra.ru/images/update/sok_5.png",
+    "https://mgultra.ru/images/update/sok_6.png",
+    "https://mgultra.ru/images/update/sport_1.png",
+    "https://mgultra.ru/images/update2/tr3_1.png",
+    "https://mgultra.ru/images/update2/tr3_2.png",
+    "https://mgultra.ru/images/update2/tr3_3.png",
+    "https://mgultra.ru/images/update2/tr3_4.png",
+    "https://mgultra.ru/images/update2/tr3_5.png",
+    "https://mgultra.ru/images/prev_vid4-1.jpg"
+   ],
+   "photos": 29,
+   "video": [
+    "https://www.youtube.com/watch?v=B68AGYlAAQ8"
+   ],
+   "site_url": "https://mgultra.ru/#mg4",
+   "price_site": 31000,
+   "card_img": "https://mgultra.ru/images/update/sok_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 308 калибр, 7.62x54",
+    "+ готовый комплект для самостоятельной установки для Вепрь",
+    "+ видеоинструкция по установке",
+    "+ Термочехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "z5",
+   "name": "З-5",
+   "specs": {
+    "Длина": "200 мм",
+    "Диаметр": "50 мм",
+    "Вес": "540 г"
+   },
+   "texts": [
+    "Усиленная конструкция, с трещеткой под зуб фиксатор",
+    "Для карабинов Сайга, АК с резьбой 24*1,5 ПР",
+    "Рекомендуется на калибры: 5,45*39, 223REM",
+    "Закрытого типа (12 камер)",
+    "Укомплектован чехлом-подсумком с креплением молли",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/z5_1.bmp",
+    "https://mgultra.ru/images/update/z5_2.bmp",
+    "https://mgultra.ru/images/update/z5_3.bmp",
+    "https://mgultra.ru/images/update/z5_4.bmp",
+    "https://mgultra.ru/images/update/z5_5.bmp",
+    "https://mgultra.ru/images/update/z5_6.bmp"
+   ],
+   "photos": 6,
+   "video": [],
+   "site_url": "https://mgultra.ru/#z5",
+   "price_site": 23000,
+   "card_img": "https://mgultra.ru/images/update/z5_1.bmp",
+   "card_props": [
+    "Для карабинов Сайга, АК с резьбой 24*1,5 ПР",
+    "Рекомендуется на калибры: 5,45*39, 223REM",
+    "Закрытого типа (12 камер)",
+    "Длина 200 мм"
+   ]
+  },
+  {
+   "id": "z7",
+   "name": "З-7",
+   "specs": {
+    "Длина": "200 мм",
+    "Диаметр": "50 мм",
+    "Вес": "490 г"
+   },
+   "texts": [
+    "усиленная конструкция",
+    "Для карабинов Вепрь, АК с резьбой 14*1 левая, Сайга, АК с резьбой 24*1,5 ПР (с трещёткой под зуб фиксатор)",
+    "Рекомендуется на калибры: 7,62*39, 7,62*51, 7,62*54",
+    "Закрытого типа (12 камер)",
+    "Укомплектован чехлом-подсумком с креплением молли",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "Рекомендуется на калибры: для 9*19, 345 TK, 9*22 Altay",
+    "+ Может быть укомплектован переходником, для карабинов не имеющим резьбу на стволе--> <!--"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/kolibri_1.png",
+    "https://mgultra.ru/images/update/z7_1.png",
+    "https://mgultra.ru/images/update/z7_2.png",
+    "https://mgultra.ru/images/update/z7_3.png",
+    "https://mgultra.ru/images/update/z7_4.png",
+    "https://mgultra.ru/images/update/z7_5.png",
+    "https://mgultra.ru/images/update/z7_6.png",
+    "https://mgultra.ru/images/update/main_compact_mini.png"
+   ],
+   "photos": 8,
+   "video": [],
+   "site_url": "https://mgultra.ru/#z7",
+   "price_site": 23000,
+   "card_img": "https://mgultra.ru/images/update/z7_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 7,62*39, 7,62*51, 7,62*54",
+    "Укомплектован чехлом-подсумком с креплением молли"
+   ]
+  },
+  {
+   "id": "mgmini",
+   "name": "Компакт Мини",
+   "specs": {
+    "Длина": "160 мм",
+    "Диаметр": "43 мм",
+    "Вес": "250 г"
+   },
+   "texts": [
+    "Под резьбу: 16*1, 14*1LH",
+    "Рекомендуется на калибры:",
+    "9*19, 345 TK, 9*22 Altay",
+    "+ Чехол в ПОДАРОК!",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "--> <!--",
+    "+ может быть укомплектован специальным переходником--> <!--",
+    "+ компактный--> <!--"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/cmini_1.jpg",
+    "https://mgultra.ru/images/cmini_2.jpg",
+    "https://mgultra.ru/images/cmini_3.jpg",
+    "https://mgultra.ru/images/cmini_4.jpg",
+    "https://mgultra.ru/images/cmini_5.jpg",
+    "https://mgultra.ru/images/cmini_6.jpg",
+    "https://mgultra.ru/images/product5.png"
+   ],
+   "photos": 7,
+   "video": [
+    "https://www.youtube.com/watch?v=ytE9h-_K8B8"
+   ],
+   "site_url": "https://mgultra.ru/#mgmini",
+   "price_site": 17000,
+   "card_img": "https://mgultra.ru/images/update/main_compact_mini.png",
+   "card_props": [
+    "Рекомендуется на калибры: для 9*19, 345 TK, 9*22 Altay",
+    "+ Может быть укомплектован переходником, для карабинов не имеющим резьбу на стволе--> <!--",
+    "+ компактный--> <!--",
+    "+ Чехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "mg5",
+   "name": "Макси Лонг Сайга-410",
+   "specs": {},
+   "texts": [
+    "Закрытого типа--> <!--",
+    "--> <!--",
+    "--> <!--",
+    "+ готовый комплект для самостоятельной установки для Сайга 410--> <!--",
+    "--> <!--",
+    "Закажите бесплатную консультацию по телефону.--> <!--",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.--> <!--"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/long1.jpg",
+    "https://mgultra.ru/images/long2.jpg",
+    "https://mgultra.ru/images/long3.jpg",
+    "https://mgultra.ru/images/long4.jpg",
+    "https://mgultra.ru/images/vid5.jpg"
+   ],
+   "photos": 5,
+   "video": [
+    "https://www.youtube.com/watch?v=dlTI2Uzijf4"
+   ],
+   "site_url": "https://mgultra.ru/#mg5",
+   "price_site": 27000,
+   "card_img": "https://mgultra.ru/images/main_saiga.jpg",
+   "card_props": [
+    "Рекомендуется на: 410 калибр",
+    "+ Видеоинструкция по установке",
+    "+ Термочехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "mg10",
+   "name": "Термочехол",
+   "specs": {},
+   "texts": [
+    "для работы с цифровыми прицелами и тепловизорами",
+    "Размеры:",
+    "Длина : 220, 250, 300, 350",
+    "для ДТКП диаметром 50мм",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update2/chehol_1.jpeg",
+    "https://mgultra.ru/images/update2/chehol_2.jpeg",
+    "https://mgultra.ru/images/update2/chehol_3.jpeg",
+    "https://mgultra.ru/images/update2/chehol_4.jpeg"
+   ],
+   "photos": 4,
+   "video": [],
+   "site_url": "https://mgultra.ru/#mg10",
+   "price_site": 3000,
+   "card_img": "https://mgultra.ru/images/update2/chehol_1.jpeg",
+   "card_props": [
+    "Размеры: Длина : 220, 250, 300, 350",
+    "для ДТКП диаметром 50мм"
+   ]
+  },
+  {
+   "id": "mg8",
+   "name": "Комплекс «Monza»",
+   "specs": {
+    "Длина": "230 мм",
+    "Диаметр": "48 мм",
+    "Вес": "450 г",
+    "1 Dual-brake:": "вес 50 г"
+   },
+   "texts": [
+    "в комплекте с Dual Brake",
+    "Закрытого типа (15 камер)",
+    "Рекомендуется на калибры: 243, 223, 6.5, 308, 30-06",
+    "Для карабинов иностранного производства имеющих штатную заводскую резьбу",
+    "+ видеообзор на «Monza» + Термочехол в ПОДАРОК!",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/monza1.jpg",
+    "https://mgultra.ru/images/monza2.jpg",
+    "https://mgultra.ru/images/monza3.jpg",
+    "https://mgultra.ru/images/monza4.jpg"
+   ],
+   "photos": 4,
+   "video": [
+    "https://www.youtube.com/watch?v=txNy3owCnj4"
+   ],
+   "site_url": "https://mgultra.ru/#mg8",
+   "price_site": null,
+   "card_props": []
+  },
+  {
+   "id": "mg9_1",
+   "name": "З-12",
+   "specs": {
+    "Длина": "200 мм",
+    "Диаметр": "50 мм",
+    "Вес": "490 г"
+   },
+   "texts": [
+    "Усиленная конструкция",
+    "Предназначен для карабинов на базе современного АК-12 с байонетным креплением на конце ствола, в калибре 5,45*39",
+    "Рекомендуется на калибры: 5,45*39",
+    "Закрытого типа (12 камер)",
+    "Укомплектован чехлом-подсумком с креплением молли",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/z12_1_n.jpeg",
+    "https://mgultra.ru/images/z12_2_n.jpeg",
+    "https://mgultra.ru/images/z12_3_n.jpeg",
+    "https://mgultra.ru/images/z12_4_n.jpeg",
+    "https://mgultra.ru/images/z12_5_n.jpeg"
+   ],
+   "photos": 5,
+   "video": [],
+   "site_url": "https://mgultra.ru/#mg9_1",
+   "price_site": 23000,
+   "card_img": "https://mgultra.ru/images/update/main_z_12.png",
+   "card_props": [
+    "Рекомендуется на калибры: 5,45*39 Укомплектован чехлом подсумком с креплением молли"
+   ]
+  },
+  {
+   "id": "mg9_2",
+   "name": "З-СВД",
+   "specs": {
+    "Длина": "200 мм",
+    "Диаметр": "50 мм",
+    "Вес": "740 г"
+   },
+   "texts": [
+    "Усиленная конструкция, быстросъемный шариково-цанговый зажим",
+    "Предназначен для карабинов снайперской винтовки Драгунова (в гражданском исполнении карабин Тигр 7,62*54) с длинным щелевым пламегасителем, в калибре 7,62*54",
+    "Рекомендуется на калибры: 7,62*54",
+    "Закрытого типа (12 камер)",
+    "Укомплектован чехлом-подсумком с креплением молли",
+    "Отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "Рекомендуется на калибры: 22lr",
+    "+ Чехол подсумок в ПОДАРОК!"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/kolibriper_1.png",
+    "https://mgultra.ru/images/update/pi_1.png",
+    "https://mgultra.ru/images/update/zsvd_1.png",
+    "https://mgultra.ru/images/update/zsvd_2.png",
+    "https://mgultra.ru/images/update/zsvd_3.png",
+    "https://mgultra.ru/images/update/zsvd_4.png",
+    "https://mgultra.ru/images/update/zsvd_5.png"
+   ],
+   "photos": 7,
+   "video": [],
+   "site_url": "https://mgultra.ru/#mg9_2",
+   "price_site": 31000,
+   "card_img": "https://mgultra.ru/images/update/zsvd_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 7,62*54 Укомплектован чехлом подсумком с креплением молли"
+   ]
+  },
+  {
+   "id": "mg6",
+   "name": "Полуинтеграл",
+   "specs": {
+    "Длина": "350 мм",
+    "Диаметр": "50 мм",
+    "Вес": "650 г"
+   },
+   "texts": [
+    "Закрытого типа (15 камер)",
+    "Рекомендуется для:",
+    "223, 243, 308, 7,62x54, 30x06, 366 ТКМ, 9,6x53 Ланкастер",
+    "+ устанавливается на любой карабин без резьбы + видеообзор на «Полуинтеграл» + Термочехол в ПОДАРОК!",
+    "--> <!--",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "Рекомендуется: Для укомплектации комплекса полуинтеграл. Служит для защиты резьбы и частичного гашения вспышки."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/dogi_1.png",
+    "https://mgultra.ru/images/update/pi_1.png",
+    "https://mgultra.ru/images/update/pi_2.png",
+    "https://mgultra.ru/images/update/pi_3.png",
+    "https://mgultra.ru/images/update/pi_4.png",
+    "https://mgultra.ru/images/update/pi_5.png"
+   ],
+   "photos": 6,
+   "video": [
+    "https://www.youtube.com/watch?v=lOOHecnFVds"
+   ],
+   "site_url": "https://mgultra.ru/#mg6",
+   "price_site": 35000,
+   "card_img": "https://mgultra.ru/images/update/pi_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 223, 243, 308, 7,62x54, 30x06, 366 ТКМ, 9,6x53 Ланкастер",
+    "+ устанавливается на любой карабин без резьбы",
+    "+ видеообзор на «Полуинтеграл»",
+    "+ Термочехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "mg7",
+   "name": "ДТКП «Дожигатель»",
+   "specs": {
+    "Длина": "250 мм",
+    "Диаметр": "45 мм",
+    "Вес": "75 г",
+    "Длинна": "160 мм"
+   },
+   "texts": [
+    "Закрытого типа",
+    "Рекомендуется для:",
+    "укомплектации комплекса полуинтеграл. Служит для защиты резьбы и частичного гашения вспышки.",
+    "накручивается на обратную муфту.",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа.",
+    "Размеры: Длина : 220, 250, 300, 350",
+    "для ДТКП диаметром 50мм",
+    "Рекомендуется на: 410 калибр"
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/omega7_1.jpg",
+    "https://mgultra.ru/images/omega7_2.jpg",
+    "https://mgultra.ru/images/omega7_3.jpg",
+    "https://mgultra.ru/images/omega7_4.jpg",
+    "https://mgultra.ru/images/update/cfox_1.png",
+    "https://mgultra.ru/images/update/dogi_1.png",
+    "https://mgultra.ru/images/update/dogi_2.png",
+    "https://mgultra.ru/images/update/dogi_3.png",
+    "https://mgultra.ru/images/update/dogi_4.png",
+    "https://mgultra.ru/images/update/dogi_5.png",
+    "https://mgultra.ru/images/update/main_z_12.png",
+    "https://mgultra.ru/images/update/omega12_1.png",
+    "https://mgultra.ru/images/update/omega12_2.png",
+    "https://mgultra.ru/images/update/omega12_3.png",
+    "https://mgultra.ru/images/update/omega12_4.png",
+    "https://mgultra.ru/images/update/omega12_5.png",
+    "https://mgultra.ru/images/update/omega5_1.png",
+    "https://mgultra.ru/images/update/omega5_2.png",
+    "https://mgultra.ru/images/update/omega5_3.png",
+    "https://mgultra.ru/images/update/omega5_4.png",
+    "https://mgultra.ru/images/update/omega5_5.png",
+    "https://mgultra.ru/images/update/z7_1.png",
+    "https://mgultra.ru/images/update/zsvd_1.png",
+    "https://mgultra.ru/images/update2/chehol_1.jpeg",
+    "https://mgultra.ru/images/long/long1.jpg",
+    "https://mgultra.ru/images/long/long2.jpg",
+    "https://mgultra.ru/images/long/p1.jpeg",
+    "https://mgultra.ru/images/long/p2.jpeg",
+    "https://mgultra.ru/images/long/p3.jpeg",
+    "https://mgultra.ru/images/long/p4.jpeg",
+    "https://mgultra.ru/images/long/p5.jpeg",
+    "https://mgultra.ru/images/main_ak12.jpg",
+    "https://mgultra.ru/images/main_saiga.jpg",
+    "https://mgultra.ru/images/prev_vid3.jpg",
+    "https://mgultra.ru/images/update/z5_1.bmp"
+   ],
+   "photos": 35,
+   "video": [
+    "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb",
+    "https://www.youtube.com/watch?v=lOOHecnFVds"
+   ],
+   "site_url": "https://mgultra.ru/#mg7",
+   "price_site": 9000,
+   "card_props": []
+  },
+  {
+   "id": "mg101",
+   "name": "Фирменный чехол для ДТКП серии ФОКС, НИТРО",
+   "specs": {},
+   "texts": [
+    "Размеры:",
+    "Длина : 170мм",
+    "для ДТКП диаметром 45мм, 48мм",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/cfox_1.png",
+    "https://mgultra.ru/images/update/cfox_2.png",
+    "https://mgultra.ru/images/update/cfox_3.png",
+    "https://mgultra.ru/images/update/cfox_4.png",
+    "https://mgultra.ru/images/update/cfox_5.png",
+    "https://mgultra.ru/images/update/cfox_6.png"
+   ],
+   "photos": 6,
+   "video": [],
+   "site_url": "https://mgultra.ru/#mg101",
+   "price_site": 2000,
+   "card_img": "https://mgultra.ru/images/update/cfox_1.png",
+   "card_props": [
+    "Размеры: Длина : 170 мм",
+    "для ДТКП диаметром 45мм, 48мм"
+   ]
+  },
+  {
+   "id": "mg522",
+   "name": "ФОКС",
+   "specs": {
+    "Длина": "170 мм",
+    "Диаметр": "48 мм",
+    "Вес": "470 г"
+   },
+   "texts": [
+    "Самый легкий и компактный, имеет современный газоразгруженный конструктив",
+    "Кованый фигурный корпус с жёстким анодированием и керамическим покрытием.",
+    "Сепаратор и резьбовое соединение выполнены из жаропрочной нержавеющей стали.",
+    "Рекомендуется на калибры: 308Win, 30-06",
+    "Газоразгруженный",
+    "Предназначен для карабинов иностранного производства с резьбой: 14*1LH, 14*1, 15*1, 16*1, 17*1, 18*1, 1/2*20, 1/2*28, 5/8*24, 9/16*24",
+    "Укомплектован чехлом-подсумком с креплением молли",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/fox_1.png",
+    "https://mgultra.ru/images/update/fox_2.png",
+    "https://mgultra.ru/images/update/fox_3.png",
+    "https://mgultra.ru/images/update/fox_4.png",
+    "https://mgultra.ru/images/update/fox_5.png",
+    "https://mgultra.ru/images/prev_vid3.jpg"
+   ],
+   "photos": 6,
+   "video": [
+    "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
+   ],
+   "site_url": "https://mgultra.ru/#mg522",
+   "price_site": 25000,
+   "card_img": "https://mgultra.ru/images/update/fox_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 308, 30-06 Предназначен для карабинов иностранного производства, имеющих штатную заводскую резьбу",
+    "+ видеообзор на «ФОКС»",
+    "+ Чехол подсумок в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "norma",
+   "name": "НОРМА",
+   "specs": {
+    "Длина": "210 мм",
+    "Диаметр": "50 мм",
+    "Вес": "550 г"
+   },
+   "texts": [
+    "Самый эффективный по снижению звука выстрела, имеет современный газоразгруженный конструктив",
+    "Кованый фигурный корпус с жёстким анодированием и керамическим покрытием.",
+    "Изготавливается только в калибре 7,62 для карабинов импортного производства с заводской резьбой на дульном срезе ствола.",
+    "Сепаратор и резьбовое соединение выполнены из жаропрочной нержавеющей стали.",
+    "Рекомендуется на калибры: 308, 30-06, 300WM",
+    "Газоразгруженный",
+    "Предназначен для карабинов иностранного производства с резьбой: 14*1LH, 14*1, 15*1, 16*1, 17*1, 18*1, 1/2*20, 1/2*28, 5/8*24, 9/16*24",
+    "Укомплектован чехлом-подсумком с креплением молли",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/norma_1.png",
+    "https://mgultra.ru/images/update/norma_2.png",
+    "https://mgultra.ru/images/update/norma_3.png",
+    "https://mgultra.ru/images/update/norma_4.png",
+    "https://mgultra.ru/images/update/norma_5.png",
+    "https://mgultra.ru/images/update/norma_6.png",
+    "https://mgultra.ru/images/prev_vid3.jpg"
+   ],
+   "photos": 7,
+   "video": [
+    "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
+   ],
+   "site_url": "https://mgultra.ru/#norma",
+   "price_site": 35000,
+   "card_img": "https://mgultra.ru/images/update/norma_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 308, 30-06, 300WM Предназначен для карабинов иностранного производства, имеющих штатную заводскую резьбу",
+    "+ видеообзор на «НОРМА»",
+    "+ Чехол подсумок в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "nitro",
+   "name": "НИТРО",
+   "specs": {
+    "Длина": "170 мм",
+    "Диаметр": "45 мм",
+    "Вес": "430 г"
+   },
+   "texts": [
+    "Самый эффективный по снижению звука выстрела, имеет современный газоразгруженный конструктив",
+    "Кованый фигурный корпус с жёстким анодированием и керамическим покрытием.",
+    "Сепаратор и резьбовое соединение выполнены из жаропрочной нержавеющей стали.",
+    "Рекомендуется на калибры: 223Rem, 22WMR",
+    "Газоразгруженный",
+    "Предназначен для карабинов иностранного производства с резьбой: 14*1LH, 14*1, 15*1, 16*1, 17*1, 18*1, 1/2*20, 1/2*28, 5/8*24, 9/16*24",
+    "Укомплектован чехлом-подсумком с креплением молли",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/nitro_1.png",
+    "https://mgultra.ru/images/update/nitro_2.png",
+    "https://mgultra.ru/images/update/nitro_3.png",
+    "https://mgultra.ru/images/update/nitro_4.png",
+    "https://mgultra.ru/images/update/nitro_5.png",
+    "https://mgultra.ru/images/prev_vid3.jpg"
+   ],
+   "photos": 6,
+   "video": [
+    "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
+   ],
+   "site_url": "https://mgultra.ru/#nitro",
+   "price_site": 25000,
+   "card_img": "https://mgultra.ru/images/update/nitro_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 223Rem, 22WMR Предназначен для карабинов иностранного производства, имеющих штатную заводскую резьбу",
+    "+ видеообзор на «НИТРО»",
+    "+ Чехол подсумок в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "mg525",
+   "name": "КОЛИБРИ",
+   "specs": {
+    "Длина": "130 мм",
+    "Диаметр": "35 мм",
+    "Вес": "150 г"
+   },
+   "texts": [
+    "Имеет 12 камер",
+    "Корпус изготовлен из авиационного сплава с керамическим покрытием",
+    "Резьбовое соединение выполненно из жаропрочной нержавеющей стали",
+    "Рекомендуется на калибры: 22LR",
+    "Предназначен для малокалиберных карабинов с резьбой: 15*1, 18*1, 1/2*20, 1/2*28, 14*1LH",
+    "Чехол-подсумок в ПОДАРОК!",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону.",
+    "Технический специалист свяжется с вами в течении дня и обсудит детали заказа."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/update/kolibri_1.png",
+    "https://mgultra.ru/images/update/kolibri_2.png",
+    "https://mgultra.ru/images/update/kolibri_3.png",
+    "https://mgultra.ru/images/update/kolibri_4.png",
+    "https://mgultra.ru/images/update/kolibri_5.png",
+    "https://mgultra.ru/images/prev_vid3.jpg"
+   ],
+   "photos": 6,
+   "video": [
+    "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb"
+   ],
+   "site_url": "https://mgultra.ru/#mg525",
+   "price_site": 15000,
+   "card_img": "https://mgultra.ru/images/update/kolibri_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 22LR",
+    "+ видеообзор на «KOLIBRI»",
+    "+ Чехол подсумок в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "creedmoor",
+   "name": "6,5 Кридмур",
+   "specs": {
+    "Длина": "180 мм",
+    "Диаметр": "45 мм",
+    "Вес": "430 г"
+   },
+   "texts": [
+    "Самый эффективный по снижению звука выстрела, имеет современный газоразгруженный конструктив",
+    "Комбинированный сепаратор выполнен из жаропрочного титанового сплава и имеет основной внутренний контур и наружный газоразгруженный.",
+    "Кованый фигурный корпус с жёстким анодированием и керамическим покрытием.",
+    "Резьбовое соединение - нержавеющая сталь.",
+    "Рекомендуется на калибры: 6,5 CREEDMOOR; 243Win",
+    "Газоразгруженный",
+    "Предназначен для карабинов иностранного производства с резьбой: 14*1LH, 14*1, 15*1, 16*1, 17*1, 18*1, 1/2*20, 1/2*28, 5/8*24, 9/16*24",
+    "Укомплектован фирменным термочехлом",
+    "отгрузка в день оплаты",
+    "Закажите бесплатную консультацию по телефону."
+   ],
+   "gallery": [
+    "https://mgultra.ru/images/cree_2.png",
+    "https://mgultra.ru/images/cree_3.png",
+    "https://mgultra.ru/images/cree_4.png",
+    "https://mgultra.ru/images/carbine2.png",
+    "https://mgultra.ru/images/cree_main.png",
+    "https://mgultra.ru/images/main/creedmor.png",
+    "https://mgultra.ru/images/main/normator.png",
+    "https://mgultra.ru/images/prev_vid3.jpg"
+   ],
+   "photos": 8,
+   "video": [
+    "https://rutube.ru/play/embed/321e68a2fd2faa921bc2ebdf57a2b7cb",
+    "https://www.youtube.com/channel/UCSGJJQH6bpbvPsO2WaUHSig?view_as=subscriber"
+   ],
+   "site_url": "https://mgultra.ru/#creedmoor",
+   "price_site": 29500,
+   "card_img": "https://mgultra.ru/images/update/main_creedmoor.png",
+   "card_props": [
+    "Рекомендуется на калибры: 6.5 CREEDMOOR, 243Win Предназначен для карабинов иностранного производства, имеющих штатную заводскую резьбу",
+    "+видеообзор на «6,5 Кридмур»",
+    "+ Фирменный термочехол в ПОДАРОК!"
+   ]
+  },
+  {
+   "id": "card-тр3",
+   "name": "ТР-3",
+   "price_site": 29000,
+   "card_img": "https://mgultra.ru/images/update2/tr3_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 5,45, 7.62-39",
+    "+ Готовый комплект для самостоятельной установки на карабин ТР-3",
+    "+ видеоинструкция по установке",
+    "+ Термочехол в ПОДАРОК!"
+   ],
+   "specs": {},
+   "texts": [],
+   "gallery": [
+    "https://mgultra.ru/images/update2/tr3_1.png"
+   ],
+   "photos": 1,
+   "video": [],
+   "site_url": "https://mgultra.ru/#catalog"
+  },
+  {
+   "id": "card-промакс",
+   "name": "ПРО МАКС",
+   "price_site": 35000,
+   "card_img": "https://mgultra.ru/images/update/promax_1.png",
+   "card_props": [
+    "Закрытого типа (16 камер)",
+    "Устанавливается на карабины имеющие штатную заводскую резьбу: 1/2*28, 14*1 ПР, 15*1 ПР, 16*1 ПР",
+    "Рекомендуется на калибры: 223, 308, 30-06, 9,6*53 Ланкастер",
+    "Длина 300 мм 100мм заходит на ствол"
+   ],
+   "specs": {},
+   "texts": [],
+   "gallery": [
+    "https://mgultra.ru/images/update/promax_1.png"
+   ],
+   "photos": 1,
+   "video": [],
+   "site_url": "https://mgultra.ru/#catalog"
+  },
+  {
+   "id": "card-спортсайга9tr9",
+   "name": "СПОРТ (Сайга-9, TR9)",
+   "price_site": 21000,
+   "card_img": "https://mgultra.ru/images/update/sport_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 9*19, 345 ТК, 9*22 Altay",
+    "Длина 240 мм",
+    "Диаметр 43мм",
+    "Вес 300 грамм"
+   ],
+   "specs": {},
+   "texts": [],
+   "gallery": [
+    "https://mgultra.ru/images/update/sport_1.png"
+   ],
+   "photos": 1,
+   "video": [],
+   "site_url": "https://mgultra.ru/#catalog"
+  },
+  {
+   "id": "card-молотвпо185впо285",
+   "name": "МОЛОТ - ВПО-185, ВПО-285",
+   "price_site": 21000,
+   "card_img": "https://mgultra.ru/images/update/molot_1.png",
+   "card_props": [
+    "Рекомендуется на калибры: 9*19, 345 ТК, 9*22 Altay",
+    "+ Чехол в ПОДАРОК!"
+   ],
+   "specs": {},
+   "texts": [],
+   "gallery": [
+    "https://mgultra.ru/images/update/molot_1.png"
+   ],
+   "photos": 1,
+   "video": [],
+   "site_url": "https://mgultra.ru/#catalog"
+  },
+  {
+   "id": "card-омега5",
+   "name": "ОМЕГА-5",
+   "price_site": 25000,
+   "card_img": "https://mgultra.ru/images/update/omega5_1.png",
+   "card_props": [
+    "Подходит на калибры: 5,45*39",
+    "Укомплектован чехлом-подсумком с креплением молли"
+   ],
+   "specs": {},
+   "texts": [],
+   "gallery": [
+    "https://mgultra.ru/images/update/omega5_1.png"
+   ],
+   "photos": 1,
+   "video": [],
+   "site_url": "https://mgultra.ru/#catalog"
+  },
+  {
+   "id": "card-omega7",
+   "name": "OMEGA-7",
+   "price_site": null,
+   "card_img": "https://mgultra.ru/images/omega7_1.jpg",
+   "card_props": [
+    "--> <!--",
+    "Укомплектован чехлом-подсумком с креплением молли"
+   ],
+   "specs": {},
+   "texts": [],
+   "gallery": [
+    "https://mgultra.ru/images/omega7_1.jpg"
+   ],
+   "photos": 1,
+   "video": [],
+   "site_url": "https://mgultra.ru/#catalog"
+  },
+  {
+   "id": "card-омега12",
+   "name": "ОМЕГА-12",
+   "price_site": 25000,
+   "card_img": "https://mgultra.ru/images/update/omega12_1.png",
+   "card_props": [
+    "Подходит на калибры: 5,45*39 Для байонетного крепления",
+    "Укомплектован чехлом-подсумком с креплением молли"
+   ],
+   "specs": {},
+   "texts": [],
+   "gallery": [
+    "https://mgultra.ru/images/update/omega12_1.png"
+   ],
+   "photos": 1,
+   "video": [],
+   "site_url": "https://mgultra.ru/#catalog"
+  },
+  {
+   "id": "card-новыйпереходникдляак",
+   "name": "Новый переходник для АК-12/TR-3",
+   "price_site": 7000,
+   "card_img": "https://mgultra.ru/images/main_ak12.jpg",
+   "card_props": [
+    "Подходит на калибры: 5,45, 7,62, 366ТКМ"
+   ],
+   "specs": {},
+   "texts": [],
+   "gallery": [
+    "https://mgultra.ru/images/main_ak12.jpg"
+   ],
+   "photos": 1,
+   "video": [],
+   "site_url": "https://mgultra.ru/#catalog"
+  }
+ ]
+}

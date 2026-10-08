@@ -1,5 +1,5 @@
 {
- "_комментарий": "Фото поставщика MG Ultra (ДТКП): до 4 кадров на модель, только с сайта поставщика. Складываем в suppliers/mgultra/photos.",
+ "_комментарий": "Фото поставщика MG Ultra (ДТКП). До 4 кадров на модель, качаем с сайта поставщика (интернет-картинки брать нельзя). Раскладка: suppliers/mgultra/photos.",
  "files": [
   {
    "name": "mgultra_mg1_1",
@@ -434,6 +434,30 @@
    ]
   },
   {
+   "name": "mgultra_mg101_1",
+   "urls": [
+    "https://mgultra.ru/images/case_1.jpg"
+   ]
+  },
+  {
+   "name": "mgultra_mg101_2",
+   "urls": [
+    "https://mgultra.ru/images/case_2.jpg"
+   ]
+  },
+  {
+   "name": "mgultra_mg101_3",
+   "urls": [
+    "https://mgultra.ru/images/case_3.jpg"
+   ]
+  },
+  {
+   "name": "mgultra_mg101_4",
+   "urls": [
+    "https://mgultra.ru/images/case_4.jpg"
+   ]
+  },
+  {
    "name": "mgultra_norma_1",
    "urls": [
     "https://mgultra.ru/images/update/norma_1.png"
@@ -551,6 +575,18 @@
    "name": "mgultra_card-молотвпо185впо285_1",
    "urls": [
     "https://mgultra.ru/images/update/molot_1.png"
+   ]
+  },
+  {
+   "name": "mgultra_card-дткпсайга410_1",
+   "urls": [
+    "https://mgultra.ru/images/product5.png"
+   ]
+  },
+  {
+   "name": "mgultra_card-дожигатель_1",
+   "urls": [
+    "https://mgultra.ru/images/update/dogi_1.png"
    ]
   },
   {
