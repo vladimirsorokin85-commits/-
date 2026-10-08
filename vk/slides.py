@@ -77,7 +77,7 @@ def _wrap_fit(text, width, sizes, max_lines=3, weight=None, name="PTSans-Bold.tt
 def slide_cover(spec, n, total):
     img = paper(W, H)
     d = ImageDraw.Draw(img)
-    y = _head(img, d, "", "Собрано из наличия · СДЭК, оплата при получении")
+    y = _head(img, d, "", "Собрано из наличия · отправка СДЭК по России")
 
     f, lines = _wrap_fit(spec.get("title", ""), W - 2 * M, (78, 68, 58), 3, name="RussoOne.ttf")
     for ln in lines:
@@ -414,7 +414,7 @@ def build_spec(kit, card, resolved, story=None):
                        "subtitle": "Условие предложения"})
     else:
         slides.append({"type": "cta", "title": "Соберём под ваш размер и задачу",
-                       "bullets": ["СДЭК по России, оплата при получении",
+                       "bullets": ["СДЭК по России",
                                    "Напишите в личные сообщения — подберём"]})
     return slides[:10]
 

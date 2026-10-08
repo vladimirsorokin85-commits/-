@@ -36,7 +36,7 @@ sys.path.insert(0, os.path.join(ROOT, "media", "blank"))
 from kit_card import build as build_card  # noqa: E402
 from vk.slides import build as build_slides, build_spec  # noqa: E402
 
-CTA = "СДЭК по России, оплата при получении. Напишите в личные сообщения — соберём под вашу задачу."
+CTA = "СДЭК по России. Напишите в личные сообщения — соберём под вашу задачу."
 
 
 def load_catalog():
@@ -195,7 +195,10 @@ def build_kit(kit_path):
         guard_text = guard_text.replace(ln, "")
     for label, rx in (("цена", r"\d[\d\s]*(₽|руб)"), ("«у Димы»", r"\bДимы?\b"),
                       ("поставщик", r"поставщик"), ("склад", r"\b(на|со)\s+склад"),
-                      ("остаток", r"\b\d+\s*(шт|компл|пар)\b")):
+                      ("остаток", r"\b\d+\s*(шт|компл|пар)\b"),
+                      ("оплата при получении", r"при получении"),
+                      ("постоплата", r"постоплат"),
+                      ("предоплата", r"\bпредоплат")):
         m = re.search(rx, guard_text, re.I)
         assert not m, f"в тексте комплекта запрещённое: {label} → {m.group(0)!r}"
 
@@ -204,6 +207,9 @@ def build_kit(kit_path):
     # отдельные посты по позициям комплекта (владелец просил: и комплект, и по отдельности)
     single_dir = os.path.join(out_dir, "по_отдельности")
     os.makedirs(single_dir, exist_ok=True)
+    for old_f in os.listdir(single_dir):          # чистим устаревшие файлы прошлых сборок
+        if old_f.endswith(".txt"):
+            os.remove(os.path.join(single_dir, old_f))
     for it in items:
         res = resol[it["id"]]
         short = it.get("short") or it["label"]
