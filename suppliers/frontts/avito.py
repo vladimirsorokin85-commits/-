@@ -119,7 +119,7 @@ def main():
             t = TEXTS.get(it["slug"])
             assert t, f"{it['slug']}: нет текста в avito_texts.py"
             n += 1
-            label = f"{n:02d}_{re.sub(r'[^0-9A-Za-zА-Яа-яЁё ]+', '', it['name']).strip()[:60]}"
+            label = f"{n:02d}_{re.sub(r'[^0-9A-Za-zА-Яа-яЁё]+', ' ', it['name']).strip()[:60]}"
             folder = os.path.join(OUT, label)
             photos = prepare_photos(it["photos"], folder)
             assert photos, f"{it['name']}: нет фото — объявление не собираем"

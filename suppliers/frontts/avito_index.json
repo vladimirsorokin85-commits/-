@@ -28,7 +28,7 @@
  },
  {
   "slug": "brjuki-vetro-vlagozashhitnye-strazh",
-  "label": "04_Брюки ветровлагозащитные Страж",
+  "label": "04_Брюки ветро влагозащитные Страж",
   "group": "odezhda",
   "title": "Брюки SoftShell Страж ветро-влагозащитные",
   "photos": 3,
@@ -46,7 +46,7 @@
  },
  {
   "slug": "kurtka-strazh",
-  "label": "06_Куртка ветровлагозащитная Страж",
+  "label": "06_Куртка ветро влагозащитная Страж",
   "group": "odezhda",
   "title": "Куртка SoftShell Страж ветро-влагозащитная",
   "photos": 3,
@@ -55,7 +55,7 @@
  },
  {
   "slug": "rubashka-polo-softtaktikal",
-  "label": "07_Рубашкаполо СофтТактикал",
+  "label": "07_Рубашка поло СофтТактикал",
   "group": "odezhda",
   "title": "Рубашка-поло тактическая СофтТактикал",
   "photos": 4,
@@ -109,7 +109,7 @@
  },
  {
   "slug": "pistoletnyj-podsumok-pm-pya-fonar",
-  "label": "13_Пистолетный подсумок ПМПЯФОНАРЬ",
+  "label": "13_Пистолетный подсумок ПМ ПЯ ФОНАРЬ",
   "group": "ragruzka",
   "title": "Подсумок для магазина ПМ/ПЯ и фонаря, MOLLE",
   "photos": 3,
@@ -118,7 +118,7 @@
  },
  {
   "slug": "podsumok-na-100-patronov",
-  "label": "14_Подсумок ПКМ100 на 100 патронов",
+  "label": "14_Подсумок ПКМ 100 на 100 патронов",
   "group": "ragruzka",
   "title": "Подсумок ПКМ на 100 патронов, MOLLE",
   "photos": 4,
@@ -217,7 +217,7 @@
  },
  {
   "slug": "podsumok-2-magazinov",
-  "label": "25_Подсумок закрытого типа для 2х магазинов",
+  "label": "25_Подсумок закрытого типа для 2 х магазинов",
   "group": "ragruzka",
   "title": "Подсумок закрытый для 2 магазинов АК, AEGIS",
   "photos": 8,
@@ -271,7 +271,7 @@
  },
  {
   "slug": "razgruzochno-poyasnaya-sistema-pulemetchika-skat",
-  "label": "31_Разгрузочнопоясная система пулеметчика СКАТ",
+  "label": "31_Разгрузочно поясная система пулеметчика СКАТ",
   "group": "ragruzka",
   "title": "Разгрузочно-поясная система СКАТ для пулемётчика",
   "photos": 4,
@@ -334,7 +334,7 @@
  },
  {
   "slug": "sistema-podachi-boepripasov-mantikora",
-  "label": "38_Система подачи боеприпасов МАНТИКОРА для 30мм автоматическог",
+  "label": "38_Система подачи боеприпасов МАНТИКОРА для 30 мм автоматическо",
   "group": "podacha",
   "title": "Система подачи боеприпасов Мантикора для АГС-17",
   "photos": 6,
@@ -352,7 +352,7 @@
  },
  {
   "slug": "sistema-podachi-boepripasov-skorpion",
-  "label": "40_Система подачи боеприпасов СКОРПИОН для ПКТ калибра 76254 R",
+  "label": "40_Система подачи боеприпасов СКОРПИОН для ПКТ калибра 7 62 54 ",
   "group": "podacha",
   "title": "Система подачи ленты Скорпион для ПКТ 7,62×54",
   "photos": 6,
@@ -397,7 +397,7 @@
  },
  {
   "slug": "podsumok-turniketa",
-  "label": "45_Подсумок универсальный для жгутатурникета",
+  "label": "45_Подсумок универсальный для жгута турникета",
   "group": "med",
   "title": "Подсумок для жгута-турникета AEGIS, MOLLE",
   "photos": 7,
@@ -415,7 +415,7 @@
  },
  {
   "slug": "takticheskaya-aptechka-rhino-ifak-qf-002m",
-  "label": "47_Тактическая аптечка RHINO IFAK QF002M",
+  "label": "47_Тактическая аптечка RHINO IFAK QF 002M",
   "group": "med",
   "title": "Аптечка-подсумок RHINO IFAK QF-002M, Cordura",
   "photos": 5,
