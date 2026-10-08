@@ -1,5 +1,5 @@
 {
- "_комментарий": "Поставщик «Фронт-ТС» (front-ts.ru). Режим разведки: обойти сайт и собрать структуру + список URL товаров. Потом mode=products по списку suppliers/frontts/data/urls.txt.",
+ "_комментарий": "Полный разбор всех 64 карточек front-ts.ru: название, цена (РРЦ с сайта), описание, фото.",
  "host": "front-ts.ru",
  "mode": "products",
  "listing_limit": 25,
@@ -8,5 +8,5 @@
  "page_cap_bytes": 4000000,
  "raw_cap_bytes": 40000000,
  "sleep": 0.4,
- "limit": 5
+ "limit": 0
 }

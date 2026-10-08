@@ -20,11 +20,15 @@ import hashlib
 import json
 import os
 import re
+import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 import zlib
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from parse import parse_product, html_to_text, images_of, jsonld  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -239,129 +243,24 @@ def looks_product(u):
 
 
 # ----------------------------------------------------------------- products
-def jsonld_products(html):
-    out = []
-    for m in re.finditer(r'<script[^>]+application/ld\+json[^>]*>(.*?)</script>', html, re.S | re.I):
-        raw = m.group(1).strip()
-        try:
-            data = json.loads(raw)
-        except Exception:  # noqa: BLE001
-            continue
-        items = data if isinstance(data, list) else [data]
-        for it in items:
-            if isinstance(it, dict) and it.get("@graph"):
-                items.extend(it["@graph"])
-            if isinstance(it, dict) and str(it.get("@type", "")).lower() in (
-                    "product", "individualproduct", "offer", "itempage"):
-                out.append(it)
-    return out
-
-
-def meta(html, keys):
-    """meta по name/property; keys — список имён в порядке приоритета."""
-    found = {}
-    for m in re.finditer(r'<meta[^>]+>', html, re.I):
-        tag = m.group(0)
-        name = re.search(r'(?:name|property|itemprop)=["\']([^"\']+)["\']', tag, re.I)
-        cont = re.search(r'content=["\']([^"\']*)["\']', tag, re.I)
-        if name and cont:
-            k = name.group(1).lower()
-            if k in keys and k not in found:
-                found[k] = cont.group(1).strip()
-    return found
-
-
-def strip_tags(html):
-    t = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", html, flags=re.S | re.I)
-    t = re.sub(r"<br\s*/?>", "\n", t, flags=re.I)
-    t = re.sub(r"</(p|div|li|tr|h\d)>", "\n", t, flags=re.I)
-    t = re.sub(r"<[^>]+>", " ", t)
-    import html as _h
-    t = _h.unescape(t)
-    t = re.sub(r"[ \t\xa0]+", " ", t)
-    t = re.sub(r"\n\s*\n+", "\n\n", t)
-    return t.strip()
-
-
-def parse_price(html):
-    pats = [r'itemprop=["\']price["\'][^>]*content=["\']([\d\s\u00a0.,]+)',
-            r'content=["\']([\d\s\u00a0.,]+)["\'][^>]*itemprop=["\']price["\']',
-            r'"price"\s*:\s*"?([\d\s.,]+)',
-            r'([\d]{3,7}(?:[.,]\d{2})?)\s*(?:₽|руб)']
-    for p in pats:
-        m = re.search(p, html, re.I)
-        if m:
-            v = re.sub(r"[^\d.,]", "", m.group(1)).replace(",", ".")
-            try:
-                return float(v)
-            except ValueError:
-                pass
-    return None
-
-
-def parse_product(html, url):
-    ld = jsonld_products(html)
-    m = meta(html, {"og:title", "og:description", "og:image", "description", "keywords",
-                    "product:price:amount", "og:price:amount"})
-    name = (ld[0].get("name") if ld else None) or m.get("og:title") or \
-        (re.search(r"<title[^>]*>(.*?)</title>", html, re.S | re.I) or [None, ""])[1]
-    name = strip_tags(name or "").split("|")[0].strip()
-    brand = ""
-    if ld:
-        b = ld[0].get("brand")
-        brand = b if isinstance(b, str) else (b or {}).get("name", "") if isinstance(b, dict) else ""
-    descr = (ld[0].get("description") if ld else "") or m.get("og:description") or m.get("description") or ""
-    descr = strip_tags(descr)
-    price = None
-    if ld:
-        off = ld[0].get("offers") or {}
-        if isinstance(off, list):
-            off = off[0] if off else {}
-        if isinstance(off, dict):
-            p = off.get("price") or off.get("lowPrice")
-            try:
-                price = float(str(p).replace(",", ".").replace(" ", ""))
-            except (TypeError, ValueError):
-                price = None
-    if price is None:
-        price = parse_price(html)
-    sku = ""
-    if ld:
-        sku = str(ld[0].get("sku") or ld[0].get("mpn") or "")
-    imgs = []
-    if ld and ld[0].get("image"):
-        im = ld[0]["image"]
-        imgs += im if isinstance(im, list) else [im]
-    if m.get("og:image"):
-        imgs.insert(0, m["og:image"])
-    hrefs, srcs = links(html, url)
-    imgs += [s for s in srcs if re.search(r"(upload|product|tovar|goods|catalog|images?)/.*\.(jpe?g|png|webp)", s, re.I)]
-    clean, seen = [], set()
-    for i in imgs:
-        i = norm(i, url)
-        if i in seen or re.search(r"(logo|icon|sprite|placeholder|no-photo|badge)", i, re.I):
-            continue
-        seen.add(i)
-        clean.append(i)
-    # текст с страницы (если описания мало) — код встроенный блок «Описание»
-    body = strip_tags(html)
-    extra = ""
-    mm = re.search(r"(Описание|Характеристики)[:\s]*(.{80,3000})", body, re.S)
-    if mm and len(descr) < 200:
-        extra = mm.group(2).strip()
-    return {"url": url, "name": name, "brand": brand, "sku": sku, "price": price,
-            "descr_short": descr, "descr_extra": extra, "images": clean[:IMGS_PER_PRODUCT],
-            "jsonld": bool(ld)}
-
-
-def download_image(url, path, referer):
-    raw, ct = fetch(url, binary=True, referer=referer)
-    if not raw or len(raw) > IMG_CAP:
+def download_image(url, path_base, referer):
+    """Скачать фото; расширение — по содержимому. Возвращает имя файла или None."""
+    raw, _ = fetch(url, binary=True, referer=referer)
+    if not raw or len(raw) > IMG_CAP or len(raw) < 1500:
         return None
+    if raw[:3] == b"\xff\xd8\xff":
+        ext = ".jpg"
+    elif raw[:8] == b"\x89PNG\r\n\x1a\n":
+        ext = ".png"
+    elif raw[:4] == b"RIFF" and raw[8:12] == b"WEBP":
+        ext = ".webp"
+    else:
+        ext = ".jpg"
+    path = path_base + ext
     with open(path, "wb") as f:
         f.write(raw)
     STATS["images"] += 1
-    return path
+    return os.path.basename(path)
 
 
 def products():
@@ -388,11 +287,11 @@ def products():
         slug = slugify(u)
         d = os.path.join(PHOTOS, slug)
         saved = []
+        os.makedirs(d, exist_ok=True)
         for i, img in enumerate(it["images"], 1):
-            os.makedirs(d, exist_ok=True)
-            p = os.path.join(d, f"{i}.jpg")
-            if download_image(img, p, u):
-                saved.append(f"{slug}/{i}.jpg")
+            got = download_image(img, os.path.join(d, f"{i:02d}"), u)
+            if got:
+                saved.append(f"{slug}/{got}")
         it["slug"] = slug
         it["photos"] = saved
         out.append(it)
