@@ -36,7 +36,7 @@ def main():
 
     out, no_photo, no_price = [], [], []
     for it in items:
-        slug = it["slug"]
+        slug = it["slug"].replace("item-", "", 1).strip("-")
         rec = {
             "slug": slug,
             "name": re.sub(r"\s+", " ", it["name"]).strip(),

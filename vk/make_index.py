@@ -49,7 +49,8 @@ def main():
     days = [f for f in sorted(files) if re.match(r"V_OKOPE_\d{2}\.\d{2}_", f)]
 
     tuning = [f for f in sorted(files) if f.startswith("V_OKOPE_mgultra_")]
-    avito = [f for f in sorted(files) if f.startswith("V_OKOPE_avito_")]
+    avito = [f for f in sorted(files) if f.startswith("V_OKOPE_avito_") and "frontts" not in f]
+    frontts = [f for f in sorted(files) if f.startswith("V_OKOPE_avito_frontts_")]
     kit_cards = ""
     for f in kits:
         slug = f[len("V_OKOPE_kit_"):-4]
@@ -60,6 +61,16 @@ def main():
                                 files[f] / 1024 / 1024, badge="новое") for f in tuning)
     avito_cards = "".join(card(f, "Авито: 20 объявлений", "папки по товарам: фото по порядку + готовый текст объявления",
                                 files[f] / 1024 / 1024, badge="для Авито") for f in avito)
+    ft_titles = {"odezhda": "Одежда и головные уборы", "ragruzka": "Разгрузка, подсумки, ремни",
+                 "podacha": "Системы подачи боеприпасов", "med": "Тактическая медицина",
+                 "ryukzaki": "Рюкзаки и сумки", "instrument": "Штурмовой инструмент",
+                 "tunning": "Тюнинг и аксессуары"}
+    frontts_cards = ""
+    for f in frontts:
+        key = f[len("V_OKOPE_avito_frontts_"):-4]
+        title = "Фронт-ТС: " + ft_titles.get(key, "все объявления" if key == "vsyo" else key)
+        frontts_cards += card(f, title, "папки по товарам: фото + готовое объявление",
+                              files[f] / 1024 / 1024)
     day_cards = "".join(card(f, day_title(f), "6 постов: фото + текст + чек-лист",
                              files[f] / 1024 / 1024) for f in days)
     week_cards = "".join(card(f, "Вся неделя 08–14.10", "42 поста одним архивом",
@@ -88,8 +99,11 @@ def main():
 <div class="grid">{kit_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Тюнинг (MG Ultra — ДТКП)</h2>
 <div class="grid">{tuning_cards or '<p class="sub">Пока пусто</p>'}</div>
-<h2>Авито (20 готовых объявлений)</h2>
+<h2>Авито — каталог Димы (20 объявлений)</h2>
 <div class="grid">{avito_cards or '<p class="sub">Пока пусто</p>'}</div>
+<h2>Авито — Фронт-ТС (63 объявления по разделам)</h2>
+<div class="grid">{frontts_cards or '<p class="sub">Пока пусто</p>'}</div>
+<p class="sub">Всё одним архивом — карточка «Фронт-ТС: все объявления» ниже (63 товара, 28 МБ).</p>
 <h2>Посты по дням</h2>
 <div class="grid">{week_cards}{day_cards or '<p class="sub">Пока пусто</p>'}</div>
 <div class="note">В архивах комплектов: папка «слайды» — готовая карусель (01…10.jpg, листайте по порядку),

@@ -319,9 +319,10 @@ def products():
     with open(os.path.join(DATA, "summary.txt"), "w", encoding="utf-8") as f:
         f.write(f"front-ts.ru: разобрано {len(out)} карточек, сбоев {len(fails)}, "
                 f"фото {sum(len(x['photos']) for x in out)}\n")
-        f.write(f"без описания: {sum(1 for x in out if not x['descr_short'] and not x['descr_extra'])}\n")
+        f.write(f"без описания: {sum(1 for x in out if len(x['descr']) < 80)}\n")
         f.write(f"без цены: {sum(1 for x in out if not x['price'])}\n")
         f.write(f"без фото: {sum(1 for x in out if not x['photos'])}\n")
+        f.write(f"фото всего: {sum(len(x['photos']) for x in out)}\n")
     log(open(os.path.join(DATA, "summary.txt"), encoding="utf-8").read())
 
 

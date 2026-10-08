@@ -33,6 +33,11 @@ RISKY = {
     "adapter-priklada-pkm": "деталь к оружию — формулировать как аксессуар",
 }
 
+# не выкладываем на Авито
+SKIP = {
+    "skorpion-english": "англоязычная версия страницы «Скорпион» — дубль, в РФ не нужна",
+}
+
 TEXTS = {}
 for _g in GROUPS:
     _m = importlib.import_module(f"texts.{_g}")

@@ -30,7 +30,7 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
-from avito_texts import TEXTS, GROUP_TITLES, GROUPS  # noqa: E402
+from avito_texts import TEXTS, GROUP_TITLES, GROUPS, RISKY, SKIP  # noqa: E402
 
 CATALOG = os.path.join(HERE, "catalog.json")
 PHOTOS = os.path.join(HERE, "photos")
@@ -111,6 +111,9 @@ def main():
     n = 0
     for g in GROUPS:
         for it in [x for x in items if x["group"] == g]:
+            if it["slug"] in SKIP:
+                print(f"  —  {it['slug']}: пропуск ({SKIP[it['slug']]})")
+                continue
             if only and it["slug"] not in only:
                 continue
             t = TEXTS.get(it["slug"])
@@ -141,7 +144,8 @@ def main():
 · Доставка: СДЭК по России
 · Из описания убраны цена и условия оплаты — они обсуждаются в переписке
 """
-            check_text(body.replace(CLOSER, ""), it["name"] + " (файл)")
+            # в блоке «что заполнить» цена допустима (она идёт в поле формы) — из проверки строку убираем
+            check_text(re.sub(r"^· Цена:.*$", "", body, flags=re.M), it["name"] + " (файл)")
             open(os.path.join(folder, "ОБЪЯВЛЕНИЕ.txt"), "w", encoding="utf-8").write(body)
             open(os.path.join(folder, "ОПИСАНИЕ_копировать.txt"), "w", encoding="utf-8").write(
                 desc + "\n\n" + CLOSER + "\n")
@@ -166,6 +170,12 @@ def main():
         for r in gr:
             readme.append(f"  {r['label']}")
         readme.append("")
+    risky = [r for r in rows if r["slug"] in RISKY]
+    if risky:
+        readme += ["", "ПРОВЕРИТЬ ПЕРЕД ВЫКЛАДКОЙ (Авито может не пропустить):"]
+        for r in risky:
+            readme.append(f"  {r['label'][:52]} — {RISKY[r['slug']]}")
+    readme += ["", "Цены в описаниях не указаны. РРЦ по каждой позиции — в файле ОБЪЯВЛЕНИЕ.txt."]
     open(os.path.join(OUT, "README_КАК_ВЫКЛАДЫВАТЬ.txt"), "w", encoding="utf-8").write("\n".join(readme))
 
     # архивы по разделам
