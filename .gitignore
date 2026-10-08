@@ -33,6 +33,6 @@ prices/
 avito_out/
 
 # Выгрузка поставщика front-ts.ru (данные и фото браузером, не в git)
-suppliers/frontts/data/
+suppliers/frontts/data/*
 !suppliers/frontts/data/urls.txt
 suppliers/frontts/photos/
