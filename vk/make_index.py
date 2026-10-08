@@ -48,11 +48,15 @@ def main():
     week = [f for f in sorted(files) if f.startswith("V_OKOPE_posts_")]
     days = [f for f in sorted(files) if re.match(r"V_OKOPE_\d{2}\.\d{2}_", f)]
 
+    tuning = [f for f in sorted(files) if f.startswith("V_OKOPE_mgultra_")]
     kit_cards = ""
     for f in kits:
         slug = f[len("V_OKOPE_kit_"):-4]
         title, sub = KIT_TITLES.get(slug, (slug, "карточка + пост + позиции по отдельности"))
         kit_cards += card(f, title, sub, files[f] / 1024 / 1024, badge="слайды")
+    tuning_cards = "".join(card(f, "Тюнинг: ДТКП MG Ultra — 5 постов",
+                                "дульные тормоза-компенсаторы закрытого типа, фото поставщика",
+                                files[f] / 1024 / 1024, badge="новое") for f in tuning)
     day_cards = "".join(card(f, day_title(f), "6 постов: фото + текст + чек-лист",
                              files[f] / 1024 / 1024) for f in days)
     week_cards = "".join(card(f, "Вся неделя 08–14.10", "42 поста одним архивом",
@@ -79,6 +83,8 @@ def main():
 <p class="sub">Скачивайте нужное и публикуйте. Внутри — фото поставщика и готовый текст.</p>
 <h2>Комплекты (слайды для карусели + карточка + пост)</h2>
 <div class="grid">{kit_cards or '<p class="sub">Пока пусто</p>'}</div>
+<h2>Тюнинг (MG Ultra — ДТКП)</h2>
+<div class="grid">{tuning_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Посты по дням</h2>
 <div class="grid">{week_cards}{day_cards or '<p class="sub">Пока пусто</p>'}</div>
 <div class="note">В архивах комплектов: папка «слайды» — готовая карусель (01…10.jpg, листайте по порядку),
