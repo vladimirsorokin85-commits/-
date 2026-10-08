@@ -157,7 +157,7 @@ def _downbeat_phase(x, start_s=8.0, span_s=30.0):
     return start_s + bp
 
 
-def make_music_v6(total, cues, drop_from=None, splash=None):
+def make_music_v6(total, cues, drop_from=None, splash=None, asian=True):
     """Intro (until first cue>0 / splash): guzheng + taiko + boom. Then the catalog DnB track (beat-aligned).
     Outro (after drop_from): track fades to 35 %, guzheng returns."""
     splash = splash if splash is not None else BAR
@@ -205,6 +205,8 @@ def make_music_v6(total, cues, drop_from=None, splash=None):
             t += 2 * BAR
             k += 1
     lead = reverb(lead[:n], 1.2, 0.18)
+    if not asian:
+        lead *= 0.0
     kick = load("drums/one-shots/kick/drum_heavy_kick.flac")
     boom = load("misc/misc_cineboom.flac")
     taiko = lp(pitch(kick, -7), 260)
@@ -216,5 +218,5 @@ def make_music_v6(total, cues, drop_from=None, splash=None):
     perc = perc[:n]
     pk = lambda x: np.percentile(np.abs(x), 99.99) + 1e-9
     ref = pk(seg)
-    mix = bed + lead / pk(lead) * ref * 0.45 + perc / pk(perc) * ref * 0.6
+    mix = bed + (lead / pk(lead) * ref * 0.45 if asian else 0) + perc / pk(perc) * ref * 0.6
     return base.clean_limit(mix)
