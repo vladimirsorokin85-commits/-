@@ -287,17 +287,25 @@ def make_photos(src_files, dest_dir, limit=8):
 
 def build():
     man = load_manifest()
+    idx = {r["id"]: r for r in json.load(open(
+        os.path.join(ROOT, "catalog", "data", "catalog_index.json"), encoding="utf-8"))}
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
     os.makedirs(OUT, exist_ok=True)
     rows = []
+    skipped = []
+    nn = 0
     for it in PLAN:
         files = []
         for pid in it["ids"]:
             files.extend((man.get(pid) or {}).get("files") or [])
-        assert files, f"{it['label']}: нет фото поставщика — объявление не собираем"
+        if not files:
+            skipped.append(it)
+            print(f"  -- {it['label']}: нет фото поставщика — не собрано")
+            continue
+        nn += 1
         name = str(it["label"]).replace("/", "-")
-        folder = os.path.join(OUT, f"{it['n']:02d}_{name}")
+        folder = os.path.join(OUT, f"{nn:02d}_{name}")
         photos = make_photos(files, folder)
         text = it["desc"].strip()
         check_text(text, it["label"])
@@ -324,11 +332,11 @@ def build():
         open(os.path.join(folder, "ОБЪЯВЛЕНИЕ.txt"), "w", encoding="utf-8").write(body)
         open(os.path.join(folder, "ОПИСАНИЕ_копировать.txt"), "w", encoding="utf-8").write(
             text + "\n\n" + CLOSER + "\n")
-        rows.append({"n": it["n"], "label": it["label"], "folder": os.path.basename(folder),
+        rows.append({"n": nn, "label": it["label"], "folder": os.path.basename(folder),
                      "title": it["avito_title"], "photos": len(photos), "chars": len(text)})
-        print(f"  {it['n']:>2}. {it['label'][:44]:46} фото {len(photos)} | {len(text)} знаков")
+        print(f"  {nn:>2}. {it['label'][:44]:46} фото {len(photos)} | {len(text)} знаков")
 
-    readme = ["АВИТО · 13 ОБЪЯВЛЕНИЙ — НОВИНКИ (октябрь 2026)", "",
+    readme = [f"АВИТО · {len(rows)} ОБЪЯВЛЕНИЙ — НОВИНКИ (октябрь 2026)", "",
               "Внутри — папки по номерам. В каждой:",
               "  · 1.jpg…N.jpg — фото товара, грузятся в объявление по порядку;",
               "  · ОБЪЯВЛЕНИЕ.txt — заголовок, описание и что заполнить в форме Авито;",
@@ -338,6 +346,11 @@ def build():
               "СПИСОК:"]
     for r in rows:
         readme.append(f"  {r['n']:>2}. {r['label']} — {r['photos']} фото")
+    if skipped:
+        readme += ["", "НЕ СОБРАНЫ — фото пока не загружены (дособеру, когда появятся):"]
+        for it in skipped:
+            arts = ", ".join(sorted({(idx.get(pid) or {}).get("code") or "?" for pid in it["ids"]}))
+            readme.append(f"  · {it['label']} (арт. {arts})")
     check_text("\n".join(readme), "README")
     open(os.path.join(OUT, "README_КАК_ВЫКЛАДЫВАТЬ.txt"), "w", encoding="utf-8").write("\n".join(readme) + "\n")
 
