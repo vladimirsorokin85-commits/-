@@ -293,16 +293,11 @@ def build():
         shutil.rmtree(OUT)
     os.makedirs(OUT, exist_ok=True)
     rows = []
-    skipped = []
     nn = 0
     for it in PLAN:
         files = []
         for pid in it["ids"]:
             files.extend((man.get(pid) or {}).get("files") or [])
-        if not files:
-            skipped.append(it)
-            print(f"  -- {it['label']}: нет фото поставщика — не собрано")
-            continue
         nn += 1
         name = str(it["label"]).replace("/", "-")
         folder = os.path.join(OUT, f"{nn:02d}_{name}")
@@ -311,6 +306,8 @@ def build():
         check_text(text, it["label"])
         check_text(it["avito_title"], it["label"] + " (заголовок)")
         assert len(it["avito_title"]) <= 50, f"{it['label']}: заголовок {len(it['avito_title'])} зн (>50)"
+        photo_line = (f"· Фото: загрузите по порядку 1.jpg → {len(photos)}.jpg" if photos
+                      else "· Фото: пока нет — добавите при выкладке (не загружены)")
         body = f"""АВИТО · ОБЪЯВЛЕНИЕ
 
 ЗАГОЛОВОК (вставьте в поле «Название»):
@@ -325,7 +322,7 @@ def build():
 · Категория: {it['avito_cat']}
 · Состояние: Новое
 · {it['price_note']}
-· Фото: загрузите по порядку 1.jpg → {len(photos)}.jpg
+{photo_line}
 · Доставка: СДЭК по России
 """
         check_text(body, it["label"] + " (файл)")
@@ -345,12 +342,8 @@ def build():
               "Категория и остальные поля формы — в тексте объявления.", "",
               "СПИСОК:"]
     for r in rows:
-        readme.append(f"  {r['n']:>2}. {r['label']} — {r['photos']} фото")
-    if skipped:
-        readme += ["", "НЕ СОБРАНЫ — фото пока не загружены (дособеру, когда появятся):"]
-        for it in skipped:
-            arts = ", ".join(sorted({(idx.get(pid) or {}).get("code") or "?" for pid in it["ids"]}))
-            readme.append(f"  · {it['label']} (арт. {arts})")
+        note = f" — {r['photos']} фото" if r["photos"] else " — БЕЗ ФОТО, добавите при выкладке"
+        readme.append(f"  {r['n']:>2}. {r['label']}{note}")
     check_text("\n".join(readme), "README")
     open(os.path.join(OUT, "README_КАК_ВЫКЛАДЫВАТЬ.txt"), "w", encoding="utf-8").write("\n".join(readme) + "\n")
 
