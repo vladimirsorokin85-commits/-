@@ -36,3 +36,6 @@ avito_out/
 suppliers/frontts/data/*
 !suppliers/frontts/data/urls.txt
 suppliers/frontts/photos/
+
+# Рабочая выгрузка объявлений (новинки) — в git идёт только архив
+avito_out_new/
