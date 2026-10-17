@@ -1,24 +1,30 @@
-# Арт-стиль — серия 2
+# Арт-стиль — серия 2 и последующие кадры
 
-## Единственный style reference
+## Закреплённые референсы
 
-`images/episode_02_cover.png` — единственный эталон стиля и моделей персонажей. Для нового текстового кадра передавать только обложку как визуальный референс и прямо указывать, что она служит лишь стилевым/персонажным эталоном, а не исходной композицией. При рестайлинге передавать исходник и обложку, сохранять содержание исходника и брать стиль только с обложки.
+- `images/episode_02_cover.png` — эталон **только стиля, линии, фактуры, света и палитры**.
+- `images/characters/bulq_reference.png` — модель Булька.
+- `images/characters/meowskis_reference.png` — модель Мистера Мявскиса.
+- Полный визуальный канон сезона: `../CHARACTER_REFERENCE.md`.
 
-В доступном инструменте нельзя выбрать или закрепить конкретную модель генератора. Поэтому используем один и тот же инструмент, один style reference и один неизменный блок ниже; меняется только описание сцены и ориентация. Не переключать между фотореализмом и иллюстрацией.
+В каждый запрос прикладывать cover style reference и character reference для каждого присутствующего главного героя. На кадре с обоими героями прикладывать все три. Референсы фиксируют визуальный язык и модели, но не композицию, позы или фон. Для рестайлинга дополнительно прикладывать исходный кадр и сохранять его смысл и действие.
 
-## Блок для всех генераций — вставлять дословно
+## Неизменный стилевой блок
 
 ```text
-Create one image in the exact same visual style and character-design language as the attached cover reference. The reference is only for style, palette, texture, and character identity; do not copy its scene or composition. Depict the scene in the brief below and preserve the requested orientation and aspect ratio.
+Create one image in the exact same hand-inked 2D science-fiction graphic-novel style as the attached episode cover. The cover is for style, palette, lighting and texture only; do not copy its composition. Use the attached individual character reference images as the authoritative model sheets for Bulq and Mr. Meowskis whenever those characters appear; preserve their face, proportions, colors, fur markings and silhouette. Depict the scene in the brief and keep its requested orientation.
 
-Unified look: a hand-inked 2D science-fiction graphic-novel illustration for a dark comedy. Confident dark contour lines with varied weight, clean readable silhouettes, restrained cross-hatching and stippled shadow texture, painterly color contained within inked shapes, matte surfaces, slightly exaggerated expressive alien faces, layered cinematic staging. Use a limited palette of petrol teal and blue-grey shadows, worn steel and muted dirty-cream midtones, with small rust-orange and warm amber accents. Keep contrast and line density consistent with the cover reference. Sardonic, lived-in mood; not horror, not grimdark, not glossy spectacle.
+Unified look: dark-comedy science-fiction graphic novel, confident dark contour lines with varied weight, clean readable silhouettes, restrained cross-hatching and stippled shadows, painterly color contained within inked shapes, matte surfaces, expressive alien faces, layered cinematic staging. Limited palette of petrol teal and blue-grey shadows, worn steel and muted dirty-cream midtones, small rust-orange and warm amber accents. Lived-in, sardonic mood; not horror, not grimdark, not glossy spectacle.
 
-Keep character models stable whenever they appear: Bulq is a compact, lightly short-furred blue-grey shurran with a broad unmistakably non-human face and practical worn trader's clothes; no throat device, collar gadget, glowing ring, or implant. Mr. Meowskis is an adult upright, sapient orange-and-white cat-person with humanoid hands/paws and practical mechanic coveralls, never a house cat or pet. Captain Otvod is a tall, long-limbed pale-green alien superhero in a teal suit and old burgundy cape held by one visible clasp. Match the cover reference rather than inventing new versions.
+Bulq is the compact, short blue-grey-furred shurran shown in his model reference; keep the same broad alien face, small ears, stout proportions and worn trader's clothing. No throat device, collar gadget, glowing ring or implant. Mr. Meowskis is the upright orange-and-white sapient cat-person shown in his model reference; preserve his feline face, fur markings, orange tail, mechanic coveralls and practical tools. He is an adult person and equal partner, never a house cat or pet.
 
-No photorealism, live-action photography, 3D/CGI render, glossy airbrushed realism, anime, watercolor, painterly-photo hybrid, style or palette shift, humans, readable text, logos, or real-world religious symbols. Do not add lettering to signs, receipts, screens, or documents.
+Captain Otvod is a guest character from episode 2, not a regular. Include him only when the shot brief explicitly calls for him, and do not treat his design as a core character reference.
+
+No photorealism, live-action photography, 3D/CGI, anime, watercolor, glossy airbrushing, humans, readable text, logos, or real-world religious symbols. Do not add lettering to signs, receipts, screens, or documents.
 ```
 
-## Проверка
+## Форматы и проверка
 
-- Обложка и кадры выпуска: горизонталь 16:9. Два изображения Reels: вертикаль 9:16.
-- Сверять с обложкой линию, заливку, цветовую палитру и модели персонажей. Если кадр выбивается — переделать тем же reference и дословным блоком, не добавляя новый стиль.
+- Обложка и кадры эпизода: 16:9. Два изображения Reels: 9:16.
+- Сверять каждый кадр с cover по линии и палитре, а персонажей — с их индивидуальными референсами.
+- Если изображение выбивается из стиля или модель персонажа изменилась — переделать с теми же закреплёнными референсами, не меняя дизайн.
