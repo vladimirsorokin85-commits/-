@@ -20,7 +20,7 @@ Bulq is the compact, short blue-grey-furred shurran shown in his model reference
 
 Captain Otvod is a guest character from episode 2, not a regular. Include him only when the shot brief explicitly calls for him, and do not treat his design as a core character reference.
 
-No photorealism, live-action photography, 3D/CGI, anime, watercolor, glossy airbrushing, readable text, logos, or real-world religious symbols. Humans may appear only when the scene brief explicitly calls for Earth contact; depict them in this same illustration style and keep Earth's technology below interstellar civilization level unless the brief says otherwise. Do not add lettering to signs, receipts, screens, or documents.
+No photorealism, live-action photography, 3D/CGI, anime, watercolor, glossy airbrushing, readable text, or logos. Humans may appear only when the scene brief explicitly calls for Earth contact; use ancient-Earth-era clothing, tools and architecture (roughly early civilizations such as Ancient Egypt), with no modern or spacefaring Earth technology unless specifically requested. Do not caricature Earth people as stupid. If historical religious imagery is needed, depict it respectfully and never use it as a joke. Do not add lettering to signs, receipts, screens, or documents.
 ```
 
 ## Форматы и проверка
