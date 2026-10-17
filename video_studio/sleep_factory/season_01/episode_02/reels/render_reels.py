@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the two vertical Episode 2 Reels from scene audio and key art."""
+"""Render the two standalone vertical Reels from current episode audio and key art."""
 from __future__ import annotations
 
 import os
@@ -11,22 +11,11 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 EP = HERE.parent
-SCRIPT = EP / "script.md"
 FFMPEG = os.environ.get("FFMPEG") or shutil.which("ffmpeg")
-
 REELS = [
-    ("s01e02_a01", "reel_01_bulq_alien.png", "reel_01_alien"),
-    ("s01e02_a08", "reel_02_return_loop.png", "reel_02_archive"),
+    ("reel_01_voice.opus", "reel_01_voice.txt", "reel_01_bulq_alien.png", "reel_01_rescue"),
+    ("reel_02_voice.opus", "reel_02_voice.txt", "reel_02_aktuarian_claim.png", "reel_02_claim"),
 ]
-
-
-def scene_text(scene_id: str) -> str:
-    text = SCRIPT.read_text(encoding="utf-8")
-    pattern = rf"(?ms)^### \[{re.escape(scene_id)}\].*?\n\n(.*?)(?=^### \[|\Z)"
-    match = re.search(pattern, text)
-    if not match:
-        raise ValueError(f"Scene not found: {scene_id}")
-    return " ".join(line.strip() for line in match.group(1).splitlines()).strip()
 
 
 def audio_duration(path: Path) -> float:
@@ -42,12 +31,10 @@ def audio_duration(path: Path) -> float:
 
 
 def caption_chunks(text: str) -> list[str]:
-    sentences = re.split(r"(?<=[.!?])\s+", text)
     chunks: list[str] = []
-    for sentence in sentences:
-        words = sentence.split()
+    for sentence in re.split(r"(?<=[.!?])\s+", text.strip()):
         current = ""
-        for word in words:
+        for word in sentence.split():
             if current and len(current) + 1 + len(word) > 66:
                 chunks.append(current)
                 current = word
@@ -80,16 +67,17 @@ def write_srt(text: str, duration: float, path: Path) -> None:
     path.write_text("\n".join(rows), encoding="utf-8")
 
 
-def render(scene_id: str, image_name: str, output_stem: str) -> None:
-    audio = EP / "voice2" / f"{scene_id}.opus"
-    image = EP / "images" / image_name
+def render(audio_name: str, text_name: str, image_name: str, output_stem: str) -> None:
+    audio = HERE / audio_name
+    text_path = HERE / text_name
+    image = EP / "images" / "reels" / image_name
     output = HERE / f"{output_stem}.mp4"
     srt = HERE / f"{output_stem}.srt"
-    text = scene_text(scene_id)
+    text = text_path.read_text(encoding="utf-8").strip()
     duration = audio_duration(audio)
+    if not 35 <= duration <= 40:
+        raise RuntimeError(f"{audio.name} duration is {duration:.2f}s; required 35–40s")
     write_srt(text, duration, srt)
-    voice_text = output_stem.replace("_alien", "_voice").replace("_archive", "_voice")
-    (HERE / f"{voice_text}.txt").write_text(text, encoding="utf-8")
     vf = (
         "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280,"
         "zoompan=z='min(zoom+0.00012,1.05)':d=1:s=720x1280:fps=24,"
