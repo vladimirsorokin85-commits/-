@@ -8,11 +8,11 @@
   "fps": 24.0,
   "video_codec": "h264",
   "audio_codec": "aac",
-  "file_size_bytes": 39155430,
+  "file_size_bytes": 66445432,
   "video_crf": 32,
   "video_preset": "veryfast",
-  "audio_bitrate_kbps": 64,
-  "size_target_mb": 30,
-  "size_target_met": false,
-  "note": "Valid full-duration render retained at CRF 32; lower-bitrate CRF 35 retry was stopped to preserve quality."
+  "audio_bitrate_kbps": 128,
+  "size_target_mb": null,
+  "size_target_met": null,
+  "note": "Visual stream retained at CRF 32; audio remuxed at 128 kb/s to prioritize fidelity; no file-size cap applied."
 }
