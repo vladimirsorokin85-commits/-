@@ -239,9 +239,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--width", type=int, default=1280)
     parser.add_argument("--height", type=int, default=720)
     parser.add_argument("--fps", type=int, default=24)
-    parser.add_argument("--crf", type=int, default=30)
+    parser.add_argument("--crf", type=int, default=26, help="Качество H.264; меньшее значение даёт лучшее изображение")
     parser.add_argument("--preset", default="slow")
-    parser.add_argument("--max-mb", type=float, default=30.0, help="Целевой предел размера, не гарантия")
+    parser.add_argument("--audio-bitrate", type=int, default=128, help="Битрейт AAC; качество важнее размера файла")
+    parser.add_argument("--max-mb", type=float, default=None, help="Необязательный ориентир размера; качество ради него не ухудшается")
     parser.add_argument("--ffmpeg")
     parser.add_argument("--ffprobe")
     args = parser.parse_args(argv)
@@ -267,51 +268,44 @@ def main(argv: list[str] | None = None) -> int:
             raise BuildError("Частота кадров должна быть в диапазоне 1–60 fps.")
         if not 16 <= args.crf <= 40:
             raise BuildError("CRF должен быть в диапазоне 16–40.")
+        if not 32 <= args.audio_bitrate <= 320:
+            raise BuildError("Битрейт AAC должен быть в диапазоне 32–320 кбит/с.")
+        if args.max_mb is not None and args.max_mb <= 0:
+            raise BuildError("--max-mb должен быть положительным числом.")
 
         output.parent.mkdir(parents=True, exist_ok=True)
-        target_bytes = int(args.max_mb * 1_000_000)
-        report: dict[str, Any] | None = None
+        report: dict[str, Any]
         with tempfile.TemporaryDirectory(prefix="sleep-video-", dir=output.parent) as temp_raw:
             temp = Path(temp_raw)
-            crfs = list(dict.fromkeys([args.crf, min(40, args.crf + 3), min(40, args.crf + 6)]))
-            for crf in crfs:
-                video_only = encode_stills(
-                    ffmpeg=ffmpeg, images=images, frame_counts=frame_counts, folder=temp,
-                    width=args.width, height=args.height, fps=args.fps,
-                    crf=crf, preset=args.preset,
-                )
-                for bitrate in (64, 48, 40, 32):
-                    mux_audio(
-                        ffmpeg=ffmpeg, video_only=video_only, audio=audio, output=output,
-                        duration=duration, audio_bitrate=bitrate,
-                    )
-                    if output.stat().st_size <= target_bytes:
-                        report = verify_output(
-                            ffprobe, output, width=args.width, height=args.height,
-                            fps=args.fps, target=duration,
-                        )
-                        report["video_crf"] = crf
-                        report["audio_bitrate_kbps"] = bitrate
-                        break
-                if report:
-                    break
-            if report is None:
-                # Keep the best-effort file, but always validate its streams and duration.
-                report = verify_output(
-                    ffprobe, output, width=args.width, height=args.height,
-                    fps=args.fps, target=duration,
-                )
-                report["size_target_met"] = False
-            else:
-                report["size_target_met"] = True
+            video_only = encode_stills(
+                ffmpeg=ffmpeg, images=images, frame_counts=frame_counts, folder=temp,
+                width=args.width, height=args.height, fps=args.fps,
+                crf=args.crf, preset=args.preset,
+            )
+            mux_audio(
+                ffmpeg=ffmpeg, video_only=video_only, audio=audio, output=output,
+                duration=duration, audio_bitrate=args.audio_bitrate,
+            )
+            report = verify_output(
+                ffprobe, output, width=args.width, height=args.height,
+                fps=args.fps, target=duration,
+            )
+            report["video_crf"] = args.crf
+            report["video_preset"] = args.preset
+            report["audio_bitrate_kbps"] = args.audio_bitrate
+            report["size_target_mb"] = args.max_mb
+            report["size_target_met"] = (
+                None if args.max_mb is None
+                else output.stat().st_size <= int(args.max_mb * 1_000_000)
+            )
 
         qc_path = output.with_suffix(".qc.json")
         qc_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"Готово: {output}")
         print(f"Хронометраж: {duration / 60:.2f} мин; кадров: {frames_total}; иллюстраций: {len(images)}")
         print(f"Размер: {output.stat().st_size / 1_000_000:.2f} МБ; QC: {qc_path}")
-        if not report.get("size_target_met"):
-            print("Предупреждение: целевой размер не достигнут без дальнейшего снижения качества.")
+        if report.get("size_target_met") is False:
+            print("Размер выше необязательного ориентира; качество не снижалось ради размера.")
         return 0
     except (BuildError, OSError, ValueError) as exc:
         print(f"Ошибка: {exc}", file=sys.stderr)
