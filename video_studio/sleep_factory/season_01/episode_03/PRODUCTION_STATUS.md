@@ -7,5 +7,6 @@
 - Финальное видео: `rendered/s01e03_full.mp4`; QC пройден. 39:27.3, 1280×720 (16:9), 24 fps, H.264 CRF 23 / preset slow, AAC 192 kb/s; около 154 МБ.
 - Обложка и все 30 кадров готовы: `images/frames/s01e03_01.png`–`s01e03_30.png`.
 - Пакет YouTube готов: `UPLOAD_METADATA.md` содержит название, описание с DonationAlerts, теги и главы; `images/episode_03_youtube_thumbnail.jpg` — обложка 1280×720; `rendered/s01e03_ru.srt` — русские субтитры с приблизительной разметкой по длительности реплик; `rendered/s01e03_youtube_assets.zip` объединяет метаданные, миниатюру и субтитры (без MP4).
+- Выбран концепт общей заставки серии: `season_01/series_intro_concept.png`; описание повторяющихся элементов и вариаций — `season_01/SERIES_INTRO_DESIGN.md`. Этот концепт пока не анимирован и не вставлен в уже собранный MP4.
 - Общий `.gitignore` исключает одиночные MP4. Для GitHub-восстановления без перекодирования видео разделено на две части (90 000 000 и 70 505 144 байта) в `rendered/github_download/`; Windows/Linux/macOS-скрипты собирают исходный файл byte-for-byte. Исходники, аудиоклипы, микс, YouTube-материалы и обе части сохранены в GitHub.
 - DonationAlerts: https://www.donationalerts.com/r/ves_nn
