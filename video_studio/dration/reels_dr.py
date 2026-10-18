@@ -120,8 +120,11 @@ def build(rc):
     # captions composited frame by frame in Python (ffmpeg overlays used too much memory here)
     audio = d / "audio.m4a"
     run([FF, "-y", "-v", "error", "-i", str(music), "-i", str(voice), "-filter_complex",
-         "[0:a][1:a]sidechaincompress=threshold=0.04:ratio=6:attack=15:release=450[duck];"
-         "[duck][1:a]amix=inputs=2:weights=1 1:normalize=0,loudnorm=I=-14:TP=-1:LRA=9[aout]",
+         # music bed: pulled well down (-24 LUFS) and ducked under the voice; voice at -16 LUFS
+         "[0:a]loudnorm=I=-24:TP=-3:LRA=7[m];"
+         "[1:a]loudnorm=I=-16:TP=-1.5:LRA=7,asplit=2[vk][vm];"
+         "[m][vk]sidechaincompress=threshold=0.025:ratio=6:attack=8:release=350[duck];"
+         "[duck][vm]amix=inputs=2:weights=1 1.2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=7[aout]",
          "-map", "[aout]", "-c:a", "aac", "-b:a", "192k", str(audio)])
     loaded = [(Image.open(pth).convert("RGBA"), x, y, t0, t1) for pth, x, y, t0, t1 in overlays]
     W, H, FPS = 1080, 1920, 30
