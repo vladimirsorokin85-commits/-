@@ -36,6 +36,18 @@ PUBLIC_IP="$(curl -s4 --max-time 15 https://ifconfig.me || true)"
 [[ -n "${PUBLIC_IP:-}" ]] || die "У сервера нет интернета. Проверь хостинг."
 info "IP сервера: $PUBLIC_IP"
 
+info "Проверяю репутацию IP в мировых блок-листах (спам/абьюз)…"
+BL_COUNT="$(curl -s --max-time 15 "https://api.blocklist.de/api/v1/blocklists/all/search/$PUBLIC_IP" | grep -oE '"count":[0-9]+' | head -n1 | grep -oE '[0-9]+' || true)"
+if [[ -n "${BL_COUNT:-}" ]]; then
+  if [[ "$BL_COUNT" -gt 3 ]]; then
+    yellow "⚠️ IP фигурирует в $BL_COUNT блок-листах. Не факт, что это помешает VPN, но если что-то не пойдёт — попроси хостинг сменить IP (у многих это бесплатно или за 100–300 ₽)."
+  else
+    green "✅ IP чистый ($BL_COUNT упоминаний — это нормально)."
+  fi
+else
+  yellow "Не удалось проверить IP (пропуск, не страшно)."
+fi
+
 export DEBIAN_FRONTEND=noninteractive
 info "Ставлю базовые пакеты (apt, может занять минуту)…"
 apt-get update -qq || die "Не обновил apt. Проверь интернет/фаервол хостера."
