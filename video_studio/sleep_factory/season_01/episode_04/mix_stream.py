@@ -267,12 +267,12 @@ def render_mix(
     )
     filters.append(
         f"[voice_main][ducked]amix=inputs=2:duration=longest:normalize=0,"
-        f"alimiter=limit=0.90,apad=whole_dur={target:.3f},"
+        f"alimiter=limit=0.80:level=false,apad=whole_dur={target:.3f},"
         f"atrim=duration={target:.3f},asetpts=PTS-STARTPTS[outa]"
     )
     command += [
         "-filter_complex", ";".join(filters), "-map", "[outa]", "-t", f"{target:.3f}",
-        "-c:a", "libmp3lame", "-b:a", "96k", "-ac", "1", "-ar", "44100",
+        "-c:a", "libmp3lame", "-b:a", "192k", "-ac", "1", "-ar", "44100",
         "-write_xing", "0", str(output),
     ]
     _run(command, "сведение речи и амбиента")
