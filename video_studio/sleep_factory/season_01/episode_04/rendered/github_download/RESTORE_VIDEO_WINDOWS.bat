@@ -2,7 +2,7 @@
 setlocal EnableExtensions
 cd /d "%~dp0"
 
-for %%F in (s01e04_full.mp4.part00 s01e04_full.mp4.part01 s01e04_full.mp4.part02 s01e04_full.mp4.sha256) do (
+for %%F in (s01e04_full.mp4.part00 s01e04_full.mp4.part01 s01e04_full.mp4.part02) do (
   if not exist "%%F" (
     echo Missing file: %%F
     pause
@@ -17,7 +17,7 @@ if errorlevel 1 (
   exit /b 1
 )
 
-for /f "tokens=1" %%H in (s01e04_full.mp4.sha256) do set "EXPECTED=%%H"
+set "EXPECTED=2ffb8112fe823e2d1a9a4a946a99f39b6d5e4cdb7771fe7c06232a258049156a"
 set "ACTUAL="
 for /f "delims=" %%H in ('certutil -hashfile s01e04_full.mp4 SHA256 ^| findstr /r /i "^[0-9a-f][0-9a-f]*$"') do set "ACTUAL=%%H"
 if not defined ACTUAL (
@@ -34,4 +34,5 @@ if /i not "%ACTUAL%"=="%EXPECTED%" (
 )
 
 echo Restored and verified: s01e04_full.mp4
+echo SHA-256: %ACTUAL%
 pause
