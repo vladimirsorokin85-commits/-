@@ -15,3 +15,8 @@
    - **НИКОГДА** не указывать рублёвые цены (`0 ₽`) в кадре, озвучке, описании или студии — делать акцент на реальных ТТХ, заводской комплектации и поставке **оптом и в розницу, с НДС и без НДС**.
    - **НИКОГДА** не указывать личные контакты менеджеров (`@VES_nn`) и служебные ссылки каталога (`moysklad.shop`, слова «онлайн-каталог»).
    - **ВСЕГДА** использовать реальные студийные фото товаров, фирменный логотип **`В ОКОПЕ — магазин брони` (`GOYDA`)** и выбранный голос **`VC-05` (`voice-05`)**.
+
+
+## Pure-Instrumental Soundtrack Mandate (Zero Vocals)
+- **STRICT BAN ON VOCAL DNB TRACKS**: Never use Drum & Bass tracks containing sung lyrics or spoken vocal hooks (such as *Pendulum — Witchcraft* vocal bars) underneath Russian `voice-05` narration.
+- Use neural-VAD-verified **100% pure instrumental** Drum & Bass / Neurofunk MP3 tracks (e.g. `assets/audio/music_mp3/dnb_calyx_teebee_quest_174bpm.mp3` — *Calyx & TeeBee — The Quest (Break Remix)*, `0.00` vocal spans across `0..154s`), with continuous phrase-hold ducking (`~ +11..+14 dB` speech-to-music SNR) and `-3.5..-4.8 dB` vocal-pocket EQ carve across `1.2–3.6 kHz`.

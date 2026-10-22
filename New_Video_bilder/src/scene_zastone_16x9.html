@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>В ОКОПЕ — Радиостанции «Ключ 256» (1920x1080 @ 60 fps)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #070a07;
+  }
+  canvas#master {
+    display: block;
+    width: 1920px;
+    height: 1080px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1920" height="1080"></canvas>
+<script>
+const W = 1920, H = 1080;
+const FPS = 60;
+const DURATION = 150.0;
+const BEAT = 60.0 / 174.0;
+
+const canvas = document.getElementById("master");
+const ctx = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
+
+const SCENES = [
+  { idx: 0,  start: 0.000,   end: 11.530,  tag: "ГЛАВА 01/11 · ЗАКРЫТЫЙ ЭФИР" },
+  { idx: 1,  start: 11.530,  end: 26.560,  tag: "ГЛАВА 02/11 · ГОТОВА ИЗ КОРОБКИ" },
+  { idx: 2,  start: 26.560,  end: 39.780,  tag: "ГЛАВА 03/11 · AES-256 MOTOROLA" },
+  { idx: 3,  start: 39.780,  end: 53.890,  tag: "ГЛАВА 04/11 · 5 ДИАПАЗОНОВ · 10 ВТ" },
+  { idx: 4,  start: 53.890,  end: 69.470,  tag: "ГЛАВА 05/11 · 4 РЕЖИМА СВЯЗИ" },
+  { idx: 5,  start: 69.470,  end: 82.850,  tag: "ГЛАВА 06/11 · СПУТНИК 195+ КАНАЛОВ" },
+  { idx: 6,  start: 82.850,  end: 96.220,  tag: "ГЛАВА 07/11 · ГРУППЫ И КАНАЛЫ 5 / 7" },
+  { idx: 7,  start: 96.220,  end: 111.260, tag: "ГЛАВА 08/11 · ДАЛЬНОСТЬ ДО 60 КМ" },
+  { idx: 8,  start: 111.260, end: 126.420, tag: "ГЛАВА 09/11 · IP67 · 18 ЧАСОВ · GPS" },
+  { idx: 9,  start: 126.420, end: 141.700, tag: "ГЛАВА 10/11 · КОМПЛЕКТ 2 ШТ. · НДС" },
+  { idx: 10, start: 141.700, end: 150.000, tag: "ГЛАВА 11/11 · ЗАКАЗАТЬ В ОКОПЕ" }
+];
+
+const COL = {
+  gold: "#d8b263",
+  goldBright: "#f6d88c",
+  green: "#5be38a",
+  greenDim: "rgba(91, 227, 138, 0.16)",
+  cyan: "#59c8ff",
+  red: "#ff6464",
+  text: "#f4f7f2",
+  muted: "#a8b5a5",
+  panel: "rgba(14, 21, 15, 0.90)",
+  border: "rgba(216, 178, 99, 0.36)"
+};
+
+const ASSETS = {
+  logoShield: "/assets/brand/logo_shield_sand.png",
+  logoFull: "/assets/brand/logo_full_sand.png",
+  bgRadar: "/assets/images/bg_radar_dusk.jpg",
+  bgCrates: "/assets/images/bg_military_crates_olive.jpg",
+  single: "/assets/zastone_key256/z_single_rgba.png",
+  pair: "/assets/zastone_key256/z_pair_rgba.png",
+  dock: "/assets/zastone_key256/z_macro_dock_rgba.png",
+  kit: "/assets/zastone_key256/z_full_kit_rgba.png",
+  manual: "/assets/zastone_key256/z_manual_quickstart.jpg"
+};
+
+const IMG = {};
+window.__READY_PROMISE = Promise.all(
+  Object.entries(ASSETS).map(([k, src]) => new Promise((resolve, reject) => {
+    const im = new Image();
+    im.onload = () => { IMG[k] = im; resolve(); };
+    im.onerror = (e) => reject(new Error("Failed loading " + src));
+    im.src = src;
+  }))
+).then(() => {
+  window.renderAt(0);
+  return true;
+});
+
+function clamp01(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
+function easeOut(v) { const t = clamp01(v); return 1 - Math.pow(1 - t, 3); }
+
+function rr(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, r);
+}
+
+function drawPanel(x, y, w, h, variant = "default", r = 20) {
+  ctx.save();
+  ctx.shadowColor = "rgba(0,0,0,0.5)";
+  ctx.shadowBlur = 26;
+  ctx.shadowOffsetY = 10;
+  let fill = COL.panel;
+  let stroke = COL.border;
+  if (variant === "green") {
+    const g = ctx.createLinearGradient(x, y, x + w, y + h);
+    g.addColorStop(0, "rgba(20, 48, 28, 0.94)");
+    g.addColorStop(1, "rgba(11, 22, 14, 0.95)");
+    fill = g; stroke = "rgba(91, 227, 138, 0.62)";
+  } else if (variant === "gold") {
+    const g = ctx.createLinearGradient(x, y, x + w, y + h);
+    g.addColorStop(0, "rgba(48, 38, 17, 0.94)");
+    g.addColorStop(1, "rgba(20, 17, 10, 0.95)");
+    fill = g; stroke = "rgba(246, 216, 140, 0.65)";
+  } else if (variant === "red") {
+    const g = ctx.createLinearGradient(x, y, x + w, y + h);
+    g.addColorStop(0, "rgba(56, 18, 18, 0.93)");
+    g.addColorStop(1, "rgba(24, 10, 10, 0.94)");
+    fill = g; stroke = "rgba(255, 100, 100, 0.60)";
+  } else if (variant === "cyan") {
+    const g = ctx.createLinearGradient(x, y, x + w, y + h);
+    g.addColorStop(0, "rgba(16, 38, 52, 0.93)");
+    g.addColorStop(1, "rgba(10, 20, 28, 0.95)");
+    fill = g; stroke = "rgba(89, 200, 255, 0.58)";
+  }
+  rr(x, y, w, h, r);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetY = 0;
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = stroke;
+  ctx.stroke();
+  ctx.restore();
+}
+
+function fitFont(text, weight, maxPx, minPx, maxW, fam = "Liberation Sans, DejaVu Sans, Arial, sans-serif") {
+  let sz = maxPx;
+  while (sz > minPx) {
+    ctx.font = `${weight} ${sz}px ${fam}`;
+    if (ctx.measureText(text).width <= maxW) break;
+    sz -= 1;
+  }
+  ctx.font = `${weight} ${sz}px ${fam}`;
+  return sz;
+}
+
+function drawFitText(text, x, y, maxW, maxPx, weight = 900, color = "#fff", align = "left", minPx = 14) {
+  fitFont(text, weight, maxPx, minPx, maxW);
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.textBaseline = "alphabetic";
+  ctx.fillText(text, x, y);
+  ctx.textAlign = "left";
+}
+
+function drawWrapped(text, x, y, maxW, lineH, fontSpec, color = "#d8e1d6", maxLines = 4) {
+  ctx.font = fontSpec;
+  ctx.fillStyle = color;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "alphabetic";
+  const words = text.split(" ");
+  let line = "";
+  let lineIdx = 0;
+  for (let i = 0; i < words.length; i++) {
+    const test = line ? line + " " + words[i] : words[i];
+    if (ctx.measureText(test).width > maxW && line) {
+      ctx.fillText(line, x, y + lineIdx * lineH);
+      line = words[i];
+      lineIdx++;
+      if (lineIdx >= maxLines - 1) {
+        while (i + 1 < words.length) {
+          i++;
+          line += " " + words[i];
+        }
+        while (ctx.measureText(line).width > maxW && line.length > 6) {
+          line = line.slice(0, -2) + "…";
+        }
+        break;
+      }
+    } else {
+      line = test;
+    }
+  }
+  if (line) ctx.fillText(line, x, y + lineIdx * lineH);
+  return y + (lineIdx + 1) * lineH;
+}
+
+function drawKicker(text, x, y, maxW = 920) {
+  ctx.font = "800 18px Liberation Sans, DejaVu Sans, sans-serif";
+  const tw = Math.min(maxW, ctx.measureText(text).width + 38);
+  rr(x, y, tw, 38, 9);
+  ctx.fillStyle = "rgba(216, 178, 99, 0.16)";
+  ctx.fill();
+  ctx.lineWidth = 1.6;
+  ctx.strokeStyle = "rgba(246, 216, 140, 0.58)";
+  ctx.stroke();
+  // Diamond icon
+  ctx.fillStyle = COL.goldBright;
+  ctx.beginPath();
+  ctx.moveTo(x + 17, y + 12);
+  ctx.lineTo(x + 24, y + 19);
+  ctx.lineTo(x + 17, y + 26);
+  ctx.lineTo(x + 10, y + 19);
+  ctx.closePath();
+  ctx.fill();
+  drawFitText(text, x + 32, y + 25, tw - 42, 17, 800, COL.goldBright);
+}
+
+function drawContain(img, x, y, w, h, scaleMul = 1.0, floatY = 0) {
+  if (!img) return;
+  const sc = Math.min(w / img.width, h / img.height) * scaleMul;
+  const dw = img.width * sc;
+  const dh = img.height * sc;
+  const dx = x + (w - dw) / 2;
+  const dy = y + (h - dh) / 2 + floatY;
+  ctx.save();
+  ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
+  ctx.shadowBlur = 34;
+  ctx.shadowOffsetY = 18;
+  ctx.drawImage(img, dx, dy, dw, dh);
+  ctx.restore();
+}
+
+function drawBackground(t, beatPulse, actIdx = 0) {
+  ctx.fillStyle = "#060906";
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle atmospheric military backdrop (14% opacity + slow Ken Burns pan)
+  const bgImg = (actIdx % 2 === 0) ? IMG.bgRadar : IMG.bgCrates;
+  if (bgImg) {
+    ctx.save();
+    ctx.globalAlpha = 0.16;
+    const zoom = 1.05 + 0.03 * Math.sin(t * 0.12);
+    const dw = W * zoom, dh = H * zoom;
+    ctx.drawImage(bgImg, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    ctx.restore();
+  }
+
+  const g = ctx.createRadialGradient(560, 520, 60, 960, 540, 1280);
+  g.addColorStop(0, `rgba(24, 42, 26, ${0.62 + 0.08 * beatPulse})`);
+  g.addColorStop(0.62, "rgba(9, 14, 10, 0.86)");
+  g.addColorStop(1, "rgba(5, 8, 5, 0.95)");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+
+  // Moving subtle tactical coordinate grid
+  ctx.strokeStyle = "rgba(130, 180, 130, 0.05)";
+  ctx.lineWidth = 1;
+  const off = (t * 22) % 80;
+  for (let x = 0; x <= W; x += 80) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (let y = -80; y <= H; y += 80) {
+    ctx.beginPath(); ctx.moveTo(0, y + off); ctx.lineTo(W, y + off); ctx.stroke();
+  }
+
+  // Subtle radar rings on left hero side
+  ctx.save();
+  ctx.translate(410, 560);
+  for (let r = 140; r <= 420; r += 140) {
+    ctx.strokeStyle = `rgba(91, 227, 138, ${0.045 + 0.025 * beatPulse})`;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.stroke();
+  }
+  const ang = t * 0.9;
+  const sg = ctx.createLinearGradient(0, 0, Math.cos(ang) * 410, Math.sin(ang) * 410);
+  sg.addColorStop(0, "rgba(91, 227, 138, 0)");
+  sg.addColorStop(1, "rgba(91, 227, 138, 0.14)");
+  ctx.strokeStyle = sg;
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(ang) * 410, Math.sin(ang) * 410); ctx.stroke();
+  ctx.restore();
+}
+
+function drawPersistentHUD(t, cur) {
+  // Top bar [56, 22, 1808, 72]
+  drawPanel(56, 22, 1808, 72, "default", 16);
+
+  // Official GOYDA Shield Logo badge
+  rr(74, 31, 54, 54, 11);
+  ctx.fillStyle = "rgba(8, 12, 8, 0.95)";
+  ctx.fill();
+  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = COL.gold;
+  ctx.stroke();
+  drawContain(IMG.logoShield, 78, 35, 46, 46);
+
+  drawFitText("В ОКОПЕ · ШИФРОВАННЫЕ РАДИОСТАНЦИИ «КЛЮЧ 256»", 144, 55, 960, 22, 900, "#ffffff");
+  drawFitText("БАЗА ZASTONE DP-UV008 v.3 MOD · КОМПЛЕКТ 2 ШТ. · ОПТОМ И В РОЗНИЦУ · С НДС И БЕЗ НДС", 144, 79, 1080, 14, 700, COL.gold);
+
+  // Right live chapter badge
+  const pillW = 430;
+  rr(1844 - pillW, 35, pillW, 46, 11);
+  ctx.fillStyle = "rgba(91, 227, 138, 0.13)";
+  ctx.fill();
+  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = "rgba(91, 227, 138, 0.55)";
+  ctx.stroke();
+  const blink = 0.55 + 0.45 * Math.sin(t * 5.2);
+  ctx.fillStyle = `rgba(91, 227, 138, ${blink.toFixed(3)})`;
+  ctx.beginPath(); ctx.arc(1844 - pillW + 22, 58, 6, 0, Math.PI * 2); ctx.fill();
+  drawFitText(cur.tag, 1844 - pillW + 38, 64, pillW - 52, 17, 800, COL.green);
+
+  // 11-segment chapter progress bar [56, 104, 1808, 7]
+  const gap = 8;
+  const segW = (1808 - gap * 10) / 11;
+  for (let i = 0; i < 11; i++) {
+    const sx = 56 + i * (segW + gap);
+    rr(sx, 104, segW, 7, 4);
+    ctx.fillStyle = "rgba(255,255,255,0.12)";
+    ctx.fill();
+    let pct = 0;
+    if (t >= SCENES[i].end) pct = 1;
+    else if (t > SCENES[i].start) pct = (t - SCENES[i].start) / (SCENES[i].end - SCENES[i].start);
+    if (pct > 0) {
+      rr(sx, 104, Math.max(6, segW * pct), 7, 4);
+      const pg = ctx.createLinearGradient(sx, 0, sx + segW, 0);
+      pg.addColorStop(0, COL.gold);
+      pg.addColorStop(1, COL.green);
+      ctx.fillStyle = pg;
+      ctx.fill();
+    }
+  }
+
+  // Bottom safe bar [56, 1018, 1808, 44]
+  drawPanel(56, 1018, 1808, 44, "default", 12);
+  drawFitText("КЛЮЧ 256 · ЛИЦЕНЗИОННОЕ ШИФРОВАНИЕ MOTOROLA AES-256", 80, 1046, 620, 15, 800, COL.goldBright);
+  drawFitText("5 ДИАПАЗОНОВ 118–520 МГЦ · СПУТНИК 195+ · 10 ВТ · IP67", 740, 1046, 600, 15, 700, COL.muted);
+  drawFitText("t.me/vokope_ru  ·  vk.com/vokope_rus  ·  Авито «В окопе»", 1840, 1046, 480, 15, 800, COL.green, "right");
+}
+
+/* ============================ 11 WIDESCREEN ACTS ============================ */
+
+function act01(t, lt, beatPulse) {
+  // Left Hero Twin Radios [56..736, 134..996]
+  drawPanel(56, 136, 670, 860, "default", 26);
+  // Encrypted green arc between the 2 radios
+  ctx.save();
+  ctx.strokeStyle = COL.green;
+  ctx.lineWidth = 3;
+  ctx.setLineDash([12, 8]);
+  ctx.lineDashOffset = -t * 54;
+  ctx.beginPath();
+  ctx.moveTo(270, 470);
+  ctx.quadraticCurveTo(391, 385, 512, 470);
+  ctx.stroke();
+  ctx.restore();
+
+  rr(166, 158, 450, 42, 21);
+  ctx.fillStyle = "rgba(18, 48, 28, 0.92)";
+  ctx.fill();
+  ctx.strokeStyle = COL.green;
+  ctx.lineWidth = 1.6;
+  ctx.stroke();
+  drawFitText("ПАРНЫЙ ЗАКРЫТЫЙ КАНАЛ · 256 БИТ", 391, 185, 410, 18, 900, COL.green, "center");
+
+  drawContain(IMG.pair, 96, 214, 590, 756, 1.0 + 0.012 * beatPulse, Math.sin(t * 2.1) * 6);
+
+  // Right Content [764..1864]
+  drawKicker("ЗАКРЫТАЯ ТАКТИЧЕСКАЯ СВЯЗЬ · КОМПЛЕКТ 2 ШТ.", 764, 144);
+  drawFitText("ВАШИ РАЗГОВОРЫ —", 764, 248, 1090, 68, 900, "#ffffff");
+  drawFitText("ТОЛЬКО ДЛЯ СВОИХ", 764, 324, 1090, 68, 900, COL.green);
+  drawWrapped(
+    "Индивидуально модернизированные и прошитые радиостанции «Ключ 256» на базе ZASTONE DP-UV008 MOD. Готовый комплект на пару.",
+    764, 372, 1080, 34, "600 24px Liberation Sans, sans-serif", "#d7e0d5", 2
+  );
+
+  // Red vs Green Comparison Cards with live waveforms [y = 456..836]
+  drawPanel(764, 456, 536, 372, "red", 22);
+  drawFitText("✕  ОБЫЧНАЯ РАЦИЯ", 794, 500, 476, 19, 900, "#ff8b8b");
+  drawFitText("ОТКРЫТЫЙ ЭФИР", 794, 544, 476, 34, 900, "#ffffff");
+  drawWrapped(
+    "Любой сканер и средства РЭР слышат частоты, маршруты выдвижения и команды группы в прямом эфире.",
+    794, 586, 476, 29, "600 21px Liberation Sans, sans-serif", "#ebd7d7", 3
+  );
+  // Live analog exposed waveform
+  ctx.save();
+  rr(794, 694, 476, 104, 14);
+  ctx.fillStyle = "rgba(0,0,0,0.42)"; ctx.fill();
+  ctx.beginPath();
+  for (let i = 0; i <= 120; i++) {
+    const px = 810 + (i / 120) * 444;
+    const amp = 28 * Math.sin(i * 0.28 + t * 9.0) * (0.55 + 0.45 * Math.sin(i * 0.07 - t * 3.1));
+    const py = 746 + amp;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.strokeStyle = "#ff6868"; ctx.lineWidth = 3; ctx.stroke();
+  ctx.restore();
+
+  drawPanel(1328, 456, 536, 372, "green", 22);
+  drawFitText("✓  КЛЮЧ 256 · AES-256", 1358, 500, 476, 19, 900, COL.green);
+  drawFitText("ЦИФРОВОЙ ЩИТ", 1358, 544, 476, 34, 900, "#ffffff");
+  drawWrapped(
+    "В чужом эфире — только цифровой шум. Свои рации слышат чистый разборчивый голос.",
+    1358, 586, 476, 29, "600 21px Liberation Sans, sans-serif", "#d6efe0", 3
+  );
+  // Live encrypted cipher packet bars
+  ctx.save();
+  rr(1358, 694, 476, 104, 14);
+  ctx.fillStyle = "rgba(0,0,0,0.42)"; ctx.fill();
+  for (let b = 0; b < 22; b++) {
+    const bx = 1376 + b * 20;
+    const bh = 16 + ((Math.sin(b * 3.7 + Math.floor(t * 8) * 1.9) + 1) * 0.5) * 58;
+    ctx.fillStyle = b % 3 === 0 ? COL.goldBright : COL.green;
+    ctx.fillRect(bx, 746 - bh / 2, 12, bh);
+  }
+  ctx.restore();
+
+  // Bottom strip card
+  drawPanel(764, 854, 1100, 142, "gold", 20);
+  drawFitText("ГОТОВА К РАБОТЕ ПРЯМО ИЗ КОРОБКИ", 798, 912, 760, 32, 900, "#ffffff");
+  drawFitText("Ключ 256 бит, каналы, группы, спутники и позывные прошиты до отгрузки", 798, 956, 1020, 22, 700, COL.goldBright);
+}
+
+function act02(t, lt) {
+  // Col 1: Single ZASTONE Radio [56..496]
+  drawPanel(56, 136, 440, 860, "default", 26);
+  drawContain(IMG.single, 80, 156, 392, 730, 1.0, Math.sin(t * 2.0) * 6);
+  drawPanel(82, 898, 388, 78, "gold", 14);
+  drawFitText("ZASTONE UV008 v.3 MOD", 276, 933, 352, 21, 900, COL.goldBright, "center");
+  drawFitText("СПЕЦВЕРСИЯ · ПРОШИТА ДО ОТГРУЗКИ", 276, 960, 352, 15, 800, "#ffffff", "center");
+
+  // Col 2: Main Turnkey Checklist & Security [524..1364]
+  drawKicker("БЫСТРЫЙ СТАРТ БЕЗ ПРОГРАММАТОРА И МЕНЮ", 524, 142);
+  drawFitText("ДОСТАЛ ИЗ КОРОБКИ —", 524, 232, 820, 56, 900, "#ffffff");
+  drawFitText("СРАЗУ НА ЗАКРЫТОЙ СВЯЗИ", 524, 296, 820, 52, 900, COL.goldBright);
+
+  const items = [
+    ["01", "256-БИТНЫЙ КЛЮЧ УЖЕ В ПАМЯТИ", "Ничего не нужно настраивать руками — включил валкодер и говоришь."],
+    ["02", "НАЗЕМНЫЕ ГРУППЫ + 195+ СПУТНИКОВ", "Рабочие УКВ-каналы и вся спутниковая сетка заранее записаны."],
+    ["03", "ПОЗЫВНЫЕ ПОДРАЗДЕЛЕНИЯ", "Каждая радиостанция подписана индивидуальным позывным бойца."]
+  ];
+  items.forEach(([num, h, d], idx) => {
+    const p = easeOut((lt - idx * 0.9) / 0.45);
+    const y = 330 + idx * 144;
+    ctx.save();
+    ctx.globalAlpha = 0.25 + 0.75 * p;
+    drawPanel(524, y, 836, 126, "green", 18);
+    rr(548, y + 26, 68, 74, 14);
+    ctx.fillStyle = "rgba(91,227,138,0.2)"; ctx.fill();
+    ctx.strokeStyle = COL.green; ctx.lineWidth = 2; ctx.stroke();
+    drawFitText(num, 582, y + 73, 52, 28, 900, COL.green, "center");
+    drawFitText(h, 636, y + 54, 696, 27, 900, "#ffffff");
+    drawFitText(d, 636, y + 92, 696, 20, 600, "#d5e4d8");
+    ctx.restore();
+  });
+
+  drawPanel(524, 770, 836, 226, "red", 20);
+  drawFitText("ЗАЩИТА ОТ СЛУЧАЙНОЙ КОМПРОМЕТАЦИИ", 556, 816, 772, 20, 900, "#ff9090");
+  drawFitText("КЛЮЧ СКРЫТ В ПАМЯТИ РАЦИИ!", 556, 862, 772, 34, 900, "#ffffff");
+  drawWrapped(
+    "Оператор физически не видит ключ шифрования на экране и не может случайно подсмотреть, сфотографировать или слить его.",
+    556, 906, 772, 30, "600 22px Liberation Sans, sans-serif", "#efe0e0", 3
+  );
+
+  // Col 3: Russian Quick-Start Operator Manual Card [1392..1864]
+  drawPanel(1392, 136, 472, 860, "default", 26);
+  drawFitText("ПАМЯТКА ОПЕРАТОРА", 1628, 184, 420, 25, 900, COL.goldBright, "center");
+  drawFitText("В КОМПЛЕКТЕ НА РУССКОМ ЯЗЫКЕ", 1628, 214, 420, 16, 700, COL.muted, "center");
+  ctx.save();
+  rr(1424, 236, 408, 578, 14);
+  ctx.clip();
+  ctx.drawImage(IMG.manual, 1424, 236, 408, 578);
+  ctx.restore();
+  rr(1424, 236, 408, 578, 14);
+  ctx.strokeStyle = "rgba(255,255,255,0.28)"; ctx.lineWidth = 2; ctx.stroke();
+
+  drawPanel(1424, 836, 408, 136, "green", 16);
+  drawFitText("5 ШАГОВ — И НА СВЯЗИ", 1628, 882, 368, 24, 900, COL.green, "center");
+  drawWrapped(
+    "Органы управления, 4 режима и поиск спутника понятным языком.",
+    1446, 916, 364, 25, "600 18px Liberation Sans, sans-serif", "#d8e7db", 2
+  );
+}
+
+function act03(t, lt) {
+  // Left: Animated 256-Bit Cryptographic Vault + Pair [56..756]
+  drawPanel(56, 136, 700, 860, "green", 26);
+  const cx = 406, cy = 440;
+  ctx.save();
+  ctx.translate(cx, cy);
+  for (let ring = 0; ring < 3; ring++) {
+    ctx.save();
+    ctx.rotate((ring % 2 === 0 ? 1 : -1) * t * (0.28 + ring * 0.14));
+    ctx.strokeStyle = ring === 1 ? COL.goldBright : COL.green;
+    ctx.lineWidth = ring === 0 ? 4 : 2.5;
+    ctx.setLineDash(ring === 2 ? [6, 10] : [26, 14]);
+    ctx.beginPath();
+    ctx.arc(0, 0, 128 + ring * 44, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+  ctx.restore();
+
+  drawFitText("AES-256", cx, cy + 12, 230, 52, 900, "#ffffff", "center");
+  drawFitText("MOTOROLA KEY", cx, cy + 44, 220, 18, 900, COL.goldBright, "center");
+
+  const hexRows = [
+    "9F4A · C81E · 77D0 · 52B3 · E09C · 441A",
+    "3E71 · 80D9 · C462 · 1F5A · 90B8 · 6D23",
+    "A7F3 · 91C0 · 4E82 · B6D1 · 256A · 7C09"
+  ];
+  rr(96, 694, 620, 62, 12);
+  ctx.fillStyle = "rgba(0,0,0,0.48)"; ctx.fill();
+  drawFitText(hexRows[Math.floor(t * 5) % hexRows.length], cx, 733, 580, 23, 800, COL.green, "center");
+
+  drawPanel(96, 780, 620, 188, "default", 18);
+  drawFitText("2^256 КОМБИНАЦИЙ КЛЮЧА", cx, 830, 570, 31, 900, COL.goldBright, "center");
+  drawWrapped(
+    "Подбор перебором физически невозможен. Цифровой протокол DMR Tier I / II (7K60FXE).",
+    126, 868, 560, 27, "600 20px Liberation Sans, sans-serif", "#d6dfd5", 3
+  );
+
+  // Right: Headline + Cards [788..1864]
+  drawKicker("КРИПТОСТОЙКОЕ ЦИФРОВОЕ ЗАКРЫТИЕ ЭФИРА", 788, 144);
+  drawFitText("ЛИЦЕНЗИОННЫЙ КЛЮЧ", 788, 240, 1060, 62, 900, "#ffffff");
+  drawFitText("MOTOROLA 256 БИТ", 788, 312, 1060, 62, 900, COL.green);
+
+  drawPanel(788, 356, 524, 340, "default", 22);
+  drawFitText("ПОЛНАЯ СОВМЕСТИМОСТЬ", 820, 406, 460, 20, 900, COL.goldBright);
+  drawFitText("РАБОТА В ОДНОЙ СЕТИ С MOTOROLA", 820, 452, 460, 29, 900, "#ffffff");
+  drawWrapped(
+    "Станции «Ключ 256» полностью совместимы по 256-битному шифрованию с профессиональными цифровыми радиостанциями Motorola.",
+    820, 502, 460, 32, "600 22px Liberation Sans, sans-serif", "#d7e0d5", 5
+  );
+
+  drawPanel(1340, 356, 524, 340, "cyan", 22);
+  drawFitText("ДВОЙНАЯ ЗАЩИТА ДАННЫХ", 1372, 406, 460, 20, 900, COL.cyan);
+  drawFitText("ШИФРОВАНИЕ РЕЧИ И SMS", 1372, 452, 460, 29, 900, "#ffffff");
+  drawWrapped(
+    "Криптографический 256-битный ключ закрывает как голосовые переговоры в эфире, так и текстовые SMS-сводки между рациями.",
+    1372, 502, 460, 32, "600 22px Liberation Sans, sans-serif", "#d7e6ef", 5
+  );
+
+  drawPanel(788, 724, 1076, 272, "gold", 24);
+  drawContain(IMG.pair, 812, 740, 220, 240);
+  drawFitText("ВАЖНЫЙ ПОЛЕВОЙ ФАКТ", 1060, 788, 770, 21, 900, COL.green);
+  drawFitText("ШИФРОВАНИЕ НЕ РЕЖЕТ ДАЛЬНОСТЬ СВЯЗИ!", 1060, 842, 770, 36, 900, "#ffffff");
+  drawWrapped(
+    "Цифровой сигнал с 256-битным ключом бьёт ровно на ту же дистанцию, что и открытый цифровой канал — без потерь в радиусе действия.",
+    1060, 890, 770, 30, "600 22px Liberation Sans, sans-serif", "#ece6d6", 3
+  );
+}
+
+function act04(t, lt) {
+  // Left: 5 Frequency Bands Spectrum Matrix [56..1196]
+  drawKicker("ШИРОКОПОЛОСНЫЙ ПРИЁМОПЕРЕДАТЧИК · 5 ДИАПАЗОНОВ", 56, 140);
+  drawFitText("ОТ 118 ДО 520 МГЦ В ОДНОМ КОРПУСЕ", 56, 222, 1130, 52, 900, "#ffffff");
+
+  const bands = [
+    ["VHF-1",   "118 – 136 МГц", "Авиационный диапазон (контроль воздушного эфира)"],
+    ["VHF-2",   "136 – 174 МГц", "Основной УКВ · максимальная работа в лесу и поле"],
+    ["СПУТНИК", "200 – 310 МГц", "Спутниковый контур · 195+ прошитых каналов"],
+    ["UHF-1",   "300 – 400 МГц", "Речной и специальный тактический диапазон"],
+    ["UHF-2",   "400 – 520 МГц", "Плотная городская застройка, бетон и спецчастоты"]
+  ];
+  const activeIdx = Math.min(4, Math.floor((lt / 14.11) * 5.5));
+  bands.forEach(([code, freq, desc], i) => {
+    const isLit = i === activeIdx || lt > 11.2;
+    const y = 262 + i * 146;
+    drawPanel(56, y, 1140, 128, isLit ? (i === 2 ? "gold" : "green") : "default", 18);
+    drawFitText(code, 88, y + 75, 175, 28, 900, i === 2 ? COL.goldBright : COL.green);
+    drawFitText(freq, 280, y + 76, 265, 32, 900, "#ffffff");
+    drawFitText(desc, 570, y + 73, 595, 22, 700, isLit ? "#f0f6ef" : COL.muted);
+  });
+
+  // Right: Radio + 10W Power & -126 dBm Sensitivity [1228..1864]
+  drawPanel(1228, 136, 636, 430, "gold", 24);
+  drawContain(IMG.single, 1248, 152, 210, 398, 1.0, Math.sin(t * 2.1) * 5);
+  drawFitText("ВЫХОДНАЯ МОЩНОСТЬ", 1476, 214, 360, 19, 900, COL.gold);
+  drawFitText("ДО 10 ВТ", 1476, 288, 360, 68, 900, "#ffffff");
+  drawFitText("3 уровня мощности:", 1476, 344, 360, 21, 700, COL.muted);
+  drawFitText("H = 10 Вт · M = 5 Вт · L = 2 Вт", 1476, 382, 360, 24, 900, COL.goldBright);
+  drawWrapped(
+    "Переключается под задачу: максимум дальности или экономия заряда вблизи.",
+    1476, 430, 360, 27, "600 19px Liberation Sans, sans-serif", "#e9e2d0", 3
+  );
+
+  drawPanel(1228, 592, 636, 404, "green", 24);
+  drawFitText("ЧУВСТВИТЕЛЬНОСТЬ ПРИЁМНИКА", 1264, 656, 564, 21, 900, COL.green);
+  drawFitText("−126 дБм  (0,112 мкВ)", 1264, 738, 564, 54, 900, "#ffffff");
+  drawWrapped(
+    "Высокочувствительный тракт вытягивает предельно слабый сигнал на дальней границе радиовидимости и при работе через спутник.",
+    1264, 796, 564, 32, "600 23px Liberation Sans, sans-serif", "#d7ecdc", 4
+  );
+}
+
+function act05(t, lt) {
+  drawKicker("УНИВЕРСАЛЬНАЯ АРХИТЕКТУРА 4-В-1", 56, 138);
+  drawFitText("ЧЕТЫРЕ РЕЖИМА СВЯЗИ В ОДНОЙ РАЦИИ", 56, 218, 1040, 46, 900, "#ffffff");
+  drawFitText("Переключение селектором — режим подписан на экране", 1864, 214, 680, 19, 700, COL.goldBright, "right");
+
+  const modes = [
+    ["РЕЖИМ 01 · ANALOG", "АНАЛОГ", "Бьёт дальше на самом пределе дистанции без обрывов. Выручает, когда цифровая речь уже начинает рваться.", "Имя на экране: Analog", COL.goldBright],
+    ["РЕЖИМ 02 · DMR OPEN", "ЦИФРА", "Чистый разборчивый голос без эфирного шипения. Открытый цифровой контур для взаимодействия со смежниками.", "Имя на экране: Digital no key", COL.cyan],
+    ["РЕЖИМ 03 · ОСНОВНОЙ", "ЦИФРА + КЛЮЧ 256", "Штатный закрытый режим по умолчанию. Полная защита речи и SMS от прослушки сканерами и средствами РЭР.", "Имя на экране: Digital key-256", COL.green],
+    ["РЕЖИМ 04 · SATCOM", "СПУТНИК", "Связь через орбитальный ретранслятор там, где нет прямой видимости — горы, плотный лес и ноль сотовых вышек.", "Комплектная L-антенна 90°", COL.goldBright]
+  ];
+  const active = Math.min(3, Math.floor((lt / 15.59) * 4.3));
+  modes.forEach(([kicker, title, body, foot, acc], i) => {
+    const col = i % 2, row = Math.floor(i / 2);
+    const x = 56 + col * 916;
+    const y = 250 + row * 324;
+    const lit = i === active || lt > 12.8;
+    drawPanel(x, y, 892, 300, lit ? (i === 2 ? "green" : i === 3 ? "gold" : "cyan") : "default", 22);
+    drawFitText(kicker, x + 32, y + 48, 520, 20, 900, acc);
+    drawFitText(title, x + 32, y + 102, 828, 40, 900, "#ffffff");
+    drawWrapped(body, x + 32, y + 148, 828, 32, "600 23px Liberation Sans, sans-serif", "#dfe7dd", 3);
+    drawFitText(foot, x + 32, y + 268, 828, 20, 800, acc);
+  });
+
+  drawPanel(56, 906, 1808, 90, "green", 18);
+  drawFitText(
+    "ОДНА РАДИОСТАНЦИЯ ЗАМЕНЯЕТ АНАЛОГОВУЮ УКВ, ЗАКРЫТУЮ MOTOROLA DMR И СПУТНИКОВУЮ СТАНЦИИ!",
+    960, 961, 1720, 27, 900, "#ffffff", "center"
+  );
+}
+
+function act06(t, lt) {
+  // Left: Animated Satellite Relay Diagram + Unfolded 90° SATCOM Antenna [56..1036]
+  drawPanel(56, 136, 980, 490, "cyan", 24);
+  drawFitText("РАБОТА ЧЕРЕЗ СПУТНИКОВЫЙ РЕТРАНСЛЯТОР · 250–290 МГЦ", 92, 182, 900, 22, 900, COL.cyan);
+
+  // Orbit curve
+  ctx.save();
+  ctx.strokeStyle = "rgba(89, 200, 255, 0.30)";
+  ctx.lineWidth = 2.5;
+  ctx.setLineDash([12, 9]);
+  ctx.beginPath();
+  ctx.moveTo(100, 350);
+  ctx.quadraticCurveTo(546, 180, 992, 350);
+  ctx.stroke();
+
+  // Animated Uplink & Downlink beams
+  ctx.strokeStyle = COL.green;
+  ctx.lineWidth = 5;
+  ctx.setLineDash([16, 10]);
+  ctx.lineDashOffset = -(t * 72);
+  ctx.beginPath(); ctx.moveTo(220, 520); ctx.lineTo(526, 278); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(566, 278); ctx.lineTo(872, 520); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Satellite body at (546, 262)
+  ctx.translate(546, 262);
+  ctx.fillStyle = "#2b6ca3"; ctx.strokeStyle = COL.cyan; ctx.lineWidth = 2.5;
+  rr(-104, -15, 64, 30, 5); ctx.fill(); ctx.stroke();
+  rr(40, -15, 64, 30, 5); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = "#e5eef5";
+  rr(-28, -24, 56, 48, 9); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = COL.goldBright;
+  ctx.beginPath(); ctx.arc(0, 34, 8, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+
+  // Mountain obstacle in center
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(355, 565);
+  ctx.lineTo(470, 425);
+  ctx.lineTo(545, 470);
+  ctx.lineTo(625, 410);
+  ctx.lineTo(735, 565);
+  ctx.closePath();
+  ctx.fillStyle = "#1a291c"; ctx.fill();
+  ctx.strokeStyle = "#527046"; ctx.lineWidth = 3; ctx.stroke();
+  drawFitText("РЕЛЬЕФ / ЛЕС · НЕТ ПРЯМОЙ ВИДИМОСТИ", 546, 548, 340, 17, 900, "#ff9d9d", "center");
+  ctx.restore();
+
+  drawPanel(96, 514, 240, 66, "green", 12);
+  drawFitText("ГРУППА «А» · 90°", 216, 555, 210, 20, 900, "#ffffff", "center");
+  drawPanel(756, 514, 240, 66, "green", 12);
+  drawFitText("ШТАБ «Б» · ОТШЛЁП ✓", 876, 555, 216, 19, 900, "#ffffff", "center");
+
+  // Bottom-left card with real unfolded 90° L-antenna photo
+  drawPanel(56, 650, 980, 346, "default", 24);
+  drawContain(IMG.pair, 80, 664, 300, 320);
+  drawFitText("СКЛАДНАЯ L-АНТЕННА 90° В КОМПЛЕКТЕ", 408, 726, 596, 30, 900, COL.goldBright);
+  drawWrapped(
+    "Разложи телескопический вибратор под углом около 90° к плоскому основанию, выйди на открытый горизонт и выбери канал — шаг, сетка и разнос частот уже прошиты!",
+    408, 774, 596, 33, "600 22px Liberation Sans, sans-serif", "#dce5da", 5
+  );
+
+  // Right 3 Step Cards [1068..1864]
+  drawKicker("ЗА РАДИОГОРИЗОНТОМ", 1068, 138);
+  drawFitText("195+ СПУТНИКОВЫХ КАНАЛОВ", 1068, 218, 796, 48, 900, "#ffffff");
+
+  const satCards = [
+    ["01 · ПРОШИТАЯ СЕТКА", "ВСЕ ЧАСТОТЫ RX/TX В ПАМЯТИ", "Руками настраивать разнос и субтоны не нужно — просто перебирай готовые спутниковые каналы.", "green"],
+    ["02 · КОНТРОЛЬ КАНАЛА", "ПРОВЕРКА ПО «ОТШЛЁПУ»", "Отпустил PTT и услышал короткий характерный «хвост» со спутника — ретранслятор открыт, связь есть!", "default"],
+    ["03 · ОФЛАЙН-ПРИЛОЖЕНИЯ", "SATVIEW И LOOK4SAT (ANDROID)", "Показывают точный азимут по компасу, угол элевации антенны и расписание пролётов без интернета.", "gold"]
+  ];
+  satCards.forEach(([k, h, b, v], idx) => {
+    const y = 250 + idx * 252;
+    drawPanel(1068, y, 796, 232, v, 20);
+    drawFitText(k, 1098, y + 44, 736, 19, 900, v === "gold" ? COL.goldBright : COL.green);
+    drawFitText(h, 1098, y + 90, 736, 30, 900, "#ffffff");
+    drawWrapped(b, 1098, y + 134, 736, 30, "600 21px Liberation Sans, sans-serif", "#e2e8e0", 3);
+  });
+}
+
+function act07(t, lt) {
+  // Left: Studio Macro Dock with illuminated LCD [56..636]
+  drawPanel(56, 136, 580, 860, "default", 26);
+  drawContain(IMG.dock, 78, 156, 536, 820, 1.0, Math.sin(t * 1.9) * 5);
+
+  // Right: Simulated Giant ZASTONE LCD Screen + Group & Ch 5/7 Cards [668..1864]
+  drawKicker("ТАКТИЧЕСКАЯ АДРЕСАЦИЯ И СОВМЕСТИМОСТЬ", 668, 138);
+  drawFitText("ПОЗЫВНОЙ НА ЭКРАНЕ, ГРУППЫ И КАНАЛЫ 5 / 7", 668, 214, 1196, 48, 900, "#ffffff");
+
+  // Realistic Illuminated Blue-White ZASTONE LCD Display Bezel
+  drawPanel(668, 246, 1196, 316, "default", 26);
+  drawFitText("●  ИНДИКАЦИЯ ВХОДЯЩЕГО ВЫЗОВА НА ЖК-ДИСПЛЕЕ РАЦИИ", 704, 286, 1120, 18, 900, "#93a8b5");
+  ctx.save();
+  const lg = ctx.createLinearGradient(700, 306, 700, 534);
+  lg.addColorStop(0, "#d4e7ff");
+  lg.addColorStop(1, "#9dc3f7");
+  rr(700, 306, 1132, 228, 18);
+  ctx.fillStyle = lg;
+  ctx.shadowColor = "rgba(130, 190, 255, 0.45)";
+  ctx.shadowBlur = 28;
+  ctx.fill();
+  ctx.restore();
+
+  drawFitText("H 10W  ·  DMR TIER II", 734, 348, 360, 21, 900, "#0d2038");
+  drawFitText("[AES] KEY-256 ACTIVE", 1266, 348, 340, 21, 900, "#145934", "center");
+  drawFitText("АКБ 100%", 1798, 348, 200, 21, 900, "#0d2038", "right");
+  ctx.strokeStyle = "rgba(13,32,56,0.22)"; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(734, 364); ctx.lineTo(1798, 364); ctx.stroke();
+
+  const callers = ["▶  ГРАНИТ-02   (ГРУППА 01 · СВОИ)", "▶  СЕВЕР-01    (ШТАБ БАТАЛЬОНА)", "▶  КЕДР-04     (ДОЗОР СЕВЕРО-ЗАПАД)"];
+  drawFitText("ВХОДЯЩИЙ ЗАШИФРОВАННЫЙ ВЫЗОВ:", 734, 404, 650, 19, 800, "#244975");
+  drawFitText(callers[Math.floor(lt / 4.2) % callers.length], 734, 466, 1060, 44, 900, "#071529");
+  drawFitText("ЧИСТЫЙ ГОЛОС · ЧУЖИЕ РАЦИИ ЭТОТ ВЫЗОВ НЕ СЛЫШАТ", 734, 512, 1060, 20, 800, "#175e38");
+
+  // Bottom 2 cards side by side [y = 586..996]
+  drawPanel(668, 586, 582, 410, "green", 22);
+  drawFitText("ИЗОЛЯЦИЯ ПОДРАЗДЕЛЕНИЙ", 700, 640, 518, 20, 900, COL.green);
+  drawFitText("СВОЙ КЛЮЧ НА ПАРУ ИЛИ ГРУППУ", 700, 692, 518, 32, 900, "#ffffff");
+  drawWrapped(
+    "Можно прошить индивидуальный ключ на конкретную пару или на всё подразделение: соседний взвод или батальон не услышит ваш эфир.",
+    700, 744, 518, 34, "600 23px Liberation Sans, sans-serif", "#d8ecdc", 6
+  );
+
+  drawPanel(1282, 586, 582, 410, "gold", 22);
+  drawFitText("КАНАЛЫ 5 И 7 · «НЕТ КЛЮЧА»", 1314, 640, 518, 20, 900, COL.cyan);
+  drawFitText("СВЯЗЬ СО СМЕЖНИКАМИ ЗА 1 ЩЕЛЧОК", 1314, 692, 518, 32, 900, "#ffffff");
+  drawWrapped(
+    "Нужно выйти на соседей, приданную броню или обычные цифровые рации? Переключись на 5-й или 7-й канал (Digital no key) — и говори открыто!",
+    1314, 744, 518, 34, "600 23px Liberation Sans, sans-serif", "#eee7d5", 6
+  );
+}
+
+function act08(t, lt) {
+  drawKicker("ЧЕСТНЫЕ ПОЛЕВЫЕ ЗАМЕРЫ · ПЕРЕДАТЧИК ДО 10 ВТ", 56, 138);
+  drawFitText("РЕАЛЬНАЯ ДАЛЬНОСТЬ СВЯЗИ: ОТ ГОРОДА ДО 60 КМ", 56, 218, 1780, 54, 900, "#ffffff");
+
+  const rows = [
+    ["ГОРОДСКАЯ ЗАСТРОЙКА · UHF 400–520 МГЦ", "Плотные жилые кварталы, железобетон и промзона", "3–7 КМ", 0.28, "default", COL.goldBright, 0.0],
+    ["ОТКРЫТАЯ МЕСТНОСТЬ · VHF 136–174 МГЦ", "Поле, лесополосы, пересечённая местность", "20–25 КМ", 0.62, "green", COL.green, 1.4],
+    ["РАБОТА С ВЫНОСОМ / ВЫСОТОЙ / РЕТРАНСЛЯТОРОМ", "Мачта, господствующая высота или выносная антенна", "ДО 60 КМ", 1.00, "gold", "#ffffff", 2.8]
+  ];
+  rows.forEach(([sub, desc, val, ratio, variant, valCol, delay], i) => {
+    const y = 254 + i * 212;
+    drawPanel(56, y, 1808, 190, variant, 22);
+    drawFitText(sub, 92, y + 48, 1240, 20, 900, variant === "green" ? COL.green : COL.goldBright);
+    drawFitText(desc, 92, y + 92, 1240, 30, 900, "#ffffff");
+    drawFitText(val, 1824, y + 88, 420, 62, 900, valCol, "right");
+
+    rr(92, y + 132, 1732, 26, 13);
+    ctx.fillStyle = "rgba(255,255,255,0.10)";
+    ctx.fill();
+    const wFill = Math.max(24, 1732 * ratio * easeOut((lt - delay) / 1.4));
+    rr(92, y + 132, wFill, 26, 13);
+    const bg = ctx.createLinearGradient(92, 0, 92 + 1732, 0);
+    bg.addColorStop(0, "#468050");
+    bg.addColorStop(0.6, COL.green);
+    bg.addColorStop(1, COL.goldBright);
+    ctx.fillStyle = bg;
+    ctx.fill();
+  });
+
+  drawPanel(56, 898, 1808, 98, "cyan", 20);
+  drawFitText(
+    "ПЛЮС СПУТНИКОВЫЙ РЕЖИМ (200–310 МГЦ) — СВЯЗЬ БЕЗ ОГРАНИЧЕНИЙ ПРЯМОЙ ВИДИМОСТИ!",
+    960, 958, 1720, 29, 900, "#ffffff", "center"
+  );
+}
+
+function act09(t, lt) {
+  // Left: Hero Radio [56..516]
+  drawPanel(56, 136, 460, 860, "default", 26);
+  drawContain(IMG.single, 80, 156, 412, 720, 1.0, Math.sin(t * 2.0) * 6);
+  drawPanel(82, 894, 408, 82, "green", 14);
+  drawFitText("МЕТАЛЛИЧЕСКОЕ ШАССИ", 286, 930, 372, 21, 900, COL.green, "center");
+  drawFitText("УДАРОПРОЧНЫЙ КОРПУС IP67", 286, 958, 372, 16, 800, "#ffffff", "center");
+
+  // Right: 3x2 Military Spec Grid [548..1864]
+  drawKicker("НАДЁЖНОСТЬ, АВТОНОМНОСТЬ И ОСНАЩЕНИЕ", 548, 138);
+  drawFitText("ЗАЩИТА IP67 · 18 ЧАСОВ РАБОТЫ · KENWOOD · GPS", 548, 216, 1316, 48, 900, "#ffffff");
+
+  const specs = [
+    ["IP67", "ПЫЛЬ И ПОГРУЖЕНИЕ В ВОДУ", "Полная герметизация корпуса — стабильно работает под проливным дождём, в снегу и грязи окопа.", "green"],
+    ["18 ЧАСОВ", "АКБ LI-ION 2500 МА·Ч", "Автономность до 18 часов в боевом цикле 5-5-90 без эффекта памяти аккумулятора.", "gold"],
+    ["315 ГРАММ", "131 × 57 × 36 ММ · −20…+60°C", "Компактный вес на разгрузке и уверенная работа в мороз и летнюю жару.", "default"],
+    ["KENWOOD", "ШТАТНЫЙ 2-PIN РАЗЪЁМ", "Подключение активных наушников, выносных тангент, ларингофонов и гарнитур.", "cyan"],
+    ["GPS + SMS", "НАВИГАЦИЯ И ТЕКСТ В ЭФИРЕ", "Координаты местоположения и зашифрованный обмен короткими текстовыми сводками.", "default"],
+    ["VOX + СКАНЕР", "СВОБОДНЫЕ РУКИ И МОНИТОРИНГ", "Голосовая активация передачи без нажатия PTT, сканирование эфира и FM-радио.", "default"]
+  ];
+  specs.forEach(([big, sub, body, variant], i) => {
+    const col = i % 3, row = Math.floor(i / 3);
+    const x = 548 + col * 444;
+    const y = 248 + row * 380;
+    drawPanel(x, y, 428, 360, variant, 22);
+    drawFitText(big, x + 28, y + 72, 372, 48, 900, variant === "green" ? COL.green : variant === "cyan" ? COL.cyan : COL.goldBright);
+    drawFitText(sub, x + 28, y + 116, 372, 20, 900, "#ffffff");
+    drawWrapped(body, x + 28, y + 162, 372, 32, "600 22px Liberation Sans, sans-serif", "#dbe4d9", 5);
+  });
+}
+
+function act10(t, lt) {
+  // Left: FULL WIDESCREEN KIT SHOWCASE [56..1016] — z_full_kit_rgba.png shines at native wide aspect!
+  drawPanel(56, 136, 960, 860, "default", 26);
+  drawFitText("ПОЛНАЯ БОЕВАЯ УКЛАДКА НА ПАРУ (2 ШТ.) — РЕАЛЬНОЕ ФОТО КОМПЛЕКТА", 536, 182, 900, 21, 900, COL.goldBright, "center");
+  drawContain(IMG.kit, 84, 204, 904, 764, 1.0 + 0.02 * easeOut(lt / 4.0));
+
+  // Right: Kit Breakdown + Pre-Shipment Coordination + Wholesale/Retail VAT [1048..1864]
+  drawKicker("ПОЛНАЯ КОМПЛЕКТАЦИЯ И ПОСТАВКА", 1048, 136);
+  drawFitText("ВСЁ В ОДНОЙ СУМКЕ —", 1048, 224, 816, 46, 900, "#ffffff");
+  drawFitText("НИЧЕГО ДОКУПАТЬ НЕ НУЖНО", 1048, 276, 816, 42, 900, COL.green);
+
+  const kitItems = [
+    ["✓  ×2 ПРОШИТЫЕ РАДИОСТАНЦИИ", "Модернизированные ZASTONE DP-UV008 MOD с АКБ 2500 мА·ч"],
+    ["✓  ×2 УКВ + ×2 СПУТНИКОВЫЕ АНТЕННЫ", "Штатные наземные антенны и складные L-антенны 90°"],
+    ["✓  ×2 ЗАРЯДНЫХ «СТАКАНА» С БП", "Настольные док-станции со световой индикацией и адаптерами 220В"],
+    ["✓  ×2 ПОДСУМКА МОЛЛЕ + УКЛАДКА", "Индивидуальные подсумки под рации + внешняя сумка-переноска"]
+  ];
+  kitItems.forEach(([h, d], i) => {
+    const y = 300 + i * 116;
+    drawPanel(1048, y, 816, 102, "default", 16);
+    drawFitText(h, 1076, y + 42, 760, 24, 900, i < 2 ? COL.green : COL.goldBright);
+    drawFitText(d, 1076, y + 78, 760, 19, 600, "#dce4da");
+  });
+
+  drawPanel(1048, 774, 816, 222, "gold", 22);
+  drawFitText("ИНДИВИДУАЛЬНАЯ ПРОШИВКА ПОД ЗАКАЗЧИКА", 1080, 822, 752, 20, 900, COL.green);
+  drawFitText("СОГЛАСУЕМ КЛЮЧИ, ГРУППЫ И ПОЗЫВНЫЕ!", 1080, 868, 752, 31, 900, "#ffffff");
+  drawFitText("ПОСТАВКА ОПТОМ И В РОЗНИЦУ · С НДС И БЕЗ НДС", 1080, 922, 752, 26, 900, COL.goldBright);
+  drawFitText("Работаем с подразделениями, фондами, юрлицами и физлицами", 1080, 964, 752, 19, 700, "#e9e3d3");
+}
+
+function act11(t, lt, beatPulse) {
+  // Left: Monumental Official GOYDA Brand Card + Twin Radios [56..776]
+  drawPanel(56, 136, 720, 860, "default", 28);
+  drawContain(IMG.logoFull, 146, 156, 540, 184);
+  drawFitText("НАДЁЖНАЯ ТЕХНИКА И СВЯЗЬ ДЛЯ СВОИХ", 416, 374, 650, 22, 800, COL.goldBright, "center");
+  drawContain(IMG.pair, 136, 398, 560, 578, 1.0 + 0.014 * beatPulse, Math.sin(t * 2.0) * 5);
+
+  // Right: 3 Official Channels + CTA [808..1864]
+  drawKicker("ОФИЦИАЛЬНЫЕ ПЛОЩАДКИ МАГАЗИНА «В ОКОПЕ»", 808, 140);
+  drawFitText("ЗАКАЗАТЬ КОМПЛЕКТ «КЛЮЧ 256»", 808, 224, 1056, 54, 900, "#ffffff");
+  drawFitText("Согласуем схему ключей и список позывных · Опт и розница · С НДС и без НДС", 808, 268, 1056, 22, 700, COL.goldBright);
+
+  const chans = [
+    ["ОФИЦИАЛЬНЫЙ TELEGRAM-КАНАЛ", "t.me/vokope_ru", "Оперативная связь, согласование прошивки ключей/позывных и заказ", "green", COL.green],
+    ["ОФИЦИАЛЬНОЕ СООБЩЕСТВО ВКОНТАКТЕ", "vk.com/vokope_rus", "Видеообзоры техники, прямые поставки и консультации специалистов", "cyan", COL.cyan],
+    ["ОФИЦИАЛЬНЫЙ МАГАЗИН НА АВИТО", "АВИТО · БРЕНД «В ОКОПЕ»", "Прямая ссылка на витрину — в описании и закреплённом комментарии", "gold", COL.goldBright]
+  ];
+  chans.forEach(([label, handle, sub, variant, acc], i) => {
+    const y = 300 + i * 194;
+    drawPanel(808, y, 1056, 174, variant, 22);
+    drawFitText(label, 844, y + 46, 984, 19, 900, acc);
+    drawFitText(handle, 844, y + 102, 984, 44, 900, "#ffffff");
+    drawFitText(sub, 844, y + 144, 984, 21, 600, "#e2eae0");
+  });
+
+  drawPanel(808, 888, 1056, 108, "green", 20);
+  drawFitText("СВЯЗЬ РЕШАЕТ ЗАДАЧУ · «КЛЮЧ 256» БЕРЕЖЁТ ГРУППУ!", 1336, 953, 996, 30, 900, "#ffffff", "center");
+}
+
+const ACT_FNS = [act01, act02, act03, act04, act05, act06, act07, act08, act09, act10, act11];
+
+window.renderAt = function(t) {
+  const beatPhase = (t / BEAT) % 1.0;
+  const beatPulse = Math.exp(-4.2 * beatPhase);
+
+  let cur = SCENES[SCENES.length - 1];
+  for (let i = 0; i < SCENES.length; i++) {
+    if (t >= SCENES[i].start && t < SCENES[i].end) {
+      cur = SCENES[i];
+      break;
+    }
+  }
+  drawBackground(t, beatPulse, cur.idx);
+
+  const lt = t - cur.start;
+  const enter = easeOut(lt / 0.30);
+  const exitAlpha = cur.idx < SCENES.length - 1 ? clamp01((cur.end - t) / 0.16) : 1.0;
+
+  ctx.save();
+  ctx.globalAlpha = enter * exitAlpha;
+  ctx.translate(0, (1 - enter) * 20);
+  ACT_FNS[cur.idx](t, lt, beatPulse);
+  ctx.restore();
+
+  // Subtle chapter transition flash
+  for (let i = 1; i < SCENES.length; i++) {
+    const dt = Math.abs(t - SCENES[i].start);
+    if (dt < 0.20) {
+      const a = (1 - dt / 0.20) * 0.22;
+      ctx.fillStyle = `rgba(246, 216, 140, ${a.toFixed(3)})`;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  drawPersistentHUD(t, cur);
+};
+
+window.setVideoTime = window.renderAt;
+window.getFrameSignature = function() {
+  const d = ctx.getImageData(480, 270, 32, 32).data;
+  let h = 2166136261;
+  for (let i = 0; i < d.length; i += 4) {
+    h ^= d[i] + (d[i + 1] << 8) + (d[i + 2] << 16);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h.toString(16);
+};
+</script>
+</body>
+</html>

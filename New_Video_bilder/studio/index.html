@@ -29,7 +29,7 @@
     max-width: 1320px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 445px 1fr;
+    grid-template-columns: 560px 1fr;
     gap: 28px;
     align-items: start;
   }
@@ -77,7 +77,7 @@
   .player-shell {
     position: relative;
     width: 100%;
-    aspect-ratio: 9 / 16;
+    aspect-ratio: 16 / 9;
     background: #080b06;
     overflow: hidden;
     border: 1px solid rgba(213, 174, 92, 0.35);
@@ -285,12 +285,20 @@
     <div class="version-tabs">
       <button
         class="v-btn active"
+        data-key="zastone"
+        data-title="Флагманский обзор (2:30): «Рации КЛЮЧ 256 · ZASTONE DP-UV008 MOD»"
+        data-src="/output/v_okope_zastone_key256.mp4?v=z256_inst2"
+        data-dl="/output/v_okope_zastone_key256.mp4"
+        data-dlname="v_okope_zastone_key256.mp4"
+      >★ КЛЮЧ 256 (2:30)</button>
+      <button
+        class="v-btn"
         data-key="sidewinder"
         data-title="Товарный Reels: «BOOIU Sidewinder GEN_3»"
         data-src="/output/v_okope_sidewinder_30s.mp4?v=sw2"
         data-dl="/output/v_okope_sidewinder_30s.mp4"
         data-dlname="v_okope_sidewinder_30s.mp4"
-      >★ Sidewinder GEN_3</button>
+      >Sidewinder GEN_3</button>
       <button
         class="v-btn"
         data-key="azar"
@@ -332,20 +340,20 @@
     </div>
 
     <div class="player-shell">
-      <video id="reelPlayer" src="/output/v_okope_sidewinder_30s.mp4?v=sw2" controls playsinline preload="metadata"></video>
+      <video id="reelPlayer" src="/output/v_okope_zastone_key256.mp4?v=z256_inst2" controls playsinline preload="metadata"></video>
     </div>
 
     <div id="sceneJumps" class="scene-jumps"></div>
 
     <div class="dl-row">
-      <a id="dlLink" class="dl-btn" href="/output/v_okope_sidewinder_30s.mp4" download="v_okope_sidewinder_30s.mp4">
-        ⬇ Скачать «BOOIU Sidewinder GEN_3 (0:30)» MP4 (1080×1920 · 60 fps)
+      <a id="dlLink" class="dl-btn" href="/output/v_okope_zastone_key256.mp4" download="v_okope_zastone_key256.mp4">
+        ⬇ Скачать «Рации КЛЮЧ 256 · ZASTONE MOD (2:30)» MP4 (1920×1080 Full HD · 60 fps)
       </a>
-      <a class="dl-btn secondary" href="/output/sidewinder_gen3_description.txt" download="sidewinder_gen3_description.txt">
-        📄 Скачать описание «Sidewinder GEN_3» без таймкодов (.TXT)
+      <a class="dl-btn secondary" href="/output/zastone_key256_description.txt" download="zastone_key256_description.txt">
+        📄 Скачать описание «КЛЮЧ 256» без таймкодов и без цен (.TXT)
       </a>
-      <a class="dl-btn secondary" href="/output/v_okope_azar_60s.mp4" download="v_okope_azar_60s.mp4">
-        📡 Скачать «АЗАР 3mx (1:00)» MP4 + в студии все предыдущие ролики
+      <a class="dl-btn secondary" href="/output/v_okope_sidewinder_30s.mp4" download="v_okope_sidewinder_30s.mp4">
+        🔦 Скачать «BOOIU Sidewinder GEN_3 (0:30)» MP4 + все предыдущие ролики в вкладках
       </a>
     </div>
   </div>
@@ -479,6 +487,19 @@ let currentAudio = null;
 let currentBtn = null;
 
 const CHAPTERS = {
+  zastone: [
+    { t: 0.00,   label: '01 · Хук: Только для своих' },
+    { t: 11.53,  label: '02 · Готова из коробки' },
+    { t: 26.56,  label: '03 · Ключ Motorola 256 бит' },
+    { t: 39.78,  label: '04 · 5 диапазонов · 10 Вт' },
+    { t: 53.89,  label: '05 · 4 режима связи' },
+    { t: 69.47,  label: '06 · Спутник 195+ · SatView' },
+    { t: 82.85,  label: '07 · Группы и каналы 5/7' },
+    { t: 96.22,  label: '08 · Дальность до 60 км' },
+    { t: 111.26, label: '09 · IP67 · 18 ч · Kenwood' },
+    { t: 126.42, label: '10 · Комплект 2 шт. · НДС' },
+    { t: 141.70, label: '11 · В ОКОПЕ · TG / VK / Авито' },
+  ],
   sidewinder: [
     { t: 0.00, label: '01 · Хук Sidewinder GEN_3' },
     { t: 5.50, label: '02 · 4 цвета LED + Строб' },
@@ -554,6 +575,38 @@ function showToast(msg) {
 }
 
 const YT_PACKS = {
+  zastone: {
+    heading: 'YouTube / VK Клипы / Telegram / RuTube — «Рации КЛЮЧ 256 · ZASTONE DP-UV008 MOD» (2:30 · без таймкодов, без цен)',
+    title: 'Рации «Ключ 256» (ZASTONE DP-UV008 MOD) — AES-256 Motorola, спутник 195+ каналов и до 60 км | В окопе',
+    desc: `Ваши разговоры — только для своих! Полный разбор комплекта индивидуально модернизированных и прошитых радиостанций «Ключ 256» (комплект из 2 шт.) на базе ZASTONE DP-UV008 v.3 MOD от «В окопе».
+
+Станции приходят полностью готовыми к работе из коробки: 256-битный ключ шифрования, рабочие наземные каналы, группы, спутниковая сетка и позывные уже прошиты в память до отгрузки. Настраивать меню в поле или подключать программатор не нужно — включил верхний валкодер, выбрал канал и работаешь в закрытом контуре. Сам ключ скрыт в памяти радиостанции: оператор не видит его на экране и не может случайно подсмотреть или скомпрометировать.
+
+КЛЮЧЕВЫЕ ПРЕИМУЩЕСТВА И ТТХ РАДИОСТАНЦИЙ «КЛЮЧ 256» (ZASTONE DP-UV008 MOD):
+• Криптостойкое шифрование: лицензионный мотороловский 256-битный ключ (AES-256, цифровой протокол DMR Tier I / II, модуляция 7K60FXE) — закрывает и голосовую связь, и SMS-сообщения; полная совместимость по ключу с радиостанциями Motorola. Шифрование не снижает дальность связи.
+• Четыре режима в одной станции: Аналог (максимальная дальность без обрывов), Цифра (чистый голос), Цифра + Ключ 256 (закрытый эфир по умолчанию), Спутник (связь через орбитальные ретрансляторы без прямой видимости и сотовых вышек).
+• 5 частотных диапазонов: VHF-1 (118–136 МГц, авиа), VHF-2 (136–174 МГц, основной УКВ), СПУТНИК (200–310 МГц, 195+ прошитых каналов), UHF-1 (300–400 МГц), UHF-2 (400–520 МГц, город и спецчастоты).
+• Спутниковый контур: комплектная складная L-антенна 90°, проверка канала по «отшлёпу» со спутника, офлайн-наведение через SatView и Look4Sat на Android.
+• Группы и совместимость: свой ключ на пару или подразделение, позывной вызывающего на ЖК-экране, открытые цифровые каналы 5 и 7 («Нет ключа») для связи со смежниками.
+• Мощность до 10 Вт (10 / 5 / 2 Вт), чувствительность −126 дБм; реальная дальность 3–7 км в городе, 20–25 км на открытой местности, до 60 км с выносом / высотой.
+• Живучесть: защита IP67, корпус 131 × 57 × 36 мм, вес 315 г, −20°C … +60°C, АКБ Li-Ion 2500 мА·ч (до 18 часов), разъём Kenwood, GPS, SMS, VOX, сканирование и FM.
+• Комплект 2 шт.: 2 прошитые рации, штатные и складные спутниковые антенны, 2 стакана с БП, 2 подсумка, сумка-укладка и памятка оператора.
+
+Согласуем схему ключей, групп и список позывных до отгрузки! Поставка оптом и в розницу — с НДС и без НДС.
+
+Официальные ресурсы «В окопе»:
+• Telegram: https://t.me/vokope_ru
+• ВКонтакте: https://vk.com/vokope_rus
+• Магазин на Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
+
+#вокопе #ключ256 #рации #шифрованнаясвязь #zastone #uv008 #радиосвязь #aes256 #спутниковаясвязь #тактическаясвязь #снаряжение #армейскаясвязь`,
+    tags: 'в окопе, ключ 256, рации ключ 256, zastone dp-uv008, zastone uv008 mod, шифрованные рации, прошитые радиостанции, рация с шифрованием aes 256, рация совместимая с motorola, спутниковая рация, рация сатком, satcom 250-310 мгц, satview наведение спутника, тактическая радиосвязь, армейские рации комплект 2 шт, цифровая рация dmr 10 вт, защищенная радиосвязь ip67, рации оптом с ндс, снаряжение в окопе',
+    pin: `Шифрованные прошитые радиостанции «Ключ 256» (комплект 2 шт. на базе ZASTONE DP-UV008 MOD) — достал из коробки и сразу на закрытой связи (AES-256 Motorola, 5 диапазонов 118–520 МГц, 195+ спутниковых каналов, 10 Вт, IP67).
+Согласуем схему ключей и список позывных до отгрузки. Поставка оптом и в розницу, с НДС и без НДС!
+• Telegram: https://t.me/vokope_ru
+• ВКонтакте: https://vk.com/vokope_rus
+• Магазин на Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241`,
+  },
   sidewinder: {
     heading: 'YouTube Shorts / VK Клипы / Reels — «BOOIU Sidewinder GEN_3» (0:30 · без таймкодов)',
     title: 'Тактический шлемный фонарь BOOIU Sidewinder GEN_3 — 4 цвета LED, ИК-режим, стробоскоп и 360° | В ОКОПЕ #shorts',
@@ -737,10 +790,10 @@ const YT_PACKS = {
   },
 };
 
-let activeKey = 'sidewinder';
+let activeKey = 'zastone';
 function renderYtPack(key) {
   activeKey = key;
-  const p = YT_PACKS[key] || YT_PACKS.sidewinder;
+  const p = YT_PACKS[key] || YT_PACKS.zastone;
   document.getElementById('ytHeading').textContent = p.heading;
   document.getElementById('ytTitleText').textContent = p.title;
   document.getElementById('ytDescText').textContent = p.desc;
@@ -753,14 +806,14 @@ function renderYtPack(key) {
   ['copyYtPin', 'pin', 'Текст закреп-комментария скопирован!'],
 ].forEach(([id, field, msg]) => {
   document.getElementById(id).addEventListener('click', async () => {
-    const val = (YT_PACKS[activeKey] || YT_PACKS.sidewinder)[field];
+    const val = (YT_PACKS[activeKey] || YT_PACKS.zastone)[field];
     try { await navigator.clipboard.writeText(val); } catch {}
     showToast(msg);
   });
 });
 
-renderChapters('sidewinder');
-renderYtPack('sidewinder');
+renderChapters('zastone');
+renderYtPack('zastone');
 
 document.querySelectorAll('.v-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -770,16 +823,19 @@ document.querySelectorAll('.v-btn').forEach((btn) => {
     video.src = btn.dataset.src;
     dlLink.href = btn.dataset.dl;
     dlLink.download = btn.dataset.dlname;
-    dlLink.textContent = btn.dataset.key === 'sidewinder'
-      ? '⬇ Скачать «BOOIU Sidewinder GEN_3 (0:30)» MP4 (1080×1920 · 60 fps)'
-      : btn.dataset.key === 'azar'
-        ? '⬇ Скачать «АЗАР 3mx (1:00)» MP4 (1080×1920 · 60 fps)'
-        : btn.dataset.key === 'power'
-          ? `⬇ Скачать «${btn.dataset.dlname}» (1080×1920 · 60 fps)`
-          : btn.dataset.key === 'product'
+    dlLink.textContent = btn.dataset.key === 'zastone'
+      ? '⬇ Скачать «Рации КЛЮЧ 256 · ZASTONE MOD (2:30 · 16:9)» MP4 (1920×1080 · 60 fps)'
+      : btn.dataset.key === 'sidewinder'
+        ? '⬇ Скачать «BOOIU Sidewinder GEN_3 (0:30)» MP4 (1080×1920 · 60 fps)'
+        : btn.dataset.key === 'azar'
+          ? '⬇ Скачать «АЗАР 3mx (1:00)» MP4 (1080×1920 · 60 fps)'
+          : btn.dataset.key === 'power'
+            ? `⬇ Скачать «${btn.dataset.dlname}» (1080×1920 · 60 fps)`
+            : btn.dataset.key === 'product'
             ? '⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)'
             : '⬇ Скачать общий ролик магазина MP4 (1080×1920 · 60 fps)';
     reelTitle.textContent = btn.dataset.title;
+    document.querySelector('.player-shell').style.aspectRatio = btn.dataset.key === 'zastone' ? '16 / 9' : '9 / 16';
     renderChapters(btn.dataset.key);
     renderYtPack(btn.dataset.key);
     video.play().catch(() => {});
