@@ -18,3 +18,6 @@ image-search/
 New_Video_bilder/assets/audio/music_mp3/pendulum_witchcraft_174bpm.mp3
 New_Video_bilder/assets/audio/music_mp3/feint_time_bomb_dnb.mp3
 New_Video_bilder/assets/audio/music_mp3/*.osu
+!New_Video_bilder/output/*.zip
+!New_Video_bilder/output/*.txt
+New_Video_bilder/assets/audio/lineups_vo/*.mp3
