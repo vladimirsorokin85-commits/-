@@ -1,7 +1,7 @@
 СБОРКА ВИДЕО S01E04 — «КРЕПЁЖ НА ВСЕ ОСИ»
 
 Полный MP4 разделён на три части без перекодирования. Скачайте все три
-бинарных файла в одну папку по прямым GitHub-ссылкам:
+части и файл контрольной суммы в одну папку по прямым GitHub-ссылкам:
 
 Часть 00:
 https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-repo/video_studio/sleep_factory/season_01/episode_04/rendered/github_download/s01e04_full.mp4.part00
@@ -12,7 +12,10 @@ https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-rep
 Часть 02:
 https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-repo/video_studio/sleep_factory/season_01/episode_04/rendered/github_download/s01e04_full.mp4.part02
 
-Скрипты восстановления — скачайте нужный файл в ту же папку, что и три части:
+Контрольная сумма (нужна скриптам восстановления):
+https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-repo/video_studio/sleep_factory/season_01/episode_04/rendered/github_download/s01e04_full.mp4.sha256
+
+Скрипты восстановления — скачайте нужный файл в ту же папку, что и три части и файл контрольной суммы:
 
 Windows — RESTORE_VIDEO_WINDOWS.bat:
 https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-repo/video_studio/sleep_factory/season_01/episode_04/rendered/github_download/RESTORE_VIDEO_WINDOWS.bat
