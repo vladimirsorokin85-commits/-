@@ -122,7 +122,14 @@ def main() -> None:
     )
     slice_w = Path("/tmp/dnb_sidewinder_decoded.wav")
     subprocess.run(
-        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(MUSIC_SLICE_MP3), "-ar", str(SR), "-ac", "2", str(slice_w)],
+        [
+            "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-i", str(MUSIC_SLICE_MP3),
+            # Carve a subtle -3.0 dB vocal-intelligibility pocket in 1.9–2.8 kHz on the music stem
+            # while keeping full sub-bass punch and top hi-hat air intact
+            "-af", "equalizer=f=2200:t=q:w=1.15:g=-3.0",
+            "-ar", str(SR), "-ac", "2", str(slice_w),
+        ],
         check=True,
     )
     music = read_wav_float(slice_w)[:TOTAL_SAMPLES]
@@ -211,15 +218,22 @@ def main() -> None:
         sfx_track[i0:i0 + n, 0] += dbl
         sfx_track[i0:i0 + n, 1] += dbl
 
-    # Smooth broadcast sidechain ducking on real Pendulum 174 BPM track
-    kernel = int(0.24 * SR)
-    smooth = np.convolve(np.abs(vo_track), np.ones(kernel, dtype=np.float32) / kernel, mode="same")
-    speaking = np.clip(smooth / 0.045, 0.0, 1.0)
-    music_gain = (0.58 - 0.32 * speaking)[:, None]
+    # Phrase-level hold ducking envelope across [vo_start - 0.10s .. vo_end + 0.14s]
+    # so loud 174 BPM drop snares/synths NEVER jump up between syllables inside a spoken phrase,
+    # plus lowered music gain (-10%..15% softer under voice, crisp recovery in transitions & 2.35s outro)!
+    gate = np.zeros(TOTAL_SAMPLES, dtype=np.float32)
+    for sc in scenes_meta:
+        g0 = max(0, int(round((sc["vo_start"] - 0.10) * SR)))
+        g1 = min(TOTAL_SAMPLES, int(round((sc["vo_end"] + 0.14) * SR)))
+        gate[g0:g1] = 1.0
+    smooth_win = int(0.18 * SR)
+    speaking = np.convolve(gate, np.ones(smooth_win, dtype=np.float32) / smooth_win, mode="same")
+    speaking = np.clip(speaking, 0.0, 1.0)
+    music_gain = (0.48 - 0.295 * speaking)[:, None]  # 0.185 under speech (vs 0.26 before), 0.48 in gaps & outro
 
     mix = np.zeros((TOTAL_SAMPLES, 2), dtype=np.float32)
-    mix[:, 0] = vo_track * 0.94 + music[:, 0] * music_gain[:, 0] + sfx_track[:, 0]
-    mix[:, 1] = vo_track * 0.94 + music[:, 1] * music_gain[:, 0] + sfx_track[:, 1]
+    mix[:, 0] = vo_track * 1.02 + music[:, 0] * music_gain[:, 0] + sfx_track[:, 0]
+    mix[:, 1] = vo_track * 1.02 + music[:, 1] * music_gain[:, 0] + sfx_track[:, 1]
 
     peak = float(np.max(np.abs(mix)))
     if peak > 0.89:
