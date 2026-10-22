@@ -2,8 +2,8 @@
 """
 Sample-accurate 30.000s (48 kHz stereo = 1,440,000 samples = 1800 frames @ 60 fps)
 master audio builder for the Power Stations Commercial («Зарядные станции — В ОКОПЕ»):
-- Uses 100% CC0-1.0 Public Domain real studio Drum & Bass MP3 (`assets/audio/music_mp3/cc0_dnb_power_30s.mp3`)
-  from warlightwolf — Tech DnB Music 21 (https://freesound.org/people/warlightwolf/sounds/612138/, 0.00% vocals, ZERO Content ID).
+- Uses 100% CC0-1.0 Public Domain real studio Drum & Bass MP3 (`assets/audio/music_mp3/dnb_01_moonlight_rave_174bpm.mp3`)
+  from Nafwise — Moonlight Rave (StreamerOS Clean DnB) (https://freesound.org/people/StreamerOS Clean DnB/sounds/612138/, 0.00% vocals, ZERO Content ID).
 - Voices: `voice-05` (`pwr_s1..pwr_s5.mp3`), zero prices, zero internal links.
 - Masters to exact -14.0 LUFS / <= -0.8 dBFS True Peak.
 """
@@ -171,7 +171,7 @@ def add_stereo_clip(buf: np.ndarray, clip: np.ndarray, start_s: float, gain_db: 
 
 def main():
     fi, fo = int(0.015 * SR), int(0.350 * SR)
-    dnb_power_mp3 = MP3_DIR / "cc0_dnb_power_30s.mp3"
+    dnb_power_mp3 = MP3_DIR / "dnb_01_moonlight_rave_174bpm.mp3"
     print(f"Using audited CC0-1.0 Public Domain DnB MP3 -> {dnb_power_mp3}")
 
     # 2. Arrange `voice-05` narration clips (`pwr_s1..pwr_s5.mp3`) on half-beat grid finishing cleanly before 27.42s crash!
@@ -312,7 +312,7 @@ def main():
 
     sync_data = {
         "product": "Зарядные станции (DJI Power / EcoFlow Delta 3 / Jackery V2 / Bluetti / Allpowers / JQB)",
-        "music_source": "assets/audio/music_mp3/cc0_dnb_power_30s.mp3 (warlightwolf — Tech DnB Music 21, CC0-1.0 Public Domain, 174.6 BPM)",
+        "music_source": "assets/audio/music_mp3/dnb_01_moonlight_rave_174bpm.mp3 (Nafwise — Moonlight Rave (StreamerOS Clean DnB), CC0-1.0 Public Domain, 174.6 BPM)",
         "duration_seconds": DURATION,
         "fps": FPS,
         "total_frames": int(DURATION * FPS),

@@ -1,98 +1,162 @@
 {
-  "policy": "STRICT_CC0_1_0_PUBLIC_DOMAIN_ONLY",
-  "tracks": {
-    "cc0_dnb_zastone_154s.mp3": {
-      "title": "Tech DnB Music 21 + Tech DnB Music 20 (174.5 BPM Instrumental Arrangement)",
-      "author": "warlightwolf",
-      "spdx_license": "CC0-1.0",
-      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source_url": "https://freesound.org/people/warlightwolf/sounds/612138/ + https://freesound.org/people/warlightwolf/sounds/612137/",
-      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+  "policy": "100% Copyright-Cleared / Zero-Content-ID Pure Instrumental Heavy Drum & Bass Arsenal (174-176 BPM, 320 kbps CBR)",
+  "verified_date": "2026-10-22",
+  "tracks": [
+    {
+      "file": "dnb_01_moonlight_rave_174bpm.mp3",
+      "title": "Moonlight Rave",
+      "artist": "Nafwise (StreamerOS Pack)",
+      "style_ru": "Мощный стадионный Dancefloor / Rave DnB (бешеный драйв 174 BPM, плотный саб)",
+      "bpm": 174.2,
+      "duration_s": 192.0,
+      "drop_cue_s": 47.29,
+      "drop_rms_db": -6.3,
+      "bitrate_kbps": 320,
+      "license": "Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID)",
+      "attribution_required": false,
+      "source_url": "https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/Moonlight%20Rave.mp3",
       "content_id_registered": false,
       "silero_vad_vocal_pct": 0.0,
-      "bpm": 174.6,
-      "used_in": [
-        "output/v_okope_zastone_key256.mp4"
-      ],
-      "sha256": "17c4aeb93d1245fff76baa6301d8c39bd8065710801954eb8e41763b7d7ea376"
+      "silero_vad_max_prob": 0.078,
+      "sha256": "394ff2b6f0874075a4dd3855a210820f79fd7d69607338938a3cb4fd1d39bf26",
+      "audition_mix_mp3": "output/dnb_audition/mix_vo_01_moonlight_rave_174bpm.mp3",
+      "audition_demo_mp4": "output/dnb_audition/demo_01_moonlight_rave_174bpm.mp4"
     },
-    "cc0_dnb_azar_60s.mp3": {
-      "title": "Tech DnB Music 21 (60s Instrumental Slice)",
-      "author": "warlightwolf",
-      "spdx_license": "CC0-1.0",
-      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source_url": "https://freesound.org/people/warlightwolf/sounds/612138/",
-      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+    {
+      "file": "dnb_02_gods_of_the_underground_174bpm.mp3",
+      "title": "Gods of the Underground",
+      "artist": "Nafwise / nathan_cook91 (StreamerOS Pack)",
+      "style_ru": "Жёсткий андеграунд 2-Step Neurofunk (хлёсткий рабочий + мощный саб-бас)",
+      "bpm": 174.2,
+      "duration_s": 234.48,
+      "drop_cue_s": 60.3,
+      "drop_rms_db": -9.3,
+      "bitrate_kbps": 320,
+      "license": "Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID)",
+      "attribution_required": false,
+      "source_url": "https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/Gods%20of%20the%20Underground.mp3",
       "content_id_registered": false,
       "silero_vad_vocal_pct": 0.0,
-      "bpm": 174.6,
-      "used_in": [
-        "output/v_okope_azar_60s.mp4"
-      ],
-      "sha256": "f4c332e7d6386807369fe7e7a751b33cdd08d3c8b6499e0852765ce929bb3ae9"
+      "silero_vad_max_prob": 0.179,
+      "sha256": "cec78cdc33fee5872b9a9adee97b7419b0cbb952d00b7017d613d991a298067e",
+      "audition_mix_mp3": "output/dnb_audition/mix_vo_02_gods_of_the_underground_174bpm.mp3",
+      "audition_demo_mp4": "output/dnb_audition/demo_02_gods_of_the_underground_174bpm.mp4"
     },
-    "cc0_dnb_sidewinder_30s.mp3": {
-      "title": "Street Action DnB - Mastered (30s Drop Slice)",
-      "author": "Peter Szegvari (szegvari)",
-      "spdx_license": "CC0-1.0",
-      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source_url": "https://freesound.org/people/szegvari/sounds/563543/",
-      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+    {
+      "file": "dnb_03_neuro_quake_174bpm.mp3",
+      "title": "Neuro Quake",
+      "artist": "Nafwise (StreamerOS Pack)",
+      "style_ru": "Тёмный тактический Neurofunk (рычащий Reese-бас под РЭБ / Булат / Ключ-256)",
+      "bpm": 174.2,
+      "duration_s": 268.28,
+      "drop_cue_s": 64.46,
+      "drop_rms_db": -8.0,
+      "bitrate_kbps": 320,
+      "license": "Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID)",
+      "attribution_required": false,
+      "source_url": "https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/Neuro%20Quake.mp3",
       "content_id_registered": false,
       "silero_vad_vocal_pct": 0.0,
-      "bpm": 174.6,
-      "used_in": [
-        "output/v_okope_sidewinder_30s.mp4"
-      ],
-      "sha256": "faff2535f966dc718d6fbdcf9c7c1632845b7c3d64032a0ed4c91e7bdbecb068"
+      "silero_vad_max_prob": 0.115,
+      "sha256": "23fd6f757d426a3799ed180644ace2f35e7273d99651d24d59f8cad81734012b",
+      "audition_mix_mp3": "output/dnb_audition/mix_vo_03_neuro_quake_174bpm.mp3",
+      "audition_demo_mp4": "output/dnb_audition/demo_03_neuro_quake_174bpm.mp4"
     },
-    "cc0_dnb_power_30s.mp3": {
-      "title": "Tech DnB Music 21 (30s Peak Drop Slice)",
-      "author": "warlightwolf",
-      "spdx_license": "CC0-1.0",
-      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source_url": "https://freesound.org/people/warlightwolf/sounds/612138/",
-      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+    {
+      "file": "dnb_04_andrew_huang_drum_and_bass_176bpm.mp3",
+      "title": "Drum & Bass",
+      "artist": "Andrew Huang",
+      "style_ru": "Эталонный студийный Drum & Bass 176 BPM (Google YouTube Audio Library 320 kbps)",
+      "bpm": 176.2,
+      "duration_s": 210.85,
+      "drop_cue_s": 18.12,
+      "drop_rms_db": -5.0,
+      "bitrate_kbps": 320,
+      "license": "YouTube Audio Library License (No Attribution Required — Official Google Buyout)",
+      "attribution_required": false,
+      "source_url": "https://www.youtube.com/audiolibrary",
       "content_id_registered": false,
       "silero_vad_vocal_pct": 0.0,
-      "bpm": 174.6,
-      "used_in": [
-        "output/v_okope_power_30s.mp4",
-        "output/v_okope_power_6_lineups.zip (01_DJI_Power, 04_JQB_Power)"
-      ],
-      "sha256": "455430822a3ee72c566ab2ab27c101b480a6612f5c537beac442d4d28611ca65"
+      "silero_vad_max_prob": 0.234,
+      "sha256": "ec13147ff7f1a0ae1032ccb4fcd58d2856d81889a8891acd788b0cda6e58f1c3",
+      "audition_mix_mp3": "output/dnb_audition/mix_vo_04_andrew_huang_drum_and_bass_176bpm.mp3",
+      "audition_demo_mp4": "output/dnb_audition/demo_04_andrew_huang_drum_and_bass_176bpm.mp4"
     },
-    "cc0_dnb_voevoda_30s.mp3": {
-      "title": "Street Action DnB - Mastered (30s Finale Slice)",
-      "author": "Peter Szegvari (szegvari)",
-      "spdx_license": "CC0-1.0",
-      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source_url": "https://freesound.org/people/szegvari/sounds/563543/",
-      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+    {
+      "file": "dnb_05_lunar_waves_174bpm.mp3",
+      "title": "Lunar Waves",
+      "artist": "Nafwise (StreamerOS Pack)",
+      "style_ru": "Скоростной мелодичный Liquid-Neuro Roller 174 BPM (глубокий саб 73%, 0% вокала)",
+      "bpm": 174.2,
+      "duration_s": 248.96,
+      "drop_cue_s": 62.92,
+      "drop_rms_db": -5.7,
+      "bitrate_kbps": 320,
+      "license": "Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID)",
+      "attribution_required": false,
+      "source_url": "https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/Lunar%20Waves.mp3",
       "content_id_registered": false,
       "silero_vad_vocal_pct": 0.0,
-      "bpm": 174.6,
-      "used_in": [
-        "output/v_okope_product_30s.mp4",
-        "output/v_okope_power_6_lineups.zip (02_EcoFlow_Delta, 05_Allpowers_R_Series)"
-      ],
-      "sha256": "4fe852983ff207b9167a5144dbb8abd8aa71a156d7e8ecc21a0fbe117ba99eb1"
+      "silero_vad_max_prob": 0.149,
+      "sha256": "8c5e2a15a1b7185d17188721fd99c50a8fd037570846110f12518cb7c2ee140c",
+      "audition_mix_mp3": "output/dnb_audition/mix_vo_05_lunar_waves_174bpm.mp3"
     },
-    "cc0_dnb_store_30s.mp3": {
-      "title": "Tech DnB Music 20 (30s Wide-Stereo Drop Slice)",
-      "author": "warlightwolf",
-      "spdx_license": "CC0-1.0",
-      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source_url": "https://freesound.org/people/warlightwolf/sounds/612137/",
-      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+    {
+      "file": "dnb_06_jeremy_blake_turn_up_lets_go_176bpm.mp3",
+      "title": "Turn Up, Let's Go",
+      "artist": "Jeremy Blake",
+      "style_ru": "Пробивной стадионный Breakbeat / DnB 176 BPM (Google YouTube Audio Library 320 kbps)",
+      "bpm": 176.2,
+      "duration_s": 265.91,
+      "drop_cue_s": 39.19,
+      "drop_rms_db": -5.6,
+      "bitrate_kbps": 320,
+      "license": "YouTube Audio Library License (No Attribution Required — Official Google Buyout)",
+      "attribution_required": false,
+      "source_url": "https://www.youtube.com/audiolibrary",
       "content_id_registered": false,
       "silero_vad_vocal_pct": 0.0,
-      "bpm": 174.6,
-      "used_in": [
-        "output/v_okope_reels_30s.mp4",
-        "output/v_okope_power_6_lineups.zip (03_Jackery_Explorer_V2, 06_Bluetti_AC_Series)"
-      ],
-      "sha256": "1572d5e0a8544f12c07ec6434024e76bbb181535b94927308ce4ea4b345d3003"
+      "silero_vad_max_prob": 0.074,
+      "sha256": "da27e60576490a19ad4f7192bc0bb106c3f7a253704be651b5aa6c78871059ca",
+      "audition_mix_mp3": "output/dnb_audition/mix_vo_06_jeremy_blake_turn_up_lets_go_176bpm.mp3"
+    },
+    {
+      "file": "dnb_07_the_jungle_hybrid_174bpm.mp3",
+      "title": "The Jungle Hybrid",
+      "artist": "Nafwise / nathan_cook91 (StreamerOS Pack)",
+      "style_ru": "Агрессивный Jungle / Techstep 174 BPM (рубленый Amen-брейк + тяжёлый саб)",
+      "bpm": 174.2,
+      "duration_s": 312.6,
+      "drop_cue_s": 56.57,
+      "drop_rms_db": -7.8,
+      "bitrate_kbps": 320,
+      "license": "Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID)",
+      "attribution_required": false,
+      "source_url": "https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/The%20Jungle%20Hybrid.mp3",
+      "content_id_registered": false,
+      "silero_vad_vocal_pct": 0.0,
+      "silero_vad_max_prob": 0.108,
+      "sha256": "e9af3128fe60ceb4950015de06088ca39f5a158852817dc83b1d573a4e199f93",
+      "audition_mix_mp3": "output/dnb_audition/mix_vo_07_the_jungle_hybrid_174bpm.mp3"
+    },
+    {
+      "file": "dnb_08_warfork_fireworks_cc0_176bpm.mp3",
+      "title": "Fireworks (Warfork CC0 OST)",
+      "artist": "Caine — Team Forbidden LLC",
+      "style_ru": "Динамичный кибер-шутерный Arena FPS DnB 176 BPM (чистая лицензия CC0 1.0 Public Domain)",
+      "bpm": 176.2,
+      "duration_s": 140.98,
+      "drop_cue_s": 23.4,
+      "drop_rms_db": -7.4,
+      "bitrate_kbps": 320,
+      "license": "CC0 1.0 Universal (Public Domain)",
+      "attribution_required": false,
+      "source_url": "https://github.com/TeamForbiddenLLC/warfork-free-soundpacks/tree/master/cc0/music",
+      "content_id_registered": false,
+      "silero_vad_vocal_pct": 0.0,
+      "silero_vad_max_prob": 0.178,
+      "sha256": "aa9f71b09dccb84e0d882f3c7f405f43406a321ae17406dfda9bfe39b44de2d8",
+      "audition_mix_mp3": "output/dnb_audition/mix_vo_08_warfork_fireworks_cc0_176bpm.mp3"
     }
-  }
+  ]
 }

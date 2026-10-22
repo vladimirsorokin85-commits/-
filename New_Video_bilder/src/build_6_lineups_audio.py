@@ -212,9 +212,9 @@ def main():
 
     # 3 distinct CC0-1.0 Public Domain studio Drum & Bass MP3 tracks rotated across the 6 lineups!
     music_pool = [
-        ("cc0_dnb_power_30s.mp3", 174.6, 27.4286),
-        ("cc0_dnb_voevoda_30s.mp3", 174.6, 27.5862),
-        ("cc0_dnb_store_30s.mp3", 174.6, 27.5862),
+        ("dnb_01_moonlight_rave_174bpm.mp3", 174.6, 27.4286),
+        ("dnb_02_gods_of_the_underground_174bpm.mp3", 174.6, 27.5862),
+        ("dnb_04_andrew_huang_drum_and_bass_176bpm.mp3", 174.6, 27.5862),
     ]
 
     lineups = [

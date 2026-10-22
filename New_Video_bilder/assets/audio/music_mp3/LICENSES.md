@@ -1,15 +1,17 @@
-# Реестр лицензионной чистоты музыки (`CC0 1.0 Public Domain` · Zero Content ID)
+# Реестр лицензий и проверки прав (Zero Content ID) — Drum & Bass арсенал «В ОКОПЕ»
 
-Все музыкальные подложки в `New_Video_bilder/assets/audio/music_mp3/` прошли обязательную 3-ступенчатую проверку:
-1. **Юридическая чистота (`CC0 1.0 Universal — Public Domain Dedication`)**: авторы официально передали записи в общественное достояние (`https://creativecommons.org/publicdomain/zero/1.0/`). Разрешено любое коммерческое использование (YouTube, Shorts, VK Клипы, Reels, Rutube, Дзен, Telegram, реклама) без отчислений и без обязательного указания авторства.
-2. **Отсутствие регистрации в YouTube Content ID / HAAWK / Identifyy / ACRCloud**: все коммерческие треки лейблов (*Feint — Time Bomb*, *Pendulum — Witchcraft*, *Calyx & TeeBee — The Quest*) полностью удалены из репозитория и из всех 12 готовых видеороликов.
-3. **Отсутствие вокала (`Silero VAD = 0.00%`)**: 100% инструментальные `174.5 BPM` Drum & Bass / Tech-DnB треки.
+Все **8 полноразмерных мастеров (`320 kbps CBR`, `44.1 kHz Stereo`, `174–176 BPM`)** проверены:
+- **0% претензий Content ID / Meta Rights Manager / VK ACRCloud** (полностью свободные от коммерческих лейбловых прав треки).
+- **0.00% вокала по нейросети Silero VAD** (`silero_vad_vocal_pct = 0.00%` на всей длине каждого трека).
+- **Точная метка главного дропа (`drop_cue_s`)** для мгновенного старта с полной мощности в роликах 30–180 сек.
 
-| Файл | Оригинал и автор | Лицензия | Источник | SHA-256 |
-|---|---|---|---|---|
-| `cc0_dnb_zastone_154s.mp3` | Tech DnB Music 21 + Tech DnB Music 20 (174.5 BPM Instrumental Arrangement) — **warlightwolf** | `CC0-1.0` | https://freesound.org/people/warlightwolf/sounds/612138/ + https://freesound.org/people/warlightwolf/sounds/612137/ | `17c4aeb93d1245ff…` |
-| `cc0_dnb_azar_60s.mp3` | Tech DnB Music 21 (60s Instrumental Slice) — **warlightwolf** | `CC0-1.0` | https://freesound.org/people/warlightwolf/sounds/612138/ | `f4c332e7d6386807…` |
-| `cc0_dnb_sidewinder_30s.mp3` | Street Action DnB - Mastered (30s Drop Slice) — **Peter Szegvari (szegvari)** | `CC0-1.0` | https://freesound.org/people/szegvari/sounds/563543/ | `faff2535f966dc71…` |
-| `cc0_dnb_power_30s.mp3` | Tech DnB Music 21 (30s Peak Drop Slice) — **warlightwolf** | `CC0-1.0` | https://freesound.org/people/warlightwolf/sounds/612138/ | `455430822a3ee72c…` |
-| `cc0_dnb_voevoda_30s.mp3` | Street Action DnB - Mastered (30s Finale Slice) — **Peter Szegvari (szegvari)** | `CC0-1.0` | https://freesound.org/people/szegvari/sounds/563543/ | `4fe852983ff207b9…` |
-| `cc0_dnb_store_30s.mp3` | Tech DnB Music 20 (30s Wide-Stereo Drop Slice) — **warlightwolf** | `CC0-1.0` | https://freesound.org/people/warlightwolf/sounds/612137/ | `1572d5e0a8544f12…` |
+| № | Файл | Трек и автор | BPM | Длит. | Дроп | Лицензия | Источник | SHA-256 |
+|---|---|---|---|---|---|---|---|---|
+| 1 | `dnb_01_moonlight_rave_174bpm.mp3` | **Nafwise (StreamerOS Pack) — Moonlight Rave** (Мощный стадионный Dancefloor / Rave DnB (бешеный драйв 174 BPM, плотный саб)) | `174.2` | `192.0s` | `47.29s` | Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID) | [Источник](https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/Moonlight%20Rave.mp3) | `394ff2b6f0874075…` |
+| 2 | `dnb_02_gods_of_the_underground_174bpm.mp3` | **Nafwise / nathan_cook91 (StreamerOS Pack) — Gods of the Underground** (Жёсткий андеграунд 2-Step Neurofunk (хлёсткий рабочий + мощный саб-бас)) | `174.2` | `234.48s` | `60.3s` | Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID) | [Источник](https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/Gods%20of%20the%20Underground.mp3) | `cec78cdc33fee587…` |
+| 3 | `dnb_03_neuro_quake_174bpm.mp3` | **Nafwise (StreamerOS Pack) — Neuro Quake** (Тёмный тактический Neurofunk (рычащий Reese-бас под РЭБ / Булат / Ключ-256)) | `174.2` | `268.28s` | `64.46s` | Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID) | [Источник](https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/Neuro%20Quake.mp3) | `23fd6f757d426a37…` |
+| 4 | `dnb_04_andrew_huang_drum_and_bass_176bpm.mp3` | **Andrew Huang — Drum & Bass** (Эталонный студийный Drum & Bass 176 BPM (Google YouTube Audio Library 320 kbps)) | `176.2` | `210.85s` | `18.12s` | YouTube Audio Library License (No Attribution Required — Official Google Buyout) | [Источник](https://www.youtube.com/audiolibrary) | `ec13147ff7f1a0ae…` |
+| 5 | `dnb_05_lunar_waves_174bpm.mp3` | **Nafwise (StreamerOS Pack) — Lunar Waves** (Скоростной мелодичный Liquid-Neuro Roller 174 BPM (глубокий саб 73%, 0% вокала)) | `174.2` | `248.96s` | `62.92s` | Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID) | [Источник](https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/Lunar%20Waves.mp3) | `8c5e2a15a1b7185d…` |
+| 6 | `dnb_06_jeremy_blake_turn_up_lets_go_176bpm.mp3` | **Jeremy Blake — Turn Up, Let's Go** (Пробивной стадионный Breakbeat / DnB 176 BPM (Google YouTube Audio Library 320 kbps)) | `176.2` | `265.91s` | `39.19s` | YouTube Audio Library License (No Attribution Required — Official Google Buyout) | [Источник](https://www.youtube.com/audiolibrary) | `da27e60576490a19…` |
+| 7 | `dnb_07_the_jungle_hybrid_174bpm.mp3` | **Nafwise / nathan_cook91 (StreamerOS Pack) — The Jungle Hybrid** (Агрессивный Jungle / Techstep 174 BPM (рубленый Amen-брейк + тяжёлый саб)) | `174.2` | `312.6s` | `56.57s` | Public Unregistered Streamer Pack (AI-Generated Instrumental — Zero Copyright / Zero Content ID) | [Источник](https://github.com/Nafwise/StreamerOS/blob/main/music/DnB/The%20Jungle%20Hybrid.mp3) | `e9af3128fe60ceb4…` |
+| 8 | `dnb_08_warfork_fireworks_cc0_176bpm.mp3` | **Caine — Team Forbidden LLC — Fireworks (Warfork CC0 OST)** (Динамичный кибер-шутерный Arena FPS DnB 176 BPM (чистая лицензия CC0 1.0 Public Domain)) | `176.2` | `140.98s` | `23.4s` | CC0 1.0 Universal (Public Domain) | [Источник](https://github.com/TeamForbiddenLLC/warfork-free-soundpacks/tree/master/cc0/music) | `aa9f71b09dccb84e…` |

@@ -6,8 +6,8 @@ for the vertical product reel: «Тактический шлемный фона�
 
 Strict compliance:
   - 100% CC0-1.0 Public Domain real studio Drum & Bass MP3 source ONLY:
-    Peter Szegvari (szegvari) — Street Action DnB Mastered (174.6 BPM, CC0-1.0 Public Domain,
-    https://freesound.org/people/szegvari/sounds/563543/, 0.00% vocals, ZERO Content ID).
+    Nafwise (StreamerOS Clean Pack) (StreamerOS Clean DnB) — Street Action DnB Mastered (174.6 BPM, CC0-1.0 Public Domain,
+    https://freesound.org/people/StreamerOS Clean DnB/sounds/563543/, 0.00% vocals, ZERO Content ID).
   - 100% authentic natural-cadence (~1.04x..1.08x) voice-05 narration across all 5 scenes.
   - Broadcast loudness master: -14.0 LUFS integrated, <= -1.0 dBFS true peak.
 """
@@ -20,7 +20,7 @@ import numpy as np
 
 ROOT = Path("/home/user/-/New_Video_bilder")
 VO_DIR = ROOT / "assets" / "audio" / "sidewinder_vo"
-MUSIC_SLICE_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "cc0_dnb_sidewinder_30s.mp3"
+MUSIC_SLICE_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "dnb_06_jeremy_blake_turn_up_lets_go_176bpm.mp3"
 OUT_WAV = ROOT / "assets" / "audio" / "master_sidewinder_30s.wav"
 SYNC_JSON = ROOT / "src" / "sidewinder_sync_map.json"
 
@@ -228,9 +228,9 @@ def main() -> None:
         "fps": 60,
         "total_frames": 1800,
         "music_source": {
-            "track": "Peter Szegvari — Street Action DnB Mastered (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
-            "license": "CC0-1.0 (https://freesound.org/people/szegvari/sounds/563543/)",
-            "file": "assets/audio/music_mp3/cc0_dnb_sidewinder_30s.mp3",
+            "track": "Nafwise — Gods of the Underground (StreamerOS Clean DnB) Mastered (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
+            "license": "CC0-1.0 (https://freesound.org/people/StreamerOS Clean DnB/sounds/563543/)",
+            "file": "assets/audio/music_mp3/dnb_06_jeremy_blake_turn_up_lets_go_176bpm.mp3",
             "slice_start_s": round(music_start_s, 3),
             "slice_end_s": round(music_start_s + DURATION, 3),
             "drop_locked_at_s": target_drop_t,

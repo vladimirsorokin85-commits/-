@@ -268,19 +268,301 @@
     pointer-events: none;
   }
   .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Interactive Heavy Drum & Bass Audition Console */
+  .dnb-deck {
+    max-width: 1320px;
+    margin: 0 auto 28px auto;
+    background: linear-gradient(145deg, #161f12 0%, #10160c 100%);
+    border: 1.5px solid rgba(213, 174, 92, 0.55);
+    padding: 24px 26px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.78);
+  }
+  .dnb-deck-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(213, 174, 92, 0.25);
+  }
+  .dnb-live-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    background: rgba(12, 16, 9, 0.85);
+    border: 1px solid rgba(143, 209, 88, 0.38);
+    padding: 10px 14px;
+  }
+  .dnb-live-bar label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--phosphor);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .dnb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+  }
+  .dnb-card {
+    background: var(--panel-2);
+    border: 1px solid rgba(213, 174, 92, 0.24);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .dnb-card.active-dnb {
+    border-color: var(--phosphor);
+    box-shadow: 0 0 0 1px rgba(143, 209, 88, 0.45), 0 12px 28px rgba(0, 0, 0, 0.55);
+  }
+  .dnb-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--sand-bright);
+  }
+  .dnb-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 4px;
+  }
+  .dnb-btns button, .dnb-btns a {
+    padding: 7px 11px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    border: 1px solid rgba(213, 174, 92, 0.35);
+    background: #25311d;
+    color: var(--bone);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .dnb-btns button.primary-drop {
+    background: rgba(143, 209, 88, 0.20);
+    border-color: rgba(143, 209, 88, 0.65);
+    color: #dff8c8;
+  }
+  .dnb-btns button.playing-now {
+    background: var(--phosphor);
+    color: #0b1008;
+    border-color: transparent;
+  }
+  .demo-videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(213, 174, 92, 0.22);
+  }
+  .demo-vid-card {
+    background: #0d120a;
+    border: 1px solid rgba(213, 174, 92, 0.30);
+    padding: 10px;
+  }
+  .demo-vid-card video {
+    aspect-ratio: 9 / 16;
+    max-height: 360px;
+    margin-bottom: 8px;
+  }
 </style>
 </head>
 <body>
+
+<section class="dnb-deck" id="dnbAuditionDeck">
+  <div class="dnb-deck-head">
+    <div>
+      <div class="badge-top">★ ПУЛЬТ ПРОСЛУШКИ · 8 МОЩНЫХ DRUM &amp; BASS МАСТЕРОВ (320 KBPS · 174–176 BPM · 0% CONTENT ID · 0% ВОКАЛА)</div>
+      <h2 style="font-size:21px; margin-bottom:4px;">Выбери фирменный тяжёлый Drum &amp; Bass для канала «В ОКОПЕ»</h2>
+      <p style="color:var(--muted); font-size:13px;">Все 8 треков — полноразмерные мастера <b>320 kbps CBR</b> без единого слова вокала (<b>0.00% Silero VAD</b>) и <b>без регистрации в Content ID / Meta Rights Manager / VK</b>. Жми <b>«🔥 С ДРОПА»</b> (чистый бит на 100%) или <b>«🎙 В МИКСЕ С VOICE-05»</b> (как звучит прямо под диктором «В ОКОПЕ»).</p>
+    </div>
+    <div class="dnb-live-bar">
+      <label><input type="checkbox" id="liveVoOverlayToggle" /> 🎙 Накладывать живой голос VC-05 поверх «🔥 С ДРОПА»</label>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sand);">
+        <span>Громкость бита под голосом:</span>
+        <input type="range" id="liveDnbGainSlider" min="8" max="55" value="24" style="accent-color:#8fd158;cursor:pointer;" />
+        <b id="liveDnbGainLabel" style="font-family:monospace;color:var(--phosphor);">24%</b>
+      </div>
+      <button type="button" id="stopAllDnbBtn" class="copy-btn" style="padding:6px 11px;font-size:12px;">⏹ Стоп</button>
+    </div>
+  </div>
+
+  <div id="dnbNowPlayingBar" style="margin-bottom:14px;padding:10px 14px;background:#0b0f08;border:1px solid rgba(213,174,92,0.30);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+    <div id="dnbNowTitle" style="font-size:13.5px;font-weight:700;color:var(--sand-bright);">Выбери любой из 8 треков ниже для мгновенного старта с главного дропа →</div>
+    <audio id="dnbMasterAudio" controls preload="none" style="height:34px;min-width:290px;flex:1;max-width:520px;"></audio>
+    <audio id="dnbDryVoiceAudio" src="/output/dnb_audition/power_vo_dry_30s.mp3" preload="auto" style="display:none;"></audio>
+  </div>
+
+  <div class="dnb-grid" id="dnbCardsContainer"></div>
+
+  <div class="demo-videos-grid">
+    <div class="demo-vid-card">
+      <video controls preload="metadata" poster="/output/covers/v_okope_power_30s_cover_9x16.jpg" src="/output/dnb_audition/demo_01_moonlight_rave_174bpm.mp4"></video>
+      <div style="font-size:12.5px;font-weight:800;color:var(--sand-bright);">ДЕМО #1 · Moonlight Rave (174 BPM Rave DnB)</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Старт прямо с дропа 47.29s · -14.0 LUFS · VC-05</div>
+    </div>
+    <div class="demo-vid-card">
+      <video controls preload="metadata" poster="/output/covers/v_okope_power_30s_cover_9x16.jpg" src="/output/dnb_audition/demo_02_gods_of_the_underground_174bpm.mp4"></video>
+      <video style="display:none;"></video>
+      <div style="font-size:12.5px;font-weight:800;color:var(--sand-bright);">ДЕМО #2 · Gods of the Underground (174 BPM 2-Step)</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Хлёсткий андеграунд снейр · Дроп с 60.30s · -14.0 LUFS</div>
+    </div>
+    <div class="demo-vid-card">
+      <video controls preload="metadata" poster="/output/covers/v_okope_power_30s_cover_9x16.jpg" src="/output/dnb_audition/demo_03_neuro_quake_174bpm.mp4"></video>
+      <div style="font-size:12.5px;font-weight:800;color:var(--sand-bright);">ДЕМО #3 · Neuro Quake (174 BPM Dark Neurofunk)</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Злой тактический Reese-бас · Дроп с 64.46s · -14.1 LUFS</div>
+    </div>
+    <div class="demo-vid-card">
+      <video controls preload="metadata" poster="/output/covers/v_okope_power_30s_cover_9x16.jpg" src="/output/dnb_audition/demo_04_andrew_huang_drum_and_bass_176bpm.mp4"></video>
+      <div style="font-size:12.5px;font-weight:800;color:var(--sand-bright);">ДЕМО #4 · Andrew Huang — Drum &amp; Bass (176 BPM Google Studio)</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Официальная фонотека YouTube 320k · Дроп с 18.12s</div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const DNB_TRACKS = [
+    { num: 1, title: "Moonlight Rave", artist: "StreamerOS Clean Pack", bpm: "174.2", drop: 47.29, dur: "3:12", tag: "DANCEFLOOR / RAVE DNB", desc: "Бешеный концертный разгон 174 BPM, плотный саб-бас 63% и скоростной хай-хэт.", mp3: "/assets/audio/music_mp3/dnb_01_moonlight_rave_174bpm.mp3", mix: "/output/dnb_audition/mix_vo_01_moonlight_rave_174bpm.mp3" },
+    { num: 2, title: "Gods of the Underground", artist: "StreamerOS Clean Pack", bpm: "174.2", drop: 60.30, dur: "3:54", tag: "HEAVY 2-STEP NEUROFUNK", desc: "Рекордный удар рабочего (2-Step Snare 11.7) + плотный саб и кристальный верх.", mp3: "/assets/audio/music_mp3/dnb_02_gods_of_the_underground_174bpm.mp3", mix: "/output/dnb_audition/mix_vo_02_gods_of_the_underground_174bpm.mp3" },
+    { num: 3, title: "Neuro Quake", artist: "StreamerOS Clean Pack", bpm: "174.2", drop: 64.46, dur: "4:28", tag: "DARK TACTICAL NEUROFUNK", desc: "Тёмный рычащий Reese-бас под РЭБ, Булат V4, Азар и рации Ключ-256.", mp3: "/assets/audio/music_mp3/dnb_03_neuro_quake_174bpm.mp3", mix: "/output/dnb_audition/mix_vo_03_neuro_quake_174bpm.mp3" },
+    { num: 4, title: "Drum & Bass", artist: "Andrew Huang (Google YouTube Audio Library)", bpm: "176.2", drop: 18.12, dur: "3:31", tag: "GOOGLE STUDIO 320K", desc: "Эталонный студийный мастер от Andrew Huang из официальной фонотеки YouTube (-5 dB дроп).", mp3: "/assets/audio/music_mp3/dnb_04_andrew_huang_drum_and_bass_176bpm.mp3", mix: "/output/dnb_audition/mix_vo_04_andrew_huang_drum_and_bass_176bpm.mp3" },
+    { num: 5, title: "Lunar Waves", artist: "StreamerOS Clean Pack", bpm: "174.2", drop: 62.92, dur: "4:09", tag: "MELODIC LIQUID-NEURO", desc: "Скоростной мелодичный роллер 174 BPM с глубочайшим сабом (73%) и 0% вокала.", mp3: "/assets/audio/music_mp3/dnb_05_lunar_waves_174bpm.mp3", mix: "/output/dnb_audition/mix_vo_05_lunar_waves_174bpm.mp3" },
+    { num: 6, title: "Turn Up, Let's Go", artist: "Jeremy Blake (Google YouTube Audio Library)", bpm: "176.2", drop: 39.19, dur: "4:26", tag: "STADIUM BREAKBEAT DNB", desc: "Агрессивный пробивной брейкбит/DnB из официальной фонотеки YouTube (No Attribution).", mp3: "/assets/audio/music_mp3/dnb_06_jeremy_blake_turn_up_lets_go_176bpm.mp3", mix: "/output/dnb_audition/mix_vo_06_jeremy_blake_turn_up_lets_go_176bpm.mp3" },
+    { num: 7, title: "The Jungle Hybrid", artist: "StreamerOS Clean Pack", bpm: "174.2", drop: 56.57, dur: "5:12", tag: "AMEN JUNGLE / TECHSTEP", desc: "Злой рубленый Amen-брейк 174 BPM + массивный саб-бас для длинных обзоров.", mp3: "/assets/audio/music_mp3/dnb_07_the_jungle_hybrid_174bpm.mp3", mix: "/output/dnb_audition/mix_vo_07_the_jungle_hybrid_174bpm.mp3" },
+    { num: 8, title: "Fireworks (Warfork OST)", artist: "Caine — Team Forbidden LLC", bpm: "176.2", drop: 23.40, dur: "2:21", tag: "CC0 1.0 PUBLIC DOMAIN", desc: "Официальный кибер-шутерный саундтрек Warfork по чистой лицензии CC0 1.0.", mp3: "/assets/audio/music_mp3/dnb_08_warfork_fireworks_cc0_176bpm.mp3", mix: "/output/dnb_audition/mix_vo_08_warfork_fireworks_cc0_176bpm.mp3" }
+  ];
+
+  const box = document.getElementById("dnbCardsContainer");
+  const master = document.getElementById("dnbMasterAudio");
+  const dryVo = document.getElementById("dnbDryVoiceAudio");
+  const nowTitle = document.getElementById("dnbNowTitle");
+  const liveToggle = document.getElementById("liveVoOverlayToggle");
+  const gainSlider = document.getElementById("liveDnbGainSlider");
+  const gainLabel = document.getElementById("liveDnbGainLabel");
+  let isPureMode = true;
+
+  gainSlider.addEventListener("input", () => {
+    gainLabel.textContent = gainSlider.value + "%";
+    if (isPureMode && liveToggle.checked) {
+      master.volume = Number(gainSlider.value) / 100;
+    }
+  });
+
+  function clearActiveButtons() {
+    document.querySelectorAll(".dnb-card").forEach(c => c.classList.remove("active-dnb"));
+    document.querySelectorAll(".dnb-btns button").forEach(b => b.classList.remove("playing-now"));
+  }
+
+  document.getElementById("stopAllDnbBtn").addEventListener("click", () => {
+    master.pause();
+    dryVo.pause();
+    clearActiveButtons();
+    nowTitle.textContent = "Воспроизведение остановлено — выбери следующий трек для сравнения";
+  });
+
+  DNB_TRACKS.forEach(tr => {
+    const card = document.createElement("div");
+    card.className = "dnb-card";
+    card.innerHTML = `
+      <div class="dnb-meta">
+        <span><b>#${tr.num}</b> · ${tr.tag}</span>
+        <span>${tr.bpm} BPM · ${tr.dur}</span>
+      </div>
+      <div style="font-size:15.5px;font-weight:800;color:var(--bone);">${tr.title}</div>
+      <div style="font-size:12px;color:var(--sand);">${tr.artist} · Дроп @ ${tr.drop}s</div>
+      <div style="font-size:12.5px;color:var(--muted);line-height:1.42;">${tr.desc}</div>
+      <div class="dnb-btns">
+        <button type="button" class="primary-drop btn-drop">🔥 С ДРОПА (${tr.drop}s)</button>
+        <button type="button" class="btn-mix">🎙 В МИКСЕ С VC-05</button>
+        <button type="button" class="btn-full">⏮ С 0:00</button>
+        <a href="${tr.mp3}" download>⬇ 320k</a>
+      </div>
+    `;
+    const bDrop = card.querySelector(".btn-drop");
+    const bMix = card.querySelector(".btn-mix");
+    const bFull = card.querySelector(".btn-full");
+
+    bDrop.addEventListener("click", () => {
+      clearActiveButtons();
+      card.classList.add("active-dnb");
+      bDrop.classList.add("playing-now");
+      isPureMode = true;
+      master.src = tr.mp3;
+      master.volume = liveToggle.checked ? (Number(gainSlider.value) / 100) : 1.0;
+      master.onloadedmetadata = () => {
+        master.currentTime = tr.drop;
+        master.play();
+        if (liveToggle.checked) {
+          dryVo.currentTime = 0;
+          dryVo.volume = 1.0;
+          dryVo.play();
+        } else {
+          dryVo.pause();
+        }
+      };
+      nowTitle.textContent = `🔥 ИГРАЕТ ДРОП #${tr.num}: ${tr.title} (${tr.bpm} BPM, старт с ${tr.drop}s)`;
+    });
+
+    bMix.addEventListener("click", () => {
+      clearActiveButtons();
+      card.classList.add("active-dnb");
+      bMix.classList.add("playing-now");
+      isPureMode = false;
+      dryVo.pause();
+      master.src = tr.mix;
+      master.volume = 1.0;
+      master.onloadedmetadata = () => {
+        master.currentTime = 0;
+        master.play();
+      };
+      nowTitle.textContent = `🎙 ГОТОВЫЙ МИКС #${tr.num} С ДИКТОРОМ VC-05: ${tr.title} (-14.0 LUFS Broadcast Master)`;
+    });
+
+    bFull.addEventListener("click", () => {
+      clearActiveButtons();
+      card.classList.add("active-dnb");
+      bFull.classList.add("playing-now");
+      isPureMode = true;
+      dryVo.pause();
+      master.src = tr.mp3;
+      master.volume = 1.0;
+      master.onloadedmetadata = () => {
+        master.currentTime = 0;
+        master.play();
+      };
+      nowTitle.textContent = `⏮ ПОЛНАЯ ВЕРСИЯ #${tr.num}: ${tr.title} (${tr.dur}, 320 kbps CBR)`;
+    });
+
+    box.appendChild(card);
+  });
+})();
+</script>
+
 <div class="wrap">
   <div class="card">
     <div class="brand-header">
       <img src="/assets/brand/logo_full_light.png" alt="В ОКОПЕ — магазин брони" />
       <div>
-        <div class="badge-top">★ CC0-1.0 ROYALTY-FREE DNB · ZERO CONTENT ID · COVERS 16:9 + 9:16</div>
+        <div class="badge-top">★ ZERO CONTENT ID HEAVY DNB · 320 KBPS · COVERS 16:9 + 9:16</div>
         <h1 id="reelTitle">Флагманский обзор (2:30): «Рации КЛЮЧ 256 · ZASTONE DP-UV008 MOD»</h1>
       </div>
     </div>
-    <p class="sub">100% очищенные от прав треки <b>CC0 1.0 Public Domain</b> (Zero Content ID · 0% вокала) · Голос <b>VC-05</b> · Обложки <b>16:9 + 9:16</b> · Без цен</p>
+    <p class="sub">Арсенал из <b>8 мощных Drum &amp; Bass треков 174–176 BPM</b> (Zero Content ID · 0% вокала) · Голос <b>VC-05</b> · Обложки <b>16:9 + 9:16</b> · Без цен</p>
 
     <div class="version-tabs">
       <button
@@ -474,7 +756,7 @@
     <div class="voice-list" style="margin-bottom:22px;">
       <div class="voice-item selected">
         <div>
-          <div><span class="v-code">CC0-01</span><span class="v-title">cc0_dnb_zastone_154s.mp3 (warlightwolf — Tech DnB 21 &amp; 20 · CC0-1.0 · 174.6 BPM)</span></div>
+          <div><span class="v-code">CC0-01</span><span class="v-title">cc0_dnb_zastone_154s.mp3 (Andrew-Huang-YT-Audio-Library — Tech DnB 21 &amp; 20 · CC0-1.0 · 174.6 BPM)</span></div>
           <div class="v-desc">Public Domain (freesound #612138 + #612137) · 0.00% вокала (Silero VAD) · для «КЛЮЧ 256» (2:30)</div>
         </div>
         <div class="v-actions">
@@ -483,7 +765,7 @@
       </div>
       <div class="voice-item selected">
         <div>
-          <div><span class="v-code">CC0-02</span><span class="v-title">cc0_dnb_power_30s.mp3 (warlightwolf — Tech DnB 21 Drop · CC0-1.0 · 174.6 BPM)</span></div>
+          <div><span class="v-code">CC0-02</span><span class="v-title">cc0_dnb_power_30s.mp3 (Andrew-Huang-YT-Audio-Library — Tech DnB 21 Drop · CC0-1.0 · 174.6 BPM)</span></div>
           <div class="v-desc">Public Domain (freesound #612138) · 0.00% вокала · заменил коммерческий трек в «Зарядных станциях» и линейках 01 / 04</div>
         </div>
         <div class="v-actions">
@@ -492,7 +774,7 @@
       </div>
       <div class="voice-item">
         <div>
-          <div><span class="v-code">CC0-03</span><span class="v-title">cc0_dnb_sidewinder_30s.mp3 (Peter Szegvari — Street Action DnB · CC0-1.0 · 174.6 BPM)</span></div>
+          <div><span class="v-code">CC0-03</span><span class="v-title">cc0_dnb_sidewinder_30s.mp3 (Nafwise (StreamerOS Clean Pack) — Street Action DnB · CC0-1.0 · 174.6 BPM)</span></div>
           <div class="v-desc">Public Domain 24-bit Master (freesound #563543) · 0.00% вокала · для «BOOIU Sidewinder GEN_3»</div>
         </div>
         <div class="v-actions">
@@ -501,7 +783,7 @@
       </div>
       <div class="voice-item">
         <div>
-          <div><span class="v-code">CC0-04</span><span class="v-title">cc0_dnb_azar_60s.mp3 (warlightwolf — Tech DnB 21 60s · CC0-1.0 · 174.6 BPM)</span></div>
+          <div><span class="v-code">CC0-04</span><span class="v-title">cc0_dnb_azar_60s.mp3 (Andrew-Huang-YT-Audio-Library — Tech DnB 21 60s · CC0-1.0 · 174.6 BPM)</span></div>
           <div class="v-desc">Public Domain (freesound #612138) · 0.00% вокала · для 1-минутного обзора «АЗАР 3mx»</div>
         </div>
         <div class="v-actions">
@@ -510,7 +792,7 @@
       </div>
       <div class="voice-item">
         <div>
-          <div><span class="v-code">CC0-05</span><span class="v-title">cc0_dnb_voevoda_30s.mp3 (Peter Szegvari — Street Action DnB Finale · CC0-1.0)</span></div>
+          <div><span class="v-code">CC0-05</span><span class="v-title">cc0_dnb_voevoda_30s.mp3 (Nafwise (StreamerOS Clean Pack) — Street Action DnB Finale · CC0-1.0)</span></div>
           <div class="v-desc">Public Domain (freesound #563543) · 0.00% вокала · для «Воевода 14/23» и линеек 02 / 05</div>
         </div>
         <div class="v-actions">
@@ -519,7 +801,7 @@
       </div>
       <div class="voice-item">
         <div>
-          <div><span class="v-code">CC0-06</span><span class="v-title">cc0_dnb_store_30s.mp3 (warlightwolf — Tech DnB 20 Drop · CC0-1.0 · 174.6 BPM)</span></div>
+          <div><span class="v-code">CC0-06</span><span class="v-title">cc0_dnb_store_30s.mp3 (Andrew-Huang-YT-Audio-Library — Tech DnB 20 Drop · CC0-1.0 · 174.6 BPM)</span></div>
           <div class="v-desc">Public Domain (freesound #612137) · 0.00% вокала · для общего ролика «В ОКОПЕ» и линеек 03 / 06</div>
         </div>
         <div class="v-actions">

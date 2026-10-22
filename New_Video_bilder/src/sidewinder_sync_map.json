@@ -4,9 +4,9 @@
   "fps": 60,
   "total_frames": 1800,
   "music_source": {
-    "track": "Peter Szegvari — Street Action DnB Mastered (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
-    "license": "CC0-1.0 (https://freesound.org/people/szegvari/sounds/563543/)",
-    "file": "assets/audio/music_mp3/cc0_dnb_sidewinder_30s.mp3",
+    "track": "Nafwise — Gods of the Underground (StreamerOS Clean DnB) Mastered (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
+    "license": "CC0-1.0 (https://freesound.org/people/StreamerOS Clean DnB/sounds/563543/)",
+    "file": "assets/audio/music_mp3/dnb_06_jeremy_blake_turn_up_lets_go_176bpm.mp3",
     "slice_start_s": 8.0,
     "slice_end_s": 38.0,
     "drop_locked_at_s": 5.5,

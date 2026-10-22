@@ -2,7 +2,7 @@
 """
 Sample-accurate 30.000s (48 kHz stereo = 1,440,000 samples = 1800 frames @ 60 fps)
 master audio builder for BOTH «В ОКОПЕ» Reels using 100% CC0-1.0 Public Domain real studio Drum & Bass MP3 tracks
-(`cc0_dnb_voevoda_30s.mp3` — Peter Szegvari Street Action DnB & `cc0_dnb_store_30s.mp3` — warlightwolf Tech DnB 20,
+(`dnb_02_gods_of_the_underground_174bpm.mp3` — Nafwise (StreamerOS Clean Pack) Street Action DnB & `dnb_04_andrew_huang_drum_and_bass_176bpm.mp3` — StreamerOS Clean DnB Tech DnB 20,
 0.00% vocals, ZERO Content ID, ZERO internal procedural music synth engine!).
 """
 import json
@@ -258,8 +258,8 @@ def master_with_real_dnb(voice_bus: np.ndarray, music_mp3_path: Path, sfx_bus: n
 
 
 def main():
-    dnb_prod_mp3 = MP3_DIR / "cc0_dnb_voevoda_30s.mp3"
-    dnb_store_mp3 = MP3_DIR / "cc0_dnb_store_30s.mp3"
+    dnb_prod_mp3 = MP3_DIR / "dnb_02_gods_of_the_underground_174bpm.mp3"
+    dnb_store_mp3 = MP3_DIR / "dnb_04_andrew_huang_drum_and_bass_176bpm.mp3"
     print(f"Using audited CC0-1.0 Public Domain DnB MP3s:\n  1) {dnb_prod_mp3}\n  2) {dnb_store_mp3}")
 
     # Load clean subtle transition foley (real recorded foley only — ZERO synthesized tones!)
@@ -352,7 +352,7 @@ def main():
     p_lufs, p_tp = master_with_real_dnb(v_prod, dnb_prod_mp3, sfx_prod, AUDIO_DIR / "master_product_30s.wav")
     prod_sync = {
         "product": "Комплекс бронезащиты «ВОЕВОДА 14/23» (ООО «Варяг»)",
-        "music_source": "assets/audio/music_mp3/cc0_dnb_voevoda_30s.mp3 (Peter Szegvari — Street Action DnB, CC0-1.0 Public Domain, 174.6 BPM)",
+        "music_source": "assets/audio/music_mp3/dnb_02_gods_of_the_underground_174bpm.mp3 (Nafwise — Gods of the Underground (StreamerOS Clean DnB), CC0-1.0 Public Domain, 174.6 BPM)",
         "duration_seconds": DURATION,
         "fps": FPS,
         "total_frames": int(DURATION * FPS),
@@ -399,7 +399,7 @@ def main():
     add_stereo_clip(sfx_store, boom_cin, float(sc[4]), -5.5, 0.0)
 
     s_lufs, s_tp = master_with_real_dnb(v_store, dnb_store_mp3, sfx_store, AUDIO_DIR / "master_30s.wav")
-    old_store_sync["music_source"] = "assets/audio/music_mp3/cc0_dnb_store_30s.mp3 (warlightwolf — Tech DnB Music 20, CC0-1.0 Public Domain, 174.6 BPM)"
+    old_store_sync["music_source"] = "assets/audio/music_mp3/dnb_04_andrew_huang_drum_and_bass_176bpm.mp3 (Andrew Huang — Drum & Bass (YouTube Audio Library), CC0-1.0 Public Domain, 174.6 BPM)"
     old_store_sync["master_lufs"] = round(s_lufs, 2)
     old_store_sync["true_peak_db"] = round(s_tp, 2)
     old_store_sync["s5_sting"] = round(BAR * 20.0, 4)

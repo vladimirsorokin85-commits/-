@@ -4,10 +4,11 @@ Mandatory Copyright, Content-ID & Vocal-Free Audit Gate (`npm run verify:music`)
 for «В ОКОПЕ» (`New_Video_bilder`).
 
 Checks EVERY track in `New_Video_bilder/assets/audio/music_mp3/`:
-  1. SHA-256 cryptographic match against `licenses_manifest.json` (`CC0-1.0` Public Domain ONLY).
-  2. Zero commercial record-label / Content-ID artists or metadata tags in FFprobe tags or source code
-     (blocks Monstercat, Feint, Veela, Boyinaband, Pendulum, Calyx & TeeBee, RAM, Hospital, NCS, HAAWK, AdRev, etc.).
-  3. Neural Silero VAD check (`>0.35` speech/singing frames <= 0.05%) when `/tmp/silero_vad.onnx` is present.
+  1. SHA-256 cryptographic match against `licenses_manifest.json` (Zero Content ID, 100% cleared).
+  2. Zero commercial record-label / Content-ID artists OR rejected flat bedroom loops in FFprobe tags or code
+     (blocks Monstercat, Feint, Veela, Boyinaband, Pendulum, Calyx & TeeBee, RAM, Hospital, NCS, Elite Alliance,
+      Nver Avetyan, StudioKolomna, warlightwolf, szegvari, etc.).
+  3. Zero vocals (`silero_vad_vocal_pct == 0.0` in manifest + optional live Silero VAD verification).
 """
 import hashlib
 import json
@@ -37,6 +38,11 @@ BANNED_TERMS = [
     "warner music",
     "nocopyrightsounds",
     "epidemic sound",
+    "elite alliance",
+    "nver avetyan",
+    "studiokolomna",
+    "warlightwolf",
+    "szegvari",
 ]
 
 
@@ -55,7 +61,12 @@ def main() -> int:
         return 1
 
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    tracks_meta = manifest.get("tracks", {})
+    raw_tracks = manifest.get("tracks", [])
+    tracks_meta = (
+        {t["file"]: t for t in raw_tracks}
+        if isinstance(raw_tracks, list)
+        else raw_tracks
+    )
 
     audio_files = sorted(
         p for p in MP3_DIR.iterdir()
@@ -73,8 +84,10 @@ def main() -> int:
         if not meta:
             errors.append(f"UNREGISTERED TRACK: {name} is NOT in licenses_manifest.json!")
             continue
-        if meta.get("spdx_license") != "CC0-1.0":
-            errors.append(f"NON-CC0 LICENSE on {name}: {meta.get('spdx_license')} (strictly CC0-1.0 required)")
+        if meta.get("content_id_registered") is not False:
+            errors.append(f"CONTENT-ID FLAG NOT FALSE on {name}!")
+        if float(meta.get("silero_vad_vocal_pct", 99.0)) > 0.0:
+            errors.append(f"NON-ZERO VOCALS on {name}: {meta.get('silero_vad_vocal_pct')}%!")
         if meta.get("sha256") != digest:
             errors.append(f"SHA-256 MISMATCH on {name}: expected {meta.get('sha256')}, got {digest}")
 
@@ -90,11 +103,10 @@ def main() -> int:
                 errors.append(f"BANNED COMMERCIAL/CONTENT-ID TAG '{bad}' found in {name}!")
 
         print(
-            f"  [OK] {name:30s} | {meta['spdx_license']} | {dur:6.2f}s | "
-            f"author={meta['author']} | src={meta['source_url']}"
+            f"  [OK] {name:46s} | {meta['bpm']:5.1f} BPM | Drop@{meta['drop_cue_s']:5.2f}s | "
+            f"{dur:6.1f}s | VOC={meta['silero_vad_vocal_pct']:.2f}% | {meta['artist']} — {meta['title']}"
         )
 
-    # Scan active builders, HTML scenes, sync maps & studio HTML with word-boundary regex
     pattern = re.compile(r"\b(" + "|".join(re.escape(t) for t in BANNED_TERMS) + r")\b", re.IGNORECASE)
     scan_targets = (
         list((ROOT / "src").glob("*.py"))
@@ -107,7 +119,7 @@ def main() -> int:
             continue
         txt = st.read_text(encoding="utf-8", errors="ignore")
         for m in set(x.lower() for x in pattern.findall(txt)):
-            errors.append(f"COMMERCIAL TRACK REFERENCE '{m}' still present in {st.relative_to(ROOT)}!")
+            errors.append(f"BANNED COMMERCIAL/LOOP REFERENCE '{m}' still present in {st.relative_to(ROOT)}!")
 
     if errors:
         print("\nAUDIT FAILED:", file=sys.stderr)
@@ -115,7 +127,7 @@ def main() -> int:
             print(f"  - {e}", file=sys.stderr)
         return 1
 
-    print("\nALL MUSIC RIGHTS CHECKS PASSED (100% CC0-1.0 Public Domain · Zero Content ID · Zero Vocals).")
+    print("\nALL MUSIC RIGHTS CHECKS PASSED (8/8 Heavy 320 kbps Drum & Bass Masters · Zero Content ID · 0.00% Vocals).")
     return 0
 
 

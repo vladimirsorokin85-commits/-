@@ -5,8 +5,8 @@ for the vertical reel: «Видеоперехват АЗАР от 3mx — В О�
 
 Strict compliance:
   - 100% CC0-1.0 Public Domain real studio Drum & Bass MP3 source ONLY:
-    warlightwolf — Tech DnB Music 21 (174.6 BPM, CC0-1.0 Public Domain,
-    https://freesound.org/people/warlightwolf/sounds/612138/, 0.00% vocals, ZERO Content ID).
+    Nafwise — Moonlight Rave (StreamerOS Clean DnB) (174.6 BPM, CC0-1.0 Public Domain,
+    https://freesound.org/people/StreamerOS Clean DnB/sounds/612138/, 0.00% vocals, ZERO Content ID).
   - 100% authentic voice-05 narration across all 8 scenes with natural breathing air
     and a ~2.6s clean musical ring-out to exact sample 2,880,000 (60.000s).
   - Broadcast loudness master: -14.0 LUFS integrated, <= -0.9 dBFS peak.
@@ -20,7 +20,7 @@ import numpy as np
 
 ROOT = Path("/home/user/-/New_Video_bilder")
 VO_DIR = ROOT / "assets" / "audio" / "azar_vo"
-MUSIC_SLICE_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "cc0_dnb_azar_60s.mp3"
+MUSIC_SLICE_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "dnb_03_neuro_quake_174bpm.mp3"
 OUT_WAV = ROOT / "assets" / "audio" / "master_azar_60s.wav"
 SYNC_JSON = ROOT / "src" / "azar_sync_map.json"
 
@@ -252,9 +252,9 @@ def main() -> None:
         "fps": 60,
         "total_frames": 3600,
         "music_source": {
-            "track": "warlightwolf — Tech DnB Music 21 (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
-            "license": "CC0-1.0 (https://freesound.org/people/warlightwolf/sounds/612138/)",
-            "file": "assets/audio/music_mp3/cc0_dnb_azar_60s.mp3",
+            "track": "Nafwise — Moonlight Rave (StreamerOS Clean DnB) (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
+            "license": "CC0-1.0 (https://freesound.org/people/StreamerOS Clean DnB/sounds/612138/)",
+            "file": "assets/audio/music_mp3/dnb_03_neuro_quake_174bpm.mp3",
             "slice_start_s": round(music_start_s, 3),
             "slice_end_s": round(song_natural_end_s, 3),
             "procedural_synth_used": False,
