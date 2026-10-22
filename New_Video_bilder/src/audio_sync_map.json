@@ -1,0 +1,233 @@
+{
+  "duration_seconds": 30.0,
+  "fps": 60,
+  "total_frames": 1800,
+  "sample_rate": 48000,
+  "bpm": 174.0,
+  "beat_seconds": 0.344828,
+  "voice_tempo": 1.31,
+  "master_lufs": -14.0,
+  "true_peak_db": -0.9,
+  "scene_cuts": [
+    0.0,
+    4.65,
+    14.3,
+    19.7,
+    24.333333,
+    30.0
+  ],
+  "scenes": [
+    {
+      "index": 1,
+      "id": "scene1_hook",
+      "file": "s1_hook.mp3",
+      "text": "Когда небо решает всё — нужна заводская техника, проверенная делом!",
+      "voice_start": 0.5172,
+      "voice_end": 4.4661,
+      "voice_start_frame": 31,
+      "voice_end_frame": 268,
+      "scene_start": 0.0,
+      "scene_end": 4.65,
+      "scene_start_frame": 0,
+      "scene_end_frame": 279
+    },
+    {
+      "index": 2,
+      "id": "scene2_catalog",
+      "file": "s2_catalog_tight.mp3",
+      "text": "В магазине «В окопе» — огромный выбор от заводов: РЭБ Капюшон, Скания, Зонт и Ромашка, детекторы Булат и Алдан, Мавики, рации и питание!",
+      "voice_start": 4.8276,
+      "voice_end": 14.1075,
+      "voice_start_frame": 290,
+      "voice_end_frame": 846,
+      "scene_start": 4.65,
+      "scene_end": 14.3,
+      "scene_start_frame": 279,
+      "scene_end_frame": 858
+    },
+    {
+      "index": 3,
+      "id": "scene3_personal",
+      "file": "s3_personal_tight.mp3",
+      "text": "Личный подход к каждому: разберём вашу задачу и согласуем с поставщиком нужные частоты и прошивку!",
+      "voice_start": 14.4828,
+      "voice_end": 19.5684,
+      "voice_start_frame": 869,
+      "voice_end_frame": 1174,
+      "scene_start": 14.3,
+      "scene_end": 19.7,
+      "scene_start_frame": 858,
+      "scene_end_frame": 1182
+    },
+    {
+      "index": 4,
+      "id": "scene4_wholesale",
+      "file": "s4_wholesale_tight.mp3",
+      "text": "От одного комплекта до крупной партии — оптом и в розницу, с НДС и без!",
+      "voice_start": 19.8276,
+      "voice_end": 24.1871,
+      "voice_start_frame": 1190,
+      "voice_end_frame": 1451,
+      "scene_start": 19.7,
+      "scene_end": 24.3333,
+      "scene_start_frame": 1182,
+      "scene_end_frame": 1460
+    },
+    {
+      "index": 5,
+      "id": "scene5_cta",
+      "file": "s5_cta.mp3",
+      "text": "Магазин «В окопе»! Переходите в наш Телеграм, ВКонтакте или на Авито!",
+      "voice_start": 24.4828,
+      "voice_end": 28.2866,
+      "voice_start_frame": 1469,
+      "voice_end_frame": 1697,
+      "scene_start": 24.3333,
+      "scene_end": 30.0,
+      "scene_start_frame": 1460,
+      "scene_end_frame": 1800
+    }
+  ],
+  "s2_nodes": [
+    5.422,
+    8.896,
+    11.791
+  ],
+  "s3_checks": [
+    15.488,
+    17.0,
+    18.404
+  ],
+  "sync_events": [
+    {
+      "event": "s1_radar_ping",
+      "role": "Всплеск радиоспектра на старте",
+      "start_s": 0.08,
+      "peak_s": 0.0846,
+      "target_frame": 5,
+      "peak_frame": 5
+    },
+    {
+      "event": "s1_lock_impact",
+      "role": "Захват цели пеленгом 360° + удар титра",
+      "start_s": 0.4,
+      "peak_s": 0.4565,
+      "target_frame": 24,
+      "peak_frame": 27
+    },
+    {
+      "event": "s1_bar1_drop",
+      "role": "Вступление основного ритма 174 BPM",
+      "start_s": 1.3793,
+      "peak_s": 1.4646,
+      "target_frame": 83,
+      "peak_frame": 88
+    },
+    {
+      "event": "cut_s1_to_s2",
+      "role": "Пролёт в 3D-шину заводского выбора",
+      "start_s": 4.51,
+      "peak_s": 5.0531,
+      "target_frame": 271,
+      "peak_frame": 303
+    },
+    {
+      "event": "s2_node1_reb",
+      "role": "Фокус узла 1: РЭБ Капюшон / Скания / Зонт / Ромашка",
+      "start_s": 5.422,
+      "peak_s": 5.43,
+      "target_frame": 325,
+      "peak_frame": 326
+    },
+    {
+      "event": "s2_node2_det",
+      "role": "Фокус узла 2: Детекторы Булат V4 / Алдан-8/12",
+      "start_s": 8.896,
+      "peak_s": 8.9006,
+      "target_frame": 534,
+      "peak_frame": 534
+    },
+    {
+      "event": "s2_node3_comms_fpv",
+      "role": "Фокус узла 3: Mavic / Рации / Питание",
+      "start_s": 11.791,
+      "peak_s": 11.7987,
+      "target_frame": 707,
+      "peak_frame": 708
+    },
+    {
+      "event": "cut_s2_to_s3",
+      "role": "Переход к карте согласования с заводом",
+      "start_s": 14.2,
+      "peak_s": 14.2512,
+      "target_frame": 852,
+      "peak_frame": 855
+    },
+    {
+      "event": "s3_check1_task",
+      "role": "Пункт 1: Разбор задачи и типа транспорта/позиции",
+      "start_s": 15.488,
+      "peak_s": 15.4957,
+      "target_frame": 929,
+      "peak_frame": 930
+    },
+    {
+      "event": "s3_check2_freq",
+      "role": "Пункт 2: Согласование рабочих частот с поставщиком",
+      "start_s": 17.0,
+      "peak_s": 17.0077,
+      "target_frame": 1020,
+      "peak_frame": 1020
+    },
+    {
+      "event": "s3_check3_firmware_ok",
+      "role": "Пункт 3: Нужная заводская прошивка и комплектация ✓",
+      "start_s": 18.404,
+      "peak_s": 18.4504,
+      "target_frame": 1104,
+      "peak_frame": 1107
+    },
+    {
+      "event": "cut_s3_to_s4_case_drop",
+      "role": "Посадка комплекта в защитный кейс + раскрытие склада",
+      "start_s": 19.7,
+      "peak_s": 19.7565,
+      "target_frame": 1182,
+      "peak_frame": 1185
+    },
+    {
+      "event": "s4_to_s5_riser",
+      "role": "Нарастание точно в защёлку кейса",
+      "start_s": 21.7549,
+      "peak_s": 24.2172,
+      "target_frame": 1305,
+      "peak_frame": 1453
+    },
+    {
+      "event": "cut_s4_to_s5_latch_slam",
+      "role": "Финальная защёлка кейса и раскрытие «В ОКОПЕ» + CTA",
+      "start_s": 24.3333,
+      "peak_s": 24.5085,
+      "target_frame": 1460,
+      "peak_frame": 1471
+    },
+    {
+      "event": "s5_latch_click",
+      "role": "Металлический щелчок замков кейса",
+      "start_s": 24.3633,
+      "peak_s": 24.371,
+      "target_frame": 1462,
+      "peak_frame": 1462
+    },
+    {
+      "event": "s5_brand_sting",
+      "role": "Финальный фирменный акцент после речи диктора",
+      "start_s": 28.2,
+      "peak_s": 28.3898,
+      "target_frame": 1692,
+      "peak_frame": 1703
+    }
+  ],
+  "music_source": "assets/audio/music_mp3/dnb_store_30s.mp3 (Real Studio Drum & Bass MP3, 320 kbps, 174.0 BPM)",
+  "s5_sting": 27.5862
+}

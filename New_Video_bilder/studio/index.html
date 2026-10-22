@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>В ОКОПЕ · Магазин брони — Военная видеостудия (Реальные фото · Real Drum & Bass · 60 FPS)</title>
+<style>
+  :root {
+    --bg: #0c1009;
+    --panel: #13190f;
+    --panel-2: #1b2416;
+    --border: rgba(213, 174, 92, 0.34);
+    --sand: #d5ae5c;
+    --sand-bright: #e7c475;
+    --olive: #849e54;
+    --phosphor: #8fd158;
+    --bone: #f2efe4;
+    --muted: #9fa693;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background: radial-gradient(circle at 20% 0%, #1c2616 0%, var(--bg) 62%);
+    color: var(--bone);
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .wrap {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 445px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 980px) {
+    .wrap { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
+    padding: 24px;
+    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.68);
+  }
+  .brand-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(213, 174, 92, 0.22);
+  }
+  .brand-header img {
+    height: 68px;
+    width: auto;
+    display: block;
+  }
+  .badge-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sand);
+    background: rgba(213, 174, 92, 0.12);
+    border: 1px solid rgba(213, 174, 92, 0.38);
+    padding: 5px 11px;
+    margin-bottom: 6px;
+  }
+  h1 { font-size: 20px; line-height: 1.22; letter-spacing: 0.02em; }
+  h2 { font-size: 19px; margin-bottom: 8px; }
+  .sub { color: var(--muted); font-size: 13.5px; line-height: 1.5; margin-bottom: 15px; }
+
+  .player-shell {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    background: #080b06;
+    overflow: hidden;
+    border: 1px solid rgba(213, 174, 92, 0.35);
+  }
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: #080b06;
+  }
+  .version-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .v-btn {
+    padding: 11px 8px;
+    border: 1px solid rgba(213, 174, 92, 0.28);
+    background: var(--panel-2);
+    color: var(--bone);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.25;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.18s;
+  }
+  .v-btn.active {
+    background: linear-gradient(135deg, var(--sand-bright), var(--sand));
+    color: #0c1009;
+    border-color: transparent;
+  }
+  .scene-jumps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .s-chip {
+    flex: 1 1 auto;
+    padding: 7px 9px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid rgba(213, 174, 92, 0.24);
+    background: var(--panel-2);
+    color: var(--bone);
+    cursor: pointer;
+  }
+  .s-chip:hover { border-color: var(--sand); color: var(--sand); }
+
+  .dl-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .dl-btn {
+    display: block;
+    width: 100%;
+    padding: 13px 16px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 13.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: linear-gradient(90deg, var(--sand-bright), #be9342);
+    color: #0c1009;
+  }
+  .dl-btn.secondary {
+    background: var(--panel-2);
+    color: var(--sand-bright);
+    border: 1px solid rgba(213, 174, 92, 0.36);
+  }
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 16px 0 22px;
+  }
+  @media (max-width: 680px) {
+    .specs-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .spec-box {
+    background: var(--panel-2);
+    border: 1px solid rgba(213, 174, 92, 0.20);
+    padding: 12px;
+  }
+  .spec-k { font-size: 11px; color: var(--muted); text-transform: uppercase; }
+  .spec-v { font-size: 15px; font-weight: 800; color: var(--phosphor); margin-top: 4px; }
+
+  .sku-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13.5px;
+  }
+  .sku-table th, .sku-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(213, 174, 92, 0.16);
+    text-align: left;
+  }
+  .sku-table th {
+    color: var(--sand);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(213, 174, 92, 0.08);
+  }
+  .sku-spec {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 800;
+    color: var(--phosphor);
+    white-space: nowrap;
+  }
+
+  .voice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin-top: 12px;
+  }
+  .voice-item {
+    background: var(--panel-2);
+    border: 1px solid rgba(213, 174, 92, 0.18);
+    padding: 13px 15px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+  .voice-item.selected {
+    border-color: var(--sand);
+    background: linear-gradient(90deg, rgba(213, 174, 92, 0.14), rgba(27, 36, 22, 0.96));
+  }
+  .v-code {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 3px 9px;
+    background: rgba(132, 158, 84, 0.22);
+    color: var(--phosphor);
+    margin-right: 8px;
+  }
+  .voice-item.selected .v-code {
+    background: var(--sand);
+    color: #0c1009;
+  }
+  .v-title { font-weight: 700; font-size: 14.5px; }
+  .v-desc { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .v-json {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11.5px;
+    color: #d4d7cb;
+    margin-top: 6px;
+    opacity: 0.85;
+  }
+  .v-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .play-btn, .copy-btn {
+    padding: 9px 13px;
+    border: 1px solid rgba(213, 174, 92, 0.30);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    background: #25311d;
+    color: var(--bone);
+  }
+  .play-btn.playing { background: var(--phosphor); color: #0b1008; border-color: transparent; }
+  .copy-btn:hover { border-color: var(--sand); color: var(--sand); }
+  .toast {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    background: var(--sand);
+    color: #0c1009;
+    font-weight: 800;
+    padding: 12px 18px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: 0.22s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="brand-header">
+      <img src="/assets/brand/logo_full_light.png" alt="В ОКОПЕ — магазин брони" />
+      <div>
+        <div class="badge-top">★ REAL PHOTO · REAL DNB MP3 · 60 FPS</div>
+        <h1 id="reelTitle">Товарный Reels: «Зарядные станции»</h1>
+      </div>
+    </div>
+    <p class="sub">Реальные студийные фото · Настоящий Drum & Bass MP3 · Голос <b>VC-05</b> · Логотип <b>GOYDA</b> · Без цен</p>
+
+    <div class="version-tabs">
+      <button
+        class="v-btn active"
+        data-key="power"
+        data-title="Товарный Reels: «Зарядные станции»"
+        data-src="/output/v_okope_power_30s.mp4?v=pwr1"
+        data-dl="/output/v_okope_power_30s.mp4"
+        data-dlname="v_okope_power_30s.mp4"
+      >Все 17 станций</button>
+      <button
+        class="v-btn"
+        data-key="product"
+        data-title="Товарный Reels: «Воевода 14/23»"
+        data-src="/output/v_okope_product_30s.mp4?v=dnb2"
+        data-dl="/output/v_okope_product_30s.mp4"
+        data-dlname="v_okope_product_30s.mp4"
+      >«Воевода 14/23»</button>
+      <button
+        class="v-btn"
+        data-key="store"
+        data-title="Общий Reels магазина «В ОКОПЕ»"
+        data-src="/output/v_okope_reels_30s.mp4?v=dnb2"
+        data-dl="/output/v_okope_reels_30s.mp4"
+        data-dlname="v_okope_reels_30s.mp4"
+      >Магазин «В ОКОПЕ»</button>
+      <button class="v-btn" data-key="power" data-title="01 · DJI Power (1000W V2 & 2000W)" data-src="/lineups/01_DJI_Power.mp4" data-dl="/lineups/01_DJI_Power.mp4" data-dlname="01_DJI_Power.mp4">01 · DJI Power</button>
+      <button class="v-btn" data-key="power" data-title="02 · EcoFlow Delta (5 моделей)" data-src="/lineups/02_EcoFlow_Delta.mp4" data-dl="/lineups/02_EcoFlow_Delta.mp4" data-dlname="02_EcoFlow_Delta.mp4">02 · EcoFlow Delta</button>
+      <button class="v-btn" data-key="power" data-title="03 · Jackery Explorer V2" data-src="/lineups/03_Jackery_Explorer_V2.mp4" data-dl="/lineups/03_Jackery_Explorer_V2.mp4" data-dlname="03_Jackery_Explorer_V2.mp4">03 · Jackery V2</button>
+      <button class="v-btn" data-key="power" data-title="04 · JQB Power (1 / 2 / 4 кВт·ч)" data-src="/lineups/04_JQB_Power.mp4" data-dl="/lineups/04_JQB_Power.mp4" data-dlname="04_JQB_Power.mp4">04 · JQB Power</button>
+      <button class="v-btn" data-key="power" data-title="05 · Allpowers R2500 V.2 & R4000" data-src="/lineups/05_Allpowers_R_Series.mp4" data-dl="/lineups/05_Allpowers_R_Series.mp4" data-dlname="05_Allpowers_R_Series.mp4">05 · Allpowers</button>
+      <button class="v-btn" data-key="power" data-title="06 · Bluetti AC180P & AC200PL" data-src="/lineups/06_Bluetti_AC_Series.mp4" data-dl="/lineups/06_Bluetti_AC_Series.mp4" data-dlname="06_Bluetti_AC_Series.mp4">06 · Bluetti AC</button>
+    </div>
+
+    <div class="player-shell">
+      <video id="reelPlayer" src="/lineups/01_DJI_Power.mp4" controls playsinline preload="metadata"></video>
+    </div>
+
+    <div id="sceneJumps" class="scene-jumps"></div>
+
+    <div class="dl-row">
+      <a class="dl-btn" href="/output/v_okope_power_6_lineups.zip" download="v_okope_power_6_lineups.zip">
+        📦 Скачать ZIP (6 роликов по линейкам + все .TXT описания · 49 МБ)
+      </a>
+      <a id="dlLink" class="dl-btn secondary" href="/lineups/01_DJI_Power.mp4" download="01_DJI_Power.mp4">
+        ⬇ Скачать выбранный ролик MP4 (1080×1920 · 60 fps)
+      </a>
+      <a class="dl-btn secondary" href="/output/descriptions_6_lineups.txt" download="descriptions_6_lineups.txt">
+        📄 Скачать единый файл всех 6 описаний (.TXT)
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="badge-top">🛡 КОМПЛЕКТАЦИИ «ВОЕВОДА 14/23» & REAL DRUM & BASS MP3</div>
+    <h2>Комплекс бронезащиты «Воевода 14/23» (ООО «Варяг») + Каталог голосов</h2>
+    <p class="sub">
+      Официальные площадки магазина «В ОКОПЕ»:
+      <a href="https://t.me/vokope_ru" target="_blank" style="color:var(--sand)">t.me/vokope_ru</a> ·
+      <a href="https://vk.com/vokope_rus" target="_blank" style="color:var(--sand)">vk.com/vokope_rus</a> ·
+      <a href="https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241" target="_blank" style="color:var(--sand)">Витрина на Авито</a> (ГОСТ 34286-2017 · РОСС RU C-RU.СЗ08.В.00059/24).
+    </p>
+
+    <div class="specs-grid">
+      <div class="spec-box">
+        <div class="spec-k">Разрешение и FPS</div>
+        <div class="spec-v">1080×1920 · 60 к/с</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-k">Точный хронометраж</div>
+        <div class="spec-v">30.000 с (1800 к.)</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-k">Музыкальная подложка</div>
+        <div class="spec-v">Real DnB 320 kbps</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-k">Громкость EBU R128</div>
+        <div class="spec-v">-14.0 LUFS</div>
+      </div>
+    </div>
+
+    <table class="sku-table">
+      <thead>
+        <tr>
+          <th>Исполнение</th>
+          <th>Состав и тактические особенности</th>
+          <th>Контур защиты</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Плитник «ВОЕВОДА 14/23»</b></td>
+          <td>СВМПЭ Бр1/С2 · 4 пряжки быстросброса ROC · КАПы</td>
+          <td class="sku-spec">Бр1/С2 · ROC</td>
+        </tr>
+        <tr>
+          <td><b>Комплекс «Стандарт»</b></td>
+          <td>Увеличенная противоосколочная площадь · ИК-ремиссия</td>
+          <td class="sku-spec">6 модулей</td>
+        </tr>
+        <tr>
+          <td><b>Комплекс «Штурм» 2.0</b></td>
+          <td>Шея, плечи, пояс, «Клевер», тассеты бёдер · 7,83 кг</td>
+          <td class="sku-spec">8 модулей · 115,8 дм²</td>
+        </tr>
+        <tr>
+          <td><b>Комплекс «БМДШ» Макс</b></td>
+          <td>Максимальный штурмовой контур защиты + упоры StKSS</td>
+          <td class="sku-spec">Полный контур</td>
+        </tr>
+        <tr>
+          <td><b>Бронеплиты «ВАРЯГ-LO» / Щёлковские</b></td>
+          <td>Керамика + СВМПЭ · штатная посадка 25×30 / SAPI L</td>
+          <td class="sku-spec">Бр5</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="badge-top">📺 YOUTUBE / SHORTS ПАКЕТ (АВТОМАТИЧЕСКИ К ВЫБРАННОМУ РОЛИКУ)</div>
+    <div id="ytBox" class="voice-item selected" style="display:block; margin-bottom:22px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+        <b id="ytHeading" style="font-size:15px; color:var(--sand-bright);">YouTube Shorts — «Воевода 14/23»</b>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="copy-btn" type="button" id="copyYtTitle">📋 Заголовок</button>
+          <button class="copy-btn" type="button" id="copyYtDesc">📋 Описание</button>
+          <button class="copy-btn" type="button" id="copyYtTags">📋 Теги Studio</button>
+          <button class="copy-btn" type="button" id="copyYtPin">📋 Закреп-коммент</button>
+        </div>
+      </div>
+      <div style="font-size:13px; color:var(--bone); margin-bottom:8px;"><b>Заголовок:</b> <span id="ytTitleText"></span></div>
+      <pre id="ytDescText" style="white-space:pre-wrap; font-family:inherit; font-size:12.5px; line-height:1.48; color:var(--muted); background:#11170e; padding:12px; border:1px solid rgba(213,174,92,0.18); max-height:240px; overflow:auto;"></pre>
+    </div>
+
+    <div class="badge-top">🎵 НАРЕЗАННЫЕ РЕАЛЬНЫЕ DRUM & BASS MP3 (320 KBPS · 174 BPM)</div>
+    <div class="voice-list" style="margin-bottom:22px;">
+      <div class="voice-item selected">
+        <div>
+          <div><span class="v-code">DNB-03</span><span class="v-title">dnb_power_30s.mp3 (Feint — Time Bomb · 175 BPM Pure Instrumental Drop)</span></div>
+          <div class="v-desc">Новый студийный срез Drum & Bass MP3 (320 kbps, 65 dB sub-bass, финальный крэш на 27.4с) для ролика «Зарядные станции»</div>
+        </div>
+        <div class="v-actions">
+          <button class="play-btn mp3-btn" data-mp3="/assets/audio/music_mp3/dnb_power_30s.mp3" type="button">▶ Прослушать MP3</button>
+        </div>
+      </div>
+      <div class="voice-item">
+        <div>
+          <div><span class="v-code">DNB-01</span><span class="v-title">dnb_voevoda_30s.mp3 (Pendulum — Live Snare Fill + Pure Instrumental Drop)</span></div>
+          <div class="v-desc">Настоящий студийный Drum & Bass MP3 (320 kbps, без вокала поверх диктора, живой финальный крэш на 27.6с)</div>
+        </div>
+        <div class="v-actions">
+          <button class="play-btn mp3-btn" data-mp3="/assets/audio/music_mp3/dnb_voevoda_30s.mp3" type="button">▶ Прослушать MP3</button>
+        </div>
+      </div>
+      <div class="voice-item">
+        <div>
+          <div><span class="v-code">DNB-02</span><span class="v-title">dnb_store_30s.mp3 (Pendulum — Drop 1 Instrumental + Climax)</span></div>
+          <div class="v-desc">Второй студийный срез Drum & Bass MP3 (320 kbps, 174 BPM) для общего ролика магазина «В ОКОПЕ»</div>
+        </div>
+        <div class="v-actions">
+          <button class="play-btn mp3-btn" data-mp3="/assets/audio/music_mp3/dnb_store_30s.mp3" type="button">▶ Прослушать MP3</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="badge-top">🎙 КАТАЛОГ ДИКТОРСКИХ ГОЛОСОВ (VC-00 … VC-06)</div>
+    <div id="voiceList" class="voice-list"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast">Скопировано в буфер!</div>
+
+<script>
+const video = document.getElementById('reelPlayer');
+const dlLink = document.getElementById('dlLink');
+const reelTitle = document.getElementById('reelTitle');
+const sceneJumps = document.getElementById('sceneJumps');
+const toast = document.getElementById('toast');
+let currentAudio = null;
+let currentBtn = null;
+
+const CHAPTERS = {
+  power: [
+    { t: 0.00, label: '01 · Тишина позиции (0:00)' },
+    { t: 4.97, label: '02 · DJI / EcoFlow / Jackery / Bluetti (0:05)' },
+    { t: 11.14, label: '03 · Вся линейка 17 моделей (0:11)' },
+    { t: 17.86, label: '04 · РЭБ, блиндажи & НДС (0:18)' },
+    { t: 23.52, label: '05 · GOYDA · TG / VK / Авито (0:24)' },
+  ],
+  product: [
+    { t: 0.00, label: '01 · Хук Воевода (0:00)' },
+    { t: 5.39, label: '02 · 8 модулей / ROC (0:05.4)' },
+    { t: 12.07, label: '03 · 4 комплектации (0:12.1)' },
+    { t: 17.82, label: '04 · Плиты Бр5 / НДС (0:17.8)' },
+    { t: 22.42, label: '05 · GOYDA & Связь (0:22.4)' },
+  ],
+  store: [
+    { t: 0.00, label: '01 · Хук РЭБ (0:00)' },
+    { t: 4.65, label: '02 · Реальный арсенал (0:04.6)' },
+    { t: 14.30, label: '03 · Завод / ОТК (0:14.3)' },
+    { t: 19.70, label: '04 · Опт / НДС (0:19.7)' },
+    { t: 24.34, label: '05 · GOYDA & Связь (0:24.3)' },
+  ],
+};
+
+function stopAudioPreview() {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
+  if (currentBtn) {
+    currentBtn.classList.remove('playing');
+    currentBtn.textContent = currentBtn.classList.contains('mp3-btn') ? '▶ Прослушать MP3' : '▶ Прослушать';
+    currentBtn = null;
+  }
+}
+
+function renderChapters(key) {
+  sceneJumps.innerHTML = '';
+  (CHAPTERS[key] || CHAPTERS.product).forEach((ch) => {
+    const b = document.createElement('button');
+    b.className = 's-chip';
+    b.type = 'button';
+    b.textContent = ch.label;
+    b.addEventListener('click', () => {
+      stopAudioPreview();
+      video.currentTime = ch.t;
+      video.play().catch(() => {});
+    });
+    sceneJumps.appendChild(b);
+  });
+}
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+const YT_PACKS = {
+  power: {
+    heading: 'YouTube Shorts — «Зарядные станции» (17 моделей)',
+    title: 'Бесшумные зарядные станции для позиций, дронов и РЭБ — DJI, EcoFlow, Jackery, Bluetti | В ОКОПЕ #shorts',
+    desc: `Когда позиции нужна тишина — работают бесшумные зарядные станции из магазина брони и тактического оснащения «В ОКОПЕ»!
+
+Надёжное автономное питание 220V (чистый синус) и USB-C PD без шума генератора, выхлопных газов и тепловой засветки в закрытых блиндажах и укрытиях. Долговечные аккумуляторы LiFePO4 с ресурсом 3000–4000 циклов.
+
+🔋 В наличии на складе вся линейка (17 моделей под любую задачу от 500 до 4000 Вт):
+• DJI Power: Power 1000W V2 · Power 2000W
+• EcoFlow Delta: Delta 3 Plus · Delta 3 Max · Delta 3 Max Plus · Delta 3 Ultra Plus · Delta Pro 3
+• Jackery Explorer V2: 1000 V2 · 2000 V2 · 3000 V2
+• Bluetti: AC180P / 1800 Вт · AC200PL / 2400 Вт
+• Тяжёлый класс: Allpowers R2500 V.2 · Allpowers R4000 · JQB Power 500W-1000Wh · 1000W-2000Wh · 1800W-4000Wh
+
+📦 Отгружаем от 1 станции бойцам до крупных партий для подразделений и фондов — оптом и в розницу, с НДС и без НДС (ЭДО, быстрая доставка по всей РФ).
+
+⏱ Таймкоды:
+00:00 — Бесшумное питание на позиции без выхлопа и теплового следа
+00:05 — Флагманские линейки: DJI Power, EcoFlow Delta 3, Jackery V2, Bluetti
+00:11 — Полный складской ряд LiFePO4 от 1 кВт до Allpowers и JQB 4 кВт·ч
+00:18 — Питание РЭБ, связи и блиндажей, опт и розница (с НДС и без НДС)
+00:24 — Официальные площадки магазина «В ОКОПЕ»
+
+📲 Официальные площадки магазина «В ОКОПЕ»:
+• Telegram-канал: https://t.me/vokope_ru
+• Сообщество ВКонтакте: https://vk.com/vokope_rus
+• Магазин на Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
+
+#вокопе #заряднаястанция #ecoflow #djipower #jackery #bluetti #allpowers #lifepo4 #питаниевполе #рэб #бпла #снаряжение #shorts`,
+    tags: 'в окопе, магазин в окопе, зарядная станция для сво, портативная электростанция lifepo4, dji power 1000 v2, dji power 2000, ecoflow delta 3 plus, ecoflow delta 3 max, ecoflow delta pro 3, jackery explorer 1000 v2, jackery explorer 2000 v2, jackery 3000 v2, bluetti ac180p, bluetti ac200pl, allpowers r2500 v2, allpowers r4000, jqb power, зарядка дронов в поле, питание для рэб и блиндажа, зарядные станции оптом с ндс',
+    pin: `🔋 В наличии все 17 моделей бесшумных зарядных станций LiFePO4: DJI Power V2, EcoFlow Delta 3 / Pro 3, Jackery V2, Bluetti, Allpowers и JQB (до 4000 Вт·ч)!
+Отгружаем оптом и в розницу, с НДС и без НДС — быстрая отправка по всей РФ:
+👉 Telegram: https://t.me/vokope_ru
+👉 ВКонтакте: https://vk.com/vokope_rus
+👉 Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241`,
+  },
+  product: {
+    heading: 'YouTube Shorts — «Воевода 14/23»',
+    title: 'Штурмовой бронекомплекс «ВОЕВОДА 14/23» — 8 модулей защиты Бр1/С2 + Бр5 | В ОКОПЕ #shorts',
+    desc: `Штурмовой модульный комплекс бронезащиты «ВОЕВОДА 14/23» (производство ООО «Варяг», Россия) — в наличии в магазине брони «В ОКОПЕ»!
+
+Серийная сертифицированная бронезащита по ГОСТ 34286-2017 (сертификат № РОСС RU C-RU.СЗ08.В.00059/24, протокол отстрела Ржевского НИИСЦ) с настоящей ИК-ремиссией для работы ночью.
+
+🛡 Ключевые характеристики «ВОЕВОДА 14/23»:
+• Баллистические пакеты СВМПЭ Бр1 / С2 (противоосколочная площадь до 115,8 дм² в версии «Штурм»)
+• 4 комплектации под задачу: лёгкий Плитник, «Стандарт» (6 модулей), «Штурм» 2.0 (8 модулей) и полный контур «БМДШ» Макс
+• Анатомическая защита шеи и плеч, трёхлепестковый напашник «Клевер», боевой пояс и тассеты бёдер
+• 4-точечный полимерный быстросброс ROC, комплект КАП и штатная поддержка упоров спины StKSS
+• Доукомплектация керамическими бронеплитами Бр5 («ВАРЯГ-LO», Щёлковские, Ратник / SAPI L) и подсумками со склада
+• Расцветки: Мох (A-TACS FG), Мультикам (MultiCam), Цифра РФ (ЕМР) | Размеры: 1 (42–48), 2 (48–54), 3 (54–64)
+
+📦 Условия поставки:
+Работаем от 1 комплекта до крупной партии для подразделений, волонтёрских фондов и организаций — оптом и в розницу, с НДС и без НДС (полный пакет закрывающих документов, быстрая отправка ТК по всей России).
+
+⏱ Таймкоды:
+00:00 — Штурмовой бронекомплекс «Воевода 14/23» (класс защиты, площадь, ИК-ремиссия)
+00:05 — Разбор 8 модулей на манекене: плечи, пряжки ROC, напашник «Клевер», пояс и StKSS
+00:12 — 4 комплектации под задачу, расцветки и размерная сетка
+00:18 — Комплектация плитами Бр5, опт и розница, работа с НДС и без НДС
+00:22 — Официальные площадки магазина «В ОКОПЕ»
+
+📲 Официальные площадки магазина «В ОКОПЕ»:
+• Telegram-канал: https://t.me/vokope_ru
+• Сообщество ВКонтакте: https://vk.com/vokope_rus
+• Магазин на Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
+
+#вокопе #воевода1423 #бронежилет #плитник #бронезащита #снаряжение #тактическоеснаряжение #бр5 #экипировка #shorts`,
+    tags: 'в окопе, магазин в окопе, воевода 14 23, воевода бронежилет, комплекс бронезащиты воевода, варяг воевода, штурмовой бронежилет, плитник мох, плитник мультикам, бронеплиты бр5, варяг lo бр5, противоосколочная защита бр1 с2, напашник клевер, упоры stkss, тактическое снаряжение, военная экипировка, магазин брони, гост 34286 2017, ик ремиссия, броня оптом с ндс',
+    pin: `🛡 Комплекс бронезащиты «ВОЕВОДА 14/23» (Мох / Мультикам / Цифра ЕМР) и плиты Бр5 в наличии!
+Подберём размер и комплектацию под вашу задачу (от 1 шт. до крупной партии, с НДС и без НДС):
+👉 Telegram: https://t.me/vokope_ru
+👉 ВКонтакте: https://vk.com/vokope_rus
+👉 Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241`,
+  },
+  store: {
+    heading: 'YouTube Shorts — Магазин «В ОКОПЕ» (Общий)',
+    title: 'Магазин брони «В ОКОПЕ» — Заводские станции РЭБ, детекторы БПЛА, связь и бронезащита #shorts',
+    desc: `Когда небо решает всё — нужна заводская техника, проверенная делом! Магазин брони и тактического оборудования «В ОКОПЕ» — прямые поставки серийного оснащения от проверенных производителей.
+
+⚙️ Основной арсенал в наличии и под заказ:
+• Серийные заводские станции РЭБ (автомобильные и окопные): «Капюшон», «Скания», «Зонт», «Ромашка», «Гарпия» (100–7400 МГц, заводской паспорт и проверка)
+• Детекторы БПЛА и видеоперехватчики: «Булат V4», «Алдан-8/12», «РАДАР», «Сигнал»
+• БПЛА, закрытая цифровая DMR/AES-256 радиосвязь, ретрансляторы, станции питания и генераторы
+• Сертифицированная бронезащита: комплексы «Воевода 14/23», плитники, шлемы и керамические плиты Бр5
+
+🔧 Индивидуальный подход к каждой задаче:
+Разберём ваши условия работы и заранее согласуем с заводом-поставщиком нужные диапазоны частот и заводскую прошивку под конкретное направление.
+
+📦 Опт и розница — с НДС и без НДС:
+Отгружаем от 1 комплекта бойцам и экипажам до крупных партий для волонтёрских фондов, предприятий и подразделений. Полный комплект закрывающих документов, оперативная доставка по всей РФ.
+
+⏱ Таймкоды:
+00:00 — Защита неба: серийные купольные комплексы РЭБ
+00:05 — Обзор арсенала: РЭБ, детекторы дронов «Булат V4», закрытая связь и броня
+00:14 — Согласование нужных частот и прошивки напрямую с производителем
+00:20 — Поставки от 1 шт. до крупной партии (с НДС и без НДС)
+00:24 — Официальные площадки магазина «В ОКОПЕ»
+
+📲 Переходите и пишите нам на официальных площадках:
+• Telegram-канал: https://t.me/vokope_ru
+• Сообщество ВКонтакте: https://vk.com/vokope_rus
+• Магазин на Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
+
+#вокопе #рэб #детектордронов #булат4 #капюшон #бронезащита #тактическаясвязь #снаряжение #рации #shorts`,
+    tags: 'в окопе, магазин брони в окопе, рэб капюшон, рэб ромашка, рэб скания, рэб зонт, детектор дронов булат 4, детектор бпла алдан, сигнал v3, тактическая радиосвязь dmr, шифрование aes 256, воевода 14 23, бронеплиты бр5, военное снаряжение оптом, поставка рэб с ндс, защита от дронов, купольный рэб',
+    pin: `⚡️ Заводские станции РЭБ («Капюшон», «Скания», «Зонт», «Ромашка»), детекторы «Булат V4», закрытая связь и броня «Воевода 14/23»!
+Согласуем нужные частоты с поставщиком, отгрузим от 1 шт. до партии (с НДС и без НДС):
+👉 Telegram: https://t.me/vokope_ru
+👉 ВКонтакте: https://vk.com/vokope_rus
+👉 Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241`,
+  },
+};
+
+let activeKey = 'power';
+function renderYtPack(key) {
+  activeKey = key;
+  const p = YT_PACKS[key] || YT_PACKS.power;
+  document.getElementById('ytHeading').textContent = p.heading;
+  document.getElementById('ytTitleText').textContent = p.title;
+  document.getElementById('ytDescText').textContent = p.desc;
+}
+
+[
+  ['copyYtTitle', 'title', 'Заголовок YouTube скопирован!'],
+  ['copyYtDesc', 'desc', 'Описание YouTube скопировано!'],
+  ['copyYtTags', 'tags', 'Теги YouTube Studio скопированы!'],
+  ['copyYtPin', 'pin', 'Текст закреп-комментария скопирован!'],
+].forEach(([id, field, msg]) => {
+  document.getElementById(id).addEventListener('click', async () => {
+    const val = (YT_PACKS[activeKey] || YT_PACKS.power)[field];
+    try { await navigator.clipboard.writeText(val); } catch {}
+    showToast(msg);
+  });
+});
+
+renderChapters('power');
+renderYtPack('power');
+
+document.querySelectorAll('.v-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    stopAudioPreview();
+    document.querySelectorAll('.v-btn').forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+    video.src = btn.dataset.src;
+    dlLink.href = btn.dataset.dl;
+    dlLink.download = btn.dataset.dlname;
+    dlLink.textContent = btn.dataset.key === 'power'
+      ? '⬇ Скачать «Зарядные станции» MP4 (1080×1920 · 60 fps)'
+      : btn.dataset.key === 'product'
+        ? '⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)'
+        : '⬇ Скачать общий ролик магазина MP4 (1080×1920 · 60 fps)';
+    reelTitle.textContent = btn.dataset.title;
+    renderChapters(btn.dataset.key);
+    renderYtPack(btn.dataset.key);
+    video.play().catch(() => {});
+  });
+});
+
+document.querySelectorAll('.mp3-btn').forEach((pBtn) => {
+  pBtn.addEventListener('click', () => {
+    video.pause();
+    if (currentAudio && currentBtn === pBtn) {
+      stopAudioPreview();
+      return;
+    }
+    stopAudioPreview();
+    const a = new Audio(pBtn.dataset.mp3);
+    currentAudio = a;
+    currentBtn = pBtn;
+    pBtn.classList.add('playing');
+    pBtn.textContent = '⏸ Играет MP3...';
+    a.play();
+    a.onended = () => stopAudioPreview();
+  });
+});
+
+fetch('/voice_catalog/voices.json')
+  .then((r) => r.json())
+  .then((data) => {
+    const root = document.getElementById('voiceList');
+    data.voices.forEach((v) => {
+      const el = document.createElement('div');
+      el.className = 'voice-item' + (v.selected ? ' selected' : '');
+      const promptCmd = `Используй голос ${v.code} из New_Video_bilder/voice_catalog/VOICE_CATALOG.md (add_voice: ${JSON.stringify(v.params)})`;
+      el.innerHTML = `
+        <div>
+          <div><span class="v-code">${v.code}</span><span class="v-title">${v.title}</span></div>
+          <div class="v-desc">${v.style}</div>
+          <div class="v-json">add_voice → ${JSON.stringify(v.params)}</div>
+        </div>
+        <div class="v-actions">
+          <button class="play-btn" type="button">▶ Прослушать</button>
+          <button class="copy-btn" type="button">Скопировать код</button>
+        </div>
+      `;
+      const pBtn = el.querySelector('.play-btn');
+      const cBtn = el.querySelector('.copy-btn');
+
+      pBtn.addEventListener('click', () => {
+        video.pause();
+        if (currentAudio && currentBtn === pBtn) {
+          stopAudioPreview();
+          return;
+        }
+        stopAudioPreview();
+        const a = new Audio(v.sample);
+        currentAudio = a;
+        currentBtn = pBtn;
+        pBtn.classList.add('playing');
+        pBtn.textContent = '⏸ Играет...';
+        a.play();
+        a.onended = () => stopAudioPreview();
+      });
+
+      cBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(promptCmd);
+          showToast(`Скопирован пресет ${v.code}!`);
+        } catch {
+          showToast(v.code + ': ' + JSON.stringify(v.params));
+        }
+      });
+
+      root.appendChild(el);
+    });
+  });
+</script>
+</body>
+</html>
