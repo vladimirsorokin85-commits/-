@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>New_Video_bilder — Видеостудия «В окопе» & Каталог голосов</title>
+<style>
+  :root {
+    --bg: #070b10;
+    --panel: #0e1622;
+    --panel-2: #131e2e;
+    --border: rgba(255, 170, 43, 0.26);
+    --amber: #ffaa2b;
+    --orange: #f97316;
+    --emerald: #34d399;
+    --sky: #38bdf8;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background: radial-gradient(circle at 20% 0%, #101c2c 0%, var(--bg) 60%);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .wrap { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  }
+  .badge-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--amber);
+    background: rgba(255, 170, 43, 0.12);
+    border: 1px solid rgba(255, 170, 43, 0.35);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  h1 { font-size: 24px; line-height: 1.2; margin-bottom: 6px; }
+  h2 { font-size: 20px; margin-bottom: 8px; }
+  .sub { color: var(--muted); font-size: 14px; line-height: 1.5; margin-bottom: 16px; }
+
+  .player-shell {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    background: #04070a;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: #04070a;
+  }
+  .version-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .v-btn {
+    padding: 9px 8px;
+    border-radius: 11px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: var(--panel-2);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.18s;
+  }
+  .v-btn.active {
+    background: linear-gradient(135deg, var(--amber), var(--orange));
+    color: #090d12;
+    border-color: transparent;
+  }
+  .scene-jumps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .s-chip {
+    flex: 1 1 auto;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 9px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: var(--panel-2);
+    color: #e2e8f0;
+    cursor: pointer;
+  }
+  .s-chip:hover { border-color: var(--amber); color: var(--amber); }
+
+  .dl-btn {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 14px 18px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 15px;
+    border-radius: 13px;
+    background: linear-gradient(90deg, var(--amber), var(--orange));
+    color: #090d12;
+  }
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 16px 0 22px;
+  }
+  @media (max-width: 680px) {
+    .specs-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .spec-box {
+    background: var(--panel-2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 12px;
+  }
+  .spec-k { font-size: 11px; color: var(--muted); text-transform: uppercase; }
+  .spec-v { font-size: 16px; font-weight: 800; color: var(--emerald); margin-top: 4px; }
+
+  .voice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .voice-item {
+    background: var(--panel-2);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+  .voice-item.selected {
+    border-color: var(--amber);
+    box-shadow: inset 0 0 0 1px rgba(255, 170, 43, 0.35);
+    background: linear-gradient(90deg, rgba(255,170,43,0.10), rgba(19,30,46,0.95));
+  }
+  .v-code {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: rgba(56, 189, 248, 0.16);
+    color: var(--sky);
+    margin-right: 8px;
+  }
+  .voice-item.selected .v-code {
+    background: var(--amber);
+    color: #090d12;
+  }
+  .v-title { font-weight: 700; font-size: 15px; }
+  .v-desc { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .v-json {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11.5px;
+    color: #cbd5e1;
+    margin-top: 6px;
+    opacity: 0.85;
+  }
+  .v-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .play-btn, .copy-btn {
+    padding: 9px 13px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.16);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    background: #1a293e;
+    color: #fff;
+  }
+  .play-btn.playing { background: var(--emerald); color: #05130d; border-color: transparent; }
+  .copy-btn:hover { border-color: var(--amber); color: var(--amber); }
+  .toast {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    background: var(--emerald);
+    color: #06140e;
+    font-weight: 800;
+    padding: 12px 18px;
+    border-radius: 12px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: 0.22s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- LEFT COLUMN: VERTICAL REELS PLAYER -->
+  <div class="card">
+    <div class="badge-top">● VIZAVI MOTION V1.6.1 · 60 FPS MASTER</div>
+    <h1>«В окопе» — 30с Reels</h1>
+    <p class="sub">Голос <b>VC-05 (voice-05)</b> · Заводские поставки РЭБ, детекторов, связи и БПЛА · Официальные контакты</p>
+
+    <div class="version-tabs">
+      <button class="v-btn active" data-src="/output/v_okope_reels_30s.mp4" data-dl="/output/v_okope_reels_30s.mp4">Финал Master (30.0с · 60fps)</button>
+      <button class="v-btn" data-src="/output/risk_probe_s2_s3.mp4" data-dl="/output/risk_probe_s2_s3.mp4">Проба стыка сцен (4.5с)</button>
+    </div>
+
+    <div class="player-shell">
+      <video id="reelPlayer" src="/output/v_okope_reels_30s.mp4" controls playsinline preload="metadata"></video>
+    </div>
+
+    <div class="scene-jumps">
+      <button class="s-chip" data-t="0.00">01 · Хук (0:00)</button>
+      <button class="s-chip" data-t="4.65">02 · Каталог РЭБ (0:04.6)</button>
+      <button class="s-chip" data-t="14.30">03 · Подход (0:14.3)</button>
+      <button class="s-chip" data-t="19.70">04 · Опт/НДС (0:19.7)</button>
+      <button class="s-chip" data-t="24.34">05 · Контакты (0:24.3)</button>
+    </div>
+
+    <a id="dlLink" class="dl-btn" href="/output/v_okope_reels_30s.mp4" download="v_okope_reels_30s.mp4">
+      ⬇ Скачать готовый MP4 (1080×1920 · 60 fps · 22.1 МБ)
+    </a>
+  </div>
+
+  <!-- RIGHT COLUMN: TECHNICAL VERIFICATION + INTERACTIVE VOICE CATALOG -->
+  <div class="card">
+    <div class="badge-top">🎙 ИНТЕРАКТИВНЫЙ КАТАЛОГ ГОЛОСОВ (VC-00 … VC-06)</div>
+    <h2>Ваши сохранённые дикторские голоса для будущих роликов</h2>
+    <p class="sub">
+      Все 7 голосов записаны на одной эталонной фразе и сохранены прямо в папке
+      <code>New_Video_bilder/voice_catalog/</code>. В любом будущем чате нажмите <b>«Скопировать для промпта»</b> —
+      и агент сразу вызовет нужный голос без перебора вслепую.
+    </p>
+
+    <div class="specs-grid">
+      <div class="spec-box">
+        <div class="spec-k">Разрешение и FPS</div>
+        <div class="spec-v">1080×1920 · 60 к/с</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-k">Точный хронометраж</div>
+        <div class="spec-v">30.000 с (1800 к.)</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-k">Громкость EBU R128</div>
+        <div class="spec-v">-14.0 LUFS / -0.9 dB</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-k">Детерминизм рендера</div>
+        <div class="spec-v">0 px diff (Bit-Exact)</div>
+      </div>
+    </div>
+
+    <div id="voiceList" class="voice-list"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast">Скопировано в буфер!</div>
+
+<script>
+const video = document.getElementById('reelPlayer');
+const dlLink = document.getElementById('dlLink');
+const toast = document.getElementById('toast');
+let currentAudio = null;
+let currentBtn = null;
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+document.querySelectorAll('.v-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.v-btn').forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+    video.src = btn.dataset.src;
+    dlLink.href = btn.dataset.dl;
+    video.play().catch(() => {});
+  });
+});
+
+document.querySelectorAll('.s-chip').forEach((chip) => {
+  chip.addEventListener('click', () => {
+    video.currentTime = parseFloat(chip.dataset.t);
+    video.play().catch(() => {});
+  });
+});
+
+fetch('/voice_catalog/voices.json')
+  .then((r) => r.json())
+  .then((data) => {
+    const root = document.getElementById('voiceList');
+    data.voices.forEach((v) => {
+      const el = document.createElement('div');
+      el.className = 'voice-item' + (v.selected ? ' selected' : '');
+      const promptCmd = `Используй голос ${v.code} из New_Video_bilder/voice_catalog/VOICE_CATALOG.md (add_voice: ${JSON.stringify(v.params)})`;
+      el.innerHTML = `
+        <div>
+          <div><span class="v-code">${v.code}</span><span class="v-title">${v.title}</span></div>
+          <div class="v-desc">${v.style}</div>
+          <div class="v-json">add_voice → ${JSON.stringify(v.params)}</div>
+        </div>
+        <div class="v-actions">
+          <button class="play-btn" type="button">▶ Прослушать</button>
+          <button class="copy-btn" type="button">Скопировать код</button>
+        </div>
+      `;
+      const pBtn = el.querySelector('.play-btn');
+      const cBtn = el.querySelector('.copy-btn');
+
+      pBtn.addEventListener('click', () => {
+        video.pause();
+        if (currentAudio && currentBtn === pBtn) {
+          currentAudio.pause();
+          currentAudio = null;
+          pBtn.classList.remove('playing');
+          pBtn.textContent = '▶ Прослушать';
+          currentBtn = null;
+          return;
+        }
+        if (currentAudio) {
+          currentAudio.pause();
+          if (currentBtn) {
+            currentBtn.classList.remove('playing');
+            currentBtn.textContent = '▶ Прослушать';
+          }
+        }
+        const a = new Audio(v.sample);
+        currentAudio = a;
+        currentBtn = pBtn;
+        pBtn.classList.add('playing');
+        pBtn.textContent = '⏸ Играет...';
+        a.play();
+        a.onended = () => {
+          pBtn.classList.remove('playing');
+          pBtn.textContent = '▶ Прослушать';
+          currentAudio = null;
+          currentBtn = null;
+        };
+      });
+
+      cBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(promptCmd);
+          showToast(`Скопирован пресет ${v.code}!`);
+        } catch {
+          showToast(v.code + ': ' + JSON.stringify(v.params));
+        }
+      });
+
+      root.appendChild(el);
+    });
+  });
+</script>
+</body>
+</html>

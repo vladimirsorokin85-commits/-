@@ -1,0 +1,1905 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>В ОКОПЕ — Reels Motion Engine v2 Final (1080×1920 @ 60fps)</title>
+<style>
+  @font-face {
+    font-family: 'RussoOne';
+    src: url('/fonts/RussoOne-Regular.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'Unbounded';
+    src: url('/fonts/Unbounded-VF.ttf') format('truetype');
+    font-weight: 200 900;
+  }
+  @font-face {
+    font-family: 'Tektur';
+    src: url('/fonts/Tektur-VF.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'FiraCond';
+    src: url('/fonts/FiraSansExtraCondensed-Black.ttf') format('truetype');
+    font-weight: 900;
+  }
+  @font-face {
+    font-family: 'JetMono';
+    src: url('/fonts/JetBrainsMono-VF.ttf') format('truetype');
+    font-weight: 400 800;
+  }
+  @font-face {
+    font-family: 'RobotoBold';
+    src: url('/studio_fonts/Roboto-Bold.woff') format('woff');
+    font-weight: 700;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: #05080c;
+    user-select: none;
+  }
+  #master {
+    display: block;
+    width: 1080px;
+    height: 1920px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1080" height="1920"></canvas>
+
+<script type="module">
+const W = 1080;
+const H = 1920;
+const DURATION = 30.0;
+const BPM = 174.0;
+const BEAT = 60.0 / BPM; // 0.3448276s
+
+// Exact measured audio sync landmarks from src/audio_sync_map.json
+const SYNC = {
+  cuts: [0.0, 4.65, 14.30, 19.70, 24.333333, 30.0],
+  s1Lock: 0.4565,
+  s1Drop: 1.4646,
+  s2Nodes: [5.422, 8.896, 11.791],
+  s3Checks: [15.488, 17.000, 18.404],
+  s4Drop: 19.7565,
+  s5Slam: 24.371,
+  s5Sting: 28.390,
+};
+
+const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const lerp = (a, b, t) => a + (b - a) * t;
+const invLerp = (a, b, v) => clamp((v - a) / (b - a || 1e-6), 0, 1);
+const smoothstep = (e0, e1, x) => {
+  const t = invLerp(e0, e1, x);
+  return t * t * (3 - 2 * t);
+};
+const easeOutExpo = (x) => {
+  const t = clamp(x, 0, 1);
+  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+};
+const easeOutBack = (x, s = 1.30) => {
+  const t = clamp(x, 0, 1) - 1;
+  return t * t * ((s + 1) * t + s) + 1;
+};
+const easeInOutCubic = (x) => {
+  const t = clamp(x, 0, 1);
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+};
+const hash11 = (p) => {
+  const s = Math.sin(p * 127.1 + 311.7) * 43758.5453123;
+  return s - Math.floor(s);
+};
+const vnoise = (x) => {
+  const i = Math.floor(x);
+  const f = x - i;
+  const u = f * f * (3 - 2 * f);
+  return lerp(hash11(i), hash11(i + 1), u);
+};
+
+// Pure stateless analytical 3D perspective camera & vector projection engine
+function makeCamera3D(pos, target, fovDeg = 46, roll = 0) {
+  let fx = target[0] - pos[0];
+  let fy = target[1] - pos[1];
+  let fz = target[2] - pos[2];
+  const fl = Math.hypot(fx, fy, fz) || 1;
+  fx /= fl; fy /= fl; fz /= fl;
+
+  let rx = -fz, ry = 0, rz = fx;
+  const rl = Math.hypot(rx, ry, rz) || 1;
+  rx /= rl; ry /= rl; rz /= rl;
+
+  let ux = ry * fz - rz * fy;
+  let uy = rz * fx - rx * fz;
+  let uz = rx * fy - ry * fx;
+
+  if (roll !== 0) {
+    const cr = Math.cos(roll), sr = Math.sin(roll);
+    const nrx = rx * cr + ux * sr, nry = ry * cr + uy * sr, nrz = rz * cr + uz * sr;
+    const nux = ux * cr - rx * sr, nuy = uy * cr - ry * sr, nuz = uz * cr - rz * sr;
+    rx = nrx; ry = nry; rz = nrz;
+    ux = nux; uy = nuy; uz = nuz;
+  }
+  const focal = (H * 0.5) / Math.tan((fovDeg * Math.PI) / 360);
+  return { pos, fx, fy, fz, rx, ry, rz, ux, uy, uz, focal };
+}
+
+function project3D(cam, x, y, z) {
+  const dx = x - cam.pos[0];
+  const dy = y - cam.pos[1];
+  const dz = z - cam.pos[2];
+  const cz = dx * cam.fx + dy * cam.fy + dz * cam.fz;
+  if (cz <= 0.15) return null;
+  const cx = dx * cam.rx + dy * cam.ry + dz * cam.rz;
+  const cy = dx * cam.ux + dy * cam.uy + dz * cam.uz;
+  const s = cam.focal / cz;
+  return { x: W * 0.5 + cx * s, y: H * 0.5 - cy * s, z: cz, s };
+}
+
+function drawLine3D(g, cam, p1, p2) {
+  const a = project3D(cam, p1[0], p1[1], p1[2]);
+  const b = project3D(cam, p2[0], p2[1], p2[2]);
+  if (!a || !b) return;
+  g.beginPath();
+  g.moveTo(a.x, a.y);
+  g.lineTo(b.x, b.y);
+  g.stroke();
+}
+
+const DUST_PTS = Array.from({ length: 180 }, (_, i) => ({
+  x: (hash11(i * 3.1) - 0.5) * 18,
+  y: (hash11(i * 7.7) - 0.35) * 14,
+  z: -hash11(i * 11.3) * 24 + 4,
+  r: 1.4 + hash11(i * 5.9) * 2.4,
+}));
+
+function draw3DTacticalSpace(g, cam, opts = {}) {
+  const {
+    gridY = -2.4,
+    gridZShift = 0,
+    gridOpacity = 0.25,
+    showDome = false,
+    domePos = [0, -0.35, 0],
+    domeRadius = 2.85,
+    domeRot = 0,
+    domeColor = 'rgba(52, 211, 153, 0.28)',
+    ringColorA = 'rgba(245, 158, 11, 0.42)',
+    ringColorB = 'rgba(56, 189, 248, 0.36)',
+    showBus = false,
+    pedestalActiveIdx = -1,
+    dustRot = 0,
+    dustZOffset = 0,
+    dustAlpha = 0.55,
+  } = opts;
+
+  g.save();
+
+  if (gridOpacity > 0.01) {
+    g.lineWidth = 1.25;
+    for (let gx = -12; gx <= 12; gx += 1.5) {
+      g.strokeStyle = gx === 0 ? `rgba(255, 170, 43, ${(gridOpacity * 1.4).toFixed(3)})` : `rgba(38, 78, 104, ${gridOpacity.toFixed(3)})`;
+      drawLine3D(g, cam, [gx, gridY, 6 + gridZShift], [gx, gridY, -24 + gridZShift]);
+    }
+    for (let gz = 6; gz >= -24; gz -= 1.5) {
+      g.strokeStyle = `rgba(38, 78, 104, ${(gridOpacity * 0.85).toFixed(3)})`;
+      drawLine3D(g, cam, [-12, gridY, gz + gridZShift], [12, gridY, gz + gridZShift]);
+    }
+  }
+
+  if (showDome) {
+    const [dx0, dy0, dz0] = domePos;
+    g.strokeStyle = domeColor;
+    g.lineWidth = 1.6;
+    for (let li = 1; li <= 5; li++) {
+      const phi = (li / 5.5) * (Math.PI * 0.5);
+      const ry = Math.cos(phi) * domeRadius;
+      const rr = Math.sin(phi) * domeRadius;
+      const segs = 28;
+      let prev = null;
+      g.beginPath();
+      for (let s = 0; s <= segs; s++) {
+        const th = domeRot + (s / segs) * Math.PI * 2;
+        const p = project3D(cam, dx0 + Math.cos(th) * rr, dy0 + ry, dz0 + Math.sin(th) * rr);
+        if (p) {
+          if (!prev) g.moveTo(p.x, p.y);
+          else g.lineTo(p.x, p.y);
+        }
+        prev = p;
+      }
+      g.stroke();
+    }
+    for (let mi = 0; mi < 12; mi++) {
+      const th = domeRot + (mi / 12) * Math.PI * 2;
+      const segs = 12;
+      let prev = null;
+      g.beginPath();
+      for (let s = 0; s <= segs; s++) {
+        const phi = (s / segs) * (Math.PI * 0.5);
+        const rr = Math.sin(phi) * domeRadius;
+        const ry = Math.cos(phi) * domeRadius;
+        const p = project3D(cam, dx0 + Math.cos(th) * rr, dy0 + ry, dz0 + Math.sin(th) * rr);
+        if (p) {
+          if (!prev) g.moveTo(p.x, p.y);
+          else g.lineTo(p.x, p.y);
+        }
+        prev = p;
+      }
+      g.stroke();
+    }
+    for (let ri = 0; ri < 3; ri++) {
+      const rad = domeRadius * (1.05 + ri * 0.16);
+      const tiltX = 1.18 + Math.sin(domeRot * 1.6 + ri) * 0.22;
+      const spinY = domeRot * (ri % 2 ? -1.4 : 1.2) + ri;
+      g.strokeStyle = ri === 1 ? ringColorB : ringColorA;
+      g.lineWidth = 2.0 - ri * 0.3;
+      g.beginPath();
+      let prev = null;
+      for (let s = 0; s <= 40; s++) {
+        const a = (s / 40) * Math.PI * 2;
+        const lx = Math.cos(a) * rad;
+        const ly = Math.sin(a) * rad * Math.cos(tiltX);
+        const lz = Math.sin(a) * rad * Math.sin(tiltX);
+        const wx = lx * Math.cos(spinY) - lz * Math.sin(spinY);
+        const wz = lx * Math.sin(spinY) + lz * Math.cos(spinY);
+        const p = project3D(cam, dx0 + wx, dy0 + 0.5 + ly, dz0 + wz);
+        if (p) {
+          if (!prev) g.moveTo(p.x, p.y);
+          else g.lineTo(p.x, p.y);
+        }
+        prev = p;
+      }
+      g.stroke();
+    }
+  }
+
+  if (showBus) {
+    g.lineWidth = 3.5;
+    g.strokeStyle = 'rgba(255, 166, 43, 0.72)';
+    drawLine3D(g, cam, [-1.55, -1.65, 6], [-1.55, -1.65, -20]);
+    g.strokeStyle = 'rgba(56, 189, 248, 0.72)';
+    drawLine3D(g, cam, [1.55, -1.65, 6], [1.55, -1.65, -20]);
+
+    const pZs = [0.0, -6.5, -13.0];
+    const pCols = ['#ffaa2b', '#34d399', '#38bdf8'];
+    pZs.forEach((pz, idx) => {
+      const px0 = idx === 1 ? 0.35 : idx === 2 ? -0.35 : -0.10;
+      g.strokeStyle = pCols[idx];
+      g.globalAlpha = idx === pedestalActiveIdx ? 0.85 : 0.35;
+      g.lineWidth = idx === pedestalActiveIdx ? 3.2 : 1.8;
+      for (let ringR of [1.45, 1.62]) {
+        g.beginPath();
+        let prev = null;
+        for (let s = 0; s <= 32; s++) {
+          const a = (s / 32) * Math.PI * 2;
+          const p = project3D(cam, px0 + Math.cos(a) * ringR, -1.60, pz + Math.sin(a) * ringR);
+          if (p) {
+            if (!prev) g.moveTo(p.x, p.y);
+            else g.lineTo(p.x, p.y);
+          }
+          prev = p;
+        }
+        g.stroke();
+      }
+    });
+    g.globalAlpha = 1;
+  }
+
+  if (dustAlpha > 0.01) {
+    const cr = Math.cos(dustRot), sr = Math.sin(dustRot);
+    for (let i = 0; i < DUST_PTS.length; i++) {
+      const d = DUST_PTS[i];
+      const rx = d.x * cr - d.z * sr;
+      const rz = d.x * sr + d.z * cr + dustZOffset;
+      const p = project3D(cam, rx, d.y, rz);
+      if (!p || p.x < -20 || p.x > W + 20 || p.y < -20 || p.y > H + 20) continue;
+      const depthFade = clamp(1.35 - p.z / 22, 0.08, 1);
+      const rad = clamp(d.r * (7.5 / p.z), 0.8, 5.2);
+      g.fillStyle = `rgba(255, 188, 76, ${(dustAlpha * depthFade).toFixed(3)})`;
+      g.beginPath();
+      g.arc(p.x, p.y, rad, 0, Math.PI * 2);
+      g.fill();
+    }
+  }
+
+  g.restore();
+}
+
+const masterCanvas = document.getElementById('master');
+const mctx = masterCanvas.getContext('2d', { alpha: false, willReadFrequently: true });
+
+const frameCanvas = document.createElement('canvas');
+frameCanvas.width = W;
+frameCanvas.height = H;
+const ctx = frameCanvas.getContext('2d', { alpha: false });
+
+const uiCanvas = document.createElement('canvas');
+uiCanvas.width = 960;
+uiCanvas.height = 1120;
+const uctx = uiCanvas.getContext('2d');
+
+const ASSET_PATHS = {
+  bgTent: '/assets/images/bg_radar_dusk.jpg',
+  bgCases: '/assets/images/gear_pelican_cases.jpg',
+  rebDome: '/assets/cutouts/gear_reb_dome_rgba.png',
+  rebArray: '/assets/cutouts/gear_reb_array_rgba.png',
+  detector: '/assets/cutouts/gear_detector_radar_rgba.png',
+  radio: '/assets/cutouts/gear_radio_encrypted_rgba.png',
+  fpv: '/assets/cutouts/gear_fpv_vtx_rgba.png',
+};
+const IMGS = {};
+const BLUR_IMGS = {};
+
+function createBlurredCopy(img, radiusPx, maxDim = 720) {
+  const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+  const cw = Math.max(16, Math.round(img.width * scale));
+  const ch = Math.max(16, Math.round(img.height * scale));
+  const c = document.createElement('canvas');
+  c.width = cw + radiusPx * 4;
+  c.height = ch + radiusPx * 4;
+  const g = c.getContext('2d');
+  g.filter = `blur(${radiusPx}px)`;
+  g.drawImage(img, radiusPx * 2, radiusPx * 2, cw, ch);
+  return c;
+}
+
+const SAFE_PAD = 64;
+const SAFE_W = W - SAFE_PAD * 2; // 952px
+
+function setFittedFont(g, text, maxW, maxPx, minPx, family, weight = '900') {
+  let size = maxPx;
+  while (size > minPx) {
+    g.font = `${weight} ${size}px ${family}`;
+    if (g.measureText(text).width <= maxW) break;
+    size -= 2;
+  }
+  g.font = `${weight} ${size}px ${family}`;
+  return size;
+}
+
+function roundRectPath(g, x, y, w, h, r) {
+  const rr = Math.min(r, w / 2, h / 2);
+  g.beginPath();
+  g.moveTo(x + rr, y);
+  g.arcTo(x + w, y, x + w, y + h, rr);
+  g.arcTo(x + w, y + h, x, y + h, rr);
+  g.arcTo(x, y + h, x, y, rr);
+  g.arcTo(x, y, x + w, y, rr);
+  g.closePath();
+}
+
+function drawCoverImage(g, img, zoom = 1.0, panX = 0, panY = 0, alpha = 1.0) {
+  const iw = img.width;
+  const ih = img.height;
+  const scale = Math.max(W / iw, H / ih) * zoom;
+  const dw = iw * scale;
+  const dh = ih * scale;
+  const dx = (W - dw) * 0.5 + panX;
+  const dy = (H - dh) * 0.5 + panY;
+  g.save();
+  g.globalAlpha = alpha;
+  g.drawImage(img, dx, dy, dw, dh);
+  g.restore();
+}
+
+function drawCutout(g, img, blurCanvas, cx, cy, targetH, opts = {}) {
+  const {
+    alpha = 1,
+    rot = 0,
+    dof = 0,
+    glowColor = null,
+    glowAlpha = 0,
+    shadowAlpha = 0.65,
+  } = opts;
+  if (alpha <= 0.005) return null;
+  const aspect = img.width / img.height;
+  const dh = targetH;
+  const dw = dh * aspect;
+
+  g.save();
+  g.globalAlpha = alpha;
+  g.translate(cx, cy);
+  if (rot) g.rotate(rot);
+
+  if (shadowAlpha > 0.01) {
+    const sg = g.createRadialGradient(0, dh * 0.47, 4, 0, dh * 0.47, dw * 0.62);
+    sg.addColorStop(0, `rgba(0,0,0,${(0.78 * shadowAlpha).toFixed(3)})`);
+    sg.addColorStop(0.55, `rgba(0,0,0,${(0.32 * shadowAlpha).toFixed(3)})`);
+    sg.addColorStop(1, 'rgba(0,0,0,0)');
+    g.save();
+    g.scale(1, 0.24);
+    g.fillStyle = sg;
+    g.beginPath();
+    g.arc(0, (dh * 0.47) / 0.24, dw * 0.62, 0, Math.PI * 2);
+    g.fill();
+    g.restore();
+  }
+
+  if (glowColor && glowAlpha > 0.01) {
+    const rg = g.createRadialGradient(0, 0, dw * 0.1, 0, 0, Math.max(dw, dh) * 0.68);
+    rg.addColorStop(0, glowColor.replace('ALPHA', (glowAlpha * 0.55).toFixed(3)));
+    rg.addColorStop(1, glowColor.replace('ALPHA', '0'));
+    g.fillStyle = rg;
+    g.fillRect(-dw * 0.75, -dh * 0.75, dw * 1.5, dh * 1.5);
+  }
+
+  const sharpWeight = clamp(1 - dof * 0.92, 0.08, 1);
+  g.globalAlpha = alpha * sharpWeight;
+  g.drawImage(img, -dw / 2, -dh / 2, dw, dh);
+  if (dof > 0.04 && blurCanvas) {
+    g.globalAlpha = alpha * clamp(dof, 0, 0.95);
+    const padRatio = 1.12;
+    g.drawImage(blurCanvas, (-dw * padRatio) / 2, (-dh * padRatio) / 2, dw * padRatio, dh * padRatio);
+  }
+  g.restore();
+  return { cx, cy, dw, dh, rot };
+}
+
+function drawKineticHeadline(g, lines, baseY, progress, opts = {}) {
+  const {
+    maxSize = 68,
+    family = 'RussoOne',
+    align = 'left',
+    accentIndex = 1,
+    accentColor = '#ffaa2b',
+    subText = null,
+    maxW = SAFE_W,
+  } = opts;
+  const baseX = align === 'center' ? W / 2 : SAFE_PAD;
+  let curY = baseY;
+
+  for (let i = 0; i < lines.length; i++) {
+    const lp = clamp((progress - i * 0.12) / 0.56, 0, 1);
+    if (lp <= 0.005) {
+      curY += maxSize * 1.12;
+      continue;
+    }
+    const eased = easeOutExpo(lp);
+    const txt = lines[i];
+    const sz = setFittedFont(g, txt, maxW, maxSize, 30, family, '900');
+    const lineH = sz * 1.16;
+
+    g.save();
+    g.beginPath();
+    g.rect(0, curY - sz * 1.08, W, lineH * 1.18);
+    g.clip();
+
+    const ySlide = (1 - eased) * (sz * 0.95);
+    g.globalAlpha = clamp(0.35 + lp * 1.8, 0, 1);
+    g.textAlign = align;
+    g.textBaseline = 'alphabetic';
+
+    g.fillStyle = 'rgba(0,0,0,0.72)';
+    g.fillText(txt, baseX + 3, curY + ySlide + 5);
+
+    g.fillStyle = i === accentIndex ? accentColor : '#f8fafc';
+    g.fillText(txt, baseX, curY + ySlide);
+    g.restore();
+
+    curY += lineH;
+  }
+
+  if (subText && progress > 0.25) {
+    const sp = easeOutExpo((progress - 0.25) / 0.55);
+    g.save();
+    g.globalAlpha = sp;
+    const sSize = setFittedFont(g, subText, maxW - 26, 30, 21, 'JetMono', '700');
+    if (align === 'center') {
+      g.textAlign = 'center';
+      g.fillStyle = '#cbd5e1';
+      g.fillText(subText, W / 2, curY + 18 + (1 - sp) * 14);
+    } else {
+      g.fillStyle = '#ffaa2b';
+      g.fillRect(SAFE_PAD, curY + 4, 5, sSize + 10);
+      g.textAlign = 'left';
+      g.fillStyle = '#e2e8f0';
+      g.fillText(subText, SAFE_PAD + 20, curY + sSize + 4 + (1 - sp) * 12);
+    }
+    g.restore();
+    curY += sSize + 28;
+  }
+  return curY;
+}
+
+function getSceneIndex(tc) {
+  const c = SYNC.cuts;
+  if (tc < c[1]) return 0;
+  if (tc < c[2]) return 1;
+  if (tc < c[3]) return 2;
+  if (tc < c[4]) return 3;
+  return 4;
+}
+
+function drawScreenSpaceHUD(g, t, sceneIdx) {
+  const pulse = 0.5 + 0.5 * Math.sin((t * Math.PI * 2) / BEAT);
+  const hx = SAFE_PAD;
+  const hy = 74;
+  const hw = SAFE_W;
+  const hh = 78;
+
+  g.save();
+  roundRectPath(g, hx, hy, hw, hh, 18);
+  g.fillStyle = 'rgba(9, 14, 20, 0.88)';
+  g.fill();
+  g.lineWidth = 1.6;
+  g.strokeStyle = 'rgba(255, 170, 43, 0.46)';
+  g.stroke();
+
+  const sx = hx + 36;
+  const sy = hy + hh / 2;
+  g.beginPath();
+  g.moveTo(sx, sy - 20);
+  g.lineTo(sx + 18, sy - 13);
+  g.lineTo(sx + 15, sy + 8);
+  g.lineTo(sx, sy + 21);
+  g.lineTo(sx - 15, sy + 8);
+  g.lineTo(sx - 18, sy - 13);
+  g.closePath();
+  g.fillStyle = '#ffaa2b';
+  g.fill();
+
+  g.fillStyle = '#090e14';
+  g.font = '900 18px RussoOne';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.fillText('V', sx, sy + 1);
+
+  g.textAlign = 'left';
+  g.font = '900 30px RussoOne';
+  g.fillStyle = '#ffffff';
+  g.fillText('В ОКОПЕ', hx + 68, sy + 1);
+
+  g.fillStyle = 'rgba(255,255,255,0.22)';
+  g.fillRect(hx + 246, hy + 20, 2, hh - 40);
+
+  const sceneLabels = [
+    '01 // ЗАЩИТА НЕБА',
+    '02 // ЗАВОДСКОЙ КАТАЛОГ',
+    '03 // ЛИЧНЫЙ ПОДХОД',
+    '04 // ОПТ И РОЗНИЦА',
+    '05 // КОНТАКТЫ',
+  ];
+  g.font = '700 22px JetMono';
+  g.fillStyle = '#fbbf24';
+  g.fillText(sceneLabels[sceneIdx] || sceneLabels[0], hx + 266, sy + 1);
+
+  g.beginPath();
+  g.arc(hx + hw - 34, sy, 6.5, 0, Math.PI * 2);
+  g.fillStyle = `rgba(52, 211, 153, ${(0.55 + 0.45 * pulse).toFixed(3)})`;
+  g.fill();
+  g.restore();
+
+  const by = 1838;
+  g.save();
+  g.fillStyle = 'rgba(255,255,255,0.14)';
+  roundRectPath(g, SAFE_PAD, by, SAFE_W, 6, 3);
+  g.fill();
+
+  const progW = SAFE_W * clamp(t / DURATION, 0, 1);
+  const grad = g.createLinearGradient(SAFE_PAD, 0, SAFE_PAD + SAFE_W, 0);
+  grad.addColorStop(0, '#ffaa2b');
+  grad.addColorStop(0.65, '#f97316');
+  grad.addColorStop(1, '#34d399');
+  g.fillStyle = grad;
+  roundRectPath(g, SAFE_PAD, by, Math.max(8, progW), 6, 3);
+  g.fill();
+  g.restore();
+}
+
+// =========================================================================
+// SCENE 1 (0.00 - 4.65s): INSTANT THUMBNAIL HOOK + LIVE RF LOCK 360°
+// (v2 Fix #1: Immediate crisp hero dome & title visibility from frame 0!)
+// =========================================================================
+function renderScene1(g, t) {
+  const dur = SYNC.cuts[1];
+  const lockP = smoothstep(0.05, SYNC.s1Lock, t);
+  const postLock = smoothstep(SYNC.s1Lock, SYNC.s1Lock + 0.35, t);
+  const exitWhip = smoothstep(dur - 0.28, dur, t);
+
+  const bgZoom = 1.07 + 0.06 * easeOutExpo(t / 2.2) + 0.16 * exitWhip;
+  drawCoverImage(g, IMGS.bgTent, bgZoom, -18 + t * 7, 10 - exitWhip * 75, 0.66);
+
+  const vig = g.createLinearGradient(0, 0, 0, H);
+  vig.addColorStop(0, 'rgba(6, 10, 15, 0.85)');
+  vig.addColorStop(0.45, 'rgba(8, 13, 20, 0.54)');
+  vig.addColorStop(1, 'rgba(5, 8, 12, 0.93)');
+  g.fillStyle = vig;
+  g.fillRect(0, 0, W, H);
+
+  const camZ = 8.1 - 1.05 * easeOutExpo(t / 1.3) - 0.32 * t - 3.2 * exitWhip;
+  const roll = (1 - easeOutExpo((t + 0.12) / 0.9)) * -0.04 + exitWhip * 0.04;
+  const cam = makeCamera3D(
+    [Math.sin(t * 0.7) * 0.42, 1.15 + Math.cos(t * 0.55) * 0.18, camZ],
+    [0, -0.25, 0],
+    46 + exitWhip * 12,
+    roll
+  );
+  const domeScale = 0.88 + 0.16 * easeOutBack(postLock, 1.35);
+  draw3DTacticalSpace(g, cam, {
+    gridOpacity: 0.28,
+    showDome: true,
+    domePos: [0, -0.35, 0],
+    domeRadius: 2.85 * domeScale,
+    domeRot: t * 0.48,
+    domeColor: postLock > 0.5 ? 'rgba(52, 211, 153, 0.36)' : 'rgba(255, 115, 53, 0.34)',
+    dustRot: t * 0.08,
+    dustAlpha: 0.58,
+  });
+
+  // Live RF Waterfall Spectrogram Module
+  const wx = SAFE_PAD;
+  const wy = 192;
+  const ww = SAFE_W;
+  const wh = 310;
+  g.save();
+  roundRectPath(g, wx, wy, ww, wh, 20);
+  g.fillStyle = 'rgba(8, 15, 23, 0.87)';
+  g.fill();
+  g.strokeStyle = postLock > 0.5 ? 'rgba(52, 211, 153, 0.65)' : 'rgba(249, 115, 22, 0.72)';
+  g.lineWidth = 2.1;
+  g.stroke();
+
+  const nBars = 56;
+  const barAreaW = ww - 64;
+  const bw = barAreaW / nBars;
+  const spikeCenter = 37;
+  for (let i = 0; i < nBars; i++) {
+    const dist = Math.abs(i - spikeCenter);
+    const baseNoise = 0.15 + 0.14 * vnoise(i * 0.85 + t * 9.5);
+    const threatSpike = Math.exp(-(dist * dist) / 7.5) * (1 - 0.72 * postLock) * (0.65 + 0.35 * smoothstep(0.0, 0.18, t));
+    const shieldDome = postLock * 0.36 * Math.exp(-Math.pow((i - 28) / 22, 2));
+    const amp = clamp(baseNoise + threatSpike + shieldDome, 0.08, 1.0);
+    const bh = amp * 168;
+    const bx = wx + 32 + i * bw;
+    const by = wy + wh - 56 - bh;
+    g.fillStyle =
+      threatSpike > 0.34 && postLock < 0.55
+        ? '#ef4444'
+        : postLock > 0.5
+        ? `rgba(52, 211, 153, ${(0.44 + amp * 0.55).toFixed(2)})`
+        : `rgba(251, 191, 36, ${(0.38 + amp * 0.6).toFixed(2)})`;
+    g.fillRect(bx + 1, by, Math.max(2, bw - 3), bh);
+  }
+
+  g.font = '700 21px JetMono';
+  g.fillStyle = '#94a3b8';
+  g.textAlign = 'left';
+  g.fillText('100 МГц', wx + 32, wy + wh - 20);
+  g.textAlign = 'center';
+  g.fillText('2.4 / 5.8 ГГц', wx + ww / 2, wy + wh - 20);
+  g.textAlign = 'right';
+  g.fillText('7400 МГц', wx + ww - 32, wy + wh - 20);
+
+  const badgeTxt =
+    postLock > 0.5
+      ? 'КУПОЛ РЭБ 360° АКТИВЕН · СИГНАЛ ПОДАВЛЕН ✓'
+      : 'ОБНАРУЖЕН КАНАЛ БПЛА · ПЕЛЕНГ 360°...';
+  g.textAlign = 'left';
+  setFittedFont(g, badgeTxt, ww - 64, 24, 18, 'JetMono', '800');
+  g.fillStyle = postLock > 0.5 ? '#34d399' : '#fb923c';
+  g.fillText(badgeTxt, wx + 32, wy + 40);
+
+  const targetX = wx + 32 + spikeCenter * bw;
+  const retX = lerp(wx + 240, targetX, easeOutExpo(lockP));
+  const retR = lerp(64, 30, easeOutExpo(lockP));
+  g.strokeStyle = postLock > 0.5 ? '#34d399' : '#f97316';
+  g.lineWidth = 2.8;
+  g.beginPath();
+  g.arc(retX, wy + 132, retR, 0, Math.PI * 2);
+  g.stroke();
+  g.restore();
+
+  if (t >= SYNC.s1Lock && t < SYNC.s1Lock + 0.65) {
+    const sp = (t - SYNC.s1Lock) / 0.65;
+    g.save();
+    g.strokeStyle = `rgba(255, 180, 50, ${(0.85 * (1 - sp)).toFixed(3)})`;
+    g.lineWidth = 8 * (1 - sp) + 1;
+    g.beginPath();
+    g.arc(W / 2, 1020, 90 + sp * 620, 0, Math.PI * 2);
+    g.stroke();
+    g.restore();
+  }
+
+  // Hero Armored EW Dome ("КАПЮШОН") — immediately visible from t = 0.00s for strong Reels thumbnail!
+  const heroIn = easeOutBack(clamp(0.42 + t / 0.55, 0, 1), 1.12);
+  const heroFloat = Math.sin(t * 2.1) * 8;
+  drawCutout(
+    g,
+    IMGS.rebDome,
+    BLUR_IMGS.rebDome,
+    W / 2,
+    982 + (1 - heroIn) * 85 + heroFloat - exitWhip * 220,
+    580 * (0.94 + 0.06 * heroIn),
+    {
+      alpha: clamp(0.88 + t * 2.0, 0, 1),
+      rot: Math.sin(t * 1.1) * 0.014,
+      dof: exitWhip * 0.5,
+      glowColor: 'rgba(255, 166, 43, ALPHA)',
+      glowAlpha: 0.52 + 0.35 * postLock,
+      shadowAlpha: 0.85,
+    }
+  );
+
+  // Kinetic Typography Card — framed cleanly from frame 0, rapid kinetic reveal 0.02s -> 0.85s
+  const cardAlpha = clamp(0.82 + t * 1.2, 0, 0.94);
+  g.save();
+  roundRectPath(g, SAFE_PAD - 12, 1300, SAFE_W + 24, 465, 24);
+  g.fillStyle = `rgba(7, 11, 16, ${cardAlpha.toFixed(3)})`;
+  g.fill();
+  g.strokeStyle = `rgba(255, 170, 43, ${(cardAlpha * 0.55).toFixed(3)})`;
+  g.lineWidth = 1.9;
+  g.stroke();
+  g.restore();
+
+  g.save();
+  const kp = easeOutExpo(clamp(0.35 + t / 0.42, 0, 1));
+  g.globalAlpha = kp;
+  g.fillStyle = '#ffaa2b';
+  g.font = '800 27px Tektur';
+  g.textAlign = 'left';
+  g.fillText('КОГДА НЕБО РЕШАЕТ ВСЁ', SAFE_PAD + 16, 1366 + (1 - kp) * 14);
+  g.restore();
+
+  g.save();
+  g.translate(16, 0);
+  drawKineticHeadline(
+    g,
+    ['ЗАВОДСКАЯ', 'ТЕХНИКА,', 'ПРОВЕРЕННАЯ ДЕЛОМ'],
+    1454,
+    clamp(0.28 + t / 0.82, 0, 1),
+    {
+      maxSize: 66,
+      family: 'RussoOne',
+      accentIndex: 1,
+      accentColor: '#ffaa2b',
+      subText: 'ПРЯМЫЕ ПОСТАВКИ ОТ ПРОИЗВОДИТЕЛЕЙ',
+    }
+  );
+  g.restore();
+}
+
+// =========================================================================
+// SCENE 2 (4.65 - 14.30s): 3D FACTORY CATALOG BUS (EXACT TRANSIENT ANCHORS)
+// =========================================================================
+function drawDetectorLiveScreen(g, box, t) {
+  if (!box) return;
+  const sw = box.dw * 0.56;
+  const sh = box.dh * 0.42;
+  const sx = box.cx - sw * 0.5;
+  const sy = box.cy - box.dh * 0.048;
+
+  g.save();
+  roundRectPath(g, sx, sy, sw, sh, 12);
+  g.clip();
+  g.fillStyle = '#061318';
+  g.fillRect(sx, sy, sw, sh);
+
+  const rcx = sx + sw / 2;
+  const rcy = sy + sh * 0.46;
+  const rr = Math.min(sw, sh) * 0.34;
+  g.strokeStyle = 'rgba(52, 211, 153, 0.38)';
+  g.lineWidth = 1.5;
+  for (let k = 1; k <= 3; k++) {
+    g.beginPath();
+    g.arc(rcx, rcy, (rr * k) / 3, 0, Math.PI * 2);
+    g.stroke();
+  }
+  const ang = t * 4.2;
+  const coneGrad = g.createRadialGradient(rcx, rcy, 2, rcx, rcy, rr);
+  coneGrad.addColorStop(0, 'rgba(52, 211, 153, 0.58)');
+  coneGrad.addColorStop(1, 'rgba(52, 211, 153, 0.04)');
+  g.fillStyle = coneGrad;
+  g.beginPath();
+  g.moveTo(rcx, rcy);
+  g.arc(rcx, rcy, rr, ang - 0.65, ang);
+  g.closePath();
+  g.fill();
+
+  const bx = rcx + Math.cos(1.1) * rr * 0.68;
+  const by = rcy + Math.sin(1.1) * rr * 0.68;
+  g.fillStyle = '#fbbf24';
+  g.beginPath();
+  g.arc(bx, by, 5.5, 0, Math.PI * 2);
+  g.fill();
+
+  g.fillStyle = '#34d399';
+  g.font = '800 16px JetMono';
+  g.textAlign = 'center';
+  g.fillText('100 МГц – 13 ГГц', rcx, sy + 26);
+  g.fillStyle = '#fbbf24';
+  g.font = '800 15px JetMono';
+  g.fillText('ПЕЛЕНГ 360° · OK', rcx, sy + sh - 18);
+  g.restore();
+}
+
+function drawRadioLiveScreen(g, box, t) {
+  if (!box) return;
+  const sw = box.dw * 0.46;
+  const sh = box.dh * 0.20;
+  const sx = box.cx - sw * 0.32;
+  const sy = box.cy - box.dh * 0.095;
+
+  g.save();
+  roundRectPath(g, sx, sy, sw, sh, 8);
+  g.clip();
+  g.fillStyle = '#07171f';
+  g.fillRect(sx, sy, sw, sh);
+
+  g.fillStyle = '#38bdf8';
+  g.font = '800 14px JetMono';
+  g.textAlign = 'center';
+  g.fillText('AES-256 ON', sx + sw / 2, sy + sh * 0.42);
+  g.fillStyle = '#34d399';
+  g.font = '700 13px JetMono';
+  const bars = 3 + Math.floor((0.5 + 0.5 * Math.sin(t * 5)) * 2);
+  g.fillText(`CH-04 [${'|'.repeat(bars)}]`, sx + sw / 2, sy + sh * 0.76);
+  g.restore();
+}
+
+function renderScene2(g, t) {
+  const sStart = SYNC.cuts[1];
+  const localT = t - sStart;
+  const [, n1T, n2T] = SYNC.s2Nodes;
+
+  // v2 Fix #5: Exact second-locked whip transitions landing precisely on audio sub-drops 8.896s & 11.791s!
+  const w1 = easeInOutCubic(smoothstep(n1T - 0.38, n1T + 0.14, t));
+  const w2 = easeInOutCubic(smoothstep(n2T - 0.38, n2T + 0.14, t));
+  const sPos = w1 + w2;
+  const activeIdx = Math.round(clamp(sPos, 0, 2));
+
+  drawCoverImage(g, IMGS.bgTent, 1.14, 45 - sPos * 52, -16, 0.52);
+  const bgOverlay = g.createLinearGradient(0, 0, 0, H);
+  bgOverlay.addColorStop(0, 'rgba(6, 11, 17, 0.90)');
+  bgOverlay.addColorStop(0.5, 'rgba(8, 14, 22, 0.68)');
+  bgOverlay.addColorStop(1, 'rgba(5, 9, 14, 0.94)');
+  g.fillStyle = bgOverlay;
+  g.fillRect(0, 0, W, H);
+
+  const targetZ = -sPos * 6.5;
+  const orbitDrift = Math.sin(t * 0.9) * 0.35;
+  const cam = makeCamera3D(
+    [orbitDrift, 0.35 + Math.cos(t * 0.7) * 0.12, targetZ + 5.8],
+    [orbitDrift * 0.25, -0.75, targetZ - 1.2],
+    47,
+    Math.sin(sPos * Math.PI) * 0.025
+  );
+  draw3DTacticalSpace(g, cam, {
+    gridOpacity: 0.22,
+    showBus: true,
+    pedestalActiveIdx: activeIdx,
+    dustRot: t * 0.08,
+    dustZOffset: targetZ * 0.65,
+    dustAlpha: 0.52,
+  });
+
+  // v2 Fix #2: Immediate visibility on cut (alpha >= 0.78 at localT = 0) with kinetic settle
+  const enterP = easeOutExpo(clamp(0.45 + localT / 0.35, 0, 1));
+  g.save();
+  g.globalAlpha = clamp(0.78 + localT * 1.5, 0, 1);
+  g.fillStyle = '#ffaa2b';
+  g.font = '800 25px Tektur';
+  g.textAlign = 'left';
+  g.fillText('ПРЯМЫЕ ПОСТАВКИ ОТ ПРОИЗВОДИТЕЛЕЙ', SAFE_PAD, 214 + (1 - enterP) * 14);
+  setFittedFont(g, 'ВЫБОР ПОД ЛЮБУЮ ЗАДАЧУ', SAFE_W, 56, 36, 'RussoOne', '900');
+  g.fillStyle = '#ffffff';
+  g.fillText('ВЫБОР ПОД ЛЮБУЮ ЗАДАЧУ', SAFE_PAD, 276 + (1 - enterP) * 18);
+
+  const tabs = ['01 · СТАНЦИИ РЭБ', '02 · ДЕТЕКТОРЫ', '03 · БПЛА И СВЯЗЬ'];
+  const tabW = (SAFE_W - 24) / 3;
+  tabs.forEach((label, idx) => {
+    const activeAmt = clamp(1 - Math.abs(sPos - idx), 0, 1);
+    const tx = SAFE_PAD + idx * (tabW + 12);
+    const ty = 302;
+    roundRectPath(g, tx, ty, tabW, 48, 12);
+    g.fillStyle = `rgba(${idx === 0 ? '255,170,43' : idx === 1 ? '52,211,153' : '56,189,248'}, ${(0.10 + 0.24 * activeAmt).toFixed(2)})`;
+    g.fill();
+    g.strokeStyle = `rgba(255,255,255,${(0.14 + 0.55 * activeAmt).toFixed(2)})`;
+    g.lineWidth = 1.5;
+    g.stroke();
+    setFittedFont(g, label, tabW - 20, 20, 15, 'JetMono', '800');
+    g.fillStyle = activeAmt > 0.5 ? '#ffffff' : '#94a3b8';
+    g.textAlign = 'center';
+    g.fillText(label, tx + tabW / 2, ty + 31);
+  });
+  g.restore();
+
+  // Station 0: Flagship EW
+  const d0 = sPos - 0;
+  if (Math.abs(d0) < 1.35) {
+    const a0 = clamp(1.25 - Math.abs(d0) * 1.15, 0, 1);
+    const shiftX = -d0 * 920;
+    const scale0 = 1 + d0 * 0.18;
+    const dof0 = clamp(Math.abs(d0) * 0.95, 0, 0.9);
+    const floatY = Math.sin(t * 2.0) * 7;
+
+    drawCutout(
+      g,
+      IMGS.rebArray,
+      BLUR_IMGS.rebArray,
+      W * 0.64 + shiftX * 0.82,
+      820 + floatY * 0.7,
+      565 * scale0,
+      {
+        alpha: a0 * 0.96,
+        rot: 0.015,
+        dof: clamp(dof0 + 0.08, 0, 0.9),
+        glowColor: 'rgba(56, 189, 248, ALPHA)',
+        glowAlpha: 0.38,
+      }
+    );
+    drawCutout(
+      g,
+      IMGS.rebDome,
+      BLUR_IMGS.rebDome,
+      W * 0.34 + shiftX * 1.08,
+      975 - floatY,
+      515 * scale0,
+      {
+        alpha: a0,
+        rot: -0.012,
+        dof: dof0,
+        glowColor: 'rgba(255, 170, 43, ALPHA)',
+        glowAlpha: 0.50,
+      }
+    );
+  }
+
+  // Station 1: Drone Detectors
+  const d1 = sPos - 1;
+  if (Math.abs(d1) < 1.35) {
+    const a1 = clamp(1.25 - Math.abs(d1) * 1.15, 0, 1);
+    const shiftX = -d1 * 920;
+    const scale1 = 1 - Math.abs(d1) * 0.10;
+    const dof1 = clamp(Math.abs(d1) * 0.95, 0, 0.9);
+    const floatY = Math.sin(t * 2.3 + 1.0) * 8;
+
+    const detBox = drawCutout(
+      g,
+      IMGS.detector,
+      BLUR_IMGS.detector,
+      W * 0.50 + shiftX,
+      875 + floatY,
+      790 * scale1,
+      {
+        alpha: a1,
+        dof: dof1,
+        glowColor: 'rgba(52, 211, 153, ALPHA)',
+        glowAlpha: 0.48,
+      }
+    );
+    if (dof1 < 0.45 && a1 > 0.35) {
+      g.save();
+      g.globalAlpha = a1 * (1 - dof1 * 1.8);
+      drawDetectorLiveScreen(g, detBox, t);
+      g.restore();
+    }
+  }
+
+  // Station 2: Mavic, Encrypted Comms, FPV & Power
+  const d2 = sPos - 2;
+  if (Math.abs(d2) < 1.35) {
+    const a2 = clamp(1.25 - Math.abs(d2) * 1.15, 0, 1);
+    const shiftX = -d2 * 920;
+    const scale2 = 1 - Math.abs(d2) * 0.10;
+    const dof2 = clamp(Math.abs(d2) * 0.95, 0, 0.9);
+    const floatY = Math.sin(t * 2.1 + 2.2) * 7;
+
+    drawCutout(
+      g,
+      IMGS.fpv,
+      BLUR_IMGS.fpv,
+      W * 0.65 + shiftX * 1.08,
+      975 - floatY,
+      430 * scale2,
+      {
+        alpha: a2,
+        rot: -0.04,
+        dof: dof2,
+        glowColor: 'rgba(255, 159, 28, ALPHA)',
+        glowAlpha: 0.44,
+      }
+    );
+
+    const radBox = drawCutout(
+      g,
+      IMGS.radio,
+      BLUR_IMGS.radio,
+      W * 0.32 + shiftX * 0.92,
+      860 + floatY,
+      780 * scale2,
+      {
+        alpha: a2,
+        rot: 0.02,
+        dof: dof2,
+        glowColor: 'rgba(56, 189, 248, ALPHA)',
+        glowAlpha: 0.46,
+      }
+    );
+    if (dof2 < 0.45 && a2 > 0.35) {
+      g.save();
+      g.globalAlpha = a2 * (1 - dof2 * 1.8);
+      drawRadioLiveScreen(g, radBox, t);
+      g.restore();
+    }
+  }
+
+  const cards = [
+    {
+      accent: '#ffaa2b',
+      kicker: 'ОФИЦИАЛЬНЫЕ ЗАВОДСКИЕ ЛИНЕЙКИ РЭБ',
+      title: 'КАПЮШОН · СКАНИЯ · ЗОНТ · РОМАШКА',
+      chips: ['НПО КИЛОВАТТ', 'ГАРПИЯ И ШТОРМ', '100–7400 МГц', 'АВТО И СТАЦИОНАР'],
+      foot: 'Сертифицированные комплексы в наличии на складе',
+    },
+    {
+      accent: '#34d399',
+      kicker: 'КОНТРОЛЬ ЭФИРА И ВИДЕОПЕРЕХВАТ 360°',
+      title: 'БУЛАТ V4 · АЛДАН-8/12 · РАДАР',
+      chips: ['ПЕЛЕНГ И КУПОЛ 360°', 'ДИСПЕТЧЕР · АЗАР', 'ДО 13 ГГц', 'МАСКИРОВКА LED'],
+      foot: 'Мгновенное обнаружение FPV и цифровых видеоканалов',
+    },
+    {
+      accent: '#38bdf8',
+      kicker: 'ПОЛНОЕ ОСНАЩЕНИЕ ПОДРАЗДЕЛЕНИЙ',
+      title: 'MAVIC · ЗАКРЫТЫЕ РАЦИИ · ПИТАНИЕ',
+      chips: ['DJI MAVIC 3T / 4T', 'ШИФРОВАНИЕ СВЯЗИ', 'FPV THOR 3 Вт', 'СТАНЦИИ DJI / JQB / TSS'],
+      foot: 'Зарядные электростанции, генераторы, бронезащита и медицина',
+    },
+  ];
+  const card = cards[activeIdx];
+  const cardLocalT =
+    activeIdx === 0 ? localT : activeIdx === 1 ? t - (n1T - 0.14) : t - (n2T - 0.14);
+  const cp = easeOutExpo(clamp(0.55 + cardLocalT / 0.32, 0, 1));
+
+  g.save();
+  g.globalAlpha = clamp(0.82 + cardLocalT * 1.8, 0, 1);
+  const cy = 1308 + (1 - cp) * 24;
+  roundRectPath(g, SAFE_PAD, cy, SAFE_W, 445, 24);
+  g.fillStyle = 'rgba(8, 13, 20, 0.93)';
+  g.fill();
+  g.strokeStyle = card.accent;
+  g.lineWidth = 2.2;
+  g.stroke();
+
+  g.fillStyle = card.accent;
+  roundRectPath(g, SAFE_PAD + 34, cy + 32, 84, 7, 4);
+  g.fill();
+
+  g.textAlign = 'left';
+  setFittedFont(g, card.kicker, SAFE_W - 68, 24, 18, 'JetMono', '800');
+  g.fillStyle = card.accent;
+  g.fillText(card.kicker, SAFE_PAD + 34, cy + 78);
+
+  setFittedFont(g, card.title, SAFE_W - 68, 52, 30, 'RussoOne', '900');
+  g.fillStyle = '#ffffff';
+  g.fillText(card.title, SAFE_PAD + 34, cy + 148);
+
+  const pillW = (SAFE_W - 68 - 20) / 2;
+  const pillH = 74;
+  card.chips.forEach((ch, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const px = SAFE_PAD + 34 + col * (pillW + 20);
+    const py = cy + 182 + row * (pillH + 16);
+    roundRectPath(g, px, py, pillW, pillH, 14);
+    g.fillStyle = 'rgba(255, 255, 255, 0.072)';
+    g.fill();
+    g.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+    g.lineWidth = 1.3;
+    g.stroke();
+
+    setFittedFont(g, ch, pillW - 32, 24, 17, 'JetMono', '800');
+    g.fillStyle = '#f1f5f9';
+    g.textAlign = 'center';
+    g.fillText(ch, px + pillW / 2, py + 45);
+  });
+
+  g.textAlign = 'left';
+  setFittedFont(g, card.foot, SAFE_W - 68, 25, 19, 'RobotoBold', '700');
+  g.fillStyle = '#cbd5e1';
+  g.fillText(card.foot, SAFE_PAD + 34, cy + 408);
+  g.restore();
+}
+
+// =========================================================================
+// SCENE 3 (14.30 - 19.70s): PERSONAL APPROACH — SUPPLIER & FACTORY SPEC UI
+// (v2 Fixes #2 & #3: Zero black-frame gap at 14.30s + framed factory pod!)
+// =========================================================================
+function drawTacticalCursor(g, x, y, pressAmt) {
+  const sc = 1 - pressAmt * 0.14;
+  g.save();
+  g.translate(x, y);
+  g.scale(sc, sc);
+
+  if (pressAmt > 0.05) {
+    g.beginPath();
+    g.arc(0, 0, 16 + pressAmt * 34, 0, Math.PI * 2);
+    g.strokeStyle = `rgba(255, 170, 43, ${(0.85 * (1 - pressAmt * 0.5)).toFixed(3)})`;
+    g.lineWidth = 3;
+    g.stroke();
+  }
+
+  g.shadowColor = 'rgba(0,0,0,0.65)';
+  g.shadowBlur = 16;
+  g.shadowOffsetX = 4;
+  g.shadowOffsetY = 8;
+
+  g.beginPath();
+  g.moveTo(0, 0);
+  g.lineTo(0, 54);
+  g.lineTo(15, 42);
+  g.lineTo(26, 64);
+  g.lineTo(36, 59);
+  g.lineTo(25, 37);
+  g.lineTo(43, 37);
+  g.closePath();
+  g.fillStyle = '#ffffff';
+  g.fill();
+  g.lineWidth = 3;
+  g.strokeStyle = '#0f172a';
+  g.stroke();
+  g.restore();
+}
+
+function renderScene3(g, t) {
+  const sStart = SYNC.cuts[2];
+  const sEnd = SYNC.cuts[3];
+  const localT = t - sStart;
+
+  drawCoverImage(g, IMGS.bgTent, 1.18 + localT * 0.012, -30 + localT * 8, -24, 0.58);
+  const bgGrad = g.createLinearGradient(0, 0, 0, H);
+  bgGrad.addColorStop(0, 'rgba(7, 12, 18, 0.90)');
+  bgGrad.addColorStop(1, 'rgba(5, 9, 14, 0.95)');
+  g.fillStyle = bgGrad;
+  g.fillRect(0, 0, W, H);
+
+  const cam = makeCamera3D([-0.8 + localT * 0.16, 1.1, 5.2], [0, -1.2, -4.0], 46, -0.015 + localT * 0.005);
+  draw3DTacticalSpace(g, cam, {
+    gridOpacity: 0.22,
+    showBus: false,
+    dustRot: t * 0.08,
+    dustAlpha: 0.45,
+  });
+
+  // Immediate cut continuity from localT = 0
+  const hp = easeOutExpo(clamp(0.45 + localT / 0.38, 0, 1));
+  g.save();
+  g.globalAlpha = clamp(0.80 + localT * 1.6, 0, 1);
+  g.fillStyle = '#34d399';
+  g.font = '800 24px Tektur';
+  g.textAlign = 'left';
+  g.fillText('НАПРЯМУЮ С ПРОВЕРЕННЫМИ ПОСТАВЩИКАМИ', SAFE_PAD, 214);
+  g.restore();
+
+  drawKineticHeadline(
+    g,
+    ['ЛИЧНЫЙ ПОДХОД', 'ПОД ВАШУ ЗАДАЧУ'],
+    296,
+    clamp(0.38 + localT / 0.52, 0, 1),
+    {
+      maxSize: 62,
+      maxW: SAFE_W - 210, // Clean dedicated lane on right for framed factory pod!
+      family: 'RussoOne',
+      accentIndex: 1,
+      accentColor: '#ffaa2b',
+      subText: 'БЕЗ БОТОВ И СЛУЧАЙНЫХ КОРОБОК',
+    }
+  );
+
+  // v2 Fix #3: Structured Top-Right Factory Verification Pod (zero text overlap!)
+  const podX = W - SAFE_PAD - 196;
+  const podY = 236;
+  g.save();
+  g.globalAlpha = hp;
+  roundRectPath(g, podX, podY, 196, 232, 22);
+  g.fillStyle = 'rgba(11, 20, 30, 0.92)';
+  g.fill();
+  g.strokeStyle = 'rgba(52, 211, 153, 0.48)';
+  g.lineWidth = 1.8;
+  g.stroke();
+  drawCutout(g, IMGS.detector, BLUR_IMGS.detector, podX + 98, podY + 102 + Math.sin(t * 2.2) * 4, 168, {
+    alpha: 0.98,
+    rot: 0.04,
+    glowColor: 'rgba(52, 211, 153, ALPHA)',
+    glowAlpha: 0.35,
+  });
+  g.fillStyle = '#34d399';
+  g.font = '800 15px JetMono';
+  g.textAlign = 'center';
+  g.fillText('ПАСПОРТ ЗАВОДА ✓', podX + 98, podY + 210);
+  g.restore();
+
+  const [c1T, c2T, c3T] = SYNC.s3Checks;
+  uctx.clearRect(0, 0, uiCanvas.width, uiCanvas.height);
+
+  roundRectPath(uctx, 12, 12, 936, 980, 28);
+  uctx.fillStyle = 'rgba(11, 18, 28, 0.96)';
+  uctx.fill();
+  uctx.strokeStyle = 'rgba(255, 170, 43, 0.50)';
+  uctx.lineWidth = 2.4;
+  uctx.stroke();
+
+  uctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+  roundRectPath(uctx, 14, 14, 932, 78, 26);
+  uctx.fill();
+  uctx.fillStyle = '#ffaa2b';
+  uctx.font = '800 23px JetMono';
+  uctx.textAlign = 'left';
+  uctx.fillText('ЗАЯВКА КЛИЕНТА → ЗАВОД-ПОСТАВЩИК', 48, 61);
+
+  const rows = [
+    {
+      tHit: c1T,
+      num: '01',
+      title: 'РАЗБИРАЕМ ВАШУ ЗАДАЧУ',
+      desc: 'Транспорт, позиция, совместимость антенн и питания',
+      badgeWait: 'В РАБОТЕ',
+      badgeDone: 'ПОДОБРАНО ✓',
+      accent: '#38bdf8',
+    },
+    {
+      tHit: c2T,
+      num: '02',
+      title: 'УТОЧНЯЕМ ЧАСТОТЫ С ЗАВОДОМ',
+      desc: 'Запрос нужных диапазонов у проверенного поставщика',
+      badgeWait: 'ЗАПРОС...',
+      badgeDone: 'СОГЛАСОВАНО ✓',
+      accent: '#ffaa2b',
+    },
+    {
+      tHit: c3T,
+      num: '03',
+      title: 'НУЖНАЯ ЗАВОДСКАЯ ПРОШИВКА',
+      desc: 'Актуальная версия ПО, паспорт и гарантия производителя',
+      badgeWait: 'ПРОВЕРКА',
+      badgeDone: 'ГОТОВО ✓',
+      accent: '#34d399',
+    },
+  ];
+
+  const btnCenters = [];
+  rows.forEach((r, idx) => {
+    const ry = 122 + idx * 250;
+    const prog = clamp((t - (r.tHit - 0.36)) / 0.52, 0, 1);
+    const done = prog >= 0.999;
+
+    const lift = Math.sin(clamp((t - r.tHit) / 0.35, 0, 1) * Math.PI) * -5;
+    uctx.save();
+    uctx.translate(0, lift);
+
+    roundRectPath(uctx, 42, ry, 876, 222, 20);
+    uctx.fillStyle = done ? 'rgba(20, 35, 44, 0.97)' : 'rgba(17, 25, 36, 0.95)';
+    uctx.fill();
+    uctx.strokeStyle = done ? r.accent : 'rgba(255,255,255,0.14)';
+    uctx.lineWidth = done ? 2.4 : 1.4;
+    uctx.stroke();
+
+    roundRectPath(uctx, 70, ry + 28, 68, 46, 12);
+    uctx.fillStyle = done ? r.accent : 'rgba(255,255,255,0.10)';
+    uctx.fill();
+    uctx.fillStyle = done ? '#071015' : '#cbd5e1';
+    uctx.font = '900 24px JetMono';
+    uctx.textAlign = 'center';
+    uctx.fillText(r.num, 104, ry + 59);
+
+    uctx.textAlign = 'left';
+    setFittedFont(uctx, r.title, 505, 33, 22, 'RussoOne', '900');
+    uctx.fillStyle = '#ffffff';
+    uctx.fillText(r.title, 158, ry + 61);
+
+    setFittedFont(uctx, r.desc, 540, 23, 17, 'RobotoBold', '700');
+    uctx.fillStyle = '#cbd5e1';
+    uctx.fillText(r.desc, 158, ry + 106);
+
+    const barX = 70;
+    const barY = ry + 152;
+    const barW = 820;
+    roundRectPath(uctx, barX, barY, barW, 16, 8);
+    uctx.fillStyle = 'rgba(255,255,255,0.09)';
+    uctx.fill();
+    if (prog > 0.01) {
+      roundRectPath(uctx, barX, barY, Math.max(16, barW * easeOutExpo(prog)), 16, 8);
+      uctx.fillStyle = r.accent;
+      uctx.fill();
+    }
+
+    const bx = 668;
+    const by = ry + 26;
+    const bw = 222;
+    const bh = 54;
+    roundRectPath(uctx, bx, by, bw, bh, 14);
+    uctx.fillStyle = done ? r.accent : 'rgba(255,255,255,0.08)';
+    uctx.fill();
+    const stLabel = done ? r.badgeDone : r.badgeWait;
+    setFittedFont(uctx, stLabel, bw - 24, 21, 16, 'JetMono', '800');
+    uctx.fillStyle = done ? '#061116' : '#94a3b8';
+    uctx.textAlign = 'center';
+    uctx.fillText(stLabel, bx + bw / 2, by + 35);
+
+    btnCenters.push({ x: bx + bw - 22, y: by + bh - 10 });
+    uctx.restore();
+  });
+
+  const allDone = smoothstep(c3T + 0.12, c3T + 0.55, t);
+  roundRectPath(uctx, 42, 888, 876, 76, 16);
+  uctx.fillStyle = `rgba(52, 211, 153, ${(0.14 + 0.22 * allDone).toFixed(2)})`;
+  uctx.fill();
+  uctx.strokeStyle = `rgba(52, 211, 153, ${(0.42 + 0.55 * allDone).toFixed(2)})`;
+  uctx.lineWidth = 1.8;
+  uctx.stroke();
+  uctx.textAlign = 'center';
+  setFittedFont(uctx, 'ПРЯМАЯ ЗАВОДСКАЯ КОМПЛЕКТАЦИЯ · ГАРАНТИЯ И ПАСПОРТ', 830, 24, 18, 'JetMono', '800');
+  uctx.fillStyle = '#ecfdf5';
+  uctx.fillText('ПРЯМАЯ ЗАВОДСКАЯ КОМПЛЕКТАЦИЯ · ГАРАНТИЯ И ПАСПОРТ', 480, 935);
+
+  // Panel enters immediately visible with brisk spring settle (no blank frame at 14.30s!)
+  const panelIn = easeOutBack(clamp(0.35 + localT / 0.38, 0, 1), 1.05);
+  const px = (W - uiCanvas.width) / 2;
+  const py = 510 + (1 - panelIn) * 110 + Math.sin(t * 1.6) * 5;
+  g.save();
+  g.globalAlpha = clamp(0.84 + localT * 2.0, 0, 1);
+  g.drawImage(uiCanvas, px, py);
+
+  let cx = px + 960;
+  let cy = py + 60;
+  if (t < c1T) {
+    const p = easeInOutCubic(invLerp(sStart + 0.22, c1T - 0.10, t));
+    cx = lerp(W + 60, px + btnCenters[0].x, p);
+    cy = lerp(py - 40, py + btnCenters[0].y, p);
+  } else if (t < c2T) {
+    const p = easeInOutCubic(invLerp(c1T + 0.22, c2T - 0.12, t));
+    cx = lerp(px + btnCenters[0].x, px + btnCenters[1].x, p) + Math.sin(p * Math.PI) * 28;
+    cy = lerp(py + btnCenters[0].y, py + btnCenters[1].y, p);
+  } else if (t < c3T + 0.45) {
+    const p = easeInOutCubic(invLerp(c2T + 0.22, c3T - 0.12, t));
+    cx = lerp(px + btnCenters[1].x, px + btnCenters[2].x, p) + Math.sin(p * Math.PI) * 28;
+    cy = lerp(py + btnCenters[1].y, py + btnCenters[2].y, p);
+  } else {
+    const p = easeInOutCubic(invLerp(c3T + 0.45, sEnd, t));
+    cx = lerp(px + btnCenters[2].x, W + 80, p);
+    cy = lerp(py + btnCenters[2].y, py + btnCenters[2].y + 120, p);
+  }
+  const press = Math.max(
+    Math.exp(-Math.pow((t - c1T) / 0.09, 2)),
+    Math.exp(-Math.pow((t - c2T) / 0.09, 2)),
+    Math.exp(-Math.pow((t - c3T) / 0.09, 2))
+  );
+  drawTacticalCursor(g, cx, cy, press);
+  g.restore();
+}
+
+// =========================================================================
+// SCENE 4 (19.70 - 24.333s): RETAIL & WHOLESALE WAREHOUSE SCALE + VAT/NO-VAT
+// =========================================================================
+function renderScene4(g, t) {
+  const sStart = SYNC.cuts[3];
+  const sEnd = SYNC.cuts[4];
+  const localT = t - sStart;
+  const u = invLerp(sStart, sEnd, t);
+
+  const dropRecoil = Math.exp(-localT * 9.0) * Math.sin(localT * 38.0) * 18;
+  const pullBack = easeInOutCubic(smoothstep(0.03, 0.70, u));
+  const zoom = lerp(1.38, 1.03, pullBack);
+  const panY = lerp(-125, 0, pullBack) + dropRecoil;
+
+  drawCoverImage(g, IMGS.bgCases, zoom, lerp(-24, 0, pullBack), panY, 1.0);
+
+  const topGrad = g.createLinearGradient(0, 0, 0, H);
+  topGrad.addColorStop(0, 'rgba(6, 10, 15, 0.93)');
+  topGrad.addColorStop(0.42, 'rgba(6, 10, 15, 0.66)');
+  topGrad.addColorStop(0.72, 'rgba(6, 10, 15, 0.26)');
+  topGrad.addColorStop(1, 'rgba(6, 10, 15, 0.94)');
+  g.fillStyle = topGrad;
+  g.fillRect(0, 0, W, H);
+
+  const cam = makeCamera3D([0, 0.4, 7.5 - pullBack * 1.5], [0, 0, 0], 46, 0);
+  draw3DTacticalSpace(g, cam, {
+    gridOpacity: 0,
+    dustRot: t * 0.12,
+    dustAlpha: 0.45,
+  });
+
+  drawKineticHeadline(
+    g,
+    ['ОТ 1 КОМПЛЕКТА', 'ДО КРУПНОЙ ПАРТИИ'],
+    268,
+    clamp(0.42 + localT / 0.50, 0, 1),
+    {
+      maxSize: 66,
+      family: 'RussoOne',
+      accentIndex: 1,
+      accentColor: '#ffaa2b',
+      subText: 'СКЛАД В НАЛИЧИИ · БЫСТРАЯ ОТГРУЗКА ПО РФ',
+    }
+  );
+
+  const p1 = easeOutBack(smoothstep(0.08, 0.68, localT), 1.12);
+  const p2 = easeOutBack(smoothstep(0.72, 1.35, localT), 1.12);
+  const p3 = easeOutBack(smoothstep(1.35, 1.98, localT), 1.12);
+
+  const drawScaleCard = (y, prog, tag, title, sub, accent) => {
+    if (prog <= 0.01) return;
+    g.save();
+    g.globalAlpha = clamp(prog, 0, 1);
+    const yy = y + (1 - prog) * 34;
+    roundRectPath(g, SAFE_PAD, yy, SAFE_W, 168, 22);
+    g.fillStyle = 'rgba(9, 14, 21, 0.91)';
+    g.fill();
+    g.strokeStyle = accent;
+    g.lineWidth = 2.2;
+    g.stroke();
+
+    g.fillStyle = accent;
+    roundRectPath(g, SAFE_PAD + 28, yy + 24, 178, 36, 9);
+    g.fill();
+    g.fillStyle = '#071016';
+    g.font = '900 20px JetMono';
+    g.textAlign = 'center';
+    g.fillText(tag, SAFE_PAD + 28 + 89, yy + 49);
+
+    g.textAlign = 'left';
+    setFittedFont(g, title, SAFE_W - 60, 40, 26, 'RussoOne', '900');
+    g.fillStyle = '#ffffff';
+    g.fillText(title, SAFE_PAD + 28, yy + 106);
+
+    setFittedFont(g, sub, SAFE_W - 60, 24, 18, 'RobotoBold', '700');
+    g.fillStyle = '#cbd5e1';
+    g.fillText(sub, SAFE_PAD + 28, yy + 144);
+    g.restore();
+  };
+
+  drawScaleCard(
+    508,
+    p1,
+    'РОЗНИЦА',
+    'ИНДИВИДУАЛЬНЫЙ ЗАКАЗ ОТ 1 ШТ.',
+    'Лично бойцам, экипажам и мобильным группам',
+    '#38bdf8'
+  );
+  drawScaleCard(
+    696,
+    p2,
+    'ОПТ СО СКЛАДА',
+    'ПОСТАВКИ ФОНДАМ И ОРГАНИЗАЦИЯМ',
+    'Для волонтёров, предприятий, дилеров и подразделений',
+    '#ffaa2b'
+  );
+
+  if (p3 > 0.01) {
+    g.save();
+    g.globalAlpha = clamp(p3, 0, 1);
+    const ry = 1585 + (1 - p3) * 30;
+    roundRectPath(g, SAFE_PAD, ry, SAFE_W, 168, 22);
+    const rg = g.createLinearGradient(SAFE_PAD, ry, SAFE_PAD + SAFE_W, ry + 168);
+    rg.addColorStop(0, '#f59e0b');
+    rg.addColorStop(1, '#ea580c');
+    g.fillStyle = rg;
+    g.fill();
+
+    g.textAlign = 'center';
+    setFittedFont(g, 'РАБОТАЕМ С НДС И БЕЗ НДС', SAFE_W - 56, 46, 30, 'RussoOne', '900');
+    g.fillStyle = '#090d12';
+    g.fillText('РАБОТАЕМ С НДС И БЕЗ НДС', W / 2, ry + 78);
+
+    setFittedFont(g, 'ПОЛНЫЙ КОМПЛЕКТ ЗАКРЫВАЮЩИХ ДОКУМЕНТОВ · ТК ПО ВСЕЙ РФ', SAFE_W - 56, 23, 17, 'JetMono', '800');
+    g.fillStyle = '#111827';
+    g.fillText('ПОЛНЫЙ КОМПЛЕКТ ЗАКРЫВАЮЩИХ ДОКУМЕНТОВ · ТК ПО ВСЕЙ РФ', W / 2, ry + 128);
+    g.restore();
+  }
+}
+
+// =========================================================================
+// SCENE 5 (24.333 - 30.000s): FULL-HEIGHT BALANCED CTA + LIVING SHEEN & HARDWARE STRIP
+// (v2 Fixes #2 & #4: Crisp cut at 24.33s, balanced vertical spacing y=260..1765,
+//  sequential beat highlight + specular CTA sheen so hold stays alive to 30.00s!)
+// =========================================================================
+function drawPlatformIcon(g, kind, cx, cy) {
+  g.save();
+  if (kind === 'tg') {
+    g.fillStyle = '#29b6f6';
+    g.beginPath();
+    g.arc(cx, cy, 35, 0, Math.PI * 2);
+    g.fill();
+    g.fillStyle = '#ffffff';
+    g.beginPath();
+    g.moveTo(cx - 18, cy + 1);
+    g.lineTo(cx + 17, cy - 14);
+    g.lineTo(cx + 10, cy + 16);
+    g.lineTo(cx - 1, cy + 7);
+    g.lineTo(cx - 8, cy + 13);
+    g.lineTo(cx - 7, cy + 3);
+    g.closePath();
+    g.fill();
+  } else if (kind === 'vk') {
+    g.fillStyle = '#2563eb';
+    roundRectPath(g, cx - 35, cy - 35, 70, 70, 18);
+    g.fill();
+    g.fillStyle = '#ffffff';
+    g.font = '900 30px RussoOne';
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillText('VK', cx, cy + 2);
+  } else {
+    g.fillStyle = '#182230';
+    roundRectPath(g, cx - 35, cy - 35, 70, 70, 18);
+    g.fill();
+    const dots = [
+      [-11, -10, 9, '#a855f7'],
+      [11, -11, 12, '#38bdf8'],
+      [-12, 12, 13, '#34d399'],
+      [12, 13, 8, '#fb7185'],
+    ];
+    dots.forEach(([dx, dy, r, col]) => {
+      g.fillStyle = col;
+      g.beginPath();
+      g.arc(cx + dx, cy + dy, r, 0, Math.PI * 2);
+      g.fill();
+    });
+  }
+  g.restore();
+}
+
+function renderScene5(g, t) {
+  const sStart = SYNC.cuts[4];
+  const localT = t - sStart;
+
+  const slamRecoil = Math.exp(-localT * 10.0) * 22;
+  drawCoverImage(g, IMGS.bgCases, 1.09 + Math.sin(localT * 0.65) * 0.012, Math.sin(localT * 0.4) * 14, slamRecoil, 0.46);
+
+  const darkScrim = g.createRadialGradient(W / 2, H * 0.46, 80, W / 2, H * 0.5, 1150);
+  darkScrim.addColorStop(0, 'rgba(11, 18, 28, 0.84)');
+  darkScrim.addColorStop(1, 'rgba(5, 8, 12, 0.95)');
+  g.fillStyle = darkScrim;
+  g.fillRect(0, 0, W, H);
+
+  // Living 3D golden dome orbiting gently behind the brand crest
+  const cam = makeCamera3D([Math.sin(localT * 0.35) * 0.7, 0.65, 7.1], [0, 0.1, 0], 46, 0);
+  draw3DTacticalSpace(g, cam, {
+    gridOpacity: 0.16,
+    showDome: true,
+    domePos: [0, 0.25, 0],
+    domeRadius: 3.15,
+    domeRot: t * 0.26,
+    domeColor: 'rgba(255, 170, 43, 0.22)',
+    dustRot: t * 0.08,
+    dustAlpha: 0.52,
+  });
+
+  // Crisp radial rim-ring impact on case slam instead of muddy full-frame wash!
+  if (localT < 0.50) {
+    const fp = localT / 0.50;
+    g.save();
+    g.strokeStyle = `rgba(255, 186, 56, ${(0.75 * (1 - fp)).toFixed(3)})`;
+    g.lineWidth = 7 * (1 - fp) + 1;
+    g.beginPath();
+    g.arc(W / 2, 345, 75 + fp * 540, 0, Math.PI * 2);
+    g.stroke();
+    g.restore();
+  }
+
+  // Hero Brand Shield Emblem — immediately visible at 0.72 scale on frame 0 of cut!
+  const bp = easeOutBack(clamp(0.55 + localT / 0.38, 0, 1), 1.15);
+  g.save();
+  g.translate(W / 2, 340 + (1 - bp) * 28);
+  g.scale(bp, bp);
+
+  g.beginPath();
+  g.moveTo(0, -76);
+  g.lineTo(66, -46);
+  g.lineTo(56, 33);
+  g.lineTo(0, 80);
+  g.lineTo(-56, 33);
+  g.lineTo(-66, -46);
+  g.closePath();
+  const shGrad = g.createLinearGradient(0, -76, 0, 80);
+  shGrad.addColorStop(0, '#ffbe3b');
+  shGrad.addColorStop(1, '#ea580c');
+  g.fillStyle = shGrad;
+  g.fill();
+  g.lineWidth = 4;
+  g.strokeStyle = '#fff7ed';
+  g.stroke();
+
+  g.fillStyle = '#090e14';
+  g.font = '900 64px RussoOne';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.fillText('V', 0, 4);
+  g.restore();
+
+  drawKineticHeadline(
+    g,
+    ['МАГАЗИН «В ОКОПЕ»'],
+    518,
+    clamp(0.45 + localT / 0.42, 0, 1),
+    {
+      maxSize: 74,
+      family: 'RussoOne',
+      align: 'center',
+      accentIndex: 99,
+      subText: 'ЗАВОДСКОЙ РЭБ · ДЕТЕКТОРЫ · СВЯЗЬ · ЭКИПИРОВКА',
+    }
+  );
+
+  // Sequential active spotlight wave across the 3 official channels on the beat grid
+  const spotlightPos = (localT * 0.85) % 3.0;
+  const channels = [
+    {
+      kind: 'tg',
+      name: 'TELEGRAM-КАНАЛ',
+      url: 't.me/vokope_ru',
+      note: 'Актуальное наличие, новинки и заказ',
+      accent: '#38bdf8',
+      delay: 0.08,
+    },
+    {
+      kind: 'vk',
+      name: 'ВКОНТАКТЕ',
+      url: 'vk.com/vokope_rus',
+      note: 'Обзоры, испытания и прямая связь',
+      accent: '#60a5fa',
+      delay: 0.22,
+    },
+    {
+      kind: 'avito',
+      name: 'АВИТО МАГАЗИН',
+      url: 'Бренд «В окопе»',
+      note: 'Витрина товаров и проверенные отзывы',
+      accent: '#34d399',
+      delay: 0.36,
+    },
+  ];
+
+  channels.forEach((ch, idx) => {
+    const cp = easeOutBack(clamp((localT - ch.delay + 0.12) / 0.44, 0, 1), 1.06);
+    if (cp <= 0.01) return;
+    const cy = 656 + idx * 214 + (1 - cp) * 32;
+    const dist = Math.min(Math.abs(spotlightPos - idx), 3 - Math.abs(spotlightPos - idx));
+    const focusBoost = clamp(1 - dist * 1.15, 0, 1) * smoothstep(0.8, 1.4, localT);
+
+    g.save();
+    g.globalAlpha = clamp(cp, 0, 1);
+
+    roundRectPath(g, SAFE_PAD, cy, SAFE_W, 188, 24);
+    g.fillStyle = `rgba(${11 + Math.round(focusBoost * 10)}, ${18 + Math.round(focusBoost * 14)}, ${28 + Math.round(focusBoost * 18)}, 0.95)`;
+    g.fill();
+    g.strokeStyle = ch.accent;
+    g.lineWidth = 2.2 + focusBoost * 1.8;
+    g.stroke();
+
+    drawPlatformIcon(g, ch.kind, SAFE_PAD + 72, cy + 94);
+
+    g.textAlign = 'left';
+    setFittedFont(g, ch.name, SAFE_W - 175, 22, 17, 'JetMono', '800');
+    g.fillStyle = ch.accent;
+    g.fillText(ch.name, SAFE_PAD + 138, cy + 54);
+
+    setFittedFont(g, ch.url, SAFE_W - 175, 44, 28, 'RussoOne', '900');
+    g.fillStyle = '#ffffff';
+    g.fillText(ch.url, SAFE_PAD + 138, cy + 112);
+
+    setFittedFont(g, ch.note, SAFE_W - 175, 24, 18, 'RobotoBold', '700');
+    g.fillStyle = '#cbd5e1';
+    g.fillText(ch.note, SAFE_PAD + 138, cy + 155);
+    g.restore();
+  });
+
+  // Primary Action Banner + Traveling Specular Sheen
+  const fp = easeOutExpo(clamp((localT - 0.42) / 0.48, 0, 1));
+  if (fp > 0.01) {
+    const stingGlow = Math.exp(-Math.pow((t - SYNC.s5Sting) / 0.36, 2));
+    const ry = 1326 + (1 - fp) * 24;
+    g.save();
+    g.globalAlpha = fp;
+    roundRectPath(g, SAFE_PAD, ry, SAFE_W, 146, 22);
+    const btnGrad = g.createLinearGradient(SAFE_PAD, ry, SAFE_PAD + SAFE_W, ry);
+    btnGrad.addColorStop(0, '#ffaa2b');
+    btnGrad.addColorStop(1, '#f97316');
+    g.fillStyle = btnGrad;
+    g.fill();
+
+    // Animated light sheen sweeping across button every 2.0s + peaking on s5Sting
+    g.save();
+    roundRectPath(g, SAFE_PAD, ry, SAFE_W, 146, 22);
+    g.clip();
+    const sheenX = SAFE_PAD - 240 + ((localT * 0.55) % 1.0) * (SAFE_W + 480);
+    const sheenGrad = g.createLinearGradient(sheenX - 130, ry, sheenX + 130, ry + 80);
+    sheenGrad.addColorStop(0, 'rgba(255,255,255,0)');
+    sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.34)');
+    sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = sheenGrad;
+    g.fillRect(SAFE_PAD, ry, SAFE_W, 146);
+    g.restore();
+
+    if (stingGlow > 0.02) {
+      roundRectPath(g, SAFE_PAD, ry, SAFE_W, 146, 22);
+      g.strokeStyle = `rgba(255,255,255,${(0.9 * stingGlow).toFixed(3)})`;
+      g.lineWidth = 5;
+      g.stroke();
+    }
+
+    g.textAlign = 'center';
+    setFittedFont(g, 'ПЕРЕХОДИТЕ И ПИШИТЕ НАМ!', SAFE_W - 56, 38, 26, 'RussoOne', '900');
+    g.fillStyle = '#090d12';
+    g.fillText('ПЕРЕХОДИТЕ И ПИШИТЕ НАМ!', W / 2, ry + 64);
+
+    setFittedFont(g, 'ПОДБЕРЁМ ПОД ЗАДАЧУ · ОПТ И РОЗНИЦА · С НДС И БЕЗ', SAFE_W - 56, 22, 16, 'JetMono', '800');
+    g.fillStyle = '#111827';
+    g.fillText('ПОДБЕРЁМ ПОД ЗАДАЧУ · ОПТ И РОЗНИЦА · С НДС И БЕЗ', W / 2, ry + 110);
+    g.restore();
+  }
+
+  // Bottom Factory Lineup Showcase Strip (fills y = 1506 .. 1775 harmoniously — zero empty void!)
+  const sp = easeOutExpo(clamp((localT - 0.55) / 0.52, 0, 1));
+  if (sp > 0.01) {
+    const sy = 1508 + (1 - sp) * 26;
+    g.save();
+    g.globalAlpha = sp;
+    roundRectPath(g, SAFE_PAD, sy, SAFE_W, 258, 22);
+    g.fillStyle = 'rgba(9, 15, 23, 0.90)';
+    g.fill();
+    g.strokeStyle = 'rgba(255, 170, 43, 0.34)';
+    g.lineWidth = 1.6;
+    g.stroke();
+
+    const miniItems = [
+      { img: IMGS.rebDome, blur: BLUR_IMGS.rebDome, label: 'РЭБ КАПЮШОН / ЗОНТ', h: 145 },
+      { img: IMGS.detector, blur: BLUR_IMGS.detector, label: 'БУЛАТ / АЛДАН', h: 162 },
+      { img: IMGS.radio, blur: BLUR_IMGS.radio, label: 'СВЯЗЬ И БПЛА', h: 162 },
+    ];
+    const colW = SAFE_W / 3;
+    miniItems.forEach((m, i) => {
+      const mx = SAFE_PAD + colW * (i + 0.5);
+      const bob = Math.sin(t * 2.2 + i * 1.4) * 4;
+      drawCutout(g, m.img, m.blur, mx, sy + 110 + bob, m.h, {
+        alpha: 0.98,
+        glowColor: i === 0 ? 'rgba(255,170,43,ALPHA)' : i === 1 ? 'rgba(52,211,153,ALPHA)' : 'rgba(56,189,248,ALPHA)',
+        glowAlpha: 0.35,
+        shadowAlpha: 0.55,
+      });
+      setFittedFont(g, m.label, colW - 24, 18, 14, 'JetMono', '800');
+      g.fillStyle = '#e2e8f0';
+      g.textAlign = 'center';
+      g.fillText(m.label, mx, sy + 228);
+    });
+    g.restore();
+  }
+}
+
+function resetCanvasState(targetCtx) {
+  targetCtx.globalAlpha = 1;
+  targetCtx.globalCompositeOperation = 'source-over';
+  targetCtx.shadowBlur = 0;
+  targetCtx.shadowOffsetX = 0;
+  targetCtx.shadowOffsetY = 0;
+  targetCtx.lineWidth = 1;
+  targetCtx.textBaseline = 'alphabetic';
+  targetCtx.textAlign = 'left';
+  targetCtx.fillStyle = '#05080c';
+  targetCtx.fillRect(0, 0, W, H);
+
+  uctx.globalAlpha = 1;
+  uctx.globalCompositeOperation = 'source-over';
+  uctx.shadowBlur = 0;
+  uctx.lineWidth = 1;
+  uctx.textBaseline = 'alphabetic';
+  uctx.textAlign = 'left';
+}
+
+function renderWorldOnly(targetCtx, tc) {
+  resetCanvasState(targetCtx);
+  const sIdx = getSceneIndex(tc);
+  if (sIdx === 0) renderScene1(targetCtx, tc);
+  else if (sIdx === 1) renderScene2(targetCtx, tc);
+  else if (sIdx === 2) renderScene3(targetCtx, tc);
+  else if (sIdx === 3) renderScene4(targetCtx, tc);
+  else renderScene5(targetCtx, tc);
+
+  for (let i = 1; i <= 4; i++) {
+    const dt = tc - SYNC.cuts[i];
+    if (Math.abs(dt) < 0.09) {
+      const k = 1 - Math.abs(dt) / 0.09;
+      const wipeX = lerp(-W * 0.3, W * 1.3, invLerp(-0.09, 0.09, dt));
+      targetCtx.save();
+      const lg = targetCtx.createLinearGradient(wipeX - 240, 0, wipeX + 240, 0);
+      lg.addColorStop(0, 'rgba(255,170,43,0)');
+      lg.addColorStop(0.5, `rgba(255,205,112,${(0.38 * k).toFixed(3)})`);
+      lg.addColorStop(1, 'rgba(56,189,248,0)');
+      targetCtx.fillStyle = lg;
+      targetCtx.fillRect(0, 0, W, H);
+      targetCtx.restore();
+    }
+  }
+}
+
+function motionVelocityFactor(t) {
+  for (let i = 1; i <= 4; i++) {
+    if (Math.abs(t - SYNC.cuts[i]) < 0.14) return 1.0;
+  }
+  if (t >= 0.12 && t <= 0.55) return 0.65;
+  if (Math.abs(t - SYNC.s2Nodes[1]) < 0.32) return 0.85;
+  if (Math.abs(t - SYNC.s2Nodes[2]) < 0.32) return 0.85;
+  if (t >= 19.70 && t <= 20.35) return 0.65;
+  return 0.0;
+}
+
+window.renderAt = function renderAt(t) {
+  const tc = clamp(t, 0, DURATION);
+  const sIdx = getSceneIndex(tc);
+  const sLo = SYNC.cuts[sIdx];
+  const sHi = SYNC.cuts[sIdx + 1] - 1e-4;
+  const vel = motionVelocityFactor(tc);
+
+  if (vel <= 0.01) {
+    renderWorldOnly(mctx, tc);
+  } else {
+    const samples = 3;
+    const shutter = (1 / 90) * vel;
+    mctx.fillStyle = '#05080c';
+    mctx.fillRect(0, 0, W, H);
+    for (let s = 0; s < samples; s++) {
+      const subT = clamp(tc - shutter * 0.5 + (shutter * s) / (samples - 1), sLo, sHi);
+      renderWorldOnly(ctx, subT);
+      mctx.save();
+      mctx.globalAlpha = 1 / (s + 1);
+      mctx.drawImage(frameCanvas, 0, 0);
+      mctx.restore();
+    }
+  }
+
+  drawScreenSpaceHUD(mctx, tc, sIdx);
+};
+
+window.getFrameSignature = function getFrameSignature() {
+  const data = mctx.getImageData(0, 0, W, H).data;
+  let h1 = 0x811c9dc5;
+  for (let i = 0; i < data.length; i += 64) {
+    h1 ^= data[i];
+    h1 = Math.imul(h1, 0x01000193) >>> 0;
+  }
+  return h1.toString(16).padStart(8, '0');
+};
+
+window.__READY_PROMISE = (async () => {
+  const fontSpecs = [
+    '900 48px RussoOne',
+    '800 32px Unbounded',
+    '800 28px Tektur',
+    '900 40px FiraCond',
+    '800 24px JetMono',
+    '700 24px RobotoBold',
+  ];
+  await Promise.all(fontSpecs.map((spec) => document.fonts.load(spec, 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюяABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789✓→/·-')));
+  await document.fonts.ready;
+
+  await Promise.all(
+    Object.entries(ASSET_PATHS).map(
+      ([key, url]) =>
+        new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            IMGS[key] = img;
+            BLUR_IMGS[key] = createBlurredCopy(img, 14);
+            resolve();
+          };
+          img.onerror = (e) => reject(new Error(`Failed to load ${url}: ${e}`));
+          img.src = url;
+        })
+    )
+  );
+
+  for (const wt of [0.05, 0.5, 6.0, 10.0, 13.0, 16.25, 21.0, 26.0, 29.5]) {
+    window.renderAt(wt);
+  }
+  await document.fonts.ready;
+  window.renderAt(0);
+  window.__SCENE_READY = true;
+  return true;
+})();
+</script>
+</body>
+</html>
