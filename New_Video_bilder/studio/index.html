@@ -276,11 +276,11 @@
     <div class="brand-header">
       <img src="/assets/brand/logo_full_light.png" alt="В ОКОПЕ — магазин брони" />
       <div>
-        <div class="badge-top">★ REAL PHOTO · REAL DNB MP3 · 60 FPS</div>
-        <h1 id="reelTitle">Товарный Reels: «BOOIU Sidewinder GEN_3»</h1>
+        <div class="badge-top">★ REAL PHOTO · INSTRUMENTAL DNB · COVERS 16:9 + 9:16</div>
+        <h1 id="reelTitle">Флагманский обзор (2:30): «Рации КЛЮЧ 256 · ZASTONE DP-UV008 MOD»</h1>
       </div>
     </div>
-    <p class="sub">Реальные студийные фото · Настоящий Drum & Bass MP3 · Голос <b>VC-05</b> · Логотип <b>GOYDA</b> · Без цен</p>
+    <p class="sub">Реальные студийные фото · Чистый инструментальный Neurofunk · Голос <b>VC-05</b> · Обложки <b>16:9 + 9:16</b> · Без цен</p>
 
     <div class="version-tabs">
       <button
@@ -340,14 +340,32 @@
     </div>
 
     <div class="player-shell">
-      <video id="reelPlayer" src="/output/v_okope_zastone_key256.mp4?v=z256_inst2" controls playsinline preload="metadata"></video>
+      <video id="reelPlayer" src="/output/v_okope_zastone_key256.mp4?v=z256_inst2" poster="/output/covers/zastone_key256_cover_16x9.jpg" controls playsinline preload="metadata"></video>
     </div>
 
     <div id="sceneJumps" class="scene-jumps"></div>
 
+    <div style="margin-top:16px; padding:14px; background:var(--panel-2); border:1px solid rgba(213,174,92,0.34);">
+      <div class="badge-top" style="margin-bottom:10px;">🖼 ОБЛОЖКИ К ВЫБРАННОМУ ВИДЕО (ПРАВИЛО 16:9 + 9:16 · &lt; 2 МБ JPEG)</div>
+      <div style="display:grid; grid-template-columns: 1.55fr 1fr; gap:12px; align-items:start;">
+        <div>
+          <a id="cover16Link" href="/output/covers/zastone_key256_cover_16x9.jpg" download="zastone_key256_cover_16x9.jpg" style="display:block; text-decoration:none;">
+            <img id="cover16Img" src="/output/covers/zastone_key256_cover_16x9.jpg" alt="Обложка 16:9" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block; border:1px solid rgba(213,174,92,0.45);" />
+            <span class="dl-btn secondary" style="margin-top:8px; padding:9px 8px; font-size:11.5px;">⬇ Обложка 16:9 (1920×1080)</span>
+          </a>
+        </div>
+        <div>
+          <a id="cover9Link" href="/output/covers/zastone_key256_cover_9x16.jpg" download="zastone_key256_cover_9x16.jpg" style="display:block; text-decoration:none;">
+            <img id="cover9Img" src="/output/covers/zastone_key256_cover_9x16.jpg" alt="Обложка 9:16" style="width:100%; aspect-ratio:9/16; max-height:220px; object-fit:contain; background:#080b06; display:block; border:1px solid rgba(213,174,92,0.45);" />
+            <span class="dl-btn secondary" style="margin-top:8px; padding:9px 8px; font-size:11.5px;">⬇ Обложка 9:16 (1080×1920)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <div class="dl-row">
       <a id="dlLink" class="dl-btn" href="/output/v_okope_zastone_key256.mp4" download="v_okope_zastone_key256.mp4">
-        ⬇ Скачать «Рации КЛЮЧ 256 · ZASTONE MOD (2:30)» MP4 (1920×1080 Full HD · 60 fps)
+        ⬇ Скачать «Рации КЛЮЧ 256 · ZASTONE MOD (2:30 · 16:9)» MP4 (1920×1080 Full HD · 60 fps)
       </a>
       <a class="dl-btn secondary" href="/output/zastone_key256_description.txt" download="zastone_key256_description.txt">
         📄 Скачать описание «КЛЮЧ 256» без таймкодов и без цен (.TXT)
@@ -439,8 +457,25 @@
       <pre id="ytDescText" style="white-space:pre-wrap; font-family:inherit; font-size:12.5px; line-height:1.48; color:var(--muted); background:#11170e; padding:12px; border:1px solid rgba(213,174,92,0.18); max-height:240px; overflow:auto;"></pre>
     </div>
 
-    <div class="badge-top">🎵 НАРЕЗАННЫЕ РЕАЛЬНЫЕ DRUM & BASS MP3 (320 KBPS · 174 BPM)</div>
+    <div class="badge-top">🖼 ГАЛЕРЕЯ ВСЕХ 12 ОБЛОЖЕК — ГОРИЗОНТАЛЬНЫЕ (16:9 · 1920×1080) И ВЕРТИКАЛЬНЫЕ (9:16 · 1080×1920)</div>
+    <div style="margin:10px 0 12px;">
+      <a class="dl-btn" href="/output/covers/v_okope_all_12_covers.zip" download="v_okope_all_12_covers.zip">
+        📦 Скачать ВСЕ 12 обложек (6 × 16:9 + 6 × 9:16) одним ZIP-архивом
+      </a>
+    </div>
+    <div id="allCoversGallery" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; margin:12px 0 24px;"></div>
+
+    <div class="badge-top">🎵 ЧИСТЫЕ ИНСТРУМЕНТАЛЬНЫЕ DRUM &amp; BASS MP3 (БЕЗ ВОКАЛА · 174 BPM)</div>
     <div class="voice-list" style="margin-bottom:22px;">
+      <div class="voice-item selected">
+        <div>
+          <div><span class="v-code">DNB-04</span><span class="v-title">dnb_calyx_teebee_quest_174bpm.mp3 (Calyx &amp; TeeBee — The Quest [Break Remix] · 174 BPM)</span></div>
+          <div class="v-desc">100% чистый инструментальный Neurofunk без вокала (Silero VAD max_p = 0.0463, -4.8 dB @ 2.2 кГц под диктора) для «КЛЮЧ 256»</div>
+        </div>
+        <div class="v-actions">
+          <button class="play-btn mp3-btn" data-mp3="/assets/audio/music_mp3/dnb_calyx_teebee_quest_174bpm.mp3" type="button">▶ Прослушать MP3</button>
+        </div>
+      </div>
       <div class="voice-item selected">
         <div>
           <div><span class="v-code">DNB-03</span><span class="v-title">dnb_power_30s.mp3 (Feint — Time Bomb · 175 BPM Pure Instrumental Drop)</span></div>
@@ -790,6 +825,28 @@ const YT_PACKS = {
   },
 };
 
+const COVER_SLUGS = {
+  zastone: 'zastone_key256',
+  sidewinder: 'sidewinder_gen3',
+  azar: 'azar_3mx',
+  power: 'power_stations',
+  product: 'voevoda_1423',
+  store: 'v_okope_store',
+};
+
+function renderCovers(key) {
+  const slug = COVER_SLUGS[key] || 'zastone_key256';
+  const c16 = `/output/covers/${slug}_cover_16x9.jpg`;
+  const c9 = `/output/covers/${slug}_cover_9x16.jpg`;
+  document.getElementById('cover16Img').src = c16;
+  document.getElementById('cover16Link').href = c16;
+  document.getElementById('cover16Link').download = `${slug}_cover_16x9.jpg`;
+  document.getElementById('cover9Img').src = c9;
+  document.getElementById('cover9Link').href = c9;
+  document.getElementById('cover9Link').download = `${slug}_cover_9x16.jpg`;
+  video.poster = key === 'zastone' ? c16 : c9;
+}
+
 let activeKey = 'zastone';
 function renderYtPack(key) {
   activeKey = key;
@@ -797,6 +854,7 @@ function renderYtPack(key) {
   document.getElementById('ytHeading').textContent = p.heading;
   document.getElementById('ytTitleText').textContent = p.title;
   document.getElementById('ytDescText').textContent = p.desc;
+  renderCovers(key);
 }
 
 [
@@ -814,6 +872,34 @@ function renderYtPack(key) {
 
 renderChapters('zastone');
 renderYtPack('zastone');
+
+const COVER_CARDS = [
+  { slug: 'zastone_key256', title: 'Рации «КЛЮЧ 256» · Zastone MOD' },
+  { slug: 'sidewinder_gen3', title: 'Фонарь BOOIU Sidewinder GEN_3' },
+  { slug: 'azar_3mx', title: 'Перехват видео «АЗАР» · 3mx' },
+  { slug: 'power_stations', title: 'Зарядные станции · 17 моделей' },
+  { slug: 'voevoda_1423', title: 'Бронезащита «Воевода 14/23»' },
+  { slug: 'v_okope_store', title: 'Магазин «В ОКОПЕ» · Общий' },
+];
+const galleryRoot = document.getElementById('allCoversGallery');
+COVER_CARDS.forEach(({ slug, title }) => {
+  const card = document.createElement('div');
+  card.style.cssText = 'background:var(--panel-2); border:1px solid rgba(213,174,92,0.28); padding:11px;';
+  card.innerHTML = `
+    <div style="font-size:12.5px; font-weight:800; color:var(--sand-bright); margin-bottom:8px;">${title}</div>
+    <div style="display:grid; grid-template-columns: 1.65fr 1fr; gap:8px; align-items:stretch;">
+      <a href="/output/covers/${slug}_cover_16x9.jpg" download="${slug}_cover_16x9.jpg" style="text-decoration:none; display:flex; flex-direction:column; gap:6px;">
+        <img src="/output/covers/${slug}_cover_16x9.jpg" alt="${title} 16:9" style="width:100%; aspect-ratio:16/9; object-fit:cover; border:1px solid rgba(213,174,92,0.35);" loading="lazy" />
+        <span style="font-size:11px; font-weight:800; color:var(--phosphor); text-align:center;">⬇ 16:9 (1920×1080)</span>
+      </a>
+      <a href="/output/covers/${slug}_cover_9x16.jpg" download="${slug}_cover_9x16.jpg" style="text-decoration:none; display:flex; flex-direction:column; gap:6px;">
+        <img src="/output/covers/${slug}_cover_9x16.jpg" alt="${title} 9:16" style="width:100%; max-height:132px; object-fit:contain; background:#080b06; border:1px solid rgba(213,174,92,0.35);" loading="lazy" />
+        <span style="font-size:11px; font-weight:800; color:var(--sand); text-align:center;">⬇ 9:16 (1080×1920)</span>
+      </a>
+    </div>
+  `;
+  galleryRoot.appendChild(card);
+});
 
 document.querySelectorAll('.v-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
