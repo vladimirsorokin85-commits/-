@@ -1,7 +1,8 @@
 СБОРКА ВИДЕО S01E05 — «ПУСТОЕ МЕСТО НА КАРТЕ»
 
 Полный MP4 разделён на 3 части по 75 МиБ или меньше.
-Скачайте все части в одну папку:
+Windows: достаточно скачать и запустить RESTORE_VIDEO_WINDOWS.bat — он загрузит недостающие или неполные части и соберёт видео. Нужен Windows PowerShell и доступ к GitHub. Если части уже скачаны вручную, положите их рядом с BAT.
+Ссылки на части для ручной загрузки:
 
 s01e05_full.mp4.part00:
 https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-repo/video_studio/sleep_factory/season_01/episode_05/rendered/github_download/s01e05_full.mp4.part00
@@ -12,13 +13,15 @@ https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-rep
 s01e05_full.mp4.part02:
 https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-repo/video_studio/sleep_factory/season_01/episode_05/rendered/github_download/s01e05_full.mp4.part02
 
-Windows — скачайте и запустите RESTORE_VIDEO_WINDOWS.bat:
+Windows BAT:
 https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-repo/video_studio/sleep_factory/season_01/episode_05/rendered/github_download/RESTORE_VIDEO_WINDOWS.bat
+PowerShell-helper (BAT загрузит его при необходимости):
+https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-repo/video_studio/sleep_factory/season_01/episode_05/rendered/github_download/restore_video_windows.ps1
 
-Linux/macOS — скачайте restore_video.sh и выполните `sh restore_video.sh`:
+Linux/macOS — скачайте все части в одну папку и выполните `sh restore_video.sh`:
 https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/edfffcf3-repo/video_studio/sleep_factory/season_01/episode_05/rendered/github_download/restore_video.sh
 
-SHA-256 не требует отдельной загрузки: контрольная сумма встроена в оба скрипта. Файл .sha256 приложен только для ручной сверки.
+SHA-256 не требует отдельной загрузки: контрольная сумма встроена в BAT, PowerShell-helper и shell restore. Файл .sha256 приложен только для ручной сверки.
 
 Файл: s01e05_full.mp4
 Длительность: 38.109 мин; речь по WebRTC VAD mode 2: 85.92%.

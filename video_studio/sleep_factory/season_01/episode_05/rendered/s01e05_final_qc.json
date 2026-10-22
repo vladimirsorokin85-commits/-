@@ -62,8 +62,12 @@
     "part_sizes_bytes": [78643200, 78643200, 5073788],
     "parts_reassembled_byte_for_byte": true,
     "embedded_sha256_in_windows_bat": true,
+    "windows_bat_downloads_missing_helper_and_parts": true,
+    "windows_helper_filename": "restore_video_windows.ps1",
+    "windows_helper_sha256": "ed585e28368effe0f470f6be216944500178e3195dd65e3678fb07a117f5c6bc",
+    "windows_batch_static_checks": "passed",
     "windows_batch_runtime_executed": false,
-    "windows_batch_runtime_note": "No Windows CMD/Wine runtime was available. The BAT's source list and embedded checksum match the package; the same package was reassembled and verified byte-for-byte with the shell restore path."
+    "windows_batch_runtime_note": "No Windows CMD/PowerShell runtime was available. The generated BAT/helper source list, exact part sizes, helper hash and embedded video checksum were checked; the same part set was reassembled and verified byte-for-byte with the shell restore path."
   },
   "checks": {
     "all_66_voice_files_structurally_valid_opus": true,

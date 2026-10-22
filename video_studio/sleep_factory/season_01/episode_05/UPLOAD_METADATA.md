@@ -51,4 +51,4 @@
 - Обложка и миниатюра: `images/episode_05_cover.png` и `images/episode_05_youtube_thumbnail.jpg`.
 - ZIP с миниатюрой, субтитрами, главами, метаданными и финальным QC: `rendered/s01e05_youtube_assets.zip`.
 - Финальный QC: `rendered/s01e05_final_qc.json`.
-- Пакет MP4 для GitHub: `rendered/github_download/README_RU.txt`. Сборка из трёх частей проверена побайтно; SHA-256 полного видео — `6412a49524d0d32ee73e192d6740d609b9f96fcf79d59daa3766ccee98f2c0ea`. Контрольная сумма встроена в `RESTORE_VIDEO_WINDOWS.bat` и `restore_video.sh`; отдельный `.sha256` для восстановления не нужен.
+- Пакет MP4 для GitHub: `rendered/github_download/README_RU.txt`. Сборка из трёх частей проверена побайтно; SHA-256 полного видео — `6412a49524d0d32ee73e192d6740d609b9f96fcf79d59daa3766ccee98f2c0ea`. BAT можно скачать и запустить отдельно: он получает helper и недостающие части с GitHub, затем собирает и проверяет MP4; SHA-256 встроен, отдельный `.sha256` не нужен.
