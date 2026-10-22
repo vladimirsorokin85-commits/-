@@ -1,4 +1,0 @@
-file '/home/user/-/video_studio/polevaya/reels/pismo/seg0.mp4'
-file '/home/user/-/video_studio/polevaya/reels/pismo/seg1.mp4'
-file '/home/user/-/video_studio/polevaya/reels/pismo/seg2.mp4'
-file '/home/user/-/video_studio/polevaya/reels/pismo/seg3.mp4'
