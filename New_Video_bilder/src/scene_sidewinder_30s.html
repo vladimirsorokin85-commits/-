@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>В ОКОПЕ · BOOIU Sidewinder GEN_3 — 30s Military Commercial Engine (1080×1920 @ 60fps)</title>
+<style>
+  @font-face {
+    font-family: 'RussoOne';
+    src: url('/fonts/RussoOne-Regular.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'RubikDirt';
+    src: url('/fonts/RubikDirt-Regular.ttf') format('truetype');
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'Tektur';
+    src: url('/fonts/Tektur-VF.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'FiraCond';
+    src: url('/fonts/FiraSansExtraCondensed-Black.ttf') format('truetype');
+    font-weight: 900;
+  }
+  @font-face {
+    font-family: 'JetMono';
+    src: url('/fonts/JetBrainsMono-VF.ttf') format('truetype');
+    font-weight: 400 800;
+  }
+  @font-face {
+    font-family: 'RobotoBold';
+    src: url('/studio_fonts/Roboto-Bold.woff') format('woff');
+    font-weight: 700;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: #0a0e09;
+    user-select: none;
+  }
+  #master {
+    display: block;
+    width: 1080px;
+    height: 1920px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1080" height="1920"></canvas>
+
+<script type="module">
+const W = 1080;
+const H = 1920;
+const DURATION = 30.0;
+const BPM = 174.0;
+const BEAT = 60.0 / BPM;
+const PAD = 58;
+const SAFE_W = W - PAD * 2; // 964px
+
+const MIL = {
+  bg: '#0a0e09',
+  panel: 'rgba(14, 20, 13, 0.94)',
+  panelHi: 'rgba(21, 29, 18, 0.95)',
+  sand: '#d5ae5c',
+  sandHi: '#eed089',
+  olive: '#849e54',
+  phosphor: '#7ef266',
+  cyan: '#48dff0',
+  emerald: '#45e884',
+  ledWhite: '#fff8e8',
+  ledRed: '#ff4242',
+  ledBlue: '#3c9bff',
+  ledIR: '#74ff70',
+  bone: '#f3f0e6',
+  ash: '#c8cbc0',
+  muted: '#8d9685',
+  borderSand: 'rgba(213, 174, 92, 0.54)',
+  borderOlive: 'rgba(132, 158, 84, 0.50)',
+};
+
+// Exact sample-locked cuts from src/sidewinder_sync_map.json (Pendulum 1st Drop locked to Frame 330 = 5.500s!)
+const CUTS = [
+  0.000000,   // S1 [0..330]     Хук: BOOIU Sidewinder GEN_3
+  5.500000,   // S2 [330..727]   4 цвета LED + Стробоскоп в 2 клика (174 BPM DROP!)
+  12.116667,  // S3 [727..1077]  Ультрапрочный нейлон · Влагозащита · IR SAFE
+  17.950000,  // S4 [1077..1397] Поворот 360° + полный комплект в кейсе + Опт/Розница
+  23.283333,  // S5 [1397..1800] Финал: В ОКОПЕ (TG / VK / Авито) + 2.35s DnB outro
+  30.000000,
+];
+
+// Calibrated optical centers inside cropped sw_front_rgba.png
+const FRONT_UV = {
+  reflector: { u: 0.7846, v: 0.5684 },
+  dome:      { u: 0.5141, v: 0.7278 },
+  button:    { u: 0.1375, v: 0.6560 },
+};
+
+const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const lerp = (a, b, t) => a + (b - a) * t;
+const easeOutCubic = (x) => 1 - Math.pow(1 - clamp(x, 0, 1), 3);
+const easeOutBack = (x) => {
+  const c1 = 1.55, c3 = c1 + 1;
+  const p = clamp(x, 0, 1) - 1;
+  return 1 + c3 * p * p * p + c1 * p * p;
+};
+const smooth01 = (x) => {
+  const c = clamp(x, 0, 1);
+  return c * c * (3 - 2 * c);
+};
+const prog = (t, t0, dur) => clamp((t - t0) / Math.max(0.0001, dur), 0, 1);
+
+function hash2(x, y) {
+  const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123;
+  return n - Math.floor(n);
+}
+
+const canvas = document.getElementById('master');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+const ASSET_PATHS = {
+  swFront: '/assets/sidewinder_gen3/sw_front_rgba.png',
+  swRear: '/assets/sidewinder_gen3/sw_rear_rgba.png',
+  swTop: '/assets/sidewinder_gen3/sw_top_rgba.png',
+  swKit: '/assets/sidewinder_gen3/sw_kit_flatlay_rgba.png',
+  swOpenCase: '/assets/sidewinder_gen3/sw_opencase_rgba.png',
+  logoFullSand: '/assets/brand/logo_full_sand.png',
+  logoShieldSand: '/assets/brand/logo_shield_sand.png',
+  bgTrench: '/assets/images/bg_trench_dugout_dusk.jpg',
+  bgArmor: '/assets/images/bg_armor_plate_camo.jpg',
+  bgCrates: '/assets/images/bg_military_crates_olive.jpg',
+  bgRadar: '/assets/images/bg_radar_dusk.jpg',
+};
+
+const IMG = {};
+
+async function loadAllAssets() {
+  await document.fonts.ready;
+  const wc = document.createElement('canvas');
+  wc.width = 64; wc.height = 64;
+  const wctx = wc.getContext('2d');
+  for (const spec of [
+    "900 48px 'RussoOne'",
+    "800 40px 'Tektur'",
+    "900 52px 'FiraCond'",
+    "700 28px 'JetMono'",
+    "700 30px 'RobotoBold'",
+  ]) {
+    await document.fonts.load(spec, 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789°');
+    wctx.font = spec;
+    wctx.fillText('ШЛЕМНЫЙ ФОНАРЬ SIDEWINDER GEN 3 В ОКОПЕ 360°', 2, 32);
+  }
+  await Promise.all(
+    Object.entries(ASSET_PATHS).map(async ([k, url]) => {
+      const im = new Image();
+      im.crossOrigin = 'anonymous';
+      im.src = url;
+      await im.decode();
+      IMG[k] = im;
+    })
+  );
+}
+
+const GRAIN_TILE = (() => {
+  const g = document.createElement('canvas');
+  g.width = 256; g.height = 256;
+  const gc = g.getContext('2d');
+  const id = gc.createImageData(256, 256);
+  for (let i = 0; i < 256 * 256; i++) {
+    const v = Math.floor(hash2(i % 256, (i / 256) | 0) * 255);
+    id.data[i * 4] = v;
+    id.data[i * 4 + 1] = v;
+    id.data[i * 4 + 2] = v;
+    id.data[i * 4 + 3] = 14;
+  }
+  gc.putImageData(id, 0, 0);
+  return g;
+})();
+
+function fitFont(text, maxW, weight, baseSize, family) {
+  let sz = baseSize;
+  ctx.font = `${weight} ${sz}px '${family}'`;
+  const w = ctx.measureText(text).width;
+  if (w > maxW && w > 0) {
+    sz = Math.max(13, Math.floor(sz * (maxW / w) * 0.985));
+    ctx.font = `${weight} ${sz}px '${family}'`;
+  }
+  return sz;
+}
+
+function drawFittedText(text, x, y, maxW, { weight = 800, size = 44, family = 'RussoOne', color = MIL.bone, align = 'left', shadow = true } = {}) {
+  ctx.save();
+  fitFont(text, maxW, weight, size, family);
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  if (shadow) {
+    ctx.shadowColor = 'rgba(0,0,0,0.75)';
+    ctx.shadowBlur = 14;
+    ctx.shadowOffsetY = 3;
+  }
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+function roundRectPath(x, y, w, h, r) {
+  const rr = Math.min(r, w * 0.5, h * 0.5);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}
+
+function drawTacticalCard(x, y, w, h, { fill = MIL.panel, stroke = MIL.borderSand, r = 16, accent = MIL.sand, glow = 0 } = {}) {
+  ctx.save();
+  if (glow > 0) {
+    ctx.shadowColor = accent;
+    ctx.shadowBlur = glow;
+  }
+  roundRectPath(x, y, w, h, r);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = stroke;
+  ctx.stroke();
+
+  const L = Math.min(18, w * 0.08, h * 0.25);
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 3;
+  for (const [cx, cy, sx, sy] of [
+    [x + 1, y + 1, 1, 1],
+    [x + w - 1, y + 1, -1, 1],
+    [x + 1, y + h - 1, 1, -1],
+    [x + w - 1, y + h - 1, -1, -1],
+  ]) {
+    ctx.beginPath();
+    ctx.moveTo(cx + sx * L, cy);
+    ctx.lineTo(cx, cy);
+    ctx.lineTo(cx, cy + sy * L);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawCoverImage(im, x, y, w, h, { zoom = 1.0, panX = 0, panY = 0, alpha = 1.0 } = {}) {
+  const ir = im.width / im.height;
+  const br = w / h;
+  let dw, dh;
+  if (ir > br) { dh = h * zoom; dw = dh * ir; }
+  else { dw = w * zoom; dh = dw / ir; }
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.beginPath();
+  ctx.rect(x, y, w, h);
+  ctx.clip();
+  ctx.drawImage(im, x + (w - dw) * 0.5 + panX, y + (h - dh) * 0.5 + panY, dw, dh);
+  ctx.restore();
+}
+
+function drawContainImage(im, cx, cy, maxW, maxH, { scale = 1.0, alpha = 1.0, glowColor = null, glowBlur = 0, dropShadow = true } = {}) {
+  const s = Math.min(maxW / im.width, maxH / im.height) * scale;
+  const dw = im.width * s;
+  const dh = im.height * s;
+  const dx = cx - dw * 0.5;
+  const dy = cy - dh * 0.5;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  if (glowColor && glowBlur > 0) {
+    ctx.shadowColor = glowColor;
+    ctx.shadowBlur = glowBlur;
+    ctx.drawImage(im, dx, dy, dw, dh);
+  }
+  if (dropShadow) {
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.80)';
+    ctx.shadowBlur = 36;
+    ctx.shadowOffsetY = 18;
+  }
+  ctx.drawImage(im, dx, dy, dw, dh);
+  ctx.restore();
+  return { x: dx, y: dy, w: dw, h: dh };
+}
+
+// Volumetric optical cone + star flare emanating directly from calibrated emitter (ex, ey)
+function drawOpticalBeam(ex, ey, angleRad, spreadRad, lenPx, rgbStr, intensity = 1.0) {
+  if (intensity <= 0.005) return;
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+
+  // Wide soft volumetric beam cone
+  const endX = ex + Math.cos(angleRad) * lenPx;
+  const endY = ey + Math.sin(angleRad) * lenPx;
+  const grad = ctx.createRadialGradient(ex, ey, 6, ex, ey, lenPx);
+  grad.addColorStop(0.0, `rgba(255, 255, 255, ${(0.95 * intensity).toFixed(3)})`);
+  grad.addColorStop(0.10, `rgba(${rgbStr}, ${(0.72 * intensity).toFixed(3)})`);
+  grad.addColorStop(0.45, `rgba(${rgbStr}, ${(0.28 * intensity).toFixed(3)})`);
+  grad.addColorStop(1.0, `rgba(${rgbStr}, 0)`);
+
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.moveTo(ex, ey);
+  ctx.arc(ex, ey, lenPx, angleRad - spreadRad, angleRad + spreadRad);
+  ctx.closePath();
+  ctx.fill();
+
+  // Inner hot core beam
+  const core = ctx.createRadialGradient(ex, ey, 2, ex, ey, lenPx * 0.72);
+  core.addColorStop(0.0, `rgba(255, 255, 255, ${(0.95 * intensity).toFixed(3)})`);
+  core.addColorStop(0.22, `rgba(${rgbStr}, ${(0.52 * intensity).toFixed(3)})`);
+  core.addColorStop(1.0, `rgba(${rgbStr}, 0)`);
+  ctx.fillStyle = core;
+  ctx.beginPath();
+  ctx.moveTo(ex, ey);
+  ctx.arc(ex, ey, lenPx * 0.72, angleRad - spreadRad * 0.36, angleRad + spreadRad * 0.36);
+  ctx.closePath();
+  ctx.fill();
+
+  // Specular emitter halo + crisp 4-point optical star flare at lens center
+  const halo = ctx.createRadialGradient(ex, ey, 0, ex, ey, 115);
+  halo.addColorStop(0.0, `rgba(255, 255, 255, ${(0.98 * intensity).toFixed(3)})`);
+  halo.addColorStop(0.28, `rgba(${rgbStr}, ${(0.78 * intensity).toFixed(3)})`);
+  halo.addColorStop(1.0, `rgba(${rgbStr}, 0)`);
+  ctx.fillStyle = halo;
+  ctx.beginPath();
+  ctx.arc(ex, ey, 115, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.strokeStyle = `rgba(255, 255, 255, ${(0.75 * intensity).toFixed(3)})`;
+  ctx.lineWidth = 2.6;
+  for (const a of [0, Math.PI * 0.5]) {
+    ctx.beginPath();
+    ctx.moveTo(ex - Math.cos(a) * 68, ey - Math.sin(a) * 68);
+    ctx.lineTo(ex + Math.cos(a) * 68, ey + Math.sin(a) * 68);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawSceneBackdrop(bgImg, t, scIdx, { glowRGB = '213, 174, 92', glowAlpha = 0.16, tint = 'rgba(8, 12, 8, 0.78)' } = {}) {
+  const sStart = CUTS[scIdx];
+  const sDur = CUTS[scIdx + 1] - sStart;
+  const u = clamp((t - sStart) / sDur, 0, 1);
+
+  ctx.fillStyle = MIL.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCoverImage(bgImg, 0, 0, W, H, {
+    zoom: 1.06 + u * 0.055,
+    panX: lerp(-15, 15, u) * (scIdx % 2 === 0 ? 1 : -1),
+    panY: lerp(-10, 10, u),
+    alpha: 0.42,
+  });
+
+  ctx.fillStyle = tint;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.save();
+  ctx.strokeStyle = 'rgba(132, 158, 84, 0.065)';
+  ctx.lineWidth = 1;
+  for (let gx = 60; gx < W; gx += 120) {
+    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+  }
+  for (let gy = 80; gy < H; gy += 120) {
+    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+  }
+  ctx.restore();
+
+  const rg = ctx.createRadialGradient(W * 0.5, H * 0.48, 30, W * 0.5, H * 0.48, 760);
+  rg.addColorStop(0, `rgba(${glowRGB}, ${glowAlpha.toFixed(3)})`);
+  rg.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = rg;
+  ctx.fillRect(0, 0, W, H);
+
+  const vig = ctx.createRadialGradient(W * 0.5, H * 0.5, 420, W * 0.5, H * 0.5, 1140);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(3, 5, 3, 0.74)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawTopHUD(t, scIdx, sectionTag) {
+  const y = 52;
+  drawTacticalCard(PAD, y, SAFE_W, 92, {
+    fill: 'rgba(14, 19, 12, 0.93)',
+    stroke: 'rgba(213, 174, 92, 0.46)',
+    r: 14,
+    accent: MIL.sand,
+  });
+  drawContainImage(IMG.logoShieldSand, PAD + 48, y + 46, 66, 68, { dropShadow: false });
+  drawFittedText('В ОКОПЕ · МАГАЗИН БРОНИ', PAD + 92, y + 40, 470, {
+    weight: 900, size: 27, family: 'RussoOne', color: MIL.sandHi, shadow: false,
+  });
+  drawFittedText(sectionTag, PAD + 92, y + 71, 520, {
+    weight: 700, size: 19, family: 'JetMono', color: MIL.phosphor, shadow: false,
+  });
+
+  const pillW = 236;
+  const px = PAD + SAFE_W - pillW - 18;
+  roundRectPath(px, y + 20, pillW, 52, 10);
+  ctx.fillStyle = 'rgba(132, 158, 84, 0.14)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(213, 174, 92, 0.48)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  const blink = 0.55 + 0.45 * Math.sin(t * 7.2);
+  ctx.fillStyle = `rgba(126, 242, 102, ${blink.toFixed(3)})`;
+  ctx.beginPath();
+  ctx.arc(px + 22, y + 46, 6.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  drawFittedText(`GEN_3 · СЦЕНА 0${scIdx + 1}/05`, px + 38, y + 53, pillW - 48, {
+    weight: 700, size: 19, family: 'JetMono', color: MIL.bone, shadow: false,
+  });
+
+  const totalU = clamp(t / DURATION, 0, 1);
+  ctx.fillStyle = 'rgba(213, 174, 92, 0.20)';
+  ctx.fillRect(PAD + 4, y + 88, SAFE_W - 8, 3);
+  ctx.fillStyle = MIL.sand;
+  ctx.fillRect(PAD + 4, y + 88, (SAFE_W - 8) * totalU, 3);
+}
+
+// =========================================================================
+// SCENE 1 [0.000s .. 5.500s]: NIGHT-OPS HOOK — BOOIU SIDEWINDER GEN_3
+// =========================================================================
+function renderScene1(t, beatPulse) {
+  drawSceneBackdrop(IMG.bgTrench, t, 0, { glowRGB: '238, 208, 137', glowAlpha: 0.20 + beatPulse * 0.05 });
+  drawTopHUD(t, 0, 'ИНДИВИДУАЛЬНОЕ ОСНАЩЕНИЕ СПЕЦСЛУЖБ');
+
+  const eH = easeOutCubic(prog(t, 0.05, 0.45));
+  const sy = (1 - eH) * 32;
+  ctx.save();
+  ctx.globalAlpha = eH;
+  roundRectPath(PAD, 172 + sy, 470, 44, 8);
+  ctx.fillStyle = 'rgba(126, 242, 102, 0.13)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(126, 242, 102, 0.52)';
+  ctx.lineWidth = 1.8;
+  ctx.stroke();
+  drawFittedText('● СПРОЕКТИРОВАН ДЛЯ СПЕЦСЛУЖБ', PAD + 18, 201 + sy, 434, {
+    weight: 800, size: 20, family: 'JetMono', color: MIL.phosphor, shadow: false,
+  });
+
+  drawFittedText('ШЛЕМНЫЙ ФОНАРЬ', PAD, 286 + sy, SAFE_W, {
+    weight: 900, size: 74, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('BOOIU SIDEWINDER GEN_3', PAD, 354 + sy, SAFE_W, {
+    weight: 900, size: 54, family: 'FiraCond', color: MIL.sandHi,
+  });
+  ctx.restore();
+
+  // Concentric tactical compass rings behind product hero
+  ctx.save();
+  for (let i = 0; i < 3; i++) {
+    ctx.strokeStyle = `rgba(213, 174, 92, ${(0.20 - i * 0.05).toFixed(2)})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(540, 1015, 220 + i * 115, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Subtle companion rear view above-left + Monumental Front Hero with live warm white beam cone!
+  const eP = easeOutBack(prog(t, 0.14, 0.60));
+  drawContainImage(IMG.swRear, 305, 650, 420, 350, {
+    scale: 0.92 + 0.08 * eP,
+    alpha: 0.92 * clamp(eP, 0, 1),
+    glowColor: 'rgba(132, 158, 84, 0.35)',
+    glowBlur: 24,
+  });
+
+  const rect = drawContainImage(IMG.swFront, 548, 1145 + Math.sin(t * 2.2) * 6, 760, 620, {
+    scale: 0.90 + 0.10 * eP,
+    alpha: clamp(eP * 1.15, 0, 1),
+    glowColor: 'rgba(238, 208, 137, 0.38)',
+    glowBlur: 32,
+  });
+
+  // Live warm tactical beam shooting forward-right out of real parabolic mirror reflector!
+  const rx = rect.x + rect.w * FRONT_UV.reflector.u;
+  const ry = rect.y + rect.h * FRONT_UV.reflector.v;
+  drawOpticalBeam(rx, ry, 0.34, 0.42, 690, '255, 240, 200', (0.72 + 0.22 * Math.sin(t * 4.5)) * clamp(eP, 0, 1));
+
+  // Right callout card next to top companion view
+  const ec1 = easeOutCubic(prog(t, 0.55, 0.45));
+  ctx.save();
+  ctx.globalAlpha = ec1;
+  drawTacticalCard(558, 520, 464, 248, {
+    fill: MIL.panelHi,
+    stroke: MIL.borderSand,
+    r: 16,
+    accent: MIL.sandHi,
+  });
+  drawFittedText('УНИВЕРСАЛЬНЫЙ МОДУЛЬ', 586, 570, 408, {
+    weight: 700, size: 19, family: 'JetMono', color: MIL.ash, shadow: false,
+  });
+  drawFittedText('НА ШЛЕМ · НА БРОНЮ · НА ГОЛОВУ', 586, 628, 408, {
+    weight: 900, size: 32, family: 'FiraCond', color: MIL.sandHi, shadow: false,
+  });
+  drawFittedText('Белый · Красный · Синий · ИК-спектр', 586, 686, 408, {
+    weight: 700, size: 22, family: 'RobotoBold', color: MIL.bone, shadow: false,
+  });
+  drawFittedText('+ режим стробоскопа в 2 нажатия', 586, 722, 408, {
+    weight: 700, size: 22, family: 'RobotoBold', color: MIL.phosphor, shadow: false,
+  });
+  ctx.restore();
+
+  // Bottom 3 spec pillars (ZERO PRICES!)
+  const cols = [
+    ['4 ЦВЕТА LED', 'БЕЛЫЙ · КРАСНЫЙ · СИНИЙ · ИК'],
+    ['СТРОБОСКОП', 'ДВОЙНОЕ НАЖАТИЕ КНОПКИ'],
+    ['ПОВОРОТ 360°', 'ВЛАГОСТОЙКИЙ НЕЙЛОН'],
+  ];
+  const cw = (SAFE_W - 28) / 3;
+  cols.forEach(([big, sub], i) => {
+    const bx = PAD + i * (cw + 14);
+    drawTacticalCard(bx, 1684, cw, 166, {
+      fill: MIL.panelHi,
+      stroke: MIL.borderSand,
+      r: 14,
+      accent: i === 1 ? MIL.phosphor : MIL.sandHi,
+    });
+    drawFittedText(big, bx + cw * 0.5, 1756, cw - 24, {
+      weight: 900, size: 36, family: 'FiraCond', color: i === 1 ? MIL.phosphor : MIL.sandHi, align: 'center', shadow: false,
+    });
+    drawFittedText(sub, bx + cw * 0.5, 1808, cw - 24, {
+      weight: 700, size: 16, family: 'JetMono', color: MIL.bone, align: 'center', shadow: false,
+    });
+  });
+}
+
+// =========================================================================
+// SCENE 2 [5.500s .. 12.117s]: 4 LED COLORS (HOLD BUTTON) + 2-CLICK STROBE!
+// (174 BPM PENDULUM DROP HITS EXACTLY AT FRAME 330 = 5.500s!)
+// =========================================================================
+function renderScene2(t, beatPulse) {
+  const lt = t - CUTS[1];
+  const dur = CUTS[2] - CUTS[1]; // 6.617s
+  const modes = [
+    {
+      name: 'БЕЛЫЙ СВЕТ',
+      en: 'LED WHITE LIGHT · ОСНОВНОЙ ПРОЖЕКТОР',
+      rgb: '255, 246, 224',
+      hex: '#fff6e0',
+      useReflector: true,
+      desc: 'Мощный направленный луч параболического рефлектора для досмотра и укрытий',
+    },
+    {
+      name: 'КРАСНЫЙ СВЕТ',
+      en: 'LED RED LIGHT · НОЧНАЯ РАБОТА С КАРТОЙ',
+      rgb: '255, 58, 58',
+      hex: '#ff4a4a',
+      useReflector: false,
+      desc: 'Не демаскирует на дистанции и полностью сохраняет ночное зрение бойца',
+    },
+    {
+      name: 'СИНИЙ СВЕТ',
+      en: 'LED BLUE LIGHT · ТАКТИЧЕСКАЯ МЕДИЦИНА',
+      rgb: '56, 152, 255',
+      hex: '#4ca6ff',
+      useReflector: false,
+      desc: 'Контрастная работа с медициной, документами и тактической маркировкой',
+    },
+    {
+      name: 'ИК + СТРОБОСКОП',
+      en: 'IR INFRARED + 2× КЛИК МАЯК ПОД ПНВ',
+      rgb: '112, 255, 108',
+      hex: '#74ff70',
+      useReflector: false,
+      desc: 'Невидим без ПНВ · Двойной клик включает стробоскоп «свой-чужой»!',
+    },
+  ];
+
+  const mIdx = Math.min(3, Math.floor((lt / dur) * 4));
+  const cur = modes[mIdx];
+  const isStrobe = lt >= dur - 1.55; // Final 1.55s demonstrates 2-click Strobe!
+
+  drawSceneBackdrop(IMG.bgRadar, t, 1, {
+    glowRGB: cur.rgb,
+    glowAlpha: 0.24 + beatPulse * 0.10,
+    tint: mIdx === 3 ? 'rgba(6, 18, 9, 0.80)' : 'rgba(7, 10, 9, 0.82)',
+  });
+
+  // Subtle green NVG scanlines when IR mode (mIdx === 3) activates!
+  if (mIdx === 3) {
+    ctx.fillStyle = 'rgba(112, 255, 108, 0.045)';
+    for (let y = 0; y < H; y += 6) ctx.fillRect(0, y, W, 2);
+  }
+
+  drawTopHUD(t, 1, '4 РЕЖИМА СВЕЧЕНИЯ + СТРОБОСКОП В 2 КЛИКА');
+
+  drawFittedText('4 ЦВЕТА СВЕТОДИОДОВ', PAD, 232, SAFE_W, {
+    weight: 900, size: 64, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('ВЫБОР ЦВЕТА — УДЕРЖАНИЕМ КНОПКИ  ·  СТРОБ — 2 НАЖАТИЯ', PAD, 286, SAFE_W, {
+    weight: 800, size: 26, family: 'Tektur', color: MIL.sandHi,
+  });
+
+  // Main dark optical chamber card
+  drawTacticalCard(PAD, 322, SAFE_W, 860, {
+    fill: 'rgba(8, 12, 10, 0.92)',
+    stroke: `rgba(${cur.rgb}, 0.62)`,
+    r: 22,
+    accent: cur.hex,
+    glow: 20,
+  });
+
+  // Active mode top banner inside chamber (strict non-overlapping split: 505px + 360px inside 896px inner width!)
+  drawFittedText(`● АКТИВЕН: ${cur.name}`, PAD + 34, 384, 505, {
+    weight: 900, size: 35, family: 'RussoOne', color: cur.hex,
+  });
+  drawFittedText(isStrobe ? '⚡ СТРОБОСКОП (2× КЛИК)' : '◉ УДЕРЖАНИЕ ВКЛ/ВЫКЛ', PAD + SAFE_W - 34, 382, 355, {
+    weight: 800, size: 20, family: 'JetMono', color: isStrobe ? MIL.sandHi : MIL.bone, align: 'right', shadow: false,
+  });
+
+  // Giant centered front hero photo
+  const rect = drawContainImage(IMG.swFront, 515, 775, 790, 640, {
+    scale: 1.0 + beatPulse * 0.014,
+    glowColor: `rgba(${cur.rgb}, 0.42)`,
+    glowBlur: 34,
+  });
+
+  // Animated tactile ring right over real rotary push-button (FRONT_UV.button)
+  const bx = rect.x + rect.w * FRONT_UV.button.u;
+  const by = rect.y + rect.h * FRONT_UV.button.v;
+  const ringR = 26 + ((lt * 3.2) % 1) * 34;
+  ctx.save();
+  ctx.strokeStyle = `rgba(238, 208, 137, ${(0.85 * (1 - ((lt * 3.2) % 1))).toFixed(3)})`;
+  ctx.lineWidth = 3.5;
+  ctx.beginPath();
+  ctx.arc(bx, by, ringR, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+
+  // Exact optical emitter beam! (Strobes crisp 11 Hz square-ish flash during final 1.55s!)
+  const strobeGate = isStrobe ? (Math.sin(t * 68.0) > -0.15 ? 1.0 : 0.12) : (0.86 + 0.14 * beatPulse);
+  const uv = cur.useReflector ? FRONT_UV.reflector : FRONT_UV.dome;
+  const ex = rect.x + rect.w * uv.u;
+  const ey = rect.y + rect.h * uv.v;
+
+  ctx.save();
+  roundRectPath(PAD + 2, 324, SAFE_W - 4, 856, 20);
+  ctx.clip();
+  drawOpticalBeam(ex, ey, 0.36, 0.48, 720, cur.rgb, strobeGate);
+  ctx.restore();
+
+  drawFittedText(cur.desc, W * 0.5, 1144, SAFE_W - 72, {
+    weight: 700, size: 24, family: 'RobotoBold', color: MIL.bone, align: 'center', shadow: false,
+  });
+
+  // 4 Color Mode Selector Cards + Strobe Banner below (y = 1212 .. 1852)
+  const cardW = (SAFE_W - 22) / 2, cardH = 216;
+  modes.forEach((m, idx) => {
+    const col = idx % 2, row = (idx / 2) | 0;
+    const cx = PAD + col * (cardW + 22);
+    const cy = 1212 + row * (cardH + 20);
+    const on = idx === mIdx;
+    drawTacticalCard(cx, cy, cardW, cardH, {
+      fill: on ? `rgba(${m.rgb}, 0.17)` : MIL.panelHi,
+      stroke: on ? m.hex : 'rgba(213, 174, 92, 0.30)',
+      r: 16,
+      accent: m.hex,
+      glow: on ? 16 : 0,
+    });
+    ctx.fillStyle = m.hex;
+    ctx.beginPath();
+    ctx.arc(cx + 38, cy + 56, 13, 0, Math.PI * 2);
+    ctx.fill();
+
+    drawFittedText(`0${idx + 1} · ${m.name}`, cx + 64, cy + 66, cardW - 90, {
+      weight: 900, size: 34, family: 'FiraCond', color: on ? m.hex : MIL.bone, shadow: false,
+    });
+    drawFittedText(m.en, cx + 28, cy + 126, cardW - 56, {
+      weight: 700, size: 17, family: 'JetMono', color: MIL.ash, shadow: false,
+    });
+    drawFittedText(on ? '● АКТИВНЫЙ СПЕКТР' : 'УДЕРЖАНИЕ КНОПКИ', cx + 28, cy + 178, cardW - 56, {
+      weight: 800, size: 20, family: 'JetMono', color: on ? MIL.sandHi : MIL.muted, shadow: false,
+    });
+  });
+
+  // Dedicated Double-Click Strobe Highlight Strip at y = 1692..1852
+  drawTacticalCard(PAD, 1690, SAFE_W, 160, {
+    fill: isStrobe ? 'rgba(48, 62, 28, 0.96)' : MIL.panel,
+    stroke: isStrobe ? MIL.sandHi : MIL.borderSand,
+    r: 16,
+    accent: MIL.sandHi,
+    glow: isStrobe ? 18 : 0,
+  });
+  drawFittedText('⚡ 2 НАЖАТИЯ КНОПКИ — РЕЖИМ СТРОБОСКОПА', W * 0.5, 1756, SAFE_W - 60, {
+    weight: 900, size: 37, family: 'FiraCond', color: MIL.sandHi, align: 'center', shadow: false,
+  });
+  drawFittedText('Тактический сигнальный маяк опознавания «свой-чужой» ночью и в ПНВ', W * 0.5, 1814, SAFE_W - 60, {
+    weight: 700, size: 23, family: 'RobotoBold', color: MIL.bone, align: 'center', shadow: false,
+  });
+}
+
+// =========================================================================
+// SCENE 3 [12.117s .. 17.950s]: NYLON POLYMER · WATERPROOF · IR SAFE LOCK
+// =========================================================================
+function renderScene3(t, beatPulse) {
+  const lt = t - CUTS[2];
+  drawSceneBackdrop(IMG.bgArmor, t, 2, { glowRGB: '132, 158, 84', glowAlpha: 0.22 });
+  drawTopHUD(t, 2, 'УЛЬТРАПРОЧНЫЙ НЕЙЛОН · ВЛАГОЗАЩИТА');
+
+  // Subtle deterministic diagonal rain streaks illustrating weatherproof reliability!
+  ctx.save();
+  ctx.strokeStyle = 'rgba(185, 225, 240, 0.13)';
+  ctx.lineWidth = 1.6;
+  for (let i = 0; i < 64; i++) {
+    const rx = ((hash2(i, 11) * 1240 + t * 210) % 1240) - 80;
+    const ry = ((hash2(i, 29) * 1980 + t * 880) % 1980) - 40;
+    ctx.beginPath();
+    ctx.moveTo(rx, ry);
+    ctx.lineTo(rx - 14, ry + 56);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  drawFittedText('НЕУБИВАЕМЫЙ КОРПУС', PAD, 232, SAFE_W, {
+    weight: 900, size: 64, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('УЛЬТРАПРОЧНЫЙ НЕЙЛОНОВЫЙ ПОЛИМЕР · РАБОТА В ЛЮБУЮ ПОГОДУ', PAD, 286, SAFE_W, {
+    weight: 800, size: 26, family: 'Tektur', color: MIL.sandHi,
+  });
+
+  // Dual high-detail macro cards: Top IR SAFE view + Rear Spring-Steel Clip & O-ring view
+  drawTacticalCard(PAD, 324, SAFE_W, 825, {
+    fill: 'rgba(12, 18, 13, 0.91)',
+    stroke: MIL.borderSand,
+    r: 20,
+    accent: MIL.sand,
+  });
+
+  const floatY = Math.sin(t * 2.3) * 5;
+  drawContainImage(IMG.swTop, 540, 565 + floatY, 620, 430, {
+    glowColor: 'rgba(126, 242, 102, 0.30)',
+    glowBlur: 26,
+  });
+  drawContainImage(IMG.swRear, 540, 935 - floatY, 600, 395, {
+    glowColor: 'rgba(213, 174, 92, 0.30)',
+    glowBlur: 24,
+  });
+
+  // Callout pills left & right inside engineering stage
+  drawTacticalCard(82, 402, 268, 92, { fill: MIL.panelHi, stroke: 'rgba(126, 242, 102, 0.55)', r: 12, accent: MIL.phosphor });
+  drawFittedText('БЛОКИРАТОР', 216, 438, 236, { weight: 700, size: 17, family: 'JetMono', color: MIL.ash, align: 'center', shadow: false });
+  drawFittedText('IR SAFE ➔', 216, 476, 236, { weight: 900, size: 28, family: 'RussoOne', color: MIL.phosphor, align: 'center', shadow: false });
+
+  drawTacticalCard(730, 868, 268, 92, { fill: MIL.panelHi, stroke: MIL.borderSand, r: 12, accent: MIL.sandHi });
+  drawFittedText('СТАЛЬНАЯ КЛИПСА', 864, 904, 236, { weight: 700, size: 17, family: 'JetMono', color: MIL.ash, align: 'center', shadow: false });
+  drawFittedText('MOLLE / БРОНЯ', 864, 942, 236, { weight: 900, size: 26, family: 'FiraCond', color: MIL.sandHi, align: 'center', shadow: false });
+
+  // 3 engineering pillars at bottom
+  const rows3 = [
+    ['НЕЙЛОНОВЫЙ ПОЛИМЕР', 'Ударопрочный армированный корпус выдерживает падения и нагрузки в бою'],
+    ['ВЛАГОСТОЙКАЯ ЗАЩИТА', 'Уплотнительные кольца O-ring на крышке АКБ — бесперебойная работа в ливень и снег'],
+    ['ЗАЩИТА ОТ ДЕМАСКИРОВКИ', 'Механический фиксатор IR SAFE исключает случайное нажатие на выходе'],
+  ];
+  rows3.forEach(([title, desc], i) => {
+    const e = easeOutCubic(prog(lt, 0.16 + i * 0.24, 0.44));
+    const cy = 1178 + i * 228 + (1 - e) * 22;
+    ctx.save();
+    ctx.globalAlpha = e;
+    drawTacticalCard(PAD, cy, SAFE_W, 206, {
+      fill: MIL.panelHi,
+      stroke: i === 2 ? 'rgba(126, 242, 102, 0.52)' : MIL.borderSand,
+      r: 16,
+      accent: i === 2 ? MIL.phosphor : MIL.sandHi,
+    });
+    drawFittedText(`0${i + 1} · ${title}`, PAD + 30, cy + 72, SAFE_W - 60, {
+      weight: 900, size: 38, family: 'FiraCond', color: i === 2 ? MIL.phosphor : MIL.sandHi, shadow: false,
+    });
+    const wds = desc.split(' ');
+    const mid = Math.ceil(wds.length * 0.56);
+    drawFittedText(wds.slice(0, mid).join(' '), PAD + 30, cy + 130, SAFE_W - 60, {
+      weight: 700, size: 24, family: 'RobotoBold', color: MIL.bone, shadow: false,
+    });
+    drawFittedText(wds.slice(mid).join(' '), PAD + 30, cy + 166, SAFE_W - 60, {
+      weight: 700, size: 24, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+}
+
+// =========================================================================
+// SCENE 4 [17.950s .. 23.283s]: 360° ROTATION + FULL KIT IN CASE + B2C/B2B SUPPLY
+// =========================================================================
+function renderScene4(t, beatPulse) {
+  const lt = t - CUTS[3];
+  drawSceneBackdrop(IMG.bgCrates, t, 3, { glowRGB: '213, 174, 92', glowAlpha: 0.22 });
+  drawTopHUD(t, 3, 'ПОВОРОТ 360° · ПОЛНЫЙ КОМПЛЕКТ В КЕЙСЕ');
+
+  drawFittedText('ПОВОРОТ НА 360°', PAD, 232, SAFE_W, {
+    weight: 900, size: 68, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('НАЛОБНЫЙ РЕМЕНЬ И КРЕПЛЕНИЯ НА ШЛЕМ УЖЕ В КОМПЛЕКТЕ', PAD, 286, SAFE_W, {
+    weight: 800, size: 26, family: 'Tektur', color: MIL.sandHi,
+  });
+
+  // Upper showcase stage: Left = Full Flat-Lay Kit w/ animated 360° compass ring | Right = Open Foam Polymer Case!
+  drawTacticalCard(PAD, 322, SAFE_W, 745, {
+    fill: 'rgba(13, 19, 13, 0.92)',
+    stroke: MIL.borderSand,
+    r: 20,
+    accent: MIL.sandHi,
+  });
+
+  // Animated 360-degree rotation dial behind flatlay mounts
+  ctx.save();
+  ctx.translate(332, 685);
+  ctx.rotate(t * 0.85);
+  ctx.strokeStyle = 'rgba(126, 242, 102, 0.42)';
+  ctx.lineWidth = 3;
+  ctx.setLineDash([18, 12]);
+  ctx.beginPath();
+  ctx.arc(0, 0, 238, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  drawContainImage(IMG.swKit, 332, 680, 495, 590, {
+    glowColor: 'rgba(213, 174, 92, 0.26)',
+    glowBlur: 22,
+  });
+  drawContainImage(IMG.swOpenCase, 804, 675, 420, 590, {
+    glowColor: 'rgba(132, 158, 84, 0.30)',
+    glowBlur: 24,
+  });
+
+  drawFittedText('ВСЕ ПЛАТФОРМЫ 360° + РЕМЕНЬ', 332, 1028, 460, {
+    weight: 800, size: 20, family: 'JetMono', color: MIL.phosphor, align: 'center', shadow: false,
+  });
+  drawFittedText('УДАРОПРОЧНЫЙ КЕЙС С ЛОЖЕМЕНТОМ', 804, 1028, 430, {
+    weight: 800, size: 19, family: 'JetMono', color: MIL.sandHi, align: 'center', shadow: false,
+  });
+
+  // Kit contents + Supply banner (ZERO PRICES!)
+  const kitItems = [
+    '✓ Шлемный фонарь BOOIU Sidewinder GEN_3 (корпус Олива / Green)',
+    '✓ Эластичный налобный ремень с быстросъёмной поворотной базой',
+    '✓ Крепления на рельсу шлема ARC и под шрауд ПНВ (вращение 360°)',
+    '✓ Стальная клипса на MOLLE / плитник + шестигранники + жёсткий кейс',
+  ];
+  drawTacticalCard(PAD, 1094, SAFE_W, 480, {
+    fill: MIL.panel,
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sand,
+  });
+  kitItems.forEach((txt, idx) => {
+    const ry = 1122 + idx * 108;
+    roundRectPath(PAD + 24, ry, SAFE_W - 48, 92, 12);
+    ctx.fillStyle = 'rgba(26, 36, 22, 0.92)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(126, 242, 102, 0.40)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    drawFittedText(txt, PAD + 48, ry + 56, SAFE_W - 96, {
+      weight: 700, size: 25, family: 'RobotoBold', color: MIL.bone, shadow: false,
+    });
+  });
+
+  // Wholesale & Retail banner at bottom (ZERO PRICES!)
+  drawTacticalCard(PAD, 1600, SAFE_W, 250, {
+    fill: 'rgba(22, 33, 19, 0.96)',
+    stroke: 'rgba(213, 174, 92, 0.68)',
+    r: 18,
+    accent: MIL.sandHi,
+    glow: 14,
+  });
+  drawFittedText('ОПТОМ И В РОЗНИЦУ · С НДС И БЕЗ НДС', W * 0.5, 1688, SAFE_W - 56, {
+    weight: 900, size: 46, family: 'FiraCond', color: MIL.sandHi, align: 'center', shadow: false,
+  });
+  drawFittedText('От 1 фонаря бойцу до крупных партий для подразделений и фондов', W * 0.5, 1756, SAFE_W - 56, {
+    weight: 700, size: 24, family: 'RobotoBold', color: MIL.bone, align: 'center', shadow: false,
+  });
+  drawFittedText('● ПРЯМАЯ ПОСТАВКА · БЫСТРАЯ ОТПРАВКА ПО ВСЕЙ РОССИИ', W * 0.5, 1812, SAFE_W - 56, {
+    weight: 800, size: 19, family: 'JetMono', color: MIL.phosphor, align: 'center', shadow: false,
+  });
+}
+
+// =========================================================================
+// SCENE 5 [23.283s .. 30.000s]: MONUMENTAL BRAND FINALE — В ОКОПЕ (TG / VK / AVITO)
+// =========================================================================
+function renderScene5(t, beatPulse) {
+  const lt = t - CUTS[4];
+  const outroSurge = smooth01((t - 27.60) / 0.45);
+  drawSceneBackdrop(IMG.bgTrench, t, 4, {
+    glowRGB: '238, 208, 137',
+    glowAlpha: 0.22 + outroSurge * 0.14,
+    tint: 'rgba(8, 12, 8, 0.80)',
+  });
+
+  if (t >= 27.60) {
+    const swp = clamp((t - 27.60) / 1.80, 0, 1);
+    ctx.save();
+    ctx.strokeStyle = `rgba(238, 208, 137, ${(0.55 * (1 - swp)).toFixed(3)})`;
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.arc(W * 0.5, 230, 90 + swp * 780, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Official GOYDA · В ОКОПЕ Full Lockup Banner
+  const eLogo = easeOutBack(prog(lt, 0.04, 0.52));
+  drawTacticalCard(PAD, 62, SAFE_W, 316, {
+    fill: 'rgba(14, 19, 12, 0.94)',
+    stroke: 'rgba(213, 174, 92, 0.68)',
+    r: 22,
+    accent: MIL.sandHi,
+    glow: 18 + outroSurge * 20,
+  });
+  drawContainImage(IMG.logoFullSand, W * 0.5, 194, 760, 204, {
+    scale: 0.92 + 0.08 * eLogo,
+    dropShadow: false,
+  });
+  drawFittedText('ШЛЕМНЫЙ ФОНАРЬ BOOIU SIDEWINDER GEN_3 · В НАЛИЧИИ', W * 0.5, 350, SAFE_W - 56, {
+    weight: 800, size: 23, family: 'Tektur', color: MIL.phosphor, align: 'center', shadow: false,
+  });
+
+  // Hero product + open case banner across middle-top (y = 400 .. 790)
+  drawTacticalCard(PAD, 400, SAFE_W, 380, {
+    fill: 'rgba(13, 19, 13, 0.92)',
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sand,
+  });
+  const heroRect = drawContainImage(IMG.swFront, 310, 592, 430, 336, {
+    scale: 1.0 + outroSurge * 0.03,
+    glowColor: 'rgba(238, 208, 137, 0.42)',
+    glowBlur: 28,
+  });
+  drawOpticalBeam(
+    heroRect.x + heroRect.w * FRONT_UV.reflector.u,
+    heroRect.y + heroRect.h * FRONT_UV.reflector.v,
+    0.25, 0.40, 390, '255, 244, 214', 0.68 + 0.25 * outroSurge
+  );
+  drawContainImage(IMG.swOpenCase, 800, 590, 340, 340, {
+    glowColor: 'rgba(132, 158, 84, 0.30)',
+    glowBlur: 22,
+  });
+
+  // 3 Official Public Channels ONLY (Telegram, VK, Avito — 100% compliant!)
+  const channels = [
+    { badge: 'TELEGRAM', title: 't.me/vokope_ru', sub: 'Оперативный заказ, наличие и консультации', accent: '#42b8f6' },
+    { badge: 'ВКОНТАКТЕ', title: 'vk.com/vokope_rus', sub: 'Обзоры снаряжения, новости и прямая связь', accent: MIL.cyan },
+    { badge: 'МАГАЗИН НА АВИТО', title: 'Официальная витрина В ОКОПЕ', sub: 'avito.ru · Проверенный профиль и доставка по РФ', accent: MIL.emerald },
+  ];
+  channels.forEach((ch, idx) => {
+    const ec = easeOutCubic(prog(lt, 0.18 + idx * 0.18, 0.42));
+    const cy = 808 + idx * 268 + (1 - ec) * 20;
+    ctx.save();
+    ctx.globalAlpha = ec;
+    drawTacticalCard(PAD, cy, SAFE_W, 246, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.55)',
+      r: 18,
+      accent: ch.accent,
+      glow: outroSurge * 10,
+    });
+    roundRectPath(PAD + 28, cy + 26, 260, 48, 9);
+    ctx.fillStyle = 'rgba(255,255,255,0.07)';
+    ctx.fill();
+    ctx.strokeStyle = ch.accent;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    drawFittedText(`● ${ch.badge}`, PAD + 46, cy + 58, 224, {
+      weight: 800, size: 19, family: 'JetMono', color: ch.accent, shadow: false,
+    });
+    drawFittedText(ch.title, PAD + 28, cy + 142, SAFE_W - 56, {
+      weight: 900, size: 50, family: 'FiraCond', color: MIL.bone, shadow: false,
+    });
+    drawFittedText(ch.sub, PAD + 28, cy + 206, SAFE_W - 56, {
+      weight: 700, size: 25, family: 'RobotoBold', color: MIL.sandHi, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Closing bottom bar
+  drawTacticalCard(PAD, 1626, SAFE_W, 228, {
+    fill: 'rgba(18, 26, 15, 0.96)',
+    stroke: 'rgba(213, 174, 92, 0.68)',
+    r: 18,
+    accent: MIL.sandHi,
+  });
+  drawFittedText('4 ЦВЕТА LED  ·  СТРОБ 2× КЛИК  ·  ПОВОРОТ 360°', W * 0.5, 1716, SAFE_W - 56, {
+    weight: 900, size: 38, family: 'FiraCond', color: MIL.sandHi, align: 'center', shadow: false,
+  });
+  drawFittedText('ОПТОМ И В РОЗНИЦУ · С НДС И БЕЗ НДС · ДОСТАВКА ПО РОССИИ', W * 0.5, 1790, SAFE_W - 56, {
+    weight: 700, size: 22, family: 'JetMono', color: MIL.bone, align: 'center', shadow: false,
+  });
+}
+
+// =========================================================================
+// STATELESS MASTER FRAME DISPATCHER
+// =========================================================================
+function renderFrame(rawTime) {
+  const t = clamp(rawTime, 0, DURATION - 1e-4);
+  const beatPhase = (t / BEAT) % 1;
+  const beatPulse = Math.exp(-beatPhase * 5.2);
+
+  let scIdx = 0;
+  for (let i = 0; i < 5; i++) {
+    if (t >= CUTS[i] && t < CUTS[i + 1]) { scIdx = i; break; }
+  }
+  if (t >= CUTS[5] - 1e-3) scIdx = 4;
+
+  switch (scIdx) {
+    case 0: renderScene1(t, beatPulse); break;
+    case 1: renderScene2(t, beatPulse); break;
+    case 2: renderScene3(t, beatPulse); break;
+    case 3: renderScene4(t, beatPulse); break;
+    default: renderScene5(t, beatPulse); break;
+  }
+
+  if (scIdx > 0) {
+    const dtCut = t - CUTS[scIdx];
+    if (dtCut >= 0 && dtCut < 0.14) {
+      const fa = (1 - dtCut / 0.14) * (scIdx === 1 ? 0.34 : 0.20);
+      ctx.fillStyle = `rgba(245, 244, 232, ${fa.toFixed(4)})`;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  const ox = ((Math.floor(t * 60) * 37) % 128);
+  const oy = ((Math.floor(t * 60) * 53) % 128);
+  for (let gx = -ox; gx < W; gx += 256) {
+    for (let gy = -oy; gy < H; gy += 256) {
+      ctx.drawImage(GRAIN_TILE, gx, gy);
+    }
+  }
+}
+
+window.renderAt = renderFrame;
+window.getFrameSignature = function () {
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let h = 2166136261;
+  for (let i = 0; i < d.length; i += 97) {
+    h ^= d[i];
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0).toString(16);
+};
+
+window.__READY_PROMISE = loadAllAssets().then(() => {
+  renderFrame(0);
+  return true;
+});
+</script>
+</body>
+</html>

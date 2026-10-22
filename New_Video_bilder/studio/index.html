@@ -277,7 +277,7 @@
       <img src="/assets/brand/logo_full_light.png" alt="В ОКОПЕ — магазин брони" />
       <div>
         <div class="badge-top">★ REAL PHOTO · REAL DNB MP3 · 60 FPS</div>
-        <h1 id="reelTitle">1-минутный Reels: «Видеоперехват АЗАР от 3mx»</h1>
+        <h1 id="reelTitle">Товарный Reels: «BOOIU Sidewinder GEN_3»</h1>
       </div>
     </div>
     <p class="sub">Реальные студийные фото · Настоящий Drum & Bass MP3 · Голос <b>VC-05</b> · Логотип <b>GOYDA</b> · Без цен</p>
@@ -285,12 +285,20 @@
     <div class="version-tabs">
       <button
         class="v-btn active"
+        data-key="sidewinder"
+        data-title="Товарный Reels: «BOOIU Sidewinder GEN_3»"
+        data-src="/output/v_okope_sidewinder_30s.mp4?v=sw1"
+        data-dl="/output/v_okope_sidewinder_30s.mp4"
+        data-dlname="v_okope_sidewinder_30s.mp4"
+      >★ Sidewinder GEN_3</button>
+      <button
+        class="v-btn"
         data-key="azar"
         data-title="1-минутный Reels: «Видеоперехват АЗАР от 3mx»"
         data-src="/output/v_okope_azar_60s.mp4?v=az1"
         data-dl="/output/v_okope_azar_60s.mp4"
         data-dlname="v_okope_azar_60s.mp4"
-      >★ АЗАР 3mx (1:00)</button>
+      >АЗАР 3mx (1:00)</button>
       <button
         class="v-btn"
         data-key="power"
@@ -324,20 +332,20 @@
     </div>
 
     <div class="player-shell">
-      <video id="reelPlayer" src="/output/v_okope_azar_60s.mp4?v=az1" controls playsinline preload="metadata"></video>
+      <video id="reelPlayer" src="/output/v_okope_sidewinder_30s.mp4?v=sw1" controls playsinline preload="metadata"></video>
     </div>
 
     <div id="sceneJumps" class="scene-jumps"></div>
 
     <div class="dl-row">
-      <a id="dlLink" class="dl-btn" href="/output/v_okope_azar_60s.mp4" download="v_okope_azar_60s.mp4">
-        ⬇ Скачать «АЗАР 3mx (1:00)» MP4 (1080×1920 · 60 fps)
+      <a id="dlLink" class="dl-btn" href="/output/v_okope_sidewinder_30s.mp4" download="v_okope_sidewinder_30s.mp4">
+        ⬇ Скачать «BOOIU Sidewinder GEN_3 (0:30)» MP4 (1080×1920 · 60 fps)
       </a>
-      <a class="dl-btn secondary" href="/output/azar_3mx_description.txt" download="azar_3mx_description.txt">
-        📄 Скачать описание «АЗАР 3mx» без таймкодов (.TXT)
+      <a class="dl-btn secondary" href="/output/sidewinder_gen3_description.txt" download="sidewinder_gen3_description.txt">
+        📄 Скачать описание «Sidewinder GEN_3» без таймкодов (.TXT)
       </a>
-      <a class="dl-btn secondary" href="/output/v_okope_power_6_lineups.zip" download="v_okope_power_6_lineups.zip">
-        📦 Скачать ZIP (6 роликов по зарядным станциям + .TXT · 49 МБ)
+      <a class="dl-btn secondary" href="/output/v_okope_azar_60s.mp4" download="v_okope_azar_60s.mp4">
+        📡 Скачать «АЗАР 3mx (1:00)» MP4 + в студии все предыдущие ролики
       </a>
     </div>
   </div>
@@ -471,6 +479,13 @@ let currentAudio = null;
 let currentBtn = null;
 
 const CHAPTERS = {
+  sidewinder: [
+    { t: 0.00, label: '01 · Хук Sidewinder GEN_3' },
+    { t: 5.50, label: '02 · 4 цвета LED + Строб' },
+    { t: 12.12, label: '03 · Нейлон · Влага · IR SAFE' },
+    { t: 17.95, label: '04 · 360° и комплект в кейсе' },
+    { t: 23.29, label: '05 · GOYDA · TG / VK / Авито' },
+  ],
   azar: [
     { t: 0.00, label: '01 · Хук АЗАР 3mx' },
     { t: 5.39, label: '02 · Авто с «Булат» в.4' },
@@ -539,6 +554,41 @@ function showToast(msg) {
 }
 
 const YT_PACKS = {
+  sidewinder: {
+    heading: 'YouTube Shorts / VK Клипы / Reels — «BOOIU Sidewinder GEN_3» (0:30 · без таймкодов)',
+    title: 'Тактический шлемный фонарь BOOIU Sidewinder GEN_3 — 4 цвета LED, ИК-режим, стробоскоп и 360° | В ОКОПЕ #shorts',
+    desc: `Тактический индивидуальный шлемный фонарь BOOIU Sidewinder GEN_3 в магазине брони и тактического оснащения «В ОКОПЕ»!
+
+Модель спроектирована специально под задачи спецподразделений, штурмовых и разведывательных групп, расчётов БПЛА и полевой медицины — когда один компактный модуль закрывает все сценарии ночной работы без смены светофильтров.
+
+🔦 4 спектра свечения и быстрое управление одной рукой в перчатке:
+• 4 разных цвета светодиодов в одном корпусе: белый (направленный рефлектор), красный (чтение карт без засветки ночного зрения), синий (работа с медициной и маркировкой) и инфракрасный ИК-режим под приборы ночного видения (ПНВ)
+• Нужный цвет легко выбирается удержанием кнопки вкл/выкл
+• Двойное нажатие кнопки (2 клика) мгновенно включает режим стробоскопа / тактического маяка опознавания «свой-чужой»
+• Механический блокиратор IR SAFE защищает от случайного демаскирующего включения на выходе
+
+🛡 Надёжная конструкция и полная комплектация на 360°:
+• Корпус выполнен из ультрапрочного армированного нейлонового полимера (цвет Олива / Green)
+• Влагостойкая герметизированная конструкция с уплотнительными кольцами обеспечивает бесперебойную и длительную работу в дождь, снег, туман и грязь
+• Поворотная платформа на 360 градусов позволяет точно направить луч под нужным углом прямо со шлема или разгрузки
+• Богатый заводской комплект в ударопрочном пластиковом кейсе с поролоновым ложементом: фонарь, эластичный налобный ремень, быстросъёмные крепления на рельсы шлема ARC и платформу ПНВ, стальная клипса на MOLLE / бронежилет и ключи
+
+📦 Условия поставки:
+Отгружаем от 1 комплекта бойцам до крупных партий для подразделений, волонтёрских фондов и организаций — оптом и в розницу, с НДС и без НДС (полный пакет закрывающих документов, быстрая отправка по всей России).
+
+📲 Официальные площадки магазина «В ОКОПЕ»:
+• Telegram-канал: https://t.me/vokope_ru
+• Сообщество ВКонтакте: https://vk.com/vokope_rus
+• Магазин на Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
+
+#вокопе #sidewinder #шлемныйфонарь #тактическийфонарь #фонарьнашлем #икфонарь #пнв #экипировка #снаряжение #спецснаряжение #бронезащита #shorts`,
+    tags: 'в окопе, магазин в окопе, booiu sidewinder gen 3, sidewinder gen 3, тактический шлемный фонарь, фонарь на шлем, индивидуальный фонарь на шлем, ик фонарь для пнв, фонарь с красным светом, стробоскоп на шлем, маяк свой чужой, фонарь на рельсу шлема arc, фонарь на молле, тактическое снаряжение, военная экипировка, налобный тактический фонарь, снаряжение оптом с ндс, магазин брони',
+    pin: `🔦 Тактический шлемный фонарь BOOIU Sidewinder GEN_3 (белый, красный, синий и ИК-свет + стробоскоп в 2 клика, поворот 360°, полный набор креплений и ремень в жёстком кейсе) — в наличии!
+Отгружаем от 1 шт. до крупных партий, оптом и в розницу, с НДС и без НДС:
+👉 Telegram: https://t.me/vokope_ru
+👉 ВКонтакте: https://vk.com/vokope_rus
+👉 Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241`,
+  },
   azar: {
     heading: 'YouTube Shorts / VK Клипы / Reels — «Приёмник АЗАР 3mx» (1:00 · без таймкодов)',
     title: 'Видеоперехват «АЗАР» от 3mx — приём сигнала с FPV-дронов до 1,5 км и вывод на монитор | В ОКОПЕ #shorts',
@@ -687,10 +737,10 @@ const YT_PACKS = {
   },
 };
 
-let activeKey = 'azar';
+let activeKey = 'sidewinder';
 function renderYtPack(key) {
   activeKey = key;
-  const p = YT_PACKS[key] || YT_PACKS.azar;
+  const p = YT_PACKS[key] || YT_PACKS.sidewinder;
   document.getElementById('ytHeading').textContent = p.heading;
   document.getElementById('ytTitleText').textContent = p.title;
   document.getElementById('ytDescText').textContent = p.desc;
@@ -703,14 +753,14 @@ function renderYtPack(key) {
   ['copyYtPin', 'pin', 'Текст закреп-комментария скопирован!'],
 ].forEach(([id, field, msg]) => {
   document.getElementById(id).addEventListener('click', async () => {
-    const val = (YT_PACKS[activeKey] || YT_PACKS.azar)[field];
+    const val = (YT_PACKS[activeKey] || YT_PACKS.sidewinder)[field];
     try { await navigator.clipboard.writeText(val); } catch {}
     showToast(msg);
   });
 });
 
-renderChapters('azar');
-renderYtPack('azar');
+renderChapters('sidewinder');
+renderYtPack('sidewinder');
 
 document.querySelectorAll('.v-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -720,13 +770,15 @@ document.querySelectorAll('.v-btn').forEach((btn) => {
     video.src = btn.dataset.src;
     dlLink.href = btn.dataset.dl;
     dlLink.download = btn.dataset.dlname;
-    dlLink.textContent = btn.dataset.key === 'azar'
-      ? '⬇ Скачать «АЗАР 3mx (1:00)» MP4 (1080×1920 · 60 fps)'
-      : btn.dataset.key === 'power'
-        ? `⬇ Скачать «${btn.dataset.dlname}» (1080×1920 · 60 fps)`
-        : btn.dataset.key === 'product'
-          ? '⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)'
-          : '⬇ Скачать общий ролик магазина MP4 (1080×1920 · 60 fps)';
+    dlLink.textContent = btn.dataset.key === 'sidewinder'
+      ? '⬇ Скачать «BOOIU Sidewinder GEN_3 (0:30)» MP4 (1080×1920 · 60 fps)'
+      : btn.dataset.key === 'azar'
+        ? '⬇ Скачать «АЗАР 3mx (1:00)» MP4 (1080×1920 · 60 fps)'
+        : btn.dataset.key === 'power'
+          ? `⬇ Скачать «${btn.dataset.dlname}» (1080×1920 · 60 fps)`
+          : btn.dataset.key === 'product'
+            ? '⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)'
+            : '⬇ Скачать общий ролик магазина MP4 (1080×1920 · 60 fps)';
     reelTitle.textContent = btn.dataset.title;
     renderChapters(btn.dataset.key);
     renderYtPack(btn.dataset.key);
