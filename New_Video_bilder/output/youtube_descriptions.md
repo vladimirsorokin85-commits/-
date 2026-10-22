@@ -113,3 +113,80 @@
 👉 ВКонтакте: https://vk.com/vokope_rus
 👉 Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
 ```
+
+---
+
+## РОЛИК №3 — Товарный обзор: Бесшумные зарядные станции (17 моделей в наличии)
+- **Файл видео:** `New_Video_bilder/output/v_okope_power_30s.mp4` (`1080×1920 · 60 fps · 30.0 сек · -14.0 LUFS`)
+
+### Варианты заголовка YouTube (на выбор)
+1. `Бесшумные зарядные станции для позиций, дронов и РЭБ — DJI, EcoFlow, Jackery, Bluetti | В ОКОПЕ #shorts`
+2. `17 моделей зарядных станций LiFePO4 в наличии: DJI Power, EcoFlow Delta 3, Allpowers 4 кВт | В ОКОПЕ`
+3. `Питание блиндажа, связи и БПЛА без генератора и выхлопа — Зарядные станции в «В ОКОПЕ» #shorts`
+
+### Готовое описание для YouTube (просто скопировать целиком)
+```text
+Когда позиции нужна тишина — работают бесшумные зарядные станции из магазина брони и тактического оснащения «В ОКОПЕ»!
+
+Надёжное автономное питание 220V (чистый синус) и USB-C PD без шума генератора, выхлопных газов и тепловой засветки в закрытых блиндажах и укрытиях. Долговечные аккумуляторы LiFePO4 с ресурсом 3000–4000 циклов.
+
+🔋 В наличии на складе вся линейка (17 моделей под любую задачу от 500 до 4000 Вт):
+
+• DJI Power (ускоренный разгон АКБ БПЛА Mavic / Matrice, сверхтихий режим 23 дБ):
+  — DJI Power 1000W V2
+  — DJI Power 2000W
+
+• EcoFlow Delta (быстрая зарядка X-Stream за 56 минут, режим ИБП 10 мс):
+  — EcoFlow Delta 3 Plus
+  — EcoFlow Delta 3 Max
+  — EcoFlow Delta 3 Max Plus
+  — EcoFlow Delta 3 Ultra Plus
+  — EcoFlow Delta Pro 3
+
+• Jackery Explorer V2 (ударопрочный корпус ChargeShield 2.0):
+  — Jackery Explorer 1000 V2
+  — Jackery Explorer 2000 V2
+  — Jackery Explorer 3000 V2
+
+• Bluetti (пылевлагозащита, надёжная автоматика 220V):
+  — Bluetti AC180P / 1800 Вт
+  — Bluetti AC200PL / 2400 Вт
+
+• Тяжёлый класс Allpowers и JQB Power (большой запас энергии для РЭБ, связи и штабов):
+  — Allpowers R2500 V.2
+  — Allpowers R4000
+  — JQB Power 500W-1000Wh
+  — JQB Power 1000W-2000Wh
+  — JQB Power 1800W-4000Wh
+
+📦 Условия поставки:
+Отгружаем от 1 станции бойцам и расчётам БПЛА до крупных партий для подразделений, волонтёрских сборов и организаций — оптом и в розницу, с НДС и без НДС (полный комплект закрывающих документов по ЭДО, быстрая доставка по всей России).
+
+⏱ Таймкоды:
+00:00 — Бесшумное питание на позиции без выхлопа и теплового следа
+00:05 — Флагманские линейки в наличии: DJI Power, EcoFlow Delta 3, Jackery V2, Bluetti
+00:11 — Полный складской ряд LiFePO4 от 1 кВт до тяжёлых станций Allpowers и JQB 4 кВт·ч
+00:18 — Питание РЭБ, связи и блиндажей, поставка оптом и в розницу (с НДС и без НДС)
+00:24 — Официальные площадки магазина «В ОКОПЕ»
+
+📲 Уточнить наличие и оформить заказ на официальных площадках «В ОКОПЕ»:
+• Telegram-канал: https://t.me/vokope_ru
+• Сообщество ВКонтакте: https://vk.com/vokope_rus
+• Магазин на Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
+
+#вокопе #заряднаястанция #ecoflow #djipower #jackery #bluetti #allpowers #lifepo4 #питаниевполе #рэб #бпла #снаряжение #shorts
+```
+
+### Теги для поля «Теги» в Творческой студии YouTube (`Ctrl+C` → `Ctrl+V`)
+```text
+в окопе, магазин в окопе, зарядная станция для сво, портативная электростанция lifepo4, dji power 1000 v2, dji power 2000, ecoflow delta 3 plus, ecoflow delta 3 max, ecoflow delta pro 3, jackery explorer 1000 v2, jackery explorer 2000 v2, jackery 3000 v2, bluetti ac180p, bluetti ac200pl, allpowers r2500 v2, allpowers r4000, jqb power, зарядка дронов в поле, питание для рэб и блиндажа, зарядные станции оптом с ндс
+```
+
+### Текст для закреплённого комментария под YouTube Shorts
+```text
+🔋 В наличии все 17 моделей бесшумных зарядных станций LiFePO4: DJI Power V2, EcoFlow Delta 3 / Pro 3, Jackery V2, Bluetti, Allpowers и JQB (до 4000 Вт·ч)!
+Отгружаем оптом и в розницу, с НДС и без НДС — быстрая отправка по всей РФ:
+👉 Telegram: https://t.me/vokope_ru
+👉 ВКонтакте: https://vk.com/vokope_rus
+👉 Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
+```

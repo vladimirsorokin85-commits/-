@@ -91,7 +91,7 @@
   }
   .version-tabs {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     margin-bottom: 14px;
   }
@@ -277,20 +277,28 @@
       <img src="/assets/brand/logo_full_light.png" alt="В ОКОПЕ — магазин брони" />
       <div>
         <div class="badge-top">★ REAL PHOTO · REAL DNB MP3 · 60 FPS</div>
-        <h1 id="reelTitle">Товарный Reels: «Воевода 14/23»</h1>
+        <h1 id="reelTitle">Товарный Reels: «Зарядные станции»</h1>
       </div>
     </div>
-    <p class="sub">Реальные студийные фото · Настоящий Drum & Bass MP3 (174 BPM) · Голос <b>VC-05</b> · Логотип <b>GOYDA</b></p>
+    <p class="sub">Реальные студийные фото · Настоящий Drum & Bass MP3 · Голос <b>VC-05</b> · Логотип <b>GOYDA</b> · Без цен</p>
 
     <div class="version-tabs">
       <button
         class="v-btn active"
+        data-key="power"
+        data-title="Товарный Reels: «Зарядные станции»"
+        data-src="/output/v_okope_power_30s.mp4?v=pwr1"
+        data-dl="/output/v_okope_power_30s.mp4"
+        data-dlname="v_okope_power_30s.mp4"
+      >Зарядные станции (30с)</button>
+      <button
+        class="v-btn"
         data-key="product"
         data-title="Товарный Reels: «Воевода 14/23»"
         data-src="/output/v_okope_product_30s.mp4?v=dnb2"
         data-dl="/output/v_okope_product_30s.mp4"
         data-dlname="v_okope_product_30s.mp4"
-      >Товар: «Воевода 14/23» (30с)</button>
+      >Броня: «Воевода 14/23»</button>
       <button
         class="v-btn"
         data-key="store"
@@ -298,18 +306,21 @@
         data-src="/output/v_okope_reels_30s.mp4?v=dnb2"
         data-dl="/output/v_okope_reels_30s.mp4"
         data-dlname="v_okope_reels_30s.mp4"
-      >Магазин «В ОКОПЕ» Real (30с)</button>
+      >Магазин «В ОКОПЕ» Real</button>
     </div>
 
     <div class="player-shell">
-      <video id="reelPlayer" src="/output/v_okope_product_30s.mp4?v=dnb2" controls playsinline preload="metadata"></video>
+      <video id="reelPlayer" src="/output/v_okope_power_30s.mp4?v=pwr1" controls playsinline preload="metadata"></video>
     </div>
 
     <div id="sceneJumps" class="scene-jumps"></div>
 
     <div class="dl-row">
-      <a id="dlLink" class="dl-btn" href="/output/v_okope_product_30s.mp4" download="v_okope_product_30s.mp4">
-        ⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)
+      <a id="dlLink" class="dl-btn" href="/output/v_okope_power_30s.mp4" download="v_okope_power_30s.mp4">
+        ⬇ Скачать «Зарядные станции» MP4 (1080×1920 · 60 fps)
+      </a>
+      <a class="dl-btn secondary" href="/output/v_okope_product_30s.mp4" download="v_okope_product_30s.mp4">
+        ⬇ Скачать «Воевода 14/23» MP4 (Real DnB · 60 fps)
       </a>
       <a class="dl-btn secondary" href="/output/v_okope_reels_30s.mp4" download="v_okope_reels_30s.mp4">
         ⬇ Скачать общий ролик магазина MP4 (Real DnB · 60 fps)
@@ -402,6 +413,15 @@
     <div class="voice-list" style="margin-bottom:22px;">
       <div class="voice-item selected">
         <div>
+          <div><span class="v-code">DNB-03</span><span class="v-title">dnb_power_30s.mp3 (Feint — Time Bomb · 175 BPM Pure Instrumental Drop)</span></div>
+          <div class="v-desc">Новый студийный срез Drum & Bass MP3 (320 kbps, 65 dB sub-bass, финальный крэш на 27.4с) для ролика «Зарядные станции»</div>
+        </div>
+        <div class="v-actions">
+          <button class="play-btn mp3-btn" data-mp3="/assets/audio/music_mp3/dnb_power_30s.mp3" type="button">▶ Прослушать MP3</button>
+        </div>
+      </div>
+      <div class="voice-item">
+        <div>
           <div><span class="v-code">DNB-01</span><span class="v-title">dnb_voevoda_30s.mp3 (Pendulum — Live Snare Fill + Pure Instrumental Drop)</span></div>
           <div class="v-desc">Настоящий студийный Drum & Bass MP3 (320 kbps, без вокала поверх диктора, живой финальный крэш на 27.6с)</div>
         </div>
@@ -437,6 +457,13 @@ let currentAudio = null;
 let currentBtn = null;
 
 const CHAPTERS = {
+  power: [
+    { t: 0.00, label: '01 · Тишина позиции (0:00)' },
+    { t: 4.97, label: '02 · DJI / EcoFlow / Jackery / Bluetti (0:05)' },
+    { t: 11.14, label: '03 · Вся линейка 17 моделей (0:11)' },
+    { t: 17.86, label: '04 · РЭБ, блиндажи & НДС (0:18)' },
+    { t: 23.52, label: '05 · GOYDA · TG / VK / Авито (0:24)' },
+  ],
   product: [
     { t: 0.00, label: '01 · Хук Воевода (0:00)' },
     { t: 5.39, label: '02 · 8 модулей / ROC (0:05.4)' },
@@ -488,6 +515,42 @@ function showToast(msg) {
 }
 
 const YT_PACKS = {
+  power: {
+    heading: 'YouTube Shorts — «Зарядные станции» (17 моделей)',
+    title: 'Бесшумные зарядные станции для позиций, дронов и РЭБ — DJI, EcoFlow, Jackery, Bluetti | В ОКОПЕ #shorts',
+    desc: `Когда позиции нужна тишина — работают бесшумные зарядные станции из магазина брони и тактического оснащения «В ОКОПЕ»!
+
+Надёжное автономное питание 220V (чистый синус) и USB-C PD без шума генератора, выхлопных газов и тепловой засветки в закрытых блиндажах и укрытиях. Долговечные аккумуляторы LiFePO4 с ресурсом 3000–4000 циклов.
+
+🔋 В наличии на складе вся линейка (17 моделей под любую задачу от 500 до 4000 Вт):
+• DJI Power: Power 1000W V2 · Power 2000W
+• EcoFlow Delta: Delta 3 Plus · Delta 3 Max · Delta 3 Max Plus · Delta 3 Ultra Plus · Delta Pro 3
+• Jackery Explorer V2: 1000 V2 · 2000 V2 · 3000 V2
+• Bluetti: AC180P / 1800 Вт · AC200PL / 2400 Вт
+• Тяжёлый класс: Allpowers R2500 V.2 · Allpowers R4000 · JQB Power 500W-1000Wh · 1000W-2000Wh · 1800W-4000Wh
+
+📦 Отгружаем от 1 станции бойцам до крупных партий для подразделений и фондов — оптом и в розницу, с НДС и без НДС (ЭДО, быстрая доставка по всей РФ).
+
+⏱ Таймкоды:
+00:00 — Бесшумное питание на позиции без выхлопа и теплового следа
+00:05 — Флагманские линейки: DJI Power, EcoFlow Delta 3, Jackery V2, Bluetti
+00:11 — Полный складской ряд LiFePO4 от 1 кВт до Allpowers и JQB 4 кВт·ч
+00:18 — Питание РЭБ, связи и блиндажей, опт и розница (с НДС и без НДС)
+00:24 — Официальные площадки магазина «В ОКОПЕ»
+
+📲 Официальные площадки магазина «В ОКОПЕ»:
+• Telegram-канал: https://t.me/vokope_ru
+• Сообщество ВКонтакте: https://vk.com/vokope_rus
+• Магазин на Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
+
+#вокопе #заряднаястанция #ecoflow #djipower #jackery #bluetti #allpowers #lifepo4 #питаниевполе #рэб #бпла #снаряжение #shorts`,
+    tags: 'в окопе, магазин в окопе, зарядная станция для сво, портативная электростанция lifepo4, dji power 1000 v2, dji power 2000, ecoflow delta 3 plus, ecoflow delta 3 max, ecoflow delta pro 3, jackery explorer 1000 v2, jackery explorer 2000 v2, jackery 3000 v2, bluetti ac180p, bluetti ac200pl, allpowers r2500 v2, allpowers r4000, jqb power, зарядка дронов в поле, питание для рэб и блиндажа, зарядные станции оптом с ндс',
+    pin: `🔋 В наличии все 17 моделей бесшумных зарядных станций LiFePO4: DJI Power V2, EcoFlow Delta 3 / Pro 3, Jackery V2, Bluetti, Allpowers и JQB (до 4000 Вт·ч)!
+Отгружаем оптом и в розницу, с НДС и без НДС — быстрая отправка по всей РФ:
+👉 Telegram: https://t.me/vokope_ru
+👉 ВКонтакте: https://vk.com/vokope_rus
+👉 Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241`,
+  },
   product: {
     heading: 'YouTube Shorts — «Воевода 14/23»',
     title: 'Штурмовой бронекомплекс «ВОЕВОДА 14/23» — 8 модулей защиты Бр1/С2 + Бр5 | В ОКОПЕ #shorts',
@@ -565,10 +628,10 @@ const YT_PACKS = {
   },
 };
 
-let activeKey = 'product';
+let activeKey = 'power';
 function renderYtPack(key) {
   activeKey = key;
-  const p = YT_PACKS[key] || YT_PACKS.product;
+  const p = YT_PACKS[key] || YT_PACKS.power;
   document.getElementById('ytHeading').textContent = p.heading;
   document.getElementById('ytTitleText').textContent = p.title;
   document.getElementById('ytDescText').textContent = p.desc;
@@ -581,14 +644,14 @@ function renderYtPack(key) {
   ['copyYtPin', 'pin', 'Текст закреп-комментария скопирован!'],
 ].forEach(([id, field, msg]) => {
   document.getElementById(id).addEventListener('click', async () => {
-    const val = (YT_PACKS[activeKey] || YT_PACKS.product)[field];
+    const val = (YT_PACKS[activeKey] || YT_PACKS.power)[field];
     try { await navigator.clipboard.writeText(val); } catch {}
     showToast(msg);
   });
 });
 
-renderChapters('product');
-renderYtPack('product');
+renderChapters('power');
+renderYtPack('power');
 
 document.querySelectorAll('.v-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -598,9 +661,11 @@ document.querySelectorAll('.v-btn').forEach((btn) => {
     video.src = btn.dataset.src;
     dlLink.href = btn.dataset.dl;
     dlLink.download = btn.dataset.dlname;
-    dlLink.textContent = btn.dataset.key === 'product'
-      ? '⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)'
-      : '⬇ Скачать общий ролик магазина MP4 (1080×1920 · 60 fps)';
+    dlLink.textContent = btn.dataset.key === 'power'
+      ? '⬇ Скачать «Зарядные станции» MP4 (1080×1920 · 60 fps)'
+      : btn.dataset.key === 'product'
+        ? '⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)'
+        : '⬇ Скачать общий ролик магазина MP4 (1080×1920 · 60 fps)';
     reelTitle.textContent = btn.dataset.title;
     renderChapters(btn.dataset.key);
     renderYtPack(btn.dataset.key);
