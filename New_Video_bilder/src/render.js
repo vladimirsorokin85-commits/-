@@ -12,8 +12,12 @@ const path = require('path');
 const zlib = require('zlib');
 const { spawn, execSync } = require('child_process');
 const puppeteer = require('puppeteer-core');
-const chromiumMod = require('@sparticuz/chromium');
-const chromium = chromiumMod.default || chromiumMod;
+async function getChromiumPath() {
+  if (fs.existsSync('/tmp/chromium')) return '/tmp/chromium';
+  const mod = await import('@sparticuz/chromium');
+  const ch = mod.default || mod;
+  return await ch.executablePath();
+}
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
@@ -47,13 +51,15 @@ function ensureRuntimeLibs() {
   process.env.LD_LIBRARY_PATH = `/tmp/sp_libs/lib:/tmp/sp_libs:${process.env.LD_LIBRARY_PATH || ''}`;
 }
 
-function startStaticServer() {
+function startStaticServer(sceneFile = 'scene.html') {
   return new Promise((resolve) => {
     const srv = http.createServer((req, res) => {
       const urlPath = decodeURIComponent(req.url.split('?')[0]);
       let filePath = null;
       if (urlPath === '/' || urlPath === '/scene.html') {
-        filePath = path.join(PROJECT_ROOT, 'src', 'scene.html');
+        filePath = path.join(PROJECT_ROOT, 'src', sceneFile);
+      } else if (urlPath.startsWith('/src/')) {
+        filePath = path.join(PROJECT_ROOT, urlPath.slice(1));
       } else if (urlPath.startsWith('/vendor/')) {
         filePath = path.join(PROJECT_ROOT, 'node_modules', 'three', 'build', path.basename(urlPath));
       } else if (urlPath.startsWith('/fonts/')) {
@@ -80,7 +86,7 @@ function startStaticServer() {
 
 async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, audioOffsetSec, outMp4 }) {
   ensureRuntimeLibs();
-  const execPath = await chromium.executablePath();
+  const execPath = await getChromiumPath();
   const numWorkers = Math.max(2, Math.min(4, os.cpus().length));
 
   const browser = await puppeteer.launch({
@@ -243,23 +249,36 @@ async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, au
 
 (async () => {
   const args = process.argv.slice(2);
-  const { server, port } = await startStaticServer();
+  let sceneFile = 'scene.html';
+  let audioFile = 'master_30s.wav';
+  let outRel = 'output/v_okope_reels_30s.mp4';
+  let probeStart = null;
+  let probeDur = 4.5;
+
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--scene' && args[i + 1]) sceneFile = args[++i];
+    else if (args[i] === '--audio' && args[i + 1]) audioFile = args[++i];
+    else if (args[i] === '--out' && args[i + 1]) outRel = args[++i];
+    else if (args[i] === '--probe') probeStart = 12.8;
+    else if (args[i] === '--probe-at' && args[i + 1]) probeStart = parseFloat(args[++i]);
+    else if (!args[i].startsWith('--') && i === 1) outRel = args[i];
+  }
+
+  const { server, port } = await startStaticServer(sceneFile);
   const browserUrl = `http://127.0.0.1:${port}/scene.html`;
-  const audioPath = path.join(PROJECT_ROOT, 'assets', 'audio', 'master_30s.wav');
+  const audioPath = path.join(PROJECT_ROOT, 'assets', 'audio', audioFile);
 
   try {
-    if (args[0] === '--probe') {
-      const startSec = 12.8;
+    if (probeStart !== null) {
       await renderSegment({
         browserUrl,
-        startFrame: Math.round(startSec * FPS),
-        frameCount: Math.round(4.5 * FPS),
+        startFrame: Math.round(probeStart * FPS),
+        frameCount: Math.round(probeDur * FPS),
         audioPath,
-        audioOffsetSec: startSec,
-        outMp4: path.join(PROJECT_ROOT, 'output', 'risk_probe_s2_s3.mp4'),
+        audioOffsetSec: probeStart,
+        outMp4: path.resolve(PROJECT_ROOT, outRel),
       });
     } else {
-      const outRel = args[1] || 'output/draft_v1.mp4';
       await renderSegment({
         browserUrl,
         startFrame: 0,

@@ -1,0 +1,108 @@
+{
+  "product": "Комплекс бронезащиты «ВОЕВОДА 14/23» (ООО «Варяг»)",
+  "catalog_url": "https://wduxqtygsunz.moysklad.shop/catalog",
+  "duration_seconds": 30.0,
+  "fps": 60,
+  "total_frames": 1800,
+  "sample_rate": 48000,
+  "bpm": 174.0,
+  "voice_tempo": 1.12,
+  "master_lufs": -14.0,
+  "true_peak_db": -0.7,
+  "scene_cuts": [
+    0.0,
+    6.0,
+    13.433333,
+    18.483333,
+    23.6,
+    30.0
+  ],
+  "scenes": [
+    {
+      "index": 1,
+      "id": "scene1_hook",
+      "file": "p2_s1.mp3",
+      "text": "Воевода 14/23! Штурмовая броня — в магазине «В окопе»!",
+      "voice_start": 0.5172,
+      "voice_end": 5.7787,
+      "voice_start_frame": 31,
+      "voice_end_frame": 347,
+      "scene_start": 0.0,
+      "scene_end": 6.0,
+      "scene_start_frame": 0,
+      "scene_end_frame": 360
+    },
+    {
+      "index": 2,
+      "id": "scene2_anatomy",
+      "file": "p2_s2.mp3",
+      "text": "Восемь модулей Бр1: плечи, шея, пах и бёдра. Четыре быстросброса и разгрузка спины!",
+      "voice_start": 6.2069,
+      "voice_end": 13.247,
+      "voice_start_frame": 372,
+      "voice_end_frame": 795,
+      "scene_start": 6.0,
+      "scene_end": 13.4333,
+      "scene_start_frame": 360,
+      "scene_end_frame": 806
+    },
+    {
+      "index": 3,
+      "id": "scene3_catalog_matrix",
+      "file": "p2_s3.mp3",
+      "text": "Сертификат ГОСТ. Все версии в каталоге — от плитника до комплектации «Штурм»!",
+      "voice_start": 13.6207,
+      "voice_end": 18.3606,
+      "voice_start_frame": 817,
+      "voice_end_frame": 1102,
+      "scene_start": 13.4333,
+      "scene_end": 18.4833,
+      "scene_start_frame": 806,
+      "scene_end_frame": 1109
+    },
+    {
+      "index": 4,
+      "id": "scene4_commercial",
+      "file": "p2_s4.mp3",
+      "text": "Укомплектуем плитами Бр5 под задачу. Оптом и в розницу, с НДС!",
+      "voice_start": 18.6207,
+      "voice_end": 23.4024,
+      "voice_start_frame": 1117,
+      "voice_end_frame": 1404,
+      "scene_start": 18.4833,
+      "scene_end": 23.6,
+      "scene_start_frame": 1109,
+      "scene_end_frame": 1416
+    },
+    {
+      "index": 5,
+      "id": "scene5_cta",
+      "file": "p2_s5.mp3",
+      "text": "Заказывайте «Воеводу» в онлайн-каталоге и Телеграм «В окопе»!",
+      "voice_start": 23.7931,
+      "voice_end": 27.5207,
+      "voice_start_frame": 1428,
+      "voice_end_frame": 1651,
+      "scene_start": 23.6,
+      "scene_end": 30.0,
+      "scene_start_frame": 1416,
+      "scene_end_frame": 1800
+    }
+  ],
+  "s1_lock": 0.4565,
+  "s1_drop": 1.4646,
+  "s2_nodes": [
+    6.5203,
+    8.9733,
+    11.2777
+  ],
+  "s3_rows": [
+    14.2413,
+    15.3523,
+    16.4633,
+    17.4733
+  ],
+  "s4_drop": 18.5398,
+  "s5_slam": 23.7752,
+  "s5_sting": 27.6607
+}

@@ -3,80 +3,91 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>New_Video_bilder — Видеостудия «В окопе» & Каталог голосов</title>
+<title>В ОКОПЕ · Магазин брони — Военная видеостудия (Реальные фото · MoySklad · 60 FPS)</title>
 <style>
   :root {
-    --bg: #070b10;
-    --panel: #0e1622;
-    --panel-2: #131e2e;
-    --border: rgba(255, 170, 43, 0.26);
-    --amber: #ffaa2b;
-    --orange: #f97316;
-    --emerald: #34d399;
-    --sky: #38bdf8;
-    --text: #f8fafc;
-    --muted: #94a3b8;
+    --bg: #0c1009;
+    --panel: #13190f;
+    --panel-2: #1b2416;
+    --border: rgba(213, 174, 92, 0.34);
+    --sand: #d5ae5c;
+    --sand-bright: #e7c475;
+    --olive: #849e54;
+    --phosphor: #8fd158;
+    --bone: #f2efe4;
+    --muted: #9fa693;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: radial-gradient(circle at 20% 0%, #101c2c 0%, var(--bg) 60%);
-    color: var(--text);
+    background: radial-gradient(circle at 20% 0%, #1c2616 0%, var(--bg) 62%);
+    color: var(--bone);
     min-height: 100vh;
     padding: 24px;
   }
   .wrap {
-    max-width: 1280px;
+    max-width: 1320px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 420px 1fr;
+    grid-template-columns: 445px 1fr;
     gap: 28px;
     align-items: start;
   }
-  @media (max-width: 960px) {
+  @media (max-width: 980px) {
     .wrap { grid-template-columns: 1fr; }
   }
   .card {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 22px;
-    padding: 22px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
+    padding: 24px;
+    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.68);
+  }
+  .brand-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(213, 174, 92, 0.22);
+  }
+  .brand-header img {
+    height: 68px;
+    width: auto;
+    display: block;
   }
   .badge-top {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--amber);
-    background: rgba(255, 170, 43, 0.12);
-    border: 1px solid rgba(255, 170, 43, 0.35);
-    padding: 6px 12px;
-    border-radius: 999px;
-    margin-bottom: 12px;
+    color: var(--sand);
+    background: rgba(213, 174, 92, 0.12);
+    border: 1px solid rgba(213, 174, 92, 0.38);
+    padding: 5px 11px;
+    margin-bottom: 6px;
   }
-  h1 { font-size: 24px; line-height: 1.2; margin-bottom: 6px; }
-  h2 { font-size: 20px; margin-bottom: 8px; }
-  .sub { color: var(--muted); font-size: 14px; line-height: 1.5; margin-bottom: 16px; }
+  h1 { font-size: 20px; line-height: 1.22; letter-spacing: 0.02em; }
+  h2 { font-size: 19px; margin-bottom: 8px; }
+  .sub { color: var(--muted); font-size: 13.5px; line-height: 1.5; margin-bottom: 15px; }
 
   .player-shell {
     position: relative;
     width: 100%;
     aspect-ratio: 9 / 16;
-    background: #04070a;
-    border-radius: 18px;
+    background: #080b06;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(213, 174, 92, 0.35);
   }
   video {
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
-    background: #04070a;
+    background: #080b06;
   }
   .version-tabs {
     display: grid;
@@ -85,19 +96,20 @@
     margin-bottom: 14px;
   }
   .v-btn {
-    padding: 9px 8px;
-    border-radius: 11px;
-    border: 1px solid rgba(255,255,255,0.14);
+    padding: 11px 8px;
+    border: 1px solid rgba(213, 174, 92, 0.28);
     background: var(--panel-2);
-    color: var(--muted);
+    color: var(--bone);
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
+    line-height: 1.25;
+    text-transform: uppercase;
     cursor: pointer;
     transition: 0.18s;
   }
   .v-btn.active {
-    background: linear-gradient(135deg, var(--amber), var(--orange));
-    color: #090d12;
+    background: linear-gradient(135deg, var(--sand-bright), var(--sand));
+    color: #0c1009;
     border-color: transparent;
   }
   .scene-jumps {
@@ -108,29 +120,39 @@
   }
   .s-chip {
     flex: 1 1 auto;
-    padding: 7px 10px;
+    padding: 7px 9px;
     font-size: 12px;
-    font-weight: 600;
-    border-radius: 9px;
-    border: 1px solid rgba(255,255,255,0.12);
+    font-weight: 700;
+    border: 1px solid rgba(213, 174, 92, 0.24);
     background: var(--panel-2);
-    color: #e2e8f0;
+    color: var(--bone);
     cursor: pointer;
   }
-  .s-chip:hover { border-color: var(--amber); color: var(--amber); }
+  .s-chip:hover { border-color: var(--sand); color: var(--sand); }
 
+  .dl-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 14px;
+  }
   .dl-btn {
     display: block;
     width: 100%;
-    margin-top: 14px;
-    padding: 14px 18px;
+    padding: 13px 16px;
     text-align: center;
     text-decoration: none;
-    font-weight: 800;
-    font-size: 15px;
-    border-radius: 13px;
-    background: linear-gradient(90deg, var(--amber), var(--orange));
-    color: #090d12;
+    font-weight: 900;
+    font-size: 13.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: linear-gradient(90deg, var(--sand-bright), #be9342);
+    color: #0c1009;
+  }
+  .dl-btn.secondary {
+    background: var(--panel-2);
+    color: var(--sand-bright);
+    border: 1px solid rgba(213, 174, 92, 0.36);
   }
   .specs-grid {
     display: grid;
@@ -143,33 +165,55 @@
   }
   .spec-box {
     background: var(--panel-2);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
+    border: 1px solid rgba(213, 174, 92, 0.20);
     padding: 12px;
   }
   .spec-k { font-size: 11px; color: var(--muted); text-transform: uppercase; }
-  .spec-v { font-size: 16px; font-weight: 800; color: var(--emerald); margin-top: 4px; }
+  .spec-v { font-size: 15px; font-weight: 800; color: var(--phosphor); margin-top: 4px; }
+
+  .sku-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13.5px;
+  }
+  .sku-table th, .sku-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(213, 174, 92, 0.16);
+    text-align: left;
+  }
+  .sku-table th {
+    color: var(--sand);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(213, 174, 92, 0.08);
+  }
+  .sku-price {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 800;
+    color: var(--phosphor);
+    white-space: nowrap;
+  }
 
   .voice-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 14px;
+    gap: 11px;
+    margin-top: 12px;
   }
   .voice-item {
     background: var(--panel-2);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 14px 16px;
+    border: 1px solid rgba(213, 174, 92, 0.18);
+    padding: 13px 15px;
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 12px;
     align-items: center;
   }
   .voice-item.selected {
-    border-color: var(--amber);
-    box-shadow: inset 0 0 0 1px rgba(255, 170, 43, 0.35);
-    background: linear-gradient(90deg, rgba(255,170,43,0.10), rgba(19,30,46,0.95));
+    border-color: var(--sand);
+    background: linear-gradient(90deg, rgba(213, 174, 92, 0.14), rgba(27, 36, 22, 0.96));
   }
   .v-code {
     display: inline-block;
@@ -177,21 +221,20 @@
     font-weight: 800;
     font-size: 13px;
     padding: 3px 9px;
-    border-radius: 7px;
-    background: rgba(56, 189, 248, 0.16);
-    color: var(--sky);
+    background: rgba(132, 158, 84, 0.22);
+    color: var(--phosphor);
     margin-right: 8px;
   }
   .voice-item.selected .v-code {
-    background: var(--amber);
-    color: #090d12;
+    background: var(--sand);
+    color: #0c1009;
   }
-  .v-title { font-weight: 700; font-size: 15px; }
+  .v-title { font-weight: 700; font-size: 14.5px; }
   .v-desc { color: var(--muted); font-size: 13px; margin-top: 4px; }
   .v-json {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 11.5px;
-    color: #cbd5e1;
+    color: #d4d7cb;
     margin-top: 6px;
     opacity: 0.85;
   }
@@ -202,25 +245,23 @@
   }
   .play-btn, .copy-btn {
     padding: 9px 13px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.16);
+    border: 1px solid rgba(213, 174, 92, 0.30);
     font-weight: 700;
     font-size: 13px;
     cursor: pointer;
-    background: #1a293e;
-    color: #fff;
+    background: #25311d;
+    color: var(--bone);
   }
-  .play-btn.playing { background: var(--emerald); color: #05130d; border-color: transparent; }
-  .copy-btn:hover { border-color: var(--amber); color: var(--amber); }
+  .play-btn.playing { background: var(--phosphor); color: #0b1008; border-color: transparent; }
+  .copy-btn:hover { border-color: var(--sand); color: var(--sand); }
   .toast {
     position: fixed;
     bottom: 22px;
     right: 22px;
-    background: var(--emerald);
-    color: #06140e;
+    background: var(--sand);
+    color: #0c1009;
     font-weight: 800;
     padding: 12px 18px;
-    border-radius: 12px;
     opacity: 0;
     transform: translateY(12px);
     transition: 0.22s;
@@ -231,42 +272,58 @@
 </head>
 <body>
 <div class="wrap">
-  <!-- LEFT COLUMN: VERTICAL REELS PLAYER -->
   <div class="card">
-    <div class="badge-top">● VIZAVI MOTION V1.6.1 · 60 FPS MASTER</div>
-    <h1>«В окопе» — 30с Reels</h1>
-    <p class="sub">Голос <b>VC-05 (voice-05)</b> · Заводские поставки РЭБ, детекторов, связи и БПЛА · Официальные контакты</p>
+    <div class="brand-header">
+      <img src="/assets/brand/logo_full_light.png" alt="В ОКОПЕ — магазин брони" />
+      <div>
+        <div class="badge-top">★ РЕАЛЬНЫЕ ФОТО · 60 FPS</div>
+        <h1 id="reelTitle">Товарный Reels: «Воевода 14/23»</h1>
+      </div>
+    </div>
+    <p class="sub">100% реальные студийные фото товаров · Каталог <b>wduxqtygsunz.moysklad.shop</b> · Голос <b>VC-05</b> · Логотип <b>GOYDA</b></p>
 
     <div class="version-tabs">
-      <button class="v-btn active" data-src="/output/v_okope_reels_30s.mp4" data-dl="/output/v_okope_reels_30s.mp4">Финал Master (30.0с · 60fps)</button>
-      <button class="v-btn" data-src="/output/risk_probe_s2_s3.mp4" data-dl="/output/risk_probe_s2_s3.mp4">Проба стыка сцен (4.5с)</button>
+      <button
+        class="v-btn active"
+        data-key="product"
+        data-title="Товарный Reels: «Воевода 14/23»"
+        data-src="/output/v_okope_product_30s.mp4?v=real1"
+        data-dl="/output/v_okope_product_30s.mp4"
+        data-dlname="v_okope_product_30s.mp4"
+      >Товар: «Воевода 14/23» (30с)</button>
+      <button
+        class="v-btn"
+        data-key="store"
+        data-title="Общий Reels магазина «В ОКОПЕ»"
+        data-src="/output/v_okope_reels_30s.mp4?v=real5"
+        data-dl="/output/v_okope_reels_30s.mp4"
+        data-dlname="v_okope_reels_30s.mp4"
+      >Магазин «В ОКОПЕ» Real (30с)</button>
     </div>
 
     <div class="player-shell">
-      <video id="reelPlayer" src="/output/v_okope_reels_30s.mp4" controls playsinline preload="metadata"></video>
+      <video id="reelPlayer" src="/output/v_okope_product_30s.mp4?v=real1" controls playsinline preload="metadata"></video>
     </div>
 
-    <div class="scene-jumps">
-      <button class="s-chip" data-t="0.00">01 · Хук (0:00)</button>
-      <button class="s-chip" data-t="4.65">02 · Каталог РЭБ (0:04.6)</button>
-      <button class="s-chip" data-t="14.30">03 · Подход (0:14.3)</button>
-      <button class="s-chip" data-t="19.70">04 · Опт/НДС (0:19.7)</button>
-      <button class="s-chip" data-t="24.34">05 · Контакты (0:24.3)</button>
-    </div>
+    <div id="sceneJumps" class="scene-jumps"></div>
 
-    <a id="dlLink" class="dl-btn" href="/output/v_okope_reels_30s.mp4" download="v_okope_reels_30s.mp4">
-      ⬇ Скачать готовый MP4 (1080×1920 · 60 fps · 22.1 МБ)
-    </a>
+    <div class="dl-row">
+      <a id="dlLink" class="dl-btn" href="/output/v_okope_product_30s.mp4" download="v_okope_product_30s.mp4">
+        ⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)
+      </a>
+      <a class="dl-btn secondary" href="/output/v_okope_reels_30s.mp4" download="v_okope_reels_30s.mp4">
+        ⬇ Скачать общий ролик магазина MP4 (Real Photos · 60 fps)
+      </a>
+    </div>
   </div>
 
-  <!-- RIGHT COLUMN: TECHNICAL VERIFICATION + INTERACTIVE VOICE CATALOG -->
   <div class="card">
-    <div class="badge-top">🎙 ИНТЕРАКТИВНЫЙ КАТАЛОГ ГОЛОСОВ (VC-00 … VC-06)</div>
-    <h2>Ваши сохранённые дикторские голоса для будущих роликов</h2>
+    <div class="badge-top">📦 ДАННЫЕ КАТАЛОГА MOYSKLAD · 1159 ТОВАРОВ</div>
+    <h2>Комплекс бронезащиты «Воевода 14/23» (ООО «Варяг») + Каталог голосов</h2>
     <p class="sub">
-      Все 7 голосов записаны на одной эталонной фразе и сохранены прямо в папке
-      <code>New_Video_bilder/voice_catalog/</code>. В любом будущем чате нажмите <b>«Скопировать для промпта»</b> —
-      и агент сразу вызовет нужный голос без перебора вслепую.
+      Артикулы, комплектации и цены взяты напрямую из официальной витрины
+      <a href="https://wduxqtygsunz.moysklad.shop/catalog" target="_blank" style="color:var(--sand)">wduxqtygsunz.moysklad.shop/catalog</a>
+      и канала <a href="https://t.me/vokope_ru" target="_blank" style="color:var(--sand)">t.me/vokope_ru</a> (ГОСТ 34286-2017 · РОСС RU C-RU.СЗ08.В.00059/24).
     </p>
 
     <div class="specs-grid">
@@ -280,14 +337,58 @@
       </div>
       <div class="spec-box">
         <div class="spec-k">Громкость EBU R128</div>
-        <div class="spec-v">-14.0 LUFS / -0.9 dB</div>
+        <div class="spec-v">-14.0 LUFS / -0.7 dB</div>
       </div>
       <div class="spec-box">
-        <div class="spec-k">Детерминизм рендера</div>
-        <div class="spec-v">0 px diff (Bit-Exact)</div>
+        <div class="spec-k">Фото товаров</div>
+        <div class="spec-v">100% Real RGBA</div>
       </div>
     </div>
 
+    <table class="sku-table">
+      <thead>
+        <tr>
+          <th>Артикул</th>
+          <th>Наименование в каталоге MoySklad</th>
+          <th>Конфигурация</th>
+          <th>Цена</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>00794</code></td>
+          <td><b>Плитник «ВОЕВОДА 14/23»</b> (Мох / Мультикам)</td>
+          <td>СВМПЭ Бр1/С2 · 4 пряжки ROC · КАПы</td>
+          <td class="sku-price">44 160 ₽</td>
+        </tr>
+        <tr>
+          <td><code>00733</code></td>
+          <td><b>Комплекс «Стандарт»</b></td>
+          <td>Увеличенная противоосколочная площадь · ИК-ремиссия</td>
+          <td class="sku-price">79 580 ₽</td>
+        </tr>
+        <tr>
+          <td><code>00459</code></td>
+          <td><b>Комплекс «Штурм» 2.0</b></td>
+          <td>8 модулей Бр1/С2 · 115,8 дм² · 7,83 кг · StKSS</td>
+          <td class="sku-price">123 096 ₽</td>
+        </tr>
+        <tr>
+          <td><code>01434</code></td>
+          <td><b>Комплекс «БМДШ» Макс</b></td>
+          <td>Полный штурмовой контур защиты + упоры StKSS</td>
+          <td class="sku-price">155 020 ₽</td>
+        </tr>
+        <tr>
+          <td><code>00823</code></td>
+          <td><b>Бронеплиты «ВАРЯГ-LO» Бр5</b> (пара)</td>
+          <td>Керамика + СВМПЭ · штатная посадка 25×30</td>
+          <td class="sku-price">14 500 ₽</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="badge-top">🎙 КАТАЛОГ ДИКТОРСКИХ ГОЛОСОВ (VC-00 … VC-06)</div>
     <div id="voiceList" class="voice-list"></div>
   </div>
 </div>
@@ -297,9 +398,43 @@
 <script>
 const video = document.getElementById('reelPlayer');
 const dlLink = document.getElementById('dlLink');
+const reelTitle = document.getElementById('reelTitle');
+const sceneJumps = document.getElementById('sceneJumps');
 const toast = document.getElementById('toast');
 let currentAudio = null;
 let currentBtn = null;
+
+const CHAPTERS = {
+  product: [
+    { t: 0.00, label: '01 · Хук Воевода (0:00)' },
+    { t: 6.00, label: '02 · 8 модулей / ROC (0:06.0)' },
+    { t: 13.44, label: '03 · Цены MoySklad (0:13.4)' },
+    { t: 18.49, label: '04 · Плиты Бр5 / НДС (0:18.5)' },
+    { t: 23.60, label: '05 · GOYDA & Заказ (0:23.6)' },
+  ],
+  store: [
+    { t: 0.00, label: '01 · Хук РЭБ (0:00)' },
+    { t: 4.65, label: '02 · Реальный арсенал (0:04.6)' },
+    { t: 14.30, label: '03 · Завод / ОТК (0:14.3)' },
+    { t: 19.70, label: '04 · Опт / НДС (0:19.7)' },
+    { t: 24.34, label: '05 · GOYDA & Каталог (0:24.3)' },
+  ],
+};
+
+function renderChapters(key) {
+  sceneJumps.innerHTML = '';
+  (CHAPTERS[key] || CHAPTERS.product).forEach((ch) => {
+    const b = document.createElement('button');
+    b.className = 's-chip';
+    b.type = 'button';
+    b.textContent = ch.label;
+    b.addEventListener('click', () => {
+      video.currentTime = ch.t;
+      video.play().catch(() => {});
+    });
+    sceneJumps.appendChild(b);
+  });
+}
 
 function showToast(msg) {
   toast.textContent = msg;
@@ -307,19 +442,20 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 2200);
 }
 
+renderChapters('product');
+
 document.querySelectorAll('.v-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.v-btn').forEach((b) => b.classList.remove('active'));
     btn.classList.add('active');
     video.src = btn.dataset.src;
     dlLink.href = btn.dataset.dl;
-    video.play().catch(() => {});
-  });
-});
-
-document.querySelectorAll('.s-chip').forEach((chip) => {
-  chip.addEventListener('click', () => {
-    video.currentTime = parseFloat(chip.dataset.t);
+    dlLink.download = btn.dataset.dlname;
+    dlLink.textContent = btn.dataset.key === 'product'
+      ? '⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)'
+      : '⬇ Скачать общий ролик магазина MP4 (1080×1920 · 60 fps)';
+    reelTitle.textContent = btn.dataset.title;
+    renderChapters(btn.dataset.key);
     video.play().catch(() => {});
   });
 });
