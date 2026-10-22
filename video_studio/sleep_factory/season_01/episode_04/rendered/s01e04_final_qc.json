@@ -3,58 +3,81 @@
   "project_targets": {
     "minimum_video_seconds": 2100,
     "minimum_speech_share": 0.85,
-    "actual_video_seconds": 2341.773,
-    "actual_video_hms": "00:39:01.773",
-    "speech_seconds": 2125.084,
-    "speech_hms": "00:35:25.084",
-    "speech_share": 0.9075,
+    "actual_video_seconds": 2439.952,
+    "actual_video_hms": "00:40:39.952",
+    "speech_seconds": 2226.901,
+    "speech_hms": "00:37:06.901",
+    "speech_share": 0.9127,
     "targets_met": true
   },
   "final_video": {
     "filename": "s01e04_full.mp4",
-    "size_bytes": 171898608,
-    "sha256": "5a4acf06f79dadca7a60f7b9b605be4d77eeee039374a6e604f4cf92e6c4d692",
+    "size_bytes": 185644297,
+    "sha256": "2ffb8112fe823e2d1a9a4a946a99f39b6d5e4cdb7771fe7c06232a258049156a",
     "resolution": "1280x720",
     "fps": 24,
+    "video_frames": 58558,
     "video_codec": "h264",
     "video_crf": 20,
     "video_preset": "slow",
     "audio_codec": "aac",
     "audio_sample_rate_hz": 44100,
     "audio_channels": 1,
-    "audio_bitrate_kbps": 192,
-    "audio_integrated_loudness_lufs": -19.8,
-    "audio_loudness_range_lu": 5.3,
-    "audio_true_peak_dbtp": -2.0
+    "audio_bitrate_target_kbps": 192,
+    "audio_integrated_loudness_lufs": -19.7,
+    "audio_loudness_range_lu": 4.9,
+    "audio_true_peak_dbtp": -2.1
   },
   "mix": {
     "filename": "s01e04_mix.mp3",
-    "timeline_target_duration_seconds": 2338.084,
-    "measured_mp3_duration_seconds": 2338.116,
-    "speech_seconds": 2125.084,
-    "speech_share": 0.9089,
+    "timeline_target_duration_seconds": 2435.301,
+    "measured_mp3_duration_seconds": 2435.344,
+    "speech_seconds": 2226.901,
+    "speech_share": 0.9144,
     "scene_count": 66,
     "inter_scene_gap_seconds": 3.0,
     "mp3_bitrate_kbps": 192,
-    "integrated_loudness_lufs": -19.8,
-    "loudness_range_lu": 5.2,
+    "integrated_loudness_lufs": -19.7,
+    "loudness_range_lu": 4.9,
     "true_peak_dbtp": -2.1
   },
   "series_intro": {
     "image": "../images/episode_04_intro.png",
     "approved_sting_audio_seconds": 3.6,
-    "video_segment_seconds": 3.625,
-    "note": "25 ms silence padding aligns the 3.6 s sting to 24 fps video."
+    "video_segment_seconds": 4.586,
+    "sources": [
+      "video_studio/toolkit/sfx/logo_sting.mp3",
+      "video_studio/toolkit/sfx/cut_tick.mp3",
+      "video_studio/reel/samples/ambi_drone.flac"
+    ],
+    "note": "The approved logo sting and two quiet switch clicks play over a soft ship hum; the title card holds briefly after the 3.6 s sting."
+  },
+  "subtitles": {
+    "filename": "s01e04_ru.srt",
+    "cue_count": 1191,
+    "intro_offset_seconds": 4.586,
+    "last_cue_end_seconds": 2427.886,
+    "timing_method": "Estimated within each TTS scene by text-character weight; not word-level forced alignment."
+  },
+  "chapters": {
+    "filename": "s01e04_chapters.txt",
+    "count": 22,
+    "first_chapter_at_zero": true
   },
   "checks": {
     "all_66_voice_files_ffprobe_valid": true,
+    "voice_format": "Opus 48 kHz mono",
     "mix_timeline_ids_match_script": true,
-    "initial_body_render_qc": "passed; its H.264 video stream was reused unchanged in the final remux",
-    "final_remux_ffprobe_streams_and_duration": "passed",
+    "body_render_qc": "passed",
+    "final_video_ffprobe_streams_duration_and_frame_count": "passed",
     "full_video_audio_video_decode": "passed",
-    "split_parts_reassembled_sha256": "passed",
-    "visual_frame_samples": ["intro 00:00:01.5", "opening 00:00:12", "middle 00:19:30", "ending 00:38:40"],
-    "subtitle_cue_count": 1129,
-    "subtitle_timing": "estimated within each TTS clip from text weighting; not word-level forced alignment"
+    "split_parts_reassembled_byte_for_byte": "passed",
+    "visual_frame_samples": [
+      "intro 00:00:02.2",
+      "opening 00:00:05.0",
+      "middle 00:20:30",
+      "ending 00:40:15"
+    ],
+    "visual_review": "All 30 generated stills were individually checked; sampled final-video frames preserve the intended artwork and contain no people."
   }
 }
