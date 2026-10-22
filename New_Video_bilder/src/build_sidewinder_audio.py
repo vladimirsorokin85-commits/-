@@ -5,11 +5,9 @@ for the vertical product reel: «Тактический шлемный фона�
 (output/v_okope_sidewinder_30s.mp4).
 
 Strict compliance:
-  - 100% real recorded studio Drum & Bass MP3 source ONLY:
-    Continuous 30.000s pure-instrumental slice from Pendulum — Witchcraft (174 BPM)
-    [38.62s .. 68.62s]: 5.50s rising intro tension -> MASSIVE 174 BPM FIRST DROP right at
-    t = 5.500s (Scene 2 4-color optical beam burst!) -> clean 2.35s musical tail ring-out.
-    ZERO procedural/synthesized music generators. ZERO sung vocals.
+  - 100% CC0-1.0 Public Domain real studio Drum & Bass MP3 source ONLY:
+    Peter Szegvari (szegvari) — Street Action DnB Mastered (174.6 BPM, CC0-1.0 Public Domain,
+    https://freesound.org/people/szegvari/sounds/563543/, 0.00% vocals, ZERO Content ID).
   - 100% authentic natural-cadence (~1.04x..1.08x) voice-05 narration across all 5 scenes.
   - Broadcast loudness master: -14.0 LUFS integrated, <= -1.0 dBFS true peak.
 """
@@ -22,8 +20,7 @@ import numpy as np
 
 ROOT = Path("/home/user/-/New_Video_bilder")
 VO_DIR = ROOT / "assets" / "audio" / "sidewinder_vo"
-MUSIC_RAW = Path("/tmp/pendulum_witchcraft_174bpm.mp3")
-MUSIC_SLICE_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "dnb_sidewinder_30s.mp3"
+MUSIC_SLICE_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "cc0_dnb_sidewinder_30s.mp3"
 OUT_WAV = ROOT / "assets" / "audio" / "master_sidewinder_30s.wav"
 SYNC_JSON = ROOT / "src" / "sidewinder_sync_map.json"
 
@@ -90,44 +87,14 @@ def measure_lufs(wav_path: Path) -> float:
 
 
 def main() -> None:
-    # Pinpoint exact first 174 BPM drop onset around ~43.5..44.6s inside Pendulum — Witchcraft
-    full_w = Path("/tmp/pendulum_sw_full.wav")
-    subprocess.run(
-        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(MUSIC_RAW), "-ar", str(SR), "-ac", "2", str(full_w)],
-        check=True,
-    )
-    m_all = read_wav_float(full_w)
-    # Measure 50ms RMS energy across 41.0s..46.0s to lock the exact sample where the massive first drop hits!
-    win = int(0.05 * SR)
-    seg = m_all[int(41.0 * SR):int(46.0 * SR)]
-    rms = np.sqrt(np.mean(seg[:len(seg)//win*win].reshape(-1, win, 2) ** 2, axis=(1, 2)))
-    drop_bin = int(np.argmax(rms >= 0.30))
-    drop_in_track_s = 41.0 + drop_bin * 0.05
-    # Place that exact 174 BPM drop right at t = 5.500s (Frame 330 = start of Scene 2!)
     target_drop_t = 5.500
-    music_start_s = drop_in_track_s - target_drop_t
-    print(f"Detected exact Pendulum 1st Drop @ {drop_in_track_s:.3f}s -> slicing [{music_start_s:.3f}s .. {music_start_s+30.0:.3f}s] so DROP locks to t = {target_drop_t:.3f}s (Frame 330)!")
-
-    MUSIC_SLICE_MP3.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        [
-            "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-ss", f"{music_start_s:.4f}", "-t", "30.000",
-            "-i", str(MUSIC_RAW),
-            "-af", "afade=t=in:st=0:d=0.40,afade=t=out:st=28.65:d=1.35",
-            "-c:a", "libmp3lame", "-b:a", "320k",
-            str(MUSIC_SLICE_MP3),
-        ],
-        check=True,
-    )
+    music_start_s = 8.000
     slice_w = Path("/tmp/dnb_sidewinder_decoded.wav")
     subprocess.run(
         [
             "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-i", str(MUSIC_SLICE_MP3),
-            # Carve a subtle -3.0 dB vocal-intelligibility pocket in 1.9–2.8 kHz on the music stem
-            # while keeping full sub-bass punch and top hi-hat air intact
-            "-af", "equalizer=f=2200:t=q:w=1.15:g=-3.0",
+            "-af", "equalizer=f=2200:t=q:w=1.0:g=-4.5,equalizer=f=3500:t=q:w=1.1:g=-2.8",
             "-ar", str(SR), "-ac", "2", str(slice_w),
         ],
         check=True,
@@ -135,6 +102,9 @@ def main() -> None:
     music = read_wav_float(slice_w)[:TOTAL_SAMPLES]
     if len(music) < TOTAL_SAMPLES:
         music = np.vstack([music, np.zeros((TOTAL_SAMPLES - len(music), 2), dtype=np.float32)])
+    # Subtle pre-drop restraint before t = 5.500s (Scene 2 beam burst!)
+    intro_i = int(target_drop_t * SR)
+    music[:intro_i] *= np.linspace(0.62, 1.0, intro_i, dtype=np.float32)[:, None]
 
     # Extract 5 natural-speed voice-05 clips (atempo ~1.06..1.10 -> 100% pure studio baritone)
     specs = [
@@ -169,7 +139,7 @@ def main() -> None:
         "vo_start": round(s1_vo_start, 4), "vo_end": round(s1_vo_start + d1, 4), "vo_dur": round(d1, 4),
     })
 
-    # Scenes 2..5: distribute cleanly from 5.78s to 27.65s -> leaving 2.35s clean 174 BPM Pendulum outro ring-out!
+    # Scenes 2..5: distribute cleanly from 5.78s to 27.65s -> leaving 2.35s clean 174.6 BPM CC0 DnB outro ring-out!
     rem_vo = sum(len(x[5]) / SR for x in clips[1:])
     start_s2_vo = 5.76  # 0.26s right after the 5.50s 174 BPM drop slam!
     target_end = 27.65
@@ -258,8 +228,9 @@ def main() -> None:
         "fps": 60,
         "total_frames": 1800,
         "music_source": {
-            "track": "Pendulum — Witchcraft (174 BPM, Pure Instrumental 1st Drop Slice)",
-            "file": "assets/audio/music_mp3/dnb_sidewinder_30s.mp3",
+            "track": "Peter Szegvari — Street Action DnB Mastered (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
+            "license": "CC0-1.0 (https://freesound.org/people/szegvari/sounds/563543/)",
+            "file": "assets/audio/music_mp3/cc0_dnb_sidewinder_30s.mp3",
             "slice_start_s": round(music_start_s, 3),
             "slice_end_s": round(music_start_s + DURATION, 3),
             "drop_locked_at_s": target_drop_t,

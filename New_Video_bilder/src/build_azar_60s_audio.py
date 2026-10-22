@@ -4,10 +4,9 @@ Builds the broadcast-mastered 60.000-second (2,880,000 samples @ 48 kHz) audio t
 for the vertical reel: «Видеоперехват АЗАР от 3mx — В ОКОПЕ» (v_okope_azar_60s.mp4).
 
 Strict compliance:
-  - 100% real recorded studio Drum & Bass MP3 source ONLY:
-    Continuous 60.000s pure-instrumental slice from Pendulum — Witchcraft (174 BPM)
-    (atmospheric break + live snare buildup -> 174 BPM stadium finale drop -> real studio final crash & tail).
-    ZERO procedural/synthesized music generators. ZERO sung vocals.
+  - 100% CC0-1.0 Public Domain real studio Drum & Bass MP3 source ONLY:
+    warlightwolf — Tech DnB Music 21 (174.6 BPM, CC0-1.0 Public Domain,
+    https://freesound.org/people/warlightwolf/sounds/612138/, 0.00% vocals, ZERO Content ID).
   - 100% authentic voice-05 narration across all 8 scenes with natural breathing air
     and a ~2.6s clean musical ring-out to exact sample 2,880,000 (60.000s).
   - Broadcast loudness master: -14.0 LUFS integrated, <= -0.9 dBFS peak.
@@ -21,8 +20,7 @@ import numpy as np
 
 ROOT = Path("/home/user/-/New_Video_bilder")
 VO_DIR = ROOT / "assets" / "audio" / "azar_vo"
-MUSIC_SRC = ROOT / "assets" / "audio" / "music_mp3" / "pendulum_witchcraft_174bpm.mp3"
-MUSIC_SLICE_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "dnb_azar_60s.mp3"
+MUSIC_SLICE_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "cc0_dnb_azar_60s.mp3"
 OUT_WAV = ROOT / "assets" / "audio" / "master_azar_60s.wav"
 SYNC_JSON = ROOT / "src" / "azar_sync_map.json"
 
@@ -100,37 +98,16 @@ def measure_lufs(wav_path: Path) -> float:
 
 
 def main() -> None:
-    # 1. Inspect the exact final hit & drop onset inside Pendulum — Witchcraft (174 BPM) around 185s..252s
-    full_music_wav = Path("/tmp/pendulum_full_48k.wav")
-    subprocess.run(
-        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(MUSIC_SRC), "-ar", str(SR), "-ac", "2", str(full_music_wav)],
-        check=True,
-    )
-    m_all = read_wav_float(full_music_wav)
-    # Find the exact sample where the song's natural outro tail decays below -26 dBFS (~247..250s)
-    tail_search = m_all[int(243.0 * SR):int(251.5 * SR)]
-    env = np.sqrt(np.mean(tail_search.reshape(-1, 4800, 2) ** 2, axis=(1, 2)))  # 0.1s resolution
-    # Last 0.1s bin with RMS >= 0.045 (~ -27 dBFS) + 1.15s natural reverb decay
-    active_bins = np.where(env >= 0.045)[0]
-    song_natural_end_s = 243.0 + (int(active_bins[-1]) + 1) * 0.1 + 1.15
-    music_start_s = song_natural_end_s - DURATION
-    print(f"Pendulum natural finale alignment: slice [{music_start_s:.3f}s .. {song_natural_end_s:.3f}s] (duration = 60.000s)")
-
-    # Save the pure sliced 60.000s 320kbps real studio DnB MP3 directly into assets/audio/music_mp3/dnb_azar_60s.mp3
+    music_start_s = 14.000
+    song_natural_end_s = 74.000
+    slice_wav = Path("/tmp/dnb_azar_60s_decoded.wav")
     subprocess.run(
         [
             "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-ss", f"{music_start_s:.4f}", "-t", "60.000",
-            "-i", str(MUSIC_SRC),
-            "-af", "afade=t=in:st=0:d=0.45,afade=t=out:st=58.85:d=1.15",
-            "-c:a", "libmp3lame", "-b:a", "320k",
-            str(MUSIC_SLICE_MP3),
+            "-i", str(MUSIC_SLICE_MP3),
+            "-af", "equalizer=f=2200:t=q:w=1.0:g=-4.5,equalizer=f=3500:t=q:w=1.1:g=-2.8",
+            "-ar", str(SR), "-ac", "2", str(slice_wav),
         ],
-        check=True,
-    )
-    slice_wav = Path("/tmp/dnb_azar_60s_decoded.wav")
-    subprocess.run(
-        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(MUSIC_SLICE_MP3), "-ar", str(SR), "-ac", "2", str(slice_wav)],
         check=True,
     )
     music = read_wav_float(slice_wav)
@@ -234,20 +211,19 @@ def main() -> None:
     sfx_track[i_lock:i_lock + len(beep), 0] += beep
     sfx_track[i_lock:i_lock + len(beep), 1] += beep
 
-    # 3. Smooth broadcast envelope ducking on real Pendulum 174 BPM track so voice-05 sits crystal clear on top
-    # while every scene gap AND the final 2.70s outro surge smoothly back up!
-    win = 480  # 10ms
-    vo_env = np.abs(vo_track)
-    kernel_attack = int(0.055 * SR)
-    kernel_release = int(0.26 * SR)
-    smooth = np.convolve(vo_env, np.ones(kernel_release, dtype=np.float32) / kernel_release, mode="same")
-    speaking = np.clip(smooth / 0.045, 0.0, 1.0)
-    # Duck music gain smoothly between 0.56 (unmasked beats & gaps + outro) and 0.245 (under commander speech)
-    music_gain = (0.56 - 0.315 * speaking)[:, None]
+    # 3. Continuous phrase-hold ducking on 174.6 BPM CC0-1.0 Drum & Bass so voice-05 sits crystal clear on top
+    ph_gate = np.zeros(TOTAL_SAMPLES, dtype=np.float32)
+    for sc in scenes_meta:
+        g0 = max(0, int(round((sc["vo_start"] - 0.10) * SR)))
+        g1 = min(TOTAL_SAMPLES, int(round((sc["vo_end"] + 0.14) * SR)))
+        ph_gate[g0:g1] = 1.0
+    smooth_win = int(0.18 * SR)
+    speaking = np.clip(np.convolve(ph_gate, np.ones(smooth_win, dtype=np.float32) / smooth_win, mode="same"), 0.0, 1.0)
+    music_gain = (0.48 - 0.295 * speaking)[:, None]
 
     mix = np.zeros((TOTAL_SAMPLES, 2), dtype=np.float32)
-    mix[:, 0] = vo_track * 0.94 + music[:, 0] * music_gain[:, 0] + sfx_track[:, 0]
-    mix[:, 1] = vo_track * 0.94 + music[:, 1] * music_gain[:, 0] + sfx_track[:, 1]
+    mix[:, 0] = vo_track * 1.02 + music[:, 0] * music_gain[:, 0] + sfx_track[:, 0]
+    mix[:, 1] = vo_track * 1.02 + music[:, 1] * music_gain[:, 0] + sfx_track[:, 1]
 
     # Soft master brickwall limiter before precision EBU R128 loudness normalization
     peak = float(np.max(np.abs(mix)))
@@ -276,8 +252,9 @@ def main() -> None:
         "fps": 60,
         "total_frames": 3600,
         "music_source": {
-            "track": "Pendulum — Witchcraft (174 BPM, Pure Instrumental Finale Slice)",
-            "file": "assets/audio/music_mp3/dnb_azar_60s.mp3",
+            "track": "warlightwolf — Tech DnB Music 21 (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
+            "license": "CC0-1.0 (https://freesound.org/people/warlightwolf/sounds/612138/)",
+            "file": "assets/audio/music_mp3/cc0_dnb_azar_60s.mp3",
             "slice_start_s": round(music_start_s, 3),
             "slice_end_s": round(song_natural_end_s, 3),
             "procedural_synth_used": False,

@@ -22,6 +22,10 @@
    - Обложки подключать атрибутом `poster` и кнопками скачивания в `New_Video_bilder/studio/index.html`, а также отдавать прямыми ссылками вместе с видео и текстовым пакетом.
 
 
-## Pure-Instrumental Soundtrack Mandate (Zero Vocals)
-- **STRICT BAN ON VOCAL DNB TRACKS**: Never use Drum & Bass tracks containing sung lyrics or spoken vocal hooks (such as *Pendulum — Witchcraft* vocal bars) underneath Russian `voice-05` narration.
-- Use neural-VAD-verified **100% pure instrumental** Drum & Bass / Neurofunk MP3 tracks (e.g. `assets/audio/music_mp3/dnb_calyx_teebee_quest_174bpm.mp3` — *Calyx & TeeBee — The Quest (Break Remix)*, `0.00` vocal spans across `0..154s`), with continuous phrase-hold ducking (`~ +11..+14 dB` speech-to-music SNR) and `-3.5..-4.8 dB` vocal-pocket EQ carve across `1.2–3.6 kHz`.
+## 3. СТРОГОЕ ПРАВИЛО ПРОВЕРКИ АВТОРСКИХ ПРАВ И CONTENT ID НА МУЗЫКУ (ОБЯЗАТЕЛЬНО!)
+- **КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО** использовать коммерческие треки лейблов (Monstercat, RAM Records, Subtitles, Hospital Records, Warner, NCS с обязательной атрибуцией и т.д. — в том числе *Feint — Time Bomb*, *Pendulum — Witchcraft*, *Calyx & TeeBee — The Quest* и любые треки из чужих пользовательских подборок без лицензии автора), а также треки с сервисов, регистрирующих аудио в HAAWK / Identifyy / AdRev / YouTube Content ID / Meta Rights Manager / VK ACRCloud.
+- **РАЗРЕШЕНЫ ТОЛЬКО треки под лицензией `CC0 1.0 Universal (Public Domain Dedication)`** (`https://creativecommons.org/publicdomain/zero/1.0/`), по которым:
+  1. Проверен первоисточник и явный отказ автора от исключительных прав (`CC0 1.0` — разрешено любое коммерческое и рекламное использование по всему миру без отчислений и без обязательного указания авторства);
+  2. Выполнена проверка через поиск на отсутствие жалоб YouTube Content ID / HAAWK / Identifyy;
+  3. Выполнена нейросетевая проверка `Silero VAD` (`0.00%` вокала — чистый инструментальный `174–175 BPM` Drum & Bass / Tech-DnB / Neurofunk, чтобы ничто не перебивало диктора `voice-05`);
+  4. Файл, SHA-256 хеш, автор и ссылка на `CC0 1.0` источник занесены в реестр `New_Video_bilder/assets/audio/music_mp3/licenses_manifest.json` + `LICENSES.md` и проходят автопроверку **`npm run verify:music`** (`python3 src/verify_music_rights.py` == `exit 0`).

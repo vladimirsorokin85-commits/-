@@ -8,7 +8,8 @@
   },
   "scripts": {
     "build:covers": "node src/build_covers.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "verify:music": "python3 src/verify_music_rights.py",
+    "test": "python3 src/verify_music_rights.py"
   },
   "keywords": [],
   "author": "",

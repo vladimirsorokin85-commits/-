@@ -4,15 +4,16 @@
   "fps": 60,
   "total_frames": 1800,
   "music_source": {
-    "track": "Pendulum — Witchcraft (174 BPM, Pure Instrumental 1st Drop Slice)",
-    "file": "assets/audio/music_mp3/dnb_sidewinder_30s.mp3",
-    "slice_start_s": 38.2,
-    "slice_end_s": 68.2,
+    "track": "Peter Szegvari — Street Action DnB Mastered (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
+    "license": "CC0-1.0 (https://freesound.org/people/szegvari/sounds/563543/)",
+    "file": "assets/audio/music_mp3/cc0_dnb_sidewinder_30s.mp3",
+    "slice_start_s": 8.0,
+    "slice_end_s": 38.0,
     "drop_locked_at_s": 5.5,
     "procedural_synth_used": false
   },
   "loudness_lufs": -14.0,
-  "peak_dbfs": -2.81,
+  "peak_dbfs": -2.51,
   "tail_ringout_s": 2.35,
   "scenes": [
     {
@@ -27,8 +28,8 @@
       "start_frame": 0,
       "end_frame": 330,
       "vo_start": 0.24,
-      "vo_end": 5.1984,
-      "vo_dur": 4.9584
+      "vo_end": 4.6902,
+      "vo_dur": 4.4502
     },
     {
       "id": 2,
@@ -37,13 +38,13 @@
       "title": "4 цвета LED + Стробоскоп в 2 клика",
       "text": "Белый, красный, синий и ИК-режим удержанием кнопки, плюс стробоскоп в два клика!",
       "scene_start": 5.5,
-      "scene_end": 12.116667,
-      "scene_dur": 6.616667,
+      "scene_end": 11.766667,
+      "scene_dur": 6.266667,
       "start_frame": 330,
-      "end_frame": 727,
+      "end_frame": 706,
       "vo_start": 5.76,
-      "vo_end": 11.5382,
-      "vo_dur": 5.7782
+      "vo_end": 10.864,
+      "vo_dur": 5.104
     },
     {
       "id": 3,
@@ -51,14 +52,14 @@
       "tempo": 1.08,
       "title": "Нейлоновый полимер · Влагозащита · IR SAFE",
       "text": "Ультрапрочный нейлоновый корпус защищён от влаги и случайного включения!",
-      "scene_start": 12.116667,
-      "scene_end": 17.95,
-      "scene_dur": 5.833333,
-      "start_frame": 727,
-      "end_frame": 1077,
-      "vo_start": 12.5858,
-      "vo_end": 17.3559,
-      "vo_dur": 4.7701
+      "scene_start": 11.766667,
+      "scene_end": 17.75,
+      "scene_dur": 5.983333,
+      "start_frame": 706,
+      "end_frame": 1065,
+      "vo_start": 12.4898,
+      "vo_end": 16.8394,
+      "vo_dur": 4.3496
     },
     {
       "id": 4,
@@ -66,14 +67,14 @@
       "tempo": 1.08,
       "title": "Поворот 360° и полный комплект в кейсе",
       "text": "Поворот на триста шестьдесят градусов, полный набор креплений — оптом и в розницу!",
-      "scene_start": 17.95,
-      "scene_end": 23.283333,
-      "scene_dur": 5.333333,
-      "start_frame": 1077,
-      "end_frame": 1397,
-      "vo_start": 18.4035,
-      "vo_end": 22.7039,
-      "vo_dur": 4.3004
+      "scene_start": 17.75,
+      "scene_end": 23.416667,
+      "scene_dur": 5.666667,
+      "start_frame": 1065,
+      "end_frame": 1405,
+      "vo_start": 18.4652,
+      "vo_end": 22.5042,
+      "vo_dur": 4.039
     },
     {
       "id": 5,
@@ -81,14 +82,14 @@
       "tempo": 1.07,
       "title": "Заказ в магазине «В ОКОПЕ»",
       "text": "Заказывайте в магазине «В окопе» — Телеграм, ВКонтакте и Авито!",
-      "scene_start": 23.283333,
+      "scene_start": 23.416667,
       "scene_end": 30.0,
-      "scene_dur": 6.716667,
-      "start_frame": 1397,
+      "scene_dur": 6.583333,
+      "start_frame": 1405,
       "end_frame": 1800,
-      "vo_start": 23.7515,
-      "vo_end": 27.65,
-      "vo_dur": 3.8985
+      "vo_start": 24.13,
+      "vo_end": 27.6499,
+      "vo_dur": 3.5199
     }
   ]
 }

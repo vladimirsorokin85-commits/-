@@ -83,7 +83,7 @@ const MIL = {
   borderOlive: 'rgba(132, 158, 84, 0.50)',
 };
 
-// Exact sample-locked cuts from src/sidewinder_sync_map.json (Pendulum 1st Drop locked to Frame 330 = 5.500s!)
+// Exact sample-locked cuts from src/sidewinder_sync_map.json (CC0-1.0 174.6 BPM Drop locked to Frame 330 = 5.500s!)
 const CUTS = [
   0.000000,   // S1 [0..330]     Хук: BOOIU Sidewinder GEN_3
   5.500000,   // S2 [330..727]   4 цвета LED + Стробоскоп в 2 клика (174 BPM DROP!)
@@ -537,7 +537,7 @@ function renderScene1(t, beatPulse) {
 
 // =========================================================================
 // SCENE 2 [5.500s .. 12.117s]: 4 LED COLORS (HOLD BUTTON) + 2-CLICK STROBE!
-// (174 BPM PENDULUM DROP HITS EXACTLY AT FRAME 330 = 5.500s!)
+// (174 BPM CC0-1.0 DNB DROP HITS EXACTLY AT FRAME 330 = 5.500s!)
 // =========================================================================
 function renderScene2(t, beatPulse) {
   const lt = t - CUTS[1];

@@ -4,14 +4,15 @@
   "fps": 60,
   "total_frames": 3600,
   "music_source": {
-    "track": "Pendulum — Witchcraft (174 BPM, Pure Instrumental Finale Slice)",
-    "file": "assets/audio/music_mp3/dnb_azar_60s.mp3",
-    "slice_start_s": 189.85,
-    "slice_end_s": 249.85,
+    "track": "warlightwolf — Tech DnB Music 21 (CC0-1.0 Public Domain, 174.6 BPM, 0% vocals)",
+    "license": "CC0-1.0 (https://freesound.org/people/warlightwolf/sounds/612138/)",
+    "file": "assets/audio/music_mp3/cc0_dnb_azar_60s.mp3",
+    "slice_start_s": 14.0,
+    "slice_end_s": 74.0,
     "procedural_synth_used": false
   },
   "loudness_lufs": -14.0,
-  "peak_dbfs": -1.92,
+  "peak_dbfs": -1.37,
   "tail_ringout_s": 2.35,
   "scenes": [
     {
@@ -21,13 +22,13 @@
       "title": "Приёмник «Азар» от 3mx",
       "text": "Видеть небо глазами дрона! В «В окопе» — видеоперехватчик «Азар» от три эм икс!",
       "scene_start": 0.0,
-      "scene_end": 5.383333,
-      "scene_dur": 5.383333,
+      "scene_end": 5.083333,
+      "scene_dur": 5.083333,
       "start_frame": 0,
-      "end_frame": 323,
+      "end_frame": 305,
       "vo_start": 0.28,
-      "vo_end": 5.0563,
-      "vo_dur": 4.7763
+      "vo_end": 4.4307,
+      "vo_dur": 4.1507
     },
     {
       "id": 2,
@@ -35,14 +36,14 @@
       "tempo": 1.19,
       "title": "Режим 1: Авто с «Булат» v.4",
       "text": "В паре с «Булатом» четыре «Азар» сам ловит видеоканал до восьми гигагерц!",
-      "scene_start": 5.383333,
-      "scene_end": 10.533333,
-      "scene_dur": 5.15,
-      "start_frame": 323,
-      "end_frame": 632,
-      "vo_start": 5.6085,
-      "vo_end": 10.0735,
-      "vo_dur": 4.465
+      "scene_start": 5.083333,
+      "scene_end": 10.566667,
+      "scene_dur": 5.483334,
+      "start_frame": 305,
+      "end_frame": 634,
+      "vo_start": 5.5543,
+      "vo_end": 9.6269,
+      "vo_dur": 4.0725
     },
     {
       "id": 3,
@@ -50,14 +51,14 @@
       "tempo": 1.25,
       "title": "Режим 2: Ручной 300–12 000 МГц",
       "text": "Второй режим — ручной поиск в сверхшироком спектре от трёхсот мегагерц до двенадцати гигагерц!",
-      "scene_start": 10.533333,
-      "scene_end": 17.25,
-      "scene_dur": 6.716667,
-      "start_frame": 632,
-      "end_frame": 1035,
-      "vo_start": 10.8742,
-      "vo_end": 16.948,
-      "vo_dur": 6.0738
+      "scene_start": 10.566667,
+      "scene_end": 17.266667,
+      "scene_dur": 6.7,
+      "start_frame": 634,
+      "end_frame": 1036,
+      "vo_start": 11.2562,
+      "vo_end": 16.6505,
+      "vo_dur": 5.3943
     },
     {
       "id": 4,
@@ -65,14 +66,14 @@
       "tempo": 1.25,
       "title": "Внешний монитор · до 1,5 км",
       "text": "Подключите внешний монитор через разъём три и пять миллиметра — и перехваченная с FPV-дрона картинка сразу выводится на экран на дистанции до полутора километров!",
-      "scene_start": 17.25,
-      "scene_end": 25.466667,
-      "scene_dur": 8.216667,
-      "start_frame": 1035,
-      "end_frame": 1528,
-      "vo_start": 17.4726,
-      "vo_end": 25.1692,
-      "vo_dur": 7.6966
+      "scene_start": 17.266667,
+      "scene_end": 25.716667,
+      "scene_dur": 8.45,
+      "start_frame": 1036,
+      "end_frame": 1543,
+      "vo_start": 17.7179,
+      "vo_end": 25.1034,
+      "vo_dur": 7.3855
     },
     {
       "id": 5,
@@ -80,14 +81,14 @@
       "tempo": 1.26,
       "title": "450 г · −20…+45°C · до 6,5 ч",
       "text": "Компактный корпус весит не больше четырёхсот пятидесяти граммов, работает от минус двадцати до плюс сорока пяти градусов и держит заряд до шести с половиной часов от одной батареи!",
-      "scene_start": 25.466667,
-      "scene_end": 34.716667,
-      "scene_dur": 9.25,
-      "start_frame": 1528,
-      "end_frame": 2083,
-      "vo_start": 25.6938,
-      "vo_end": 34.4087,
-      "vo_dur": 8.7149
+      "scene_start": 25.716667,
+      "scene_end": 35.05,
+      "scene_dur": 9.333333,
+      "start_frame": 1543,
+      "end_frame": 2103,
+      "vo_start": 26.1708,
+      "vo_end": 34.4388,
+      "vo_dur": 8.268
     },
     {
       "id": 6,
@@ -95,14 +96,14 @@
       "tempo": 1.26,
       "title": "Заводской комплект и паспорт 3mx",
       "text": "В заводской коробке с официальным паспортом уже есть всё необходимое: две съёмные антенны на пружине, сменные аккумуляторы, зарядный стакан, блок питания и видеокабели!",
-      "scene_start": 34.716667,
-      "scene_end": 43.783333,
-      "scene_dur": 9.066666,
-      "start_frame": 2083,
-      "end_frame": 2627,
-      "vo_start": 34.9333,
-      "vo_end": 43.472,
-      "vo_dur": 8.5387
+      "scene_start": 35.05,
+      "scene_end": 44.083333,
+      "scene_dur": 9.033333,
+      "start_frame": 2103,
+      "end_frame": 2645,
+      "vo_start": 35.5062,
+      "vo_end": 43.4562,
+      "vo_dur": 7.95
     },
     {
       "id": 7,
@@ -110,14 +111,14 @@
       "tempo": 1.26,
       "title": "Оптом и в розницу · НДС / без НДС",
       "text": "Поставляем оригинальные комплексы для расчётов, транспорта и постов наблюдения — от одного прибора до крупных партий, оптом и в розницу, с НДС и без НДС!",
-      "scene_start": 43.783333,
-      "scene_end": 52.4,
-      "scene_dur": 8.616667,
-      "start_frame": 2627,
-      "end_frame": 3144,
-      "vo_start": 43.9966,
-      "vo_end": 52.0599,
-      "vo_dur": 8.0633
+      "scene_start": 44.083333,
+      "scene_end": 52.6,
+      "scene_dur": 8.516667,
+      "start_frame": 2645,
+      "end_frame": 3156,
+      "vo_start": 44.5236,
+      "vo_end": 51.9181,
+      "vo_dur": 7.3944
     },
     {
       "id": 8,
@@ -125,14 +126,14 @@
       "tempo": 1.22,
       "title": "Заказ в магазине «В ОКОПЕ»",
       "text": "Заказывайте видеоперехватчик «Азар» в магазине «В окопе» — Телеграм, ВКонтакте и Авито!",
-      "scene_start": 52.4,
+      "scene_start": 52.6,
       "scene_end": 60.0,
-      "scene_dur": 7.6,
-      "start_frame": 3144,
+      "scene_dur": 7.4,
+      "start_frame": 3156,
       "end_frame": 3600,
-      "vo_start": 52.6397,
-      "vo_end": 57.6499,
-      "vo_dur": 5.0102
+      "vo_start": 53.0979,
+      "vo_end": 57.65,
+      "vo_dur": 4.5521
     }
   ]
 }

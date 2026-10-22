@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Sample-accurate 30.000s (48 kHz stereo = 1,440,000 samples = 1800 frames @ 60 fps)
-master audio builder for BOTH «В ОКОПЕ» Reels using 100% REAL sliced Drum & Bass MP3 tracks
-(Pendulum — Witchcraft 174.000 BPM pure instrumental drops + live drum fills & natural studio crash outro,
-ZERO internal procedural music synth engine!).
+master audio builder for BOTH «В ОКОПЕ» Reels using 100% CC0-1.0 Public Domain real studio Drum & Bass MP3 tracks
+(`cc0_dnb_voevoda_30s.mp3` — Peter Szegvari Street Action DnB & `cc0_dnb_store_30s.mp3` — warlightwolf Tech DnB 20,
+0.00% vocals, ZERO Content ID, ZERO internal procedural music synth engine!).
 """
 import json
 import math
@@ -200,17 +200,16 @@ def master_with_real_dnb(voice_bus: np.ndarray, music_mp3_path: Path, sfx_bus: n
     Mix voiceover + real 320kbps Drum & Bass MP3 (full crisp 20Hz-20kHz studio spectrum, zero lowpass muffling!)
     with transparent sidechain ducking and exact -14.0 LUFS EBU R128 mastering.
     """
-    # Decode the standalone sliced real Drum & Bass MP3 with only a gentle -2.6 dB vocal-presence pocket at 2.3 kHz
     music_bus = decode_audio(
         music_mp3_path,
-        af="equalizer=f=2300:t=q:w=1.1:g=-2.6",
+        af="equalizer=f=2200:t=q:w=1.0:g=-4.5,equalizer=f=3500:t=q:w=1.1:g=-2.8",
         stereo=True,
     )[:TOTAL_SAMPLES].copy()
     if len(music_bus) < TOTAL_SAMPLES:
         music_bus = np.vstack([music_bus, np.zeros((TOTAL_SAMPLES - len(music_bus), 2), dtype=np.float32)])
 
     v_mono = np.mean(np.abs(voice_bus), axis=1)
-    speaking = (moving_rms(v_mono, int(0.16 * SR)) > 0.008).astype(np.float32)
+    speaking = (moving_rms(v_mono, int(0.24 * SR)) > 0.006).astype(np.float32)
     duck_env = np.empty(TOTAL_SAMPLES, dtype=np.float32)
     prev = 0.0
     a_att = math.exp(-1.0 / (0.14 * SR))
@@ -224,10 +223,9 @@ def master_with_real_dnb(voice_bus: np.ndarray, music_mp3_path: Path, sfx_bus: n
 
     rms_v = float(np.sqrt(np.mean(voice_bus ** 2) + 1e-12))
     rms_m = float(np.sqrt(np.mean(music_bus ** 2) + 1e-12))
-    # Punchy, energetic balance: Real DnB drums & Reese sub hit hard (-18.4 dB RMS full / -4.0 dB duck under speech)
     voice_bus = voice_bus * ((10.0 ** (-16.2 / 20.0)) / rms_v)
-    music_bus = music_bus * ((10.0 ** (-18.6 / 20.0)) / rms_m)
-    music_bus *= (10.0 ** ((-4.0 * duck_env) / 20.0))[:, None]
+    music_bus = music_bus * ((10.0 ** (-20.4 / 20.0)) / rms_m)
+    music_bus *= (10.0 ** ((-5.5 * duck_env) / 20.0))[:, None]
 
     mix = voice_bus + music_bus + sfx_bus * 0.65
     fi = int(0.015 * SR)
@@ -260,38 +258,9 @@ def master_with_real_dnb(voice_bus: np.ndarray, music_mp3_path: Path, sfx_bus: n
 
 
 def main():
-    src_mp3 = MP3_DIR / "pendulum_witchcraft_174bpm.mp3"
-    full_dnb = decode_audio(src_mp3, stereo=True)
-
-    # 1. Cut TWO distinct 30.000s pure-instrumental real Drum & Bass MP3 tracks (ZERO vocals, ZERO synth toys!):
-    #    - Product Reel MP3: Live acoustic 32nd-note snare roll (200.910s, 1 bar) -> Climax Pure Instrumental Drop (202.289s, 16 bars)
-    #      -> Heavy Riff Continuation (213.323s, 3 bars) -> Real Studio Final Cymbal Crash & Ring-Out (246.427s, 2.414s)
-    dnb_prod_mp3 = MP3_DIR / "dnb_voevoda_30s.mp3"
-    build_real_dnb_cut(
-        full_dnb,
-        [
-            (200.9100, BAR * 1.0),    # 0.000s - 1.379s: Famous live Pendulum snare drum fill!
-            (202.2893, BAR * 16.0),   # 1.379s - 23.448s: 16 continuous bars pure instrumental DnB drop!
-            (213.3238, BAR * 3.0),    # 23.448s - 27.586s: 3 bars climax riff over CTA!
-            (246.4272, 2.4200),       # 27.586s - 30.000s: Real studio final crash hit & reverb ring-out!
-        ],
-        dnb_prod_mp3,
-    )
-
-    #    - Store Reel MP3: 1-bar snare riser build (43.668s, 1 bar) -> Drop 1 Pure Instrumental Riff (67.116s, 16 bars)
-    #      -> Drop 2 Pure Instrumental Riff Climax (149.875s, 3 bars) -> Real Studio Final Cymbal Crash (246.427s, 2.414s)
-    dnb_store_mp3 = MP3_DIR / "dnb_store_30s.mp3"
-    build_real_dnb_cut(
-        full_dnb,
-        [
-            (43.6681, BAR * 1.0),     # 0.000s - 1.379s: First-drop snare riser build!
-            (67.1164, BAR * 16.0),    # 1.379s - 23.448s: 16 continuous bars Drop 1 pure instrumental!
-            (149.8750, BAR * 3.0),    # 23.448s - 27.586s: 3 bars Drop 2 heavy riff climax!
-            (246.4272, 2.4200),       # 27.586s - 30.000s: Real studio final crash hit & reverb ring-out!
-        ],
-        dnb_store_mp3,
-    )
-    print(f"Sliced standalone 320 kbps real DnB MP3s:\n  1) {dnb_prod_mp3}\n  2) {dnb_store_mp3}")
+    dnb_prod_mp3 = MP3_DIR / "cc0_dnb_voevoda_30s.mp3"
+    dnb_store_mp3 = MP3_DIR / "cc0_dnb_store_30s.mp3"
+    print(f"Using audited CC0-1.0 Public Domain DnB MP3s:\n  1) {dnb_prod_mp3}\n  2) {dnb_store_mp3}")
 
     # Load clean subtle transition foley (real recorded foley only — ZERO synthesized tones!)
     boom_cin = decode_audio(SFX_DIR / "boom_cinematic.mp3")
@@ -359,7 +328,7 @@ def main():
     sfx_prod = np.zeros((TOTAL_SAMPLES, 2), dtype=np.float32)
     c1, c2, c3, c4 = p_cuts[1], p_cuts[2], p_cuts[3], p_cuts[4]
     p_lock = round(add_stereo_clip(sfx_prod, imp_deep, 0.40, -6.0, 0.0), 4)
-    p_drop = round(BAR, 4)  # Real Pendulum Drop slams on exact Bar 1 (1.3793s)!
+    p_drop = round(BAR, 4)
     add_stereo_clip(sfx_prod, whoosh_tr, max(0.0, c1 - 0.14), -7.5, 0.0)
     s2_span = c2 - c1
     t_st1 = round(c1 + 0.07 * s2_span, 4)
@@ -383,7 +352,7 @@ def main():
     p_lufs, p_tp = master_with_real_dnb(v_prod, dnb_prod_mp3, sfx_prod, AUDIO_DIR / "master_product_30s.wav")
     prod_sync = {
         "product": "Комплекс бронезащиты «ВОЕВОДА 14/23» (ООО «Варяг»)",
-        "music_source": "assets/audio/music_mp3/dnb_voevoda_30s.mp3 (Real Studio Drum & Bass MP3, 320 kbps, 174.0 BPM)",
+        "music_source": "assets/audio/music_mp3/cc0_dnb_voevoda_30s.mp3 (Peter Szegvari — Street Action DnB, CC0-1.0 Public Domain, 174.6 BPM)",
         "duration_seconds": DURATION,
         "fps": FPS,
         "total_frames": int(DURATION * FPS),
@@ -430,7 +399,7 @@ def main():
     add_stereo_clip(sfx_store, boom_cin, float(sc[4]), -5.5, 0.0)
 
     s_lufs, s_tp = master_with_real_dnb(v_store, dnb_store_mp3, sfx_store, AUDIO_DIR / "master_30s.wav")
-    old_store_sync["music_source"] = "assets/audio/music_mp3/dnb_store_30s.mp3 (Real Studio Drum & Bass MP3, 320 kbps, 174.0 BPM)"
+    old_store_sync["music_source"] = "assets/audio/music_mp3/cc0_dnb_store_30s.mp3 (warlightwolf — Tech DnB Music 20, CC0-1.0 Public Domain, 174.6 BPM)"
     old_store_sync["master_lufs"] = round(s_lufs, 2)
     old_store_sync["true_peak_db"] = round(s_tp, 2)
     old_store_sync["s5_sting"] = round(BAR * 20.0, 4)

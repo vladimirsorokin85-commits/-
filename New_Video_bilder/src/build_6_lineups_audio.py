@@ -210,11 +210,11 @@ def main():
     whoosh_s = decode_audio(SFX_DIR / "whoosh_short.mp3")
     whoosh_tr = decode_audio(SFX_DIR / "whoosh_transition.mp3")
 
-    # 3 distinct real studio Drum & Bass MP3 tracks rotated across the 6 lineups!
+    # 3 distinct CC0-1.0 Public Domain studio Drum & Bass MP3 tracks rotated across the 6 lineups!
     music_pool = [
-        ("dnb_power_30s.mp3", 175.0, 27.4286),
-        ("dnb_voevoda_30s.mp3", 174.0, 27.5862),
-        ("dnb_store_30s.mp3", 174.0, 27.5862),
+        ("cc0_dnb_power_30s.mp3", 174.6, 27.4286),
+        ("cc0_dnb_voevoda_30s.mp3", 174.6, 27.5862),
+        ("cc0_dnb_store_30s.mp3", 174.6, 27.5862),
     ]
 
     lineups = [
@@ -296,36 +296,47 @@ def main():
     fi, fo = int(0.015 * SR), int(0.350 * SR)
     gaps = [0.20, 0.20, 0.20, 0.20, 0.0]
 
+    existing_sync = json.loads((PROJECT / "src" / "lineups_sync_map.json").read_text(encoding="utf-8"))
+
     for item in lineups:
         slug = item["slug"]
         mp3_name, bpm, sting_t = music_pool[item["music_idx"]]
         beat = 60.0 / bpm
-        raw_segs = split_5_phrases(VO_DIR / item["raw"], item["phrases"])
+        clean_stem = VO_DIR / f"clean_vo_{slug}.wav"
+        raw_mp3 = VO_DIR / item["raw"]
 
-        best_tempo = 1.24
-        for cand in [1.14, 1.18, 1.22, 1.26, 1.30, 1.34, 1.38, 1.42]:
-            polished_try = [trim_and_polish_segment(s, cand) for s in raw_segs]
-            tc = 1.5 * beat
-            for ic, clip in enumerate(polished_try):
-                tc = math.ceil(tc / (beat / 2.0) - 1e-6) * (beat / 2.0)
-                tc += len(clip) / SR + gaps[ic]
-            if tc <= 27.60:
-                best_tempo = cand
-                break
+        if raw_mp3.exists():
+            raw_segs = split_5_phrases(raw_mp3, item["phrases"])
+            best_tempo = 1.24
+            for cand in [1.14, 1.18, 1.22, 1.26, 1.30, 1.34, 1.38, 1.42]:
+                polished_try = [trim_and_polish_segment(s, cand) for s in raw_segs]
+                tc = 1.5 * beat
+                for ic, clip in enumerate(polished_try):
+                    tc = math.ceil(tc / (beat / 2.0) - 1e-6) * (beat / 2.0)
+                    tc += len(clip) / SR + gaps[ic]
+                if tc <= 27.60:
+                    best_tempo = cand
+                    break
+            clips = [trim_and_polish_segment(s, best_tempo) for s in raw_segs]
+            v_bus = np.zeros((TOTAL_SAMPLES, 2), dtype=np.float32)
+            meta = []
+            t_cur = 1.5 * beat
+            for idx, (txt, clip) in enumerate(zip(item["phrases"], clips)):
+                grid = beat / 2.0
+                start_s = math.ceil(t_cur / grid - 1e-6) * grid
+                end_s = start_s + len(clip) / SR
+                add_stereo_clip(v_bus, clip, start_s, 0.0, 0.0)
+                meta.append({"index": idx + 1, "text": txt, "voice_start": round(start_s, 4), "voice_end": round(end_s, 4)})
+                t_cur = end_s + gaps[idx]
+            cuts = [0.0] + [round(int(round(0.5 * (meta[i]["voice_end"] + meta[i + 1]["voice_start"]) * FPS)) / FPS, 6) for i in range(4)] + [30.0]
+        else:
+            # Frame-locked pre-isolated 30.000s mono voice stem -> 0.000000s visual drift!
+            mono_v = decode_audio(clean_stem, af="highpass=f=85,equalizer=f=3350:t=q:w=1.1:g=2.2")[:TOTAL_SAMPLES]
+            v_bus = np.column_stack([mono_v, mono_v])
+            meta = existing_sync[slug]["scenes"]
+            cuts = existing_sync[slug]["cuts"]
+            best_tempo = existing_sync[slug]["voice_tempo"]
 
-        clips = [trim_and_polish_segment(s, best_tempo) for s in raw_segs]
-        v_bus = np.zeros((TOTAL_SAMPLES, 2), dtype=np.float32)
-        meta = []
-        t_cur = 1.5 * beat
-        for idx, (txt, clip) in enumerate(zip(item["phrases"], clips)):
-            grid = beat / 2.0
-            start_s = math.ceil(t_cur / grid - 1e-6) * grid
-            end_s = start_s + len(clip) / SR
-            add_stereo_clip(v_bus, clip, start_s, 0.0, 0.0)
-            meta.append({"index": idx + 1, "text": txt, "voice_start": round(start_s, 4), "voice_end": round(end_s, 4)})
-            t_cur = end_s + gaps[idx]
-
-        cuts = [0.0] + [round(int(round(0.5 * (meta[i]["voice_end"] + meta[i + 1]["voice_start"]) * FPS)) / FPS, 6) for i in range(4)] + [30.0]
         sfx_bus = np.zeros((TOTAL_SAMPLES, 2), dtype=np.float32)
         c1, c2, c3, c4 = cuts[1], cuts[2], cuts[3], cuts[4]
         p_lock = round(add_stereo_clip(sfx_bus, imp_deep, 0.40, -6.0, 0.0), 4)
@@ -338,9 +349,12 @@ def main():
         p_s4 = round(add_stereo_clip(sfx_bus, imp_deep, c3, -5.8, 0.0), 4)
         p_s5 = round(add_stereo_clip(sfx_bus, boom_cin, c4, -5.5, 0.0), 4)
 
-        music_bus = decode_audio(MP3_DIR / mp3_name, af="equalizer=f=2300:t=q:w=1.1:g=-2.6", stereo=True)[:TOTAL_SAMPLES].copy()
-        v_mono = np.mean(np.abs(v_bus), axis=1)
-        speaking = (moving_rms(v_mono, int(0.16 * SR)) > 0.008).astype(np.float32)
+        music_bus = decode_audio(MP3_DIR / mp3_name, af="equalizer=f=2200:t=q:w=1.0:g=-4.5,equalizer=f=3500:t=q:w=1.1:g=-2.8", stereo=True)[:TOTAL_SAMPLES].copy()
+        speaking = np.zeros(TOTAL_SAMPLES, dtype=np.float32)
+        for m_seg in meta:
+            s0 = max(0, int((m_seg["voice_start"] - 0.10) * SR))
+            s1 = min(TOTAL_SAMPLES, int((m_seg["voice_end"] + 0.14) * SR))
+            speaking[s0:s1] = 1.0
         duck_env = np.empty(TOTAL_SAMPLES, dtype=np.float32)
         prev, a_att, a_rel = 0.0, math.exp(-1.0 / (0.14 * SR)), math.exp(-1.0 / (0.45 * SR))
         for i in range(0, TOTAL_SAMPLES, 64):
@@ -350,8 +364,8 @@ def main():
             duck_env[i : i + 64] = prev
 
         v_bus *= (10.0 ** (-16.2 / 20.0)) / float(np.sqrt(np.mean(v_bus ** 2) + 1e-12))
-        music_bus *= (10.0 ** (-18.6 / 20.0)) / float(np.sqrt(np.mean(music_bus ** 2) + 1e-12))
-        music_bus *= (10.0 ** ((-4.0 * duck_env) / 20.0))[:, None]
+        music_bus *= (10.0 ** (-20.4 / 20.0)) / float(np.sqrt(np.mean(music_bus ** 2) + 1e-12))
+        music_bus *= (10.0 ** ((-5.5 * duck_env) / 20.0))[:, None]
 
         mix = v_bus + music_bus + sfx_bus * 0.65
         mix[:fi] *= np.linspace(0.0, 1.0, fi, dtype=np.float32)[:, None]

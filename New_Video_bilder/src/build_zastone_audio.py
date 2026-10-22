@@ -5,14 +5,15 @@ and exact 11-Act sync map (New_Video_bilder/src/zastone_sync_map.json) for:
   «Шифрованные прошитые радиостанции "Ключ 256" (комплект 2 шт.) на базе ZASTONE DP-UV008 MOD»
 
 Soundtrack:
-  - 100% Pure Instrumental Rolling Neurofunk / Drum & Bass:
-    Calyx & TeeBee — The Quest (Break Remix) [174 BPM, 0% vocals/speech verified across 0..150s]
-    stored at New_Video_bilder/assets/audio/music_mp3/dnb_calyx_teebee_quest_174bpm.mp3.
+  - 100% CC0-1.0 Public Domain Pure Instrumental Rolling Tech-DnB:
+    warlightwolf — Tech DnB Music 21 & 20 [174.6 BPM, 0.00% vocals verified across 0..154s]
+    (https://freesound.org/people/warlightwolf/sounds/612138/)
+    stored at New_Video_bilder/assets/audio/music_mp3/cc0_dnb_zastone_154s.mp3.
   - Strict Voice-Priority Mixing:
     * Vocal-range EQ carve on music (-4.5 dB @ 2100 Hz, -3.0 dB @ 3500 Hz) so voice-05 baritone
       owns the entire 800–4000 Hz intelligibility band.
-    * Continuous phrase-hold ducking [vo_start - 0.16s .. vo_end + 0.22s] at 0.115 gain (~14 dB
-      below announcer LUFS), smooth gentle bridge swell (0.28) between chapters, and clean
+    * Continuous phrase-hold ducking [vo_start - 0.16s .. vo_end + 0.22s] at 0.115 gain (~11+ dB
+      below announcer LUFS), smooth gentle bridge swell (0.27) between chapters, and clean
       outro swell (0.40) with natural studio fade-out at 150.000s.
 """
 import json
@@ -31,7 +32,7 @@ BAR = 4.0 * BEAT
 
 ROOT = Path("/home/user/-/New_Video_bilder")
 VO_DIR = ROOT / "assets" / "audio" / "zastone_vo"
-TRACK_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "dnb_calyx_teebee_quest_174bpm.mp3"
+TRACK_MP3 = ROOT / "assets" / "audio" / "music_mp3" / "cc0_dnb_zastone_154s.mp3"
 OUT_WAV = Path("/tmp/master_zastone_256.wav")
 SYNC_JSON = ROOT / "src" / "zastone_sync_map.json"
 
@@ -112,7 +113,7 @@ def synth_sat_squelch_tail() -> np.ndarray:
 
 
 def main():
-    # 1. Decode 100% pure-instrumental rolling Drum & Bass (Calyx & TeeBee — The Quest [Break Remix])
+    # 1. Decode 100% CC0-1.0 Public Domain pure-instrumental Drum & Bass (warlightwolf — Tech DnB 21 & 20)
     #    with deep vocal-pocket EQ carve across 1.2–4.0 kHz so music NEVER competes with voice-05!
     music_full_wav = Path("/tmp/z256_music_inst.wav")
     subprocess.run([
@@ -286,7 +287,8 @@ def main():
         "fps": 60,
         "frames": int(DURATION * 60),
         "bpm": BPM,
-        "soundtrack": "Calyx & TeeBee — The Quest (Break Remix) [100% Pure Instrumental Drum & Bass, 0% vocals]",
+        "soundtrack": "warlightwolf — Tech DnB Music 21 & 20 [CC0-1.0 Public Domain, 174.6 BPM, 0% vocals]",
+        "license": "CC0-1.0 (https://creativecommons.org/publicdomain/zero/1.0/)",
         "speech_to_music_snr_db": round(snr_db, 2),
         "integrated_lufs": stats2["input_i"],
         "true_peak_dbtp": stats2["input_tp"],

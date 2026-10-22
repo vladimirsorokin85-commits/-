@@ -1,0 +1,98 @@
+{
+  "policy": "STRICT_CC0_1_0_PUBLIC_DOMAIN_ONLY",
+  "tracks": {
+    "cc0_dnb_zastone_154s.mp3": {
+      "title": "Tech DnB Music 21 + Tech DnB Music 20 (174.5 BPM Instrumental Arrangement)",
+      "author": "warlightwolf",
+      "spdx_license": "CC0-1.0",
+      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source_url": "https://freesound.org/people/warlightwolf/sounds/612138/ + https://freesound.org/people/warlightwolf/sounds/612137/",
+      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+      "content_id_registered": false,
+      "silero_vad_vocal_pct": 0.0,
+      "bpm": 174.6,
+      "used_in": [
+        "output/v_okope_zastone_key256.mp4"
+      ],
+      "sha256": "17c4aeb93d1245fff76baa6301d8c39bd8065710801954eb8e41763b7d7ea376"
+    },
+    "cc0_dnb_azar_60s.mp3": {
+      "title": "Tech DnB Music 21 (60s Instrumental Slice)",
+      "author": "warlightwolf",
+      "spdx_license": "CC0-1.0",
+      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source_url": "https://freesound.org/people/warlightwolf/sounds/612138/",
+      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+      "content_id_registered": false,
+      "silero_vad_vocal_pct": 0.0,
+      "bpm": 174.6,
+      "used_in": [
+        "output/v_okope_azar_60s.mp4"
+      ],
+      "sha256": "f4c332e7d6386807369fe7e7a751b33cdd08d3c8b6499e0852765ce929bb3ae9"
+    },
+    "cc0_dnb_sidewinder_30s.mp3": {
+      "title": "Street Action DnB - Mastered (30s Drop Slice)",
+      "author": "Peter Szegvari (szegvari)",
+      "spdx_license": "CC0-1.0",
+      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source_url": "https://freesound.org/people/szegvari/sounds/563543/",
+      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+      "content_id_registered": false,
+      "silero_vad_vocal_pct": 0.0,
+      "bpm": 174.6,
+      "used_in": [
+        "output/v_okope_sidewinder_30s.mp4"
+      ],
+      "sha256": "faff2535f966dc718d6fbdcf9c7c1632845b7c3d64032a0ed4c91e7bdbecb068"
+    },
+    "cc0_dnb_power_30s.mp3": {
+      "title": "Tech DnB Music 21 (30s Peak Drop Slice)",
+      "author": "warlightwolf",
+      "spdx_license": "CC0-1.0",
+      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source_url": "https://freesound.org/people/warlightwolf/sounds/612138/",
+      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+      "content_id_registered": false,
+      "silero_vad_vocal_pct": 0.0,
+      "bpm": 174.6,
+      "used_in": [
+        "output/v_okope_power_30s.mp4",
+        "output/v_okope_power_6_lineups.zip (01_DJI_Power, 04_JQB_Power)"
+      ],
+      "sha256": "455430822a3ee72c566ab2ab27c101b480a6612f5c537beac442d4d28611ca65"
+    },
+    "cc0_dnb_voevoda_30s.mp3": {
+      "title": "Street Action DnB - Mastered (30s Finale Slice)",
+      "author": "Peter Szegvari (szegvari)",
+      "spdx_license": "CC0-1.0",
+      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source_url": "https://freesound.org/people/szegvari/sounds/563543/",
+      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+      "content_id_registered": false,
+      "silero_vad_vocal_pct": 0.0,
+      "bpm": 174.6,
+      "used_in": [
+        "output/v_okope_product_30s.mp4",
+        "output/v_okope_power_6_lineups.zip (02_EcoFlow_Delta, 05_Allpowers_R_Series)"
+      ],
+      "sha256": "4fe852983ff207b9167a5144dbb8abd8aa71a156d7e8ecc21a0fbe117ba99eb1"
+    },
+    "cc0_dnb_store_30s.mp3": {
+      "title": "Tech DnB Music 20 (30s Wide-Stereo Drop Slice)",
+      "author": "warlightwolf",
+      "spdx_license": "CC0-1.0",
+      "license_deed": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source_url": "https://freesound.org/people/warlightwolf/sounds/612137/",
+      "corpus_mirror": "https://github.com/SoundSafari/CC0-1.0-Music",
+      "content_id_registered": false,
+      "silero_vad_vocal_pct": 0.0,
+      "bpm": 174.6,
+      "used_in": [
+        "output/v_okope_reels_30s.mp4",
+        "output/v_okope_power_6_lineups.zip (03_Jackery_Explorer_V2, 06_Bluetti_AC_Series)"
+      ],
+      "sha256": "1572d5e0a8544f12c07ec6434024e76bbb181535b94927308ce4ea4b345d3003"
+    }
+  }
+}

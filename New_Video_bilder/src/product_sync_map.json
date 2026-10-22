@@ -1,6 +1,6 @@
 {
   "product": "Комплекс бронезащиты «ВОЕВОДА 14/23» (ООО «Варяг»)",
-  "music_source": "assets/audio/music_mp3/dnb_voevoda_30s.mp3 (Real Studio Drum & Bass MP3, 320 kbps, 174.0 BPM)",
+  "music_source": "assets/audio/music_mp3/cc0_dnb_voevoda_30s.mp3 (Peter Szegvari — Street Action DnB, CC0-1.0 Public Domain, 174.6 BPM)",
   "duration_seconds": 30.0,
   "fps": 60,
   "total_frames": 1800,
@@ -8,7 +8,7 @@
   "bpm": 174.0,
   "voice_tempo": 1.25,
   "master_lufs": -14.0,
-  "true_peak_db": -1.0,
+  "true_peak_db": -0.6,
   "scene_cuts": [
     0.0,
     5.383333,

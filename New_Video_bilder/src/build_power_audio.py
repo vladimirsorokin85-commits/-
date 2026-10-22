@@ -2,8 +2,8 @@
 """
 Sample-accurate 30.000s (48 kHz stereo = 1,440,000 samples = 1800 frames @ 60 fps)
 master audio builder for the Power Stations Commercial («Зарядные станции — В ОКОПЕ»):
-- Slices a standalone 320 kbps real studio Drum & Bass MP3 (`assets/audio/music_mp3/dnb_power_30s.mp3`)
-  from Feint — Time Bomb (Monstercat 175.0 BPM pure instrumental climax drop + live snare build & natural crash outro).
+- Uses 100% CC0-1.0 Public Domain real studio Drum & Bass MP3 (`assets/audio/music_mp3/cc0_dnb_power_30s.mp3`)
+  from warlightwolf — Tech DnB Music 21 (https://freesound.org/people/warlightwolf/sounds/612138/, 0.00% vocals, ZERO Content ID).
 - Voices: `voice-05` (`pwr_s1..pwr_s5.mp3`), zero prices, zero internal links.
 - Masters to exact -14.0 LUFS / <= -0.8 dBFS True Peak.
 """
@@ -170,32 +170,9 @@ def add_stereo_clip(buf: np.ndarray, clip: np.ndarray, start_s: float, gain_db: 
 
 
 def main():
-    # 1. Slice standalone 320 kbps real studio Drum & Bass MP3 from Feint — Time Bomb (175.0 BPM):
-    #    - 0.000s - 1.371s: Real pre-drop snare & riser build (42.6776s, 1 bar)
-    #    - 1.371s - 23.314s: 16 continuous pure-instrumental climax drop bars (153.7636s, 16 bars, 65 dB sub-bass, zero vocals!)
-    #    - 23.314s - 27.429s: 3 bars pure instrumental drop climax (164.7350s, 3 bars, M/S = 3.3 dB)
-    #    - 27.429s - 30.000s: Natural studio final crash & atmospheric ring-out (175.7065s, 2.58s)
-    src_feint = decode_audio(MP3_DIR / "feint_time_bomb_dnb.mp3", stereo=True)
-    segs = [
-        (42.6776, BAR * 1.0),
-        (153.7636, BAR * 16.0),
-        (164.7350, BAR * 3.0),
-        (175.7065, 2.6000),
-    ]
-    xf_s = 0.012
-    parts = []
-    for idx, (t0, dur) in enumerate(segs):
-        extra = xf_s if idx < len(segs) - 1 else 0.35
-        s0 = int(round(t0 * SR))
-        s1 = min(len(src_feint), s0 + int(round((dur + extra) * SR)))
-        parts.append(src_feint[s0:s1].copy())
-    joined = crossfade_join(parts, xfade_ms=12.0)[:TOTAL_SAMPLES].copy()
     fi, fo = int(0.015 * SR), int(0.350 * SR)
-    joined[:fi] *= np.linspace(0.0, 1.0, fi, dtype=np.float32)[:, None]
-    joined[-fo:] *= (0.5 * (1.0 + np.cos(np.linspace(0.0, math.pi, fo, dtype=np.float32))))[:, None]
-    dnb_power_mp3 = MP3_DIR / "dnb_power_30s.mp3"
-    export_mp3_320(joined * (0.88 / max(float(np.max(np.abs(joined))), 1e-6)), dnb_power_mp3)
-    print(f"Sliced standalone 320 kbps real DnB MP3 -> {dnb_power_mp3}")
+    dnb_power_mp3 = MP3_DIR / "cc0_dnb_power_30s.mp3"
+    print(f"Using audited CC0-1.0 Public Domain DnB MP3 -> {dnb_power_mp3}")
 
     # 2. Arrange `voice-05` narration clips (`pwr_s1..pwr_s5.mp3`) on half-beat grid finishing cleanly before 27.42s crash!
     clips_cfg = [
@@ -283,9 +260,12 @@ def main():
     p_s5 = round(add_stereo_clip(sfx_bus, boom_cin, c4, -5.5, 0.0), 4)
     sting_t = round(BAR * 20.0, 4)  # 27.4286s real studio crash outro!
 
-    music_bus = decode_audio(dnb_power_mp3, af="equalizer=f=2300:t=q:w=1.1:g=-2.6", stereo=True)[:TOTAL_SAMPLES].copy()
-    v_mono = np.mean(np.abs(v_bus), axis=1)
-    speaking = (moving_rms(v_mono, int(0.16 * SR)) > 0.008).astype(np.float32)
+    music_bus = decode_audio(dnb_power_mp3, af="equalizer=f=2200:t=q:w=1.0:g=-4.5,equalizer=f=3500:t=q:w=1.1:g=-2.8", stereo=True)[:TOTAL_SAMPLES].copy()
+    speaking = np.zeros(TOTAL_SAMPLES, dtype=np.float32)
+    for m_seg in meta:
+        s0 = max(0, int((m_seg["voice_start"] - 0.10) * SR))
+        s1 = min(TOTAL_SAMPLES, int((m_seg["voice_end"] + 0.14) * SR))
+        speaking[s0:s1] = 1.0
     duck_env = np.empty(TOTAL_SAMPLES, dtype=np.float32)
     prev = 0.0
     a_att = math.exp(-1.0 / (0.14 * SR))
@@ -300,8 +280,8 @@ def main():
     rms_v = float(np.sqrt(np.mean(v_bus ** 2) + 1e-12))
     rms_m = float(np.sqrt(np.mean(music_bus ** 2) + 1e-12))
     v_bus = v_bus * ((10.0 ** (-16.2 / 20.0)) / rms_v)
-    music_bus = music_bus * ((10.0 ** (-18.6 / 20.0)) / rms_m)
-    music_bus *= (10.0 ** ((-4.0 * duck_env) / 20.0))[:, None]
+    music_bus = music_bus * ((10.0 ** (-20.4 / 20.0)) / rms_m)
+    music_bus *= (10.0 ** ((-5.5 * duck_env) / 20.0))[:, None]
 
     mix = v_bus + music_bus + sfx_bus * 0.65
     mix[:fi] *= np.linspace(0.0, 1.0, fi, dtype=np.float32)[:, None]
@@ -332,7 +312,7 @@ def main():
 
     sync_data = {
         "product": "Зарядные станции (DJI Power / EcoFlow Delta 3 / Jackery V2 / Bluetti / Allpowers / JQB)",
-        "music_source": "assets/audio/music_mp3/dnb_power_30s.mp3 (Feint — Time Bomb, 320 kbps, 175.0 BPM)",
+        "music_source": "assets/audio/music_mp3/cc0_dnb_power_30s.mp3 (warlightwolf — Tech DnB Music 21, CC0-1.0 Public Domain, 174.6 BPM)",
         "duration_seconds": DURATION,
         "fps": FPS,
         "total_frames": int(DURATION * FPS),

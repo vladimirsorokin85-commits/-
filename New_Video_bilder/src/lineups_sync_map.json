@@ -1,6 +1,6 @@
 {
   "01_DJI_Power": {
-    "bpm": 175.0,
+    "bpm": 174.6,
     "voice_tempo": 1.3,
     "voice_end": 27.3372,
     "master_lufs": -14.0,
@@ -51,11 +51,11 @@
     ]
   },
   "02_EcoFlow_Delta": {
-    "bpm": 174.0,
+    "bpm": 174.6,
     "voice_tempo": 1.26,
     "voice_end": 27.0933,
-    "master_lufs": -14.1,
-    "true_peak_db": -0.9,
+    "master_lufs": -14.0,
+    "true_peak_db": -1.0,
     "cuts": [
       0.0,
       4.883333,
@@ -102,11 +102,11 @@
     ]
   },
   "03_Jackery_Explorer_V2": {
-    "bpm": 174.0,
+    "bpm": 174.6,
     "voice_tempo": 1.34,
     "voice_end": 27.0379,
     "master_lufs": -14.1,
-    "true_peak_db": -1.0,
+    "true_peak_db": -0.9,
     "cuts": [
       0.0,
       5.9,
@@ -153,11 +153,11 @@
     ]
   },
   "04_JQB_Power": {
-    "bpm": 175.0,
+    "bpm": 174.6,
     "voice_tempo": 1.26,
     "voice_end": 27.1609,
-    "master_lufs": -14.0,
-    "true_peak_db": -1.0,
+    "master_lufs": -14.1,
+    "true_peak_db": -0.9,
     "cuts": [
       0.0,
       5.883333,
@@ -204,11 +204,11 @@
     ]
   },
   "05_Allpowers_R_Series": {
-    "bpm": 174.0,
+    "bpm": 174.6,
     "voice_tempo": 1.22,
     "voice_end": 27.5554,
     "master_lufs": -14.0,
-    "true_peak_db": -1.0,
+    "true_peak_db": -0.8,
     "cuts": [
       0.0,
       5.883333,
@@ -255,7 +255,7 @@
     ]
   },
   "06_Bluetti_AC_Series": {
-    "bpm": 174.0,
+    "bpm": 174.6,
     "voice_tempo": 1.18,
     "voice_end": 27.0804,
     "master_lufs": -14.0,

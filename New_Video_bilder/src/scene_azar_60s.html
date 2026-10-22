@@ -83,7 +83,7 @@ const MIL = {
   borderCyan: 'rgba(59, 226, 240, 0.48)',
 };
 
-// Exact frame-locked sync landmarks from src/azar_sync_map.json (Pendulum 174 BPM + voice-05)
+// Exact frame-locked sync landmarks from src/azar_sync_map.json (CC0-1.0 174.6 BPM DnB + voice-05)
 const CUTS = [
   0.000000,   // S1 [0..323]     Приёмник «Азар» от 3mx
   5.383333,   // S2 [323..632]   Режим 1: Авто с «Булат» v.4 (300–8000 МГц)
@@ -854,7 +854,7 @@ function renderScene2(t, beatPulse) {
 
 // =========================================================================
 // SCENE 3 [10.533s .. 17.250s]: MODE 2 — MANUAL 300–12 000 МГц + STEALTH
-// (174 BPM PENDULUM STADIUM DROP SURGES AT t = 13.0s!)
+// (174 BPM CC0-1.0 DNB STADIUM DROP SURGES AT t = 13.0s!)
 // =========================================================================
 function renderScene3(t, beatPulse) {
   const lt = t - CUTS[2];
@@ -1702,7 +1702,7 @@ function renderScene7(t, beatPulse) {
 
 // =========================================================================
 // SCENE 8 [52.400s .. 60.000s]: MONUMENTAL BRAND FINALE — В ОКОПЕ (TG / VK / AVITO)
-// Voice finishes at 57.65s -> Real Pendulum Studio Finale Crash & Ring-out to 60.000s!
+// Voice finishes at 57.65s -> Real CC0-1.0 DnB Studio Finale Crash & Ring-out to 60.000s!
 // =========================================================================
 function renderScene8(t, beatPulse) {
   const lt = t - CUTS[7];
@@ -1713,7 +1713,7 @@ function renderScene8(t, beatPulse) {
     beatPulse: beatPulse + outroSurge * 0.35,
   });
 
-  // Expanding golden shockwave ring right as voice finishes (57.65s) and Pendulum finale crash rings out!
+  // Expanding golden shockwave ring right as voice finishes (57.65s) and CC0-1.0 DnB finale crash rings out!
   if (t >= 57.55) {
     const swp = clamp((t - 57.55) / 1.85, 0, 1);
     ctx.save();
@@ -1869,7 +1869,7 @@ function renderScene8(t, beatPulse) {
 function renderFrame(rawTime) {
   const t = clamp(rawTime, 0, DURATION - 1e-4);
 
-  // Beat pulse locked to 174 BPM Pendulum clock
+  // Beat pulse locked to 174 BPM CC0-1.0 DnB clock
   const beatPhase = (t / BEAT) % 1;
   const beatPulse = Math.exp(-beatPhase * 5.2);
 
