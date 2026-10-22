@@ -79,14 +79,14 @@ const MIL = {
 
 // Exact measured audio sync landmarks from src/product_sync_map.json
 const SYNC = {
-  cuts: [0.0, 6.0, 13.433333, 18.483333, 23.6, 30.0],
+  cuts: [0.0, 5.383333, 12.066667, 17.816667, 22.416667, 30.0],
   s1Lock: 0.4565,
-  s1Drop: 1.4646,
-  s2Nodes: [6.5203, 8.9733, 11.2777],
-  s3Rows: [14.2413, 15.3523, 16.4633, 17.4733],
-  s4Drop: 18.5398,
-  s5Slam: 23.7752,
-  s5Sting: 27.6607,
+  s1Drop: 1.3793,
+  s2Nodes: [5.8512, 8.0567, 10.1285],
+  s3Rows: [12.9867, 14.2517, 15.5167, 16.6667],
+  s4Drop: 17.8731,
+  s5Slam: 22.5919,
+  s5Sting: 27.5862,
 };
 
 const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
@@ -710,9 +710,9 @@ function drawScreenSpaceHUD(g, t, sceneIdx) {
   const sectorLabels = [
     'ОБЗОР // ВОЕВОДА 14/23',
     'КОНСТРУКЦИЯ // 8 МОДУЛЕЙ',
-    'КАТАЛОГ // ЦЕНЫ И ВЕРСИИ',
+    'ЛИНЕЙКА // 4 КОМПЛЕКТАЦИИ',
     'ПОСТАВКА // БР5 И ОПТ/НДС',
-    'ЗАКАЗ // ОФИЦИАЛЬНЫЕ ССЫЛКИ',
+    'ЗАКАЗ // ОФИЦИАЛЬНАЯ СВЯЗЬ',
   ];
   setFittedFont(g, sectorLabels[sceneIdx] || sectorLabels[0], hw - 365, 22, 16, 'JetMono', '800');
   g.fillStyle = MIL.olive;
@@ -889,7 +889,7 @@ function renderScene1(g, t) {
   g.fillStyle = MIL.sand;
   g.font = '400 29px RubikDirt';
   g.textAlign = 'left';
-  g.fillText('ФЛАГМАН КАТАЛОГА · ООО «ВАРЯГ»', SAFE_PAD + 30, 1356 + (1 - kp) * 14);
+  g.fillText('ФЛАГМАН БРОНЕЗАЩИТЫ · ООО «ВАРЯГ»', SAFE_PAD + 30, 1356 + (1 - kp) * 14);
   g.restore();
 
   g.save();
@@ -1138,7 +1138,7 @@ function renderScene2(g, t) {
 }
 
 // =========================================================================
-// SCENE 3 (13.433 - 18.483s): VERIFIED MOYSKLAD CATALOG MATRIX (SKUs, GOST & RUB PRICES)
+// SCENE 3: 4 TACTICAL CONFIGURATIONS & CAMO MATRIX (GOST 34286-2017)
 // =========================================================================
 function drawTacticalSightReticle(g, x, y, lockFlash) {
   const expand = 1 + (1 - lockFlash) * 0.06;
@@ -1191,41 +1191,41 @@ function renderScene3(g, t) {
   setFittedFont(g, 'СЕРТИФИКАТ POCC RU C-RU.C308.B.00059/24 · ГОСТ 34286-2017', SAFE_W, 22, 16, 'JetMono', '800');
   g.textAlign = 'left';
   g.fillText('СЕРТИФИКАТ POCC RU C-RU.C308.B.00059/24 · ГОСТ 34286-2017', SAFE_PAD, 212);
-  setFittedFont(g, 'ВСЕ ВЕРСИИ В ОНЛАЙН-КАТАЛОГЕ', SAFE_W, 54, 34, 'RussoOne', '900');
+  setFittedFont(g, '4 КОМПЛЕКТАЦИИ ПОД ЗАДАЧУ', SAFE_W, 54, 34, 'RussoOne', '900');
   g.fillStyle = MIL.bone;
-  g.fillText('ВСЕ ВЕРСИИ В ОНЛАЙН-КАТАЛОГЕ', SAFE_PAD, 276);
+  g.fillText('4 КОМПЛЕКТАЦИИ ПОД ЗАДАЧУ', SAFE_PAD, 276);
   g.restore();
 
   const rows = [
     {
-      sku: 'АРТ. 00794 · МОДУЛЬ ТОРСА',
+      sku: 'БАЗОВЫЙ МОДУЛЬ ТОРСА',
       title: 'ПЛИТНИК «ВОЕВОДА 14/23»',
       desc: 'Баллистика СВМПЭ Бр1/С2 · 4 пряжки ROC · КАПы',
-      price: '44 160 ₽',
+      badge: 'БР1/С2 · ROC',
       trig: r1T,
       gold: false,
     },
     {
-      sku: 'АРТ. 00733 · БАЗОВАЯ СБОРКА',
+      sku: 'УСИЛЕННАЯ БАЗОВАЯ СБОРКА',
       title: 'КОМПЛЕКС «СТАНДАРТ»',
       desc: 'Увеличенная площадь осколочной защиты · ИК-ремиссия',
-      price: '79 580 ₽',
+      badge: '6 МОДУЛЕЙ',
       trig: r2T,
       gold: false,
     },
     {
-      sku: 'АРТ. 00459 · ХИТ ПОСТАВОК СВО',
+      sku: 'ХИТ ПОСТАВОК СВО',
       title: 'КОМПЛЕКС «ШТУРМ» 2.0',
-      desc: '8 модулей: шея, плечи, пояс, «Клевер», тассеты бёдер',
-      price: '123 096 ₽',
+      desc: 'Шея, плечи, пояс, «Клевер», тассеты бёдер · 115,8 дм²',
+      badge: '8 МОДУЛЕЙ',
       trig: r3T,
       gold: true,
     },
     {
-      sku: 'АРТ. 01434 · ПОЛНЫЙ КОНТУР',
+      sku: 'МАКСИМАЛЬНАЯ ЗАЩИТА',
       title: 'КОМПЛЕКС «БМДШ» МАКС',
       desc: 'Максимальный штурмовой контур защиты + упоры StKSS',
-      price: '155 020 ₽',
+      badge: 'МАКС КОНТУР',
       trig: r4T,
       gold: false,
     },
@@ -1247,7 +1247,7 @@ function renderScene3(g, t) {
       accentBarLeft: r.gold ? MIL.sandBright : MIL.olive,
     });
 
-    // Left text column (strictly bounded to w = 640px so ZERO overlap with right price stamp!)
+    // Left text column (strictly bounded to w = 635px so ZERO overlap with right spec badge!)
     g.save();
     g.textAlign = 'left';
     setFittedFont(g, r.sku, 635, 19, 15, 'JetMono', '800');
@@ -1263,7 +1263,7 @@ function renderScene3(g, t) {
     g.fillText(r.desc, SAFE_PAD + 30, ry + 168);
     g.restore();
 
-    // Right Chamfered Price Stamp Box (x = SAFE_PAD + 686, w = 242, h = 64)
+    // Right Chamfered Tactical Spec Stamp Box (x = SAFE_PAD + 686, w = 242, h = 64)
     const sx = SAFE_PAD + 686;
     const sy = ry + 79;
     const sw = 242;
@@ -1279,9 +1279,9 @@ function renderScene3(g, t) {
     });
     g.save();
     g.textAlign = 'center';
-    setFittedFont(g, r.price, sw - 26, 30, 22, 'RussoOne', '900');
+    setFittedFont(g, r.badge, sw - 26, 26, 18, 'RussoOne', '900');
     g.fillStyle = locked > 0.5 && r.gold ? '#0c1009' : MIL.bone;
-    g.fillText(r.price, sx + sw / 2, sy + 43);
+    g.fillText(r.badge, sx + sw / 2, sy + 42);
     g.restore();
   });
 
@@ -1329,9 +1329,9 @@ function renderScene3(g, t) {
   g.fillText('РАЗМЕРЫ: 1 (42–48) · 2 (48–54) · 3 (54–64)', SAFE_PAD + 34 + 280, 1639);
 
   g.textAlign = 'left';
-  setFittedFont(g, 'КАТАЛОГ: wduxqtygsunz.moysklad.shop/catalog', 590, 21, 16, 'JetMono', '800');
+  setFittedFont(g, 'ИК-РЕМИССИЯ · ПОЛНЫЙ КОМПЛЕКТ КАП · В НАЛИЧИИ', 590, 20, 15, 'JetMono', '800');
   g.fillStyle = MIL.ash;
-  g.fillText('КАТАЛОГ: wduxqtygsunz.moysklad.shop/catalog', SAFE_PAD + 34, 1720);
+  g.fillText('ИК-РЕМИССИЯ · ПОЛНЫЙ КОМПЛЕКТ КАП · В НАЛИЧИИ', SAFE_PAD + 34, 1720);
   g.restore();
 
   // Outer 4-Corner Optical Reticle stepping across price stamps (ZERO text overlap!)
@@ -1442,7 +1442,7 @@ function renderScene4(g, t) {
     502,
     p1,
     'БРОНЕПЛИТЫ БР5',
-    'ВАРЯГ-LO (14 500 ₽) · ЩЁЛКОВСКИЕ',
+    'ВАРЯГ-LO · ЩЁЛКОВСКИЕ · РАТНИК',
     'Керамика + СВМПЭ, боковые плиты, упоры StKSS и подсумки',
     MIL.phosphor
   );
@@ -1507,21 +1507,13 @@ function drawMilitaryChannelBadge(g, kind, cx, cy) {
   g.save();
   drawArmorPlate(g, cx - 38, cy - 38, 76, 76, {
     cut: 14,
-    fill: kind === 'shop' ? '#2c3d22' : kind === 'tg' ? '#2c3d22' : '#334224',
+    fill: kind === 'tg' ? '#2c3d22' : kind === 'vk' ? '#334224' : '#26331c',
     stroke: MIL.sand,
     lineW: 2.0,
     rivets: false,
   });
 
-  if (kind === 'shop') {
-    g.strokeStyle = MIL.sandBright;
-    g.lineWidth = 3.2;
-    g.strokeRect(cx - 19, cy - 17, 15, 15);
-    g.strokeRect(cx + 4, cy - 17, 15, 15);
-    g.strokeRect(cx - 19, cy + 5, 15, 15);
-    g.fillStyle = MIL.phosphor;
-    g.fillRect(cx + 4, cy + 5, 15, 15);
-  } else if (kind === 'tg') {
+  if (kind === 'tg') {
     g.fillStyle = MIL.sandBright;
     g.beginPath();
     g.moveTo(cx - 20, cy + 1);
@@ -1532,12 +1524,25 @@ function drawMilitaryChannelBadge(g, kind, cx, cy) {
     g.lineTo(cx - 8, cy + 3);
     g.closePath();
     g.fill();
-  } else {
+  } else if (kind === 'vk') {
     g.fillStyle = MIL.bone;
-    g.font = '900 28px RussoOne';
+    g.font = '900 30px RussoOne';
     g.textAlign = 'center';
     g.textBaseline = 'middle';
     g.fillText('VK', cx, cy + 2);
+  } else {
+    const dots = [
+      [-11, -10, 9, MIL.sandBright],
+      [11, -11, 12, MIL.olive],
+      [-12, 12, 13, MIL.phosphor],
+      [12, 13, 8, MIL.bone],
+    ];
+    dots.forEach(([dx, dy, r, col]) => {
+      g.fillStyle = col;
+      g.beginPath();
+      g.arc(cx + dx, cy + dy, r, 0, Math.PI * 2);
+      g.fill();
+    });
   }
   g.restore();
 }
@@ -1605,27 +1610,27 @@ function renderScene5(g, t) {
   const spotlightPos = (localT * 0.85) % 3.0;
   const channels = [
     {
-      kind: 'shop',
-      name: 'ОНЛАЙН-КАТАЛОГ · 1159 ТОВАРОВ',
-      url: 'wduxqtygsunz.moysklad.shop',
-      note: 'Все комплектации «Воевода 14/23», артикулы и цены',
-      accent: MIL.sandBright,
-      delay: 0.08,
-    },
-    {
       kind: 'tg',
       name: 'ОФИЦИАЛЬНЫЙ TELEGRAM-КАНАЛ',
       url: 't.me/vokope_ru',
-      note: 'Обзоры брони, живые остатки и заказ онлайн',
-      accent: MIL.phosphor,
-      delay: 0.22,
+      note: 'Обзоры брони, живые остатки и заказ',
+      accent: MIL.sand,
+      delay: 0.08,
     },
     {
       kind: 'vk',
-      name: 'ВКОНТАКТЕ И ВИТРИНА АВИТО',
-      url: 'vk.com/vokope_rus · Авито',
-      note: 'Отзывы подразделений и быстрая отгрузка по РФ',
+      name: 'СООБЩЕСТВО ВКОНТАКТЕ',
+      url: 'vk.com/vokope_rus',
+      note: 'Отзывы подразделений и прямая связь',
       accent: MIL.olive,
+      delay: 0.22,
+    },
+    {
+      kind: 'avito',
+      name: 'МАГАЗИН НА АВИТО',
+      url: 'Авито — «В ОКОПЕ»',
+      note: 'Проверенный продавец и доставка по всей РФ',
+      accent: MIL.phosphor,
       delay: 0.36,
     },
   ];
@@ -1708,9 +1713,9 @@ function renderScene5(g, t) {
     g.fillStyle = '#0c1009';
     g.fillText('ЗАКАЗЫВАЙТЕ «ВОЕВОДУ 14/23»!', W / 2, ry + 62);
 
-    setFittedFont(g, 'ОТ 44 160 ₽ ДО 155 020 ₽ · ОПТ И РОЗНИЦА · С НДС И БЕЗ', SAFE_W - 56, 20, 15, 'JetMono', '800');
+    setFittedFont(g, 'В НАЛИЧИИ НА СКЛАДЕ · ОПТ И РОЗНИЦА · С НДС И БЕЗ', SAFE_W - 56, 20, 15, 'JetMono', '800');
     g.fillStyle = '#1b2314';
-    g.fillText('ОТ 44 160 ₽ ДО 155 020 ₽ · ОПТ И РОЗНИЦА · С НДС И БЕЗ', W / 2, ry + 108);
+    g.fillText('В НАЛИЧИИ НА СКЛАДЕ · ОПТ И РОЗНИЦА · С НДС И БЕЗ', W / 2, ry + 108);
     g.restore();
   }
 
