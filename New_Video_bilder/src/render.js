@@ -84,7 +84,7 @@ function startStaticServer(sceneFile = 'scene.html') {
   });
 }
 
-async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, audioOffsetSec, outMp4 }) {
+async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, audioOffsetSec, outMp4, maxrateKbps = null }) {
   ensureRuntimeLibs();
   const execPath = await getChromiumPath();
   const numWorkers = Math.max(2, Math.min(4, os.cpus().length));
@@ -179,12 +179,13 @@ async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, au
     '-c:v', 'libx264',
     '-preset', 'medium',
     '-profile:v', 'high',
-    '-crf', '17',
+    '-crf', maxrateKbps ? '19' : '17',
+    ...(maxrateKbps ? ['-maxrate', `${maxrateKbps}k`, '-bufsize', `${maxrateKbps * 2}k`] : []),
     '-pix_fmt', 'yuv420p',
     '-r', String(FPS),
     '-vsync', 'cfr',
     '-c:a', 'aac',
-    '-b:a', '256k',
+    '-b:a', maxrateKbps ? '192k' : '256k',
     '-ar', '48000',
     '-ac', '2',
     '-movflags', '+faststart',
@@ -252,6 +253,8 @@ async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, au
   let sceneFile = 'scene.html';
   let audioFile = 'master_30s.wav';
   let outRel = 'output/v_okope_reels_30s.mp4';
+  let durationSec = 30.0;
+  let maxrateKbps = null;
   let probeStart = null;
   let probeDur = 4.5;
 
@@ -259,6 +262,8 @@ async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, au
     if (args[i] === '--scene' && args[i + 1]) sceneFile = args[++i];
     else if (args[i] === '--audio' && args[i + 1]) audioFile = args[++i];
     else if (args[i] === '--out' && args[i + 1]) outRel = args[++i];
+    else if (args[i] === '--duration' && args[i + 1]) durationSec = parseFloat(args[++i]);
+    else if (args[i] === '--maxrate' && args[i + 1]) maxrateKbps = parseInt(args[++i], 10);
     else if (args[i] === '--probe') probeStart = 12.8;
     else if (args[i] === '--probe-at' && args[i + 1]) probeStart = parseFloat(args[++i]);
     else if (!args[i].startsWith('--') && i === 1) outRel = args[i];
@@ -277,15 +282,17 @@ async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, au
         audioPath,
         audioOffsetSec: probeStart,
         outMp4: path.resolve(PROJECT_ROOT, outRel),
+        maxrateKbps,
       });
     } else {
       await renderSegment({
         browserUrl,
         startFrame: 0,
-        frameCount: 30 * FPS,
+        frameCount: Math.round(durationSec * FPS),
         audioPath,
         audioOffsetSec: 0.0,
         outMp4: path.resolve(PROJECT_ROOT, outRel),
+        maxrateKbps,
       });
     }
   } finally {

@@ -1,0 +1,1933 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>В ОКОПЕ · Видеоперехват «АЗАР» от 3mx — 60s Military Commercial Engine (1080×1920 @ 60fps)</title>
+<style>
+  @font-face {
+    font-family: 'RussoOne';
+    src: url('/fonts/RussoOne-Regular.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'RubikDirt';
+    src: url('/fonts/RubikDirt-Regular.ttf') format('truetype');
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'Tektur';
+    src: url('/fonts/Tektur-VF.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'FiraCond';
+    src: url('/fonts/FiraSansExtraCondensed-Black.ttf') format('truetype');
+    font-weight: 900;
+  }
+  @font-face {
+    font-family: 'JetMono';
+    src: url('/fonts/JetBrainsMono-VF.ttf') format('truetype');
+    font-weight: 400 800;
+  }
+  @font-face {
+    font-family: 'RobotoBold';
+    src: url('/studio_fonts/Roboto-Bold.woff') format('woff');
+    font-weight: 700;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: #0b0f0a;
+    user-select: none;
+  }
+  #master {
+    display: block;
+    width: 1080px;
+    height: 1920px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1080" height="1920"></canvas>
+
+<script type="module">
+const W = 1080;
+const H = 1920;
+const DURATION = 60.0;
+const BPM = 174.0;
+const BEAT = 60.0 / BPM;
+const PAD = 58;
+const SAFE_W = W - PAD * 2; // 964px
+
+const MIL = {
+  bg: '#0b0f0a',
+  panel: 'rgba(15, 21, 14, 0.93)',
+  panelHi: 'rgba(23, 32, 20, 0.95)',
+  panelCyan: 'rgba(12, 28, 30, 0.94)',
+  sand: '#d5ae5c',
+  sandHi: '#eed089',
+  olive: '#849e54',
+  phosphor: '#8fd158',
+  cyan: '#3be2f0',
+  cyanSoft: 'rgba(59, 226, 240, 0.22)',
+  emerald: '#45e884',
+  amber: '#f0a944',
+  redRec: '#ef4c4c',
+  bone: '#f3f0e6',
+  ash: '#c8cbc0',
+  muted: '#8d9685',
+  borderSand: 'rgba(213, 174, 92, 0.52)',
+  borderCyan: 'rgba(59, 226, 240, 0.48)',
+};
+
+// Exact frame-locked sync landmarks from src/azar_sync_map.json (Pendulum 174 BPM + voice-05)
+const CUTS = [
+  0.000000,   // S1 [0..323]     Приёмник «Азар» от 3mx
+  5.383333,   // S2 [323..632]   Режим 1: Авто с «Булат» v.4 (300–8000 МГц)
+  10.533333,  // S3 [632..1035]  Режим 2: Ручной 300–12 000 МГц + Радиотишина (174 BPM Drop @ ~13.0s)
+  17.250000,  // S4 [1035..1528] Внешний монитор Jack 3.5 мм + Дальность до 1,5 км
+  25.466667,  // S5 [1528..2083] Полевая надёжность: <=450 г · -20..+45°C · до 6,5 ч
+  34.716667,  // S6 [2083..2627] Заводская коробка + Паспорт изделия 3mx
+  43.783333,  // S7 [2627..3144] Поставка комплексов: оптом и в розницу, с НДС и без НДС
+  52.400000,  // S8 [3144..3600] Финальный призыв: В ОКОПЕ — Telegram, VK, Авито + 2.35s DnB outro
+  60.000000,
+];
+
+const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const lerp = (a, b, t) => a + (b - a) * t;
+const easeOutCubic = (x) => 1 - Math.pow(1 - clamp(x, 0, 1), 3);
+const easeOutBack = (x) => {
+  const c1 = 1.55, c3 = c1 + 1;
+  const p = clamp(x, 0, 1) - 1;
+  return 1 + c3 * p * p * p + c1 * p * p;
+};
+const smooth01 = (x) => {
+  const c = clamp(x, 0, 1);
+  return c * c * (3 - 2 * c);
+};
+const prog = (t, t0, dur) => clamp((t - t0) / Math.max(0.0001, dur), 0, 1);
+
+function hash2(x, y) {
+  const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123;
+  return n - Math.floor(n);
+}
+
+const canvas = document.getElementById('master');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+const ASSET_PATHS = {
+  azarHero: '/assets/azar_3mx/azar_hero_full_rgba.png',
+  azarFront: '/assets/azar_3mx/azar_front_closeup_rgba.png',
+  azarBack: '/assets/azar_3mx/azar_back_full_rgba.png',
+  azarKit: '/assets/azar_3mx/azar_kit_standing_rgba.png',
+  azarBoxClose: '/assets/azar_3mx/azar_3_box_closeup.jpg',
+  azarBoxWide: '/assets/azar_3mx/azar_4_box_wide.jpg',
+  bulat4: '/assets/real_products/real_bulat4_rgba.png',
+  logoFullSand: '/assets/brand/logo_full_sand.png',
+  logoShieldSand: '/assets/brand/logo_shield_sand.png',
+  bgRadar: '/assets/images/bg_radar_dusk.jpg',
+  bgTrench: '/assets/images/bg_trench_dugout_dusk.jpg',
+  bgArmor: '/assets/images/bg_armor_plate_camo.jpg',
+  bgCrates: '/assets/images/bg_military_crates_olive.jpg',
+};
+
+const IMG = {};
+
+async function loadAllAssets() {
+  await document.fonts.ready;
+  // Pre-warm every font weight/family used on canvas so glyph metrics are 100% deterministic from frame 0
+  const warmCanvas = document.createElement('canvas');
+  warmCanvas.width = 64;
+  warmCanvas.height = 64;
+  const wctx = warmCanvas.getContext('2d');
+  for (const spec of [
+    "900 48px 'RussoOne'",
+    "400 48px 'RubikDirt'",
+    "800 40px 'Tektur'",
+    "600 32px 'Tektur'",
+    "900 52px 'FiraCond'",
+    "700 28px 'JetMono'",
+    "500 24px 'JetMono'",
+    "700 30px 'RobotoBold'",
+  ]) {
+    await document.fonts.load(spec, 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789MHzГГц');
+    wctx.font = spec;
+    wctx.fillText('АЗАР 3mx БУЛАТ 12000 МГц В ОКОПЕ', 2, 32);
+  }
+
+  await Promise.all(
+    Object.entries(ASSET_PATHS).map(async ([k, url]) => {
+      const im = new Image();
+      im.crossOrigin = 'anonymous';
+      im.src = url;
+      await im.decode();
+      IMG[k] = im;
+    })
+  );
+}
+
+// Pre-baked subtle film grain tile for tactile broadcast finish (zero per-frame RNG cost)
+const GRAIN_TILE = (() => {
+  const g = document.createElement('canvas');
+  g.width = 256;
+  g.height = 256;
+  const gc = g.getContext('2d');
+  const id = gc.createImageData(256, 256);
+  for (let i = 0; i < 256 * 256; i++) {
+    const v = Math.floor(hash2(i % 256, (i / 256) | 0) * 255);
+    id.data[i * 4] = v;
+    id.data[i * 4 + 1] = v;
+    id.data[i * 4 + 2] = v;
+    id.data[i * 4 + 3] = 15;
+  }
+  gc.putImageData(id, 0, 0);
+  return g;
+})();
+
+// Pre-rendered procedural aerial recon terrain canvas for Scene 4 simulated FPV monitor feed
+const RECON_TERRAIN = (() => {
+  const c = document.createElement('canvas');
+  c.width = 960;
+  c.height = 600;
+  const g = c.getContext('2d');
+  // Dusk sky-to-haze horizon
+  const sky = g.createLinearGradient(0, 0, 0, 215);
+  sky.addColorStop(0, '#4d5855');
+  sky.addColorStop(0.65, '#7e8983');
+  sky.addColorStop(1, '#a9b3ac');
+  g.fillStyle = sky;
+  g.fillRect(0, 0, 960, 215);
+
+  // Ground perspective plain (215..600)
+  const grd = g.createLinearGradient(0, 212, 0, 600);
+  grd.addColorStop(0, '#5a635c');
+  grd.addColorStop(0.35, '#3d453e');
+  grd.addColorStop(1, '#222823');
+  g.fillStyle = grd;
+  g.fillRect(0, 212, 960, 388);
+
+  // Field parcels & agricultural grid lines in perspective
+  g.strokeStyle = 'rgba(175, 186, 176, 0.20)';
+  g.lineWidth = 2;
+  for (let k = -6; k <= 6; k++) {
+    g.beginPath();
+    g.moveTo(480 + k * 28, 214);
+    g.lineTo(480 + k * 210, 600);
+    g.stroke();
+  }
+  for (let r = 0; r < 11; r++) {
+    const yy = 216 + Math.pow(r / 10, 1.85) * 380;
+    g.strokeStyle = `rgba(165, 176, 166, ${(0.08 + r * 0.014).toFixed(3)})`;
+    g.beginPath();
+    g.moveTo(0, yy);
+    g.lineTo(960, yy);
+    g.stroke();
+  }
+
+  // Country road converging toward horizon center-right + dark treeline belt alongside
+  g.fillStyle = '#8b948e';
+  g.beginPath();
+  g.moveTo(506, 214);
+  g.lineTo(520, 214);
+  g.lineTo(685, 600);
+  g.lineTo(598, 600);
+  g.closePath();
+  g.fill();
+
+  // Treeline belt & forest patches
+  for (let i = 0; i < 190; i++) {
+    const u = i / 189;
+    const yy = 218 + Math.pow(u, 1.7) * 372;
+    const xx = lerp(492, 560, Math.pow(u, 1.02)) - 14 - hash2(i, 7) * (12 + 34 * u);
+    const rr = 3.5 + 16 * u * (0.65 + 0.5 * hash2(i, 19));
+    g.fillStyle = `rgba(${18 + ((hash2(i, 3) * 18) | 0)}, ${24 + ((hash2(i, 5) * 20) | 0)}, ${19 + ((hash2(i, 9) * 16) | 0)}, 0.92)`;
+    g.beginPath();
+    g.arc(xx, yy, rr, 0, Math.PI * 2);
+    g.fill();
+  }
+  // Distant treeline ridge on horizon
+  for (let x = 0; x < 960; x += 6) {
+    const hh = 5 + hash2(x, 41) * 13;
+    g.fillStyle = 'rgba(34, 40, 35, 0.85)';
+    g.fillRect(x, 214 - hh, 7, hh + 2);
+  }
+  // Small tracked vehicle / observation point silhouette on road shoulder at mid-distance
+  g.fillStyle = '#d4dcd5';
+  g.fillRect(548, 336, 22, 11);
+  g.fillStyle = '#2a302b';
+  g.fillRect(551, 339, 15, 5);
+  return c;
+})();
+
+// Helper: auto-fit font size so string NEVER overflows maxW under any circumstance
+function fitFont(text, maxW, weight, baseSize, family) {
+  let sz = baseSize;
+  ctx.font = `${weight} ${sz}px '${family}'`;
+  let w = ctx.measureText(text).width;
+  if (w > maxW && w > 0) {
+    sz = Math.max(13, Math.floor(sz * (maxW / w) * 0.985));
+    ctx.font = `${weight} ${sz}px '${family}'`;
+  }
+  return sz;
+}
+
+function drawFittedText(text, x, y, maxW, { weight = 800, size = 44, family = 'RussoOne', color = MIL.bone, align = 'left', baseline = 'alphabetic', shadow = true } = {}) {
+  ctx.save();
+  fitFont(text, maxW, weight, size, family);
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.textBaseline = baseline;
+  if (shadow) {
+    ctx.shadowColor = 'rgba(0,0,0,0.72)';
+    ctx.shadowBlur = 14;
+    ctx.shadowOffsetY = 3;
+  }
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+function roundRectPath(x, y, w, h, r) {
+  const rr = Math.min(r, w * 0.5, h * 0.5);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}
+
+function drawTacticalCard(x, y, w, h, { fill = MIL.panel, stroke = MIL.borderSand, r = 16, accent = MIL.sand, glow = 0 } = {}) {
+  ctx.save();
+  if (glow > 0) {
+    ctx.shadowColor = accent;
+    ctx.shadowBlur = glow;
+  }
+  roundRectPath(x, y, w, h, r);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = stroke;
+  ctx.stroke();
+
+  // Crisp tactical corner brackets
+  const L = Math.min(18, w * 0.08, h * 0.25);
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 3;
+  for (const [cx, cy, sx, sy] of [
+    [x + 1, y + 1, 1, 1],
+    [x + w - 1, y + 1, -1, 1],
+    [x + 1, y + h - 1, 1, -1],
+    [x + w - 1, y + h - 1, -1, -1],
+  ]) {
+    ctx.beginPath();
+    ctx.moveTo(cx + sx * L, cy);
+    ctx.lineTo(cx, cy);
+    ctx.lineTo(cx, cy + sy * L);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawCoverImage(im, x, y, w, h, { zoom = 1.0, panX = 0, panY = 0, alpha = 1.0 } = {}) {
+  const ir = im.width / im.height;
+  const br = w / h;
+  let dw, dh;
+  if (ir > br) {
+    dh = h * zoom;
+    dw = dh * ir;
+  } else {
+    dw = w * zoom;
+    dh = dw / ir;
+  }
+  const dx = x + (w - dw) * 0.5 + panX;
+  const dy = y + (h - dh) * 0.5 + panY;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.beginPath();
+  ctx.rect(x, y, w, h);
+  ctx.clip();
+  ctx.drawImage(im, dx, dy, dw, dh);
+  ctx.restore();
+}
+
+function drawContainImage(im, cx, cy, maxW, maxH, { scale = 1.0, alpha = 1.0, glowColor = null, glowBlur = 0, dropShadow = true } = {}) {
+  const s = Math.min(maxW / im.width, maxH / im.height) * scale;
+  const dw = im.width * s;
+  const dh = im.height * s;
+  const dx = cx - dw * 0.5;
+  const dy = cy - dh * 0.5;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  if (glowColor && glowBlur > 0) {
+    ctx.shadowColor = glowColor;
+    ctx.shadowBlur = glowBlur;
+    ctx.drawImage(im, dx, dy, dw, dh);
+  }
+  if (dropShadow) {
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.78)';
+    ctx.shadowBlur = 34;
+    ctx.shadowOffsetY = 16;
+  }
+  ctx.drawImage(im, dx, dy, dw, dh);
+  ctx.restore();
+  return { x: dx, y: dy, w: dw, h: dh };
+}
+
+function drawSceneBackdrop(bgImg, t, scIdx, { tint = 'rgba(9, 14, 10, 0.76)', cyanRadial = 0.16, beatPulse = 0 } = {}) {
+  const sStart = CUTS[scIdx];
+  const sDur = CUTS[scIdx + 1] - sStart;
+  const u = clamp((t - sStart) / sDur, 0, 1);
+
+  ctx.fillStyle = MIL.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCoverImage(bgImg, 0, 0, W, H, {
+    zoom: 1.06 + u * 0.055,
+    panX: lerp(-16, 16, u) * (scIdx % 2 === 0 ? 1 : -1),
+    panY: lerp(-10, 10, u),
+    alpha: 0.44,
+  });
+
+  ctx.fillStyle = tint;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle tactical coordinate grid
+  ctx.save();
+  ctx.strokeStyle = 'rgba(132, 158, 84, 0.065)';
+  ctx.lineWidth = 1;
+  for (let gx = 60; gx < W; gx += 120) {
+    ctx.beginPath();
+    ctx.moveTo(gx, 0);
+    ctx.lineTo(gx, H);
+    ctx.stroke();
+  }
+  for (let gy = 80; gy < H; gy += 120) {
+    ctx.beginPath();
+    ctx.moveTo(0, gy);
+    ctx.lineTo(W, gy);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Atmospheric dual glow (sand + 3mx cyan)
+  const rg1 = ctx.createRadialGradient(W * 0.52, H * 0.48, 30, W * 0.52, H * 0.48, 760);
+  rg1.addColorStop(0, `rgba(59, 226, 240, ${(cyanRadial + beatPulse * 0.07).toFixed(3)})`);
+  rg1.addColorStop(0.55, 'rgba(34, 62, 48, 0.08)');
+  rg1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = rg1;
+  ctx.fillRect(0, 0, W, H);
+
+  // Vignette
+  const vig = ctx.createRadialGradient(W * 0.5, H * 0.5, 420, W * 0.5, H * 0.5, 1140);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(4, 6, 4, 0.72)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawTopHUD(t, scIdx, sectionTag) {
+  const y = 52;
+  drawTacticalCard(PAD, y, SAFE_W, 92, {
+    fill: 'rgba(14, 19, 12, 0.92)',
+    stroke: 'rgba(213, 174, 92, 0.45)',
+    r: 14,
+    accent: MIL.sand,
+  });
+
+  // Official GOYDA shield logo on left
+  drawContainImage(IMG.logoShieldSand, PAD + 48, y + 46, 66, 68, { dropShadow: false });
+
+  drawFittedText('В ОКОПЕ · МАГАЗИН БРОНИ', PAD + 92, y + 40, 470, {
+    weight: 900,
+    size: 27,
+    family: 'RussoOne',
+    color: MIL.sandHi,
+    shadow: false,
+  });
+  drawFittedText(sectionTag, PAD + 92, y + 71, 520, {
+    weight: 700,
+    size: 19,
+    family: 'JetMono',
+    color: MIL.cyan,
+    shadow: false,
+  });
+
+  // Right status pill + scene counter 01/08 .. 08/08
+  const pillW = 228;
+  const px = PAD + SAFE_W - pillW - 18;
+  roundRectPath(px, y + 20, pillW, 52, 10);
+  ctx.fillStyle = 'rgba(59, 226, 240, 0.11)';
+  ctx.fill();
+  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = 'rgba(59, 226, 240, 0.46)';
+  ctx.stroke();
+
+  const blink = 0.55 + 0.45 * Math.sin(t * 7.2);
+  ctx.fillStyle = `rgba(69, 232, 132, ${blink.toFixed(3)})`;
+  ctx.beginPath();
+  ctx.arc(px + 22, y + 46, 6.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  drawFittedText(`3mx АЗАР · 0${scIdx + 1}/08`, px + 38, y + 53, pillW - 48, {
+    weight: 700,
+    size: 20,
+    family: 'JetMono',
+    color: MIL.bone,
+    shadow: false,
+  });
+
+  // Bottom progress bar along top HUD
+  const totalU = clamp(t / DURATION, 0, 1);
+  ctx.fillStyle = 'rgba(213, 174, 92, 0.20)';
+  ctx.fillRect(PAD + 4, y + 88, SAFE_W - 8, 3);
+  ctx.fillStyle = MIL.sand;
+  ctx.fillRect(PAD + 4, y + 88, (SAFE_W - 8) * totalU, 3);
+}
+
+// =========================================================================
+// SCENE 1 [0.000s .. 5.383s]: HERO REVEAL — «ВИДЕОПЕРЕХВАТ АЗАР ОТ 3mx»
+// =========================================================================
+function renderScene1(t, beatPulse) {
+  const u = prog(t, CUTS[0], CUTS[1] - CUTS[0]);
+  drawSceneBackdrop(IMG.bgRadar, t, 0, { cyanRadial: 0.22, beatPulse });
+  drawTopHUD(t, 0, 'РАДИОЭЛЕКТРОННАЯ РАЗВЕДКА · НОВИНКА 3mx');
+
+  // Kicker badge + Kinetic Headline
+  const eHead = easeOutCubic(prog(t, 0.06, 0.46));
+  ctx.save();
+  ctx.globalAlpha = eHead;
+  const slideY = (1 - eHead) * 34;
+
+  roundRectPath(PAD, 174 + slideY, 430, 44, 8);
+  ctx.fillStyle = 'rgba(59, 226, 240, 0.14)';
+  ctx.fill();
+  ctx.strokeStyle = MIL.borderCyan;
+  ctx.lineWidth = 1.8;
+  ctx.stroke();
+  drawFittedText('● ВИДЕТЬ НЕБО ГЛАЗАМИ ДРОНА', PAD + 18, 203 + slideY, 396, {
+    weight: 800,
+    size: 21,
+    family: 'JetMono',
+    color: MIL.cyan,
+    shadow: false,
+  });
+
+  drawFittedText('ПРИЁМНИК «АЗАР»', PAD, 286 + slideY, SAFE_W, {
+    weight: 900,
+    size: 74,
+    family: 'RussoOne',
+    color: MIL.bone,
+  });
+  drawFittedText('АНАЛОГОВЫЙ ВИДЕОПЕРЕХВАТ FPV · 3mx', PAD, 340 + slideY, SAFE_W, {
+    weight: 800,
+    size: 33,
+    family: 'Tektur',
+    color: MIL.sandHi,
+  });
+  ctx.restore();
+
+  // Concentric RF radar rings behind the full-antenna Azar hero
+  const cx = 560, cy = 1090;
+  ctx.save();
+  for (let rIdx = 0; rIdx < 4; rIdx++) {
+    const rad = 165 + rIdx * 118 + ((t * 58) % 118) * 0.35;
+    ctx.strokeStyle = `rgba(59, 226, 240, ${(0.24 - rIdx * 0.048).toFixed(3)})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy - 30, rad, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  // Rotating radar sweep sector
+  const ang = t * 1.85;
+  const sweepGrad = ctx.createRadialGradient(cx, cy - 30, 20, cx, cy - 30, 520);
+  sweepGrad.addColorStop(0, 'rgba(59, 226, 240, 0.20)');
+  sweepGrad.addColorStop(1, 'rgba(59, 226, 240, 0)');
+  ctx.fillStyle = sweepGrad;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy - 30);
+  ctx.arc(cx, cy - 30, 520, ang, ang + 0.62);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+
+  // Subtle companion rear-angle silhouette on right-back + Main Full-Antenna Front Hero front-center-right
+  const eProd = easeOutBack(prog(t, 0.14, 0.62));
+  drawContainImage(IMG.azarBack, 790, 1085, 290, 1020, {
+    scale: 0.94 + 0.06 * eProd,
+    alpha: 0.86 * clamp(eProd, 0, 1),
+    glowColor: 'rgba(213, 174, 92, 0.25)',
+    glowBlur: 24,
+  });
+  drawContainImage(IMG.azarHero, 505, 1035 + Math.sin(t * 2.1) * 5, 470, 1280, {
+    scale: 0.90 + 0.10 * eProd,
+    alpha: clamp(eProd * 1.15, 0, 1),
+    glowColor: 'rgba(59, 226, 240, 0.42)',
+    glowBlur: 34 + beatPulse * 14,
+  });
+
+  // Left floating telemetry callout cards pointing right at antennas & glowing 3mx LCD
+  const callouts = [
+    { t0: 0.65, y: 495, label: '2 АНТЕННЫ SMA (M)', val: 'ГИБКАЯ ПРУЖИНА', col: MIL.sandHi },
+    { t0: 1.25, y: 745, label: 'ДИСПЛЕЙ 3mx', val: 'МГНОВЕННЫЙ СИГНАЛ', col: MIL.cyan },
+    { t0: 1.85, y: 995, label: 'ДОК-СТАНЦИЯ LED', val: 'БЫСТРЫЙ ЗАРЯД АКБ', col: MIL.emerald },
+  ];
+  callouts.forEach((c) => {
+    const ec = easeOutCubic(prog(t, c.t0, 0.42));
+    if (ec <= 0) return;
+    ctx.save();
+    ctx.globalAlpha = ec;
+    const x0 = PAD - (1 - ec) * 30;
+    drawTacticalCard(x0, c.y, 336, 118, {
+      fill: 'rgba(13, 20, 15, 0.93)',
+      stroke: 'rgba(213, 174, 92, 0.48)',
+      r: 12,
+      accent: c.col,
+    });
+    drawFittedText(c.label, x0 + 20, c.y + 44, 296, {
+      weight: 700,
+      size: 20,
+      family: 'JetMono',
+      color: MIL.ash,
+      shadow: false,
+    });
+    drawFittedText(c.val, x0 + 20, c.y + 88, 296, {
+      weight: 900,
+      size: 29,
+      family: 'RussoOne',
+      color: c.col,
+      shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Bottom 3-pillar summary strip (ZERO PRICES!)
+  const eBot = easeOutCubic(prog(t, 0.85, 0.5));
+  ctx.save();
+  ctx.globalAlpha = eBot;
+  const by = 1692 + (1 - eBot) * 28;
+  const cols = [
+    ['300–12 000 МГц', 'СВЕРХШИРОКИЙ СПЕКТР'],
+    ['ДО 1,5 КМ', 'ДАЛЬНОСТЬ ПЕРЕХВАТА'],
+    ['ДО 6,5 ЧАСОВ', 'ОТ ОДНОГО АКБ'],
+  ];
+  const cw = (SAFE_W - 28) / 3;
+  cols.forEach(([big, sub], i) => {
+    const bx = PAD + i * (cw + 14);
+    drawTacticalCard(bx, by, cw, 156, {
+      fill: MIL.panelHi,
+      stroke: i === 0 ? MIL.borderCyan : MIL.borderSand,
+      r: 14,
+      accent: i === 0 ? MIL.cyan : MIL.sand,
+    });
+    drawFittedText(big, bx + cw * 0.5, by + 72, cw - 28, {
+      weight: 900,
+      size: 35,
+      family: 'FiraCond',
+      color: i === 0 ? MIL.cyan : MIL.sandHi,
+      align: 'center',
+      shadow: false,
+    });
+    drawFittedText(sub, bx + cw * 0.5, by + 118, cw - 28, {
+      weight: 700,
+      size: 17,
+      family: 'JetMono',
+      color: MIL.bone,
+      align: 'center',
+      shadow: false,
+    });
+  });
+  ctx.restore();
+}
+
+// =========================================================================
+// SCENE 2 [5.383s .. 10.533s]: MODE 1 — AUTO SYNC WITH BULAT v.4 (300–8000 МГц)
+// =========================================================================
+function renderScene2(t, beatPulse) {
+  const lt = t - CUTS[1];
+  drawSceneBackdrop(IMG.bgTrench, t, 1, { cyanRadial: 0.24, beatPulse });
+  drawTopHUD(t, 1, 'РЕЖИМ №1 · АВТОМАТИЧЕСКИЙ ТАНДЕМ 3mx');
+
+  const eH = easeOutCubic(prog(lt, 0.04, 0.42));
+  ctx.save();
+  ctx.globalAlpha = eH;
+  roundRectPath(PAD, 172, 470, 44, 8);
+  ctx.fillStyle = 'rgba(69, 232, 132, 0.14)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(69, 232, 132, 0.52)';
+  ctx.lineWidth = 1.8;
+  ctx.stroke();
+  drawFittedText('● РЕЖИМ 01 · ПОЛНЫЙ АВТОМАТ', PAD + 18, 201, 434, {
+    weight: 800,
+    size: 21,
+    family: 'JetMono',
+    color: MIL.emerald,
+    shadow: false,
+  });
+
+  drawFittedText('ТАНДЕМ С «БУЛАТ» В.4', PAD, 282, SAFE_W, {
+    weight: 900,
+    size: 68,
+    family: 'RussoOne',
+    color: MIL.bone,
+  });
+  drawFittedText('МГНОВЕННЫЙ АВТОЗАХВАТ ВИДЕОКАНАЛА · 300–8 000 МГц', PAD, 336, SAFE_W, {
+    weight: 800,
+    size: 29,
+    family: 'Tektur',
+    color: MIL.cyan,
+  });
+  ctx.restore();
+
+  // Tandem stage card
+  drawTacticalCard(PAD, 376, SAFE_W, 960, {
+    fill: 'rgba(12, 18, 14, 0.90)',
+    stroke: MIL.borderCyan,
+    r: 20,
+    accent: MIL.cyan,
+  });
+
+  // Animated wireless Bluetooth / RF packet stream linking Bulat v.4 (x=285) ---> Azar (x=780)
+  const linkX1 = 365, linkX2 = 695, linkY = 855;
+  ctx.save();
+  for (let arc = -1; arc <= 1; arc++) {
+    ctx.strokeStyle = `rgba(59, 226, 240, ${(0.34 - Math.abs(arc) * 0.1).toFixed(2)})`;
+    ctx.lineWidth = 3;
+    ctx.setLineDash([14, 10]);
+    ctx.lineDashOffset = -t * 150;
+    ctx.beginPath();
+    ctx.moveTo(linkX1, linkY + arc * 34);
+    ctx.quadraticCurveTo(530, linkY - 68 + arc * 34, linkX2, linkY + arc * 34);
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+  // Traveling glowing telemetry pulses
+  for (let p = 0; p < 4; p++) {
+    const pu = ((lt * 0.95 + p * 0.25) % 1);
+    const px = lerp(linkX1, linkX2, pu);
+    const py = linkY - Math.sin(pu * Math.PI) * 34;
+    ctx.fillStyle = MIL.cyan;
+    ctx.shadowColor = MIL.cyan;
+    ctx.shadowBlur = 18;
+    ctx.beginPath();
+    ctx.arc(px, py, 8, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.shadowBlur = 0;
+
+  // Center bridge badge: АВТОПЕРЕДАЧА ЧАСТОТЫ
+  drawTacticalCard(392, 742, 296, 96, {
+    fill: 'rgba(10, 31, 34, 0.96)',
+    stroke: MIL.cyan,
+    r: 12,
+    accent: MIL.sandHi,
+    glow: 14,
+  });
+  drawFittedText('BLUETOOTH SYNC', 540, 780, 260, {
+    weight: 800,
+    size: 20,
+    family: 'JetMono',
+    color: MIL.cyan,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('АВТОНАСТРОЙКА', 540, 818, 260, {
+    weight: 900,
+    size: 25,
+    family: 'RussoOne',
+    color: MIL.sandHi,
+    align: 'center',
+    shadow: false,
+  });
+  ctx.restore();
+
+  // Left: Real 3mx Bulat v.4 detector | Right: Real 3mx Azar full-antenna receiver
+  const eL = easeOutBack(prog(lt, 0.10, 0.55));
+  const eR = easeOutBack(prog(lt, 0.22, 0.55));
+  drawContainImage(IMG.bulat4, 250, 855 + Math.sin(t * 2.4) * 5, 310, 740, {
+    scale: 0.9 + 0.1 * eL,
+    alpha: clamp(eL * 1.2, 0, 1),
+    glowColor: 'rgba(213, 174, 92, 0.35)',
+    glowBlur: 26,
+  });
+  drawContainImage(IMG.azarHero, 812, 835 - Math.sin(t * 2.4) * 5, 345, 865, {
+    scale: 0.9 + 0.1 * eR,
+    alpha: clamp(eR * 1.2, 0, 1),
+    glowColor: 'rgba(59, 226, 240, 0.44)',
+    glowBlur: 30,
+  });
+
+  // Labels under each real device inside stage card
+  drawTacticalCard(88, 1218, 336, 94, { fill: MIL.panelHi, stroke: MIL.borderSand, r: 12, accent: MIL.sand });
+  drawFittedText('ДЕТЕКТОР БПЛА', 256, 1252, 304, { weight: 700, size: 18, family: 'JetMono', color: MIL.ash, align: 'center', shadow: false });
+  drawFittedText('«БУЛАТ» В.4', 256, 1292, 304, { weight: 900, size: 30, family: 'RussoOne', color: MIL.sandHi, align: 'center', shadow: false });
+
+  drawTacticalCard(652, 1218, 340, 94, { fill: MIL.panelCyan, stroke: MIL.borderCyan, r: 12, accent: MIL.cyan });
+  drawFittedText('ВИДЕОПЕРЕХВАТЧИК', 822, 1252, 308, { weight: 700, size: 18, family: 'JetMono', color: MIL.cyan, align: 'center', shadow: false });
+  drawFittedText('«АЗАР» 3mx', 822, 1292, 308, { weight: 900, size: 30, family: 'RussoOne', color: MIL.bone, align: 'center', shadow: false });
+
+  // Bottom live auto-scan frequency lock bar: 300 МГц --> 8 000 МГц
+  drawTacticalCard(PAD, 1372, SAFE_W, 476, {
+    fill: MIL.panel,
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.emerald,
+  });
+  drawFittedText('ДИАПАЗОН АВТОРЕЖИМА: 300 — 8 000 МГц (ДО 8 ГГц)', PAD + 30, 1432, SAFE_W - 60, {
+    weight: 900,
+    size: 31,
+    family: 'FiraCond',
+    color: MIL.sandHi,
+    shadow: false,
+  });
+
+  // Spectrum bars + auto lock cursor jumping cleanly across real FPV channels
+  const lockStep = Math.min(2, Math.floor(lt / 1.55));
+  const lockFreqs = [
+    { pos: 0.19, mhz: '1 280 МГц', band: 'L-BAND ANALOG VTX' },
+    { pos: 0.44, mhz: '3 320 МГц', band: 'S-BAND ANALOG VTX' },
+    { pos: 0.74, mhz: '5 865 МГц', band: 'RACEBAND CH-R7 · ЗАХВАТ!' },
+  ];
+  const curTarget = lockFreqs[lockStep];
+  const prevTarget = lockFreqs[Math.max(0, lockStep - 1)];
+  const stepLocal = smooth01((lt - lockStep * 1.55) / 0.42);
+  const cursorPos = lerp(prevTarget.pos, curTarget.pos, stepLocal);
+
+  const gx = PAD + 32, gy = 1468, gw = SAFE_W - 64, gh = 200;
+  roundRectPath(gx, gy, gw, gh, 12);
+  ctx.fillStyle = 'rgba(7, 13, 12, 0.95)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(59, 226, 240, 0.30)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  const nBars = 56;
+  for (let i = 0; i < nBars; i++) {
+    const uBar = i / (nBars - 1);
+    let amp = 0.12 + 0.09 * Math.sin(t * 8.0 + i * 0.9);
+    for (const lf of lockFreqs) {
+      amp += 0.72 * Math.exp(-Math.pow((uBar - lf.pos) / 0.032, 2));
+    }
+    const bh = clamp(amp, 0.06, 0.96) * (gh - 36);
+    const bx = gx + 16 + i * ((gw - 32) / nBars);
+    const near = Math.abs(uBar - cursorPos) < 0.045;
+    ctx.fillStyle = near ? MIL.emerald : 'rgba(59, 226, 240, 0.55)';
+    ctx.fillRect(bx, gy + gh - 18 - bh, ((gw - 32) / nBars) * 0.68, bh);
+  }
+
+  const cxLine = gx + 16 + cursorPos * (gw - 32);
+  ctx.strokeStyle = MIL.sandHi;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(cxLine, gy + 8);
+  ctx.lineTo(cxLine, gy + gh - 8);
+  ctx.stroke();
+
+  // Status readout row below spectrum
+  drawFittedText(`● КАНАЛ ЗАХВАЧЕН: ${curTarget.mhz}`, gx, 1732, gw * 0.58, {
+    weight: 900,
+    size: 32,
+    family: 'RussoOne',
+    color: MIL.emerald,
+    shadow: false,
+  });
+  drawFittedText(curTarget.band, gx + gw, 1732, gw * 0.42, {
+    weight: 700,
+    size: 22,
+    family: 'JetMono',
+    color: MIL.cyan,
+    align: 'right',
+    shadow: false,
+  });
+  drawFittedText('Без ручного перебора частот: «Булат» в.4 обнаруживает цель — «Азар» сразу включает нужный канал', gx, 1796, gw, {
+    weight: 700,
+    size: 22,
+    family: 'RobotoBold',
+    color: MIL.ash,
+    shadow: false,
+  });
+}
+
+// =========================================================================
+// SCENE 3 [10.533s .. 17.250s]: MODE 2 — MANUAL 300–12 000 МГц + STEALTH
+// (174 BPM PENDULUM STADIUM DROP SURGES AT t = 13.0s!)
+// =========================================================================
+function renderScene3(t, beatPulse) {
+  const lt = t - CUTS[2];
+  const dropBoost = smooth01((t - 12.85) / 0.35);
+  drawSceneBackdrop(IMG.bgRadar, t, 2, { cyanRadial: 0.20 + dropBoost * 0.14, beatPulse: beatPulse * (0.5 + dropBoost) });
+  drawTopHUD(t, 2, 'РЕЖИМ №2 · РУЧНОЙ ПОИСК ДО 12 ГГц');
+
+  // Header
+  drawFittedText('РУЧНОЙ СПЕКТР', PAD, 236, SAFE_W, {
+    weight: 900,
+    size: 66,
+    family: 'RussoOne',
+    color: MIL.bone,
+  });
+  drawFittedText('300 МГц — 12 000 МГц', PAD, 314, SAFE_W, {
+    weight: 900,
+    size: 62,
+    family: 'FiraCond',
+    color: MIL.cyan,
+  });
+
+  // Stealth badge: BLUETOOTH OFF · ПОЛНАЯ РАДИОТИШИНА
+  drawTacticalCard(PAD, 344, SAFE_W, 84, {
+    fill: 'rgba(18, 36, 22, 0.94)',
+    stroke: 'rgba(69, 232, 132, 0.62)',
+    r: 12,
+    accent: MIL.emerald,
+    glow: dropBoost * 16,
+  });
+  drawFittedText('◆ BLUETOOTH OFF · РАБОТА В РЕЖИМЕ ПОЛНОЙ РАДИОТИШИНЫ', PAD + SAFE_W * 0.5, 396, SAFE_W - 48, {
+    weight: 800,
+    size: 26,
+    family: 'Tektur',
+    color: MIL.emerald,
+    align: 'center',
+    shadow: false,
+  });
+
+  // Main split showcase: Left = Full-height RF Waterfall 300..12000 MHz | Right = Real Azar Front Closeup w/ keypad scan
+  const leftW = 538, rightW = SAFE_W - leftW - 22;
+  drawTacticalCard(PAD, 456, leftW, 1010, {
+    fill: 'rgba(9, 15, 16, 0.95)',
+    stroke: MIL.borderCyan,
+    r: 18,
+    accent: MIL.cyan,
+  });
+
+  drawFittedText('ВОДОПАД ЧАСТОТ · 0.3 — 12.0 ГГц', PAD + 24, 506, leftW - 48, {
+    weight: 700,
+    size: 21,
+    family: 'JetMono',
+    color: MIL.sandHi,
+    shadow: false,
+  });
+
+  // Deterministic high-resolution SDR spectrum analyzer + waterfall (top 145px live FFT trace + 505px razor-fine carrier waterfall)
+  const wx = PAD + 22, wy = 530, ww = leftW - 44, wh = 650;
+  ctx.fillStyle = '#04090b';
+  ctx.fillRect(wx, wy, ww, wh);
+
+  const bands = [
+    { u: 0.10, w: 0.016, label: '720 МГц' },
+    { u: 0.23, w: 0.014, label: '1.3 ГГц' },
+    { u: 0.39, w: 0.017, label: '3.3 ГГц' },
+    { u: 0.56, w: 0.020, label: '5.8 ГГц' },
+    { u: 0.74, w: 0.015, label: '8.4 ГГц' },
+    { u: 0.90, w: 0.019, label: '10.8–12 ГГц' },
+  ];
+  const activeIdx = Math.min(bands.length - 1, Math.floor((lt / (CUTS[3] - CUTS[2])) * bands.length));
+  const activeBand = bands[activeIdx];
+
+  // Top live FFT spectrum trace box (wy .. wy + 145)
+  const fftH = 142;
+  ctx.strokeStyle = 'rgba(59, 226, 240, 0.14)';
+  ctx.lineWidth = 1;
+  for (let gg = 1; gg < 4; gg++) {
+    ctx.beginPath();
+    ctx.moveTo(wx, wy + (fftH * gg) / 4);
+    ctx.lineTo(wx + ww, wy + (fftH * gg) / 4);
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  for (let i = 0; i <= 140; i++) {
+    const cu = i / 140;
+    let amp = 0.10 + 0.06 * hash2(i * 1.7, Math.floor(t * 24));
+    for (let b = 0; b < bands.length; b++) {
+      const d = (cu - bands[b].u) / bands[b].w;
+      if (Math.abs(d) < 3.0) {
+        amp += Math.exp(-d * d) * (b === activeIdx ? 0.84 : 0.50) * (0.82 + 0.18 * Math.sin(t * 11 + b));
+      }
+    }
+    const px = wx + cu * ww;
+    const py = wy + fftH - 8 - clamp(amp, 0, 0.96) * (fftH - 20);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.strokeStyle = MIL.cyan;
+  ctx.lineWidth = 2.2;
+  ctx.stroke();
+
+  // Fine high-density waterfall (wy + fftH + 4 .. wy + wh)
+  const wfY = wy + fftH + 6, wfH = wh - fftH - 6;
+  const rows = 92, cols = 124;
+  const cw = ww / cols, ch = wfH / rows;
+  const scroll = t * 28;
+  for (let r = 0; r < rows; r++) {
+    const rowSeed = Math.floor(scroll) - r;
+    for (let c = 0; c < cols; c++) {
+      const cu = (c + 0.5) / cols;
+      let val = hash2(c * 5.3, rowSeed * 1.1) * 0.20;
+      for (let b = 0; b < bands.length; b++) {
+        const d = Math.abs(cu - bands[b].u) / bands[b].w;
+        if (d < 2.5) {
+          const pulse = 0.68 + 0.32 * Math.sin(rowSeed * 0.32 + b * 2.1);
+          val += Math.exp(-d * d) * (b === activeIdx ? 0.98 : 0.64) * pulse;
+        }
+      }
+      val = clamp(val * (0.80 + 0.30 * dropBoost), 0, 1);
+      if (val > 0.17) {
+        const rr = val > 0.80 ? 246 : Math.floor(20 + val * 75);
+        const gg = Math.floor(78 + val * 170);
+        const bb = val > 0.80 ? 128 : Math.floor(138 + val * 115);
+        ctx.fillStyle = `rgb(${rr},${gg},${bb})`;
+        ctx.fillRect(wx + c * cw, wfY + r * ch, cw + 0.55, ch + 0.55);
+      }
+    }
+  }
+
+  // Active manual tuning crosshair inside waterfall
+  const tuneX = wx + activeBand.u * ww;
+  ctx.strokeStyle = MIL.sandHi;
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(tuneX, wy);
+  ctx.lineTo(tuneX, wy + wh);
+  ctx.stroke();
+
+  // Sub-band pills beneath waterfall
+  bands.forEach((b, idx) => {
+    const px = wx + (idx % 3) * ((ww - 16) / 3 + 8);
+    const py = wy + wh + 24 + Math.floor(idx / 3) * 86;
+    const on = idx === activeIdx;
+    roundRectPath(px, py, (ww - 16) / 3, 72, 10);
+    ctx.fillStyle = on ? 'rgba(59, 226, 240, 0.22)' : 'rgba(18, 25, 22, 0.92)';
+    ctx.fill();
+    ctx.lineWidth = on ? 2.5 : 1.3;
+    ctx.strokeStyle = on ? MIL.cyan : 'rgba(213, 174, 92, 0.32)';
+    ctx.stroke();
+    drawFittedText(b.label, px + (ww - 16) / 6, py + 45, (ww - 16) / 3 - 14, {
+      weight: 900,
+      size: 22,
+      family: 'FiraCond',
+      color: on ? MIL.sandHi : MIL.bone,
+      align: 'center',
+      shadow: false,
+    });
+  });
+
+  // Right card: Real close-up Azar front with glowing cyan LCD & physical 15-key tactile rubber keypad
+  const rx = PAD + leftW + 22;
+  drawTacticalCard(rx, 456, rightW, 1010, {
+    fill: MIL.panelHi,
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sand,
+  });
+  drawContainImage(IMG.azarFront, rx + rightW * 0.5, 925, rightW - 24, 830, {
+    scale: 1.0 + beatPulse * 0.012,
+    glowColor: 'rgba(59, 226, 240, 0.42)',
+    glowBlur: 28,
+  });
+  drawFittedText('15 ФИЗИЧЕСКИХ КНОПОК', rx + rightW * 0.5, 1396, rightW - 32, {
+    weight: 900,
+    size: 26,
+    family: 'FiraCond',
+    color: MIL.sandHi,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('ТОЧНЫЙ ШАГ В ПЕРЧАТКАХ', rx + rightW * 0.5, 1434, rightW - 32, {
+    weight: 700,
+    size: 18,
+    family: 'JetMono',
+    color: MIL.cyan,
+    align: 'center',
+    shadow: false,
+  });
+
+  // Bottom advantage summary banner
+  drawTacticalCard(PAD, 1496, SAFE_W, 352, {
+    fill: MIL.panel,
+    stroke: MIL.borderCyan,
+    r: 18,
+    accent: MIL.cyan,
+  });
+  const rows3 = [
+    ['ДО 12 000 МГц', 'Перехват нестандартных и смещённых видеочастот FPV'],
+    ['РАДИОТИШИНА', 'Отключение Bluetooth — нулевое собственное излучение'],
+    ['ЗАПИСЬ СИГНАЛА', 'Кнопки REC / STOP прямо на фронтальной панели «Азар»'],
+  ];
+  rows3.forEach(([tag, desc], i) => {
+    const ry = 1546 + i * 96;
+    roundRectPath(PAD + 26, ry, 250, 62, 10);
+    ctx.fillStyle = i === 0 ? 'rgba(59, 226, 240, 0.16)' : 'rgba(213, 174, 92, 0.15)';
+    ctx.fill();
+    ctx.strokeStyle = i === 0 ? MIL.borderCyan : MIL.borderSand;
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    drawFittedText(tag, PAD + 151, ry + 41, 226, {
+      weight: 900,
+      size: 25,
+      family: 'FiraCond',
+      color: i === 0 ? MIL.cyan : MIL.sandHi,
+      align: 'center',
+      shadow: false,
+    });
+    drawFittedText(desc, PAD + 298, ry + 40, SAFE_W - 324, {
+      weight: 700,
+      size: 24,
+      family: 'RobotoBold',
+      color: MIL.bone,
+      shadow: false,
+    });
+  });
+}
+
+// =========================================================================
+// SCENE 4 [17.250s .. 25.467s]: EXTERNAL MONITOR VIA JACK 3.5 ММ · UP TO 1.5 KM
+// =========================================================================
+function renderScene4(t, beatPulse) {
+  const lt = t - CUTS[3];
+  drawSceneBackdrop(IMG.bgTrench, t, 3, { cyanRadial: 0.25, beatPulse });
+  drawTopHUD(t, 3, 'ВИДЕОВЫХОД JACK 3.5 ММ · ДО 1,5 КМ');
+
+  drawFittedText('ВЫВОД НА ВНЕШНИЙ МОНИТОР', PAD, 226, SAFE_W, {
+    weight: 900,
+    size: 56,
+    family: 'RussoOne',
+    color: MIL.bone,
+  });
+  drawFittedText('ПЕРЕХВАТ ВИДЕОКАРТИНКИ С FPV-ДРОНА НА ДИСТАНЦИИ ДО 1,5 КМ', PAD, 278, SAFE_W, {
+    weight: 800,
+    size: 26,
+    family: 'Tektur',
+    color: MIL.sandHi,
+  });
+
+  // Rugged External Field Monitor Frame (y = 312 .. 980)
+  const mx = PAD, my = 314, mw = SAFE_W, mh = 650;
+  drawTacticalCard(mx, my, mw, mh, {
+    fill: '#141917',
+    stroke: 'rgba(213, 174, 92, 0.66)',
+    r: 22,
+    accent: MIL.cyan,
+    glow: 18,
+  });
+
+  // Inner CRT/LCD analog screen bezel
+  const sx = mx + 28, sy = my + 48, sw = mw - 56, sh = mh - 92;
+  ctx.save();
+  roundRectPath(sx, sy, sw, sh, 10);
+  ctx.clip();
+
+  // First 0.95s: analog RF snow locking onto live aerial FPV video feed!
+  const lockAmt = smooth01((lt - 0.55) / 0.65);
+  const rollY = Math.sin(t * 2.1) * 8 + (1 - lockAmt) * ((t * 520) % 180 - 90);
+  const bankDeg = Math.sin(t * 0.92) * 0.045;
+
+  ctx.save();
+  ctx.translate(sx + sw * 0.5, sy + sh * 0.5);
+  ctx.rotate(bankDeg);
+  const scaleFeed = 1.12 + lt * 0.012;
+  ctx.drawImage(
+    RECON_TERRAIN,
+    -sw * 0.5 * scaleFeed,
+    -sh * 0.5 * scaleFeed + rollY * 0.35,
+    sw * scaleFeed,
+    sh * scaleFeed
+  );
+  ctx.restore();
+
+  // Authentic analog FPV scanlines + occasional thin horizontal RF interference tear bar
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.16)';
+  for (let yLine = sy; yLine < sy + sh; yLine += 4) {
+    ctx.fillRect(sx, yLine, sw, 1.5);
+  }
+  const tearY = sy + ((t * 235) % sh);
+  ctx.fillStyle = `rgba(235, 245, 240, ${(0.10 + 0.25 * (1 - lockAmt)).toFixed(3)})`;
+  ctx.fillRect(sx, tearY, sw, 5);
+
+  // Analog RF snow static overlay fading down to realistic 8% grain once locked at t_local=1.2s
+  const staticAlpha = lerp(0.72, 0.07, lockAmt);
+  ctx.globalAlpha = staticAlpha;
+  for (let gx = sx; gx < sx + sw; gx += 256) {
+    for (let gy = sy; gy < sy + sh; gy += 256) {
+      ctx.drawImage(GRAIN_TILE, gx - ((t * 700) % 64), gy - ((t * 430) % 64), 320, 320);
+    }
+  }
+  ctx.globalAlpha = 1.0;
+
+  // Authentic Analog FPV Betaflight-style Monochrome OSD Overlay inside intercepted feed!
+  ctx.save();
+  const osdCol = '#f2f6f0';
+  drawFittedText('● AV-IN LOCK · 5865 MHz [R7]', sx + 24, sy + 42, 460, {
+    weight: 800,
+    size: 24,
+    family: 'JetMono',
+    color: lockAmt > 0.6 ? MIL.emerald : MIL.amber,
+  });
+  const distKm = (1.48 - lt * 0.035).toFixed(2);
+  drawFittedText(`RSSI ${Math.round(88 + 8 * lockAmt)}%   DIST ${distKm} KM`, sx + sw - 24, sy + 42, 410, {
+    weight: 800,
+    size: 23,
+    family: 'JetMono',
+    color: osdCol,
+    align: 'right',
+  });
+
+  // Artificial horizon ladder & center FPV crosshair
+  const midX = sx + sw * 0.5, midY = sy + sh * 0.52;
+  ctx.strokeStyle = 'rgba(242, 246, 240, 0.82)';
+  ctx.lineWidth = 2.4;
+  ctx.save();
+  ctx.translate(midX, midY);
+  ctx.rotate(-bankDeg);
+  ctx.beginPath();
+  ctx.moveTo(-130, 0); ctx.lineTo(-42, 0);
+  ctx.moveTo(42, 0); ctx.lineTo(130, 0);
+  ctx.stroke();
+  ctx.restore();
+
+  // Center reticle
+  ctx.strokeStyle = MIL.cyan;
+  ctx.lineWidth = 2.2;
+  ctx.strokeRect(midX - 22, midY - 22, 44, 44);
+
+  // Bottom OSD telemetry strip inside monitor
+  drawFittedText('CAM: ANALOG PAL 50Hz', sx + 24, sy + sh - 22, 340, {
+    weight: 700,
+    size: 21,
+    family: 'JetMono',
+    color: osdCol,
+  });
+  drawFittedText('ПЕРЕХВАТ ОБСТАНОВКИ В РЕАЛЬНОМ ВРЕМЕНИ', sx + sw - 24, sy + sh - 22, 520, {
+    weight: 700,
+    size: 20,
+    family: 'JetMono',
+    color: MIL.sandHi,
+    align: 'right',
+  });
+  ctx.restore();
+  ctx.restore(); // end monitor screen clip
+
+  // Monitor bezel top label
+  drawFittedText('ВНЕШНИЙ ПОЛЕВОЙ МОНИТОР · AV VIDEO OUT (JACK 3.5 ММ)', mx + mw * 0.5, my + 33, mw - 80, {
+    weight: 700,
+    size: 19,
+    family: 'JetMono',
+    color: MIL.ash,
+    align: 'center',
+    shadow: false,
+  });
+
+  // Lower half: Real Azar receiver on right + animated glowing Jack 3.5mm cable running directly into monitor AV port + specs on left!
+  // Cable conduit from Azar top/side Jack (x=760, y=1185) up into monitor bottom AV socket (x=760, y=964)
+  ctx.save();
+  ctx.strokeStyle = 'rgba(59, 226, 240, 0.32)';
+  ctx.lineWidth = 14;
+  ctx.beginPath();
+  ctx.moveTo(760, 1175);
+  ctx.bezierCurveTo(760, 1065, 760, 1035, 760, 964);
+  ctx.stroke();
+
+  ctx.strokeStyle = MIL.sandHi;
+  ctx.lineWidth = 5;
+  ctx.setLineDash([16, 10]);
+  ctx.lineDashOffset = t * 140; // flowing UP from Azar into External Monitor!
+  ctx.beginPath();
+  ctx.moveTo(760, 1175);
+  ctx.lineTo(760, 964);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // AV Plug badge at monitor bottom socket
+  roundRectPath(666, 948, 188, 38, 8);
+  ctx.fillStyle = '#0e2428';
+  ctx.fill();
+  ctx.strokeStyle = MIL.cyan;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  drawFittedText('▲ JACK 3.5 ММ AV', 760, 974, 170, {
+    weight: 800,
+    size: 18,
+    family: 'JetMono',
+    color: MIL.cyan,
+    align: 'center',
+    shadow: false,
+  });
+  ctx.restore();
+
+  // Real Azar close-up on bottom-right
+  drawContainImage(IMG.azarFront, 815, 1465, 395, 760, {
+    scale: 1.0,
+    glowColor: 'rgba(59, 226, 240, 0.42)',
+    glowBlur: 30,
+  });
+
+  // Left stacked feature cards (x = PAD .. 602)
+  const leftCards = [
+    { y: 1018, h: 256, k: 'ДАЛЬНОСТЬ ПРИЁМА СИГНАЛА', big: 'ДО 1,5 КМ', sub: 'Уверенный приём аналогового видео с FPV-дронов', col: MIL.sandHi },
+    { y: 1300, h: 256, k: 'КАБЕЛИ УЖЕ В КОМПЛЕКТЕ', big: 'TRRS + RCA 3.5', sub: 'Jack 3.5 мм TRRS/TRRS и TRRS/RCA в базовой коробке', col: MIL.cyan },
+    { y: 1582, h: 262, k: 'ВЫНОСНЫЕ АНТЕННЫ 3mx', big: 'МАГНИТ 2,5 М', sub: 'Совместимость с выносными антеннами для авто и блиндажа', col: MIL.emerald },
+  ];
+  leftCards.forEach((c, idx) => {
+    const ec = easeOutCubic(prog(lt, 0.25 + idx * 0.28, 0.45));
+    ctx.save();
+    ctx.globalAlpha = ec;
+    drawTacticalCard(PAD, c.y + (1 - ec) * 20, 548, c.h, {
+      fill: MIL.panelHi,
+      stroke: idx === 1 ? MIL.borderCyan : MIL.borderSand,
+      r: 16,
+      accent: c.col,
+    });
+    drawFittedText(c.k, PAD + 26, c.y + 46, 496, {
+      weight: 700,
+      size: 19,
+      family: 'JetMono',
+      color: MIL.ash,
+      shadow: false,
+    });
+    drawFittedText(c.big, PAD + 26, c.y + 126, 496, {
+      weight: 900,
+      size: 62,
+      family: 'FiraCond',
+      color: c.col,
+      shadow: false,
+    });
+    // Wrap 2-line clean Russian subtitle safely
+    const words = c.sub.split(' ');
+    const mid = Math.ceil(words.length / 2);
+    drawFittedText(words.slice(0, mid).join(' '), PAD + 26, c.y + 184, 496, {
+      weight: 700,
+      size: 23,
+      family: 'RobotoBold',
+      color: MIL.bone,
+      shadow: false,
+    });
+    drawFittedText(words.slice(mid).join(' '), PAD + 26, c.y + 218, 496, {
+      weight: 700,
+      size: 23,
+      family: 'RobotoBold',
+      color: MIL.bone,
+      shadow: false,
+    });
+    ctx.restore();
+  });
+}
+
+// =========================================================================
+// SCENE 5 [25.467s .. 34.717s]: RUGGED FIELD ENDURANCE — 450 г · -20..+45°C · 6,5 ч
+// =========================================================================
+function renderScene5(t, beatPulse) {
+  const lt = t - CUTS[4];
+  drawSceneBackdrop(IMG.bgArmor, t, 4, { cyanRadial: 0.21, beatPulse });
+  drawTopHUD(t, 4, 'ПОЛЕВАЯ ВЫНОСЛИВОСТЬ · ХАРАКТЕРИСТИКИ');
+
+  drawFittedText('СОЗДАН ДЛЯ ПОЛЯ БОЯ', PAD, 234, SAFE_W, {
+    weight: 900,
+    size: 64,
+    family: 'RussoOne',
+    color: MIL.bone,
+  });
+  drawFittedText('ЛЁГКИЙ КОРПУС · РАБОТА В МОРОЗ И ЖАРУ · ДОЛГИЙ ЗАРЯД', PAD, 290, SAFE_W, {
+    weight: 800,
+    size: 27,
+    family: 'Tektur',
+    color: MIL.sandHi,
+  });
+
+  // Center dual-angle studio showcase stage: Front closeup + Full tall rear view with belt clip & spring antennas!
+  drawTacticalCard(PAD, 330, SAFE_W, 855, {
+    fill: 'rgba(13, 19, 14, 0.90)',
+    stroke: MIL.borderSand,
+    r: 20,
+    accent: MIL.sand,
+  });
+
+  const floatA = Math.sin(t * 2.2) * 6;
+  drawContainImage(IMG.azarFront, 338, 765 + floatA, 415, 760, {
+    glowColor: 'rgba(59, 226, 240, 0.42)',
+    glowBlur: 30,
+  });
+  drawContainImage(IMG.azarBack, 768, 748 - floatA, 320, 790, {
+    glowColor: 'rgba(213, 174, 92, 0.34)',
+    glowBlur: 26,
+  });
+
+  drawFittedText('ВИД СПЕРЕДИ · ЖК-ЭКРАН', 338, 1160, 410, {
+    weight: 700,
+    size: 20,
+    family: 'JetMono',
+    color: MIL.cyan,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('ВИД СЗАДИ · КЛИПСА НА БРОНЮ', 768, 1160, 410, {
+    weight: 700,
+    size: 20,
+    family: 'JetMono',
+    color: MIL.sandHi,
+    align: 'center',
+    shadow: false,
+  });
+
+  // 2x2 crisp military telemetry grid below (y = 1215 .. 1848)
+  const specs4 = [
+    { big: '≤ 450 Г', tag: 'МАССА С АНТЕННАМИ И АКБ', d1: 'Габариты 357 × 60 × 34 мм', d2: 'Крепление на разгрузку и пояс', col: MIL.sandHi },
+    { big: '−20…+45°C', tag: 'РАБОЧИЙ ДИАПАЗОН ТЕМПЕРАТУР', d1: 'Стабильный приём зимой и летом', d2: 'Ударопрочный рельефный пластик', col: MIL.cyan },
+    { big: 'ДО 6,5 Ч', tag: 'ОТ ОДНОГО АККУМУЛЯТОРА', d1: 'Li-Ion 2 300 мА·ч (17 020 мВт·ч)', d2: 'Мгновенная замена в поле', col: MIL.emerald },
+    { big: 'TYPE-C + ДОК', tag: 'УНИВЕРСАЛЬНОЕ ПИТАНИЕ', d1: 'Зарядный стакан 220В в наборе', d2: 'Зарядка от повербанка и станции', col: MIL.sandHi },
+  ];
+  const cardW = (SAFE_W - 24) / 2, cardH = 302;
+  specs4.forEach((s, i) => {
+    const col = i % 2, row = (i / 2) | 0;
+    const e = easeOutCubic(prog(lt, 0.20 + i * 0.24, 0.45));
+    const cx = PAD + col * (cardW + 24);
+    const cy = 1216 + row * (cardH + 22) + (1 - e) * 24;
+    ctx.save();
+    ctx.globalAlpha = e;
+    drawTacticalCard(cx, cy, cardW, cardH, {
+      fill: MIL.panelHi,
+      stroke: i === 1 ? MIL.borderCyan : MIL.borderSand,
+      r: 16,
+      accent: s.col,
+    });
+    drawFittedText(s.tag, cx + 26, cy + 48, cardW - 52, {
+      weight: 700,
+      size: 18,
+      family: 'JetMono',
+      color: MIL.ash,
+      shadow: false,
+    });
+    drawFittedText(s.big, cx + 26, cy + 142, cardW - 52, {
+      weight: 900,
+      size: 70,
+      family: 'FiraCond',
+      color: s.col,
+      shadow: false,
+    });
+    drawFittedText(s.d1, cx + 26, cy + 208, cardW - 52, {
+      weight: 700,
+      size: 22,
+      family: 'RobotoBold',
+      color: MIL.bone,
+      shadow: false,
+    });
+    drawFittedText(s.d2, cx + 26, cy + 246, cardW - 52, {
+      weight: 700,
+      size: 21,
+      family: 'RobotoBold',
+      color: MIL.muted,
+      shadow: false,
+    });
+    ctx.restore();
+  });
+}
+
+// =========================================================================
+// SCENE 6 [34.717s .. 43.783s]: FACTORY KIT & OFFICIAL 3mx PASSPORT
+// =========================================================================
+function renderScene6(t, beatPulse) {
+  const lt = t - CUTS[5];
+  drawSceneBackdrop(IMG.bgCrates, t, 5, { cyanRadial: 0.20, beatPulse });
+  drawTopHUD(t, 5, 'ЗАВОДСКАЯ КОМПЛЕКТАЦИЯ · ОРИГИНАЛ 3mx');
+
+  drawFittedText('ВСЁ ГОТОВО ИЗ КОРОБКИ', PAD, 232, SAFE_W, {
+    weight: 900,
+    size: 62,
+    family: 'RussoOne',
+    color: MIL.bone,
+  });
+  drawFittedText('ОФИЦИАЛЬНЫЙ КОМПЛЕКТ ПОСТАВКИ С ПАСПОРТОМ ИЗДЕЛИЯ 3mx', PAD, 286, SAFE_W, {
+    weight: 800,
+    size: 26,
+    family: 'Tektur',
+    color: MIL.sandHi,
+  });
+
+  // Hero standing factory open box cutout on left-center + closeup passport inset card on top-right!
+  drawTacticalCard(PAD, 324, SAFE_W, 845, {
+    fill: 'rgba(13, 18, 13, 0.90)',
+    stroke: MIL.borderSand,
+    r: 20,
+    accent: MIL.sand,
+  });
+
+  const eKit = easeOutBack(prog(lt, 0.08, 0.58));
+  drawContainImage(IMG.azarKit, 392, 748, 635, 795, {
+    scale: 0.92 + 0.08 * eKit,
+    alpha: clamp(eKit * 1.15, 0, 1),
+    glowColor: 'rgba(59, 226, 240, 0.28)',
+    glowBlur: 24,
+  });
+
+  // Framed photo card showing real azar_3_box_closeup.jpg (Passport + internal factory cradle layout)
+  const ix = 696, iy = 362, iw = 300, ih = 390;
+  drawTacticalCard(ix, iy, iw, ih, {
+    fill: MIL.panelHi,
+    stroke: MIL.borderCyan,
+    r: 14,
+    accent: MIL.cyan,
+  });
+  ctx.save();
+  roundRectPath(ix + 10, iy + 10, iw - 20, ih - 68, 10);
+  ctx.clip();
+  drawCoverImage(IMG.azarBoxClose, ix + 10, iy + 10, iw - 20, ih - 68, { zoom: 1.06 + lt * 0.01 });
+  ctx.restore();
+  drawFittedText('ПАСПОРТ ИЗДЕЛИЯ 3mx', ix + iw * 0.5, iy + ih - 24, iw - 28, {
+    weight: 800,
+    size: 19,
+    family: 'JetMono',
+    color: MIL.cyan,
+    align: 'center',
+    shadow: false,
+  });
+
+  // Badge under closeup on right side
+  drawTacticalCard(ix, iy + ih + 22, iw, 360, {
+    fill: 'rgba(17, 27, 20, 0.95)',
+    stroke: MIL.borderSand,
+    r: 14,
+    accent: MIL.emerald,
+  });
+  drawFittedText('ЗАВОДСКОЙ ОТК', ix + iw * 0.5, iy + ih + 82, iw - 32, {
+    weight: 900,
+    size: 31,
+    family: 'FiraCond',
+    color: MIL.emerald,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('Серийный номер', ix + iw * 0.5, iy + ih + 138, iw - 32, {
+    weight: 700,
+    size: 21,
+    family: 'RobotoBold',
+    color: MIL.bone,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('Паспорт в зип-пакете', ix + iw * 0.5, iy + ih + 174, iw - 32, {
+    weight: 700,
+    size: 21,
+    family: 'RobotoBold',
+    color: MIL.bone,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('Готов к работе сразу', ix + iw * 0.5, iy + ih + 210, iw - 32, {
+    weight: 700,
+    size: 21,
+    family: 'RobotoBold',
+    color: MIL.sandHi,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('ОРИГИНАЛ РОССИЯ', ix + iw * 0.5, iy + ih + 292, iw - 32, {
+    weight: 800,
+    size: 20,
+    family: 'JetMono',
+    color: MIL.cyan,
+    align: 'center',
+    shadow: false,
+  });
+
+  // 5-item sequential checklist illuminating in lockstep with voice-05 narration!
+  const items = [
+    'Приёмник аналогового видеосигнала «Азар» + Паспорт 3mx',
+    'Две съёмные антенны SMA (средняя и большая) на пружине',
+    'Сменные Li-Ion аккумуляторы 2 300 мА·ч для дежурства',
+    'Зарядный стакан с LED-индикацией + сетевой адаптер 220В',
+    'Кабели Jack 3.5 мм TRRS/TRRS, TRRS/RCA и USB питания',
+  ];
+  drawTacticalCard(PAD, 1196, SAFE_W, 654, {
+    fill: MIL.panel,
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sand,
+  });
+  items.forEach((line, idx) => {
+    const on = lt >= 0.45 + idx * 1.15;
+    const ry = 1226 + idx * 120;
+    roundRectPath(PAD + 24, ry, SAFE_W - 48, 102, 12);
+    ctx.fillStyle = on ? 'rgba(34, 52, 34, 0.92)' : 'rgba(18, 24, 18, 0.86)';
+    ctx.fill();
+    ctx.lineWidth = on ? 2.2 : 1.2;
+    ctx.strokeStyle = on ? 'rgba(69, 232, 132, 0.65)' : 'rgba(213, 174, 92, 0.25)';
+    ctx.stroke();
+
+    // Check badge
+    roundRectPath(PAD + 44, ry + 22, 58, 58, 10);
+    ctx.fillStyle = on ? MIL.emerald : 'rgba(213, 174, 92, 0.2)';
+    ctx.fill();
+    drawFittedText('✓', PAD + 73, ry + 63, 44, {
+      weight: 900,
+      size: 34,
+      family: 'RussoOne',
+      color: on ? '#09140c' : MIL.sand,
+      align: 'center',
+      shadow: false,
+    });
+    drawFittedText(line, PAD + 124, ry + 61, SAFE_W - 176, {
+      weight: 700,
+      size: 25,
+      family: 'RobotoBold',
+      color: on ? MIL.bone : MIL.ash,
+      shadow: false,
+    });
+  });
+}
+
+// =========================================================================
+// SCENE 7 [43.783s .. 52.400s]: B2C & B2B SUPPLY — WHOLESALE & RETAIL, VAT / NO VAT
+// =========================================================================
+function renderScene7(t, beatPulse) {
+  const lt = t - CUTS[6];
+  drawSceneBackdrop(IMG.bgCrates, t, 6, { tint: 'rgba(10, 15, 10, 0.78)', cyanRadial: 0.19, beatPulse });
+  drawTopHUD(t, 6, 'ПОСТАВКА ПОД ЗАДАЧИ · ОПТ И РОЗНИЦА');
+
+  drawFittedText('ПОСТАВКА КОМПЛЕКСОВ', PAD, 232, SAFE_W, {
+    weight: 900,
+    size: 62,
+    family: 'RussoOne',
+    color: MIL.bone,
+  });
+  drawFittedText('ОТ 1 ПРИБОРА ДО КРУПНЫХ ПАРТИЙ · ОПТОМ И В РОЗНИЦУ', PAD, 286, SAFE_W, {
+    weight: 800,
+    size: 28,
+    family: 'Tektur',
+    color: MIL.sandHi,
+  });
+
+  // Hero supply showcase: Wide factory box photo on left + Bulat v.4 + Azar full-kit standing hero on right
+  drawTacticalCard(PAD, 326, SAFE_W, 760, {
+    fill: 'rgba(14, 20, 14, 0.92)',
+    stroke: MIL.borderSand,
+    r: 20,
+    accent: MIL.sand,
+  });
+
+  // Wide factory open box card (azar_4_box_wide.jpg — fifth user studio photo!)
+  const wx = PAD + 26, wy = 356, ww = 435, wh = 435;
+  ctx.save();
+  roundRectPath(wx, wy, ww, wh, 14);
+  ctx.clip();
+  drawCoverImage(IMG.azarBoxWide, wx, wy, ww, wh, { zoom: 1.05 + lt * 0.01 });
+  ctx.restore();
+  roundRectPath(wx, wy, ww, wh, 14);
+  ctx.strokeStyle = MIL.borderSand;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Badge directly beneath wide box photo on left
+  drawTacticalCard(wx, wy + wh + 20, ww, 248, {
+    fill: 'rgba(20, 30, 18, 0.96)',
+    stroke: 'rgba(69, 232, 132, 0.55)',
+    r: 14,
+    accent: MIL.emerald,
+  });
+  drawFittedText('С НДС И БЕЗ НДС', wx + ww * 0.5, wy + wh + 98, ww - 36, {
+    weight: 900,
+    size: 50,
+    family: 'FiraCond',
+    color: MIL.sandHi,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('Закрывающие документы для юрлиц,', wx + ww * 0.5, wy + wh + 156, ww - 36, {
+    weight: 700,
+    size: 21,
+    family: 'RobotoBold',
+    color: MIL.bone,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('волонтёрских фондов и физлиц', wx + ww * 0.5, wy + wh + 190, ww - 36, {
+    weight: 700,
+    size: 21,
+    family: 'RobotoBold',
+    color: MIL.bone,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('● ПРЯМАЯ ЗАВОДСКАЯ ПОСТАВКА', wx + ww * 0.5, wy + wh + 232, ww - 36, {
+    weight: 800,
+    size: 18,
+    family: 'JetMono',
+    color: MIL.emerald,
+    align: 'center',
+    shadow: false,
+  });
+
+  // Right side of stage: Paired Bulat v.4 + Azar Hero standing side by side
+  drawContainImage(IMG.bulat4, 650, 725, 225, 590, {
+    glowColor: 'rgba(213, 174, 92, 0.30)',
+    glowBlur: 22,
+  });
+  drawContainImage(IMG.azarHero, 868, 700, 275, 700, {
+    glowColor: 'rgba(59, 226, 240, 0.42)',
+    glowBlur: 28,
+  });
+
+  // 3 deployment scenario cards at bottom (ZERO PRICES!)
+  const deploy = [
+    ['МОБИЛЬНЫЕ ГРУППЫ И РАСЧЁТЫ', 'Индивидуальный видеоперехват «Азар» + детектор «Булат» в.4'],
+    ['ТРАНСПОРТ И АВТОКОЛОННЫ', 'Комплектация выносными магнитными антеннами 2,5 м на крышу'],
+    ['ПОСТЫ НАБЛЮДЕНИЯ И БЛИНДАЖИ', 'Круглосуточный вывод воздушной обстановки на внешний экран'],
+  ];
+  deploy.forEach(([h1, sub], i) => {
+    const e = easeOutCubic(prog(lt, 0.22 + i * 0.25, 0.45));
+    const dy = 1116 + i * 244 + (1 - e) * 22;
+    ctx.save();
+    ctx.globalAlpha = e;
+    drawTacticalCard(PAD, dy, SAFE_W, 220, {
+      fill: MIL.panelHi,
+      stroke: i === 1 ? MIL.borderCyan : MIL.borderSand,
+      r: 16,
+      accent: i === 1 ? MIL.cyan : MIL.sandHi,
+    });
+    drawFittedText(`0${i + 1} · ${h1}`, PAD + 30, dy + 74, SAFE_W - 60, {
+      weight: 900,
+      size: 38,
+      family: 'FiraCond',
+      color: i === 1 ? MIL.cyan : MIL.sandHi,
+      shadow: false,
+    });
+    drawFittedText(sub, PAD + 30, dy + 148, SAFE_W - 60, {
+      weight: 700,
+      size: 25,
+      family: 'RobotoBold',
+      color: MIL.bone,
+      shadow: false,
+    });
+    ctx.restore();
+  });
+}
+
+// =========================================================================
+// SCENE 8 [52.400s .. 60.000s]: MONUMENTAL BRAND FINALE — В ОКОПЕ (TG / VK / AVITO)
+// Voice finishes at 57.65s -> Real Pendulum Studio Finale Crash & Ring-out to 60.000s!
+// =========================================================================
+function renderScene8(t, beatPulse) {
+  const lt = t - CUTS[7];
+  const outroSurge = smooth01((t - 57.55) / 0.45);
+  drawSceneBackdrop(IMG.bgRadar, t, 7, {
+    tint: 'rgba(8, 12, 9, 0.80)',
+    cyanRadial: 0.22 + outroSurge * 0.14,
+    beatPulse: beatPulse + outroSurge * 0.35,
+  });
+
+  // Expanding golden shockwave ring right as voice finishes (57.65s) and Pendulum finale crash rings out!
+  if (t >= 57.55) {
+    const swp = clamp((t - 57.55) / 1.85, 0, 1);
+    ctx.save();
+    ctx.strokeStyle = `rgba(238, 208, 137, ${(0.55 * (1 - swp)).toFixed(3)})`;
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.arc(W * 0.5, 420, 90 + swp * 760, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Official GOYDA · В ОКОПЕ Full Lockup Banner at Top
+  const eLogo = easeOutBack(prog(lt, 0.04, 0.52));
+  drawTacticalCard(PAD, 66, SAFE_W, 330, {
+    fill: 'rgba(14, 19, 12, 0.94)',
+    stroke: 'rgba(213, 174, 92, 0.68)',
+    r: 22,
+    accent: MIL.sandHi,
+    glow: 18 + outroSurge * 20,
+  });
+  drawContainImage(IMG.logoFullSand, W * 0.5, 204, 760, 210, {
+    scale: 0.92 + 0.08 * eLogo,
+    dropShadow: false,
+  });
+  drawFittedText('ЗАКАЗЫВАЙТЕ ПРИЁМНИК «АЗАР» 3mx · ОПТОМ И В РОЗНИЦУ', W * 0.5, 366, SAFE_W - 60, {
+    weight: 800,
+    size: 24,
+    family: 'Tektur',
+    color: MIL.cyan,
+    align: 'center',
+    shadow: false,
+  });
+
+  // Left: 3 Official Public Channels ONLY (Telegram, VK, Avito — 100% compliant!)
+  // Right: Monumental Full-Antenna Azar Hero standing tall next to the 3 official channel cards!
+  const channels = [
+    {
+      badge: 'TELEGRAM',
+      title: 't.me/vokope_ru',
+      sub: 'Оперативный заказ, наличие и консультации',
+      accent: '#42b8f6',
+    },
+    {
+      badge: 'ВКОНТАКТЕ',
+      title: 'vk.com/vokope_rus',
+      sub: 'Обзоры снаряжения, новости и прямая связь',
+      accent: MIL.cyan,
+    },
+    {
+      badge: 'МАГАЗИН НА АВИТО',
+      title: 'Официальная витрина В ОКОПЕ',
+      sub: 'avito.ru · Проверенный профиль и доставка',
+      accent: MIL.emerald,
+    },
+  ];
+
+  channels.forEach((ch, idx) => {
+    const ec = easeOutCubic(prog(lt, 0.20 + idx * 0.20, 0.45));
+    const cy = 436 + idx * 360 + (1 - ec) * 24;
+    ctx.save();
+    ctx.globalAlpha = ec;
+    drawTacticalCard(PAD, cy, 610, 330, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.55)',
+      r: 18,
+      accent: ch.accent,
+      glow: outroSurge * 10,
+    });
+
+    roundRectPath(PAD + 28, cy + 28, 250, 50, 9);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
+    ctx.fill();
+    ctx.strokeStyle = ch.accent;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    drawFittedText(`● ${ch.badge}`, PAD + 46, cy + 61, 214, {
+      weight: 800,
+      size: 20,
+      family: 'JetMono',
+      color: ch.accent,
+      shadow: false,
+    });
+
+    drawFittedText(ch.title, PAD + 28, cy + 158, 554, {
+      weight: 900,
+      size: 46,
+      family: 'FiraCond',
+      color: MIL.bone,
+      shadow: false,
+    });
+
+    const wds = ch.sub.split(' ');
+    const half = Math.ceil(wds.length / 2);
+    drawFittedText(wds.slice(0, half).join(' '), PAD + 28, cy + 226, 554, {
+      weight: 700,
+      size: 24,
+      family: 'RobotoBold',
+      color: MIL.sandHi,
+      shadow: false,
+    });
+    drawFittedText(wds.slice(half).join(' '), PAD + 28, cy + 262, 554, {
+      weight: 700,
+      size: 24,
+      family: 'RobotoBold',
+      color: MIL.ash,
+      shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Right hero column: Standing full-antenna Azar 3mx
+  drawContainImage(IMG.azarHero, 868, 980 + Math.sin(t * 2.0) * 5, 345, 1110, {
+    scale: 1.0 + outroSurge * 0.025,
+    glowColor: 'rgba(59, 226, 240, 0.48)',
+    glowBlur: 34 + outroSurge * 18,
+  });
+
+  // Bottom closing creed bar
+  drawTacticalCard(PAD, 1538, SAFE_W, 314, {
+    fill: 'rgba(16, 24, 15, 0.95)',
+    stroke: 'rgba(213, 174, 92, 0.68)',
+    r: 20,
+    accent: MIL.sandHi,
+  });
+  drawFittedText('УСИЛИВАЙТЕ КОНТРОЛЬ ВОЗДУХА!', W * 0.5, 1632, SAFE_W - 60, {
+    weight: 900,
+    size: 52,
+    family: 'RussoOne',
+    color: MIL.sandHi,
+    align: 'center',
+  });
+  drawFittedText('300–12 000 МГц  ·  ДО 1,5 КМ  ·  JACK 3.5 ММ  ·  ДО 6,5 Ч', W * 0.5, 1712, SAFE_W - 60, {
+    weight: 900,
+    size: 33,
+    family: 'FiraCond',
+    color: MIL.cyan,
+    align: 'center',
+    shadow: false,
+  });
+  drawFittedText('ОРИГИНАЛЬНАЯ ПОСТАВКА 3mx · С НДС И БЕЗ НДС · ДОСТАВКА ПО РОССИИ', W * 0.5, 1788, SAFE_W - 60, {
+    weight: 700,
+    size: 21,
+    family: 'JetMono',
+    color: MIL.bone,
+    align: 'center',
+    shadow: false,
+  });
+}
+
+// =========================================================================
+// STATELESS MASTER FRAME DISPATCHER (100% BIT-EXACT DETERMINISTIC)
+// =========================================================================
+function renderFrame(rawTime) {
+  const t = clamp(rawTime, 0, DURATION - 1e-4);
+
+  // Beat pulse locked to 174 BPM Pendulum clock
+  const beatPhase = (t / BEAT) % 1;
+  const beatPulse = Math.exp(-beatPhase * 5.2);
+
+  let scIdx = 0;
+  for (let i = 0; i < 8; i++) {
+    if (t >= CUTS[i] && t < CUTS[i + 1]) {
+      scIdx = i;
+      break;
+    }
+  }
+  if (t >= CUTS[8] - 1e-3) scIdx = 7;
+
+  switch (scIdx) {
+    case 0: renderScene1(t, beatPulse); break;
+    case 1: renderScene2(t, beatPulse); break;
+    case 2: renderScene3(t, beatPulse); break;
+    case 3: renderScene4(t, beatPulse); break;
+    case 4: renderScene5(t, beatPulse); break;
+    case 5: renderScene6(t, beatPulse); break;
+    case 6: renderScene7(t, beatPulse); break;
+    default: renderScene8(t, beatPulse); break;
+  }
+
+  // Crisp subtle tactical shutter flash right across cut boundaries (first 0.14s of scenes 2..8)
+  if (scIdx > 0) {
+    const dtCut = t - CUTS[scIdx];
+    if (dtCut >= 0 && dtCut < 0.14) {
+      const fa = (1 - dtCut / 0.14) * 0.22;
+      ctx.fillStyle = `rgba(213, 232, 224, ${fa.toFixed(4)})`;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  // Deterministic film grain pass across entire 1080×1920 frame
+  const ox = ((Math.floor(t * 60) * 37) % 128);
+  const oy = ((Math.floor(t * 60) * 53) % 128);
+  for (let gx = -ox; gx < W; gx += 256) {
+    for (let gy = -oy; gy < H; gy += 256) {
+      ctx.drawImage(GRAIN_TILE, gx, gy);
+    }
+  }
+}
+
+window.renderAt = renderFrame;
+window.getFrameSignature = function () {
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let h = 2166136261;
+  for (let i = 0; i < d.length; i += 97) {
+    h ^= d[i];
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0).toString(16);
+};
+
+window.__READY_PROMISE = loadAllAssets().then(() => {
+  renderFrame(0);
+  return true;
+});
+</script>
+</body>
+</html>

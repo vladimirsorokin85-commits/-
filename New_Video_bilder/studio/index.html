@@ -277,7 +277,7 @@
       <img src="/assets/brand/logo_full_light.png" alt="В ОКОПЕ — магазин брони" />
       <div>
         <div class="badge-top">★ REAL PHOTO · REAL DNB MP3 · 60 FPS</div>
-        <h1 id="reelTitle">Товарный Reels: «Зарядные станции»</h1>
+        <h1 id="reelTitle">1-минутный Reels: «Видеоперехват АЗАР от 3mx»</h1>
       </div>
     </div>
     <p class="sub">Реальные студийные фото · Настоящий Drum & Bass MP3 · Голос <b>VC-05</b> · Логотип <b>GOYDA</b> · Без цен</p>
@@ -285,6 +285,14 @@
     <div class="version-tabs">
       <button
         class="v-btn active"
+        data-key="azar"
+        data-title="1-минутный Reels: «Видеоперехват АЗАР от 3mx»"
+        data-src="/output/v_okope_azar_60s.mp4?v=az1"
+        data-dl="/output/v_okope_azar_60s.mp4"
+        data-dlname="v_okope_azar_60s.mp4"
+      >★ АЗАР 3mx (1:00)</button>
+      <button
+        class="v-btn"
         data-key="power"
         data-title="Товарный Reels: «Зарядные станции»"
         data-src="/output/v_okope_power_30s.mp4?v=pwr1"
@@ -316,20 +324,20 @@
     </div>
 
     <div class="player-shell">
-      <video id="reelPlayer" src="/lineups/01_DJI_Power.mp4" controls playsinline preload="metadata"></video>
+      <video id="reelPlayer" src="/output/v_okope_azar_60s.mp4?v=az1" controls playsinline preload="metadata"></video>
     </div>
 
     <div id="sceneJumps" class="scene-jumps"></div>
 
     <div class="dl-row">
-      <a class="dl-btn" href="/output/v_okope_power_6_lineups.zip" download="v_okope_power_6_lineups.zip">
-        📦 Скачать ZIP (6 роликов по линейкам + все .TXT описания · 49 МБ)
+      <a id="dlLink" class="dl-btn" href="/output/v_okope_azar_60s.mp4" download="v_okope_azar_60s.mp4">
+        ⬇ Скачать «АЗАР 3mx (1:00)» MP4 (1080×1920 · 60 fps)
       </a>
-      <a id="dlLink" class="dl-btn secondary" href="/lineups/01_DJI_Power.mp4" download="01_DJI_Power.mp4">
-        ⬇ Скачать выбранный ролик MP4 (1080×1920 · 60 fps)
+      <a class="dl-btn secondary" href="/output/azar_3mx_description.txt" download="azar_3mx_description.txt">
+        📄 Скачать описание «АЗАР 3mx» без таймкодов (.TXT)
       </a>
-      <a class="dl-btn secondary" href="/output/descriptions_6_lineups.txt" download="descriptions_6_lineups.txt">
-        📄 Скачать единый файл всех 6 описаний (.TXT)
+      <a class="dl-btn secondary" href="/output/v_okope_power_6_lineups.zip" download="v_okope_power_6_lineups.zip">
+        📦 Скачать ZIP (6 роликов по зарядным станциям + .TXT · 49 МБ)
       </a>
     </div>
   </div>
@@ -463,6 +471,16 @@ let currentAudio = null;
 let currentBtn = null;
 
 const CHAPTERS = {
+  azar: [
+    { t: 0.00, label: '01 · Хук АЗАР 3mx' },
+    { t: 5.39, label: '02 · Авто с «Булат» в.4' },
+    { t: 10.54, label: '03 · Ручной до 12 ГГц' },
+    { t: 17.25, label: '04 · Внешний монитор · 1,5 км' },
+    { t: 25.47, label: '05 · 450 г · −20…+45°C · 6,5 ч' },
+    { t: 34.72, label: '06 · Коробка и паспорт 3mx' },
+    { t: 43.79, label: '07 · Опт и розница · НДС' },
+    { t: 52.40, label: '08 · GOYDA · TG / VK / Авито' },
+  ],
   power: [
     { t: 0.00, label: '01 · Тишина позиции (0:00)' },
     { t: 4.97, label: '02 · DJI / EcoFlow / Jackery / Bluetti (0:05)' },
@@ -521,6 +539,41 @@ function showToast(msg) {
 }
 
 const YT_PACKS = {
+  azar: {
+    heading: 'YouTube Shorts / VK Клипы / Reels — «Приёмник АЗАР 3mx» (1:00 · без таймкодов)',
+    title: 'Видеоперехват «АЗАР» от 3mx — приём сигнала с FPV-дронов до 1,5 км и вывод на монитор | В ОКОПЕ #shorts',
+    desc: `Увидеть воздушную обстановку глазами дрона раньше, чем он выйдет на рубеж — приёмник аналогового видеосигнала с FPV-дронов «Азар» от компании 3mx в магазине брони и тактического оснащения «В ОКОПЕ»!
+
+Компактный прибор радиоэлектронной разведки позволяет не только фиксировать активность беспилотников в секторе, но и в реальном времени просматривать перехваченное аналоговое видеоизображение для оценки маршрута и действий оператора БПЛА.
+
+📡 Два режима работы под любую тактическую задачу:
+• Автоматический режим совместно с детектором БПЛА «Булат» в.4 (диапазон 300–8 000 МГц) — приёмник сам мгновенно переключается на обнаруженный видеоканал без ручного перебора частот
+• Ручной режим точечного поиска (расширенный диапазон 300–12 000 МГц) — контроль нестандартных и смещённых частот с возможностью отключения Bluetooth для соблюдения полной радиотишины
+
+🖥 Вывод видео на внешний монитор и основные характеристики:
+• Подключение внешнего полевого или стационарного монитора через разъём Jack 3.5 мм (кабели TRRS/TRRS и TRRS/RCA уже входят в заводской комплект; внешний монитор подбирается отдельно под задачу поста или транспорта)
+• Дальность приёма аналогового видеосигнала: до 1,5 км
+• Автономность: до 6,5 часов непрерывной работы от одного сменного аккумулятора Li-Ion 2 300 мА·ч
+• Полевая эргономика: масса не более 450 г с антеннами и АКБ, габариты 357 × 60 × 34 мм, рабочий диапазон температур от −20°C до +45°C, удобная физическая кнопочная клавиатура под работу в перчатках
+• Полная заводская комплектация с паспортом изделия 3mx: 2 съёмные антенны SMA на гибкой пружине, сменные аккумуляторы, зарядный стакан со световой индикацией, сетевой адаптер 220В, кабели питания USB / Type-C и видеокабели
+• Совместимость с выносными магнитными антеннами 3mx (2,5 м) для установки на транспорт и укрытия
+
+📦 Условия поставки:
+Поставляем оригинальное заводское оборудование от 1 прибора для мобильных расчётов до крупных партий для подразделений, волонтёрских фондов и организаций — оптом и в розницу, с НДС и без НДС (полный пакет закрывающих документов, оперативная доставка по всей России).
+
+📲 Официальные площадки магазина «В ОКОПЕ»:
+• Telegram-канал: https://t.me/vokope_ru
+• Сообщество ВКонтакте: https://vk.com/vokope_rus
+• Магазин на Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241
+
+#вокопе #азар #3mx #видеоперехват #перехватвидео #булат4 #детектордронов #fpv #рэб #радиоразведка #защитаотдронов #снаряжение #shorts`,
+    tags: 'в окопе, магазин в окопе, азар 3mx, приемник видеосигнала азар, видеоперехватчик дронов, перехват видео с fpv дрона, приемник аналогового видеосигнала 3mx, булат 4, булат v4, тандем булат и азар, детектор дронов 3mx, обнаружение бпла, контроль неба, внешний монитор для видеоперехвата, радиоэлектронная разведка, защита от fpv дронов, военное снаряжение оптом с ндс, магазин брони',
+    pin: `📡 Приёмник аналогового видеосигнала «Азар» от 3mx (300–12 000 МГц, дальность до 1,5 км, авторежим с «Булат» в.4 и вывод картинки на внешний монитор)!
+Поставляем оригинальные комплексы от 1 шт. до крупных партий — оптом и в розницу, с НДС и без НДС:
+👉 Telegram: https://t.me/vokope_ru
+👉 ВКонтакте: https://vk.com/vokope_rus
+👉 Авито: https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241`,
+  },
   power: {
     heading: 'YouTube Shorts — «Зарядные станции» (17 моделей)',
     title: 'Бесшумные зарядные станции для позиций, дронов и РЭБ — DJI, EcoFlow, Jackery, Bluetti | В ОКОПЕ #shorts',
@@ -634,10 +687,10 @@ const YT_PACKS = {
   },
 };
 
-let activeKey = 'power';
+let activeKey = 'azar';
 function renderYtPack(key) {
   activeKey = key;
-  const p = YT_PACKS[key] || YT_PACKS.power;
+  const p = YT_PACKS[key] || YT_PACKS.azar;
   document.getElementById('ytHeading').textContent = p.heading;
   document.getElementById('ytTitleText').textContent = p.title;
   document.getElementById('ytDescText').textContent = p.desc;
@@ -650,14 +703,14 @@ function renderYtPack(key) {
   ['copyYtPin', 'pin', 'Текст закреп-комментария скопирован!'],
 ].forEach(([id, field, msg]) => {
   document.getElementById(id).addEventListener('click', async () => {
-    const val = (YT_PACKS[activeKey] || YT_PACKS.power)[field];
+    const val = (YT_PACKS[activeKey] || YT_PACKS.azar)[field];
     try { await navigator.clipboard.writeText(val); } catch {}
     showToast(msg);
   });
 });
 
-renderChapters('power');
-renderYtPack('power');
+renderChapters('azar');
+renderYtPack('azar');
 
 document.querySelectorAll('.v-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -667,11 +720,13 @@ document.querySelectorAll('.v-btn').forEach((btn) => {
     video.src = btn.dataset.src;
     dlLink.href = btn.dataset.dl;
     dlLink.download = btn.dataset.dlname;
-    dlLink.textContent = btn.dataset.key === 'power'
-      ? '⬇ Скачать «Зарядные станции» MP4 (1080×1920 · 60 fps)'
-      : btn.dataset.key === 'product'
-        ? '⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)'
-        : '⬇ Скачать общий ролик магазина MP4 (1080×1920 · 60 fps)';
+    dlLink.textContent = btn.dataset.key === 'azar'
+      ? '⬇ Скачать «АЗАР 3mx (1:00)» MP4 (1080×1920 · 60 fps)'
+      : btn.dataset.key === 'power'
+        ? `⬇ Скачать «${btn.dataset.dlname}» (1080×1920 · 60 fps)`
+        : btn.dataset.key === 'product'
+          ? '⬇ Скачать «Воевода 14/23» MP4 (1080×1920 · 60 fps)'
+          : '⬇ Скачать общий ролик магазина MP4 (1080×1920 · 60 fps)';
     reelTitle.textContent = btn.dataset.title;
     renderChapters(btn.dataset.key);
     renderYtPack(btn.dataset.key);
