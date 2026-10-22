@@ -1,0 +1,4 @@
+file '/home/user/-/video_studio/polevaya/reels/cenzor/seg0.mp4'
+file '/home/user/-/video_studio/polevaya/reels/cenzor/seg1.mp4'
+file '/home/user/-/video_studio/polevaya/reels/cenzor/seg2.mp4'
+file '/home/user/-/video_studio/polevaya/reels/cenzor/seg3.mp4'
