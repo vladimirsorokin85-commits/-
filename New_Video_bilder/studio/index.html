@@ -383,6 +383,41 @@
 </head>
 <body>
 
+<section class="dnb-deck" id="pole31HeroRelease" style="border-color:rgba(86,230,138,0.92);box-shadow:0 30px 76px rgba(0,0,0,0.88);">
+  <div class="dnb-deck-head">
+    <div>
+      <div class="badge-top" style="color:#56e68a;border-color:rgba(86,230,138,0.72);background:rgba(86,230,138,0.16);">★ ДВОЙНОЙ НОВЫЙ РЕЛИЗ · 16:9 ДЛИННЫЙ (03:39 · 1920×1080 @ 60 FPS) + 9:16 SHORTS/REELS (00:58 · 1080×1920 @ 60 FPS)</div>
+      <h2 style="font-size:23px; margin-bottom:6px;">НПО «КИЛОВАТТ» — Станция РЭБ «Поле-31» (до 240 Вт · Срыв спутников ≥ 2000 м · GPS / ГЛОНАСС / BeiDou / Galileo)</h2>
+      <p style="color:var(--muted); font-size:13.5px;">Озвучка <b>voice-05</b> · Чистый инструментальный Drum &amp; Bass <b>320 kbps (174.2 BPM · 0.00% вокала · 0% Content ID)</b> · Оба мастера ровно <b>−14.00 LUFS</b> · <b>1162–1300 / 1550–1630 МГц</b> · Купол <b>900×300 мм (24 кг · работа 24/7)</b> · Зелёный в базе + любой цвет под заказ · <b>12В / 24В / 220В / ИП-24/100</b> · Связка <b>«Сигнал-М2» + «Поле-31» + «Ребус-4»</b> · Без цен в кадре и тексте.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:9px;">
+      <a class="dl-btn" style="width:auto;padding:11px 16px;" href="/output/v_okope_pole31_long_16x9.mp4" download="v_okope_pole31_long_16x9.mp4">⬇ Длинный 16:9 MP4 (03:39 · 1080p60)</a>
+      <a class="dl-btn" style="width:auto;padding:11px 16px;" href="/output/v_okope_pole31_short_9x16.mp4" download="v_okope_pole31_short_9x16.mp4">⬇ Короткий 9:16 MP4 (00:58 · 1080×1920 · 60fps)</a>
+      <a class="dl-btn secondary" style="width:auto;padding:11px 14px;" href="/output/covers/pole31_cover_16x9.jpg" download="pole31_cover_16x9.jpg">🖼 Обложка 16:9</a>
+      <a class="dl-btn secondary" style="width:auto;padding:11px 14px;" href="/output/covers/pole31_cover_9x16.jpg" download="pole31_cover_9x16.jpg">🖼 Обложка 9:16</a>
+      <a class="dl-btn secondary" style="width:auto;padding:11px 14px;" href="/output/pole31_long_16x9_description.txt" download="pole31_long_16x9_description.txt">📄 SEO 16:9 (+ таймкоды)</a>
+      <a class="dl-btn secondary" style="width:auto;padding:11px 14px;" href="/output/pole31_short_9x16_description.txt" download="pole31_short_9x16_description.txt">📄 SEO 9:16 (без таймкодов)</a>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1.58fr 330px;gap:22px;align-items:start;">
+    <div style="background:#080c08;border:1px solid rgba(86,230,138,0.52);padding:10px;">
+      <div style="font-size:11.5px;font-weight:800;color:var(--phosphor);margin-bottom:6px;">ГОРИЗОНТАЛЬНЫЙ ВЫПУСК 16:9 (1920×1080 @ 60 FPS · 03:39)</div>
+      <video id="pole31LongVid" controls preload="metadata" poster="/output/covers/pole31_cover_16x9.jpg" src="/output/v_okope_pole31_long_16x9.mp4" style="aspect-ratio:16/9;width:100%;display:block;"></video>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
+        <button type="button" class="copy-btn" onclick="const v=document.getElementById('pole31LongVid');v.currentTime=0;v.play();">00:00 · Угроза крыла</button>
+        <button type="button" class="copy-btn" onclick="const v=document.getElementById('pole31LongVid');v.currentTime=34.37;v.play();">00:34 · 240 Вт · 2000+ м</button>
+        <button type="button" class="copy-btn" onclick="const v=document.getElementById('pole31LongVid');v.currentTime=80.49;v.play();">01:20 · Радиаторы 24/7 и цвета</button>
+        <button type="button" class="copy-btn" onclick="const v=document.getElementById('pole31LongVid');v.currentTime=121.29;v.play();">02:01 · Авто / ББМ / Тренога</button>
+        <button type="button" class="copy-btn" onclick="const v=document.getElementById('pole31LongVid');v.currentTime=170.12;v.play();">02:50 · Сигнал-М2 + Ребус-4</button>
+      </div>
+    </div>
+    <div style="background:#080c08;border:1px solid rgba(213,174,92,0.52);padding:10px;">
+      <div style="font-size:11.5px;font-weight:800;color:var(--sand-bright);margin-bottom:6px;">ВЕРТИКАЛЬНЫЙ REELS / SHORTS 9:16 (00:58 · 60 FPS)</div>
+      <video id="pole31ShortVid" controls preload="metadata" poster="/output/covers/pole31_cover_9x16.jpg" src="/output/v_okope_pole31_short_9x16.mp4" style="aspect-ratio:9/16;width:100%;max-height:520px;display:block;"></video>
+    </div>
+  </div>
+</section>
+
 <section class="dnb-deck" id="detectorsHeroRelease" style="border-color:rgba(86,230,138,0.82);box-shadow:0 28px 70px rgba(0,0,0,0.85);">
   <div class="dnb-deck-head">
     <div>
@@ -1293,6 +1328,7 @@ renderChapters('zastone');
 renderYtPack('zastone');
 
 const COVER_CARDS = [
+  { slug: 'pole31', title: 'Станция РЭБ «Поле-31» · 16:9 + 9:16' },
   { slug: 'detectors_guide', title: 'Все 19 детекторов БПЛА · Гид 16:9 (06:14)' },
   { slug: 'aldan12', title: 'Детектор «Алдан-12» + Часы · 9:16' },
   { slug: 'tyt_mduv390', title: 'TYT MD-UV390 Plus AES-256 · 9:16' },

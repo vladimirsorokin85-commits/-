@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>В ОКОПЕ — Станция РЭБ «Поле-31» НПО «КИЛОВАТТ» (1920x1080 @ 60 fps)</title>
+<style>
+  @font-face {
+    font-family: "RussoOne";
+    src: url("/fonts/RussoOne-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  @font-face {
+    font-family: "JetBrainsMono";
+    src: url("/fonts/JetBrainsMono-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #070b08;
+  }
+  canvas#master {
+    display: block;
+    width: 1920px;
+    height: 1080px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1920" height="1080"></canvas>
+<script>
+const W = 1920, H = 1080;
+const FPS = 60;
+const DURATION = 219.0;
+const BPM_BEAT = 60.0 / 174.2;
+
+const canvas = document.getElementById("master");
+const ctx = canvas.getContext("2d", { alpha: false });
+
+const COL = {
+  bg: "#070b08",
+  bgCard: "rgba(12, 20, 15, 0.89)",
+  bgCardHi: "rgba(17, 30, 21, 0.94)",
+  gold: "#e0b861",
+  goldBright: "#ffdf91",
+  amberDim: "rgba(224, 184, 97, 0.16)",
+  green: "#56e68a",
+  greenDim: "rgba(86, 230, 138, 0.16)",
+  cyan: "#5cc9ff",
+  cyanDim: "rgba(92, 201, 255, 0.15)",
+  red: "#ff5c5c",
+  redDim: "rgba(255, 92, 92, 0.16)",
+  text: "#f4f7f3",
+  muted: "#a8b8ac",
+  border: "rgba(224, 184, 97, 0.34)"
+};
+
+// Exact 5 chapters + 10 dynamic visual beats synced to pole31_long_master.wav (219.00s)
+const CHAPTERS = [
+  { idx: 1, code: "00:00", start: 0.000,   end: 34.370,  short: "01 · УГРОЗА БПЛА",       title: "АВТОПИЛОТ ПРОТИВ ОБЫЧНЫХ КУПОЛОВ" },
+  { idx: 2, code: "00:34", start: 34.370,  end: 80.488,  short: "02 · 240 ВТ · 2000+ М",  title: "ДВА ЭШЕЛОНА СПУТНИКОВОЙ НАВИГАЦИИ" },
+  { idx: 3, code: "01:20", start: 80.488,  end: 121.288, short: "03 · КОРПУС И ЦВЕТА",    title: "БРОНЕКУПОЛ 900×300 · РАДИАТОРЫ 24/7" },
+  { idx: 4, code: "02:01", start: 121.288, end: 170.116, short: "04 · МОНТАЖ И ПИТАНИЕ",  title: "АВТО, ББМ, ТРЕНОГА · 12 / 24 / 220В" },
+  { idx: 5, code: "02:50", start: 170.116, end: 219.000, short: "05 · КОМПЛЕКС В ОКОПЕ",  title: "СИГНАЛ-М2 + ПОЛЕ-31 + РЕБУС-4 · ПОСТАВКА" }
+];
+
+const BEATS = [
+  { id: "1A", ch: 0, start: 0.000,   end: 17.500 },
+  { id: "1B", ch: 0, start: 17.500,  end: 34.370 },
+  { id: "2A", ch: 1, start: 34.370,  end: 57.500 },
+  { id: "2B", ch: 1, start: 57.500,  end: 80.488 },
+  { id: "3A", ch: 2, start: 80.488,  end: 101.000 },
+  { id: "3B", ch: 2, start: 101.000, end: 121.288 },
+  { id: "4A", ch: 3, start: 121.288, end: 145.800 },
+  { id: "4B", ch: 3, start: 145.800, end: 170.116 },
+  { id: "5A", ch: 4, start: 170.116, end: 193.500 },
+  { id: "5B", ch: 4, start: 193.500, end: 219.000 }
+];
+
+const ASSET_PATHS = {
+  logoShield: "/assets/brand/logo_shield_sand.png",
+  logoFull:   "/assets/brand/logo_full_sand.png",
+  bgRadar:    "/assets/images/bg_radar_dusk.jpg",
+  domeGreen:  "/assets/pole_31/dome_green_rgba.png",
+  domeOlive:  "/assets/pole_31/dome_olive_clean_rgba.png",
+  domeSand:   "/assets/pole_31/dome_sand_rgba.png",
+  domeSilver: "/assets/pole_31/dome_silver_rgba.png",
+  domeBottom: "/assets/pole_31/dome_bottom_heatsinks_rgba.png",
+  bpZone:     "/assets/pole_31/bp_dome_2000m_rgba.png",
+  bpMounts:   "/assets/pole_31/bp_mounts_3types_rgba.png",
+  bpWiring:   "/assets/pole_31/bp_wiring_12_24_220_rgba.png",
+  bpPower:    "/assets/pole_31/bp_power_units_rgba.png"
+};
+
+const IMG = {};
+let bgStaticCanvas = null;
+let glowGold = null, glowGreen = null, glowCyan = null;
+
+function makeGlowSprite(rgbStr, size = 560) {
+  const c = document.createElement("canvas");
+  c.width = size; c.height = size;
+  const g = c.getContext("2d");
+  const grad = g.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  grad.addColorStop(0.0, `rgba(${rgbStr}, 0.42)`);
+  grad.addColorStop(0.48, `rgba(${rgbStr}, 0.14)`);
+  grad.addColorStop(1.0, `rgba(${rgbStr}, 0.0)`);
+  g.fillStyle = grad;
+  g.fillRect(0, 0, size, size);
+  return c;
+}
+
+function buildStaticBackdrop() {
+  const c = document.createElement("canvas");
+  c.width = W; c.height = H;
+  const g = c.getContext("2d");
+  g.fillStyle = "#060a07";
+  g.fillRect(0, 0, W, H);
+  if (IMG.bgRadar) {
+    g.save();
+    g.globalAlpha = 0.22;
+    const sc = Math.max(W / IMG.bgRadar.width, H / IMG.bgRadar.height);
+    const dw = IMG.bgRadar.width * sc, dh = IMG.bgRadar.height * sc;
+    g.drawImage(IMG.bgRadar, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    g.restore();
+  }
+  const vig = g.createRadialGradient(W * 0.52, H * 0.48, 220, W * 0.5, H * 0.5, 1180);
+  vig.addColorStop(0, "rgba(10, 22, 15, 0.24)");
+  vig.addColorStop(1, "rgba(4, 7, 5, 0.92)");
+  g.fillStyle = vig;
+  g.fillRect(0, 0, W, H);
+
+  g.strokeStyle = "rgba(120, 180, 140, 0.055)";
+  g.lineWidth = 1;
+  for (let x = 0; x <= W; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  for (let y = 0; y <= H; y += 64) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+  return c;
+}
+
+window.__READY_PROMISE = (async () => {
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+  await Promise.all(
+    Object.entries(ASSET_PATHS).map(([k, url]) => new Promise((resolve) => {
+      const im = new Image();
+      im.onload = () => { IMG[k] = im; resolve(); };
+      im.onerror = () => { console.warn("Missing:", url); resolve(); };
+      im.src = url;
+    }))
+  );
+  glowGold  = makeGlowSprite("224, 184, 97", 600);
+  glowGreen = makeGlowSprite("86, 230, 138", 600);
+  glowCyan  = makeGlowSprite("92, 201, 255", 580);
+  bgStaticCanvas = buildStaticBackdrop();
+  window.renderAt(0.0);
+  return true;
+})();
+
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const easeOutCubic = (x) => { const c = clamp(x, 0, 1); return 1 - Math.pow(1 - c, 3); };
+
+function roundRect(x, y, w, h, r = 14) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function drawCard(x, y, w, h, opts = {}) {
+  const { accent = COL.gold, bg = COL.bgCard, radius = 16, highlight = false } = opts;
+  roundRect(x, y, w, h, radius);
+  ctx.fillStyle = bg;
+  ctx.fill();
+  ctx.lineWidth = highlight ? 2.2 : 1.3;
+  ctx.strokeStyle = highlight ? accent : "rgba(224,184,97,0.28)";
+  ctx.stroke();
+
+  const L = 18;
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 2.6;
+  ctx.beginPath();
+  ctx.moveTo(x + 2, y + L); ctx.lineTo(x + 2, y + 2); ctx.lineTo(x + L, y + 2);
+  ctx.moveTo(x + w - L, y + 2); ctx.lineTo(x + w - 2, y + 2); ctx.lineTo(x + w - 2, y + L);
+  ctx.stroke();
+}
+
+function drawBadge(text, x, y, bg, fg, fontSize = 15) {
+  ctx.font = `700 ${fontSize}px "JetBrainsMono", monospace`;
+  const padX = 14, h = fontSize + 14;
+  const w = Math.ceil(ctx.measureText(text).width + padX * 2);
+  roundRect(x, y, w, h, 8);
+  ctx.fillStyle = bg; ctx.fill();
+  ctx.strokeStyle = fg; ctx.lineWidth = 1.2; ctx.stroke();
+  ctx.fillStyle = fg;
+  ctx.textBaseline = "middle"; ctx.textAlign = "left";
+  ctx.fillText(text, x + padX, y + h / 2 + 1);
+  return w;
+}
+
+function drawCutout(key, cx, cy, maxW, maxH, t, phase = 0, glow = glowGreen, floatAmp = 5.0) {
+  const im = IMG[key];
+  if (!im) return;
+  const fy = Math.sin(t * 1.6 + phase) * floatAmp;
+  const sc = Math.min(maxW / im.width, maxH / im.height);
+  const dw = im.width * sc, dh = im.height * sc;
+  if (glow) {
+    const gs = Math.max(dw, dh) * 1.25;
+    ctx.drawImage(glow, cx - gs / 2, cy + fy - gs / 2, gs, gs);
+  }
+  ctx.drawImage(im, cx - dw / 2, cy + fy - dh / 2, dw, dh);
+}
+
+function wrapLines(text, maxWidth, font) {
+  ctx.font = font;
+  const words = text.split(" ");
+  const lines = [];
+  let line = "";
+  for (const w of words) {
+    const test = line ? line + " " + w : w;
+    if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = w; }
+    else line = test;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function drawBullets(items, x, y, maxW, lineGap = 14, accent = COL.green, fontSize = 21) {
+  let cy = y;
+  const font = `700 ${fontSize}px "Montserrat", sans-serif`;
+  for (const item of items) {
+    ctx.fillStyle = accent;
+    roundRect(x, cy + 7, 10, 10, 3);
+    ctx.fill();
+    const lines = wrapLines(item, maxW - 26, font);
+    ctx.font = font; ctx.fillStyle = COL.text;
+    ctx.textAlign = "left"; ctx.textBaseline = "top";
+    for (const ln of lines) {
+      ctx.fillText(ln, x + 24, cy);
+      cy += fontSize + 7;
+    }
+    cy += lineGap;
+  }
+  return cy;
+}
+
+function drawSpecGrid(specs, x, y, w, cols = 2) {
+  const gap = 14;
+  const cw = (w - gap * (cols - 1)) / cols;
+  const rh = 82;
+  specs.forEach((sp, i) => {
+    const r = Math.floor(i / cols), c = i % cols;
+    const bx = x + c * (cw + gap), by = y + r * (rh + gap);
+    roundRect(bx, by, cw, rh, 12);
+    ctx.fillStyle = "rgba(255,255,255,0.048)"; ctx.fill();
+    ctx.strokeStyle = "rgba(224,184,97,0.26)"; ctx.lineWidth = 1; ctx.stroke();
+
+    ctx.font = `700 13px "JetBrainsMono", monospace`;
+    ctx.fillStyle = COL.muted; ctx.textAlign = "left"; ctx.textBaseline = "top";
+    ctx.fillText(sp[0], bx + 16, by + 13);
+
+    ctx.font = `400 24px "RussoOne", sans-serif`;
+    ctx.fillStyle = sp[2] || COL.goldBright;
+    ctx.fillText(sp[1], bx + 16, by + 39);
+  });
+}
+
+function drawHeaderTitle(kicker, title, subtitle, enterP = 1) {
+  const dy = (1 - easeOutCubic(enterP)) * 18;
+  ctx.save();
+  ctx.globalAlpha = clamp(enterP * 1.4, 0, 1);
+  drawBadge(kicker, 56, 100 + dy, COL.amberDim, COL.goldBright, 15);
+  ctx.font = `400 44px "RussoOne", sans-serif`;
+  ctx.fillStyle = COL.text; ctx.textAlign = "left"; ctx.textBaseline = "top";
+  ctx.fillText(title, 56, 142 + dy);
+  if (subtitle) {
+    ctx.font = `700 20px "Montserrat", sans-serif`;
+    ctx.fillStyle = COL.muted;
+    ctx.fillText(subtitle, 56, 198 + dy);
+  }
+  ctx.restore();
+}
+
+function drawTopAndBottomChrome(t, chIdx) {
+  roundRect(42, 20, W - 84, 62, 14);
+  ctx.fillStyle = "rgba(10, 16, 12, 0.91)"; ctx.fill();
+  ctx.strokeStyle = "rgba(224, 184, 97, 0.34)"; ctx.lineWidth = 1.2; ctx.stroke();
+
+  if (IMG.logoShield) ctx.drawImage(IMG.logoShield, 58, 25, 48, 52);
+  ctx.font = `400 22px "RussoOne", sans-serif`;
+  ctx.fillStyle = COL.goldBright; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+  ctx.fillText("В ОКОПЕ", 118, 43);
+  ctx.font = `700 12px "JetBrainsMono", monospace`;
+  ctx.fillStyle = COL.green;
+  ctx.fillText("НПО «КИЛОВАТТ» · СТАНЦИЯ РЭБ «ПОЛЕ-31»", 118, 64);
+
+  let px = 472;
+  const availW = 1390, pillGap = 10;
+  const pillW = (availW - pillGap * (CHAPTERS.length - 1)) / CHAPTERS.length;
+  CHAPTERS.forEach((c, idx) => {
+    const active = idx === chIdx, done = idx < chIdx;
+    roundRect(px, 30, pillW, 42, 9);
+    ctx.fillStyle = active ? "rgba(86, 230, 138, 0.22)" : (done ? "rgba(224, 184, 97, 0.11)" : "rgba(255,255,255,0.035)");
+    ctx.fill();
+    ctx.strokeStyle = active ? COL.green : (done ? "rgba(224,184,97,0.4)" : "rgba(255,255,255,0.09)");
+    ctx.lineWidth = active ? 1.8 : 1; ctx.stroke();
+    if (active) {
+      const prog = clamp((t - c.start) / (c.end - c.start), 0, 1);
+      roundRect(px + 2, 66, Math.max(6, (pillW - 4) * prog), 4, 2);
+      ctx.fillStyle = COL.green; ctx.fill();
+    }
+    ctx.font = `700 13px "JetBrainsMono", monospace`;
+    ctx.fillStyle = active ? COL.goldBright : (done ? COL.green : COL.muted);
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(c.short, px + pillW / 2, 49);
+    px += pillW + pillGap;
+  });
+
+  // Bottom live RF jammer bar y=1004..1060
+  roundRect(42, 1004, W - 84, 56, 12);
+  ctx.fillStyle = "rgba(10, 16, 12, 0.91)"; ctx.fill();
+  ctx.strokeStyle = "rgba(224,184,97,0.28)"; ctx.lineWidth = 1; ctx.stroke();
+
+  const sx0 = 62, nb = 48, bw = 9, bgap = 3;
+  const beatKick = Math.pow(Math.max(0, Math.sin(t * Math.PI / BPM_BEAT)), 4);
+  for (let i = 0; i < nb; i++) {
+    const inBand = (i >= 10 && i <= 20) || (i >= 29 && i <= 40);
+    const wave = inBand ? (0.72 + 0.26 * Math.sin(t * 9.0 + i * 0.5)) : (0.14 + 0.08 * Math.sin(t * 4 + i));
+    const h = clamp((wave + beatKick * 0.14) * 36, 4, 38);
+    ctx.fillStyle = inBand ? COL.green : "rgba(224,184,97,0.45)";
+    ctx.fillRect(sx0 + i * (bw + bgap), 1050 - h, bw, h);
+  }
+  ctx.font = `700 14px "JetBrainsMono", monospace`;
+  ctx.fillStyle = COL.muted; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+  ctx.fillText("1162–1300 МГц [L2/L5/G2/B2]  +  1550–1630 МГц [L1/G1/B1/E1]  │  ДО 240 ВТ  │  КУПОЛ ≥ 2000 М  │  РАБОТА 24/7", 660, 1032);
+
+  ctx.fillStyle = COL.goldBright; ctx.textAlign = "right";
+  const curM = String(Math.floor(t / 60)).padStart(2, "0");
+  const curS = String(Math.floor(t % 60)).padStart(2, "0");
+  ctx.fillText(`${curM}:${curS} / 03:39`, W - 62, 1032);
+  ctx.fillStyle = COL.green;
+  ctx.fillRect(56, 1057, (W - 112) * clamp(t / DURATION, 0, 1), 2.5);
+}
+
+function renderBeat(beat, t, enterP) {
+  const id = beat.id;
+
+  // 1A: Autonomous fixed-wing GNSS threat vs standard domes
+  if (id === "1A") {
+    drawHeaderTitle(
+      "ГЛАВА 01 · НОВАЯ РЕАЛЬНОСТЬ ПВО И РЭБ",
+      "ПОЧЕМУ ОБЫЧНЫЕ КУПОЛА БЕССИЛЬНЫ ПРОТИВ «КРЫЛА»",
+      "Ударный БПЛА самолётного типа летит за десятки километров без оператора — строго по спутникам",
+      enterP
+    );
+    drawCard(56, 248, 860, 730, { accent: COL.red, bg: "rgba(22, 12, 13, 0.90)", highlight: true });
+    drawBadge("ПРОБЛЕМА СТАРЫХ ПОДАВИТЕЛЕЙ", 88, 278, COL.redDim, COL.red, 15);
+    ctx.font = `400 38px "RussoOne", sans-serif`; ctx.fillStyle = COL.text;
+    ctx.textAlign = "left"; ctx.textBaseline = "top";
+    ctx.fillText("4 СОЗВЕЗДИЯ НАВИГАЦИИ СРАЗУ", 88, 326);
+    drawSpecGrid([
+      ["США · NAVSTAR", "GPS (L1 / L2 / L5)", COL.red],
+      ["РОССИЯ", "ГЛОНАСС (G1 / G2 / G3)", COL.red],
+      ["КИТАЙ · BDS", "BEIDOU (B1 / B2 / B3)", COL.red],
+      ["ЕВРОСОЮЗ", "GALILEO (E1 / E5a / E5b)", COL.red]
+    ], 88, 392, 796, 2);
+    drawBullets([
+      "Дальнобойный БПЛА самолётного типа не держит радиолинк с пультом — он идёт по маршруту GNSS",
+      "Купола на 2.4 / 5.8 ГГц не мешают борту выйти точно в координаты цеха, подстанции или склада",
+      "Нужен мощный специализированный барьер, наглухо срывающий спутниковую привязку на дальнем подступе"
+    ], 88, 598, 796, 14, COL.red, 20);
+
+    drawCard(946, 248, 918, 730, { accent: COL.green, highlight: true });
+    drawBadge("ОТВЕТ НПО «КИЛОВАТТ» · НОВИНКА 2026", 978, 278, COL.greenDim, COL.green, 15);
+    // Animated protective dome pulse waves above real green Pole-31 cutout
+    for (let k = 0; k < 4; k++) {
+      const p = ((t * 0.62 + k * 0.25) % 1.0);
+      ctx.beginPath();
+      ctx.arc(1405, 650, 120 + p * 270, Math.PI, Math.PI * 2);
+      ctx.strokeStyle = `rgba(86, 230, 138, ${0.62 * (1 - p)})`;
+      ctx.lineWidth = 3.2; ctx.stroke();
+    }
+    drawCutout("domeGreen", 1405, 600, 620, 440, t, 0.2, glowGreen);
+    ctx.font = `400 40px "RussoOne", sans-serif`; ctx.fillStyle = COL.goldBright;
+    ctx.textAlign = "center"; ctx.fillText("СТАНЦИЯ РЭБ «ПОЛЕ-31»", 1405, 868);
+    ctx.font = `700 18px "Montserrat", sans-serif`; ctx.fillStyle = COL.green;
+    ctx.fillText("ДРОНЫ ТЕРЯЮТ СВЯЗЬ СО СПУТНИКАМИ ЗА 2000–3000 МЕТРОВ", 1405, 922);
+  }
+
+  // 1B: Official 2000-3000m Dome Diagram + Target Types
+  else if (id === "1B") {
+    drawHeaderTitle(
+      "ГЛАВА 01 · ФИЗИКА СРЫВА НАВЕДЕНИЯ",
+      "НЕПРОБИВАЕМЫЙ КУПОЛ НА РУБЕЖЕ НЕ МЕНЕЕ 2000 МЕТРОВ",
+      "Защита объектов, автотранспорта, ББМ и личного состава от самолётных, разведывательных и ударных БПЛА",
+      enterP
+    );
+    drawCard(56, 248, 1080, 730, { accent: COL.cyan, highlight: true });
+    drawBadge("ОФИЦИАЛЬНАЯ СХЕМА ЗОНЫ ПРОТИВОДЕЙСТВИЯ «ПОЛЕ-31»", 88, 276, COL.cyanDim, COL.cyan, 15);
+    drawCutout("bpZone", 596, 520, 980, 390, t, 0.0, glowCyan, 2.5);
+    drawCutout("domeOlive", 596, 825, 340, 230, t, 0.8, glowGreen, 3.0);
+
+    drawCard(1166, 248, 698, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["РУБЕЖ ПОДАВЛЕНИЯ", "НЕ МЕНЕЕ 2000 М", COL.green],
+      ["ЭФФЕКТИВНАЯ ЗОНА", "2000 – 3000 М", COL.goldBright]
+    ], 1198, 282, 634, 1);
+    drawBullets([
+      "Дальнобойные ударные БПЛА самолётного типа теряют маршрут задолго до объекта",
+      "Срывает удержание точки и возврат у разведывательных и ударных Mavic / Autel / FPV",
+      "Одинаково эффективно прикрывает завод, объект ТЭК, агрохолдинг или колонну на марше"
+    ], 1198, 492, 634, 18, COL.green, 21);
+  }
+
+  // 2A: 240W Dual-Band GNSS Jamming Architecture
+  else if (id === "2A") {
+    drawHeaderTitle(
+      "ГЛАВА 02 · ГЛАВНОЕ ТЕХНОЛОГИЧЕСКОЕ ПРЕИМУЩЕСТВО",
+      "240 ВАТТ ПО ДВУМ ЭШЕЛОНАМ: 1162–1300 И 1550–1630 МГЦ",
+      "Почему многочастотные приёмники больше не могут «перепрыгнуть» на резервные спутниковые литеры",
+      enterP
+    );
+    drawCard(56, 248, 900, 730, { accent: COL.green, highlight: true });
+    // Dual high-power RF bar visualizer
+    const bands = [
+      { tag: "НИЖНИЙ НАВИГАЦИОННЫЙ ЭШЕЛОН", freq: "1162 – 1300 МГЦ", sys: "GPS L2/L5 · ГЛОНАСС G2/G3 · BeiDou B2/B3 · Galileo E5a/E5b", acc: COL.cyan, y: 290 },
+      { tag: "ВЕРХНИЙ НАВИГАЦИОННЫЙ ЭШЕЛОН", freq: "1550 – 1630 МГЦ", sys: "GPS L1 · ГЛОНАСС G1 · BeiDou B1 · Galileo E1 (все литеры)", acc: COL.green, y: 530 }
+    ];
+    bands.forEach((b, bi) => {
+      roundRect(88, b.y, 836, 208, 14);
+      ctx.fillStyle = "rgba(8, 17, 13, 0.95)"; ctx.fill();
+      ctx.strokeStyle = b.acc; ctx.lineWidth = 2; ctx.stroke();
+      ctx.font = `700 14px "JetBrainsMono", monospace`; ctx.fillStyle = b.acc;
+      ctx.textAlign = "left"; ctx.fillText(b.tag, 114, b.y + 30);
+      ctx.font = `400 44px "RussoOne", sans-serif`; ctx.fillStyle = COL.goldBright;
+      ctx.fillText(b.freq, 114, b.y + 82);
+      ctx.font = `700 18px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+      ctx.fillText(b.sys, 114, b.y + 132);
+      const pw = 0.86 + 0.14 * Math.sin(t * 8 + bi * 2);
+      roundRect(114, b.y + 166, 780 * pw, 18, 6);
+      ctx.fillStyle = b.acc; ctx.fill();
+    });
+    ctx.font = `700 16px "Montserrat", sans-serif`; ctx.fillStyle = COL.goldBright;
+    ctx.fillText("ПОЛНОЕ ПЕРЕКРЫТИЕ ВСЕХ ЛИТЕР — БЕЗ «ОКОН» ДЛЯ МНОГОЧАСТОТНЫХ МОДУЛЕЙ", 88, 795);
+    ctx.font = `700 14.5px "JetBrainsMono", monospace`; ctx.fillStyle = COL.muted;
+    ctx.fillText("МОЩНОСТЬ ПЕРЕДАТЧИКОВ: ДО 240 ВТ  │  ПОТРЕБЛЕНИЕ: ≤ 600 ВТ", 88, 845);
+
+    drawCard(986, 248, 878, 730, { accent: COL.goldBright, highlight: true });
+    drawCutout("domeGreen", 1425, 555, 650, 470, t, 0.4, glowGold);
+    drawSpecGrid([
+      ["ВЫХОДНАЯ МОЩНОСТЬ", "ДО 240 ВТ", COL.goldBright],
+      ["ВСЕ 4 ГРУППИРОВКИ", "GPS · ГЛОНАСС · BEIDOU · GALILEO", COL.green]
+    ], 1018, 825, 814, 2);
+  }
+
+  // 2B: Full Passport Technical Table Card
+  else if (id === "2B") {
+    drawHeaderTitle(
+      "ГЛАВА 02 · ПАСПОРТНЫЕ ДАННЫЕ (УТВЕРЖДЕНЫ ГЛАВНЫМ ИНЖЕНЕРОМ)",
+      "ЧЕСТНЫЕ ЗАВОДСКИЕ ХАРАКТЕРИСТИКИ «ПОЛЕ-31»",
+      "Каждая цифра подтверждена заводскими испытаниями НПО «КИЛОВАТТ»",
+      enterP
+    );
+    drawCard(56, 248, 660, 730, { accent: COL.green, highlight: true });
+    drawCutout("domeOlive", 386, 560, 560, 440, t, 0.5, glowGreen);
+    drawBadge("ЗАВОДСКОЙ ПАСПОРТ · ГАРАНТИЯ 12 МЕС", 136, 885, COL.greenDim, COL.green, 15);
+
+    drawCard(746, 248, 1118, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["ДИАПАЗОНЫ ЧАСТОТ", "1162–1300 / 1550–1630 МГЦ", COL.green],
+      ["ПОДАВЛЯЕМЫЕ СИСТЕМЫ", "GPS · ГЛОНАСС · BEIDOU · GALILEO", COL.goldBright],
+      ["ДАЛЬНОСТЬ ПОДАВЛЕНИЯ", "НЕ МЕНЕЕ 2000 М (ЗОНА ДО 3 КМ)", COL.green],
+      ["СУММАРНАЯ МОЩНОСТЬ РЧ", "ДО 240 ВТ (ПОТРЕБЛ. ≤ 600 ВТ)", COL.goldBright],
+      ["ГАБАРИТЫ ИЗДЕЛИЯ", "900 × 300 ММ", COL.cyan],
+      ["МАССА НЕТТО / БРУТТО", "24 КГ / 29 КГ (УПАК. 950×950×400)", COL.cyan],
+      ["ВРЕМЯ НЕПРЕРЫВНОЙ РАБОТЫ", "НЕОГРАНИЧЕННО (24 / 7)", COL.green],
+      ["РАБОЧАЯ ТЕМПЕРАТУРА", "ОТ −20 °C ДО +40 °C", COL.goldBright]
+    ], 778, 286, 1054, 2);
+
+    ctx.font = `700 18px "Montserrat", sans-serif`; ctx.fillStyle = COL.muted;
+    ctx.textAlign = "left";
+    ctx.fillText("Потребляемый ток от источника питания:  24В — до 25 А  ·  12В — до 55 А  ·  сеть 220В — до 5 А", 778, 695);
+    ctx.fillStyle = COL.goldBright;
+    ctx.fillText("Контроль работы: световая индикация на корпусе и выносном пульте + проверка анализатором спектра.", 778, 740);
+  }
+
+  // 3A: Underside 12 Extruded Aluminum Heatsinks & Fiberglass Armor Dome
+  else if (id === "3A") {
+    drawHeaderTitle(
+      "ГЛАВА 03 · ИНЖЕНЕРИЯ КРУГЛОСУТОЧНОГО ДЕЖУРСТВА 24/7",
+      "МЕТАЛЛИЧЕСКОЕ ОСНОВАНИЕ + 12 СЕКЦИЙ РАДИАТОРОВ",
+      "Почему «Поле-31» держит полную мощность 240 Вт без ограничения времени непрерывной работы",
+      enterP
+    );
+    drawCard(56, 248, 860, 730, { accent: COL.cyan, highlight: true });
+    drawBadge("РЕАЛЬНЫЙ ВИД СНИЗУ · ОТВОД ТЕПЛА + 4 МАГНИТНЫЕ ОПОРЫ", 88, 276, COL.cyanDim, COL.cyan, 14);
+    drawCutout("domeBottom", 486, 615, 620, 560, t, 0.3, glowCyan);
+
+    drawCard(946, 248, 918, 730, { accent: COL.gold });
+    drawBullets([
+      "Несущая плита из металла с 12 массивными алюминиевыми радиаторами отводит до 600 Вт тепла",
+      "Время непрерывной работы по паспорту — НЕОГРАНИЧЕННО (круглосуточный режим 24/7)",
+      "При монтаже на транспорт рёбра охлаждения направляются по ходу движения для обдува потоком",
+      "Сверху — противоударный радиопрозрачный купол из армированного стеклопластика 900×300 мм",
+      "Надёжная защита электронных блоков от осколков веток, камней, осадков и перепадов −20…+40 °C"
+    ], 978, 300, 854, 22, COL.green, 22);
+  }
+
+  // 3B: Default Green + Any Custom Color on Order!
+  else if (id === "3B") {
+    drawHeaderTitle(
+      "ГЛАВА 03 · МАСКИРОВКА ПОД ЛЮБОЙ ОБЪЕКТ И ТЕАТР ДЕЙСТВИЙ",
+      "ЗЕЛЁНЫЙ ПО УМОЛЧАНИЮ — ЛЮБОЙ ЦВЕТ ПОД ЗАКАЗ",
+      "Радиопрозрачная защитная эмаль не снижает мощность излучения на 240 Вт",
+      enterP
+    );
+    const variants = [
+      { key: "domeGreen",  tag: "БАЗОВЫЙ СЕРИЙНЫЙ", title: "ЗАЩИТНЫЙ ЗЕЛЁНЫЙ", desc: "Штатный цвет по умолчанию для ББМ, грузовиков, лесополос и полевых позиций", acc: COL.green },
+      { key: "domeSand",   tag: "ПОД ЗАКАЗ",        title: "ПЕСОЧНЫЙ / ХАКИ",  desc: "Под степную местность, камуфляж техники и выжженный летний рельеф", acc: COL.goldBright },
+      { key: "domeSilver", tag: "ПОД ЗАКАЗ",        title: "СЕРЫЙ / БЕЛЫЙ / RAL", desc: "Под светлую кровлю цеха, подстанции ТЭК, гражданский транспорт или зимний снег", acc: COL.cyan }
+    ];
+    variants.forEach((v, i) => {
+      const x = 56 + i * 614, y = 252, w = 580, h = 726;
+      drawCard(x, y, w, h, { accent: v.acc, highlight: true });
+      drawBadge(v.tag, x + 28, y + 26, "rgba(255,255,255,0.06)", v.acc, 14);
+      drawCutout(v.key, x + w / 2, y + 325, 490, 360, t, i * 1.1, i === 2 ? glowCyan : glowGold);
+      ctx.font = `400 30px "RussoOne", sans-serif`; ctx.fillStyle = COL.text;
+      ctx.textAlign = "left"; ctx.fillText(v.title, x + 28, y + 545);
+      const lns = wrapLines(v.desc, w - 56, `700 20px "Montserrat", sans-serif`);
+      ctx.font = `700 20px "Montserrat", sans-serif`; ctx.fillStyle = COL.muted;
+      lns.forEach((ln, li) => ctx.fillText(ln, x + 28, y + 598 + li * 29));
+    });
+  }
+
+  // 4A: 3 Placement Modes (Auto / Armor / Tripod-Building)
+  else if (id === "4A") {
+    drawHeaderTitle(
+      "ГЛАВА 04 · УНИВЕРСАЛЬНОЕ РАЗМЕЩЕНИЕ НА ТЕХНИКЕ И ОБЪЕКТАХ",
+      "АВТОТРАНСПОРТ, БРОНЯ, КУНГ ИЛИ ВЫСОТНАЯ ТРЕНОГА",
+      "Станция работает и в движении на марше, и стационарно на господствующей высоте",
+      enterP
+    );
+    drawCard(56, 248, 820, 730, { accent: COL.green, highlight: true });
+    drawBadge("ПАСПОРТНЫЕ СХЕМЫ УСТАНОВКИ РИС. 1–3", 88, 276, COL.greenDim, COL.green, 14);
+    drawCutout("bpMounts", 466, 632, 740, 620, t, 0.2, glowGreen, 2.0);
+
+    drawCard(906, 248, 958, 730, { accent: COL.gold });
+    drawBullets([
+      "Легковой транспорт, пикапы, УАЗ, грузовые автомобили и КУНГи — магнитное или болтовое крепление",
+      "Верхняя точка ББМ, включая размещение прямо поверх защитного «мангала» или антидроновой сетки",
+      "Крыши цехов, подстанций ТЭК, элеваторов, складов и переносная стойка-тренога на возвышенности",
+      "Безопасная эксплуатация: дистанционный запуск выносной кнопкой «Пуск» (не ближе 5 м при излучении)"
+    ], 938, 300, 894, 24, COL.goldBright, 22);
+  }
+
+  // 4B: 4 Power Configurations (12V / 24V / 220V / Autonomous IP-24/100)
+  else if (id === "4B") {
+    drawHeaderTitle(
+      "ГЛАВА 04 · 4 ВАРИАНТА ПИТАНИЯ ПОД ЛЮБУЮ ЗАДАЧУ",
+      "БОРТОВАЯ СЕТЬ 12В, 24В, СТАЦИОНАР 220В ИЛИ БОКС ИП-24/100",
+      "Комплектный блок питания и силовой кабель 4 м (6 м) с клеммами под болт М8",
+      enterP
+    );
+    drawCard(56, 248, 920, 730, { accent: COL.cyan, highlight: true });
+    drawCutout("bpWiring", 516, 612, 850, 650, t, 0.0, glowCyan, 1.8);
+
+    drawCard(1006, 248, 858, 730, { accent: COL.gold });
+    drawCutout("bpPower", 1435, 455, 620, 350, t, 0.6, glowGold, 2.0);
+    drawSpecGrid([
+      ["ЛЕГКОВОЕ АВТО 12В", "ПН 12/24В (50А · ДО 55А)", COL.green],
+      ["ГРУЗОВИК / БРОНЯ 24В", "КОММУТАТОР 24В (60А · ДО 25А)", COL.goldBright],
+      ["СТАЦИОНАР 220В", "ЩИТ СЩ 220/24В (60А · ДО 5А)", COL.cyan],
+      ["ПОЛЕВОЙ АВТОНОМ", "ПЕРЕНОСНОЙ БОКС ИП-24/100", COL.goldBright]
+    ], 1038, 660, 794, 2);
+  }
+
+  // 5A: NPO KILOWATT 3-Echelon Shield (Signal-M2 + Pole-31 + Rebus-4)
+  else if (id === "5A") {
+    drawHeaderTitle(
+      "ГЛАВА 05 · ЭШЕЛОНИРОВАННЫЙ ЩИТ НПО «КИЛОВАТТ»",
+      "«СИГНАЛ-М2» + «ПОЛЕ-31» + «РЕБУС-4» В ЕДИНОМ КОНТУРЕ",
+      "Комплексная защита военной инфраструктуры, объектов ТЭК, заводов и агросектора",
+      enterP
+    );
+    const stages = [
+      { step: "РУБЕЖ 01 · ОБНАРУЖЕНИЕ", name: "«СИГНАЛ-М2»", desc: "Обновлённый обнаружитель дронов НПО «КИЛОВАТТ» засекает подлёт БПЛА и выдаёт раннюю тревогу посту безопасности.", acc: COL.cyan },
+      { step: "РУБЕЖ 02 · НАВИГАЦИЯ ≥ 2 КМ", name: "«ПОЛЕ-31» (240 ВТ)", desc: "На дистанции 2000–3000 м выжигает GPS, ГЛОНАСС, BeiDou и Galileo (1162–1300 / 1550–1630 МГц), срывая выход на цель.", acc: COL.green, hero: true },
+      { step: "РУБЕЖ 03 · БЛИЖНИЙ КОНТУР", name: "«РЕБУС-4»", desc: "Подавляет каналы радиоуправления и видеосвязи на ближних подступах к охраняемому периметру предприятия.", acc: COL.goldBright }
+    ];
+    stages.forEach((s, i) => {
+      const x = 56 + i * 614, y = 252, w = 580, h = 726;
+      drawCard(x, y, w, h, { accent: s.acc, bg: s.hero ? COL.bgCardHi : COL.bgCard, highlight: true });
+      drawBadge(s.step, x + 28, y + 28, "rgba(255,255,255,0.06)", s.acc, 14);
+      ctx.font = `400 38px "RussoOne", sans-serif`; ctx.fillStyle = s.acc;
+      ctx.textAlign = "left"; ctx.fillText(s.name, x + 28, y + 92);
+      if (s.hero) {
+        drawCutout("domeGreen", x + w / 2, y + 335, 440, 310, t, 0.3, glowGreen);
+      } else {
+        // Stylized radar / shield emblem for partner NPO Kilowatt modules
+        ctx.save();
+        ctx.strokeStyle = s.acc; ctx.lineWidth = 2.5;
+        for (let r = 45; r <= 125; r += 40) {
+          ctx.beginPath(); ctx.arc(x + w / 2, y + 325, r + ((t * 24) % 30), 0, Math.PI * 2);
+          ctx.globalAlpha = 0.35; ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+        ctx.font = `400 30px "RussoOne", sans-serif`; ctx.fillStyle = COL.text;
+        ctx.textAlign = "center"; ctx.fillText("НПО «КИЛОВАТТ»", x + w / 2, y + 330);
+        ctx.restore();
+      }
+      const lns = wrapLines(s.desc, w - 56, `700 20px "Montserrat", sans-serif`);
+      ctx.font = `700 20px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+      ctx.textAlign = "left";
+      lns.forEach((ln, li) => ctx.fillText(ln, x + 28, y + 515 + li * 30));
+    });
+  }
+
+  // 5B: Grand Finale & Direct Factory Supply via V OKOPE
+  else if (id === "5B") {
+    drawCard(56, 108, 1808, 872, { accent: COL.goldBright, bg: "rgba(11, 18, 13, 0.94)", highlight: true });
+    if (IMG.logoFull) {
+      const lw = 210, lh = (IMG.logoFull.height / IMG.logoFull.width) * lw;
+      ctx.drawImage(IMG.logoFull, 92, 134, lw, lh);
+    }
+    drawBadge("ПРЯМАЯ ЗАВОДСКАЯ ПОСТАВКА НПО «КИЛОВАТТ» · ГАРАНТИЯ 12 МЕС", 334, 146, COL.greenDim, COL.green, 15);
+    ctx.font = `400 48px "RussoOne", sans-serif`;
+    ctx.fillStyle = COL.goldBright; ctx.textAlign = "left"; ctx.textBaseline = "top";
+    ctx.fillText("СТАНЦИЯ РЭБ «ПОЛЕ-31» В МАГАЗИНЕ «В ОКОПЕ»", 334, 196);
+
+    drawBullets([
+      "Специальные условия и скидки дилерам, военнослужащим, фондам и на оптовые партии",
+      "Работаем оптом и в розницу · с НДС и без НДС · полный комплект закрывающих документов",
+      "Покраска купола в любой цвет под заказ + подбор питания 12В / 24В / 220В / ИП-24/100"
+    ], 96, 326, 1060, 14, COL.green, 22);
+
+    const chCards = [
+      ["TELEGRAM-КАНАЛ", "t.me/vokope_ru", COL.cyan],
+      ["СООБЩЕСТВО ВКОНТАКТЕ", "vk.com/vokope_rus", COL.green],
+      ["ФИРМЕННЫЙ МАГАЗИН АВИТО", "Бренд «В ОКОПЕ» — ссылка в описании", COL.goldBright]
+    ];
+    chCards.forEach((cc, i) => {
+      const cy = 548 + i * 124;
+      roundRect(96, cy, 1030, 104, 14);
+      ctx.fillStyle = "rgba(255,255,255,0.055)"; ctx.fill();
+      ctx.strokeStyle = cc[2]; ctx.lineWidth = 1.6; ctx.stroke();
+      ctx.font = `700 14px "JetBrainsMono", monospace`; ctx.fillStyle = cc[2];
+      ctx.textAlign = "left"; ctx.fillText(cc[0], 126, cy + 28);
+      ctx.font = `400 30px "RussoOne", sans-serif`; ctx.fillStyle = COL.text;
+      ctx.fillText(cc[1], 126, cy + 58);
+    });
+
+    drawCutout("domeSilver", 1500, 445, 520, 360, t, 1.1, glowCyan);
+    drawCutout("domeGreen",  1485, 735, 560, 390, t, 0.2, glowGreen);
+  }
+}
+
+window.renderAt = function(tSec) {
+  const t = clamp(Number(tSec) || 0, 0, DURATION);
+  ctx.drawImage(bgStaticCanvas, 0, 0);
+
+  let chIdx = 0;
+  for (let i = 0; i < CHAPTERS.length; i++) {
+    if (t >= CHAPTERS[i].start && (t < CHAPTERS[i].end || i === CHAPTERS.length - 1)) { chIdx = i; break; }
+  }
+  let beat = BEATS[0];
+  for (let i = 0; i < BEATS.length; i++) {
+    if (t >= BEATS[i].start && (t < BEATS[i].end || i === BEATS.length - 1)) { beat = BEATS[i]; break; }
+  }
+  const localT = t - beat.start;
+  renderBeat(beat, t, clamp(localT / 0.40, 0, 1));
+
+  if (localT < 0.20 && beat.start > 0.01) {
+    ctx.fillStyle = `rgba(86, 230, 138, ${(1 - localT / 0.20) * 0.14})`;
+    ctx.fillRect(0, 0, W, H);
+  }
+  drawTopAndBottomChrome(t, chIdx);
+};
+
+window.getFrameSignature = function() {
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < d.length; i += 64) { h ^= d[i]; h = Math.imul(h, 16777619) >>> 0; }
+  return h.toString(16);
+};
+</script>
+</body>
+</html>

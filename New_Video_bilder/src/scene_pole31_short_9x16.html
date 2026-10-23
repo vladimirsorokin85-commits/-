@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>В ОКОПЕ — Станция РЭБ «Поле-31» Shorts / Reels (1080x1920 @ 60 fps)</title>
+<style>
+  @font-face {
+    font-family: "RussoOne";
+    src: url("/fonts/RussoOne-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  @font-face {
+    font-family: "JetBrainsMono";
+    src: url("/fonts/JetBrainsMono-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: #070b08;
+  }
+  canvas#master {
+    display: block;
+    width: 1080px;
+    height: 1920px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1080" height="1920"></canvas>
+<script>
+const W = 1080, H = 1920;
+const FPS = 60;
+let DURATION = 58.0;
+const BPM_BEAT = 60.0 / 174.2;
+
+const canvas = document.getElementById("master");
+const ctx = canvas.getContext("2d", { alpha: false });
+
+const COL = {
+  bgCard: "rgba(12, 20, 15, 0.91)",
+  gold: "#e0b861",
+  goldBright: "#ffdf91",
+  amberDim: "rgba(224, 184, 97, 0.17)",
+  green: "#56e68a",
+  greenDim: "rgba(86, 230, 138, 0.17)",
+  cyan: "#5cc9ff",
+  cyanDim: "rgba(92, 201, 255, 0.16)",
+  red: "#ff5c5c",
+  text: "#f4f7f3",
+  muted: "#a9b9ad"
+};
+
+// 6 high-retention vertical beats across 58.0s (safe zone y = 135 .. 1665)
+const BEATS = [
+  { id: "S1", start: 0.000,  end: 10.600 },
+  { id: "S2", start: 10.600, end: 23.000 },
+  { id: "S3", start: 23.000, end: 34.500 },
+  { id: "S4", start: 34.500, end: 46.200 },
+  { id: "S5", start: 46.200, end: 58.000 }
+];
+
+const ASSET_PATHS = {
+  logoShield: "/assets/brand/logo_shield_sand.png",
+  logoFull:   "/assets/brand/logo_full_sand.png",
+  bgRadar:    "/assets/images/bg_radar_dusk.jpg",
+  domeGreen:  "/assets/pole_31/dome_green_rgba.png",
+  domeSand:   "/assets/pole_31/dome_sand_rgba.png",
+  domeSilver: "/assets/pole_31/dome_silver_rgba.png",
+  domeBottom: "/assets/pole_31/dome_bottom_heatsinks_rgba.png",
+  bpZone:     "/assets/pole_31/bp_dome_2000m_rgba.png",
+  bpMounts:   "/assets/pole_31/bp_mounts_3types_rgba.png"
+};
+
+const IMG = {};
+let bgStatic = null, glowGreen = null, glowGold = null, glowCyan = null;
+
+function makeGlow(rgbStr, size = 620) {
+  const c = document.createElement("canvas");
+  c.width = size; c.height = size;
+  const g = c.getContext("2d");
+  const gr = g.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  gr.addColorStop(0.0, `rgba(${rgbStr}, 0.44)`);
+  gr.addColorStop(0.5, `rgba(${rgbStr}, 0.14)`);
+  gr.addColorStop(1.0, `rgba(${rgbStr}, 0.0)`);
+  g.fillStyle = gr; g.fillRect(0, 0, size, size);
+  return c;
+}
+
+window.__READY_PROMISE = (async () => {
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+  try {
+    const r = await fetch("/src/data/pole31_timelines.json");
+    if (r.ok) {
+      const j = await r.json();
+      if (j.short_9x16 && j.short_9x16.scenes) {
+        DURATION = j.short_9x16.duration;
+        const sc = j.short_9x16.scenes;
+        // Split scene 3 cleanly into Custom Colors + Heatsink 24/7 (S3) and Mounts + Ecosystem (S4)
+        const mid3 = (sc[2].start + sc[2].end) * 0.5;
+        BEATS[0].start = sc[0].start; BEATS[0].end = sc[0].end;
+        BEATS[1].start = sc[1].start; BEATS[1].end = sc[1].end;
+        BEATS[2].start = sc[2].start; BEATS[2].end = mid3;
+        BEATS[3].start = mid3;        BEATS[3].end = sc[2].end;
+        BEATS[4].start = sc[3].start; BEATS[4].end = DURATION;
+      }
+    }
+  } catch (e) {}
+  await Promise.all(
+    Object.entries(ASSET_PATHS).map(([k, u]) => new Promise((res) => {
+      const im = new Image();
+      im.onload = () => { IMG[k] = im; res(); };
+      im.onerror = () => res();
+      im.src = u;
+    }))
+  );
+  glowGreen = makeGlow("86, 230, 138", 680);
+  glowGold  = makeGlow("224, 184, 97", 680);
+  glowCyan  = makeGlow("92, 201, 255", 640);
+
+  const c = document.createElement("canvas");
+  c.width = W; c.height = H;
+  const g = c.getContext("2d");
+  g.fillStyle = "#060a07"; g.fillRect(0, 0, W, H);
+  if (IMG.bgRadar) {
+    g.save(); g.globalAlpha = 0.24;
+    const sc = Math.max(W / IMG.bgRadar.width, H / IMG.bgRadar.height);
+    const dw = IMG.bgRadar.width * sc, dh = IMG.bgRadar.height * sc;
+    g.drawImage(IMG.bgRadar, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    g.restore();
+  }
+  const vig = g.createRadialGradient(W/2, H*0.46, 180, W/2, H/2, 1100);
+  vig.addColorStop(0, "rgba(10, 22, 15, 0.20)");
+  vig.addColorStop(1, "rgba(4, 7, 5, 0.94)");
+  g.fillStyle = vig; g.fillRect(0, 0, W, H);
+  g.strokeStyle = "rgba(120, 180, 140, 0.055)"; g.lineWidth = 1;
+  for (let x = 0; x <= W; x += 60) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  for (let y = 0; y <= H; y += 60) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+  bgStatic = c;
+  window.renderAt(0.0);
+  return true;
+})();
+
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const easeOut = (x) => 1 - Math.pow(1 - clamp(x, 0, 1), 3);
+
+function roundRect(x, y, w, h, r = 16) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function drawCard(x, y, w, h, accent = COL.green) {
+  roundRect(x, y, w, h, 20);
+  ctx.fillStyle = COL.bgCard; ctx.fill();
+  ctx.strokeStyle = accent; ctx.lineWidth = 2.2; ctx.stroke();
+}
+
+function drawCutout(key, cx, cy, maxW, maxH, t, phase = 0, glow = glowGreen) {
+  const im = IMG[key];
+  if (!im) return;
+  const fy = Math.sin(t * 2.0 + phase) * 6;
+  const sc = Math.min(maxW / im.width, maxH / im.height);
+  const dw = im.width * sc, dh = im.height * sc;
+  if (glow) {
+    const gs = Math.max(dw, dh) * 1.28;
+    ctx.drawImage(glow, cx - gs/2, cy + fy - gs/2, gs, gs);
+  }
+  ctx.drawImage(im, cx - dw/2, cy + fy - dh/2, dw, dh);
+}
+
+window.renderAt = function(tSec) {
+  const t = clamp(Number(tSec) || 0, 0, DURATION);
+  ctx.drawImage(bgStatic, 0, 0);
+
+  // Top safe header y = 118..204
+  roundRect(54, 118, W - 108, 86, 18);
+  ctx.fillStyle = "rgba(10, 17, 13, 0.92)"; ctx.fill();
+  ctx.strokeStyle = "rgba(224,184,97,0.42)"; ctx.lineWidth = 1.6; ctx.stroke();
+  if (IMG.logoShield) ctx.drawImage(IMG.logoShield, 76, 128, 60, 66);
+  ctx.font = `400 30px "RussoOne", sans-serif`;
+  ctx.fillStyle = COL.goldBright; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+  ctx.fillText("В ОКОПЕ", 154, 150);
+  ctx.font = `700 15px "JetBrainsMono", monospace`;
+  ctx.fillStyle = COL.green;
+  ctx.fillText("НПО «КИЛОВАТТ» · СТАНЦИЯ РЭБ «ПОЛЕ-31»", 154, 179);
+
+  let beat = BEATS[0];
+  for (let i = 0; i < BEATS.length; i++) {
+    if (t >= BEATS[i].start && (t < BEATS[i].end || i === BEATS.length - 1)) { beat = BEATS[i]; break; }
+  }
+  const ep = easeOut((t - beat.start) / 0.35);
+  const dy = (1 - ep) * 24;
+
+  // S1: Hook — Green Dome + 2000m Satellite Blackout
+  if (beat.id === "S1") {
+    ctx.font = `400 58px "RussoOne", sans-serif`;
+    ctx.fillStyle = COL.text; ctx.textAlign = "center"; ctx.textBaseline = "top";
+    ctx.fillText("ДРОНЫ ТЕРЯЮТ", W/2, 244 + dy);
+    ctx.fillStyle = COL.green;
+    ctx.fillText("СВЯЗЬ СО СПУТНИКАМИ", W/2, 314 + dy);
+
+    for (let k = 0; k < 4; k++) {
+      const p = ((t * 0.72 + k * 0.25) % 1.0);
+      ctx.beginPath();
+      ctx.arc(W/2, 830, 130 + p * 330, Math.PI, Math.PI * 2);
+      ctx.strokeStyle = `rgba(86, 230, 138, ${0.65 * (1 - p)})`;
+      ctx.lineWidth = 4; ctx.stroke();
+    }
+    drawCutout("domeGreen", W/2, 815, 860, 600, t, 0.2, glowGreen);
+
+    drawCard(54, 1175, W - 108, 430, COL.goldBright);
+    ctx.font = `400 50px "RussoOne", sans-serif`;
+    ctx.fillStyle = COL.goldBright; ctx.textAlign = "center";
+    ctx.fillText("«ПОЛЕ-31» · НПО «КИЛОВАТТ»", W/2, 1218);
+    ctx.font = `700 26px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+    ctx.fillText("Новое оружие против дальнобойных БПЛА", W/2, 1300);
+    ctx.fillText("самолётного типа со спутниковой навигацией", W/2, 1340);
+    roundRect(104, 1418, W - 208, 132, 16);
+    ctx.fillStyle = COL.greenDim; ctx.fill(); ctx.strokeStyle = COL.green; ctx.stroke();
+    ctx.font = `400 44px "RussoOne", sans-serif`; ctx.fillStyle = COL.green;
+    ctx.fillText("КУПОЛ ≥ 2000 М · ДО 240 ВТ", W/2, 1458);
+  }
+
+  // S2: Dual GNSS Bands + All 4 Constellations
+  else if (beat.id === "S2") {
+    ctx.font = `400 54px "RussoOne", sans-serif`;
+    ctx.fillStyle = COL.goldBright; ctx.textAlign = "center"; ctx.textBaseline = "top";
+    ctx.fillText("ДВА ЭШЕЛОНА · 240 ВТ", W/2, 242 + dy);
+    ctx.font = `700 24px "Montserrat", sans-serif`; ctx.fillStyle = COL.muted;
+    ctx.fillText("Выжигает абсолютно все литеры 4 систем навигации", W/2, 314 + dy);
+
+    drawCard(54, 382, W - 108, 390, COL.cyan);
+    drawCutout("bpZone", W/2, 575, 900, 340, t, 0.0, glowCyan);
+
+    const rows = [
+      ["НИЖНИЙ ДИАПАЗОН GNSS", "1162 – 1300 МГЦ", COL.cyan],
+      ["ВЕРХНИЙ ДИАПАЗОН GNSS", "1550 – 1630 МГЦ", COL.green],
+      ["ПОДАВЛЯЕМЫЕ СИСТЕМЫ", "GPS · ГЛОНАСС · BEIDOU · GALILEO", COL.goldBright],
+      ["ДАЛЬНОСТЬ ПОДАВЛЕНИЯ", "НЕ МЕНЕЕ 2000 М (ЗОНА ДО 3 КМ)", COL.green]
+    ];
+    rows.forEach((r, i) => {
+      const y = 805 + i * 198;
+      drawCard(54, y, W - 108, 174, r[2]);
+      ctx.font = `700 18px "JetBrainsMono", monospace`; ctx.fillStyle = COL.muted;
+      ctx.textAlign = "left"; ctx.fillText(r[0], 96, y + 32);
+      ctx.font = `400 40px "RussoOne", sans-serif`; ctx.fillStyle = r[2];
+      ctx.fillText(r[1], 96, y + 84);
+    });
+  }
+
+  // S3: Fiberglass Armor 900x300, 12 Heatsinks 24/7 & Any Custom Color
+  else if (beat.id === "S3") {
+    ctx.font = `400 52px "RussoOne", sans-serif`;
+    ctx.fillStyle = COL.text; ctx.textAlign = "center"; ctx.textBaseline = "top";
+    ctx.fillText("БРОНЕКУПОЛ 900×300 ММ", W/2, 240 + dy);
+    ctx.fillStyle = COL.green;
+    ctx.fillText("РАБОТАЕТ 24/7 БЕЗ ПЕРЕГРЕВА", W/2, 306 + dy);
+
+    drawCard(54, 392, 470, 520, COL.cyan);
+    drawCutout("domeBottom", 289, 635, 410, 410, t, 0.3, glowCyan);
+    ctx.font = `700 16px "JetBrainsMono", monospace`; ctx.fillStyle = COL.cyan;
+    ctx.textAlign = "center"; ctx.fillText("12 РАДИАТОРОВ · −20…+40°C", 289, 868);
+
+    drawCard(556, 392, 470, 520, COL.goldBright);
+    drawCutout("domeGreen", 791, 635, 420, 360, t, 1.1, glowGreen);
+    ctx.font = `700 16px "JetBrainsMono", monospace`; ctx.fillStyle = COL.goldBright;
+    ctx.fillText("АРМИРОВАННЫЙ СТЕКЛОПЛАСТИК", 791, 868);
+
+    drawCard(54, 945, W - 108, 660, COL.green);
+    ctx.font = `400 36px "RussoOne", sans-serif`; ctx.fillStyle = COL.goldBright;
+    ctx.fillText("ЗЕЛЁНЫЙ В БАЗЕ · ЛЮБОЙ ЦВЕТ ПОД ЗАКАЗ", W/2, 985);
+    drawCutout("domeGreen",  240, 1245, 300, 240, t, 0.2, null);
+    drawCutout("domeSand",   540, 1245, 300, 240, t, 0.9, null);
+    drawCutout("domeSilver", 840, 1245, 300, 240, t, 1.6, null);
+    ctx.font = `700 24px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+    ctx.fillText("Масса нетто 24 кг · Радиопрозрачная эмаль под любой объект", W/2, 1465);
+    ctx.fillStyle = COL.green;
+    ctx.fillText("Зелёный · Песочный · Серый под кровлю · Зимний белый", W/2, 1515);
+  }
+
+  // S4: Mounts (Auto/Armor/Tripod), Power 12/24/220V & Rebus-4 + Signal-M2
+  else if (beat.id === "S4") {
+    ctx.font = `400 50px "RussoOne", sans-serif`;
+    ctx.fillStyle = COL.goldBright; ctx.textAlign = "center"; ctx.textBaseline = "top";
+    ctx.fillText("НА БРОНЮ, АВТО И ТРЕНОГУ", W/2, 240 + dy);
+    ctx.font = `700 24px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+    ctx.fillText("Военная инфраструктура · ТЭК · Промпредприятия · Агросектор", W/2, 310 + dy);
+
+    drawCard(54, 378, W - 108, 680, COL.green);
+    drawCutout("bpMounts", W/2, 718, 860, 610, t, 0.0, glowGreen);
+
+    drawCard(54, 1090, W - 108, 515, COL.goldBright);
+    ctx.font = `400 34px "RussoOne", sans-serif`; ctx.fillStyle = COL.cyan;
+    ctx.fillText("ПИТАНИЕ: 12В · 24В · СЕТЬ 220В · ИП-24/100", W/2, 1135);
+    ctx.font = `700 25px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+    ctx.fillText("Выносная кнопка «Пуск» прямо в кабину или пост охраны", W/2, 1210);
+    roundRect(92, 1290, W - 184, 265, 16);
+    ctx.fillStyle = COL.amberDim; ctx.fill(); ctx.strokeStyle = COL.goldBright; ctx.stroke();
+    ctx.font = `700 18px "JetBrainsMono", monospace`; ctx.fillStyle = COL.goldBright;
+    ctx.fillText("ЕДИНЫЙ КОНТУР НПО «КИЛОВАТТ»", W/2, 1326);
+    ctx.font = `400 38px "RussoOne", sans-serif`; ctx.fillStyle = COL.green;
+    ctx.fillText("«СИГНАЛ-М2» + «ПОЛЕ-31» + «РЕБУС-4»", W/2, 1384);
+    ctx.font = `700 22px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+    ctx.fillText("Обнаружение подлёта + срыв спутников + подавление управления", W/2, 1465);
+  }
+
+  // S5: CTA — Direct Factory Supply via V OKOPE
+  else {
+    drawCard(54, 238, W - 108, 1370, COL.goldBright);
+    if (IMG.logoFull) {
+      const lw = 230, lh = (IMG.logoFull.height / IMG.logoFull.width) * lw;
+      ctx.drawImage(IMG.logoFull, W/2 - lw/2, 268, lw, lh);
+    }
+    drawCutout("domeGreen", W/2, 690, 620, 410, t, 0.3, glowGreen);
+    ctx.font = `400 44px "RussoOne", sans-serif`; ctx.fillStyle = COL.goldBright;
+    ctx.textAlign = "center"; ctx.fillText("ПРЯМАЯ ЗАВОДСКАЯ ПОСТАВКА", W/2, 930);
+
+    const perks = [
+      "✓ Скидки военным, фондам, дилерам и на опт",
+      "✓ Оптом и в розницу · с НДС и без НДС",
+      "✓ Паспорт изделия · заводская гарантия 12 мес"
+    ];
+    ctx.font = `700 27px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+    perks.forEach((p, idx) => ctx.fillText(p, W/2, 1012 + idx * 52));
+
+    const links = [
+      ["TELEGRAM", "t.me/vokope_ru", COL.cyan],
+      ["ВКОНТАКТЕ", "vk.com/vokope_rus", COL.green],
+      ["МАГАЗИН АВИТО", "Бренд «В ОКОПЕ» — в описании", COL.goldBright]
+    ];
+    links.forEach((l, i) => {
+      const y = 1196 + i * 124;
+      roundRect(96, y, W - 192, 104, 16);
+      ctx.fillStyle = "rgba(255,255,255,0.06)"; ctx.fill();
+      ctx.strokeStyle = l[2]; ctx.lineWidth = 2; ctx.stroke();
+      ctx.font = `700 15px "JetBrainsMono", monospace`; ctx.fillStyle = l[2];
+      ctx.textAlign = "left"; ctx.fillText(l[0], 130, y + 28);
+      ctx.font = `400 32px "RussoOne", sans-serif`; ctx.fillStyle = COL.text;
+      ctx.fillText(l[1], 130, y + 58);
+    });
+  }
+
+  // Bottom live RF progress bar inside safe zone y = 1630..1690
+  const kick = Math.pow(Math.max(0, Math.sin(t * Math.PI / BPM_BEAT)), 4);
+  roundRect(54, 1630, W - 108, 54, 14);
+  ctx.fillStyle = "rgba(10,16,12,0.92)"; ctx.fill();
+  ctx.strokeStyle = "rgba(86,230,138,0.4)"; ctx.stroke();
+  roundRect(62, 1638, (W - 124) * clamp(t / DURATION, 0, 1), 38, 10);
+  ctx.fillStyle = `rgba(86, 230, 138, ${0.22 + kick * 0.14})`; ctx.fill();
+  ctx.font = `700 18px "JetBrainsMono", monospace`; ctx.fillStyle = COL.goldBright;
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillText("ПОЛЕ-31  │  1162–1300 / 1550–1630 МГц  │  ДО 240 ВТ  │  ≥ 2000 М", W/2, 1657);
+};
+
+window.getFrameSignature = function() {
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < d.length; i += 64) { h ^= d[i]; h = Math.imul(h, 16777619) >>> 0; }
+  return h.toString(16);
+};
+</script>
+</body>
+</html>
