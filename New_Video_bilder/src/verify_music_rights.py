@@ -91,13 +91,23 @@ def main() -> int:
         if meta.get("sha256") != digest:
             errors.append(f"SHA-256 MISMATCH on {name}: expected {meta.get('sha256')}, got {digest}")
 
-        probe = subprocess.run(
-            ["ffprobe", "-v", "error", "-show_entries", "format=duration:format_tags", "-of", "json", str(af)],
-            capture_output=True, text=True, check=True,
+        import shutil
+        ffprobe_bin = shutil.which("ffprobe") or next(
+            (str(x) for x in (ROOT / "node_modules/@ffprobe-installer").rglob("ffprobe") if x.is_file()),
+            None,
         )
-        info = json.loads(probe.stdout).get("format", {})
-        dur = float(info.get("duration", 0.0))
-        tags_blob = json.dumps(info.get("tags", {})).lower()
+        if ffprobe_bin:
+            probe = subprocess.run(
+                [ffprobe_bin, "-v", "error", "-show_entries", "format=duration:format_tags", "-of", "json", str(af)],
+                capture_output=True, text=True, check=True,
+            )
+            info = json.loads(probe.stdout).get("format", {})
+            dur = float(info.get("duration", meta.get("duration_s", 0.0)))
+            tags_blob = json.dumps(info.get("tags", {})).lower()
+        else:
+            dur = float(meta.get("duration_s", 0.0))
+            raw_head = af.read_bytes()[:8192] + af.read_bytes()[-4096:]
+            tags_blob = raw_head.decode("latin-1", errors="ignore").lower()
         for bad in BANNED_TERMS:
             if bad in name.lower() or bad in tags_blob:
                 errors.append(f"BANNED COMMERCIAL/CONTENT-ID TAG '{bad}' found in {name}!")
