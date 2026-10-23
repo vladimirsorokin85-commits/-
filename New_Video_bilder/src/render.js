@@ -87,7 +87,7 @@ function startStaticServer(sceneFile = 'scene.html') {
 async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, audioOffsetSec, outMp4, maxrateKbps = null }) {
   ensureRuntimeLibs();
   const execPath = await getChromiumPath();
-  const numWorkers = Math.max(2, Math.min(8, os.cpus().length));
+  const numWorkers = Math.max(2, Math.min(12, os.cpus().length));
 
   const browser = await puppeteer.launch({
     args: [
@@ -98,7 +98,7 @@ async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, au
       '--hide-scrollbars',
       '--font-render-hinting=none',
     ],
-    defaultViewport: { width: 1080, height: 1920, deviceScaleFactor: 1 },
+    defaultViewport: { width: 1920, height: 1920, deviceScaleFactor: 1 },
     executablePath: execPath,
     headless: true,
   });
@@ -109,27 +109,34 @@ async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, au
       p.on('pageerror', (err) => console.error('[PAGE EXC]', err));
       await p.goto(browserUrl, { waitUntil: 'networkidle0' });
       await p.evaluate(() => window.__READY_PROMISE);
+      const dims = await p.evaluate(() => {
+        const c = document.getElementById('master');
+        return { w: c.width, h: c.height };
+      });
+      await p.setViewport({ width: dims.w, height: dims.h, deviceScaleFactor: 1 });
       return p;
     })
   );
 
   // Strict Cold-Seek vs Forward-Play vs Backward-Rewind Bit-Exact Determinism Gate
   const seekCheck = await pages[0].evaluate(() => {
-    const c2d = document.getElementById('master').getContext('2d');
+    const c = document.getElementById('master');
+    const c2d = c.getContext('2d');
+    const cw = c.width, ch = c.height;
     window.renderAt(16.25);
     const coldHash = window.getFrameSignature();
-    const coldBuf = new Uint8Array(c2d.getImageData(0, 0, 1080, 1920).data);
+    const coldBuf = new Uint8Array(c2d.getImageData(0, 0, cw, ch).data);
 
     window.renderAt(2.10);
     window.renderAt(9.45);
     window.renderAt(16.25);
     const forwardHash = window.getFrameSignature();
-    const fwdBuf = new Uint8Array(c2d.getImageData(0, 0, 1080, 1920).data);
+    const fwdBuf = new Uint8Array(c2d.getImageData(0, 0, cw, ch).data);
 
     window.renderAt(27.80);
     window.renderAt(16.25);
     const rewindHash = window.getFrameSignature();
-    const rewBuf = new Uint8Array(c2d.getImageData(0, 0, 1080, 1920).data);
+    const rewBuf = new Uint8Array(c2d.getImageData(0, 0, cw, ch).data);
 
     let maxColdRew = 0;
     let maxFwdRew = 0;

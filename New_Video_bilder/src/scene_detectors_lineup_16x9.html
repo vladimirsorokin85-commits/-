@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>В ОКОПЕ — Полный разбор линейки детекторов дронов и видеоперехватчиков (1920x1080 @ 60 fps)</title>
+<style>
+  @font-face {
+    font-family: "RussoOne";
+    src: url("/fonts/RussoOne-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  @font-face {
+    font-family: "JetBrainsMono";
+    src: url("/fonts/JetBrainsMono-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #070b08;
+  }
+  canvas#master {
+    display: block;
+    width: 1920px;
+    height: 1080px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1920" height="1080"></canvas>
+<script>
+const W = 1920, H = 1080;
+const FPS = 60;
+const DURATION = 374.0;
+const BPM_BEAT = 60.0 / 174.0;
+
+const canvas = document.getElementById("master");
+const ctx = canvas.getContext("2d", { alpha: false });
+
+const COL = {
+  bg: "#070b08",
+  bgCard: "rgba(12, 19, 15, 0.88)",
+  bgCardHi: "rgba(18, 30, 22, 0.93)",
+  gold: "#e0b861",
+  goldBright: "#ffdf91",
+  amberDim: "rgba(224, 184, 97, 0.16)",
+  green: "#56e68a",
+  greenDim: "rgba(86, 230, 138, 0.16)",
+  cyan: "#5cc9ff",
+  red: "#ff5c5c",
+  redDim: "rgba(255, 92, 92, 0.16)",
+  text: "#f4f7f3",
+  muted: "#a8b8ac",
+  border: "rgba(224, 184, 97, 0.34)",
+  borderSoft: "rgba(255, 255, 255, 0.10)"
+};
+
+// Exact contiguous 7-chapter broadcast timeline synced to detectors_longform_master.wav (374.00s)
+const CHAPTERS = [
+  { idx: 1, code: "00:00", start: 0.000,   end: 39.890,  short: "01 · ФИЗИКА 40 М/С",      title: "18 СЕКУНД ЖИЗНИ: ПОЧЕМУ УШИ ПРОИГРЫВАЮТ РАДИОЭФИРУ" },
+  { idx: 2, code: "00:39", start: 39.890,  end: 93.630,  short: "02 · АЛДАН-8 / 12",       title: "ЭШЕЛОН 1 · ДАЛЬНОСТЬ 5.8 КМ ПРОТИВ СПЕКТРА 100 МГЦ – 13 ГГЦ" },
+  { idx: 3, code: "01:33", start: 93.630,  end: 149.870, short: "03 · БУЛАТ · МАРС · ASEL", title: "ЭШЕЛОН 2 · ОХОТНИКИ ЗА ПРОТОКОЛАМИ И ЦИФРОЙ ELRS" },
+  { idx: 4, code: "02:29", start: 149.870, end: 205.810, short: "04 · ТЕНЬ · АМУЛЕТ · H233",title: "СПЕЦЗАДАЧИ, РЕЙДОВЫЙ КЕЙС И СЕТЕВОЙ ЩИТ ПЕРИМЕТРА" },
+  { idx: 5, code: "03:25", start: 205.810, end: 263.470, short: "05 · ДИСПЕТЧЕР 135+/835+", title: "ЭШЕЛОН 3 · ГЛАЗА ВРАЖЕСКОГО ПИЛОТА НА ТВОЁМ ЭКРАНЕ" },
+  { idx: 6, code: "04:23", start: 263.470, end: 319.830, short: "06 · ТАИР И ВЫНОСЫ",      title: "ЭШЕЛОН 4 · ВЫНОС АНТЕНН НА БРОНЮ, ТАИР И ПИТАНИЕ 12/24В" },
+  { idx: 7, code: "05:19", start: 319.830, end: 374.000, short: "07 · МАТРИЦА В ОКОПЕ",    title: "ГОТОВАЯ ШПАРГАЛКА ПОД ЗАДАЧУ И ПРЯМАЯ ЗАВОДСКАЯ ПОСТАВКА" }
+];
+
+// 16 internal visual beats so the viewer gets a fresh visual composition every ~20-25 seconds!
+const BEATS = [
+  { id: "1A", ch: 0, start: 0.000,   end: 19.500 },
+  { id: "1B", ch: 0, start: 19.500,  end: 39.890 },
+  { id: "2A", ch: 1, start: 39.890,  end: 66.500 },
+  { id: "2B", ch: 1, start: 66.500,  end: 93.630 },
+  { id: "3A", ch: 2, start: 93.630,  end: 114.500 },
+  { id: "3B", ch: 2, start: 114.500, end: 132.500 },
+  { id: "3C", ch: 2, start: 132.500, end: 149.870 },
+  { id: "4A", ch: 3, start: 149.870, end: 169.000 },
+  { id: "4B", ch: 3, start: 169.000, end: 187.500 },
+  { id: "4C", ch: 3, start: 187.500, end: 205.810 },
+  { id: "5A", ch: 4, start: 205.810, end: 234.500 },
+  { id: "5B", ch: 4, start: 234.500, end: 263.470 },
+  { id: "6A", ch: 5, start: 263.470, end: 291.500 },
+  { id: "6B", ch: 5, start: 291.500, end: 319.830 },
+  { id: "7A", ch: 6, start: 319.830, end: 347.000 },
+  { id: "7B", ch: 6, start: 347.000, end: 374.000 }
+];
+
+const ASSET_PATHS = {
+  logoShield:   "/assets/brand/logo_shield_sand.png",
+  logoFull:     "/assets/brand/logo_full_sand.png",
+  bgRadar:      "/assets/images/bg_radar_dusk.jpg",
+  aldanPair:    "/assets/detectors_lineup/aldan_pair.png",
+  aldanTrio:    "/assets/detectors_lineup/aldan_trio.png",
+  aldanUnit:    "/assets/detectors_lineup/aldan_unit.png",
+  aldanWatch:   "/assets/detectors_lineup/aldan_watch.png",
+  bulatV4:      "/assets/detectors_lineup/bulat_v4.png",
+  bulatTair:    "/assets/detectors_lineup/bulat_tair_pair.png",
+  mars3mx:      "/assets/detectors_lineup/mars_3mx.png",
+  tairWatch:    "/assets/detectors_lineup/tair_watch.png",
+  tairBack:     "/assets/detectors_lineup/tair_back.png",
+  aselHand:     "/assets/detectors_lineup/asel_h231b_hand.png",
+  aselKit:      "/assets/detectors_lineup/asel_h231b_kit.png",
+  aselH233:     "/assets/detectors_lineup/asel_h233_stat.png",
+  tenV4:        "/assets/detectors_lineup/ten_v4.png",
+  amulet:       "/assets/detectors_lineup/amulet_mt6200.png",
+  disp135:      "/assets/detectors_lineup/dispetcher_135.png",
+  disp835:      "/assets/detectors_lineup/dispetcher_835.png",
+  ant3mx:       "/assets/detectors_lineup/antennas_3mx_pair.png",
+  vzor46:       "/assets/detectors_lineup/vzor46_ant.png"
+};
+
+const IMG = {};
+let bgStaticCanvas = null;
+let glowGold = null, glowGreen = null, glowRed = null;
+
+function makeGlowSprite(rgbStr, size = 512) {
+  const c = document.createElement("canvas");
+  c.width = size; c.height = size;
+  const g = c.getContext("2d");
+  const grad = g.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  grad.addColorStop(0.0, `rgba(${rgbStr}, 0.42)`);
+  grad.addColorStop(0.45, `rgba(${rgbStr}, 0.14)`);
+  grad.addColorStop(1.0, `rgba(${rgbStr}, 0.0)`);
+  g.fillStyle = grad;
+  g.fillRect(0, 0, size, size);
+  return c;
+}
+
+function buildStaticBackdrop() {
+  const c = document.createElement("canvas");
+  c.width = W; c.height = H;
+  const g = c.getContext("2d");
+  g.fillStyle = "#060a07";
+  g.fillRect(0, 0, W, H);
+  if (IMG.bgRadar) {
+    g.save();
+    g.globalAlpha = 0.20;
+    const sc = Math.max(W / IMG.bgRadar.width, H / IMG.bgRadar.height);
+    const dw = IMG.bgRadar.width * sc, dh = IMG.bgRadar.height * sc;
+    g.drawImage(IMG.bgRadar, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    g.restore();
+  }
+  const vig = g.createRadialGradient(W * 0.52, H * 0.48, 220, W * 0.5, H * 0.5, 1180);
+  vig.addColorStop(0, "rgba(10, 20, 14, 0.25)");
+  vig.addColorStop(1, "rgba(4, 7, 5, 0.92)");
+  g.fillStyle = vig;
+  g.fillRect(0, 0, W, H);
+
+  // Crisp subtle tactical telemetry grid
+  g.strokeStyle = "rgba(120, 175, 138, 0.055)";
+  g.lineWidth = 1;
+  for (let x = 0; x <= W; x += 64) {
+    g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke();
+  }
+  for (let y = 0; y <= H; y += 64) {
+    g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke();
+  }
+  return c;
+}
+
+window.__READY_PROMISE = (async () => {
+  if (document.fonts && document.fonts.ready) {
+    await document.fonts.ready;
+  }
+  await Promise.all(
+    Object.entries(ASSET_PATHS).map(([k, url]) => new Promise((resolve) => {
+      const im = new Image();
+      im.onload = () => { IMG[k] = im; resolve(); };
+      im.onerror = () => { console.warn("Missing asset:", url); resolve(); };
+      im.src = url;
+    }))
+  );
+  glowGold  = makeGlowSprite("224, 184, 97", 560);
+  glowGreen = makeGlowSprite("86, 230, 138", 560);
+  glowRed   = makeGlowSprite("255, 92, 92", 520);
+  bgStaticCanvas = buildStaticBackdrop();
+  window.renderAt(0.0);
+  return true;
+})();
+
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const easeOutCubic = (x) => { const c = clamp(x, 0, 1); return 1 - Math.pow(1 - c, 3); };
+const easeInOut = (x) => { const c = clamp(x, 0, 1); return c < 0.5 ? 4*c*c*c : 1 - Math.pow(-2*c + 2, 3)/2; };
+
+function roundRect(x, y, w, h, r = 14) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function drawCard(x, y, w, h, opts = {}) {
+  const { accent = COL.gold, bg = COL.bgCard, radius = 16, highlight = false } = opts;
+  roundRect(x, y, w, h, radius);
+  ctx.fillStyle = bg;
+  ctx.fill();
+  ctx.lineWidth = highlight ? 2.2 : 1.3;
+  ctx.strokeStyle = highlight ? accent : "rgba(224,184,97,0.28)";
+  ctx.stroke();
+
+  // Top tactical corner brackets
+  const L = 16;
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  ctx.moveTo(x + 2, y + L); ctx.lineTo(x + 2, y + 2); ctx.lineTo(x + L, y + 2);
+  ctx.moveTo(x + w - L, y + 2); ctx.lineTo(x + w - 2, y + 2); ctx.lineTo(x + w - 2, y + L);
+  ctx.stroke();
+}
+
+function drawBadge(text, x, y, bg, fg, fontSize = 15) {
+  ctx.font = `700 ${fontSize}px "JetBrainsMono", monospace`;
+  const padX = 14, h = fontSize + 14;
+  const w = Math.ceil(ctx.measureText(text).width + padX * 2);
+  roundRect(x, y, w, h, 8);
+  ctx.fillStyle = bg;
+  ctx.fill();
+  ctx.strokeStyle = fg;
+  ctx.lineWidth = 1.1;
+  ctx.stroke();
+  ctx.fillStyle = fg;
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "left";
+  ctx.fillText(text, x + padX, y + h / 2 + 1);
+  return w;
+}
+
+function drawCutout(key, cx, cy, maxW, maxH, t, phase = 0, glow = glowGold, scaleMul = 1.0) {
+  const im = IMG[key];
+  if (!im) return;
+  const floatY = Math.sin(t * 1.65 + phase) * 5.5;
+  const pulse = 1.0 + 0.012 * Math.sin(t * 3.1 + phase);
+  const sc = Math.min(maxW / im.width, maxH / im.height) * scaleMul * pulse;
+  const dw = im.width * sc, dh = im.height * sc;
+  if (glow) {
+    const gs = Math.max(dw, dh) * 1.25;
+    ctx.drawImage(glow, cx - gs / 2, cy + floatY - gs / 2, gs, gs);
+  }
+  // Ground contact shadow ellipse
+  ctx.save();
+  ctx.fillStyle = "rgba(0,0,0,0.48)";
+  ctx.beginPath();
+  ctx.ellipse(cx, cy + maxH * 0.46, Math.min(dw * 0.42, 160), 14, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.drawImage(im, cx - dw / 2, cy + floatY - dh / 2, dw, dh);
+  ctx.restore();
+}
+
+function wrapLines(text, maxWidth, font) {
+  ctx.font = font;
+  const words = text.split(" ");
+  const lines = [];
+  let line = "";
+  for (const w of words) {
+    const test = line ? line + " " + w : w;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      lines.push(line);
+      line = w;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function drawBullets(items, x, y, maxW, lineGap = 12, accent = COL.green, fontSize = 20) {
+  let cy = y;
+  const font = `700 ${fontSize}px "Montserrat", sans-serif`;
+  for (const item of items) {
+    ctx.fillStyle = accent;
+    roundRect(x, cy + 6, 9, 9, 3);
+    ctx.fill();
+    const lines = wrapLines(item, maxW - 24, font);
+    ctx.font = font;
+    ctx.fillStyle = COL.text;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    for (const ln of lines) {
+      ctx.fillText(ln, x + 22, cy);
+      cy += fontSize + 7;
+    }
+    cy += lineGap;
+  }
+  return cy;
+}
+
+function drawSpecGrid(specs, x, y, w, cols = 2) {
+  const gap = 14;
+  const cw = (w - gap * (cols - 1)) / cols;
+  const rh = 78;
+  specs.forEach((sp, i) => {
+    const r = Math.floor(i / cols), c = i % cols;
+    const bx = x + c * (cw + gap), by = y + r * (rh + gap);
+    roundRect(bx, by, cw, rh, 12);
+    ctx.fillStyle = "rgba(255,255,255,0.045)";
+    ctx.fill();
+    ctx.strokeStyle = "rgba(224,184,97,0.24)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.font = `700 13px "JetBrainsMono", monospace`;
+    ctx.fillStyle = COL.muted;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText(sp[0], bx + 16, by + 12);
+
+    ctx.font = `800 22px "RussoOne", sans-serif`;
+    ctx.fillStyle = sp[2] || COL.goldBright;
+    ctx.fillText(sp[1], bx + 16, by + 37);
+  });
+}
+
+function drawTopAndBottomChrome(t, chIdx) {
+  // Top bar y = 20..82
+  roundRect(42, 20, W - 84, 62, 14);
+  ctx.fillStyle = "rgba(10, 16, 12, 0.90)";
+  ctx.fill();
+  ctx.strokeStyle = "rgba(224, 184, 97, 0.32)";
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+
+  if (IMG.logoShield) {
+    ctx.drawImage(IMG.logoShield, 58, 25, 48, 52);
+  }
+  ctx.font = `400 22px "RussoOne", sans-serif`;
+  ctx.fillStyle = COL.goldBright;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  ctx.fillText("В ОКОПЕ", 118, 43);
+
+  ctx.font = `700 12px "JetBrainsMono", monospace`;
+  ctx.fillStyle = COL.green;
+  ctx.fillText("РАДИОРАЗВЕДКА · 19 ПОЗИЦИЙ", 118, 64);
+
+  // 7 interactive chapter pills across top bar right
+  let px = 376;
+  const availW = 1486;
+  const pillGap = 8;
+  const pillW = (availW - pillGap * (CHAPTERS.length - 1)) / CHAPTERS.length;
+  CHAPTERS.forEach((c, idx) => {
+    const active = idx === chIdx;
+    const done = idx < chIdx;
+    roundRect(px, 30, pillW, 42, 9);
+    ctx.fillStyle = active ? "rgba(224, 184, 97, 0.22)" : (done ? "rgba(86, 230, 138, 0.10)" : "rgba(255,255,255,0.035)");
+    ctx.fill();
+    ctx.strokeStyle = active ? COL.goldBright : (done ? "rgba(86,230,138,0.4)" : "rgba(255,255,255,0.09)");
+    ctx.lineWidth = active ? 1.8 : 1;
+    ctx.stroke();
+
+    if (active) {
+      const prog = clamp((t - c.start) / (c.end - c.start), 0, 1);
+      roundRect(px + 2, 66, Math.max(6, (pillW - 4) * prog), 4, 2);
+      ctx.fillStyle = COL.goldBright;
+      ctx.fill();
+    }
+
+    ctx.font = `700 12px "JetBrainsMono", monospace`;
+    ctx.fillStyle = active ? COL.goldBright : (done ? COL.green : COL.muted);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(c.short, px + pillW / 2, 49);
+    px += pillW + pillGap;
+  });
+
+  // Bottom RF spectrum strip y = 1004..1060
+  roundRect(42, 1004, W - 84, 56, 12);
+  ctx.fillStyle = "rgba(10, 16, 12, 0.90)";
+  ctx.fill();
+  ctx.strokeStyle = "rgba(224,184,97,0.26)";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Animated 56-bin live spectrum analyzer on left-center
+  const sx0 = 62, nb = 56, bw = 8, bgap = 3;
+  const beatKick = Math.pow(Math.max(0, Math.sin(t * Math.PI / BPM_BEAT)), 4);
+  for (let i = 0; i < nb; i++) {
+    const f = i / nb;
+    const wave = 0.35 + 0.35 * Math.sin(t * 4.4 + i * 0.42) + 0.30 * Math.cos(t * 7.1 - i * 0.27);
+    const spike = (Math.abs(f - ((t * 0.14) % 1.0)) < 0.06) ? 0.45 : 0.0;
+    const h = clamp((wave + spike + beatKick * 0.18) * 34, 4, 38);
+    ctx.fillStyle = h > 28 ? COL.goldBright : COL.green;
+    ctx.fillRect(sx0 + i * (bw + bgap), 1050 - h, bw, h);
+  }
+
+  ctx.font = `700 14px "JetBrainsMono", monospace`;
+  ctx.fillStyle = COL.muted;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  ctx.fillText("100 МГц ── 1.2 ГГц ── 2.4 ГГц ── 3.3 ГГц ── 5.8 ГГц ── 7.2 ГГц ── 13 ГГц  │  ПАССИВНЫЙ РЕЖИМ 0.00 Вт", 705, 1032);
+
+  // Overall master timeline progress bar
+  const totalProg = clamp(t / DURATION, 0, 1);
+  ctx.fillStyle = COL.goldBright;
+  ctx.textAlign = "right";
+  const curM = String(Math.floor(t / 60)).padStart(2, "0");
+  const curS = String(Math.floor(t % 60)).padStart(2, "0");
+  ctx.fillText(`${curM}:${curS} / 06:14`, W - 62, 1032);
+  ctx.fillStyle = "rgba(224,184,97,0.85)";
+  ctx.fillRect(56, 1057, (W - 112) * totalProg, 2.5);
+}
+
+function drawHeaderTitle(kicker, title, subtitle, enterP = 1) {
+  const dy = (1 - easeOutCubic(enterP)) * 18;
+  ctx.save();
+  ctx.globalAlpha = clamp(enterP * 1.4, 0, 1);
+  drawBadge(kicker, 56, 102 + dy, COL.amberDim, COL.goldBright, 15);
+  ctx.font = `400 44px "RussoOne", sans-serif`;
+  ctx.fillStyle = COL.text;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+  ctx.fillText(title, 56, 144 + dy);
+  if (subtitle) {
+    ctx.font = `700 20px "Montserrat", sans-serif`;
+    ctx.fillStyle = COL.muted;
+    ctx.fillText(subtitle, 56, 200 + dy);
+  }
+  ctx.restore();
+}
+
+// =========================================================================
+// 16 BESPOKE BROADCAST VISUAL SCENES (374.00s @ 60 FPS)
+// =========================================================================
+function renderBeat(beat, t, localP, enterP) {
+  const id = beat.id;
+
+  // --- BEAT 1A: 40 M/S PHYSICS HOOK ---
+  if (id === "1A") {
+    drawHeaderTitle(
+      "ГЛАВА 01 · ФИЗИКА ВЫЖИВАНИЯ НА ПОЗИЦИИ",
+      "ФПВ-ДРОН ИДЁТ 40 МЕТРОВ В СЕКУНДУ",
+      "Почему человеческий слух даёт всего 2 секунды, а пассивный радиоконтроль — до 2 минут манёвра",
+      enterP
+    );
+
+    // Left: Red Acoustic Trap Card vs Emerald RF Shield Card
+    drawCard(56, 248, 900, 345, { accent: COL.red, bg: "rgba(26, 12, 13, 0.90)", highlight: true });
+    drawBadge("БЕЗ ДЕТЕКТОРА · НА СЛУХ", 84, 272, COL.redDim, COL.red, 15);
+    ctx.font = `400 72px "RussoOne", sans-serif`;
+    ctx.fillStyle = COL.red;
+    ctx.textAlign = "left"; ctx.textBaseline = "top";
+    ctx.fillText("80 М = 2 СЕК", 84, 314);
+    ctx.font = `700 21px "Montserrat", sans-serif`;
+    ctx.fillStyle = COL.text;
+    ctx.fillText("На скорости 140 км/ч винт слышно, когда пикирование уже началось.", 84, 405);
+    // Animated red closing distance bar
+    const sweep1 = (t * 0.55) % 1.0;
+    roundRect(84, 456, 840, 26, 8);
+    ctx.fillStyle = "rgba(255,92,92,0.14)"; ctx.fill();
+    roundRect(84, 456, 840 * (1 - sweep1 * 0.88), 26, 8);
+    ctx.fillStyle = COL.red; ctx.fill();
+    ctx.font = `700 15px "JetBrainsMono", monospace`;
+    ctx.fillStyle = COL.muted;
+    ctx.fillText("ДИСТАНЦИЯ ДО ЦЕЛИ: КРИТИЧЕСКАЯ · ВРЕМЕНИ НА УКРЫТИЕ НЕТ", 84, 498);
+
+    // Lower-left: Passive RF Advantage Card
+    drawCard(56, 614, 900, 366, { accent: COL.green, bg: COL.bgCardHi, highlight: true });
+    drawBadge("ПАССИВНЫЙ ДЕТЕКТОР · 0.00 Вт В ЭФИР", 84, 638, COL.greenDim, COL.green, 15);
+    ctx.font = `400 64px "RussoOne", sans-serif`;
+    ctx.fillStyle = COL.green;
+    ctx.fillText("1500 – 5800 М = ДО 120 СЕК", 84, 680);
+    drawBullets([
+      "Полная радиотишина: приёмник ничего не излучает и не виден радиоразведке",
+      "Запас времени укрыть личный состав, остановить машину и включить купол РЭБ",
+      "Полный разбор всех 19 позиций линейки «В ОКОПЕ»: от карманных до стационарных"
+    ], 84, 768, 845, 10, COL.green, 19);
+
+    // Right Hero Pedestal: Flagship Trio Cutouts
+    drawCard(986, 248, 878, 732, { accent: COL.gold });
+    drawBadge("ФЛАГМАНСКИЙ АРСЕНАЛ В ОКОПЕ", 1016, 274, COL.amberDim, COL.goldBright, 15);
+    drawCutout("aldanPair", 1185, 585, 290, 500, t, 0.0, glowGold);
+    drawCutout("bulatTair", 1435, 595, 250, 480, t, 1.4, glowGreen);
+    drawCutout("disp835",   1680, 625, 315, 340, t, 2.6, glowGold);
+    ctx.font = `700 16px "JetBrainsMono", monospace`;
+    ctx.fillStyle = COL.goldBright;
+    ctx.textAlign = "center";
+    ctx.fillText("АЛДАН-8 / 12", 1185, 895);
+    ctx.fillText("БУЛАТ V.4 + ТАИР", 1435, 895);
+    ctx.fillText("ДИСПЕТЧЕР 835+", 1680, 895);
+    ctx.font = `700 15px "Montserrat", sans-serif`;
+    ctx.fillStyle = COL.muted;
+    ctx.fillText("Прямые заводские поставки · оптом и в розницу · с НДС и без НДС", 1425, 942);
+  }
+
+  // --- BEAT 1B: 4 ECHELONS ARCHITECTURE ---
+  else if (id === "1B") {
+    drawHeaderTitle(
+      "СИСТЕМНЫЙ ПОДХОД В ОКОПЕ",
+      "4 ЭШЕЛОНА ЗАЩИТЫ ОТ БПЛА БЕЗ СЛЕПЫХ ЗОН",
+      "Ни одна коробка не решает всё сразу — работает грамотная связка под конкретную задачу",
+      enterP
+    );
+    const cards = [
+      { n: "ЭШЕЛОН 01", title: "ШИРОКИЙ СПЕКТР", sub: "Алдан-8 и Алдан-12", desc: "Дальний дозор до 5800 м и перекрытие от 100 МГц до 13 ГГц с фильтром своих раций.", img: "aldanTrio", acc: COL.goldBright },
+      { n: "ЭШЕЛОН 02", title: "ПРОТОКОЛЫ И ELRS", sub: "Булат V.4 · Марс · ASEL · Тень · Амулет", desc: "Идентификация марки дрона, цифровых видеолинков, пультов ELRS, Crossfire и OcuSync.", img: "mars3mx", acc: COL.green },
+      { n: "ЭШЕЛОН 03", title: "ВИДЕОПЕРЕХВАТ", sub: "Диспетчер 135+ и 835+", desc: "Живая картинка с камеры вражеского FPV на встроенном мониторе до 8260 МГц.", img: "disp135", acc: COL.cyan },
+      { n: "ЭШЕЛОН 04", title: "ВЫНОС И ЗАПЯСТЬЕ", sub: "Таир · H237 · VZOR 46 · 12/24В", desc: "Антенна снаружи на броне и мачте — боец под защитой с вибросигналом на руке.", img: "tairWatch", acc: COL.gold }
+    ];
+    cards.forEach((c, i) => {
+      const x = 56 + i * 456, y = 252, w = 436, h = 726;
+      drawCard(x, y, w, h, { accent: c.acc, highlight: true });
+      drawBadge(c.n, x + 24, y + 24, "rgba(255,255,255,0.06)", c.acc, 14);
+      drawCutout(c.img, x + w / 2, y + 275, 290, 340, t, i * 1.1, i % 2 ? glowGreen : glowGold);
+      ctx.font = `400 28px "RussoOne", sans-serif`;
+      ctx.fillStyle = COL.text;
+      ctx.textAlign = "left"; ctx.textBaseline = "top";
+      ctx.fillText(c.title, x + 24, y + 480);
+      ctx.font = `700 16px "JetBrainsMono", monospace`;
+      ctx.fillStyle = c.acc;
+      ctx.fillText(c.sub, x + 24, y + 520);
+      const lns = wrapLines(c.desc, w - 48, `700 18px "Montserrat", sans-serif`);
+      ctx.font = `700 18px "Montserrat", sans-serif`;
+      ctx.fillStyle = COL.muted;
+      lns.forEach((ln, li) => ctx.fillText(ln, x + 24, y + 562 + li * 26));
+    });
+  }
+
+  // --- BEAT 2A: ALDAN-8 LONG RANGE 5800M ---
+  else if (id === "2A") {
+    drawHeaderTitle(
+      "ГЛАВА 02 · ЭШЕЛОН 1 · ДАЛЬНИЙ РУБЕЖ",
+      "ДЕТЕКТОР БПЛА «АЛДАН-8» (300 – 8000 МГЦ)",
+      "Рекордная дистанция раннего обнаружения до 5800 метров — максимум времени на манёвр",
+      enterP
+    );
+    drawCard(56, 248, 720, 730, { accent: COL.goldBright, highlight: true });
+    // Animated concentric radar range rings behind Aldan-8
+    for (let r = 1; r <= 4; r++) {
+      const rr = r * 72 + ((t * 42) % 72);
+      ctx.beginPath();
+      ctx.arc(416, 590, rr, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(86, 230, 138, ${0.28 * (1 - rr / 360)})`;
+      ctx.lineWidth = 1.6;
+      ctx.stroke();
+    }
+    drawCutout("aldanPair", 416, 585, 450, 560, t, 0.3, glowGreen);
+    drawBadge("ПОДТВЕРЖДЕНО ВУНЦ ВВС «ВВА»", 186, 912, COL.greenDim, COL.green, 15);
+
+    drawCard(806, 248, 1058, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["ДАЛЬНОСТЬ ОБНАРУЖЕНИЯ", "ДО 5800 МЕТРОВ", COL.green],
+      ["РАБОЧИЙ ДИАПАЗОН", "300 – 8000 МГЦ (360°)", COL.goldBright],
+      ["АВТОНОМНОСТЬ", "ДО 15 Ч · 2 × 5000 мА·ч", COL.cyan],
+      ["МАССА / ЗАРЯДКА", "298 Г · USB TYPE-C", COL.goldBright]
+    ], 838, 280, 994, 2);
+
+    drawBullets([
+      "Прошёл реальные испытания на ЛБС — благодарности 90-й гв. танковой дивизии и войск РЭБ МВО",
+      "Видит DJI, Autel, FPV и цифровые каналы управления и видеопередачи одновременно",
+      "Умный вырез 425–445 МГц: штатные радиостанции подразделения не вызывают ложных сработок",
+      "Звук, свет и вибросигнал · русский интерфейс · декларация ЕАЭС до 2030 года"
+    ], 838, 492, 990, 16, COL.green, 21);
+  }
+
+  // --- BEAT 2B: ALDAN-12 ULTRA-WIDE 100 MHZ - 13 GHZ + WATCH ---
+  else if (id === "2B") {
+    drawHeaderTitle(
+      "ГЛАВА 02 · ЭШЕЛОН 1 · АБСОЛЮТНЫЙ СПЕКТР",
+      "ФЛАГМАН «АЛДАН-12» (100 МГЦ – 13 ГГЦ) + ЧАСЫ",
+      "Закрывает и сверхнизкие частоты управления, и верхние видеомосты вплоть до 13 000 МГц",
+      enterP
+    );
+    drawCard(56, 248, 760, 730, { accent: COL.goldBright, highlight: true });
+    drawCutout("aldanTrio", 375, 585, 440, 560, t, 0.5, glowGold);
+    // Floating zoom callout of Aldan wrist watch
+    drawCard(545, 290, 240, 290, { accent: COL.cyan, bg: "rgba(10,20,24,0.92)", highlight: true });
+    drawCutout("aldanWatch", 665, 415, 155, 175, t, 1.8, glowGreen);
+    ctx.font = `700 13px "JetBrainsMono", monospace`;
+    ctx.fillStyle = COL.cyan;
+    ctx.textAlign = "center";
+    ctx.fillText("ЧАСЫ ОПОВЕЩЕНИЯ", 665, 535);
+    ctx.fillStyle = COL.muted;
+    ctx.fillText("ДУБЛЬ НА ЗАПЯСТЬЕ", 665, 556);
+
+    drawCard(846, 248, 1018, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["СВЕРХШИРОКИЙ СПЕКТР", "100 – 13 000 МГЦ", COL.goldBright],
+      ["НАСТРОЙКА ПОЛОС", "13 НЕЗАВИСИМЫХ ЗОН", COL.green],
+      ["МНОГОЦЕЛЕВОЙ РЕЖИМ", "ДО 9 БПЛА СРАЗУ", COL.cyan],
+      ["ПИТАНИЕ В КОМПЛЕКТЕ", "2 × 5400 мА·ч · ДО 15 Ч", COL.goldBright]
+    ], 878, 280, 954, 2);
+
+    // 13-zone animated visual bar
+    ctx.font = `700 14px "JetBrainsMono", monospace`;
+    ctx.fillStyle = COL.goldBright;
+    ctx.textAlign = "left";
+    ctx.fillText("АКТИВНОЕ СКАНИРОВАНИЕ 13 ПОДДИАПАЗОНОВ (ФИЛЬТР СВОИХ РАЦИЙ 425–445 МГЦ):", 878, 492);
+    for (let z = 0; z < 13; z++) {
+      const zx = 878 + z * 73.5;
+      const lit = Math.floor((t * 6) % 13) === z;
+      roundRect(zx, 514, 66, 42, 7);
+      ctx.fillStyle = lit ? "rgba(86,230,138,0.32)" : "rgba(224,184,97,0.12)";
+      ctx.fill();
+      ctx.strokeStyle = lit ? COL.green : COL.border;
+      ctx.stroke();
+      ctx.font = `700 13px "JetBrainsMono", monospace`;
+      ctx.fillStyle = lit ? COL.green : COL.goldBright;
+      ctx.textAlign = "center";
+      ctx.fillText(`Z${String(z+1).padStart(2,"0")}`, zx + 33, 536);
+    }
+
+    drawBullets([
+      "Масса всего 298 г при дальности до 1000 м и круговом обзоре 360°",
+      "Собственные рации в полосе 425–445 МГц полностью отфильтрованы — ноль ложных тревог",
+      "Бесшумный вибро-дубль на наручные часы оповещения для штурмовых и дозорных групп"
+    ], 878, 592, 950, 16, COL.goldBright, 20);
+  }
+
+  // --- BEAT 3A: 3MX BULAT V.4 + EXTRA MODULE ---
+  else if (id === "3A") {
+    drawHeaderTitle(
+      "ГЛАВА 03 · ЭШЕЛОН 2 · ФРОНТОВОЙ ЭТАЛОН 3MX",
+      "ДЕТЕКТОР БПЛА «БУЛАТ» V.4 В КЕЙСЕ + ДОП. МОДУЛЬ",
+      "Максимальная простота: включил одной кнопкой — сразу видишь марку дрона, частоту и время",
+      enterP
+    );
+    drawCard(56, 248, 680, 730, { accent: COL.green, highlight: true });
+    drawCutout("bulatV4", 265, 590, 250, 560, t, 0.2, glowGreen);
+    drawCutout("bulatTair", 545, 600, 250, 520, t, 1.5, glowGold);
+
+    drawCard(766, 248, 1098, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["ДИАПАЗОН / РЕЖИМ", "300 – 6200 МГЦ · 0 Вт", COL.green],
+      ["ДАЛЬНОСТЬ / ВЕС", "ДО 1.5 КМ · 285 Г", COL.goldBright],
+      ["3 АККУМУЛЯТОРА", "ДО 15 Ч · 9200 мВт·ч × 3", COL.cyan],
+      ["ДОП. ЧАСТОТНЫЙ МОДУЛЬ", "105 Г · ДО 8 Ч · СВЯЗЬ 30 М", COL.goldBright]
+    ], 798, 280, 1034, 2);
+
+    drawBullets([
+      "Не требует обучения личного состава: старт поиска сразу после удержания кнопки",
+      "Отдельный режим «Только FPV» + вывод марки БПЛА, несущей частоты и времени контакта",
+      "Карманный 105-граммовый доп. модуль расширяет спектр всех «Булатов» в радиусе 30 метров",
+      "Штатная Bluetooth-интеграция с наручными браслетами оповещения «Таир» (до 50 м)"
+    ], 798, 495, 1030, 16, COL.green, 21);
+  }
+
+  // --- BEAT 3B: 3MX MARS DIGITAL & ELRS ---
+  else if (id === "3B") {
+    drawHeaderTitle(
+      "ГЛАВА 03 · ЭШЕЛОН 2 · ОХОТА НА ЦИФРУ И ELRS",
+      "ДЕТЕКТОР «МАРС» (3MX) — ЦИФРОВЫЕ ВИДЕОЛИНКИ И ELRS",
+      "Специализированный инструмент со встроенным спектроанализатором против сложных протоколов",
+      enterP
+    );
+    drawCard(56, 248, 640, 730, { accent: COL.goldBright, highlight: true });
+    drawCutout("mars3mx", 376, 585, 340, 590, t, 0.6, glowGold);
+
+    drawCard(726, 248, 1138, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["ЦЕЛЕВЫЕ ПРОТОКОЛЫ", "ЦИФРОВОЕ ВИДЕО + ELRS", COL.goldBright],
+      ["ДАЛЬНОСТЬ ДЕТЕКЦИИ", "ДО 1500 МЕТРОВ (360°)", COL.green],
+      ["УСИЛЕННОЕ ПИТАНИЕ", "3 × 2300 мА·ч (ДО 6.5 Ч × 3)", COL.cyan],
+      ["ГАБАРИТЫ И МАССА", "120×60×34 ММ · 300 Г", COL.goldBright]
+    ], 758, 280, 1074, 2);
+
+    // Live animated spectrum wave box
+    roundRect(758, 476, 1074, 132, 12);
+    ctx.fillStyle = "rgba(8, 16, 12, 0.92)"; ctx.fill();
+    ctx.strokeStyle = COL.green; ctx.lineWidth = 1.2; ctx.stroke();
+    ctx.beginPath();
+    for (let x = 0; x <= 1034; x += 6) {
+      const u = x / 1034;
+      const pk1 = Math.exp(-Math.pow((u - 0.32) / 0.035, 2)) * (58 + 14 * Math.sin(t * 9));
+      const pk2 = Math.exp(-Math.pow((u - 0.71) / 0.05, 2)) * (68 + 12 * Math.cos(t * 7));
+      const noise = 8 * Math.sin(x * 0.19 + t * 11) + 5 * Math.cos(x * 0.07 - t * 6);
+      const y = 582 - Math.max(4, pk1 + pk2 + noise + 12);
+      if (x === 0) ctx.moveTo(778 + x, y); else ctx.lineTo(778 + x, y);
+    }
+    ctx.strokeStyle = COL.green; ctx.lineWidth = 2.6; ctx.stroke();
+    ctx.font = `700 14px "JetBrainsMono", monospace`;
+    ctx.fillStyle = COL.goldBright; ctx.textAlign = "left";
+    ctx.fillText("СПЕКТРОАНАЛИЗАТОР 3MX: ПАКЕТНЫЙ ИМПУЛЬС ELRS 915/2400 + ЦИФРОВОЙ VTX ОБНАРУЖЕН", 780, 502);
+
+    drawBullets([
+      "Встроенный спектроанализатор + обновляемая база сигнатур от инженеров 3mx",
+      "Две пружинные антенны SMA в комплекте + зарядный стакан 230В и USB/DC кабель",
+      "Один «Марс» раздаёт тревогу всем браслетам «Таир» в радиусе 50 метров"
+    ], 758, 636, 1070, 15, COL.goldBright, 20);
+  }
+
+  // --- BEAT 3C: ASEL LABS H231B & ZOV H245 ---
+  else if (id === "3C") {
+    drawHeaderTitle(
+      "ГЛАВА 03 · ЭШЕЛОН 2 · ГЛУБОКИЙ АНАЛИЗ ПАКЕТОВ",
+      "ASEL LABS H231B И ZOV H245 (300 – 7500 МГЦ)",
+      "Обнаружитель + определитель протоколов с расширенным верхним диапазоном до 7.5 ГГц",
+      enterP
+    );
+    drawCard(56, 248, 820, 730, { accent: COL.cyan, highlight: true });
+    drawCutout("aselHand", 250, 575, 290, 480, t, 0.4, glowGreen);
+    drawCutout("aselKit",  605, 600, 460, 430, t, 1.6, glowGold);
+    ctx.font = `700 15px "JetBrainsMono", monospace`;
+    ctx.fillStyle = COL.goldBright; ctx.textAlign = "center";
+    ctx.fillText("ПОЛНЫЙ БОЕВОЙ КЕЙС: 4 АНТЕННЫ · 3 АКБ · ЧЕХОЛ MOLLE", 466, 922);
+
+    drawCard(906, 248, 958, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["РАСШИРЕННЫЙ ДИАПАЗОН", "300 – 7500 МГЦ", COL.cyan],
+      ["ДИСТАНЦИЯ (4 АНТЕННЫ)", "700 – 2500 МЕТРОВ", COL.green],
+      ["H231B АККУМУЛЯТОРЫ", "3 × 4000 мА·ч + USB 3–24В", COL.goldBright],
+      ["ZOV H245 ПИТАНИЕ", "3 × LiPo 7.4В + POWERBANK", COL.goldBright]
+    ], 938, 280, 894, 2);
+
+    drawBullets([
+      "Декодирует OcuSync, Crossfire (CRSF), ELRS, SBUS, IBUS, FPort, FCC — пишет марку на экране",
+      "Добавлены участки 3000–4900 МГц и 6100–7500 МГц под нестандартные видеопередатчики",
+      "В жёстком кейсе сразу 4 сменные антенны под ближний бой, марш и дальнее наблюдение"
+    ], 938, 498, 890, 18, COL.cyan, 20);
+  }
+
+  // --- BEAT 4A: TEN V4 SPECIAL SIGNATURES ---
+  else if (id === "4A") {
+    drawHeaderTitle(
+      "ГЛАВА 04 · СПЕЦИАЛЬНЫЕ ЗАДАЧИ И НЕСТАНДАРТНЫЕ БОРТА",
+      "ДЕТЕКТОР «ТЕНЬ» V4 (250 – 7200 МГЦ)",
+      "Тяжёлые БПЛА «Марсианин» («Хорнет»), радиодатчики движения и мгновенное обучение сигнатурам",
+      enterP
+    );
+    drawCard(56, 248, 640, 730, { accent: COL.cyan, highlight: true });
+    drawCutout("tenV4", 376, 585, 380, 570, t, 0.7, glowGreen);
+
+    drawCard(726, 248, 1138, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["ПОЛОСА ПРИЁМА", "250 – 7200 МГЦ", COL.green],
+      ["ДАЛЬНОСТЬ / АНТЕНА", "1000 – 1500 М · 360°", COL.goldBright],
+      ["АВТОНОМНОСТЬ", "ДО 10 Ч · 2600 мА·ч", COL.cyan],
+      ["ИНТЕРФЕЙСЫ", "USB-C · SMA-F · JACK · UART", COL.goldBright]
+    ], 758, 280, 1074, 2);
+
+    drawBullets([
+      "Целенаправленное обнаружение тяжёлых БПЛА «Марсианин» («Хорнет») и нестандартных частот",
+      "Засекает радиодатчики движения и инженерную телеметрию на маршруте выдвижения",
+      "Обучение в один клик: можно мгновенно запомнить или игнорировать помеху прямо на позиции",
+      "Встроенный журнал событий + открытый интерфейс API USB/UART для интеграции в комплексы"
+    ], 758, 495, 1070, 16, COL.green, 21);
+  }
+
+  // --- BEAT 4B: AMULET MT-6200 MAXIMAL ---
+  else if (id === "4B") {
+    drawHeaderTitle(
+      "ГЛАВА 04 · АВТОНОМНЫЙ РЕЙДОВЫЙ КОМПЛЕКТ РФ",
+      "«АМУЛЕТ» МТ-6200 «МАКСИМАЛЬНЫЙ» (400 – 6200 МГЦ)",
+      "Скорость реакции 1–2 секунды, метровая секторальная антенна до 3000 м и 3 АКБ в ударном кейсе",
+      enterP
+    );
+    drawCard(56, 248, 660, 730, { accent: COL.goldBright, highlight: true });
+    drawCutout("amulet", 386, 585, 470, 560, t, 0.9, glowGold);
+
+    drawCard(746, 248, 1118, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["ВРЕМЯ СРАБАТЫВАНИЯ", "1 – 2 СЕКУНДЫ", COL.green],
+      ["ДАЛЬНОСТЬ С СЕКТОРНОЙ", "1000 – 3000 МЕТРОВ", COL.goldBright],
+      ["ПИТАНИЕ В КЕЙСЕ", "3 АКБ × 3800 мА·ч (ПО 10 Ч)", COL.cyan],
+      ["ЗАЩИТА И ВЕС", "IP64 · 300 Г · РОССИЯ", COL.goldBright]
+    ], 778, 280, 1054, 2);
+
+    drawBullets([
+      "Видеоподдиапазоны: 850–1700, 2400–2500, 3300–3400 и 4900–6200 МГц",
+      "В кейсе «Максимальный»: 100-см секторальная антенна, кабель выноса RG58, 3 всенаправленные антенны",
+      "Сразу 3 аккумулятора в комплекте (до 30 часов суммарного дежурства) + стакан, чехол и кейс"
+    ], 778, 498, 1050, 18, COL.goldBright, 20);
+  }
+
+  // --- BEAT 4C: STATIONARY ASEL LABS H233 ---
+  else if (id === "4C") {
+    drawHeaderTitle(
+      "ГЛАВА 04 · СЕТЕВОЙ ЩИТ ШТАБА, СКЛАДА И ПЕРИМЕТРА",
+      "СТАЦИОНАРНЫЙ ДЕТЕКТОР ASEL LABS H233 (300 – 7500 МГЦ)",
+      "Объединяет несколько постов по Ethernet на единый экран КП без интернета и сам включает РЭБ",
+      enterP
+    );
+    drawCard(56, 248, 620, 730, { accent: COL.red, highlight: true });
+    drawCutout("aselH233", 366, 585, 420, 590, t, 0.4, glowGreen);
+
+    drawCard(706, 248, 1158, 730, { accent: COL.gold });
+    // Network architecture diagram inside card
+    const nodes = [
+      { x: 748, y: 292, w: 300, h: 120, t1: "ПОСТЫ ПЕРИМЕТРА", t2: "H233 + антенна H237", acc: COL.green },
+      { x: 1128, y: 292, w: 320, h: 120, t1: "ЛОКАЛЬНАЯ СЕТЬ LAN", t2: "Web-экран КП (0% интернета)", acc: COL.cyan },
+      { x: 1528, y: 292, w: 296, h: 120, t1: "РЕЛЕ OUTPUT", t2: "Автозапуск сирены / РЭБ", acc: COL.goldBright }
+    ];
+    nodes.forEach((nd, ni) => {
+      drawCard(nd.x, nd.y, nd.w, nd.h, { accent: nd.acc, bg: "rgba(16,26,20,0.95)", highlight: true });
+      ctx.font = `700 14px "JetBrainsMono", monospace`; ctx.fillStyle = nd.acc;
+      ctx.textAlign = "left"; ctx.fillText(nd.t1, nd.x + 18, nd.y + 34);
+      ctx.font = `700 18px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+      ctx.fillText(nd.t2, nd.x + 18, nd.y + 72);
+      if (ni < 2) {
+        ctx.strokeStyle = COL.goldBright; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(nd.x + nd.w + 8, nd.y + 60); ctx.lineTo(nodes[ni+1].x - 8, nd.y + 60); ctx.stroke();
+      }
+    });
+
+    drawSpecGrid([
+      ["ДАЛЬНОСТЬ / ПОЛОСА", "ДО 2000 М · 300–7500 МГЦ", COL.green],
+      ["БОРТОВОЕ И БАЗОВОЕ ПИТАНИЕ", "10 – 80 В ИЛИ USB TYPE-C", COL.goldBright]
+    ], 748, 444, 1076, 2);
+
+    drawBullets([
+      "Один дежурный контролирует весь крупный объект с ноутбука, ПК или планшета в локальной сети",
+      "Полное логирование всех срабатываний для разбора маршрутов и времени пролёта БПЛА",
+      "Рекомендованная связка — внешняя всепогодная антенна ASEL H237 на мачте или крыше"
+    ], 748, 566, 1070, 16, COL.green, 20);
+  }
+
+  // --- BEAT 5A: DISPETCHER 135+ VIDEO INTERCEPTOR ---
+  else if (id === "5A") {
+    drawHeaderTitle(
+      "ГЛАВА 05 · ЭШЕЛОН 3 · ВИДЕОПЕРЕХВАТ НА ВСТРОЕННЫЙ МОНИТОР",
+      "ПЕРЕХВАТЧИК ВИДЕО «ДИСПЕТЧЕР 135+» (1.2 / 3.3 / 5.8 ГГЦ)",
+      "Писк детектора говорит «в небе дрон» — экран Диспетчера показывает, куда именно он пикирует",
+      enterP
+    );
+    drawCard(56, 248, 820, 730, { accent: COL.green, highlight: true });
+    drawCutout("disp135", 466, 600, 700, 590, t, 0.3, glowGreen);
+
+    drawCard(906, 248, 958, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["КАНАЛ 1 (1.2 ГГЦ)", "1080 – 2200 МГЦ", COL.green],
+      ["КАНАЛ 2 (3.3 ГГЦ)", "3000 – 4000 МГЦ", COL.cyan],
+      ["КАНАЛ 3 (5.8 ГГЦ)", "4867 – 6060 МГЦ", COL.goldBright],
+      ["АВТОНОМНОСТЬ / МАССА", "ДО 10 Ч · 790 Г", COL.goldBright]
+    ], 938, 280, 894, 2);
+
+    drawBullets([
+      "Три независимых приёмника сканируют 1.2, 3.3 и 5.8 ГГц параллельно без пропусков",
+      "Никакой пайки и сборки: накрутил комплектные антенны, нажал питание — картинка на экране",
+      "Два исполнения: с ремнями на предплечье штурмовика или с подставкой в авто / блиндаж",
+      "Двойное питание: стандартный 5В USB Type-C или силовая линия 7–36 В через разъём XT-60"
+    ], 938, 495, 890, 16, COL.green, 20);
+  }
+
+  // --- BEAT 5B: DISPETCHER 135+ VS 835+ HEAD-TO-HEAD ---
+  else if (id === "5B") {
+    drawHeaderTitle(
+      "ГЛАВА 05 · КЛЮЧЕВОЕ ОТЛИЧИЕ ДВУХ МОДЕЛЕЙ",
+      "«ДИСПЕТЧЕР 135+» ПРОТИВ «ДИСПЕТЧЕР 835+» (ДО 8260 МГЦ)",
+      "Выбирайте под радиообстановку вашего направления — или перекрывайте все 4 видеодиапазона в паре",
+      enterP
+    );
+    // Left half: 135+
+    drawCard(56, 248, 886, 730, { accent: COL.green, highlight: true });
+    drawBadge("КЛАССИКА + НИЖНИЙ 1.2 ГГЦ", 86, 274, COL.greenDim, COL.green, 15);
+    ctx.font = `400 34px "RussoOne", sans-serif`; ctx.fillStyle = COL.text;
+    ctx.textAlign = "left"; ctx.fillText("ДИСПЕТЧЕР 135+", 86, 322);
+    drawCutout("disp135", 499, 575, 510, 410, t, 0.2, glowGreen);
+    drawBullets([
+      "Диапазоны: 1.2 ГГц (1080–2200) · 3.3 ГГц (3000–4000) · 5.8 ГГц (4867–6060 МГц)",
+      "Перехватывает дальнобойные крылья и FPV на 1.2 ГГц + весь стандартный парк 3.3/5.8"
+    ], 86, 804, 826, 10, COL.green, 18);
+
+    // Right half: 835+
+    drawCard(978, 248, 886, 730, { accent: COL.goldBright, highlight: true });
+    drawBadge("ВЕРХНИЙ ЭШЕЛОН 7.2 ГГЦ (ДО 8.26 ГГЦ)", 1008, 274, COL.amberDim, COL.goldBright, 15);
+    ctx.font = `400 34px "RussoOne", sans-serif`; ctx.fillStyle = COL.goldBright;
+    ctx.textAlign = "left"; ctx.fillText("ДИСПЕТЧЕР 835+", 1008, 322);
+    drawCutout("disp835", 1421, 575, 510, 410, t, 1.4, glowGold);
+    drawBullets([
+      "Диапазоны: 3.3 ГГц (3000–4000) · 5.8 ГГц (4867–6060) · 7.2 ГГц (6060–8260 МГц)",
+      "Закрывает новейшие высокочастотные FPV-видеомосты 6–8.26 ГГц, уходящие от старого РЭБ"
+    ], 1008, 804, 826, 10, COL.goldBright, 18);
+  }
+
+  // --- BEAT 6A: TAIR WRIST MESH ALERT ---
+  else if (id === "6A") {
+    drawHeaderTitle(
+      "ГЛАВА 06 · ЭШЕЛОН 4 · БЕСШУМНОЕ ОПОВЕЩЕНИЕ НА ЗАПЯСТЬЕ",
+      "УСТРОЙСТВО «ТАИР» (3MX) — ДЕТЕКТОР НАВЕРХУ, БОЕЦ В УКРЫТИИ",
+      "28.5 грамма · защита IP67 · связь по Bluetooth до 50 м + ретрансляция по цепочке ещё на 20 м",
+      enterP
+    );
+    drawCard(56, 248, 760, 730, { accent: COL.green, highlight: true });
+    drawCutout("bulatV4",   215, 585, 220, 520, t, 0.2, glowGold);
+    drawCutout("tairWatch", 535, 520, 340, 360, t, 1.2, glowGreen);
+    drawCutout("tairBack",  535, 815, 190, 175, t, 2.2, null);
+    // Animated BLE radio wave arcs between Bulat and Tair
+    for (let k = 0; k < 3; k++) {
+      const p = ((t * 1.4 + k * 0.33) % 1.0);
+      ctx.beginPath();
+      ctx.arc(315 + p * 80, 520, 26 + p * 44, -0.65, 0.65);
+      ctx.strokeStyle = `rgba(86,230,138,${0.8 * (1 - p)})`;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+
+    drawCard(846, 248, 1018, 730, { accent: COL.gold });
+    drawSpecGrid([
+      ["СВЯЗЬ С БУЛАТ V.4 / МАРС", "BLE ДО 50 М + ЦЕПОЧКА 20 М", COL.green],
+      ["АВТОНОМНОСТЬ", "ДО 40 Ч ПОИСКА · 30 ДН ЧАСЫ", COL.goldBright],
+      ["ЗАЩИТА / РАЗЪЁМ", "IP67 · МАГНИТНАЯ ЗАРЯДКА", COL.cyan],
+      ["ВЕС НА РУКЕ", "ВСЕГО 28.5 ГРАММА", COL.goldBright]
+    ], 878, 280, 954, 2);
+
+    drawBullets([
+      "Один «Булат V.4» (прошивка 1.58+) или «Марс» раздаёт тревогу сразу нескольким «Таирам»",
+      "На дисплее часов мгновенно всплывает тип БПЛА, частота и время + тихий вибросигнал",
+      "Детектор стоит на бруствере в точке лучшего приёма, пока расчёт работает под перекрытием"
+    ], 878, 498, 950, 18, COL.green, 21);
+  }
+
+  // --- BEAT 6B: ARMOR / BUNKER REMOTE ANTENNAS & 12/24V POWER ---
+  else if (id === "6B") {
+    drawHeaderTitle(
+      "ГЛАВА 06 · ЭШЕЛОН 4 · ВЫНОС НА БРОНЮ И ПИТАНИЕ 12/24В",
+      "ПОЧЕМУ В БРОНЕМАШИНЕ НЕЛЬЗЯ ДЕРЖАТЬ АНТЕННУ ВНУТРИ КУЗОВА",
+      "Стальная броня гасит до 80% сигнала — вынеси приём на крышу магнитами и запитай стакан от бортсети",
+      enterP
+    );
+    drawCard(56, 248, 700, 730, { accent: COL.goldBright, highlight: true });
+    drawCutout("ant3mx", 250, 595, 310, 520, t, 0.4, glowGreen);
+    drawCutout("vzor46", 555, 595, 290, 500, t, 1.7, glowGold);
+    ctx.font = `700 14px "JetBrainsMono", monospace`;
+    ctx.fillStyle = COL.goldBright; ctx.textAlign = "center";
+    ctx.fillText("МАГНИТНЫЕ ВЫНОСЫ 3MX / РФ", 250, 922);
+    ctx.fillText("КУПОЛ «VZOR 46» IP65", 555, 922);
+
+    drawCard(786, 248, 1078, 730, { accent: COL.gold });
+    const rows = [
+      ["ВЫНОС 3MX ДЛЯ «БУЛАТ» V.4", "Кабель RG223 2.5 м с малыми потерями · разъёмы QuickSMA · магниты · 0% расхода АКБ"],
+      ["АНТЕННА ASEL H237 И H237 V2", "450–6200 МГц · кабель 5 м (N → SMA) · 3-точечный магнит на броню + штатив 3/8\""],
+      ["ШИРОКОПОЛОСНАЯ «VZOR 46»", "0.4–6.0 ГГц · IP65 · кабель RG-402 2.5 м · приём и передача до 50 Вт (Булат, ASEL, рации)"],
+      ["МАГНИТНЫЕ БАЗЫ РФ + ПРУЖИННАЯ", "Универсальный комплект 2 шт SMA 3 м (Булат / ASEL / Амулет) + пружинная антенна «Амулет»"],
+      ["АВТО-ЗУ 12/24В ПОД СТАКАН", "Выход 8.4В 500 мА в прикуриватель легковушек и грузовиков — ротация АКБ прямо в рейсе"]
+    ];
+    rows.forEach((rw, idx) => {
+      const ry = 274 + idx * 134;
+      roundRect(816, ry, 1018, 118, 12);
+      ctx.fillStyle = "rgba(255,255,255,0.042)"; ctx.fill();
+      ctx.strokeStyle = "rgba(224,184,97,0.25)"; ctx.lineWidth = 1; ctx.stroke();
+      ctx.font = `400 22px "RussoOne", sans-serif`; ctx.fillStyle = COL.goldBright;
+      ctx.textAlign = "left"; ctx.fillText(rw[0], 840, ry + 26);
+      ctx.font = `700 18px "Montserrat", sans-serif`; ctx.fillStyle = COL.text;
+      ctx.fillText(rw[1], 840, ry + 66);
+    });
+  }
+
+  // --- BEAT 7A: SCREENSHOT-WORTHY 4-COLUMN TACTICAL SELECTION MATRIX ---
+  else if (id === "7A") {
+    drawHeaderTitle(
+      "ГЛАВА 07 · СОХРАНИ ШПАРГАЛКУ · ГОТОВАЯ ФОРМУЛА ВЫБОРА",
+      "КАКОЙ КОМПЛЕКТ СОБРАТЬ ПОД ВАШУ ЗАДАЧУ",
+      "Проверенная конфигурация 4 эшелонов от команды «В ОКОПЕ» без лишних позиций",
+      enterP
+    );
+    const cols = [
+      {
+        tag: "ЗАДАЧА 01", name: "ШТУРМ И ПЕХОТА", acc: COL.green, img: "aldanTrio",
+        items: ["«Алдан-12» (100 МГц – 13 ГГц) или «Булат V.4»", "Наручные часы Алдан / браслеты «Таир»", "«Диспетчер 135+» на ремне предплечья"]
+      },
+      {
+        tag: "ЗАДАЧА 02", name: "ДАЛЬНИЙ ДОЗОР", acc: COL.goldBright, img: "amulet",
+        items: ["Дальнобойный «Алдан-8» (до 5800 м)", "«ТЕНЬ V4» против Хорнета и датчиков", "Кейс «Амулет МТ-6200 Макс» (антенна 1 м)"]
+      },
+      {
+        tag: "ЗАДАЧА 03", name: "БРОНЯ И КОЛОННА", acc: COL.cyan, img: "disp835",
+        items: ["«Марс» (ELRS) + ASEL H231B / ZOV H245", "Магнитный вынос на крышу (3mx / H237 / VZOR)", "«Диспетчер 835+» в кабину + ЗУ 12/24В"]
+      },
+      {
+        tag: "ЗАДАЧА 04", name: "ШТАБ И ПЕРИМЕТР", acc: COL.gold, img: "aselH233",
+        items: ["Сеть стационарных ASEL Labs H233", "Выносные мачтовые антенны H237 (5 м)", "Единый экран LAN + автозапуск РЭБ (10–80В)"]
+      }
+    ];
+    cols.forEach((c, i) => {
+      const x = 56 + i * 456, y = 250, w = 436, h = 728;
+      drawCard(x, y, w, h, { accent: c.acc, highlight: true });
+      drawBadge(c.tag, x + 22, y + 22, "rgba(255,255,255,0.06)", c.acc, 14);
+      ctx.font = `400 27px "RussoOne", sans-serif`; ctx.fillStyle = COL.text;
+      ctx.textAlign = "left"; ctx.fillText(c.name, x + 22, y + 72);
+      drawCutout(c.img, x + w / 2, y + 265, 250, 260, t, i * 0.9, i % 2 ? glowGreen : glowGold);
+      drawBullets(c.items, x + 22, y + 432, w - 44, 14, c.acc, 18);
+    });
+  }
+
+  // --- BEAT 7B: GRAND FINALE & OFFICIAL 3 CHANNELS ---
+  else if (id === "7B") {
+    drawCard(56, 108, 1808, 872, { accent: COL.goldBright, bg: "rgba(11, 18, 13, 0.93)", highlight: true });
+    if (IMG.logoFull) {
+      const lw = 210, lh = (IMG.logoFull.height / IMG.logoFull.width) * lw;
+      ctx.drawImage(IMG.logoFull, 92, 134, lw, lh);
+    }
+    drawBadge("ПРЯМАЯ ЗАВОДСКАЯ ПОСТАВКА · 100% ОРИГИНАЛ", 334, 148, COL.greenDim, COL.green, 16);
+    ctx.font = `400 50px "RussoOne", sans-serif`;
+    ctx.fillStyle = COL.goldBright;
+    ctx.textAlign = "left"; ctx.textBaseline = "top";
+    ctx.fillText("КОМПЛЕКТУЕМ ПОДРАЗДЕЛЕНИЯ И ВОЛОНТЁРОВ", 334, 198);
+
+    drawBullets([
+      "Оптом и в розницу · работаем с НДС и без НДС · полный пакет закрывающих документов",
+      "Заводская гарантия на все приборы · предзаказ партий напрямую с производств",
+      "Инженерное согласование рабочих частот под ваш сектор перед отгрузкой"
+    ], 96, 336, 1080, 14, COL.green, 22);
+
+    // 3 Official Channels ONLY
+    const chCards = [
+      ["TELEGRAM-КАНАЛ", "t.me/vokope_ru", COL.cyan],
+      ["СООБЩЕСТВО ВКОНТАКТЕ", "vk.com/vokope_rus", COL.green],
+      ["ФИРМЕННЫЙ МАГАЗИН АВИТО", "Бренд «В ОКОПЕ» — ссылка в описании", COL.goldBright]
+    ];
+    chCards.forEach((cc, i) => {
+      const cy = 548 + i * 124;
+      roundRect(96, cy, 1030, 104, 14);
+      ctx.fillStyle = "rgba(255,255,255,0.055)"; ctx.fill();
+      ctx.strokeStyle = cc[2]; ctx.lineWidth = 1.6; ctx.stroke();
+      ctx.font = `700 14px "JetBrainsMono", monospace`; ctx.fillStyle = cc[2];
+      ctx.textAlign = "left"; ctx.fillText(cc[0], 126, cy + 28);
+      ctx.font = `400 30px "RussoOne", sans-serif`; ctx.fillStyle = COL.text;
+      ctx.fillText(cc[1], 126, cy + 58);
+    });
+
+    // Right side full arsenal hero cluster
+    drawCutout("aldanTrio", 1310, 505, 290, 450, t, 0.2, glowGold);
+    drawCutout("aselH233",  1655, 420, 230, 340, t, 1.3, glowGreen);
+    drawCutout("disp835",   1500, 760, 370, 295, t, 2.4, glowGold);
+  }
+}
+
+window.renderAt = function(tSec) {
+  const t = clamp(Number(tSec) || 0, 0, DURATION);
+  ctx.drawImage(bgStaticCanvas, 0, 0);
+
+  let chIdx = 0;
+  for (let i = 0; i < CHAPTERS.length; i++) {
+    if (t >= CHAPTERS[i].start && (t < CHAPTERS[i].end || i === CHAPTERS.length - 1)) {
+      chIdx = i;
+      break;
+    }
+  }
+  let beat = BEATS[0];
+  for (let i = 0; i < BEATS.length; i++) {
+    if (t >= BEATS[i].start && (t < BEATS[i].end || i === BEATS.length - 1)) {
+      beat = BEATS[i];
+      break;
+    }
+  }
+  const beatDur = Math.max(0.001, beat.end - beat.start);
+  const localT = t - beat.start;
+  const enterP = clamp(localT / 0.42, 0, 1);
+
+  renderBeat(beat, t, localT / beatDur, enterP);
+
+  // Subtle clean flash-wipe right on beat transitions
+  if (localT < 0.22 && beat.start > 0.01) {
+    ctx.fillStyle = `rgba(224, 184, 97, ${(1 - localT / 0.22) * 0.14})`;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  drawTopAndBottomChrome(t, chIdx);
+};
+
+window.getFrameSignature = function() {
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < d.length; i += 64) {
+    h ^= d[i];
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h.toString(16);
+};
+</script>
+</body>
+</html>

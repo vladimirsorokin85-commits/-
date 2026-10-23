@@ -177,6 +177,25 @@ const COVER_SPECS = [
       { src: "/assets/aldan_12/aldan_pair_rgba.png",  x: 345,  y: 625, w: 690, h: 775, alpha: 1.00 },
     ],
   },
+  {
+    slug: "detectors_guide",
+    kicker: "ПОЛНЫЙ РАЗБОР · 19 ПОЗИЦИЙ В ОДНОМ ВИДЕО",
+    line1: "ВСЕ ДЕТЕКТОРЫ БПЛА",
+    line2: "100 МГц – 13 ГГц",
+    accent: "#56e68a",
+    glow: "rgba(86, 230, 138, 0.30)",
+    bg: "/assets/images/bg_radar_dusk.jpg",
+    chips: ["АЛДАН-8/12 · БУЛАТ · МАРС", "ДИСПЕТЧЕР 135+ / 835+", "ASEL · ТЕНЬ V4 · ТАИР"],
+    subline: "4 ЭШЕЛОНА РАДИОРАЗВЕДКИ · ПЕРЕХВАТ ВИДЕО · ОПТОМ И В РОЗНИЦУ · НДС",
+    items16: [
+      { src: "/assets/detectors_lineup/dispetcher_835.png", x: 995,  y: 500, w: 530, h: 465, alpha: 0.99 },
+      { src: "/assets/detectors_lineup/aldan_trio.png",     x: 1385, y: 46,  w: 505, h: 920, alpha: 1.00 },
+    ],
+    items9: [
+      { src: "/assets/detectors_lineup/dispetcher_835.png", x: 46,   y: 910, w: 560, h: 485, alpha: 0.99 },
+      { src: "/assets/detectors_lineup/aldan_trio.png",     x: 470,  y: 625, w: 565, h: 775, alpha: 1.00 },
+    ],
+  },
 ];
 
 function startAssetServer() {
