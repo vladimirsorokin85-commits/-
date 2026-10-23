@@ -37,6 +37,7 @@ class StudioRangeHandler(SimpleHTTPRequestHandler):
 
     def end_headers(self):
         self.send_header("Accept-Ranges", "bytes")
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Cache-Control", "no-cache")
         super().end_headers()
 
@@ -113,15 +114,18 @@ class StudioRangeHandler(SimpleHTTPRequestHandler):
 
     def copyfile(self, source, outputfile):
         remaining = getattr(self, "_range_len", None)
-        if remaining is None:
-            return super().copyfile(source, outputfile)
-        buf_size = 65536
-        while remaining > 0:
-            chunk = source.read(min(buf_size, remaining))
-            if not chunk:
-                break
-            outputfile.write(chunk)
-            remaining -= len(chunk)
+        try:
+            if remaining is None:
+                return super().copyfile(source, outputfile)
+            buf_size = 65536
+            while remaining > 0:
+                chunk = source.read(min(buf_size, remaining))
+                if not chunk:
+                    break
+                outputfile.write(chunk)
+                remaining -= len(chunk)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
 
 
 if __name__ == "__main__":
