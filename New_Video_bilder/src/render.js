@@ -87,7 +87,7 @@ function startStaticServer(sceneFile = 'scene.html') {
 async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, audioOffsetSec, outMp4, maxrateKbps = null }) {
   ensureRuntimeLibs();
   const execPath = await getChromiumPath();
-  const numWorkers = Math.max(2, Math.min(4, os.cpus().length));
+  const numWorkers = Math.max(2, Math.min(8, os.cpus().length));
 
   const browser = await puppeteer.launch({
     args: [
@@ -177,9 +177,9 @@ async function renderSegment({ browserUrl, startFrame, frameCount, audioPath, au
     '-map', '0:v:0',
     '-map', '1:a:0',
     '-c:v', 'libx264',
-    '-preset', 'medium',
+    '-preset', maxrateKbps ? 'faster' : 'medium',
     '-profile:v', 'high',
-    '-crf', maxrateKbps ? '19' : '17',
+    '-crf', maxrateKbps ? '21' : '17',
     ...(maxrateKbps ? ['-maxrate', `${maxrateKbps}k`, '-bufsize', `${maxrateKbps * 2}k`] : []),
     '-pix_fmt', 'yuv420p',
     '-r', String(FPS),

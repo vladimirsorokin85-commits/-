@@ -158,6 +158,25 @@ const COVER_SPECS = [
       { src: "/assets/tyt_mduv390/tyt_handset_upright_rgba.png", x: 520,  y: 635, w: 510, h: 765, alpha: 1.00 },
     ],
   },
+  {
+    slug: "aldan12",
+    kicker: "ДРОН-ДЕТЕКТОР БПЛА · ЧАСЫ В ПОДАРОК",
+    line1: "«АЛДАН-12»",
+    line2: "100 МГц – 13 ГГц",
+    accent: "#f6d88c",
+    glow: "rgba(246, 216, 140, 0.30)",
+    bg: "/assets/images/bg_radar_dusk.jpg",
+    chips: ["360° · ДО 1000 М · 9 БПЛА", "ФИЛЬТР РАЦИЙ 425–445 МГц", "ДО 15 Ч · 2 АКБ + ЧАСЫ"],
+    subline: "DJI · FPV · AUTEL · 298 Г · ДЕКЛАРАЦИЯ ЕАЭС ДО 2030 Г. · ОПТ И РОЗНИЦА · НДС",
+    items16: [
+      { src: "/assets/aldan_12/aldan_watch_rgba.png", x: 1030, y: 630, w: 300, h: 325, alpha: 0.99 },
+      { src: "/assets/aldan_12/aldan_pair_rgba.png",  x: 1275, y: 42,  w: 615, h: 925, alpha: 1.00 },
+    ],
+    items9: [
+      { src: "/assets/aldan_12/aldan_watch_rgba.png", x: 64,   y: 995, w: 325, h: 375, alpha: 0.99 },
+      { src: "/assets/aldan_12/aldan_pair_rgba.png",  x: 345,  y: 625, w: 690, h: 775, alpha: 1.00 },
+    ],
+  },
 ];
 
 function startAssetServer() {

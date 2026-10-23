@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>В ОКОПЕ · Дрон-детектор БПЛА «АЛДАН-12» 100 МГц – 13 ГГц + Часы в подарок (1080×1920 @ 60fps)</title>
+<style>
+  @font-face {
+    font-family: 'RussoOne';
+    src: url('/fonts/RussoOne-Regular.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'RubikDirt';
+    src: url('/fonts/RubikDirt-Regular.ttf') format('truetype');
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'Tektur';
+    src: url('/fonts/Tektur-VF.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'FiraCond';
+    src: url('/fonts/FiraSansExtraCondensed-Black.ttf') format('truetype');
+    font-weight: 900;
+  }
+  @font-face {
+    font-family: 'JetMono';
+    src: url('/fonts/JetBrainsMono-VF.ttf') format('truetype');
+    font-weight: 400 800;
+  }
+  @font-face {
+    font-family: 'RobotoBold';
+    src: url('/studio_fonts/Roboto-Bold.woff') format('woff');
+    font-weight: 700;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: #0a0e09;
+    user-select: none;
+  }
+  #master {
+    display: block;
+    width: 1080px;
+    height: 1920px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1080" height="1920"></canvas>
+
+<script type="module">
+const W = 1080;
+const H = 1920;
+const DURATION = 58.0;
+const BPM = 174.2;
+const BEAT = 60.0 / BPM;
+const PAD = 56;
+const SAFE_W = W - PAD * 2; // 968px
+
+const MIL = {
+  bg: '#090e09',
+  panel: 'rgba(14, 20, 13, 0.93)',
+  panelHi: 'rgba(21, 30, 18, 0.95)',
+  panelAmber: 'rgba(32, 24, 12, 0.94)',
+  panelEmerald: 'rgba(11, 29, 20, 0.94)',
+  sand: '#d5ae5c',
+  sandHi: '#f6d88c',
+  olive: '#849e54',
+  phosphor: '#93d85c',
+  emerald: '#4ae88a',
+  cyan: '#42dcfa',
+  amber: '#f6b347',
+  redAlert: '#f25454',
+  bone: '#f4f1e8',
+  ash: '#c8cdc2',
+  muted: '#8f9988',
+  borderSand: 'rgba(213, 174, 92, 0.56)',
+  borderEmerald: 'rgba(74, 232, 138, 0.52)',
+};
+
+// Exact sample-locked 60fps cut points from src/aldan12_sync_map.json (3,480 frames @ 60fps = 58.000s)
+const CUTS = [
+  0.000000,   // S1 [0..559]     АЛДАН-12 · 100 МГц–13 ГГц · Часы в подарок
+  9.316667,   // S2 [559..1155]  360° · До 1000 м · До 9 БПЛА · 13 настраиваемых зон
+  19.250000,  // S3 [1155..1778] DJI · FPV · AUTEL + Фильтр своих раций 425–445 МГц
+  29.633333,  // S4 [1778..2218] До 15 часов · 2 съёмных АКБ 5400 мА·ч · USB Type-C
+  36.966667,  // S5 [2218..2891] 298 г · −10…+55 °C · Звук/Свет/Вибро · Русский язык · ЕАЭС 2030
+  48.183333,  // S6 [2891..3480] Оптом и в розницу · НДС / без НДС · В ОКОПЕ (TG · VK · Авито)
+  58.000000,
+];
+
+const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const lerp = (a, b, t) => a + (b - a) * t;
+const easeOutCubic = (x) => 1 - Math.pow(1 - clamp(x, 0, 1), 3);
+const easeOutBack = (x) => {
+  const c1 = 1.48, c3 = c1 + 1;
+  const p = clamp(x, 0, 1) - 1;
+  return 1 + c3 * p * p * p + c1 * p * p;
+};
+const prog = (t, t0, dur) => clamp((t - t0) / Math.max(0.0001, dur), 0, 1);
+
+function hash2(x, y) {
+  const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123;
+  return n - Math.floor(n);
+}
+
+const canvas = document.getElementById('master');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+const ASSET_PATHS = {
+  trio: '/assets/aldan_12/aldan_trio_rgba.png',
+  unit: '/assets/aldan_12/aldan_unit_rgba.png',
+  pair: '/assets/aldan_12/aldan_pair_rgba.png',
+  watch: '/assets/aldan_12/aldan_watch_rgba.png',
+  photoPair: '/assets/aldan_12/aldan_1_pair_antennas.jpg',
+  photoTrio: '/assets/aldan_12/aldan_2_trio_watch.jpg',
+  photoWatchBox: '/assets/aldan_12/aldan_3_watch_macro.jpg',
+  photoFlatlay: '/assets/aldan_12/aldan_4_kit_flatlay.jpg',
+  logoFullSand: '/assets/brand/logo_full_sand.png',
+  logoShieldSand: '/assets/brand/logo_shield_sand.png',
+  bgRadar: '/assets/images/bg_radar_dusk.jpg',
+  bgTrench: '/assets/images/bg_trench_dugout_dusk.jpg',
+  bgArmor: '/assets/images/bg_armor_plate_camo.jpg',
+  bgCrates: '/assets/images/bg_military_crates_olive.jpg',
+};
+
+const IMG = {};
+
+async function loadAllAssets() {
+  await document.fonts.ready;
+  const warmCanvas = document.createElement('canvas');
+  warmCanvas.width = 64;
+  warmCanvas.height = 64;
+  const wctx = warmCanvas.getContext('2d');
+  for (const spec of [
+    "900 48px 'RussoOne'",
+    "400 48px 'RubikDirt'",
+    "800 40px 'Tektur'",
+    "600 32px 'Tektur'",
+    "900 52px 'FiraCond'",
+    "700 28px 'JetMono'",
+    "500 24px 'JetMono'",
+    "700 30px 'RobotoBold'",
+  ]) {
+    await document.fonts.load(spec, 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789DJIFPVAUTEL');
+    wctx.font = spec;
+    wctx.fillText('АЛДАН-12 100 МГц 13 ГГц DJI FPV AUTEL ЕАЭС 2030', 2, 32);
+  }
+  await Promise.all(
+    Object.entries(ASSET_PATHS).map(async ([k, url]) => {
+      const im = new Image();
+      im.crossOrigin = 'anonymous';
+      im.src = url;
+      await im.decode();
+      IMG[k] = im;
+    })
+  );
+}
+
+// Single pre-baked full-screen tactile matte film finish (zero per-frame multi-blit overhead & clean H.264 bitrate!)
+const GRAIN_FULL = (() => {
+  const g = document.createElement('canvas');
+  g.width = W;
+  g.height = H;
+  const gc = g.getContext('2d');
+  const tile = document.createElement('canvas');
+  tile.width = 256;
+  tile.height = 256;
+  const tc = tile.getContext('2d');
+  const id = tc.createImageData(256, 256);
+  for (let i = 0; i < 256 * 256; i++) {
+    const v = Math.floor(hash2(i % 256, (i / 256) | 0) * 255);
+    id.data[i * 4] = v;
+    id.data[i * 4 + 1] = v;
+    id.data[i * 4 + 2] = v;
+    id.data[i * 4 + 3] = 10;
+  }
+  tc.putImageData(id, 0, 0);
+  for (let x = 0; x < W; x += 256) {
+    for (let y = 0; y < H; y += 256) {
+      gc.drawImage(tile, x, y);
+    }
+  }
+  return g;
+})();
+
+function fitFont(text, maxW, weight, baseSize, family) {
+  let sz = baseSize;
+  ctx.font = `${weight} ${sz}px '${family}'`;
+  const w = ctx.measureText(text).width;
+  if (w > maxW && w > 0) {
+    sz = Math.max(13, Math.floor(sz * (maxW / w) * 0.985));
+    ctx.font = `${weight} ${sz}px '${family}'`;
+  }
+  return sz;
+}
+
+function drawFittedText(text, x, y, maxW, { weight = 800, size = 44, family = 'RussoOne', color = MIL.bone, align = 'left', baseline = 'alphabetic', shadow = true } = {}) {
+  ctx.save();
+  fitFont(text, maxW, weight, size, family);
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.textBaseline = baseline;
+  if (shadow) {
+    ctx.shadowColor = 'rgba(0,0,0,0.78)';
+    ctx.shadowBlur = 14;
+    ctx.shadowOffsetY = 3;
+  }
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+function roundRectPath(x, y, w, h, r) {
+  const rr = Math.min(r, w * 0.5, h * 0.5);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}
+
+function drawTacticalCard(x, y, w, h, { fill = MIL.panel, stroke = MIL.borderSand, r = 16, accent = MIL.sand, glow = 0 } = {}) {
+  ctx.save();
+  if (glow > 0) {
+    ctx.shadowColor = accent;
+    ctx.shadowBlur = glow;
+  }
+  roundRectPath(x, y, w, h, r);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = stroke;
+  ctx.stroke();
+
+  const L = Math.min(18, w * 0.08, h * 0.25);
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 3;
+  for (const [cx, cy, sx, sy] of [
+    [x + 1, y + 1, 1, 1],
+    [x + w - 1, y + 1, -1, 1],
+    [x + 1, y + h - 1, 1, -1],
+    [x + w - 1, y + h - 1, -1, -1],
+  ]) {
+    ctx.beginPath();
+    ctx.moveTo(cx + sx * L, cy);
+    ctx.lineTo(cx, cy);
+    ctx.lineTo(cx, cy + sy * L);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawCoverImage(im, x, y, w, h, { zoom = 1.0, panX = 0, panY = 0, alpha = 1.0, radius = 0 } = {}) {
+  const ir = im.width / im.height;
+  const br = w / h;
+  let dw, dh;
+  if (ir > br) {
+    dh = h * zoom;
+    dw = dh * ir;
+  } else {
+    dw = w * zoom;
+    dh = dw / ir;
+  }
+  const dx = x + (w - dw) * 0.5 + panX;
+  const dy = y + (h - dh) * 0.5 + panY;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  if (radius > 0) roundRectPath(x, y, w, h, radius);
+  else { ctx.beginPath(); ctx.rect(x, y, w, h); }
+  ctx.clip();
+  ctx.drawImage(im, dx, dy, dw, dh);
+  ctx.restore();
+}
+
+function drawContainImage(im, cx, cy, maxW, maxH, { scale = 1.0, alpha = 1.0, glowColor = null, glowBlur = 0, dropShadow = true } = {}) {
+  const s = Math.min(maxW / im.width, maxH / im.height) * scale;
+  const dw = im.width * s;
+  const dh = im.height * s;
+  const dx = cx - dw * 0.5;
+  const dy = cy - dh * 0.5;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  if (glowColor && glowBlur > 0) {
+    ctx.shadowColor = glowColor;
+    ctx.shadowBlur = glowBlur;
+    ctx.drawImage(im, dx, dy, dw, dh);
+  }
+  if (dropShadow) {
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.82)';
+    ctx.shadowBlur = 34;
+    ctx.shadowOffsetY = 16;
+  }
+  ctx.drawImage(im, dx, dy, dw, dh);
+  ctx.restore();
+  return { x: dx, y: dy, w: dw, h: dh };
+}
+
+function drawSceneBackdrop(bgImg, t, scIdx, { tint = 'rgba(9, 13, 8, 0.77)', goldRadial = 0.18, beatPulse = 0 } = {}) {
+  const sStart = CUTS[scIdx];
+  const sDur = CUTS[scIdx + 1] - sStart;
+  const u = clamp((t - sStart) / sDur, 0, 1);
+
+  ctx.fillStyle = MIL.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCoverImage(bgImg, 0, 0, W, H, {
+    zoom: 1.06 + u * 0.055,
+    panX: lerp(-16, 16, u) * (scIdx % 2 === 0 ? 1 : -1),
+    panY: lerp(-10, 10, u),
+    alpha: 0.44,
+  });
+
+  ctx.fillStyle = tint;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.save();
+  ctx.strokeStyle = 'rgba(213, 174, 92, 0.065)';
+  ctx.lineWidth = 1;
+  for (let gx = 60; gx < W; gx += 120) {
+    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+  }
+  for (let gy = 80; gy < H; gy += 120) {
+    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+  }
+  ctx.restore();
+
+  const rg = ctx.createRadialGradient(W * 0.52, H * 0.48, 30, W * 0.52, H * 0.48, 790);
+  rg.addColorStop(0, `rgba(246, 216, 140, ${(goldRadial + beatPulse * 0.075).toFixed(3)})`);
+  rg.addColorStop(0.55, 'rgba(38, 54, 28, 0.10)');
+  rg.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = rg;
+  ctx.fillRect(0, 0, W, H);
+
+  const vig = ctx.createRadialGradient(W * 0.5, H * 0.5, 420, W * 0.5, H * 0.5, 1140);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(4, 6, 4, 0.74)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawTopHUD(t, scIdx, sectionTag) {
+  const y = 52;
+  drawTacticalCard(PAD, y, SAFE_W, 92, {
+    fill: 'rgba(14, 20, 12, 0.93)',
+    stroke: 'rgba(213, 174, 92, 0.52)',
+    r: 14,
+    accent: MIL.sandHi,
+  });
+
+  drawContainImage(IMG.logoShieldSand, PAD + 48, y + 46, 66, 68, { dropShadow: false });
+
+  drawFittedText('В ОКОПЕ · КОНТРОЛЬ НЕБА', PAD + 94, y + 42, 470, {
+    weight: 900, size: 26, family: 'RussoOne', color: MIL.sandHi, shadow: false,
+  });
+  drawFittedText(sectionTag, PAD + 94, y + 73, 560, {
+    weight: 700, size: 19, family: 'JetMono', color: MIL.emerald, shadow: false,
+  });
+
+  const pillW = 248;
+  const px = PAD + SAFE_W - pillW - 18;
+  roundRectPath(px, y + 20, pillW, 52, 10);
+  ctx.fillStyle = 'rgba(246, 179, 71, 0.15)';
+  ctx.fill();
+  ctx.strokeStyle = MIL.sandHi;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  const blink = 0.55 + 0.45 * Math.sin(t * 7.5);
+  ctx.save();
+  ctx.globalAlpha = blink;
+  ctx.fillStyle = MIL.emerald;
+  ctx.beginPath();
+  ctx.arc(px + 24, y + 46, 6.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  drawFittedText(`SCAN 360° · 0${scIdx + 1}/06`, px + 42, y + 53, pillW - 56, {
+    weight: 800, size: 19, family: 'JetMono', color: MIL.bone, shadow: false,
+  });
+}
+
+function drawProgressBar(t) {
+  const y = 1866;
+  ctx.fillStyle = 'rgba(255,255,255,0.11)';
+  roundRectPath(PAD, y, SAFE_W, 8, 4);
+  ctx.fill();
+  const fw = Math.max(8, SAFE_W * clamp(t / DURATION, 0, 1));
+  const grd = ctx.createLinearGradient(PAD, 0, PAD + SAFE_W, 0);
+  grd.addColorStop(0, MIL.sandHi);
+  grd.addColorStop(1, MIL.emerald);
+  ctx.fillStyle = grd;
+  roundRectPath(PAD, y, fw, 8, 4);
+  ctx.fill();
+}
+
+// =========================================================================
+// SCENE 1 [0.00s .. 9.32s]: HERO HOOK — АЛДАН-12 + ЧАСЫ В ПОДАРОК!
+// =========================================================================
+function renderScene1(t, beatPulse) {
+  const lt = t - CUTS[0];
+  drawSceneBackdrop(IMG.bgRadar, t, 0, { goldRadial: 0.22, beatPulse });
+  drawTopHUD(t, 0, 'ДРОН-ДЕТЕКТОР БПЛА · 100 МГц – 13 ГГц');
+
+  const eHead = easeOutCubic(prog(lt, 0.05, 0.42));
+  ctx.save();
+  ctx.globalAlpha = eHead;
+  drawFittedText('«АЛДАН-12»', PAD, 250 - (1 - eHead) * 18, SAFE_W, {
+    weight: 900, size: 92, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('ДРОН-ДЕТЕКТОР БПЛА · 100 МГц – 13 ГГц', PAD, 332, SAFE_W, {
+    weight: 900, size: 46, family: 'FiraCond', color: MIL.sandHi,
+  });
+  ctx.restore();
+
+  // Animated 360° radar sweep behind hero trio
+  const rcx = 760, rcy = 960;
+  for (let r = 1; r <= 3; r++) {
+    ctx.save();
+    ctx.strokeStyle = `rgba(74, 232, 138, ${(0.28 - r * 0.06).toFixed(2)})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(rcx, rcy, r * 112, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+  const sweepAng = (t * 2.4) % (Math.PI * 2);
+  ctx.save();
+  ctx.strokeStyle = 'rgba(74, 232, 138, 0.65)';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(rcx, rcy);
+  ctx.lineTo(rcx + Math.cos(sweepAng) * 336, rcy + Math.sin(sweepAng) * 336);
+  ctx.stroke();
+  ctx.restore();
+
+  // Left stack of 4 power cards (including big GIFT WATCH highlight!)
+  const cards = [
+    { k: 'АКЦИЯ В «В ОКОПЕ»', v: '+ ЧАСЫ В ПОДАРОК!', s: 'Выносной браслет оповещения в комплекте', acc: MIL.amber, hi: true },
+    { k: 'ШИРОКИЙ ДИАПАЗОН', v: '100 – 13 000 МГц', s: 'Перекрывает все основные частоты БПЛА', acc: MIL.sandHi },
+    { k: 'ДИСТАНЦИЯ И ОХВАТ', v: '1000 М · 360°', s: 'До 9 дронов одновременно · 13 зон', acc: MIL.emerald },
+    { k: 'УМНЫЙ ФИЛЬТР ЭФИРА', v: '425–445 МГц', s: 'Свои рации ложную тревогу не вызывают', acc: MIL.cyan },
+  ];
+
+  cards.forEach((c, idx) => {
+    const eb = easeOutBack(prog(lt, 0.24 + idx * 0.16, 0.44));
+    const cy = 384 + idx * 246;
+    ctx.save();
+    ctx.globalAlpha = clamp(eb, 0, 1);
+    ctx.translate(-(1 - eb) * 36, 0);
+    drawTacticalCard(PAD, cy, 456, 224, {
+      fill: c.hi ? MIL.panelAmber : MIL.panelHi,
+      stroke: c.hi ? 'rgba(246, 179, 71, 0.80)' : 'rgba(213, 174, 92, 0.50)',
+      r: 16,
+      accent: c.acc,
+      glow: c.hi ? 16 + beatPulse * 14 : 0,
+    });
+    drawFittedText(c.k, PAD + 24, cy + 46, 408, {
+      weight: 800, size: 19, family: 'JetMono', color: c.acc, shadow: false,
+    });
+    drawFittedText(c.v, PAD + 24, cy + 124, 408, {
+      weight: 900, size: 52, family: 'FiraCond', color: MIL.bone, shadow: false,
+    });
+    drawFittedText(c.s, PAD + 24, cy + 180, 408, {
+      weight: 700, size: 22, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Hero full trio cutout on right (Gift Watch + 3-Antenna Aldan-12 + 2nd 5400 mAh Battery!)
+  const eHero = easeOutBack(prog(lt, 0.12, 0.56));
+  drawContainImage(IMG.trio, 780, 885 + Math.sin(t * 2.1) * 6, 495, 1020, {
+    scale: (0.90 + 0.10 * eHero) * (1 + beatPulse * 0.016),
+    alpha: clamp(eHero, 0, 1),
+    glowColor: 'rgba(246, 216, 140, 0.42)',
+    glowBlur: 32 + beatPulse * 16,
+  });
+
+  // Bottom bar
+  drawTacticalCard(PAD, 1412, SAFE_W, 412, {
+    fill: 'rgba(13, 21, 14, 0.95)',
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sandHi,
+  });
+  drawContainImage(IMG.watch, 845, 1618, 280, 320, {
+    scale: 1 + beatPulse * 0.02,
+    glowColor: 'rgba(246, 179, 71, 0.44)',
+    glowBlur: 26,
+  });
+  drawFittedText('ДЕТЕКТОР + ЧАСЫ В ПОДАРОК', PAD + 28, 1498, 620, {
+    weight: 900, size: 46, family: 'FiraCond', color: MIL.amber, shadow: false,
+  });
+  drawFittedText('ДО 15 ЧАСОВ · 2 АКБ 5400 мА·ч', PAD + 28, 1572, 620, {
+    weight: 900, size: 44, family: 'RussoOne', color: MIL.bone, shadow: false,
+  });
+  drawFittedText('ДЕКЛАРАЦИЯ ЕАЭС ДО 2030 Г. · РУССКИЙ ЯЗЫК', PAD + 28, 1644, 620, {
+    weight: 800, size: 22, family: 'JetMono', color: MIL.emerald, shadow: false,
+  });
+  drawFittedText('Видит DJI · FPV · AUTEL и цифровые каналы', PAD + 28, 1712, 620, {
+    weight: 700, size: 25, family: 'RobotoBold', color: MIL.ash, shadow: false,
+  });
+  drawFittedText('ОПТОМ И В РОЗНИЦУ · С НДС И БЕЗ НДС', PAD + 28, 1776, 620, {
+    weight: 800, size: 22, family: 'JetMono', color: MIL.sandHi, shadow: false,
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 2 [9.32s .. 19.25s]: 360° RADAR · 1000 M · 9 UAVs · 13 SUB-BANDS
+// =========================================================================
+function renderScene2(t, beatPulse) {
+  const lt = t - CUTS[1];
+  drawSceneBackdrop(IMG.bgRadar, t, 1, { goldRadial: 0.20, beatPulse });
+  drawTopHUD(t, 1, 'КРУГОВОЕ СКАНИРОВАНИЕ 360° · ДО 9 ЦЕЛЕЙ');
+
+  drawFittedText('360° И ДО 1000 МЕТРОВ', PAD, 236, SAFE_W, {
+    weight: 900, size: 68, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('ДО 9 БПЛА ОДНОВРЕМЕННО В 13 НАСТРАИВАЕМЫХ ЗОНАХ', PAD, 308, SAFE_W, {
+    weight: 900, size: 40, family: 'FiraCond', color: MIL.emerald,
+  });
+
+  // Live tactical 360° radar scope plotting 9 simultaneous UAV targets + upright Aldan-12 hero
+  drawTacticalCard(PAD, 348, 596, 616, {
+    fill: 'rgba(9, 19, 13, 0.95)',
+    stroke: MIL.borderEmerald,
+    r: 20,
+    accent: MIL.emerald,
+    glow: 14,
+  });
+
+  const cx = PAD + 298, cy = 656, R = 246;
+  for (let k = 1; k <= 4; k++) {
+    ctx.strokeStyle = `rgba(74, 232, 138, ${(0.16 + k * 0.05).toFixed(2)})`;
+    ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.arc(cx, cy, (R * k) / 4, 0, Math.PI * 2); ctx.stroke();
+  }
+  ctx.strokeStyle = 'rgba(74, 232, 138, 0.22)';
+  ctx.beginPath(); ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx, cy - R); ctx.lineTo(cx, cy + R); ctx.stroke();
+
+  const ang = (t * 2.15) % (Math.PI * 2);
+  const gradSweep = ctx.createRadialGradient(cx, cy, 8, cx, cy, R);
+  gradSweep.addColorStop(0, 'rgba(74, 232, 138, 0.32)');
+  gradSweep.addColorStop(1, 'rgba(74, 232, 138, 0.02)');
+  ctx.save();
+  ctx.fillStyle = gradSweep;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.arc(cx, cy, R, ang - 0.58, ang);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = MIL.emerald;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.lineTo(cx + Math.cos(ang) * R, cy + Math.sin(ang) * R);
+  ctx.stroke();
+  ctx.restore();
+
+  // 9 active UAV blips around 360° horizon
+  const blips = [
+    [-0.72, 0.55, 'FPV 5.8G'], [0.48, -0.62, 'DJI O3'], [0.76, 0.22, 'FPV 1.2G'],
+    [-0.35, -0.78, 'AUTEL'], [-0.82, -0.18, 'FPV 3.3G'], [0.22, 0.74, 'DJI O4'],
+    [0.64, -0.18, 'FPV 5.8G'], [-0.15, 0.42, 'MAVIC'], [0.12, -0.36, 'FPV 900M'],
+  ];
+  blips.forEach(([bx, by, lbl], idx) => {
+    const px = cx + bx * R, py = cy + by * R;
+    const pulse = 0.55 + 0.45 * Math.sin(t * 7.0 + idx * 1.1);
+    ctx.fillStyle = idx % 2 === 0 ? MIL.redAlert : MIL.amber;
+    ctx.beginPath(); ctx.arc(px, py, 6 + pulse * 3, 0, Math.PI * 2); ctx.fill();
+    drawFittedText(lbl, px + 11, py + 6, 110, {
+      weight: 800, size: 15, family: 'JetMono', color: MIL.bone, shadow: false,
+    });
+  });
+
+  drawFittedText('АКТИВНЫХ ЦЕЛЕЙ В СЕКТОРЕ: 09 / 09 · R = 1000 М', cx, 938, 540, {
+    weight: 800, size: 19, family: 'JetMono', color: MIL.emerald, align: 'center', shadow: false,
+  });
+
+  // Upright 3-antenna Aldan-12 hero cutout on right
+  drawContainImage(IMG.unit, 862, 656 + Math.sin(t * 2.0) * 5, 340, 625, {
+    scale: 1 + beatPulse * 0.016,
+    glowColor: 'rgba(246, 216, 140, 0.40)',
+    glowBlur: 28,
+  });
+
+  // 13 sub-band visual bar + 4 key metric cards below
+  drawTacticalCard(PAD, 992, SAFE_W, 250, {
+    fill: MIL.panelHi,
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sandHi,
+  });
+  drawFittedText('13 НАСТРАИВАЕМЫХ ЧАСТОТНЫХ ПОДДИАПАЗОНОВ (100 – 13 000 МГц)', PAD + 28, 1052, SAFE_W - 56, {
+    weight: 900, size: 33, family: 'FiraCond', color: MIL.sandHi, shadow: false,
+  });
+  for (let z = 0; z < 13; z++) {
+    const zx = PAD + 28 + z * 70;
+    const activeH = 62 + 38 * Math.abs(Math.sin(t * 5.2 + z * 0.75)) * (0.55 + 0.45 * beatPulse);
+    roundRectPath(zx, 1206 - activeH, 58, activeH, 8);
+    ctx.fillStyle = z % 3 === 0 ? 'rgba(246, 179, 71, 0.85)' : 'rgba(74, 232, 138, 0.78)';
+    ctx.fill();
+    drawFittedText(`Z${z + 1}`, zx + 29, 1228, 54, {
+      weight: 800, size: 16, family: 'JetMono', color: MIL.bone, align: 'center', shadow: false,
+    });
+  }
+
+  const metrics = [
+    ['ДАЛЬНОСТЬ ОБНАРУЖЕНИЯ', 'ДО 1000 МЕТРОВ', 'Заблаговременное предупреждение группы', MIL.sandHi],
+    ['ЧАСТОТНОЕ ПОКРЫТИЕ', '100 МГц – 13 ГГц', 'Аналоговые и цифровые линии управления и видео', MIL.emerald],
+    ['МНОГОЦЕЛЕВОЙ РЕЖИМ', 'ДО 9 БПЛА СРАЗУ', 'Не слепнет при налёте роя или нескольких FPV', MIL.amber],
+    ['КРУГОВАЯ ДИАГРАММА', '360° БЕЗ СЛЕПЫХ ЗОН', 'Три съёмные всенаправленные антенны в работе', MIL.cyan],
+  ];
+  metrics.forEach(([k, v, s, acc], idx) => {
+    const col = idx % 2, row = (idx / 2) | 0;
+    const sx = PAD + col * 494, sy = 1272 + row * 282;
+    drawTacticalCard(sx, sy, 474, 258, {
+      fill: MIL.panelHi, stroke: 'rgba(213, 174, 92, 0.48)', r: 16, accent: acc,
+    });
+    drawFittedText(k, sx + 24, sy + 48, 426, { weight: 800, size: 19, family: 'JetMono', color: acc, shadow: false });
+    drawFittedText(v, sx + 24, sy + 126, 426, { weight: 900, size: 50, family: 'FiraCond', color: MIL.bone, shadow: false });
+    drawFittedText(s, sx + 24, sy + 194, 426, { weight: 700, size: 22, family: 'RobotoBold', color: MIL.ash, shadow: false });
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 3 [19.25s .. 29.63s]: DJI · FPV · AUTEL + 425–445 MHz RADIO FILTER!
+// =========================================================================
+function renderScene3(t, beatPulse) {
+  const lt = t - CUTS[2];
+  drawSceneBackdrop(IMG.bgArmor, t, 2, { goldRadial: 0.21, beatPulse });
+  drawTopHUD(t, 2, 'ПРОТОКОЛЫ БПЛА + ФИЛЬТР СВОИХ РАЦИЙ');
+
+  drawFittedText('DJI · FPV · AUTEL', PAD, 236, SAFE_W, {
+    weight: 900, size: 74, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('ФИЛЬТРУЕТ 425–445 МГц — СВОИ РАЦИИ ТРЕВОГУ НЕ ВЫЗЫВАЮТ!', PAD, 308, SAFE_W, {
+    weight: 900, size: 39, family: 'FiraCond', color: MIL.emerald,
+  });
+
+  // Full uncropped studio showcase card of Gift Watch + 3-Antenna Aldan-12 + 2nd Battery
+  drawTacticalCard(PAD, 344, SAFE_W, 560, {
+    fill: 'rgba(13, 21, 14, 0.95)',
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sandHi,
+    glow: 16,
+  });
+  drawContainImage(IMG.trio, 320, 624, 440, 515, {
+    scale: 1 + beatPulse * 0.015,
+    glowColor: 'rgba(246, 216, 140, 0.40)',
+    glowBlur: 28,
+  });
+  drawContainImage(IMG.watch, 742, 558 + Math.sin(t * 2.4) * 5, 290, 325, {
+    scale: 1 + beatPulse * 0.02,
+    glowColor: 'rgba(74, 232, 138, 0.42)',
+    glowBlur: 26,
+  });
+  drawFittedText('ВЫНОСНОЙ БРАСЛЕТ', 742, 770, 390, {
+    weight: 900, size: 34, family: 'FiraCond', color: MIL.amber, align: 'center', shadow: false,
+  });
+  drawFittedText('Дублирует тревогу и частоту на руке!', 742, 816, 390, {
+    weight: 700, size: 22, family: 'RobotoBold', color: MIL.bone, align: 'center', shadow: false,
+  });
+  drawFittedText('● В ПОДАРОК К ДЕТЕКТОРУ', 742, 862, 390, {
+    weight: 800, size: 20, family: 'JetMono', color: MIL.emerald, align: 'center', shadow: false,
+  });
+
+  // Visual Notch Filter Diagram card: Threats caught vs 425–445 MHz friendly radios muted!
+  drawTacticalCard(PAD, 932, SAFE_W, 430, {
+    fill: MIL.panelEmerald,
+    stroke: MIL.borderEmerald,
+    r: 18,
+    accent: MIL.emerald,
+    glow: 14 + beatPulse * 10,
+  });
+  drawFittedText('ИНТЕЛЛЕКТУАЛЬНАЯ СЕЛЕКЦИЯ СИГНАЛОВ В ЭФИРЕ', PAD + 28, 994, SAFE_W - 56, {
+    weight: 900, size: 36, family: 'FiraCond', color: MIL.emerald, shadow: false,
+  });
+
+  const bandsViz = [
+    { name: 'FPV 300–900', st: 'ТРЕВОГА!', col: MIL.redAlert, x: PAD + 28, w: 205 },
+    { name: 'РАЦИИ 425–445 МГц', st: 'СВОИ · ТИХО ✓', col: MIL.emerald, x: PAD + 249, w: 266 },
+    { name: 'FPV 1.2 / 3.3G', st: 'ТРЕВОГА!', col: MIL.redAlert, x: PAD + 531, w: 196 },
+    { name: 'DJI / AUTEL 2.4·5.8', st: 'ТРЕВОГА!', col: MIL.amber, x: PAD + 743, w: 197 },
+  ];
+  bandsViz.forEach((b, i) => {
+    roundRectPath(b.x, 1028, b.w, 198, 14);
+    ctx.fillStyle = i === 1 ? 'rgba(74, 232, 138, 0.19)' : 'rgba(242, 84, 84, 0.14)';
+    ctx.fill();
+    ctx.strokeStyle = b.col;
+    ctx.lineWidth = i === 1 ? 3 : 2;
+    ctx.stroke();
+    drawFittedText(b.name, b.x + b.w * 0.5, 1102, b.w - 22, {
+      weight: 900, size: 28, family: 'FiraCond', color: MIL.bone, align: 'center', shadow: false,
+    });
+    drawFittedText(b.st, b.x + b.w * 0.5, 1176, b.w - 22, {
+      weight: 800, size: 22, family: 'JetMono', color: b.col, align: 'center', shadow: false,
+    });
+  });
+
+  drawFittedText('Работайте в радиоэфире группы спокойно — без ложных срабатываний детектора!', W * 0.5, 1314, SAFE_W - 60, {
+    weight: 700, size: 26, family: 'RobotoBold', color: MIL.bone, align: 'center', shadow: false,
+  });
+
+  // Bottom 2 protocol summary cards
+  const pCards = [
+    ['КОММЕРЧЕСКИЕ И РАЗВЕДЫВАТЕЛЬНЫЕ БПЛА', 'Уверенно фиксирует цифровые видеолинии и телеметрию DJI, AUTEL и аналогов', MIL.sandHi],
+    ['УДАРНЫЕ И КАСТОМНЫЕ FPV-ДРОНЫ', 'Контролирует нестандартные уведённые частоты от 100 МГц вплоть до 13 ГГц', MIL.amber],
+  ];
+  pCards.forEach(([h, s, acc], idx) => {
+    const py = 1392 + idx * 222;
+    drawTacticalCard(PAD, py, SAFE_W, 198, {
+      fill: MIL.panelHi, stroke: 'rgba(213, 174, 92, 0.50)', r: 16, accent: acc,
+    });
+    drawFittedText(h, PAD + 28, py + 72, SAFE_W - 56, {
+      weight: 900, size: 38, family: 'FiraCond', color: acc, shadow: false,
+    });
+    drawFittedText(s, PAD + 28, py + 142, SAFE_W - 56, {
+      weight: 700, size: 25, family: 'RobotoBold', color: MIL.bone, shadow: false,
+    });
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 4 [29.63s .. 36.97s]: UP TO 15 HOURS · 2× 5400 mAh · USB TYPE-C
+// =========================================================================
+function renderScene4(t, beatPulse) {
+  const lt = t - CUTS[3];
+  drawSceneBackdrop(IMG.bgCrates, t, 3, { goldRadial: 0.20, beatPulse });
+  drawTopHUD(t, 3, 'АВТОНОМНОСТЬ ДО 15 ЧАСОВ · 2 АКБ 5400 мА·ч');
+
+  drawFittedText('ДО 15 ЧАСОВ РАБОТЫ', PAD, 236, SAFE_W, {
+    weight: 900, size: 70, family: 'RussoOne', color: MIL.sandHi,
+  });
+  drawFittedText('СРАЗУ 2 СЪЁМНЫХ АККУМУЛЯТОРА 5400 мА·ч + ЗАРЯДКА TYPE-C', PAD, 308, SAFE_W, {
+    weight: 900, size: 39, family: 'FiraCond', color: MIL.bone,
+  });
+
+  // Real studio flatlay photo of Aldan-12 + 2nd removable battery + Type-C cable + belt clip + OTG flash
+  drawTacticalCard(PAD, 344, SAFE_W, 640, {
+    fill: '#0e140d',
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sandHi,
+    glow: 16,
+  });
+  drawCoverImage(IMG.photoFlatlay, PAD + 10, 354, SAFE_W - 20, 620, {
+    zoom: 1.03 + 0.05 * clamp(lt / 7.3, 0, 1),
+    panX: lerp(-12, 12, clamp(lt / 7.3, 0, 1)),
+    radius: 14,
+  });
+
+  // 3 big power cards + floating pair cutout on right
+  const pwr = [
+    ['ЁМКОСТЬ БАТАРЕИ', '5400 мА·ч × 2 ШТ.', 'Мгновенная горячая замена АКБ на выходе', MIL.emerald],
+    ['РЕСУРС ДЕЖУРСТВА', 'ДО 15 ЧАСОВ', 'Непрерывный радиоконтроль неба на смене', MIL.sandHi],
+    ['ПОЛЕВОЕ ПИТАНИЕ', 'РАЗЪЁМ USB TYPE-C', 'Кабель, клипса и OTG-адаптер в комплекте', MIL.cyan],
+  ];
+  pwr.forEach(([k, v, s, acc], idx) => {
+    const cy = 1018 + idx * 270;
+    drawTacticalCard(PAD, cy, 608, 244, {
+      fill: MIL.panelHi, stroke: 'rgba(213, 174, 92, 0.52)', r: 16, accent: acc,
+    });
+    drawFittedText(k, PAD + 26, cy + 52, 556, { weight: 800, size: 20, family: 'JetMono', color: acc, shadow: false });
+    drawFittedText(v, PAD + 26, cy + 132, 556, { weight: 900, size: 54, family: 'FiraCond', color: MIL.bone, shadow: false });
+    drawFittedText(s, PAD + 26, cy + 196, 556, { weight: 700, size: 24, family: 'RobotoBold', color: MIL.ash, shadow: false });
+  });
+
+  drawContainImage(IMG.pair, 862, 1412 + Math.sin(t * 2.2) * 5, 345, 815, {
+    scale: 1 + beatPulse * 0.016,
+    glowColor: 'rgba(246, 216, 140, 0.40)',
+    glowBlur: 28,
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 5 [36.97s .. 48.18s]: GIFT WATCH MACRO · 298 G · EAEU 2030 · RU UI
+// =========================================================================
+function renderScene5(t, beatPulse) {
+  const lt = t - CUTS[4];
+  drawSceneBackdrop(IMG.bgTrench, t, 4, { goldRadial: 0.22, beatPulse });
+  drawTopHUD(t, 4, 'ЧАСЫ В ПОДАРОК · 298 Г · ДЕКЛАРАЦИЯ ЕАЭС 2030');
+
+  drawFittedText('ЧАСЫ В ПОДАРОК!', PAD, 236, SAFE_W, {
+    weight: 900, size: 74, family: 'RussoOne', color: MIL.amber,
+  });
+  drawFittedText('298 Г · РУССКИЙ ИНТЕРФЕЙС · ДЕКЛАРАЦИЯ ЕАЭС ДО 2030 ГОДА', PAD, 308, SAFE_W, {
+    weight: 900, size: 39, family: 'FiraCond', color: MIL.bone,
+  });
+
+  // Macro studio photo of the Gift Watch-Repeater in its protective foam box!
+  drawTacticalCard(PAD, 344, SAFE_W, 560, {
+    fill: '#0e140d',
+    stroke: 'rgba(246, 179, 71, 0.72)',
+    r: 18,
+    accent: MIL.amber,
+    glow: 18 + beatPulse * 12,
+  });
+  drawCoverImage(IMG.photoWatchBox, PAD + 10, 354, SAFE_W - 20, 540, {
+    zoom: 1.03 + 0.06 * clamp(lt / 11.2, 0, 1),
+    panY: lerp(10, -12, clamp(lt / 11.2, 0, 1)),
+    radius: 14,
+  });
+
+  // 6 field spec cards below watch macro
+  const specs = [
+    ['МАССА ПРИБОРА', 'ВСЕГО 298 Г', 'Лёгкий корпус на бронежилет или разгрузку', MIL.emerald],
+    ['РАБОЧИЕ ТЕМПЕРАТУРЫ', '−10 °C … +55 °C', 'Надёжная работа в холод, ветер и зной', MIL.cyan],
+    ['ТРИ ВИДА ОПОВЕЩЕНИЯ', 'ЗВУК · СВЕТ · ВИБРО', 'Мгновенный сигнал в шуме и в режиме тишины', MIL.amber],
+    ['УПРАВЛЕНИЕ И МЕНЮ', 'РУССКИЙ ЯЗЫК', 'Наглядная индикация частот и уровня угрозы', MIL.sandHi],
+    ['БОНУС В КОМПЛЕКТЕ', 'ЧАСЫ В ПОДАРОК', 'Дублирующий экран и оповещение на запястье', MIL.amber],
+    ['СЕРТИФИКАЦИЯ РФ', 'ЕАЭС ДО 2030 Г.', 'Официальная декларация соответствия ЕАЭС', MIL.emerald],
+  ];
+
+  specs.forEach(([k, v, s, acc], idx) => {
+    const col = idx % 2, row = (idx / 2) | 0;
+    const es = easeOutBack(prog(lt, 0.20 + idx * 0.14, 0.40));
+    const sx = PAD + col * 494, sy = 930 + row * 300;
+    ctx.save();
+    ctx.globalAlpha = clamp(es, 0, 1);
+    drawTacticalCard(sx, sy, 474, 276, {
+      fill: idx === 4 ? MIL.panelAmber : MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.50)',
+      r: 16,
+      accent: acc,
+    });
+    drawFittedText(k, sx + 24, sy + 48, 426, { weight: 800, size: 19, family: 'JetMono', color: acc, shadow: false });
+    drawFittedText(v, sx + 24, sy + 128, 426, { weight: 900, size: 50, family: 'FiraCond', color: MIL.bone, shadow: false });
+    const ws = s.split(' ');
+    const h = Math.ceil(ws.length / 2);
+    drawFittedText(ws.slice(0, h).join(' '), sx + 24, sy + 190, 426, { weight: 700, size: 22, family: 'RobotoBold', color: MIL.sandHi, shadow: false });
+    drawFittedText(ws.slice(h).join(' '), sx + 24, sy + 228, 426, { weight: 700, size: 22, family: 'RobotoBold', color: MIL.ash, shadow: false });
+    ctx.restore();
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 6 [48.18s .. 58.00s]: OFFICIAL BRAND FINALE — В ОКОПЕ (3 CHANNELS)
+// =========================================================================
+function renderScene6(t, beatPulse) {
+  const lt = t - CUTS[5];
+  const outroSurge = clamp((t - 55.62) / 2.38, 0, 1);
+  drawSceneBackdrop(IMG.bgRadar, t, 5, { goldRadial: 0.25 + outroSurge * 0.10, beatPulse });
+
+  drawTacticalCard(PAD, 52, SAFE_W, 344, {
+    fill: 'rgba(13, 20, 13, 0.95)',
+    stroke: 'rgba(213, 174, 92, 0.70)',
+    r: 22,
+    accent: MIL.sandHi,
+    glow: 18 + outroSurge * 18,
+  });
+  drawContainImage(IMG.logoFullSand, W * 0.5, 176, 560, 176, {
+    scale: 1 + outroSurge * 0.025,
+    glowColor: 'rgba(213, 174, 92, 0.38)',
+    glowBlur: 22,
+  });
+  drawFittedText('«АЛДАН-12» + ЧАСЫ В ПОДАРОК — В «В ОКОПЕ»', W * 0.5, 346, SAFE_W - 60, {
+    weight: 900, size: 42, family: 'FiraCond', color: MIL.amber, align: 'center', shadow: false,
+  });
+
+  const channels = [
+    {
+      badge: 'TELEGRAM',
+      title: 't.me/vokope_ru',
+      sub: 'Оперативный заказ, наличие и консультации',
+      accent: '#42b8f6',
+    },
+    {
+      badge: 'ВКОНТАКТЕ',
+      title: 'vk.com/vokope_rus',
+      sub: 'Обзоры снаряжения, новости и прямая связь',
+      accent: MIL.cyan,
+    },
+    {
+      badge: 'МАГАЗИН НА АВИТО',
+      title: 'Официальная витрина В ОКОПЕ',
+      sub: 'avito.ru · Проверенный профиль и доставка',
+      accent: MIL.emerald,
+    },
+  ];
+
+  channels.forEach((ch, idx) => {
+    const ec = easeOutCubic(prog(lt, 0.16 + idx * 0.18, 0.44));
+    const cy = 426 + idx * 356 + (1 - ec) * 22;
+    ctx.save();
+    ctx.globalAlpha = ec;
+    drawTacticalCard(PAD, cy, 600, 328, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.56)',
+      r: 18,
+      accent: ch.accent,
+      glow: outroSurge * 12,
+    });
+
+    roundRectPath(PAD + 28, cy + 28, 252, 50, 9);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
+    ctx.fill();
+    ctx.strokeStyle = ch.accent;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    drawFittedText(`● ${ch.badge}`, PAD + 46, cy + 61, 216, {
+      weight: 800, size: 20, family: 'JetMono', color: ch.accent, shadow: false,
+    });
+
+    drawFittedText(ch.title, PAD + 28, cy + 158, 544, {
+      weight: 900, size: 46, family: 'FiraCond', color: MIL.bone, shadow: false,
+    });
+
+    const wds = ch.sub.split(' ');
+    const half = Math.ceil(wds.length / 2);
+    drawFittedText(wds.slice(0, half).join(' '), PAD + 28, cy + 226, 544, {
+      weight: 700, size: 24, family: 'RobotoBold', color: MIL.sandHi, shadow: false,
+    });
+    drawFittedText(wds.slice(half).join(' '), PAD + 28, cy + 262, 544, {
+      weight: 700, size: 24, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Right hero column: Standing full trio (Gift Watch + 3-Antenna Aldan-12 + Spare Battery)
+  drawContainImage(IMG.trio, 862, 956 + Math.sin(t * 2.0) * 5, 360, 1085, {
+    scale: 1.0 + outroSurge * 0.03 + beatPulse * 0.012,
+    glowColor: 'rgba(246, 216, 140, 0.48)',
+    glowBlur: 36 + outroSurge * 20,
+  });
+
+  drawTacticalCard(PAD, 1522, SAFE_W, 320, {
+    fill: 'rgba(15, 24, 15, 0.96)',
+    stroke: 'rgba(213, 174, 92, 0.70)',
+    r: 20,
+    accent: MIL.sandHi,
+  });
+  drawFittedText('ЧИСТОЕ НЕБО НАД ПОЗИЦИЕЙ!', W * 0.5, 1618, SAFE_W - 60, {
+    weight: 900, size: 52, family: 'RussoOne', color: MIL.sandHi, align: 'center',
+  });
+  drawFittedText('100 МГц–13 ГГц · 1000 М · ФИЛЬТР РАЦИЙ · ЧАСЫ В ПОДАРОК', W * 0.5, 1700, SAFE_W - 60, {
+    weight: 900, size: 33, family: 'FiraCond', color: MIL.emerald, align: 'center', shadow: false,
+  });
+  drawFittedText('ОПТОМ И В РОЗНИЦУ · С НДС И БЕЗ НДС · ДЕКЛАРАЦИЯ ЕАЭС ДО 2030 Г.', W * 0.5, 1778, SAFE_W - 60, {
+    weight: 700, size: 21, family: 'JetMono', color: MIL.bone, align: 'center', shadow: false,
+  });
+}
+
+// =========================================================================
+// STATELESS MASTER FRAME DISPATCHER (100% BIT-EXACT DETERMINISTIC)
+// =========================================================================
+function renderFrame(rawTime) {
+  const t = clamp(rawTime, 0, DURATION - 1e-4);
+  const beatPhase = (t / BEAT) % 1;
+  const beatPulse = Math.exp(-beatPhase * 5.2);
+
+  let scIdx = 0;
+  for (let i = 0; i < 6; i++) {
+    if (t >= CUTS[i] && t < CUTS[i + 1]) {
+      scIdx = i;
+      break;
+    }
+  }
+  if (t >= CUTS[6] - 1e-3) scIdx = 5;
+
+  switch (scIdx) {
+    case 0: renderScene1(t, beatPulse); break;
+    case 1: renderScene2(t, beatPulse); break;
+    case 2: renderScene3(t, beatPulse); break;
+    case 3: renderScene4(t, beatPulse); break;
+    case 4: renderScene5(t, beatPulse); break;
+    default: renderScene6(t, beatPulse); break;
+  }
+
+  if (scIdx > 0) {
+    const dtCut = t - CUTS[scIdx];
+    if (dtCut >= 0 && dtCut < 0.14) {
+      const fa = (1 - dtCut / 0.14) * 0.22;
+      ctx.fillStyle = `rgba(246, 232, 198, ${fa.toFixed(4)})`;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  ctx.drawImage(GRAIN_FULL, 0, 0);
+}
+
+window.renderAt = renderFrame;
+window.getFrameSignature = function () {
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let h = 2166136261;
+  for (let i = 0; i < d.length; i += 97) {
+    h ^= d[i];
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0).toString(16);
+};
+
+window.__READY_PROMISE = loadAllAssets().then(() => {
+  renderFrame(0);
+  return true;
+});
+</script>
+</body>
+</html>
