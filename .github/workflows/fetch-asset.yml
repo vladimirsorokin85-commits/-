@@ -1,0 +1,129 @@
+name: Fetch asset (внешние файлы → ветка assets-inbox)
+
+# Универсальная «докачка»: GitHub Actions имеет полный доступ в интернет,
+# а рабочая песочница — нет. Поэтому внешние файлы (например логотип из ВК)
+# тянет этот workflow и публикует в ветку assets-inbox.
+# Забрать: bash tools/fetch_asset.sh
+#
+# Заявка: assets/requests/fetch.json
+#   {"files": [{"name": "logo_vk", "urls": ["https://...", "https://..."]}]}
+# Скачивается ПЕРВЫЙ удачный URL из списка. Расширение определяется по содержимому.
+
+on:
+  push:
+    paths:
+      - "assets/requests/**"
+      - ".github/workflows/fetch-asset.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-asset
+  cancel-in-progress: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Качаем файлы из заявки
+        run: |
+          set -e
+          mkdir -p assets/inbox
+          python3 - <<'PY'
+          import json, os, subprocess, mimetypes
+
+          req_path = "assets/requests/fetch.json"
+          if not os.path.exists(req_path):
+              print("заявки нет"); raise SystemExit(0)
+          req = json.load(open(req_path, encoding="utf-8"))
+          ext_by_type = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp",
+                         "image/gif": ".gif", "application/pdf": ".pdf"}
+
+          for item in req.get("files", []):
+              name = item["name"]
+              ok = False
+              for url in item.get("urls", []):
+                  out = f"assets/inbox/{name}.bin"
+                  r = subprocess.run(["curl", "-sSL", "--max-time", "90",
+                                      "-A", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+                                      "-H", "Accept: image/*,*/*",
+                                      "-H", "Referer: https://vk.com/",
+                                      "-o", out, "-w", "%{http_code} %{size_download} %{content_type}", url],
+                                     capture_output=True, text=True)
+                  info = r.stdout.strip()
+                  parts = info.split()
+                  code = parts[0] if parts else "000"
+                  size = int(parts[1]) if len(parts) > 1 else 0
+                  ctype = parts[2] if len(parts) > 2 else ""
+                  print(f"  {name}: {code} {size} байт {ctype} <- {url[:100]}")
+                  if code == "200" and size > 2000:
+                      ext = ext_by_type.get(ctype.split(";")[0], "")
+                      if not ext:
+                          head = open(out, "rb").read(16)
+                          if head[:3] == b"\xff\xd8\xff": ext = ".jpg"
+                          elif head[:8] == b"\x89PNG\r\n\x1a\n": ext = ".png"
+                          elif head[:4] == b"RIFF": ext = ".webp"
+                          else: ext = ".bin"
+                      final = f"assets/inbox/{name}{ext}"
+                      os.replace(out, final)
+                      print(f"      -> {final}")
+                      ok = True
+                      break
+                  os.path.exists(out) and os.remove(out)
+              if not ok:
+                  print(f"::warning::не удалось скачать «{name}» ни по одному URL")
+          PY
+
+      - name: Что получилось
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import glob, os
+          files = sorted(glob.glob("assets/inbox/*"))
+          if not files:
+              print("пусто"); raise SystemExit(0)
+          from struct import unpack
+          for p in files:
+              size = os.path.getsize(p)
+              dim = ""
+              try:
+                  head = open(p, "rb").read(64)
+                  if head[:3] == b"\xff\xd8\xff":
+                      i = 2
+                      while i < len(head) - 9:
+                          if head[i] != 0xFF: i += 1; continue
+                          m = head[i+1]
+                          if m in (0xC0,0xC1,0xC2,0xC3):
+                              h = int.from_bytes(head[i+5:i+7], "big"); w = int.from_bytes(head[i+7:i+9], "big")
+                              dim = f" {w}x{h}"; break
+                          seg = int.from_bytes(head[i+2:i+4], "big"); i += 2 + max(seg, 2)
+                  elif head[:8] == b"\x89PNG\r\n\x1a\n":
+                      dim = f" {int.from_bytes(head[16:20],'big')}x{int.from_bytes(head[20:24],'big')}"
+              except Exception as e:
+                  dim = f" ({e})"
+              print(f"{p}: {size} байт{dim}")
+          PY
+
+      - name: Публикуем в ветку assets-inbox
+        if: always()
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          tmp=$(mktemp -d)
+          mkdir -p "$tmp/assets"
+          cp -r assets/inbox "$tmp/assets/inbox"
+          cd "$tmp"
+          git init -q
+          git checkout -q -b assets-inbox
+          git add -A
+          git -c user.name="asset-bot" -c user.email="asset-bot@users.noreply.github.com" \
+              commit -qm "Внешние файлы $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push -q --force "https://x-access-token:${TOKEN}@github.com/${REPO}.git" assets-inbox \
+            || echo "::warning::Не удалось опубликовать ветку assets-inbox"

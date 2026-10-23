@@ -1,0 +1,80 @@
+{
+ "odezhda": [
+  "bejsbolka-goliaf",
+  "boevaya-rubashka-goliaf",
+  "boevye-brjuki-goliaf",
+  "brjuki-vetro-vlagozashhitnye-strazh",
+  "kurtka-goliaf-letnyaya",
+  "kurtka-strazh",
+  "rubashka-polo-softtaktikal",
+  "shapka-vors"
+ ],
+ "ragruzka": [
+  "lyamki",
+  "mup-malyj-universalnyj-podsumok",
+  "pistoletnyj-podsumok-pm-pya-fonar",
+  "podsumok-2-magazinov",
+  "podsumok-dlya-1-magazina",
+  "podsumok-dlya-ak",
+  "podsumok-dlya-akh4",
+  "podsumok-dlya-dokumentov",
+  "podsumok-dlya-granaty",
+  "podsumok-dlya-magazina",
+  "podsumok-dlya-magazinov",
+  "podsumok-dlya-otstrelyannyh-magazinov",
+  "podsumok-dlya-protivogaza",
+  "podsumok-dlya-radiostancii",
+  "podsumok-dlya-ruchnoj-granaty",
+  "podsumok-dvojnoj",
+  "podsumok-na-100-patronov",
+  "podsumok-utilitarnyj-srednij",
+  "poyas-razgruzochnyj",
+  "poyas-takticheskij-anakonda",
+  "razgruzochno-poyasnaya-sistema-pulemetchika-skat",
+  "razgruzochnye-podtyazhki",
+  "remen-brjuchnoj-takticheskij",
+  "remen-poyasnoj-takticheskij",
+  "nakolenniki-takticheskie",
+  "nalokotniki-vnutrennie-takticheskie",
+  "chehol-dlya-broneplit"
+ ],
+ "podacha": [
+  "rassypnaya-pulemetnaya-lenta-spoloh",
+  "sistema-podachi-boepripasov-mantikora",
+  "sistema-podachi-boepripasov-piton",
+  "sistema-podachi-boepripasov-skorpion",
+  "skorpion",
+  "skorpion-english"
+ ],
+ "med": [
+  "bolshaya-takticheskaya-aptechka-rhino-rescue-ifak-pro",
+  "vytyazhnaya-aptechka-vydra",
+  "takticheskaya-aptechka-rhino-ifak-qf-002m",
+  "podsumok-medicinskij",
+  "podsumok-turniketa",
+  "rhino-rescue-4-bandazh-perevyazochnyj-individualnyj-bpi-4",
+  "rhino-rescue-6-bandazh-perevyazochnyj-individualnyj-bpi-6",
+  "takticheskij-turniketnyj-zhgut-rhinorescue"
+ ],
+ "ryukzaki": [
+  "rjukzak-dlya-dronov-kvadrat",
+  "rjukzak-minimap-minimap",
+  "rjukzak-minimap-minimap-9-litrov",
+  "rjukzak-optima-35-litrov",
+  "rjukzak-takticheskij",
+  "ryukzak-dlya-rpg"
+ ],
+ "instrument": [
+  "pozharnyi-lom",
+  "ruchnoj-taran",
+  "shturmovaya-kuvalda",
+  "shturmovoj-boltorez",
+  "shturmovoj-taran"
+ ],
+ "tunning": [
+  "adapter-priklada-pkm",
+  "planka-pikatinni",
+  "takticheska-ruchka",
+  "takticheskaya-rukoyatka"
+ ]
+}
