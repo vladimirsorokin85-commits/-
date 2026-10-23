@@ -207,12 +207,12 @@ const COVER_SPECS = [
     chips: ["1162–1300 / 1550–1630 МГц", "GPS · ГЛОНАСС · BEIDOU · GALILEO", "КУПОЛ 900×300 · ЛЮБОЙ ЦВЕТ"],
     subline: "РАБОТА 24/7 · 12В / 24В / 220В · СКИДКИ ВОЕННЫМ, ФОНДАМ И НА ОПТ · НДС",
     items16: [
-      { src: "/assets/pole_31/dome_silver_rgba.png", x: 1120, y: 118, w: 540, h: 390, alpha: 0.96 },
-      { src: "/assets/pole_31/dome_green_rgba.png",  x: 1020, y: 405, w: 860, h: 585, alpha: 1.00 },
+      { src: "/assets/pole_31/dome_silver_rgba.png", x: 1125, y: 108, w: 540, h: 390, alpha: 0.96 },
+      { src: "/assets/pole_31/dome_green_rgba.png",  x: 982,  y: 388, w: 862, h: 585, alpha: 1.00 },
     ],
     items9: [
-      { src: "/assets/pole_31/dome_silver_rgba.png", x: 520,  y: 645, w: 510, h: 375, alpha: 0.96 },
-      { src: "/assets/pole_31/dome_green_rgba.png",  x: 68,   y: 830, w: 830, h: 575, alpha: 1.00 },
+      { src: "/assets/pole_31/dome_silver_rgba.png", x: 515,  y: 635, w: 505, h: 375, alpha: 0.96 },
+      { src: "/assets/pole_31/dome_green_rgba.png",  x: 64,   y: 825, w: 835, h: 575, alpha: 1.00 },
     ],
   },
 ];
