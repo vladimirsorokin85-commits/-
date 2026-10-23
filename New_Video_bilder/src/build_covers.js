@@ -139,6 +139,25 @@ const COVER_SPECS = [
       { src: "/assets/real_products/real_voevoda_hero_rgba.png",  x: 430, y: 635, w: 595, h: 760, alpha: 1.00 },
     ],
   },
+  {
+    slug: "tyt_mduv390",
+    kicker: "ЦИФРОВАЯ РАДИОСТАНЦИЯ · DMR + АНАЛОГ",
+    line1: "TYT MD-UV390 PLUS",
+    line2: "10 ВТ · AES-256 · IP67",
+    accent: "#4ae88a",
+    glow: "rgba(74, 232, 138, 0.30)",
+    bg: "/assets/images/bg_radar_dusk.jpg",
+    chips: ["AES-256 ШИФРОВАНИЕ", "АКБ 3600 TYPE-C", "2 АНТЕННЫ 12/38 СМ"],
+    subline: "136–174 / 400–480 МГц · ДОП. АКБ В НАЛИЧИИ · ОПТ И РОЗНИЦА · С НДС И БЕЗ НДС",
+    items16: [
+      { src: "/assets/tyt_mduv390/tyt_kit_front_rgba.png",       x: 1042, y: 505, w: 495, h: 465, alpha: 0.98 },
+      { src: "/assets/tyt_mduv390/tyt_handset_upright_rgba.png", x: 1418, y: 54,  w: 465, h: 910, alpha: 1.00 },
+    ],
+    items9: [
+      { src: "/assets/tyt_mduv390/tyt_kit_front_rgba.png",       x: 52,   y: 895, w: 575, h: 495, alpha: 0.97 },
+      { src: "/assets/tyt_mduv390/tyt_handset_upright_rgba.png", x: 520,  y: 635, w: 510, h: 765, alpha: 1.00 },
+    ],
+  },
 ];
 
 function startAssetServer() {
@@ -356,12 +375,25 @@ async function renderCoverCanvas(spec, orient) {
 `;
 
 (async () => {
+  const zlib = require("zlib");
+  const { execSync } = require("child_process");
+  if (!fs.existsSync("/tmp/sp_libs/lib/libnspr4.so")) {
+    fs.mkdirSync("/tmp/sp_libs", { recursive: true });
+    const brPath = path.join(PROJECT_ROOT, "node_modules", "@sparticuz", "chromium", "bin", "al2023.tar.br");
+    fs.writeFileSync("/tmp/sp_libs/al2023.tar", zlib.brotliDecompressSync(fs.readFileSync(brPath)));
+    execSync("tar -xf /tmp/sp_libs/al2023.tar -C /tmp/sp_libs");
+  }
   process.env.LD_LIBRARY_PATH = `/tmp/sp_libs/lib:/tmp/sp_libs:${process.env.LD_LIBRARY_PATH || ""}`;
+  let execPath = "/tmp/chromium";
+  if (!fs.existsSync(execPath)) {
+    const mod = await import("@sparticuz/chromium");
+    execPath = await (mod.default || mod).executablePath();
+  }
   fs.mkdirSync(COVERS_DIR, { recursive: true });
   const { server, port } = await startAssetServer();
 
   const browser = await puppeteer.launch({
-    executablePath: "/tmp/chromium",
+    executablePath: execPath,
     headless: true,
     defaultViewport: { width: 1920, height: 1920, deviceScaleFactor: 1 },
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu", "--disable-dev-shm-usage"],

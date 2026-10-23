@@ -1,0 +1,1230 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>В ОКОПЕ · Цифровая радиостанция TYT MD-UV390 Plus DMR AES-256 IP67 10 Вт (1080×1920 @ 60fps)</title>
+<style>
+  @font-face {
+    font-family: 'RussoOne';
+    src: url('/fonts/RussoOne-Regular.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'RubikDirt';
+    src: url('/fonts/RubikDirt-Regular.ttf') format('truetype');
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'Tektur';
+    src: url('/fonts/Tektur-VF.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'FiraCond';
+    src: url('/fonts/FiraSansExtraCondensed-Black.ttf') format('truetype');
+    font-weight: 900;
+  }
+  @font-face {
+    font-family: 'JetMono';
+    src: url('/fonts/JetBrainsMono-VF.ttf') format('truetype');
+    font-weight: 400 800;
+  }
+  @font-face {
+    font-family: 'RobotoBold';
+    src: url('/studio_fonts/Roboto-Bold.woff') format('woff');
+    font-weight: 700;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: #0a0f0a;
+    user-select: none;
+  }
+  #master {
+    display: block;
+    width: 1080px;
+    height: 1920px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1080" height="1920"></canvas>
+
+<script type="module">
+const W = 1080;
+const H = 1920;
+const DURATION = 72.0;
+const BPM = 174.2;
+const BEAT = 60.0 / BPM;
+const PAD = 56;
+const SAFE_W = W - PAD * 2; // 968px
+
+const MIL = {
+  bg: '#090e09',
+  panel: 'rgba(13, 20, 13, 0.93)',
+  panelHi: 'rgba(20, 30, 19, 0.95)',
+  panelEmerald: 'rgba(11, 29, 21, 0.94)',
+  sand: '#d5ae5c',
+  sandHi: '#f0d38b',
+  olive: '#849e54',
+  phosphor: '#8fd158',
+  emerald: '#4ae88a',
+  cyan: '#42dcfa',
+  amber: '#f4ae46',
+  redPlus: '#ef4d4d',
+  bone: '#f4f1e8',
+  ash: '#c8cdc2',
+  muted: '#8f9988',
+  borderSand: 'rgba(213, 174, 92, 0.54)',
+  borderEmerald: 'rgba(74, 232, 138, 0.52)',
+};
+
+// Exact sample-locked 60fps cut points from src/tyt_sync_map.json (4,320 frames @ 60fps)
+const CUTS = [
+  0.000000,   // S1 [0..459]     TYT MD-UV390 Plus · 10 Вт · AES-256
+  7.650000,   // S2 [459..1210]  Два диапазона VHF/UHF · DMR TDMA · MotoTRBO
+  20.166667,  // S3 [1210..1799] AES-256 · 3000 каналов · 120 000 контактов · 8 ч записи
+  29.983333,  // S4 [1799..2312] АКБ 3600 мА·ч (BATT-TYPEC-XL) с USB Type-C + Доп. АКБ в наличии
+  38.533333,  // S5 [2312..2930] Литое шасси · IP67 · −30…+60 °C · 0.20 мкВ · −60 дБ
+  48.833333,  // S6 [2930..3462] Полный комплект · 2 антенны 12 и 38 см · стакан + БП
+  57.700000,  // S7 [3462..3857] Оптом и в розницу · с НДС и без НДС
+  64.283333,  // S8 [3857..4320] Заказ в магазине «В ОКОПЕ» · Telegram · VK · Авито + 2.32s Neurofunk outro
+  72.000000,
+];
+
+const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const lerp = (a, b, t) => a + (b - a) * t;
+const easeOutCubic = (x) => 1 - Math.pow(1 - clamp(x, 0, 1), 3);
+const easeOutBack = (x) => {
+  const c1 = 1.48, c3 = c1 + 1;
+  const p = clamp(x, 0, 1) - 1;
+  return 1 + c3 * p * p * p + c1 * p * p;
+};
+const prog = (t, t0, dur) => clamp((t - t0) / Math.max(0.0001, dur), 0, 1);
+
+function hash2(x, y) {
+  const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123;
+  return n - Math.floor(n);
+}
+
+const canvas = document.getElementById('master');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+const ASSET_PATHS = {
+  handset: '/assets/tyt_mduv390/tyt_handset_upright_rgba.png',
+  kitFront: '/assets/tyt_mduv390/tyt_kit_front_rgba.png',
+  chassisPair: '/assets/tyt_mduv390/tyt_chassis_pair_rgba.png',
+  photoKitFront: '/assets/tyt_mduv390/tyt_1_full_kit_front.jpg',
+  photoTypeC: '/assets/tyt_mduv390/tyt_2_typec_macro.jpg',
+  photoChassis: '/assets/tyt_mduv390/tyt_3_chassis_batt_label.jpg',
+  photoOpenKit: '/assets/tyt_mduv390/tyt_4_full_kit_open_chassis.jpg',
+  photoSpecs: '/assets/tyt_mduv390/tyt_5_front_box_specs.jpg',
+  logoFullSand: '/assets/brand/logo_full_sand.png',
+  logoShieldSand: '/assets/brand/logo_shield_sand.png',
+  bgRadar: '/assets/images/bg_radar_dusk.jpg',
+  bgTrench: '/assets/images/bg_trench_dugout_dusk.jpg',
+  bgArmor: '/assets/images/bg_armor_plate_camo.jpg',
+  bgCrates: '/assets/images/bg_military_crates_olive.jpg',
+};
+
+const IMG = {};
+
+async function loadAllAssets() {
+  await document.fonts.ready;
+  const warmCanvas = document.createElement('canvas');
+  warmCanvas.width = 64;
+  warmCanvas.height = 64;
+  const wctx = warmCanvas.getContext('2d');
+  for (const spec of [
+    "900 48px 'RussoOne'",
+    "400 48px 'RubikDirt'",
+    "800 40px 'Tektur'",
+    "600 32px 'Tektur'",
+    "900 52px 'FiraCond'",
+    "700 28px 'JetMono'",
+    "500 24px 'JetMono'",
+    "700 30px 'RobotoBold'",
+  ]) {
+    await document.fonts.load(spec, 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789AESDMRTYTWIP');
+    wctx.font = spec;
+    wctx.fillText('TYT MD-UV390 Plus AES-256 IP67 3600 мАч В ОКОПЕ', 2, 32);
+  }
+  await Promise.all(
+    Object.entries(ASSET_PATHS).map(async ([k, url]) => {
+      const im = new Image();
+      im.crossOrigin = 'anonymous';
+      im.src = url;
+      await im.decode();
+      IMG[k] = im;
+    })
+  );
+}
+
+const GRAIN_TILE = (() => {
+  const g = document.createElement('canvas');
+  g.width = 256;
+  g.height = 256;
+  const gc = g.getContext('2d');
+  const id = gc.createImageData(256, 256);
+  for (let i = 0; i < 256 * 256; i++) {
+    const v = Math.floor(hash2(i % 256, (i / 256) | 0) * 255);
+    id.data[i * 4] = v;
+    id.data[i * 4 + 1] = v;
+    id.data[i * 4 + 2] = v;
+    id.data[i * 4 + 3] = 14;
+  }
+  gc.putImageData(id, 0, 0);
+  return g;
+})();
+
+function fitFont(text, maxW, weight, baseSize, family) {
+  let sz = baseSize;
+  ctx.font = `${weight} ${sz}px '${family}'`;
+  const w = ctx.measureText(text).width;
+  if (w > maxW && w > 0) {
+    sz = Math.max(13, Math.floor(sz * (maxW / w) * 0.985));
+    ctx.font = `${weight} ${sz}px '${family}'`;
+  }
+  return sz;
+}
+
+function drawFittedText(text, x, y, maxW, { weight = 800, size = 44, family = 'RussoOne', color = MIL.bone, align = 'left', baseline = 'alphabetic', shadow = true } = {}) {
+  ctx.save();
+  fitFont(text, maxW, weight, size, family);
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.textBaseline = baseline;
+  if (shadow) {
+    ctx.shadowColor = 'rgba(0,0,0,0.76)';
+    ctx.shadowBlur = 14;
+    ctx.shadowOffsetY = 3;
+  }
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+function roundRectPath(x, y, w, h, r) {
+  const rr = Math.min(r, w * 0.5, h * 0.5);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}
+
+function drawTacticalCard(x, y, w, h, { fill = MIL.panel, stroke = MIL.borderSand, r = 16, accent = MIL.sand, glow = 0 } = {}) {
+  ctx.save();
+  if (glow > 0) {
+    ctx.shadowColor = accent;
+    ctx.shadowBlur = glow;
+  }
+  roundRectPath(x, y, w, h, r);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = stroke;
+  ctx.stroke();
+
+  const L = Math.min(18, w * 0.08, h * 0.25);
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 3;
+  for (const [cx, cy, sx, sy] of [
+    [x + 1, y + 1, 1, 1],
+    [x + w - 1, y + 1, -1, 1],
+    [x + 1, y + h - 1, 1, -1],
+    [x + w - 1, y + h - 1, -1, -1],
+  ]) {
+    ctx.beginPath();
+    ctx.moveTo(cx + sx * L, cy);
+    ctx.lineTo(cx, cy);
+    ctx.lineTo(cx, cy + sy * L);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawCoverImage(im, x, y, w, h, { zoom = 1.0, panX = 0, panY = 0, alpha = 1.0, radius = 0 } = {}) {
+  const ir = im.width / im.height;
+  const br = w / h;
+  let dw, dh;
+  if (ir > br) {
+    dh = h * zoom;
+    dw = dh * ir;
+  } else {
+    dw = w * zoom;
+    dh = dw / ir;
+  }
+  const dx = x + (w - dw) * 0.5 + panX;
+  const dy = y + (h - dh) * 0.5 + panY;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  if (radius > 0) roundRectPath(x, y, w, h, radius);
+  else { ctx.beginPath(); ctx.rect(x, y, w, h); }
+  ctx.clip();
+  ctx.drawImage(im, dx, dy, dw, dh);
+  ctx.restore();
+}
+
+function drawContainImage(im, cx, cy, maxW, maxH, { scale = 1.0, alpha = 1.0, glowColor = null, glowBlur = 0, dropShadow = true } = {}) {
+  const s = Math.min(maxW / im.width, maxH / im.height) * scale;
+  const dw = im.width * s;
+  const dh = im.height * s;
+  const dx = cx - dw * 0.5;
+  const dy = cy - dh * 0.5;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  if (glowColor && glowBlur > 0) {
+    ctx.shadowColor = glowColor;
+    ctx.shadowBlur = glowBlur;
+    ctx.drawImage(im, dx, dy, dw, dh);
+  }
+  if (dropShadow) {
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.80)';
+    ctx.shadowBlur = 34;
+    ctx.shadowOffsetY = 16;
+  }
+  ctx.drawImage(im, dx, dy, dw, dh);
+  ctx.restore();
+  return { x: dx, y: dy, w: dw, h: dh };
+}
+
+function drawSceneBackdrop(bgImg, t, scIdx, { tint = 'rgba(8, 13, 9, 0.77)', emeraldRadial = 0.16, beatPulse = 0 } = {}) {
+  const sStart = CUTS[scIdx];
+  const sDur = CUTS[scIdx + 1] - sStart;
+  const u = clamp((t - sStart) / sDur, 0, 1);
+
+  ctx.fillStyle = MIL.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCoverImage(bgImg, 0, 0, W, H, {
+    zoom: 1.06 + u * 0.055,
+    panX: lerp(-16, 16, u) * (scIdx % 2 === 0 ? 1 : -1),
+    panY: lerp(-10, 10, u),
+    alpha: 0.44,
+  });
+
+  ctx.fillStyle = tint;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle tactical coordinate grid
+  ctx.save();
+  ctx.strokeStyle = 'rgba(132, 158, 84, 0.065)';
+  ctx.lineWidth = 1;
+  for (let gx = 60; gx < W; gx += 120) {
+    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+  }
+  for (let gy = 80; gy < H; gy += 120) {
+    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+  }
+  ctx.restore();
+
+  const rg = ctx.createRadialGradient(W * 0.5, H * 0.49, 30, W * 0.5, H * 0.49, 780);
+  rg.addColorStop(0, `rgba(74, 232, 138, ${(emeraldRadial + beatPulse * 0.075).toFixed(3)})`);
+  rg.addColorStop(0.55, 'rgba(32, 62, 42, 0.09)');
+  rg.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = rg;
+  ctx.fillRect(0, 0, W, H);
+
+  const vig = ctx.createRadialGradient(W * 0.5, H * 0.5, 420, W * 0.5, H * 0.5, 1140);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(4, 6, 4, 0.74)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawTopHUD(t, scIdx, sectionTag) {
+  const y = 52;
+  drawTacticalCard(PAD, y, SAFE_W, 92, {
+    fill: 'rgba(14, 20, 13, 0.93)',
+    stroke: 'rgba(213, 174, 92, 0.48)',
+    r: 14,
+    accent: MIL.sand,
+  });
+
+  drawContainImage(IMG.logoShieldSand, PAD + 48, y + 46, 66, 68, { dropShadow: false });
+
+  drawFittedText('В ОКОПЕ · ЦИФРОВАЯ СВЯЗЬ', PAD + 94, y + 42, 470, {
+    weight: 900,
+    size: 26,
+    family: 'RussoOne',
+    color: MIL.sandHi,
+    shadow: false,
+  });
+  drawFittedText(sectionTag, PAD + 94, y + 73, 560, {
+    weight: 700,
+    size: 19,
+    family: 'JetMono',
+    color: MIL.emerald,
+    shadow: false,
+  });
+
+  // Live AES-256 encrypted status pill on right
+  const pillW = 248;
+  const px = PAD + SAFE_W - pillW - 18;
+  roundRectPath(px, y + 20, pillW, 52, 10);
+  ctx.fillStyle = 'rgba(74, 232, 138, 0.13)';
+  ctx.fill();
+  ctx.strokeStyle = MIL.emerald;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  const blink = 0.55 + 0.45 * Math.sin(t * 7.5);
+  ctx.save();
+  ctx.globalAlpha = blink;
+  ctx.fillStyle = MIL.emerald;
+  ctx.beginPath();
+  ctx.arc(px + 24, y + 46, 6.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  drawFittedText(`AES-256 · 0${scIdx + 1}/08`, px + 42, y + 53, pillW - 56, {
+    weight: 800,
+    size: 19,
+    family: 'JetMono',
+    color: MIL.bone,
+    shadow: false,
+  });
+}
+
+function drawProgressBar(t) {
+  const y = 1866;
+  ctx.fillStyle = 'rgba(255,255,255,0.11)';
+  roundRectPath(PAD, y, SAFE_W, 8, 4);
+  ctx.fill();
+  const fw = Math.max(8, SAFE_W * clamp(t / DURATION, 0, 1));
+  const grd = ctx.createLinearGradient(PAD, 0, PAD + SAFE_W, 0);
+  grd.addColorStop(0, MIL.emerald);
+  grd.addColorStop(1, MIL.sandHi);
+  ctx.fillStyle = grd;
+  roundRectPath(PAD, y, fw, 8, 4);
+  ctx.fill();
+}
+
+// =========================================================================
+// SCENE 1 [0.00s .. 7.65s]: HERO HOOK — TYT MD-UV390 Plus · 10W · AES-256
+// =========================================================================
+function renderScene1(t, beatPulse) {
+  const lt = t - CUTS[0];
+  drawSceneBackdrop(IMG.bgRadar, t, 0, { emeraldRadial: 0.21, beatPulse });
+  drawTopHUD(t, 0, 'TYT MD-UV390 PLUS · DMR DIGITAL + ANALOG');
+
+  const eHead = easeOutCubic(prog(lt, 0.05, 0.42));
+  ctx.save();
+  ctx.globalAlpha = eHead;
+  drawFittedText('TYT MD-UV390', PAD, 248 - (1 - eHead) * 20, SAFE_W, {
+    weight: 900,
+    size: 86,
+    family: 'RussoOne',
+    color: MIL.bone,
+  });
+  // PLUS + 10W + AES-256 headline strip
+  drawFittedText('PLUS · 10 ВТ · AES-256', PAD, 336 - (1 - eHead) * 14, SAFE_W, {
+    weight: 900,
+    size: 58,
+    family: 'FiraCond',
+    color: MIL.emerald,
+  });
+  ctx.restore();
+
+  // Animated concentric RF encrypted wave rings behind upright TYT handset
+  const cx = 690, cy = 985;
+  for (let rIdx = 0; rIdx < 3; rIdx++) {
+    const ph = ((t * 0.72 + rIdx / 3) % 1);
+    const rad = 135 + ph * 290;
+    ctx.save();
+    ctx.strokeStyle = `rgba(74, 232, 138, ${((1 - ph) * 0.34).toFixed(3)})`;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(cx, cy - 120, rad, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Left vertical stack of 4 power badges
+  const badges = [
+    { k: 'ШИФРОВАНИЕ', v: 'AES-256 BIT', sub: 'Закрытый цифровой радиоканал', acc: MIL.emerald },
+    { k: 'МОЩНОСТЬ ПЕРЕДАТЧИКА', v: '10 ВТ / 1 ВТ', sub: 'Дальняя связь в плотной застройке', acc: MIL.sandHi },
+    { k: 'ЗАЩИТА КОРПУСА', v: 'IP67 · ЛИТЬЁ', sub: 'Вода, грязь, −30 °C … +60 °C', acc: MIL.cyan },
+    { k: 'ПИТАНИЕ В ПОЛЕ', v: '3600 мА·ч TYPE-C', sub: 'Прямая зарядка от повербанка', acc: MIL.amber },
+  ];
+  badges.forEach((b, i) => {
+    const eb = easeOutBack(prog(lt, 0.26 + i * 0.16, 0.44));
+    const by = 408 + i * 244;
+    ctx.save();
+    ctx.globalAlpha = clamp(eb, 0, 1);
+    ctx.translate(-(1 - eb) * 38, 0);
+    drawTacticalCard(PAD, by, 456, 220, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.50)',
+      r: 16,
+      accent: b.acc,
+      glow: i === 0 ? 12 + beatPulse * 12 : 0,
+    });
+    drawFittedText(b.k, PAD + 24, by + 46, 408, {
+      weight: 800, size: 19, family: 'JetMono', color: b.acc, shadow: false,
+    });
+    drawFittedText(b.v, PAD + 24, by + 124, 408, {
+      weight: 900, size: 54, family: 'FiraCond', color: MIL.bone, shadow: false,
+    });
+    drawFittedText(b.sub, PAD + 24, by + 178, 408, {
+      weight: 700, size: 22, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Hero upright TYT MD-UV390 handset studio cutout on right
+  const eHero = easeOutBack(prog(lt, 0.14, 0.56));
+  drawContainImage(IMG.handset, 785, 895 + Math.sin(t * 2.3) * 6, 490, 960, {
+    scale: (0.90 + 0.10 * eHero) * (1 + beatPulse * 0.018),
+    alpha: clamp(eHero, 0, 1),
+    glowColor: 'rgba(74, 232, 138, 0.44)',
+    glowBlur: 32 + beatPulse * 18,
+  });
+
+  // Bottom summary bar
+  const eBot = easeOutCubic(prog(lt, 0.55, 0.45));
+  ctx.save();
+  ctx.globalAlpha = eBot;
+  drawTacticalCard(PAD, 1420, SAFE_W, 404, {
+    fill: 'rgba(13, 22, 15, 0.95)',
+    stroke: MIL.borderEmerald,
+    r: 18,
+    accent: MIL.emerald,
+  });
+  drawContainImage(IMG.kitFront, 775, 1622, 430, 360, {
+    scale: 1 + beatPulse * 0.012,
+    glowColor: 'rgba(213, 174, 92, 0.30)',
+    glowBlur: 20,
+  });
+  drawFittedText('ЦИФРА DMR + АНАЛОГ', PAD + 28, 1502, 500, {
+    weight: 900, size: 44, family: 'FiraCond', color: MIL.sandHi, shadow: false,
+  });
+  drawFittedText('136–174 И 400–480 МГц', PAD + 28, 1574, 500, {
+    weight: 900, size: 46, family: 'RussoOne', color: MIL.bone, shadow: false,
+  });
+  drawFittedText('СОВМЕСТИМА С MOTOTRBO TIER I & II', PAD + 28, 1646, 500, {
+    weight: 800, size: 23, family: 'JetMono', color: MIL.emerald, shadow: false,
+  });
+  drawFittedText('Оптом и в розницу · С НДС и без НДС', PAD + 28, 1712, 500, {
+    weight: 700, size: 25, family: 'RobotoBold', color: MIL.ash, shadow: false,
+  });
+  drawFittedText('ДОПОЛНИТЕЛЬНЫЕ АКБ В НАЛИЧИИ', PAD + 28, 1776, 500, {
+    weight: 800, size: 22, family: 'JetMono', color: MIL.amber, shadow: false,
+  });
+  ctx.restore();
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 2 [7.65s .. 20.17s]: DUAL-BAND VHF/UHF · DMR TDMA · MOTOTRBO
+// =========================================================================
+function renderScene2(t, beatPulse) {
+  const lt = t - CUTS[1];
+  drawSceneBackdrop(IMG.bgTrench, t, 1, { emeraldRadial: 0.18, beatPulse });
+  drawTopHUD(t, 1, 'ДВА ДИАПАЗОНА · DMR TIER I & II · TDMA');
+
+  drawFittedText('ЦИФРА DMR И АНАЛОГ', PAD, 232, SAFE_W, {
+    weight: 900, size: 68, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('ДВА ДИАПАЗОНА + MOTOTRBO TIER I & II', PAD, 304, SAFE_W, {
+    weight: 900, size: 42, family: 'FiraCond', color: MIL.sandHi,
+  });
+
+  // Real box specifications closeup photo panel (tyt_5_front_box_specs.jpg)
+  const ePhoto = easeOutCubic(prog(lt, 0.08, 0.50));
+  ctx.save();
+  ctx.globalAlpha = ePhoto;
+  drawTacticalCard(PAD, 344, SAFE_W, 560, {
+    fill: '#0e150e',
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sandHi,
+    glow: 14,
+  });
+  drawCoverImage(IMG.photoSpecs, PAD + 10, 354, SAFE_W - 20, 540, {
+    zoom: 1.03 + 0.05 * clamp(lt / 12.5, 0, 1),
+    panX: lerp(-12, 12, clamp(lt / 12.5, 0, 1)),
+    radius: 14,
+  });
+  // Subtle bottom gradient caption on photo
+  const pg = ctx.createLinearGradient(0, 760, 0, 894);
+  pg.addColorStop(0, 'rgba(8, 12, 8, 0)');
+  pg.addColorStop(1, 'rgba(8, 12, 8, 0.90)');
+  ctx.fillStyle = pg;
+  ctx.fillRect(PAD + 10, 760, SAFE_W - 20, 134);
+  drawFittedText('ЗАВОДСКАЯ МАРКИРОВКА: HIGH 10W / LOW 1W · ETSI TS 102 361-1,-2,-3 · AMBE+2™', PAD + 34, 868, SAFE_W - 68, {
+    weight: 800, size: 21, family: 'JetMono', color: MIL.emerald, shadow: false,
+  });
+  ctx.restore();
+
+  // Dual-band VHF / UHF live RF spectrum analyzer + 2 TDMA slots cards
+  const bands = [
+    { tag: 'ДИАПАЗОН VHF', freq: '136 – 174 МГц', note: 'Лес, пересечённая местность, открытый рельеф', acc: MIL.emerald },
+    { tag: 'ДИАПАЗОН UHF', freq: '400 – 480 МГц', note: 'Плотная городская застройка, бетон, укрытия', acc: MIL.cyan },
+  ];
+  bands.forEach((b, idx) => {
+    const eb = easeOutBack(prog(lt, 0.35 + idx * 0.22, 0.45));
+    const bx = PAD + idx * 494;
+    ctx.save();
+    ctx.globalAlpha = clamp(eb, 0, 1);
+    drawTacticalCard(bx, 932, 474, 304, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(74, 232, 138, 0.45)',
+      r: 16,
+      accent: b.acc,
+    });
+    drawFittedText(b.tag, bx + 24, 980, 426, {
+      weight: 800, size: 21, family: 'JetMono', color: b.acc, shadow: false,
+    });
+    drawFittedText(b.freq, bx + 24, 1064, 426, {
+      weight: 900, size: 58, family: 'FiraCond', color: MIL.bone, shadow: false,
+    });
+    // Animated spectrum bars inside each band card
+    for (let k = 0; k < 22; k++) {
+      const hBar = 14 + 44 * Math.abs(Math.sin(t * 6.4 + k * 0.65 + idx * 2.1)) * (0.55 + 0.45 * beatPulse);
+      ctx.fillStyle = idx === 0 ? 'rgba(74, 232, 138, 0.72)' : 'rgba(66, 220, 250, 0.72)';
+      ctx.fillRect(bx + 24 + k * 19, 1152 - hBar, 13, hBar);
+    }
+    drawFittedText(b.note, bx + 24, 1202, 426, {
+      weight: 700, size: 21, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // TDMA 2 Time-Slots + MotoTRBO + Protocol spec matrix
+  drawTacticalCard(PAD, 1264, SAFE_W, 566, {
+    fill: MIL.panel,
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sandHi,
+  });
+  drawFittedText('СТАНДАРТЫ СВЯЗИ И СОВМЕСТИМОСТЬ', PAD + 28, 1326, SAFE_W - 56, {
+    weight: 900, size: 36, family: 'FiraCond', color: MIL.sandHi, shadow: false,
+  });
+
+  const rows = [
+    ['ТЕХНОЛОГИЯ TDMA', '2 независимых тайм-слота (прямой канал DMO и ретранслятор)'],
+    ['СОВМЕСТИМОСТЬ', 'Полная совместимость с Motorola MotoTRBO Tier I и Tier II'],
+    ['ВОКОДЕР И ПРОТОКОЛ', 'Цифровой вокодер AMBE+2™ · ETSI TS 102 361-1, -2, -3'],
+    ['ШАГ СЕТКИ / МОДУЛЯЦИЯ', '12,5 кГц · 4FSK (7K60FXD данные / 7K60FXE данные + голос)'],
+    ['СИГНАЛИНГ И ПРИЁМ', 'Одновременный приём 2 диапазонов · CTCSS / DCS · DTMF'],
+  ];
+  rows.forEach(([k, v], rIdx) => {
+    const er = easeOutCubic(prog(lt, 0.75 + rIdx * 0.22, 0.42));
+    const ry = 1362 + rIdx * 90;
+    ctx.save();
+    ctx.globalAlpha = er;
+    roundRectPath(PAD + 24, ry, SAFE_W - 48, 76, 10);
+    ctx.fillStyle = rIdx % 2 === 0 ? 'rgba(255,255,255,0.045)' : 'rgba(74, 232, 138, 0.065)';
+    ctx.fill();
+    drawFittedText(k, PAD + 44, ry + 32, 360, {
+      weight: 800, size: 20, family: 'JetMono', color: MIL.emerald, shadow: false,
+    });
+    drawFittedText(v, PAD + 44, ry + 62, SAFE_W - 92, {
+      weight: 700, size: 23, family: 'RobotoBold', color: MIL.bone, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 3 [20.17s .. 29.98s]: AES-256 CRYPTO · 3000 CH · 120K · 8H REC
+// =========================================================================
+function renderScene3(t, beatPulse) {
+  const lt = t - CUTS[2];
+  drawSceneBackdrop(IMG.bgArmor, t, 2, { emeraldRadial: 0.23, beatPulse });
+  drawTopHUD(t, 2, 'КРИПТОЗАЩИТА AES-256 · УПРАВЛЕНИЕ ЭФИРОМ');
+
+  drawFittedText('ШИФРОВАНИЕ AES-256', PAD, 236, SAFE_W, {
+    weight: 900, size: 70, family: 'RussoOne', color: MIL.emerald,
+  });
+  drawFittedText('ЗАКРЫТЫЕ ПЕРЕГОВОРЫ И ПОЛНЫЙ КОНТРОЛЬ ГРУППЫ', PAD, 306, SAFE_W, {
+    weight: 900, size: 39, family: 'FiraCond', color: MIL.bone,
+  });
+
+  // Live deterministic hex cipher stream strip
+  drawTacticalCard(PAD, 336, SAFE_W, 88, {
+    fill: MIL.panelEmerald,
+    stroke: MIL.borderEmerald,
+    r: 12,
+    accent: MIL.emerald,
+    glow: 10 + beatPulse * 10,
+  });
+  const stepHex = Math.floor(t * 8);
+  let hexLine = 'AES-256 KEY LOCK // ';
+  const HEX = '0123456789ABCDEF';
+  for (let i = 0; i < 32; i++) {
+    const hv = Math.floor(hash2(i + stepHex * 0.37, 19) * 16) % 16;
+    hexLine += HEX[hv] + (i % 4 === 3 && i < 31 ? '·' : '');
+  }
+  drawFittedText(hexLine, PAD + 26, 390, SAFE_W - 52, {
+    weight: 800, size: 23, family: 'JetMono', color: MIL.emerald, shadow: false,
+  });
+
+  // Left upright TYT MD-UV390 hero handset + Right 6 tactical capability cards
+  drawContainImage(IMG.handset, 268, 1040 + Math.sin(t * 2.1) * 5, 395, 1140, {
+    scale: 1.0 + beatPulse * 0.015,
+    glowColor: 'rgba(74, 232, 138, 0.42)',
+    glowBlur: 30 + beatPulse * 14,
+  });
+
+  const feats = [
+    { val: 'ДО 3 000 КАНАЛОВ', sub: 'Гибкая частотная сетка подразделений и ретрансляторов', acc: MIL.sandHi },
+    { val: '120 000 КОНТАКТОВ', sub: 'Индивидуальные, групповые и общие вызовы + текстовые СМС', acc: MIL.emerald },
+    { val: 'ДО 8 ЧАСОВ ЗАПИСИ', sub: 'Встроенный цифровой регистратор переговоров в памяти рации', acc: MIL.cyan },
+    { val: 'ПРЕРЫВАНИЕ ПЕРЕДАЧИ', sub: 'Экстренный приоритет командира в занятом радиоканале', acc: MIL.amber },
+    { val: 'РЕЖИМ VFO + ЭКРАН', sub: 'Прямой ввод частоты с клавиатуры и цветной ЖК-дисплей', acc: MIL.sandHi },
+    { val: 'ЗАЩИТА ПАРОЛЕМ', sub: 'Пароль на включение, настройки, прошивку и удалённая активация', acc: MIL.emerald },
+  ];
+
+  feats.forEach((f, idx) => {
+    const ef = easeOutBack(prog(lt, 0.14 + idx * 0.22, 0.42));
+    const fy = 450 + idx * 196;
+    ctx.save();
+    ctx.globalAlpha = clamp(ef, 0, 1);
+    ctx.translate((1 - ef) * 34, 0);
+    drawTacticalCard(466, fy, 558, 178, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.48)',
+      r: 15,
+      accent: f.acc,
+    });
+    drawFittedText(f.val, 492, fy + 64, 506, {
+      weight: 900, size: 44, family: 'FiraCond', color: f.acc, shadow: false,
+    });
+    const words = f.sub.split(' ');
+    const mid = Math.ceil(words.length / 2);
+    drawFittedText(words.slice(0, mid).join(' '), 492, fy + 114, 506, {
+      weight: 700, size: 22, family: 'RobotoBold', color: MIL.bone, shadow: false,
+    });
+    drawFittedText(words.slice(mid).join(' '), 492, fy + 148, 506, {
+      weight: 700, size: 22, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Bottom bar: self-upgradable firmware note
+  drawTacticalCard(PAD, 1650, SAFE_W, 176, {
+    fill: 'rgba(13, 22, 15, 0.95)',
+    stroke: MIL.borderSand,
+    r: 16,
+    accent: MIL.sandHi,
+  });
+  drawFittedText('САМОСТОЯТЕЛЬНОЕ ОБНОВЛЕНИЕ ПРОШИВКИ ПОЛЬЗОВАТЕЛЕМ', W * 0.5, 1720, SAFE_W - 56, {
+    weight: 900, size: 34, family: 'FiraCond', color: MIL.sandHi, align: 'center', shadow: false,
+  });
+  drawFittedText('VOX · СКАНИРОВАНИЕ · ТОНАЛЬНЫЙ ВЫЗОВ · БЛОКИРОВКА КЛАВИАТУРЫ · TOT', W * 0.5, 1778, SAFE_W - 56, {
+    weight: 700, size: 21, family: 'JetMono', color: MIL.emerald, align: 'center', shadow: false,
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 4 [29.98s .. 38.53s]: 3600 mAh BATTERY + USB TYPE-C MACRO + SPARE BATTS
+// =========================================================================
+function renderScene4(t, beatPulse) {
+  const lt = t - CUTS[3];
+  drawSceneBackdrop(IMG.bgCrates, t, 3, { emeraldRadial: 0.19, beatPulse });
+  drawTopHUD(t, 3, 'АВТОНОМНОСТЬ · АКБ 3600 мА·ч · USB TYPE-C');
+
+  drawFittedText('АКБ 3600 мА·ч TYPE-C', PAD, 236, SAFE_W, {
+    weight: 900, size: 68, family: 'RussoOne', color: MIL.sandHi,
+  });
+  drawFittedText('ПРЯМАЯ ЗАРЯДКА В ПОЛЕ ОТ ПОВЕРБАНКА, БОРТСЕТИ ИЛИ СТАКАНА', PAD, 306, SAFE_W, {
+    weight: 900, size: 37, family: 'FiraCond', color: MIL.bone,
+  });
+
+  // Real macro photo of USB Type-C port on the battery base (tyt_2_typec_macro.jpg)
+  const eMac = easeOutCubic(prog(lt, 0.08, 0.48));
+  ctx.save();
+  ctx.globalAlpha = eMac;
+  drawTacticalCard(PAD, 344, SAFE_W, 560, {
+    fill: '#0d140d',
+    stroke: MIL.borderEmerald,
+    r: 18,
+    accent: MIL.emerald,
+    glow: 16,
+  });
+  drawCoverImage(IMG.photoTypeC, PAD + 10, 354, SAFE_W - 20, 540, {
+    zoom: 1.05 + 0.07 * clamp(lt / 8.5, 0, 1),
+    panY: lerp(8, -10, clamp(lt / 8.5, 0, 1)),
+    radius: 14,
+  });
+
+  // Animated reticle ring pointing dead-center onto the recessed USB Type-C port!
+  const rx = 524, ry = 602;
+  ctx.strokeStyle = MIL.emerald;
+  ctx.lineWidth = 3.5;
+  ctx.beginPath();
+  ctx.arc(rx, ry, 54 + Math.sin(t * 6.0) * 5, 0, Math.PI * 2);
+  ctx.stroke();
+
+  roundRectPath(PAD + 30, 804, SAFE_W - 60, 70, 12);
+  ctx.fillStyle = 'rgba(8, 16, 11, 0.88)';
+  ctx.fill();
+  ctx.strokeStyle = MIL.emerald;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  drawFittedText('● РАЗЪЁМ USB TYPE-C ПРЯМО НА КОРПУСЕ АККУМУЛЯТОРА BATT-TYPEC-XL', W * 0.5, 848, SAFE_W - 100, {
+    weight: 800, size: 22, family: 'JetMono', color: MIL.emerald, align: 'center', shadow: false,
+  });
+  ctx.restore();
+
+  // Middle showcase: Floating RGBA cutout of 3600mAh battery + 10W chassis pair
+  const ePair = easeOutBack(prog(lt, 0.34, 0.50));
+  drawContainImage(IMG.chassisPair, 336, 1235, 545, 560, {
+    scale: (0.92 + 0.08 * ePair) * (1 + beatPulse * 0.014),
+    alpha: clamp(ePair, 0, 1),
+    glowColor: 'rgba(213, 174, 92, 0.34)',
+    glowBlur: 24,
+  });
+
+  const battCards = [
+    { k: 'ЁМКОСТЬ ШТАТНОЙ АКБ', v: '3600 мА·ч', s: 'Li-Ion 7,4 В · 26,64 Вт·ч · BATT-TYPEC-XL', acc: MIL.emerald },
+    { k: 'ДВА СПОСОБА ЗАРЯДКИ', v: 'TYPE-C + СТАКАН', s: 'Полевой кабель USB-C и настольная база 220В', acc: MIL.sandHi },
+    { k: 'СКЛАДСКОЙ РЕЗЕРВ', v: 'ДОП. АКБ В СТРОЮ', s: 'Дополнительные аккумуляторы также в наличии', acc: MIL.amber },
+  ];
+  battCards.forEach((c, idx) => {
+    const ec = easeOutBack(prog(lt, 0.45 + idx * 0.22, 0.42));
+    const cy = 940 + idx * 204;
+    ctx.save();
+    ctx.globalAlpha = clamp(ec, 0, 1);
+    drawTacticalCard(618, cy, 406, 184, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.52)',
+      r: 15,
+      accent: c.acc,
+    });
+    drawFittedText(c.k, 642, cy + 44, 358, {
+      weight: 800, size: 18, family: 'JetMono', color: c.acc, shadow: false,
+    });
+    drawFittedText(c.v, 642, cy + 108, 358, {
+      weight: 900, size: 46, family: 'FiraCond', color: MIL.bone, shadow: false,
+    });
+    drawFittedText(c.s, 642, cy + 154, 358, {
+      weight: 700, size: 20, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Bottom bar
+  drawTacticalCard(PAD, 1574, SAFE_W, 250, {
+    fill: 'rgba(13, 22, 15, 0.95)',
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sandHi,
+  });
+  drawFittedText('СМЕННЫЙ ЗАПАС ПИТАНИЯ НА ПОЗИЦИИ', W * 0.5, 1656, SAFE_W - 60, {
+    weight: 900, size: 44, family: 'RussoOne', color: MIL.sandHi, align: 'center',
+  });
+  drawFittedText('Укомплектуем каждую рацию дополнительными АКБ с разъёмом Type-C', W * 0.5, 1726, SAFE_W - 60, {
+    weight: 700, size: 26, family: 'RobotoBold', color: MIL.bone, align: 'center', shadow: false,
+  });
+  drawFittedText('ОПТОМ И В РОЗНИЦУ  ·  С НДС И БЕЗ НДС  ·  ОТПРАВКА ПО РОССИИ', W * 0.5, 1788, SAFE_W - 60, {
+    weight: 800, size: 21, family: 'JetMono', color: MIL.emerald, align: 'center', shadow: false,
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 5 [38.53s .. 48.83s]: CAST CHASSIS · IP67 · −30…+60 °C · RF SPECS
+// =========================================================================
+function renderScene5(t, beatPulse) {
+  const lt = t - CUTS[4];
+  drawSceneBackdrop(IMG.bgRadar, t, 4, { emeraldRadial: 0.20, beatPulse });
+  drawTopHUD(t, 4, 'ЛИТОЕ ШАССИ · ЗАЩИТА IP67 · РАДИОТРАКТ');
+
+  drawFittedText('ЛИТОЕ ШАССИ · IP67', PAD, 236, SAFE_W, {
+    weight: 900, size: 70, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('ПОГРУЖЕНИЕ В ВОДУ, ГРЯЗЬ И МОРОЗ ОТ −30 °C ДО +60 °C', PAD, 306, SAFE_W, {
+    weight: 900, size: 40, family: 'FiraCond', color: MIL.cyan,
+  });
+
+  // Macro photo of die-cast aluminum chassis + orange IP67 waterproof seal + PLUS badge
+  drawTacticalCard(PAD, 344, SAFE_W, 548, {
+    fill: '#0d140e',
+    stroke: 'rgba(66, 220, 250, 0.50)',
+    r: 18,
+    accent: MIL.cyan,
+    glow: 14,
+  });
+  drawCoverImage(IMG.photoChassis, PAD + 10, 354, SAFE_W - 20, 528, {
+    zoom: 1.04 + 0.06 * clamp(lt / 10.3, 0, 1),
+    panX: lerp(14, -14, clamp(lt / 10.3, 0, 1)),
+    radius: 14,
+  });
+
+  // 6 engineering telemetry cards below chassis photo
+  const specs = [
+    ['СТЕПЕНЬ ЗАЩИТЫ', 'IP67 WATERPROOF', 'Полная пылезащита и погружение в воду'],
+    ['РАБОЧИЕ ТЕМПЕРАТУРЫ', '−30 °C … +60 °C', 'Стабильный выход на передачу в мороз и жару'],
+    ['ЧУВСТВИТЕЛЬНОСТЬ RX', '0,20 / 0,25 мкВ', 'Аналог 12 дБ SINAD · Цифра DMR BER < 5%'],
+    ['ИЗБИРАТЕЛЬНОСТЬ RX', '< −60 дБ', 'Интермодуляция < −60 дБ · Побочные > 70 дБ'],
+    ['СТАБИЛЬНОСТЬ ЧАСТОТЫ', '±1,0 ppm · 50 Ом', 'Мощность звука динамика 1 Вт @ 16 Ом'],
+    ['ГАБАРИТЫ И МАССА', '317 г · 140×66×37', 'Высота с антенной 242 мм · с клипсой 50 мм'],
+  ];
+
+  specs.forEach(([k, v, s], idx) => {
+    const col = idx % 2;
+    const row = (idx / 2) | 0;
+    const es = easeOutBack(prog(lt, 0.26 + idx * 0.16, 0.42));
+    const sx = PAD + col * 494;
+    const sy = 920 + row * 304;
+    ctx.save();
+    ctx.globalAlpha = clamp(es, 0, 1);
+    drawTacticalCard(sx, sy, 474, 282, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.48)',
+      r: 16,
+      accent: col === 0 ? MIL.cyan : MIL.emerald,
+    });
+    drawFittedText(k, sx + 24, sy + 50, 426, {
+      weight: 800, size: 19, family: 'JetMono', color: col === 0 ? MIL.cyan : MIL.emerald, shadow: false,
+    });
+    drawFittedText(v, sx + 24, sy + 132, 426, {
+      weight: 900, size: 52, family: 'FiraCond', color: MIL.bone, shadow: false,
+    });
+    const ws = s.split(' ');
+    const h = Math.ceil(ws.length / 2);
+    drawFittedText(ws.slice(0, h).join(' '), sx + 24, sy + 194, 426, {
+      weight: 700, size: 22, family: 'RobotoBold', color: MIL.sandHi, shadow: false,
+    });
+    drawFittedText(ws.slice(h).join(' '), sx + 24, sy + 232, 426, {
+      weight: 700, size: 22, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 6 [48.83s .. 57.70s]: FULL FACTORY KIT · 2 ANTENNAS (12 + 38 CM)
+// =========================================================================
+function renderScene6(t, beatPulse) {
+  const lt = t - CUTS[5];
+  drawSceneBackdrop(IMG.bgTrench, t, 5, { emeraldRadial: 0.18, beatPulse });
+  drawTopHUD(t, 5, 'КОМПЛЕКТАЦИЯ · СРАЗУ 2 АНТЕННЫ 12 И 38 СМ');
+
+  drawFittedText('ПОЛНЫЙ КОМПЛЕКТ', PAD, 236, SAFE_W, {
+    weight: 900, size: 70, family: 'RussoOne', color: MIL.sandHi,
+  });
+  drawFittedText('ВСЁ ДЛЯ РАБОТЫ В ЭФИРЕ С ПЕРВОЙ МИНУТЫ ИЗ КОРОБКИ', PAD, 306, SAFE_W, {
+    weight: 900, size: 39, family: 'FiraCond', color: MIL.bone,
+  });
+
+  // Real overhead open chassis & kit photo (tyt_4_full_kit_open_chassis.jpg)
+  drawTacticalCard(PAD, 342, SAFE_W, 520, {
+    fill: '#0e150e',
+    stroke: MIL.borderSand,
+    r: 18,
+    accent: MIL.sandHi,
+  });
+  drawCoverImage(IMG.photoOpenKit, PAD + 10, 352, SAFE_W - 20, 500, {
+    zoom: 1.03 + 0.05 * clamp(lt / 8.8, 0, 1),
+    panX: lerp(-10, 10, clamp(lt / 8.8, 0, 1)),
+    radius: 14,
+  });
+
+  // 7 numbered factory kit checklist items on left + floating RGBA kit cutout on right
+  const items = [
+    ['01', 'Радиостанция TYT MD-UV390 Plus 10W AES-256'],
+    ['02', 'Штатный АКБ Li-Ion 3600 мА·ч с портом Type-C'],
+    ['03', 'Короткая антенна 12 см + Длинная 38 см (2 шт.)'],
+    ['04', 'Настольное зарядное устройство (стакан)'],
+    ['05', 'Сетевой блок питания 220 В для базы'],
+    ['06', 'Поясная клипса на ремень или разгрузку'],
+    ['07', 'Инструкция пользователя + Заводская коробка'],
+  ];
+
+  items.forEach(([num, label], idx) => {
+    const ei = easeOutCubic(prog(lt, 0.18 + idx * 0.16, 0.36));
+    const iy = 892 + idx * 132;
+    ctx.save();
+    ctx.globalAlpha = ei;
+    drawTacticalCard(PAD, iy, 616, 114, {
+      fill: idx === 2 ? MIL.panelEmerald : MIL.panelHi,
+      stroke: idx === 2 ? MIL.borderEmerald : 'rgba(213, 174, 92, 0.44)',
+      r: 14,
+      accent: idx === 2 ? MIL.emerald : MIL.sandHi,
+    });
+    drawFittedText(num, PAD + 22, iy + 68, 64, {
+      weight: 900, size: 34, family: 'JetMono', color: idx === 2 ? MIL.emerald : MIL.sandHi, shadow: false,
+    });
+    drawFittedText(label, PAD + 94, iy + 66, 498, {
+      weight: 700, size: 25, family: 'RobotoBold', color: MIL.bone, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Right column: Floating RGBA kit front + upright handset hero
+  drawContainImage(IMG.kitFront, 868, 1140 + Math.sin(t * 2.2) * 5, 360, 460, {
+    scale: 1 + beatPulse * 0.016,
+    glowColor: 'rgba(213, 174, 92, 0.36)',
+    glowBlur: 24,
+  });
+  drawContainImage(IMG.handset, 868, 1580, 340, 490, {
+    scale: 1 + beatPulse * 0.014,
+    glowColor: 'rgba(74, 232, 138, 0.38)',
+    glowBlur: 24,
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 7 [57.70s .. 64.28s]: WHOLESALE & RETAIL · С НДС И БЕЗ НДС
+// =========================================================================
+function renderScene7(t, beatPulse) {
+  const lt = t - CUTS[6];
+  drawSceneBackdrop(IMG.bgCrates, t, 6, { emeraldRadial: 0.21, beatPulse });
+  drawTopHUD(t, 6, 'ПОСТАВКА ПАРТИЙ И ШТУЧНО · С НДС И БЕЗ НДС');
+
+  drawFittedText('ОПТОМ И В РОЗНИЦУ', PAD, 240, SAFE_W, {
+    weight: 900, size: 70, family: 'RussoOne', color: MIL.bone,
+  });
+  drawFittedText('РАБОТАЕМ С НДС И БЕЗ НДС · ОТ 1 ШТ. ДО КРУПНЫХ ПАРТИЙ', PAD, 314, SAFE_W, {
+    weight: 900, size: 40, family: 'FiraCond', color: MIL.emerald,
+  });
+
+  // Center visual showcase card combining both RGBA studio cutouts cleanly
+  drawTacticalCard(PAD, 354, SAFE_W, 560, {
+    fill: 'rgba(13, 21, 14, 0.94)',
+    stroke: MIL.borderEmerald,
+    r: 20,
+    accent: MIL.emerald,
+    glow: 16 + beatPulse * 12,
+  });
+  drawContainImage(IMG.kitFront, 345, 634, 510, 500, {
+    scale: 1 + beatPulse * 0.015,
+    glowColor: 'rgba(74, 232, 138, 0.34)',
+    glowBlur: 26,
+  });
+  drawContainImage(IMG.chassisPair, 800, 644, 430, 490, {
+    scale: 1 + beatPulse * 0.015,
+    glowColor: 'rgba(213, 174, 92, 0.34)',
+    glowBlur: 24,
+  });
+
+  const blocks = [
+    ['ДЛЯ ПОДРАЗДЕЛЕНИЙ И ВОЛОНТЁРОВ', 'Комплектация групп связью TYT MD-UV390 Plus 10W AES-256 и запасными АКБ Type-C', MIL.emerald],
+    ['ЮРЛИЦАМ И ФОНДАМ — С НДС / БЕЗ НДС', 'Полный пакет закрывающих документов, счёт, оперативная отгрузка со склада', MIL.sandHi],
+    ['ПРОВЕРКА ПЕРЕД ОТПРАВКОЙ', 'Заводские комплекты с двумя антеннами (12 и 38 см) и быстрая доставка по всей РФ', MIL.cyan],
+  ];
+
+  blocks.forEach(([h, s, acc], idx) => {
+    const eb = easeOutBack(prog(lt, 0.20 + idx * 0.22, 0.42));
+    const by = 948 + idx * 290;
+    ctx.save();
+    ctx.globalAlpha = clamp(eb, 0, 1);
+    drawTacticalCard(PAD, by, SAFE_W, 260, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.54)',
+      r: 18,
+      accent: acc,
+    });
+    drawFittedText(h, PAD + 30, by + 84, SAFE_W - 60, {
+      weight: 900, size: 46, family: 'FiraCond', color: acc, shadow: false,
+    });
+    const wds = s.split(' ');
+    const mid = Math.ceil(wds.length / 2);
+    drawFittedText(wds.slice(0, mid).join(' '), PAD + 30, by + 154, SAFE_W - 60, {
+      weight: 700, size: 26, family: 'RobotoBold', color: MIL.bone, shadow: false,
+    });
+    drawFittedText(wds.slice(mid).join(' '), PAD + 30, by + 198, SAFE_W - 60, {
+      weight: 700, size: 26, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  drawProgressBar(t);
+}
+
+// =========================================================================
+// SCENE 8 [64.28s .. 72.00s]: OFFICIAL BRAND FINALE — В ОКОПЕ (3 CHANNELS)
+// =========================================================================
+function renderScene8(t, beatPulse) {
+  const lt = t - CUTS[7];
+  const outroSurge = clamp((t - 69.68) / 2.32, 0, 1);
+  drawSceneBackdrop(IMG.bgRadar, t, 7, { emeraldRadial: 0.24 + outroSurge * 0.10, beatPulse });
+
+  // Monumental top brand banner with official GOYDA full logo
+  drawTacticalCard(PAD, 52, SAFE_W, 344, {
+    fill: 'rgba(13, 20, 13, 0.95)',
+    stroke: 'rgba(213, 174, 92, 0.68)',
+    r: 22,
+    accent: MIL.sandHi,
+    glow: 18 + outroSurge * 18,
+  });
+  drawContainImage(IMG.logoFullSand, W * 0.5, 176, 560, 176, {
+    scale: 1 + outroSurge * 0.025,
+    glowColor: 'rgba(213, 174, 92, 0.36)',
+    glowBlur: 22,
+  });
+  drawFittedText('ЗАКАЗЫВАЙТЕ TYT MD-UV390 PLUS В «В ОКОПЕ»', W * 0.5, 346, SAFE_W - 60, {
+    weight: 900, size: 42, family: 'FiraCond', color: MIL.emerald, align: 'center', shadow: false,
+  });
+
+  // Left column: ONLY the 3 Official Public Channels (Telegram, VK, Avito — 100% strict compliance!)
+  const channels = [
+    {
+      badge: 'TELEGRAM',
+      title: 't.me/vokope_ru',
+      sub: 'Оперативный заказ, наличие и консультации',
+      accent: '#42b8f6',
+    },
+    {
+      badge: 'ВКОНТАКТЕ',
+      title: 'vk.com/vokope_rus',
+      sub: 'Обзоры снаряжения, новости и прямая связь',
+      accent: MIL.cyan,
+    },
+    {
+      badge: 'МАГАЗИН НА АВИТО',
+      title: 'Официальная витрина В ОКОПЕ',
+      sub: 'avito.ru · Проверенный профиль и доставка',
+      accent: MIL.emerald,
+    },
+  ];
+
+  channels.forEach((ch, idx) => {
+    const ec = easeOutCubic(prog(lt, 0.16 + idx * 0.18, 0.44));
+    const cy = 426 + idx * 356 + (1 - ec) * 22;
+    ctx.save();
+    ctx.globalAlpha = ec;
+    drawTacticalCard(PAD, cy, 610, 328, {
+      fill: MIL.panelHi,
+      stroke: 'rgba(213, 174, 92, 0.56)',
+      r: 18,
+      accent: ch.accent,
+      glow: outroSurge * 12,
+    });
+
+    roundRectPath(PAD + 28, cy + 28, 252, 50, 9);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
+    ctx.fill();
+    ctx.strokeStyle = ch.accent;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    drawFittedText(`● ${ch.badge}`, PAD + 46, cy + 61, 216, {
+      weight: 800, size: 20, family: 'JetMono', color: ch.accent, shadow: false,
+    });
+
+    drawFittedText(ch.title, PAD + 28, cy + 158, 554, {
+      weight: 900, size: 46, family: 'FiraCond', color: MIL.bone, shadow: false,
+    });
+
+    const wds = ch.sub.split(' ');
+    const half = Math.ceil(wds.length / 2);
+    drawFittedText(wds.slice(0, half).join(' '), PAD + 28, cy + 226, 554, {
+      weight: 700, size: 24, family: 'RobotoBold', color: MIL.sandHi, shadow: false,
+    });
+    drawFittedText(wds.slice(half).join(' '), PAD + 28, cy + 262, 554, {
+      weight: 700, size: 24, family: 'RobotoBold', color: MIL.ash, shadow: false,
+    });
+    ctx.restore();
+  });
+
+  // Right hero column: Standing upright TYT MD-UV390 Plus handset cutout
+  drawContainImage(IMG.handset, 868, 962 + Math.sin(t * 2.0) * 5, 345, 1080, {
+    scale: 1.0 + outroSurge * 0.03 + beatPulse * 0.012,
+    glowColor: 'rgba(74, 232, 138, 0.48)',
+    glowBlur: 36 + outroSurge * 20,
+  });
+
+  // Bottom closing summary bar
+  drawTacticalCard(PAD, 1522, SAFE_W, 320, {
+    fill: 'rgba(15, 24, 15, 0.96)',
+    stroke: 'rgba(213, 174, 92, 0.70)',
+    r: 20,
+    accent: MIL.sandHi,
+  });
+  drawFittedText('СВЯЗЬ БЕЗ КОМПРОМИССОВ!', W * 0.5, 1618, SAFE_W - 60, {
+    weight: 900, size: 54, family: 'RussoOne', color: MIL.sandHi, align: 'center',
+  });
+  drawFittedText('10 ВТ  ·  AES-256  ·  IP67  ·  3600 мА·ч TYPE-C  ·  2 АНТЕННЫ', W * 0.5, 1700, SAFE_W - 60, {
+    weight: 900, size: 33, family: 'FiraCond', color: MIL.emerald, align: 'center', shadow: false,
+  });
+  drawFittedText('ОПТОМ И В РОЗНИЦУ · С НДС И БЕЗ НДС · ДОП. АКБ В НАЛИЧИИ', W * 0.5, 1778, SAFE_W - 60, {
+    weight: 700, size: 21, family: 'JetMono', color: MIL.bone, align: 'center', shadow: false,
+  });
+}
+
+// =========================================================================
+// STATELESS MASTER FRAME DISPATCHER (100% BIT-EXACT DETERMINISTIC)
+// =========================================================================
+function renderFrame(rawTime) {
+  const t = clamp(rawTime, 0, DURATION - 1e-4);
+  const beatPhase = (t / BEAT) % 1;
+  const beatPulse = Math.exp(-beatPhase * 5.2);
+
+  let scIdx = 0;
+  for (let i = 0; i < 8; i++) {
+    if (t >= CUTS[i] && t < CUTS[i + 1]) {
+      scIdx = i;
+      break;
+    }
+  }
+  if (t >= CUTS[8] - 1e-3) scIdx = 7;
+
+  switch (scIdx) {
+    case 0: renderScene1(t, beatPulse); break;
+    case 1: renderScene2(t, beatPulse); break;
+    case 2: renderScene3(t, beatPulse); break;
+    case 3: renderScene4(t, beatPulse); break;
+    case 4: renderScene5(t, beatPulse); break;
+    case 5: renderScene6(t, beatPulse); break;
+    case 6: renderScene7(t, beatPulse); break;
+    default: renderScene8(t, beatPulse); break;
+  }
+
+  // Crisp subtle tactical shutter flash across cut boundaries
+  if (scIdx > 0) {
+    const dtCut = t - CUTS[scIdx];
+    if (dtCut >= 0 && dtCut < 0.14) {
+      const fa = (1 - dtCut / 0.14) * 0.22;
+      ctx.fillStyle = `rgba(214, 236, 224, ${fa.toFixed(4)})`;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  // Deterministic film grain pass across entire 1080×1920 frame
+  const ox = ((Math.floor(t * 60) * 37) % 128);
+  const oy = ((Math.floor(t * 60) * 53) % 128);
+  for (let gx = -ox; gx < W; gx += 256) {
+    for (let gy = -oy; gy < H; gy += 256) {
+      ctx.drawImage(GRAIN_TILE, gx, gy);
+    }
+  }
+}
+
+window.renderAt = renderFrame;
+window.getFrameSignature = function () {
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let h = 2166136261;
+  for (let i = 0; i < d.length; i += 97) {
+    h ^= d[i];
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0).toString(16);
+};
+
+window.__READY_PROMISE = loadAllAssets().then(() => {
+  renderFrame(0);
+  return true;
+});
+</script>
+</body>
+</html>
