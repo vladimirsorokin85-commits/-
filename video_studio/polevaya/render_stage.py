@@ -28,7 +28,7 @@ ASSETS = ROOT / "assets_polevaya"
 GRADED = TMP / "graded"
 GRADED.mkdir(parents=True, exist_ok=True)
 FONTS = ROOT / "fonts"
-W, H, FPS = 1920, 1080, 30
+W, H, FPS = 1920, 1080, 60
 BASE_W, BASE_H = 2400, 1350
 TL = json.load(open(TMP / "timeline.json"))
 

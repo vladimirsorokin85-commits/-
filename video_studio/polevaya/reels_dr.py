@@ -24,11 +24,11 @@ TAIL = 2.5          # closing card with the long-video pointer (s)
 FT = {sz: ImageFont.truetype(str(FONT), sz) for sz in (118, 84, 56, 40)}
 
 REELS = [
-    {"name": "cenzor", "body": 1, "imgs": ["dr_03", "dr_05", "dr_02", "dr_04"],
+    {"name": "cenzor", "body": 1, "imgs": ["dr_03", "dr_11", "dr_05", "dr_14"],
      "hook": ["ЦЕНЗОР ЧИТАЛ", "ПИСЬМА СОЛДАТ"], "tail": "ПОЛНЫЙ ВЫПУСК «ИХ НРАВЫ» — В ДЛИННОМ ВИДЕО"},
-    {"name": "otkrytka", "body": 2, "imgs": ["dr_06", "dr_07", "dr_08", "dr_01"],
+    {"name": "otkrytka", "body": 2, "imgs": ["dr_06", "dr_13", "dr_07", "dr_12"],
      "hook": ["ОТКРЫТКА", "«Я ЖИВ»"], "tail": "ПОЛНЫЙ ВЫПУСК «ИХ НРАВЫ» — В ДЛИННОМ ВИДЕО"},
-    {"name": "pismo", "body": 3, "imgs": ["dr_09", "dr_10", "dr_02", "dr_01"],
+    {"name": "pismo", "body": 3, "imgs": ["dr_16", "dr_15", "dr_10", "dr_01"],
      "hook": ["ПИСЬМО ПРИШЛО", "ПОСЛЕ ЧЕЛОВЕКА"], "tail": "ПОЛНЫЙ ВЫПУСК «ИХ НРАВЫ» — В ДЛИННОМ ВИДЕО"},
 ]
 
@@ -84,7 +84,7 @@ def build(rc):
     seg_files = []
     for i, im in enumerate(imgs):
         sf = d / f"seg{i}.mp4"
-        run([FF, "-y", "-v", "error", "-loop", "1", "-framerate", "30", "-t", f"{seg_d:.3f}",
+        run([FF, "-y", "-v", "error", "-loop", "1", "-framerate", "60", "-t", f"{seg_d:.3f}",
              "-i", str(ASSETS / f"{im}.jpg"),
              "-filter_complex",
              "[0:v]split[a][b];"
@@ -93,7 +93,7 @@ def build(rc):
              "[b]scale=1080:-2,setsar=1[fg];"
              "[bg][fg]overlay=(W-w)/2:(H-h)/2,"
              f"fade=t=in:st=0:d=0.3,fade=t=out:st={seg_d-0.3:.3f}:d=0.3,format=yuv420p[v]",
-             "-map", "[v]", "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-r", "30",
+             "-map", "[v]", "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-r", "60",
              "-pix_fmt", "yuv420p", str(sf)])
         seg_files.append(sf)
     lst = d / "segs.txt"
@@ -129,7 +129,7 @@ def build(rc):
          "[duck][vm]amix=inputs=2:weights=1 1.2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=7[aout]",
          "-map", "[aout]", "-c:a", "aac", "-b:a", "192k", str(audio)])
     loaded = [(Image.open(pth).convert("RGBA"), x, y, t0, t1) for pth, x, y, t0, t1 in overlays]
-    W, H, FPS = 1080, 1920, 30
+    W, H, FPS = 1080, 1920, 60
     nframes = int(round(D * FPS))
     dec = subprocess.Popen([FF, "-v", "error", "-i", str(base), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
                            stdout=subprocess.PIPE)
@@ -161,7 +161,7 @@ def build(rc):
 
     # 4) branded short ident in front
     final = OUT / f"reel_{name}_9x16.mp4"
-    subprocess.run(["python3", str(ROOT / "brand" / "ident.py"), "prepend", str(body), str(final), "9x16"],
+    subprocess.run(["python3", str(ROOT / "polevaya" / "prepend60.py"), str(body), str(final), "9x16"],
                    check=True, env=dict(os.environ, IDENT="short"),
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print(name, f"voice {end:.2f}s, body {D:.2f}s, captions {len(subs)}, cut at sentence {n+1}/{len(sents)}", flush=True)
