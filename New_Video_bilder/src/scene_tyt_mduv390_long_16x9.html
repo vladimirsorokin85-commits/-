@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>В ОКОПЕ — TYT MD-UV390 Plus DMR AES-256 (1920x1080 @ 60 fps)</title>
+<style>
+  @font-face {
+    font-family: "RussoOne";
+    src: url("/fonts/RussoOne-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  @font-face {
+    font-family: "JetBrainsMono";
+    src: url("/fonts/JetBrainsMono-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #080d0a;
+  }
+  canvas#master {
+    display: block;
+    width: 1920px;
+    height: 1080px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1920" height="1080"></canvas>
+<script>
+const W = 1920, H = 1080;
+const FPS = 60;
+let DURATION = 287.4;
+const BPM_BEAT = 60.0 / 174.2;
+
+const canvas = document.getElementById("master");
+const ctx = canvas.getContext("2d", { alpha: false });
+
+const COL = {
+  bgCard: "rgba(12, 18, 14, 0.93)",
+  gold: "#e0b861",
+  goldBright: "#ffdf91",
+  green: "#56e68a",
+  greenDim: "rgba(86, 230, 138, 0.17)",
+  cyan: "#5cc9ff",
+  cyanDim: "rgba(92, 201, 255, 0.16)",
+  orange: "#ff8c33",
+  text: "#f4f7f3",
+  muted: "#a9b9ad"
+};
+
+const CHAPTERS = [
+  { id: "ch1", start: 0.000,   end: 53.960,  num: "01", title: "TYT MD-UV390 PLUS // 10 ВАТТ", sub: "Проверенная рабочая лошадка закрытой фронтовой связи" },
+  { id: "ch2", start: 53.960,  end: 112.090, num: "02", title: "РАДИОТРАКТ И ДИАПАЗОНЫ VHF/UHF", sub: "136–174 и 400–480 МГц / Прямой ввод VFO / Кодек AMBE+2" },
+  { id: "ch3", start: 112.090, end: 166.790, num: "03", title: "DMR TDMA // ШИФРОВАНИЕ AES-256", sub: "2 тайм-слота / Совместимость с MotoTRBO / Запись до 8 ч" },
+  { id: "ch4", start: 166.790, end: 223.360, num: "04", title: "АКБ 3600 мА·ч И ЗАЩИТА IP67", sub: "Прямая зарядка USB Type-C в поле / Литое шасси −30…+60 °C" },
+  { id: "ch5", start: 223.360, end: 287.400, num: "05", title: "КОМПЛЕКТ С 2 АНТЕННАМИ И ЗАКАЗ", sub: "Антенны 12 и 38 см / Поставка «В ОКОПЕ» с НДС и без НДС" }
+];
+
+const ASSET_PATHS = {
+  logoShield:  "/assets/brand/logo_shield_sand.png",
+  logoFull:    "/assets/brand/logo_full_sand.png",
+  handsetUp:   "/assets/tyt_mduv390/tyt_handset_upright_rgba.png",
+  chassisPair: "/assets/tyt_mduv390/tyt_chassis_pair_rgba.png",
+  kitFront:    "/assets/tyt_mduv390/tyt_kit_front_rgba.png",
+  dmrBadge:    "/assets/real_products/real_tyt_dmr_rgba.png"
+};
+
+const IMG = {};
+let bgStatic = null, glowGreen = null, glowGold = null, glowCyan = null;
+
+function makeGlow(rgbStr, size = 800) {
+  const c = document.createElement("canvas");
+  c.width = size; c.height = size;
+  const g = c.getContext("2d");
+  const gr = g.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  gr.addColorStop(0.0, `rgba(${rgbStr}, 0.40)`);
+  gr.addColorStop(0.5, `rgba(${rgbStr}, 0.12)`);
+  gr.addColorStop(1.0, `rgba(${rgbStr}, 0.0)`);
+  g.fillStyle = gr; g.fillRect(0, 0, size, size);
+  return c;
+}
+
+window.__READY_PROMISE = (async () => {
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+  const proms = Object.entries(ASSET_PATHS).map(([k, src]) => new Promise((res) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => { IMG[k] = img; res(); };
+    img.onerror = () => { console.warn("Failed asset:", src); IMG[k] = null; res(); };
+    img.src = src;
+  }));
+  await Promise.all(proms);
+
+  bgStatic = document.createElement("canvas");
+  bgStatic.width = W; bgStatic.height = H;
+  const bgCtx = bgStatic.getContext("2d");
+  const bgGrad = bgCtx.createLinearGradient(0, 0, W, H);
+  bgGrad.addColorStop(0.0, "#080e0a");
+  bgGrad.addColorStop(0.4, "#0c1711");
+  bgGrad.addColorStop(1.0, "#050705");
+  bgCtx.fillStyle = bgGrad;
+  bgCtx.fillRect(0, 0, W, H);
+
+  // Subtle military tactical grid
+  bgCtx.strokeStyle = "rgba(86, 230, 138, 0.035)";
+  bgCtx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 80) {
+    bgCtx.beginPath(); bgCtx.moveTo(x, 0); bgCtx.lineTo(x, H); bgCtx.stroke();
+  }
+  for (let y = 0; y <= H; y += 80) {
+    bgCtx.beginPath(); bgCtx.moveTo(0, y); bgCtx.lineTo(W, y); bgCtx.stroke();
+  }
+
+  glowGreen = makeGlow("86, 230, 138", 800);
+  glowGold  = makeGlow("224, 184, 97", 800);
+  glowCyan  = makeGlow("92, 201, 255", 800);
+})();
+
+function render(time) {
+  const t = Math.max(0, Math.min(DURATION, time));
+  ctx.drawImage(bgStatic, 0, 0);
+
+  const beatPhase = (t % BPM_BEAT) / BPM_BEAT;
+  const pulse = Math.exp(-beatPhase * 4.2);
+
+  let curCh = CHAPTERS[0];
+  for (const ch of CHAPTERS) {
+    if (t >= ch.start && t < ch.end) { curCh = ch; break; }
+  }
+  if (t >= CHAPTERS[CHAPTERS.length - 1].end) curCh = CHAPTERS[CHAPTERS.length - 1];
+
+  const st = t - curCh.start;
+  const chDur = curCh.end - curCh.start;
+
+  // TOP BAR: Brand & Title
+  ctx.save();
+  if (IMG.logoShield) {
+    ctx.drawImage(IMG.logoShield, 80, 50, 64, 64);
+  }
+  ctx.fillStyle = COL.gold;
+  ctx.font = "400 30px 'RussoOne'";
+  ctx.fillText("В ОКОПЕ", 160, 85);
+  ctx.fillStyle = COL.muted;
+  ctx.font = "600 16px 'Montserrat'";
+  ctx.fillText("ТАКТИЧЕСКАЯ РАДИОСВЯЗЬ // TYT MD-UV390 PLUS", 160, 110);
+
+  // Top right chapter indicator
+  ctx.fillStyle = "rgba(86, 230, 138, 0.15)";
+  ctx.strokeStyle = COL.green;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.roundRect(W - 360, 50, 280, 54, 10);
+  ctx.fill(); ctx.stroke();
+  ctx.fillStyle = COL.green;
+  ctx.font = "400 20px 'RussoOne'";
+  ctx.fillText(`ГЛАВА ${curCh.num} // ОБЗОР`, W - 340, 84);
+  ctx.restore();
+
+  // LEFT COLUMN: Tactical Info & Specifications (X: 80..860)
+  ctx.save();
+  const leftX = 80, topY = 160;
+  
+  // Chapter Title Box
+  ctx.fillStyle = "rgba(86, 230, 138, 0.08)";
+  ctx.strokeStyle = "rgba(86, 230, 138, 0.25)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(leftX, topY, 780, 140, 14);
+  ctx.fill(); ctx.stroke();
+
+  ctx.fillStyle = COL.green;
+  ctx.fillRect(leftX + 24, topY + 24, 6, 92);
+
+  ctx.fillStyle = COL.green;
+  ctx.font = "400 32px 'RussoOne'";
+  ctx.fillText(curCh.title, leftX + 44, topY + 62);
+
+  ctx.fillStyle = COL.text;
+  ctx.font = "600 17px 'Montserrat'";
+  ctx.fillText(curCh.sub, leftX + 44, topY + 105);
+
+  // Data Cards Grid (2x2 cards)
+  let cards = [];
+  if (curCh.id === "ch1") {
+    cards = [
+      { t: "МОЩНОСТЬ 10 ВАТТ", d: "Максимальный запас по энергетике для пробития плотной застройки и леса" },
+      { t: "ШИФРОВАНИЕ AES-256", d: "Аппаратный криптографический протокол закрывает эфир от РЭР противника" },
+      { t: "ПОРТ USB TYPE-C", d: "Зарядка батареи 3600 мА·ч напрямую от любого пауэрбанка в поле" },
+      { t: "ЗАЩИТА IP67", d: "Монолитное литое шасси, выдерживающее погружение в воду и грязь" }
+    ];
+  } else if (curCh.id === "ch2") {
+    cards = [
+      { t: "ДВА ДИАПАЗОНА", d: "136–174 МГц (VHF) и 400–480 МГц (UHF) с одновременным приёмом" },
+      { t: "ПРЯМОЙ ВВОД VFO", d: "Быстрая перестройка частоты с клавиатуры без подключения к ПК" },
+      { t: "КОДЕК AMBE+2", d: "Кристальная разборчивость голоса при интенсивном внешнем шуме" },
+      { t: "3000 КАНАЛОВ", d: "До 120 000 контактов для индивидуальных и групповых вызовов" }
+    ];
+  } else if (curCh.id === "ch3") {
+    cards = [
+      { t: "ПРОТОКОЛ DMR TDMA", d: "Два независимых тайм-слота на одной частоте (Tier I & II)" },
+      { t: "СОВМЕСТИМОСТЬ", d: "Полная интеграция в радиосети стандарта MotoTRBO" },
+      { t: "ЗАПИСЬ ДО 8 ЧАСОВ", d: "Фиксация переговоров во внутреннюю память для объективного контроля" },
+      { t: "ТЕКСТОВЫЕ SMS", d: "Передача коротких сообщений и координат в закрытом режиме" }
+    ];
+  } else if (curCh.id === "ch4") {
+    cards = [
+      { t: "АКБ 3600 мА·ч", d: "Сверхъёмкий аккумулятор обеспечивает до 24–36 часов активной связи" },
+      { t: "TYPE-C НА КОРПУСЕ", d: "Прямая зарядка в окопе без необходимости носить сетевой стакан" },
+      { t: "СТАНДАРТ IP67", d: "Полная герметичность: ливень, снегопад, погружение до 1 метра" },
+      { t: "РАБОТА −30…+60 °C", d: "Литое алюминиевое шасси эффективно отводит тепло на 10 Вт" }
+    ];
+  } else if (curCh.id === "ch5") {
+    cards = [
+      { t: "ДВЕ АНТЕННЫ", d: "Компактная 12 см для бронежилета + дальнобойный хлыст 38 см" },
+      { t: "ПОЛНЫЙ КОМПЛЕКТ", d: "Рация, АКБ Type-C, стакан, блок питания, клипса, документация" },
+      { t: "ДОПОЛНИТЕЛЬНЫЕ АКБ", d: "Сменные аккумуляторы всегда в наличии для быстрой ротации" },
+      { t: "ПОСТАВКА «В ОКОПЕ»", d: "Опт и розница (0 ₽), безналичный расчёт с НДС и без НДС, доставка по РФ" }
+    ];
+  }
+
+  const cW = 380, cH = 145;
+  cards.forEach((c, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const cX = leftX + col * 400;
+    const cY = topY + 160 + row * 165;
+
+    ctx.fillStyle = COL.bgCard;
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(cX, cY, cW, cH, 12);
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = COL.goldBright;
+    ctx.font = "400 18px 'RussoOne'";
+    ctx.fillText(c.t, cX + 20, cY + 38);
+
+    ctx.fillStyle = COL.muted;
+    ctx.font = "500 15px 'Montserrat'";
+    const words = c.d.split(" ");
+    let l1 = "", l2 = "";
+    for (const w of words) {
+      if ((l1 + w).length < 28) l1 += w + " ";
+      else l2 += w + " ";
+    }
+    ctx.fillText(l1.trim(), cX + 20, cY + 74);
+    ctx.fillText(l2.trim(), cX + 20, cY + 102);
+  });
+
+  // Bottom Timeline Progress in Left Column
+  const pbY = topY + 510;
+  ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+  ctx.fillRect(leftX, pbY, 780, 8);
+  const chProg = st / chDur;
+  ctx.fillStyle = COL.green;
+  ctx.fillRect(leftX, pbY, 780 * chProg, 8);
+
+  ctx.fillStyle = COL.muted;
+  ctx.font = "600 14px 'JetBrainsMono'";
+  ctx.fillText(`ЭТАП: ${curCh.title} // ВРЕМЯ: ${t.toFixed(1)}s / ${DURATION.toFixed(1)}s`, leftX, pbY + 32);
+  ctx.restore();
+
+  // RIGHT COLUMN: Studio 3D Hardware Display (X: 920..1840, Y: 140..960)
+  ctx.save();
+  const rightCenterX = 1380;
+  const rightCenterY = 530;
+
+  // Background glow
+  if (curCh.id === "ch1" || curCh.id === "ch4") {
+    ctx.drawImage(glowGreen, rightCenterX - 400, rightCenterY - 400);
+  } else if (curCh.id === "ch2") {
+    ctx.drawImage(glowCyan, rightCenterX - 400, rightCenterY - 400);
+  } else {
+    ctx.drawImage(glowGold, rightCenterX - 400, rightCenterY - 400);
+  }
+
+  const fl = Math.sin(st * 1.5) * 12;
+  const sc = 0.95 + pulse * 0.015;
+
+  ctx.translate(rightCenterX, rightCenterY + fl);
+  ctx.scale(sc, sc);
+
+  if (curCh.id === "ch1") {
+    if (IMG.handsetUp) ctx.drawImage(IMG.handsetUp, -400, -480, 800, 960);
+  } else if (curCh.id === "ch2") {
+    if (IMG.dmrBadge) ctx.drawImage(IMG.dmrBadge, -420, -420, 840, 840);
+  } else if (curCh.id === "ch3") {
+    if (IMG.chassisPair) ctx.drawImage(IMG.chassisPair, -500, -380, 1000, 760);
+  } else if (curCh.id === "ch4") {
+    if (IMG.chassisPair) ctx.drawImage(IMG.chassisPair, -500, -380, 1000, 760);
+  } else if (curCh.id === "ch5") {
+    if (IMG.kitFront) ctx.drawImage(IMG.kitFront, -540, -400, 1080, 800);
+  }
+  ctx.restore();
+
+  // BOTTOM BANNER: Channel Contacts & Store Info
+  ctx.save();
+  const botY = H - 75;
+  ctx.fillStyle = "rgba(8, 14, 10, 0.96)";
+  ctx.fillRect(0, botY - 15, W, 90);
+  ctx.strokeStyle = "rgba(224, 184, 97, 0.25)";
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, botY - 15); ctx.lineTo(W, botY - 15); ctx.stroke();
+
+  ctx.fillStyle = COL.gold;
+  ctx.font = "400 20px 'RussoOne'";
+  ctx.fillText("ЭКИПИРОВКА «В ОКОПЕ»:", 80, botY + 28);
+
+  ctx.fillStyle = COL.text;
+  ctx.font = "600 18px 'Montserrat'";
+  ctx.fillText("ТЕЛЕГРАМ: T.ME/VOKOPE_RU   |   ВК: VK.COM/VOKOPE_RUS   |   АВИТО: ОФИЦИАЛЬНЫЙ МАГАЗИН", 340, botY + 28);
+
+  ctx.fillStyle = COL.green;
+  ctx.font = "400 20px 'RussoOne'";
+  ctx.fillText("ОПТ И РОЗНИЦА // С НДС И БЕЗ НДС", W - 450, botY + 28);
+  ctx.restore();
+}
+
+window.getFrameSignature = function() {
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < d.length; i += 64) { h ^= d[i]; h = Math.imul(h, 16777619) >>> 0; }
+  return h.toString(16);
+};
+
+window.renderAt = render;
+window.renderForTime = render;
+window.TOTAL_DURATION = DURATION;
+</script>
+</body>
+</html>
