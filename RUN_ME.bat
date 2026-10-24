@@ -1,58 +1,58 @@
 @echo off
 chcp 65001 >nul
-title Исследование рынка YouTube - В Окопе
+title YouTube Market Research - V Okopé
 
 echo ========================================
-echo  ИССЛЕДОВАНИЕ РЫНКА YOUTUBE "В ОКОПЕ"
+echo  YOUTUBE MARKET RESEARCH "V OKOPE"
 echo ========================================
 echo.
 
-:: Проверка Python
+:: Check Python
 where python >nul 2>&1
 if errorlevel 1 (
-    echo ОШИБКА: Python не найден.
-    echo Установите Python с сайта python.org
-    echo и поставьте галочку "Add Python to PATH".
+    echo ERROR: Python not found.
+    echo Install Python from python.org
+    echo and check "Add Python to PATH".
     echo.
     pause
     exit /b 1
 )
 
-echo [1/5] Python найден
+echo [1/5] Python found
 python --version
 
-:: Установка yt-dlp
+:: Install yt-dlp
 echo.
-echo [2/5] Установка yt-dlp...
+echo [2/5] Installing yt-dlp...
 python -m pip install -U yt-dlp --quiet
 
-:: Папка для результата
+:: Create folder
 if not exist "market_research" mkdir market_research
 cd market_research
 
-:: Скачивание файлов с GitHub
+:: Download files using Python (works on any Windows)
 echo.
-echo [3/5] Скачивание файлов...
-powershell -command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/6fcfd4f9-repo/find_outliers.py' -OutFile 'find_outliers.py'"
-powershell -command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/6fcfd4f9-repo/MILITARY_KEYWORDS.txt' -OutFile 'MILITARY_KEYWORDS.txt'"
+echo [3/5] Downloading files...
+python -c "import urllib.request; urllib.request.urlretrieve('https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/6fcfd4f9-repo/find_outliers.py', 'find_outliers.py')"
+python -c "import urllib.request; urllib.request.urlretrieve('https://raw.githubusercontent.com/vladimirsorokin85-commits/-/arena/6fcfd4f9-repo/MILITARY_KEYWORDS.txt', 'MILITARY_KEYWORDS.txt')"
 
-:: Запуск сбора данных
+:: Run collection
 echo.
-echo [4/5] Запуск сбора данных (подождите несколько минут)...
+echo [4/5] Collecting data (wait a few minutes)...
 python find_outliers.py --keywords-file MILITARY_KEYWORDS.txt --out outliers.csv
 
-:: Открытие результата
+:: Open result
 echo.
-echo [5/5] Готово!
+echo [5/5] Done!
 if exist outliers.csv (
     start outliers.csv
-    echo Файл outliers.csv открыт в Excel.
+    echo File outliers.csv opened in Excel.
 ) else (
-    echo Файл не создан. Проверьте интернет-подключение.
+    echo File not created. Check internet connection.
 )
 
 echo.
 echo ========================================
-echo  ГОТОВО. Смотрите файл outliers.csv
+echo  DONE. See outliers.csv
 echo ========================================
 pause
