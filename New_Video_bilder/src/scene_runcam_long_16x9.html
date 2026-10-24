@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>В ОКОПЕ — RunCam Helmet 2 Widescreen Review (1920x1080 @ 60 fps)</title>
+<style>
+  @font-face {
+    font-family: "RussoOne";
+    src: url("/fonts/RussoOne-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  @font-face {
+    font-family: "JetBrainsMono";
+    src: url("/fonts/JetBrainsMono-VF.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #080d0a;
+  }
+  canvas#master {
+    display: block;
+    width: 1920px;
+    height: 1080px;
+  }
+</style>
+</head>
+<body>
+<canvas id="master" width="1920" height="1080"></canvas>
+<script>
+const W = 1920, H = 1080;
+const FPS = 60;
+let DURATION = 260.0;
+const BPM_BEAT = 60.0 / 174.2;
+
+const canvas = document.getElementById("master");
+const ctx = canvas.getContext("2d", { alpha: false });
+
+const COL = {
+  bgCard: "rgba(12, 18, 14, 0.93)",
+  orange: "#ff6a00",
+  orangeBright: "#ff8c33",
+  orangeGlow: "rgba(255, 106, 0, 0.35)",
+  gold: "#e0b861",
+  goldBright: "#ffdf91",
+  green: "#56e68a",
+  greenDim: "rgba(86, 230, 138, 0.17)",
+  cyan: "#5cc9ff",
+  cyanDim: "rgba(92, 201, 255, 0.16)",
+  text: "#f4f7f3",
+  muted: "#a9b9ad"
+};
+
+const CHAPTERS = [
+  { id: "ch1", start: 0.000,   end: 38.360, num: "01", title: "ПРОБЛЕМА ЭКШН-КАМЕР В БОЮ", sub: "Почему классические кирпичи слепят и цепляются за броню" },
+  { id: "ch2", start: 38.360,  end: 86.800, num: "02", title: "ГИБКИЙ ОБЪЕКТИВ И СВЕТОСИЛА F/1.6", sub: "Направление по линии взгляда и чистый 1080p@60fps в сумерках" },
+  { id: "ch3", start: 86.800,  end: 140.400, num: "03", title: "ТАКТИЛЬНЫЙ СЛАЙДЕР И ВИБРООТКЛИК", sub: "Управление вслепую в штурмовых перчатках / 0% демаскировки" },
+  { id: "ch4", start: 140.400, end: 197.500, num: "04", title: "ПИТАНИЕ 18650 И СТАНДАРТ IP67", sub: "До 8 часов записи без проводов и герметичный корпус" },
+  { id: "ch5", start: 197.500, end: 260.000, num: "05", title: "ЗАВОДСКОЙ КОМПЛЕКТ И ЗАКАЗ В ОКОПЕ", sub: "Крепления под ARC-rail и велкро / Опт и розница с гарантией" }
+];
+
+const ASSET_PATHS = {
+  logoShield: "/assets/brand/logo_shield_sand.png",
+  logoFull:   "/assets/brand/logo_full_sand.png",
+  heroIso:    "/assets/runcam_helmet2/runcam_hero_iso_rgba.png",
+  lensClose:  "/assets/runcam_helmet2/runcam_lens_closeup_rgba.png",
+  sideCtrls:  "/assets/runcam_helmet2/runcam_side_controls_rgba.png",
+  mountRear:  "/assets/runcam_helmet2/runcam_mount_rear_rgba.png",
+  mountSide:  "/assets/runcam_helmet2/runcam_mount_side_rgba.png",
+  fullKit:    "/assets/runcam_helmet2/runcam_full_kit_rgba.png",
+  boxUnbox:   "/assets/runcam_helmet2/runcam_unboxing_rgba.png"
+};
+
+const IMG = {};
+let bgStatic = null, glowOrange = null, glowGreen = null, glowCyan = null;
+
+function makeGlow(rgbStr, size = 800) {
+  const c = document.createElement("canvas");
+  c.width = size; c.height = size;
+  const g = c.getContext("2d");
+  const gr = g.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  gr.addColorStop(0.0, `rgba(${rgbStr}, 0.40)`);
+  gr.addColorStop(0.5, `rgba(${rgbStr}, 0.12)`);
+  gr.addColorStop(1.0, `rgba(${rgbStr}, 0.0)`);
+  g.fillStyle = gr; g.fillRect(0, 0, size, size);
+  return c;
+}
+
+window.__READY_PROMISE = (async () => {
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+  const proms = Object.entries(ASSET_PATHS).map(([k, src]) => new Promise((res) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => { IMG[k] = img; res(); };
+    img.onerror = () => { console.warn("Failed asset:", src); IMG[k] = null; res(); };
+    img.src = src;
+  }));
+  await Promise.all(proms);
+
+  // Background canvas
+  bgStatic = document.createElement("canvas");
+  bgStatic.width = W; bgStatic.height = H;
+  const bgCtx = bgStatic.getContext("2d");
+  const bgGrad = bgCtx.createLinearGradient(0, 0, W, H);
+  bgGrad.addColorStop(0.0, "#080e0b");
+  bgGrad.addColorStop(0.4, "#0d1812");
+  bgGrad.addColorStop(1.0, "#050705");
+  bgCtx.fillStyle = bgGrad;
+  bgCtx.fillRect(0, 0, W, H);
+
+  // Subtle military grid
+  bgCtx.strokeStyle = "rgba(86, 230, 138, 0.035)";
+  bgCtx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 80) {
+    bgCtx.beginPath(); bgCtx.moveTo(x, 0); bgCtx.lineTo(x, H); bgCtx.stroke();
+  }
+  for (let y = 0; y <= H; y += 80) {
+    bgCtx.beginPath(); bgCtx.moveTo(0, y); bgCtx.lineTo(W, y); bgCtx.stroke();
+  }
+
+  glowOrange = makeGlow("255, 106, 0", 800);
+  glowGreen  = makeGlow("86, 230, 138", 800);
+  glowCyan   = makeGlow("92, 201, 255", 800);
+})();
+
+function render(time) {
+  const t = Math.max(0, Math.min(DURATION, time));
+  ctx.drawImage(bgStatic, 0, 0);
+
+  const beatPhase = (t % BPM_BEAT) / BPM_BEAT;
+  const pulse = Math.exp(-beatPhase * 4.2);
+
+  // Current chapter
+  let curCh = CHAPTERS[0];
+  for (const ch of CHAPTERS) {
+    if (t >= ch.start && t < ch.end) { curCh = ch; break; }
+  }
+  if (t >= CHAPTERS[CHAPTERS.length - 1].end) curCh = CHAPTERS[CHAPTERS.length - 1];
+
+  const st = t - curCh.start;
+  const chDur = curCh.end - curCh.start;
+
+  // TOP BAR: Brand & Title
+  ctx.save();
+  if (IMG.logoShield) {
+    ctx.drawImage(IMG.logoShield, 80, 50, 64, 64);
+  }
+  ctx.fillStyle = COL.gold;
+  ctx.font = "400 30px 'RussoOne'";
+  ctx.fillText("В ОКОПЕ", 160, 85);
+  ctx.fillStyle = COL.muted;
+  ctx.font = "600 16px 'Montserrat'";
+  ctx.fillText("ВОЕННО-ТАКТИЧЕСКИЙ РАЗБОР // RUNCAM HELMET 2", 160, 110);
+
+  // Top right chapter indicator
+  ctx.fillStyle = "rgba(255, 106, 0, 0.15)";
+  ctx.strokeStyle = COL.orange;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.roundRect(W - 360, 50, 280, 54, 10);
+  ctx.fill(); ctx.stroke();
+  ctx.fillStyle = COL.orangeBright;
+  ctx.font = "400 20px 'RussoOne'";
+  ctx.fillText(`ГЛАВА ${curCh.num} // ОБЗОР`, W - 340, 84);
+  ctx.restore();
+
+  // LEFT COLUMN: Tactical Info & Specifications (X: 80..860)
+  ctx.save();
+  const leftX = 80, topY = 160;
+  
+  // Chapter Title Box
+  ctx.fillStyle = "rgba(255, 106, 0, 0.08)";
+  ctx.strokeStyle = "rgba(255, 106, 0, 0.25)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(leftX, topY, 780, 140, 14);
+  ctx.fill(); ctx.stroke();
+
+  ctx.fillStyle = COL.orange;
+  ctx.fillRect(leftX + 24, topY + 24, 6, 92);
+
+  ctx.fillStyle = COL.orangeBright;
+  ctx.font = "400 34px 'RussoOne'";
+  ctx.fillText(curCh.title, leftX + 44, topY + 62);
+
+  ctx.fillStyle = COL.text;
+  ctx.font = "600 18px 'Montserrat'";
+  ctx.fillText(curCh.sub, leftX + 44, topY + 105);
+
+  // Data Cards Grid (2x2 cards)
+  let cards = [];
+  if (curCh.id === "ch1") {
+    cards = [
+      { t: "ВЫНОСНОЙ МОДУЛЬ", d: "Объектив на гибкой шейке выставляется строго по зрачку оператора" },
+      { t: "НИЗКИЙ ПРОФИЛЬ", d: "Блок питания садится в тень шлема, исключая зацепы за люки и ветки" },
+      { t: "РАБОЧИЙ РАКУРС", d: "Камера смотрит туда же, куда направлен ствол и взгляд стрелка" },
+      { t: "БЫСТРЫЙ СЪЁМ", d: "Моментальное отсоединение от каски при необходимости" }
+    ];
+  } else if (curCh.id === "ch2") {
+    cards = [
+      { t: "СВЕТОСИЛА F/1.6", d: "Максимальный захват фотонов при работе в сумерках и тёмных помещениях" },
+      { t: "1080P @ 60 FPS", d: "Высокая частота кадров даёт плавную картинку без строба при отдаче" },
+      { t: "ШИРОКИЙ УГОЛ", d: "Оптимальный сектор обзора без эффекта рыбьего глаза по краям" },
+      { t: "МЕТАЛЛООПЛЁТКА", d: "Бронированная гибкая трубка надёжно держит заданный угол наклона" }
+    ];
+  } else if (curCh.id === "ch3") {
+    cards = [
+      { t: "СЛАЙДЕР ВКЛЮЧЕНИЯ", d: "Массивный рифлёный ползунок переключается в толстых зимних перчатках" },
+      { t: "ВИБРОСИГНАЛИЗАЦИЯ", d: "Тактильный отклик в шлем при старте записи и критическом заряде" },
+      { t: "100% МАСКИРОВКА", d: "Полное отсутствие светящихся светодиодов, демаскирующих в ПНВ" },
+      { t: "WI-FI МОДУЛЬ", d: "Синхронизация со смартфоном для настройки ракурса и скачивания видео" }
+    ];
+  } else if (curCh.id === "ch4") {
+    cards = [
+      { t: "БАТАРЕЯ 18650", d: "Стандартный сменный аккумулятор высокой ёмкости (2000+ мА·ч)" },
+      { t: "ДО 8 ЧАСОВ ЗАПИСИ", d: "Полный рабочий выход без висящих проводов и пауэрбанков на экипировке" },
+      { t: "ЗАЩИТА IP67", d: "Абсолютная герметичность: ливень, снегопад, погружение в грязь" },
+      { t: "АРМИРОВАННЫЙ КОРПУС", d: "Ударопрочный полимер выдерживает падения и удары об осколки" }
+    ];
+  } else if (curCh.id === "ch5") {
+    cards = [
+      { t: "ПОЛНЫЙ КОМПЛЕКТ", d: "Камера, 18650, шнур, 2 крепления, велкро-панели, отвёртка, винты" },
+      { t: "СОВМЕСТИМОСТЬ", d: "Монтаж на ARC-rail, молле-системы, шрауд или купол шлема" },
+      { t: "ГАРАНТИЯ И СЕРВИС", d: "Проверка каждого комплекта перед отправкой, гарантия магазина" },
+      { t: "ПОСТАВКА «В ОКОПЕ»", d: "Опт и розница, работа с юрлицами с НДС/без НДС, отправка по РФ" }
+    ];
+  }
+
+  const cW = 380, cH = 145;
+  cards.forEach((c, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const cX = leftX + col * 400;
+    const cY = topY + 160 + row * 165;
+
+    ctx.fillStyle = COL.bgCard;
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(cX, cY, cW, cH, 12);
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = COL.goldBright;
+    ctx.font = "400 18px 'RussoOne'";
+    ctx.fillText(c.t, cX + 20, cY + 38);
+
+    ctx.fillStyle = COL.muted;
+    ctx.font = "500 15px 'Montserrat'";
+    // Wrap description into 2 lines
+    const words = c.d.split(" ");
+    let l1 = "", l2 = "";
+    for (const w of words) {
+      if ((l1 + w).length < 28) l1 += w + " ";
+      else l2 += w + " ";
+    }
+    ctx.fillText(l1.trim(), cX + 20, cY + 74);
+    ctx.fillText(l2.trim(), cX + 20, cY + 102);
+  });
+
+  // Bottom Timeline Progress in Left Column
+  const pbY = topY + 510;
+  ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+  ctx.fillRect(leftX, pbY, 780, 8);
+  const chProg = st / chDur;
+  ctx.fillStyle = COL.orange;
+  ctx.fillRect(leftX, pbY, 780 * chProg, 8);
+
+  ctx.fillStyle = COL.muted;
+  ctx.font = "600 14px 'JetBrainsMono'";
+  ctx.fillText(`ЭТАП: ${curCh.title} // ВРЕМЯ: ${t.toFixed(1)}s / ${DURATION.toFixed(1)}s`, leftX, pbY + 32);
+  ctx.restore();
+
+  // RIGHT COLUMN: Studio 3D Hardware Display (X: 920..1840, Y: 140..960)
+  ctx.save();
+  const rightCenterX = 1380;
+  const rightCenterY = 540;
+
+  // Background glow
+  if (curCh.id === "ch1" || curCh.id === "ch3") {
+    ctx.drawImage(glowOrange, rightCenterX - 400, rightCenterY - 400);
+  } else if (curCh.id === "ch2") {
+    ctx.drawImage(glowCyan, rightCenterX - 400, rightCenterY - 400);
+  } else {
+    ctx.drawImage(glowGreen, rightCenterX - 400, rightCenterY - 400);
+  }
+
+  // Floating hardware animation
+  const fl = Math.sin(st * 1.5) * 12;
+  const sc = 0.95 + pulse * 0.015;
+
+  ctx.translate(rightCenterX, rightCenterY + fl);
+  ctx.scale(sc, sc);
+
+  if (curCh.id === "ch1") {
+    if (IMG.heroIso) ctx.drawImage(IMG.heroIso, -550, -550, 1100, 1100);
+  } else if (curCh.id === "ch2") {
+    if (IMG.lensClose) {
+      ctx.drawImage(IMG.lensClose, -540, -540, 1080, 1080);
+      // HUD Optical targeting reticle
+      ctx.strokeStyle = "rgba(92, 201, 255, 0.4)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(0, 0, 300, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  } else if (curCh.id === "ch3") {
+    if (IMG.sideCtrls) ctx.drawImage(IMG.sideCtrls, -530, -530, 1060, 1060);
+  } else if (curCh.id === "ch4") {
+    if (IMG.mountRear) ctx.drawImage(IMG.mountRear, -520, -520, 1040, 1040);
+  } else if (curCh.id === "ch5") {
+    if (IMG.fullKit) ctx.drawImage(IMG.fullKit, -500, -500, 1000, 1000);
+  }
+  ctx.restore();
+
+  // BOTTOM BANNER: Channel Contacts & Store Info
+  ctx.save();
+  const botY = H - 75;
+  ctx.fillStyle = "rgba(8, 14, 10, 0.96)";
+  ctx.fillRect(0, botY - 15, W, 90);
+  ctx.strokeStyle = "rgba(224, 184, 97, 0.25)";
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, botY - 15); ctx.lineTo(W, botY - 15); ctx.stroke();
+
+  ctx.fillStyle = COL.gold;
+  ctx.font = "400 20px 'RussoOne'";
+  ctx.fillText("ЭКИПИРОВКА «В ОКОПЕ»:", 80, botY + 28);
+
+  ctx.fillStyle = COL.text;
+  ctx.font = "600 18px 'Montserrat'";
+  ctx.fillText("ТЕЛЕГРАМ: T.ME/VOKOPE_RU   |   ВК: VK.COM/VOKOPE_RUS   |   АВИТО: ОФИЦИАЛЬНЫЙ МАГАЗИН", 340, botY + 28);
+
+  ctx.fillStyle = COL.orangeBright;
+  ctx.font = "400 20px 'RussoOne'";
+  ctx.fillText("БЕЗ ПРЕДОПЛАТЫ // ДОСТАВКА ПО РФ", W - 420, botY + 28);
+  ctx.restore();
+}
+
+
+window.getFrameSignature = function() {
+  const d = ctx.getImageData(0, 0, W, H).data;
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < d.length; i += 64) { h ^= d[i]; h = Math.imul(h, 16777619) >>> 0; }
+  return h.toString(16);
+};
+
+window.renderAt = render; window.renderForTime = render;
+window.TOTAL_DURATION = DURATION;
+</script>
+</body>
+</html>

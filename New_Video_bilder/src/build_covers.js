@@ -197,6 +197,24 @@ const COVER_SPECS = [
     ],
   },
   {
+    slug: "runcam_helmet2",
+    kicker: "НОВИНКА // ТАКТИЧЕСКАЯ ЭКИПИРОВКА",
+    line1: "RUNCAM HELMET 2",
+    line2: "ГИБКИЙ ОБЪЕКТИВ // F/1.6",
+    accent: "#ff6a00",
+    glow: "rgba(255, 106, 0, 0.35)",
+    bg: "/assets/images/bg_radar_dusk.jpg",
+    chips: ["ГИБКАЯ ШЕЙКА ПО ЛИНИИ ВЗГЛЯДА", "8 ЧАСОВ ЗАПИСИ ОТ 18650", "IP67 / ВИБРООТКЛИК БЕЗ ДИОДОВ"],
+    subline: "1080P @ 60 FPS · СВЕТОСИЛА F/1.6 · СЛАЙДЕР В ПЕРЧАТКАХ · В НАЛИЧИИ В ОКОПЕ",
+    items16: [
+      { src: "/assets/runcam_helmet2/runcam_hero_iso_rgba.png", x: 1060, y: 90, w: 800, h: 800, alpha: 1.00 },
+      { src: "/assets/runcam_helmet2/runcam_full_kit_rgba.png", x: 1390, y: 490, w: 500, h: 500, alpha: 0.94 },
+    ],
+    items9: [
+      { src: "/assets/runcam_helmet2/runcam_hero_iso_rgba.png", x: 90, y: 560, w: 900, h: 900, alpha: 1.00 },
+    ],
+  },
+  {
     slug: "pole31",
     kicker: "НОВИНКА НПО «КИЛОВАТТ» · СТАНЦИЯ РЭБ",
     line1: "«ПОЛЕ-31» · 240 ВТ",
