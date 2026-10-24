@@ -30,7 +30,8 @@ from pathlib import Path
 def run_yt_dlp_search(query: str, limit: int):
     """Один вызов yt-dlp для поиска по запросу. Возвращает список видео."""
     cmd = [
-        "yt-dlp",
+        sys.executable,
+        "-m", "yt_dlp",
         "--skip-download",
         "--print-json",
         "--max-downloads", str(limit),
@@ -61,7 +62,7 @@ def run_yt_dlp_search(query: str, limit: int):
 
 def get_channel_subscribers(channel_url: str):
     """Подписчики канала (отдельный медленный запрос, только при --with-subs)."""
-    cmd = ["yt-dlp", "--skip-download", "--print-json", channel_url]
+    cmd = [sys.executable, "-m", "yt_dlp", "--skip-download", "--print-json", channel_url]
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
         if result.stdout.strip():
