@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a separate vertical 40-second Reel announcing the S02 tone shift."""
+"""Build a separate vertical 40-second story teaser for S02E01."""
 from __future__ import annotations
 
 import hashlib
@@ -16,7 +16,7 @@ SEASON = HERE.parent
 SEASON_01 = SEASON.parent / "season_01"
 EPISODE = SEASON / "episode_01"
 INTRO_IMAGE = SEASON_01 / "series_intro_alternative.png"
-EPISODE_IMAGE = EPISODE / "images" / "episode_01_cover.png"
+EPISODE_IMAGE = EPISODE / "images" / "episode_01_cover_v2.png"
 PUMP_IMAGE = EPISODE / "images" / "pump_valve_macro.png"
 SPA_IMAGE = EPISODE / "images" / "abandoned_spa_service_bay.png"
 INTRO_STING = SEASON_01 / "series_micro_jingle.wav"
@@ -35,32 +35,36 @@ VOICE_GAP_SECONDS = 0.8
 CTA_SECONDS = 4.0
 
 BULQ_TEXT = (
-    "Первый сезон я называл хлам «лотом с потенциалом». Хватит вежливости. "
-    "Дальше — взрослая грязная чёрная комедия: мат, пошлость и космическое дерьмо. "
-    "Первая серия уже пахнет закрытым спа. Мявскис, держи фильтр. Не нюхай, это товар."
+    "В спа любовь продавали по минутам, уборку — секс-работникам. "
+    "За фильтром «Лунный хохот»: запечатанная капсула с внеземным дурманом. "
+    "Я хотел понюхать, но Мявскис отобрал мой нос. "
+    "Первый лот сезона: один насос, ноль бесплатных проб."
 )
 MEOWSKIS_TEXT = (
-    "Проверки останутся точными. Но утечка — не «ароматическое событие», "
-    "а ебаный насос, собранный задом наперёд. За «свежесть» всё ещё списывают жетоны. "
-    "Лот подтвердит давление. Запах Бульк назовёт сам. «Премиальная вонь» — старт второго сезона."
+    "Реестр считает аэрозоль контролируемым, но состав неизвестен. "
+    "Пломба цела; разрешения на перепродажу нет. Капсулу сдаём отдельно. "
+    "Один насос прошёл короткий тест, одиннадцать не проверены. "
+    "Хозяин исчез; счёт за уборку ищет работников."
 )
 BULQ_CAPTIONS = [
-    "Первый сезон я называл хлам",
-    "«лотом с потенциалом». Хватит вежливости.",
-    "Дальше — взрослая грязная чёрная комедия:",
-    "мат, пошлость и космическое дерьмо.",
-    "Первая серия уже пахнет закрытым спа.",
-    "Мявскис, держи фильтр.",
-    "Не нюхай, это товар.",
+    "В спа любовь продавали по минутам,",
+    "уборку — секс-работникам.",
+    "За фильтром «Лунный хохот»:",
+    "запечатанная капсула с внеземным дурманом.",
+    "Я хотел понюхать,",
+    "но Мявскис отобрал мой нос.",
+    "Первый лот сезона: один насос,",
+    "ноль бесплатных проб.",
 ]
 MEOWSKIS_CAPTIONS = [
-    "Проверки останутся точными.",
-    "Но утечка — не «ароматическое событие»,",
-    "а ебаный насос, собранный задом наперёд.",
-    "За «свежесть» всё ещё списывают жетоны.",
-    "Лот подтвердит давление.",
-    "Запах Бульк назовёт сам.",
-    "«Премиальная вонь» — старт второго сезона.",
+    "Реестр считает аэрозоль контролируемым,",
+    "но состав неизвестен.",
+    "Пломба цела; разрешения на перепродажу нет.",
+    "Капсулу сдаём отдельно.",
+    "Один насос прошёл короткий тест,",
+    "одиннадцать не проверены.",
+    "Хозяин исчез; счёт за уборку",
+    "ищет работников.",
 ]
 
 
@@ -190,7 +194,7 @@ def write_captions(cues: list[Cue], meowskis_end: float) -> None:
         "Style: CTA,DejaVu Sans,34,&H00F7EBD4,&H000000FF,&HCC071115,&H99070D11,-1,0,0,0,100,100,0,0,1,3,1,2,48,48,260,1",
         "", "[Events]",
         "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
-        f"Dialogue: 0,{ass_stamp(TITLE_SECONDS)},{ass_stamp(TARGET_SECONDS-CTA_SECONDS)},Brand,,0,0,0,,ВТОРОЙ СЕЗОН • БЕЗ ЭВФЕМИЗМОВ",
+        f"Dialogue: 0,{ass_stamp(TITLE_SECONDS)},{ass_stamp(TARGET_SECONDS-CTA_SECONDS)},Brand,,0,0,0,,СПА ЗАКРЫТО • АВТОСПИСАНИЕ РАБОТАЕТ",
         f"Dialogue: 1,{ass_stamp(TARGET_SECONDS-CTA_SECONDS)},{ass_stamp(TARGET_SECONDS)},CTA,,0,0,0,,ПРЕМИАЛЬНАЯ ВОНЬ • ПЕРВАЯ СЕРИЯ",
     ]
     for index, cue in enumerate(cues, 1):
@@ -329,7 +333,7 @@ def main() -> None:
     if abs(duration - TARGET_SECONDS) > 0.08:
         raise RuntimeError(f"Итоговый Reel длится {duration:.3f} с, ожидалось 40 с.")
     report = {
-        "title": "Бульк меняет риторику — второй сезон без сахарной пудры",
+        "title": "Бордель закрылся, автосписание — нет: Премиальная вонь",
         "duration_seconds": round(duration, 3),
         "video": video,
         "audio": audio,
@@ -337,7 +341,7 @@ def main() -> None:
         "speech_seconds": round(bulq_seconds + meowskis_seconds, 3),
         "speech_share_estimate": round((bulq_seconds + meowskis_seconds) / TARGET_SECONDS, 4),
         "subtitle_timing": "Estimated by character weight within each generated clip; not word-level forced alignment.",
-        "visuals": ["approved season intro", "reverse-valve macro", "empty abandoned spa service bay", "S02E01 cover with only the two canon co-hosts"],
+        "visuals": ["approved season intro", "reverse-valve macro", "empty abandoned spa service bay", "sealed controlled-cartridge prop", "S02E01 cover with only the two canon co-hosts"],
         "series_voice_tags": {"Bulq": "voice-07", "Mr. Meowskis": "voice-08"},
         "speech_tool_voice_ids": {"Bulq": "voice-09", "Mr. Meowskis": "voice-10"},
         "intro_sting_seconds": round(sting_seconds, 3),

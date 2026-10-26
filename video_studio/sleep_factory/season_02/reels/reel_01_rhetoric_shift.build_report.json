@@ -1,5 +1,5 @@
 {
-  "title": "Бульк меняет риторику — второй сезон без сахарной пудры",
+  "title": "Бордель закрылся, автосписание — нет: Премиальная вонь",
   "duration_seconds": 40.0,
   "video": {
     "codec_name": "h264",
@@ -15,16 +15,17 @@
     "sample_rate": "44100",
     "channels": 1,
     "r_frame_rate": "0/0",
-    "nb_frames": "1719"
+    "nb_frames": "1720"
   },
-  "size_bytes": 1453056,
-  "speech_seconds": 31.44,
-  "speech_share_estimate": 0.786,
+  "size_bytes": 1468987,
+  "speech_seconds": 31.032,
+  "speech_share_estimate": 0.7758,
   "subtitle_timing": "Estimated by character weight within each generated clip; not word-level forced alignment.",
   "visuals": [
     "approved season intro",
     "reverse-valve macro",
     "empty abandoned spa service bay",
+    "sealed controlled-cartridge prop",
     "S02E01 cover with only the two canon co-hosts"
   ],
   "series_voice_tags": {
@@ -37,5 +38,5 @@
   },
   "intro_sting_seconds": 3.6,
   "full_decode_passed": true,
-  "sha256": "13a688b2ad296480bd5c9bc92a8e266b0925c9c3b15594619b3ea3e5ea4a993e"
+  "sha256": "173f3ba8f001c9272d895027dba41cad6bdee2692a4ac50139c9f2a4808a7184"
 }
