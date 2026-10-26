@@ -10,19 +10,74 @@
   "audio_codec": "aac",
   "audio_sample_rate": 44100,
   "audio_channels": 1,
-  "caption_cues": 18,
-  "caption_timing": "estimated; inherited from S01E05 scene-level SRT; no forced alignment",
+  "intro_sting_source": "series_micro_jingle.wav",
+  "intro_sting_seconds": 3.6,
+  "intro_sting_note": "approved logo sting with two clicks and a soft ship hum; no synthesized melody",
+  "caption_cues": 13,
+  "narration_durations_seconds": {
+    "Bulq": 14.375,
+    "Mr. Meowskis": 17.164
+  },
+  "voice_end_seconds": 35.939,
+  "cta_start_seconds": 36.0,
+  "cta_duration_seconds": 4.0,
+  "caption_timing": "estimated by character weight within the two generated narration clips; no forced alignment",
   "speech_sources": [
-    "s01e05_a01_b01.opus",
-    "s01e05_a01_m01.opus"
+    "narration_bulq.wav",
+    "narration_meowskis.wav"
   ],
+  "voice_map": {
+    "Bulq": "voice-07",
+    "Mr. Meowskis": "voice-08"
+  },
+  "season_synopsis": "В космическом магазинчике каждая сделка начинается с неожиданности: маяк спас груз, но страховщик спорит; тень получает тариф; универсальные скобы подходят не всем. Бульк ищет выгоду, пока Мявскис проверяет детали. Мы с Бульком проверяем технику и условия сделки. В сезоне — карта с намеренно пустым участком и три стука в трюме. Лот сообщает только проверяемые данные. Каждая история самостоятельна, а вместе — первый сезон.",
   "season_wide_visuals": [
-    "series intro",
-    "episode 04",
-    "episode 05",
-    "episode 06 teaser"
+    "season intro",
+    "episode 02 beacon console",
+    "episode 03 shade canopy (no people)",
+    "episode 04 fastener tray",
+    "episode 05 three-dimensional map",
+    "episode 06 hold/rail stop",
+    "co-host season close"
+  ],
+  "visual_timeline_seconds": [
+    {
+      "label": "season intro",
+      "start": 0.0,
+      "end": 3.625
+    },
+    {
+      "label": "episode 02 beacon console",
+      "start": 3.625,
+      "end": 10.333
+    },
+    {
+      "label": "episode 03 shade canopy (no people)",
+      "start": 10.333,
+      "end": 11.708
+    },
+    {
+      "label": "episode 04 fastener tray",
+      "start": 11.708,
+      "end": 22.667
+    },
+    {
+      "label": "episode 05 three-dimensional map",
+      "start": 22.667,
+      "end": 25.958
+    },
+    {
+      "label": "episode 06 hold/rail stop",
+      "start": 25.958,
+      "end": 31.125
+    },
+    {
+      "label": "co-host season close",
+      "start": 31.125,
+      "end": 40.0
+    }
   ],
   "full_decode_passed": true,
-  "size_bytes": 1432586,
-  "sha256": "9224f795722f2a5377c0d6fdee64e1cedf8cdedc99212726f2335a1d0104fd18"
+  "size_bytes": 1483065,
+  "sha256": "f181b09311a75733e8496935d07c086955f7fc144838d0698db6a1403e6befcc"
 }

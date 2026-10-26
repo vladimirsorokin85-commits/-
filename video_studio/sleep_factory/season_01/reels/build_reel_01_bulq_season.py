@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Build a separate 40-second season-wide Bulq Reel from approved season assets.
+"""Build a separate 40-second Reel that briefly summarizes the whole first season.
 
-Audio reuses the opening Bulq clip and the first two complete Meowskis sentences
-from S01E05. Caption timing is inherited from the estimated S01E05 SRT, not forced
-alignment. No pilot Reel is read or overwritten.
+The fresh narration uses the selected Bulq and Meowskis voices, with captions
+estimated by character weight within each generated clip. Visuals sample objects
+and settings across S01E02–S01E06 without reusing or overwriting pilot Reels.
 """
 from __future__ import annotations
 
@@ -19,12 +19,43 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SEASON = HERE.parent
 SLEEP_FACTORY = SEASON.parent
+EP02 = SEASON / "episode_02"
+EP03 = SEASON / "episode_03"
+EP04 = SEASON / "episode_04"
 EP05 = SEASON / "episode_05"
 EP06 = SEASON / "episode_06"
-SOURCE_SRT = EP05 / "rendered" / "s01e05_ru.srt"
-TIMELINE = EP05 / "rendered" / "s01e05_mix.timeline.json"
-BULQ_AUDIO = EP05 / "voice2" / "s01e05_a01_b01.opus"
-MEOWSKIS_AUDIO = EP05 / "voice2" / "s01e05_a01_m01.opus"
+BULQ_NARRATION = HERE / "narration_bulq.wav"
+MEOWSKIS_NARRATION = HERE / "narration_meowskis.wav"
+INTRO_STING = SEASON / "series_micro_jingle.wav"
+BULQ_TEXT = (
+    "В космическом магазинчике каждая сделка начинается с неожиданности: "
+    "маяк спас груз, но страховщик спорит; тень получает тариф; "
+    "универсальные скобы подходят не всем. Бульк ищет выгоду, "
+    "пока Мявскис проверяет детали."
+)
+MEOWSKIS_TEXT = (
+    "Мы с Бульком проверяем технику и условия сделки. "
+    "В сезоне — карта с намеренно пустым участком и три стука в трюме. "
+    "Лот сообщает только проверяемые данные. "
+    "Каждая история самостоятельна, а вместе — первый сезон."
+)
+BULQ_CAPTIONS = [
+    "В космическом магазинчике",
+    "каждая сделка начинается с неожиданности:",
+    "маяк спас груз, но страховщик спорит;",
+    "тень получает тариф;",
+    "универсальные скобы подходят не всем.",
+    "Бульк ищет выгоду, пока Мявскис проверяет детали.",
+]
+MEOWSKIS_CAPTIONS = [
+    "Мы с Бульком проверяем технику",
+    "и условия сделки.",
+    "В сезоне — карта с намеренно пустым участком",
+    "и три стука в трюме.",
+    "Лот сообщает только проверяемые данные.",
+    "Каждая история самостоятельна,",
+    "а вместе — первый сезон.",
+]
 OUTPUT = HERE / "reel_01_bulq_season.mp4"
 OUTPUT_SRT = HERE / "reel_01_bulq_season.srt"
 OUTPUT_ASS = HERE / "reel_01_bulq_season.ass"
@@ -33,11 +64,9 @@ WORK_ROOT = SLEEP_FACTORY.parents[1] / ".arena" / "reel_01_bulq_season_work"
 FPS = 24
 WIDTH, HEIGHT = 720, 1280
 TARGET_SECONDS = 40.0
-INTRO_OFFSET = 4.586  # Separate S01E05 intro, already reflected in its estimated SRT.
-TITLE_SECONDS = 2.0
+TITLE_SECONDS = 3.6
 VOICE_GAP_SECONDS = 0.8
-M_SCENE_ID = "s01e05_a01_m01"
-B_SCENE_ID = "s01e05_a01_b01"
+CTA_SECONDS = 4.0
 
 
 @dataclass(frozen=True)
@@ -101,56 +130,43 @@ def ass_stamp(value: float) -> str:
     return f"{hours}:{minutes:02}:{seconds:02}.{cs:02}"
 
 
-def parse_srt(path: Path) -> list[Cue]:
-    raw = path.read_text(encoding="utf-8").strip()
-    cues: list[Cue] = []
-    for block in raw.split("\n\n"):
-        lines = block.splitlines()
-        if len(lines) < 3 or " --> " not in lines[1]:
-            continue
-        start_text, end_text = lines[1].split(" --> ", 1)
-        def seconds(value: str) -> float:
-            hh, mm, rest = value.split(":")
-            ss, millis = rest.split(",")
-            return int(hh) * 3600 + int(mm) * 60 + int(ss) + int(millis) / 1000
-        cues.append(Cue(seconds(start_text), seconds(end_text), " ".join(lines[2:])))
-    return cues
+def cue_weight(text: str) -> float:
+    characters = sum(not char.isspace() for char in text)
+    ending = text.rstrip("\"'»”’)]}")
+    if ending.endswith((".", "!", "?", "…", ":")):
+        return characters + 5.0
+    if ending.endswith((",", ";")):
+        return characters + 2.0
+    return float(max(1, characters))
 
 
-def timeline_info() -> tuple[float, float]:
-    data = json.loads(TIMELINE.read_text(encoding="utf-8"))
-    records = {item["id"]: item for item in data["scenes"]}
-    b = records[B_SCENE_ID]
-    m = records[M_SCENE_ID]
-    return float(b["end"]) - float(b["start"]), float(m["start"])
+def timed_cues(chunks: list[str], start: float, duration: float) -> list[Cue]:
+    if not chunks or duration <= 0:
+        raise RuntimeError("Пустой текст или нулевая длительность дикторского фрагмента.")
+    pad = min(0.045, duration / max(2, 2 * len(chunks)))
+    active = duration - pad * (len(chunks) - 1)
+    weights = [cue_weight(chunk) for chunk in chunks]
+    total = sum(weights)
+    cursor = start
+    result: list[Cue] = []
+    for index, (chunk, weight) in enumerate(zip(chunks, weights)):
+        end = start + duration if index == len(chunks) - 1 else cursor + active * weight / total
+        result.append(Cue(cursor, end, chunk))
+        cursor = end + (pad if index < len(chunks) - 1 else 0.0)
+    return result
 
 
-def make_cues(bulq_seconds: float, meowskis_start: float, meowskis_scene_start: float) -> list[Cue]:
-    source = parse_srt(SOURCE_SRT)
-    # The first thirteen estimated cues cover Bulq's complete opening voice clip.
-    # The next five cover Meowskis' first two complete sentences only.
-    if len(source) < 18:
-        raise RuntimeError("В исходном SRT S01E05 не хватает реплик для сезонного Reel.")
-    selected: list[Cue] = []
-    for cue in source[:13]:
-        selected.append(Cue(
-            TITLE_SECONDS + cue.start - INTRO_OFFSET,
-            TITLE_SECONDS + cue.end - INTRO_OFFSET,
-            cue.text,
-        ))
-    for cue in source[13:18]:
-        selected.append(Cue(
-            meowskis_start + cue.start - INTRO_OFFSET - meowskis_scene_start,
-            meowskis_start + cue.end - INTRO_OFFSET - meowskis_scene_start,
-            cue.text,
-        ))
-    for cue in selected:
-        if cue.start < 0 or cue.end <= cue.start or cue.end > TARGET_SECONDS + 0.02:
-            raise RuntimeError(f"Некорректная оценочная реплика в Reel: {cue}")
-    return selected
+def make_cues(bulq_seconds: float, meowskis_start: float,
+              meowskis_seconds: float) -> list[Cue]:
+    if " ".join(BULQ_CAPTIONS) != BULQ_TEXT or " ".join(MEOWSKIS_CAPTIONS) != MEOWSKIS_TEXT:
+        raise RuntimeError("Текст озвучки и набор субтитров разошлись.")
+    return (
+        timed_cues(BULQ_CAPTIONS, TITLE_SECONDS, bulq_seconds)
+        + timed_cues(MEOWSKIS_CAPTIONS, meowskis_start, meowskis_seconds)
+    )
 
 
-def wrap_ass(text: str, max_chars: int = 26) -> str:
+def wrap_ass(text: str, max_chars: int = 29) -> str:
     words = text.split()
     lines: list[str] = []
     current: list[str] = []
@@ -179,7 +195,7 @@ def write_captions(cues: list[Cue], meowskis_end: float) -> None:
         "", "[Events]",
         "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
         f"Dialogue: 0,0:00:00.00,{ass_stamp(TARGET_SECONDS)},Brand,,0,0,0,,ИСТОРИИ ПЕРВОГО СЕЗОНА",
-        f"Dialogue: 1,{ass_stamp(max(meowskis_end, TARGET_SECONDS-3))},{ass_stamp(TARGET_SECONDS)},CTA,,0,0,0,,СЛУШАЙ ВЕСЬ СЕЗОН НА YOUTUBE",
+        f"Dialogue: 1,{ass_stamp(max(meowskis_end, TARGET_SECONDS-CTA_SECONDS))},{ass_stamp(TARGET_SECONDS)},CTA,,0,0,0,,СЛУШАЙ ВЕСЬ СЕЗОН НА YOUTUBE",
     ]
     for index, cue in enumerate(cues, 1):
         srt_lines.extend((str(index), f"{stamp(cue.start)} --> {stamp(cue.end)}", cue.text, ""))
@@ -215,7 +231,8 @@ def render_segment(segment: Segment, output: Path, folder: Path) -> None:
 
 def make_audio(output: Path, bulq_seconds: float, meowskis_seconds: float, tail: float) -> None:
     graph = (
-        f"anullsrc=r=44100:cl=mono:d={TITLE_SECONDS:.6f}[head];"
+        "[2:a]aresample=44100,aformat=sample_fmts=fltp:channel_layouts=mono,"
+        f"atrim=duration={TITLE_SECONDS:.6f},asetpts=PTS-STARTPTS[head];"
         "[0:a]aresample=44100,aformat=sample_fmts=fltp:channel_layouts=mono,"
         f"atrim=duration={bulq_seconds:.6f},asetpts=PTS-STARTPTS[bulq];"
         f"anullsrc=r=44100:cl=mono:d={VOICE_GAP_SECONDS:.6f}[gap];"
@@ -225,45 +242,64 @@ def make_audio(output: Path, bulq_seconds: float, meowskis_seconds: float, tail:
         "[head][bulq][gap][meowskis][tail]concat=n=5:v=0:a=1[out]"
     )
     run(
-        [FFMPEG, "-hide_banner", "-y", "-loglevel", "error", "-i", str(BULQ_AUDIO),
-         "-i", str(MEOWSKIS_AUDIO), "-filter_complex", graph, "-map", "[out]",
+        [FFMPEG, "-hide_banner", "-y", "-loglevel", "error", "-i", str(BULQ_NARRATION),
+         "-i", str(MEOWSKIS_NARRATION), "-i", str(INTRO_STING),
+         "-filter_complex", graph, "-map", "[out]",
          "-t", f"{TARGET_SECONDS:.6f}", "-c:a", "pcm_s16le", str(output)],
         "сборка аудиодорожки Reel",
     )
 
 
 def main() -> None:
-    for path in (SOURCE_SRT, TIMELINE, BULQ_AUDIO, MEOWSKIS_AUDIO):
+    for path in (BULQ_NARRATION, MEOWSKIS_NARRATION, INTRO_STING):
         if not path.is_file():
             raise FileNotFoundError(path)
     images = [
-        SLEEP_FACTORY / "season_01" / "series_intro_alternative.png",
-        SEASON / "episode_04" / "images" / "episode_04_cover.png",
-        SEASON / "episode_05" / "images" / "episode_05_cover.png",
-        EP06 / "images" / "episode_06_cover.png",
-        SEASON / "episode_04" / "images" / "episode_04_cover.png",
-        SEASON / "episode_05" / "images" / "episode_05_cover.png",
+        SEASON / "series_intro_alternative.png",
+        EP02 / "images" / "frames" / "s01e02_05.png",
+        EP03 / "images" / "frames" / "s01e03_15.png",
+        EP04 / "images" / "frames" / "s01e04_02.png",
+        EP05 / "images" / "frames" / "s01e05_27.png",
+        EP06 / "images" / "scene_17_stop_macro.png",
+        EP05 / "images" / "frames" / "s01e05_30.png",
     ]
     for image in images:
         if not image.is_file():
             raise FileNotFoundError(image)
 
-    bulq_seconds, meowskis_scene_start = timeline_info()
-    source_cues = parse_srt(SOURCE_SRT)
-    meowskis_seconds = source_cues[17].end - INTRO_OFFSET - meowskis_scene_start
+    bulq_seconds = probe_duration(BULQ_NARRATION)
+    meowskis_seconds = probe_duration(MEOWSKIS_NARRATION)
+    intro_seconds = probe_duration(INTRO_STING)
+    if abs(intro_seconds - TITLE_SECONDS) > 0.05:
+        raise RuntimeError("Утверждённый sting заставки должен длиться 3,6 секунды.")
     meowskis_start = TITLE_SECONDS + bulq_seconds + VOICE_GAP_SECONDS
     tail = TARGET_SECONDS - meowskis_start - meowskis_seconds
     if tail < 0:
-        raise RuntimeError("Выбранные цитаты не помещаются в 40 секунд.")
-    cues = make_cues(bulq_seconds, meowskis_start, meowskis_scene_start)
+        raise RuntimeError("Сезонная озвучка не помещается в 40 секунд.")
+    cues = make_cues(bulq_seconds, meowskis_start, meowskis_seconds)
     write_captions(cues, meowskis_start + meowskis_seconds)
 
-    frames = [48, 192, 192, 96, 144, 288]
+    # Keep the approved 3.6-second series sting on the opening card, then
+    # follow the synopsis: beacon, shade, fasteners, map, hold/rail mystery,
+    # and the co-host season-wide close.
+    frames = [87, 161, 33, 263, 79, 124, 213]
+    visual_labels = [
+        "season intro", "episode 02 beacon console", "episode 03 shade canopy (no people)",
+        "episode 04 fastener tray", "episode 05 three-dimensional map",
+        "episode 06 hold/rail stop", "co-host season close",
+    ]
     if sum(frames) != round(TARGET_SECONDS * FPS):
         raise RuntimeError("Сумма кадров визуального плана не равна 40 секундам.")
     WORK_ROOT.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="render_", dir=WORK_ROOT) as temp:
         work = Path(temp)
+        canopy_crop = work / "e03_shade_canopy.png"
+        run(
+            [FFMPEG, "-hide_banner", "-y", "-loglevel", "error", "-i", str(images[2]),
+             "-vf", "crop=500:280:650:0", "-frames:v", "1", str(canopy_crop)],
+            "подготовка кадра тени E03 без людей",
+        )
+        images[2] = canopy_crop
         segments: list[Path] = []
         for index, (image, frame_count) in enumerate(zip(images, frames)):
             path = work / f"segment_{index:02d}.mp4"
@@ -315,10 +351,27 @@ def main() -> None:
         "audio_codec": audio.get("codec_name"),
         "audio_sample_rate": int(audio.get("sample_rate", 0)),
         "audio_channels": int(audio.get("channels", 0)),
+        "intro_sting_source": INTRO_STING.name,
+        "intro_sting_seconds": intro_seconds,
+        "intro_sting_note": "approved logo sting with two clicks and a soft ship hum; no synthesized melody",
         "caption_cues": len(cues),
-        "caption_timing": "estimated; inherited from S01E05 scene-level SRT; no forced alignment",
-        "speech_sources": [BULQ_AUDIO.name, MEOWSKIS_AUDIO.name],
-        "season_wide_visuals": ["series intro", "episode 04", "episode 05", "episode 06 teaser"],
+        "narration_durations_seconds": {"Bulq": bulq_seconds, "Mr. Meowskis": meowskis_seconds},
+        "voice_end_seconds": round(meowskis_start + meowskis_seconds, 3),
+        "cta_start_seconds": round(max(meowskis_start + meowskis_seconds, TARGET_SECONDS - CTA_SECONDS), 3),
+        "cta_duration_seconds": round(TARGET_SECONDS - max(meowskis_start + meowskis_seconds, TARGET_SECONDS - CTA_SECONDS), 3),
+        "caption_timing": "estimated by character weight within the two generated narration clips; no forced alignment",
+        "speech_sources": [BULQ_NARRATION.name, MEOWSKIS_NARRATION.name],
+        "voice_map": {"Bulq": "voice-07", "Mr. Meowskis": "voice-08"},
+        "season_synopsis": BULQ_TEXT + " " + MEOWSKIS_TEXT,
+        "season_wide_visuals": visual_labels,
+        "visual_timeline_seconds": [
+            {
+                "label": label,
+                "start": round(sum(frames[:index]) / FPS, 3),
+                "end": round(sum(frames[:index + 1]) / FPS, 3),
+            }
+            for index, label in enumerate(visual_labels)
+        ],
         "full_decode_passed": True,
         "size_bytes": OUTPUT.stat().st_size,
         "sha256": hashlib.sha256(OUTPUT.read_bytes()).hexdigest(),
