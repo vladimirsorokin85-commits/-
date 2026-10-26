@@ -11,7 +11,7 @@ import json
 import re
 from pathlib import Path
 
-HEADER = re.compile(r"^### \[(?P<id>s01e05_[^\]]+)\] \[voice-[^\]]+\](?: \[[^\]]+\])? .+$")
+HEADER = re.compile(r"^### \[(?P<id>s01e06_[^\]]+)\] \[voice-[^\]]+\](?: \[[^\]]+\])? .+$")
 SENTENCE_BREAK = re.compile(r"(?<=[.!?…])\s+")
 CLOSE = "\"'»”’)]}"
 

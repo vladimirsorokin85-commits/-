@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Build a 16:9 H.264 MP4 from a finished audio mix and numbered stills.
 
-Images are evenly distributed over the real audio duration, with a slow alternating
-zoom. The render is CFR and its duration is derived from the audio, not hard-coded
-as 40 minutes.
+Images can be evenly distributed over the real audio duration or aligned to act
+boundaries from the finished scene timeline. A slow alternating zoom is used. The
+render is CFR and its duration is derived from the audio, not hard-coded.
 
 Example:
   python3 build_video.py --audio out/episode_01.mp3 --images episode_01/images \
@@ -17,6 +17,7 @@ import argparse
 import glob
 import json
 import math
+import re
 import shutil
 import subprocess
 import sys
@@ -125,13 +126,64 @@ def expand_images(raw: list[str], base: Path) -> list[Path]:
     return result
 
 
-def distribute_frames(total_frames: int, segments: int) -> list[int]:
+def distribute_frames(
+    total_frames: int, segments: int, weights: list[float] | None = None,
+) -> list[int]:
     if total_frames <= 0 or segments <= 0:
         raise BuildError("Число кадров и изображений должно быть положительным.")
     if segments > total_frames:
         raise BuildError("Изображений больше, чем кадров итогового видео; уменьшите число изображений.")
-    base, remainder = divmod(total_frames, segments)
-    return [base + (1 if i < remainder else 0) for i in range(segments)]
+    if weights is None:
+        weights = [1.0] * segments
+    if len(weights) != segments or any(not math.isfinite(w) or w <= 0 for w in weights):
+        raise BuildError("Нужен положительный вес для каждого изображения.")
+    total_weight = sum(weights)
+    exact = [total_frames * weight / total_weight for weight in weights]
+    counts = [math.floor(value) for value in exact]
+    remainder = total_frames - sum(counts)
+    order = sorted(range(segments), key=lambda i: exact[i] - counts[i], reverse=True)
+    for index in order[:remainder]:
+        counts[index] += 1
+    if any(count < 1 for count in counts):
+        raise BuildError("Временной интервал изображения слишком короткий для одного кадра.")
+    return counts
+
+
+def weights_from_act_timeline(timeline_path: Path, frame_acts: list[str]) -> list[float]:
+    """Split each act's real timeline interval evenly across its assigned stills."""
+    try:
+        data = json.loads(timeline_path.read_text(encoding="utf-8"))
+        scenes = data["scenes"]
+        duration = float(data["duration_seconds"])
+    except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        raise BuildError(f"Некорректный таймлайн сцен: {timeline_path}") from exc
+    pattern = re.compile(r"^s01e06_(?P<act>a\d{2})_")
+    starts: dict[str, float] = {}
+    for scene in scenes:
+        match = pattern.match(str(scene.get("id", "")))
+        if match:
+            starts.setdefault(match.group("act"), float(scene["start"]))
+    acts = list(starts)
+    if not acts or len(frame_acts) == 0:
+        raise BuildError("Нет act-разметки для таймлайна и изображений.")
+    if any(act not in starts for act in frame_acts):
+        missing = sorted(set(frame_acts) - set(starts))
+        raise BuildError(f"Неизвестные акты в frame-acts: {', '.join(missing)}")
+    order = {act: index for index, act in enumerate(acts)}
+    ranks = [order[act] for act in frame_acts]
+    if ranks != sorted(ranks):
+        raise BuildError("Активы изображений должны идти в том же порядке, что и главы сценария.")
+    present_acts = list(dict.fromkeys(frame_acts))
+    counts = {act: frame_acts.count(act) for act in present_acts}
+    weights: list[float] = []
+    for index, act in enumerate(present_acts):
+        start = 0.0 if index == 0 else starts[act]
+        end = starts[present_acts[index + 1]] if index + 1 < len(present_acts) else duration
+        interval = end - start
+        if interval <= 0:
+            raise BuildError(f"У акта {act} некорректный интервал в таймлайне.")
+        weights.extend([interval / counts[act]] * counts[act])
+    return weights
 
 
 def concat_quote(path: Path) -> str:
@@ -235,6 +287,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--audio", required=True, type=Path, help="Готовый дикторский микс")
     parser.add_argument("--images", required=True, nargs="+", help="Изображения, glob-шаблоны или папки")
+    parser.add_argument("--timeline", type=Path, help="Таймлайн mix_stream.py для привязки кадров к актам")
+    parser.add_argument("--frame-acts", type=Path, help="JSON с frame_acts: акт на каждое изображение")
     parser.add_argument("--output", required=True, type=Path, help="Итоговый MP4")
     parser.add_argument("--width", type=int, default=1280)
     parser.add_argument("--height", type=int, default=720)
@@ -261,7 +315,20 @@ def main(argv: list[str] | None = None) -> int:
         if duration < 35 * 60:
             raise BuildError(f"Видео короче 35 минут: {duration / 60:.2f} мин.")
         frames_total = round(duration * args.fps)
-        frame_counts = distribute_frames(frames_total, len(images))
+        frame_acts: list[str] | None = None
+        weights: list[float] | None = None
+        if args.frame_acts:
+            if not args.timeline:
+                raise BuildError("--frame-acts требует --timeline.")
+            try:
+                act_data = json.loads(args.frame_acts.expanduser().read_text(encoding="utf-8"))
+                frame_acts = act_data["frame_acts"] if isinstance(act_data, dict) else act_data
+            except (OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
+                raise BuildError(f"Некорректная разметка кадров: {args.frame_acts}") from exc
+            if not isinstance(frame_acts, list) or len(frame_acts) != len(images):
+                raise BuildError("Число frame_acts должно совпадать с числом изображений.")
+            weights = weights_from_act_timeline(args.timeline.expanduser().resolve(), frame_acts)
+        frame_counts = distribute_frames(frames_total, len(images), weights=weights)
         if args.width <= 0 or args.height <= 0 or args.width % 2 or args.height % 2:
             raise BuildError("Ширина и высота должны быть положительными чётными числами.")
         if args.fps < 1 or args.fps > 60:
@@ -293,6 +360,10 @@ def main(argv: list[str] | None = None) -> int:
             report["video_crf"] = args.crf
             report["video_preset"] = args.preset
             report["audio_bitrate_kbps"] = args.audio_bitrate
+            report["image_timing"] = "act-aligned" if frame_acts else "uniform"
+            report["frame_counts"] = frame_counts
+            if frame_acts is not None:
+                report["frame_acts"] = frame_acts
             report["size_target_mb"] = args.max_mb
             report["size_target_met"] = (
                 None if args.max_mb is None
