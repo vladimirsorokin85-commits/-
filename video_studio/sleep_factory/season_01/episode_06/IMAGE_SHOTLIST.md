@@ -4,7 +4,7 @@
 
 ## Проверенные stills на текущем этапе
 
-Готовы и осмотрены: `s01e06_03_empty_hold.png`, `s01e06_04_bulq_listens.png`, `s01e06_05_meowskis_panel.png`, `s01e06_06_lot_status.png`, `s01e06_08_bulq_wall_listen.png`, `s01e06_09_ventilation.png`, `s01e06_10_vent_check.png`, `s01e06_12_bulkhead.png`, `s01e06_14_swap_positions.png`, `s01e06_15_meowskis_surface_check.png`, `scene_17_stop_macro.png` и `s01e06_29_wrap.png`. Все — 1280×720. Для сцены 07 переиспользовать establishing still пустого отсека из сцены 03. Черновик сцены 07 с несколькими похожими на направляющие рейками и первый вариант сцены 10 со случайным экранным интерфейсом отвергнуты и удалены.
+Готовы и осмотрены: `s01e06_03_empty_hold.png`, `s01e06_04_bulq_listens.png`, `s01e06_05_meowskis_panel.png`, `s01e06_06_lot_status.png`, `s01e06_08_bulq_wall_listen.png`, `s01e06_09_ventilation.png`, `s01e06_10_vent_check.png`, `s01e06_12_bulkhead.png`, `s01e06_14_swap_positions.png`, `s01e06_15_meowskis_surface_check.png`, `s01e06_16_rail_latch.png`, `scene_17_stop_macro.png`, `s01e06_21_service_hold.png`, `s01e06_22_gaskets_compare.png` и `s01e06_29_wrap.png`. Все — 1280×720. Для сцены 07 переиспользовать establishing still пустого отсека из сцены 03. Черновик сцены 07 с несколькими похожими на направляющие рейками, первый вариант сцены 10 со случайным экранным интерфейсом и черновик сцены 23, где старая прокладка оставалась на месте при подаче новой, отвергнуты и удалены.
 
 **Заставка:** узнаваемая общая композиция; единственное изменение — аккуратный металлический стопор с матовой прокладкой на прилавке.
 
