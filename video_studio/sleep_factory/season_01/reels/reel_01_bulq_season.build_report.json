@@ -1,0 +1,28 @@
+{
+  "output": "reel_01_bulq_season.mp4",
+  "duration_seconds": 40.0,
+  "resolution": [
+    720,
+    1280
+  ],
+  "fps": 24,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "audio_sample_rate": 44100,
+  "audio_channels": 1,
+  "caption_cues": 18,
+  "caption_timing": "estimated; inherited from S01E05 scene-level SRT; no forced alignment",
+  "speech_sources": [
+    "s01e05_a01_b01.opus",
+    "s01e05_a01_m01.opus"
+  ],
+  "season_wide_visuals": [
+    "series intro",
+    "episode 04",
+    "episode 05",
+    "episode 06 teaser"
+  ],
+  "full_decode_passed": true,
+  "size_bytes": 1432586,
+  "sha256": "9224f795722f2a5377c0d6fdee64e1cedf8cdedc99212726f2335a1d0104fd18"
+}
