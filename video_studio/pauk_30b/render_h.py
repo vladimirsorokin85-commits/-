@@ -144,11 +144,11 @@ def brackets(d, x, y, w, h, col=(0, 229, 160, 190), ln=18, wd=2):
         d.line([(cx, cy), (cx + sx * ln, cy)], fill=col, width=wd)
         d.line([(cx, cy), (cx, cy + sy * ln)], fill=col, width=wd)
 
-def kicker(d, x, y, s, col=ACC, size=15):
+def kicker(d, x, y, s, col=ACC, size=24):
     f = F(MONO, size); w = tw(d, s, f)
-    d.rectangle([x, y, x + w + 24, y + 30], fill=a((8, 26, 22), 236), outline=a(col, 150), width=1)
-    d.rectangle([x, y, x + 4, y + 30], fill=a(col, 255))
-    d.text((x + 12, y + 8), s, font=f, fill=a(col, 255))
+    d.rectangle([x, y, x + w + 34, y + 44], fill=a((8, 26, 22), 236), outline=a(col, 150), width=1)
+    d.rectangle([x, y, x + 6, y + 44], fill=a(col, 255))
+    d.text((x + 18, y + 10), s, font=f, fill=a(col, 255))
 
 def rtext(d, xy, s, f, col, p, dy=26):
     p = c01(p)
@@ -190,9 +190,9 @@ def photo_panel(ov, d, name, x, y, w, h, t, zoom=1.03, py=0.0, label=None, idx=N
     ov.paste(photo_tile(name, w, h, z, 0.22 * math.sin(t * .38), py + 0.10 * math.cos(t * .31)), (x, y))
     brackets(d, x - 10, y - 10, w + 20, h + 20, a(ACC, 200))
     if idx:
-        d.text((x + w - 16, y + 14), idx, font=F(MONO, 15), fill=a(ACC, 215), anchor="ra")
+        d.text((x + w - 16, y + 14), idx, font=F(MONO, 24), fill=a(ACC, 215), anchor="ra")
     if label:
-        f = F(MONO, 15); lw = tw(d, label, f)
+        f = F(MONO, 24); lw = tw(d, label, f)
         d.rectangle([x - 10, y + h + 10, x + lw + 30, y + h + 50], fill=(8, 11, 17, 248))
         d.rectangle([x - 10, y + h + 10, x - 4, y + h + 50], fill=a(ACC, 255))
         d.text((x + 4, y + h + 20), label, font=f, fill=a(ACC, 250))
@@ -205,772 +205,601 @@ def ambient(ov, d, t):
     d.line([(0, sy), (W, sy)], fill=a((26, 40, 58), 255), width=1)
     msg = ("ПЕРЕХВАТ БПЛА  •  СЕТЬ 2,5 × 2,5 М = 6 М²  •  ДАЛЬНОСТЬ 25–30 М  •  "
            "30 М/С  •  ЭЛЕКТРОННЫЙ ЗАПАЛ  •  ПЕРЕЗАРЯДКА ОТ 2 С  •  "
-           "400 / 650 Г  •  IP54  •  ДО −40 °C  •  ")
-    fm = F(MONO, 15); mw = tw(d, msg, fm)
+           "400 / 650 Г  •  IP54  •  ДО -40 °C  •  ")
+    fm = F(MONO, 24); mw = tw(d, msg, fm)
     x = int(-(t * 90) % mw)
     while x < W:
         d.text((x, sy + 7), msg, font=fm, fill=a((150, 200, 195), 170))
         x += mw
 
 def chrome(ov, d, t, total, section):
-    d.rectangle([0, 0, W, 62], fill=(9, 12, 18, 248))
-    d.line([(0, 62), (W, 62)], fill=a(ACC, 120), width=1)
-    d.rectangle([0, 0, 6, 62], fill=a(ACC, 255))
-    fb = F(RUSSO, 22)
-    d.text((26, 20), "«В ОКОПЕ»", font=fb, fill=a(TXT, 255))
-    xb = 26 + tw(d, "«В ОКОПЕ»", fb) + 18
-    d.text((xb, 23), "//  СРЕДСТВА ПРОТИВОДЕЙСТВИЯ БПЛА", font=F(MONO, 15), fill=a(DIM, 235))
-    d.text((xb + 330, 23), f"//  {section}", font=F(MONO, 15), fill=a(ACC, 240))
+    """Верхняя и нижняя плашки. Крупный шрифт, без бегущей строки."""
+    d.rectangle([0, 0, W, 72], fill=(9, 12, 18, 250))
+    d.line([(0, 72), (W, 72)], fill=a(ACC, 130), width=1)
+    d.rectangle([0, 0, 7, 72], fill=a(ACC, 255))
+    fb = F(RUSSO, 34)
+    d.text((26, 19), "«В ОКОПЕ»", font=fb, fill=a(TXT, 255))
+    xb = 26 + tw(d, "«В ОКОПЕ»", fb) + 24
+    fm = F(MONO, 22)
+    s1 = "//  ПРОТИВОДЕЙСТВИЕ БПЛА"
+    d.text((xb, 26), s1, font=fm, fill=a(DIM, 235))
+    xb2 = xb + tw(d, s1, fm) + 20
+    d.text((xb2, 26), f"//  {section}", font=fm, fill=a(ACC, 240))
 
     p = clamp(t / total, 0, 1)
-    d.rectangle([0, 63, W, 66], fill=(12, 18, 26, 245))
-    d.rectangle([0, 63, int(W * p), 66], fill=a(ACC, 235))
-    d.rectangle([int(W * p) - 2, 61, int(W * p) + 2, 68], fill=a(ACC, 255))
+    d.rectangle([0, 73, W, 77], fill=(12, 18, 26, 245))
+    d.rectangle([0, 73, int(W * p), 77], fill=a(ACC, 235))
+    d.rectangle([int(W * p) - 2, 71, int(W * p) + 2, 79], fill=a(ACC, 255))
 
-    d.text((W - 214, 21), f"TC {int(t//60):02d}:{int(t%60):02d}:{int((t*FPS)%FPS):02d}",
-           font=F(MONO, 16), fill=a(ACC, 240))
-    d.ellipse([W - 250, 24, W - 238, 36], fill=a(RED, 230))
-    meter(d, W - 470, 44, t)
+    d.ellipse([W - 30, 26, W - 14, 42], fill=a(RED, 230))
+    d.text((W - 290, 26), f"TC {int(t//60):02d}:{int(t%60):02d}", font=F(MONO, 22), fill=a(ACC, 240))
+    meter(d, W - 470, 52, t)
 
-    ambient(ov, d, t)
-    d.rectangle([0, H - 58, W, H], fill=(9, 12, 18, 252))
-    d.line([(0, H - 58), (W, H - 58)], fill=a(LINE, 255), width=1)
-    d.text((26, H - 40), "ПАУК 30Б  //  РУЧНОЙ СЕТКОМЁТ", font=F(MONO, 15), fill=a(DIM, 235))
-    d.text((W - 430, H - 40), "t.me/vokope_ru", font=F(MONO, 15), fill=a(ACC, 235))
-    d.text((W - 250, H - 40), "vk.com/vokope_rus", font=F(MONO, 15), fill=a(ACC, 235))
+    d.rectangle([0, H - 64, W, H], fill=(9, 12, 18, 252))
+    d.line([(0, H - 64), (W, H - 64)], fill=a(LINE, 255), width=1)
+    ff = F(MONO, 22)
+    d.text((26, H - 44), "ПАУК 30Б  //  РУЧНОЙ СЕТКОМЁТ", font=ff, fill=a(DIM, 235))
+    vk = "vk.com/vokope_rus"
+    d.text((W - 26, H - 44), vk, font=ff, fill=a(ACC, 235), anchor="ra")
+    tg = "t.me/vokope_ru"
+    d.text((W - 26 - tw(d, vk, ff) - 34, H - 44), tg, font=ff, fill=a(ACC, 235), anchor="ra")
+
+
+# ───────────────────────── примитивы вёрстки ─────────────────────────
+def head(d, kick, title, col=ACC, y=96, tsize=64, maxw=1680):
+    kicker(d, 70, y, kick, col, 26)
+    f = fit(title, RUSSO, tsize, maxw)
+    d.text((70, y + 58), title, font=f, fill=a(TXT, 255))
+    return y + 58 + int(f.size * 1.24)
+
+
+def sub(d, x, y, s, col=DIM, size=32, maxw=None):
+    f = fit(s, MONO, size, maxw) if maxw else F(MONO, size)
+    d.text((x, y), s, font=f, fill=a(col, 245))
+    return y + int(size * 1.3)
+
+
+def row2(d, x, y, w, k, v, col=ACC, h=112, ks=38, vs=30):
+    d.rectangle([x, y, x + w, y + h], fill=(10, 14, 21, 244), outline=a(LINE, 255), width=1)
+    d.rectangle([x, y, x + 8, y + h], fill=a(col, 255))
+    d.text((x + 34, y + 12), k, font=F(RUSSO, ks), fill=a(TXT, 255))
+    d.text((x + 34, y + h - 46), v, font=F(MONO, vs), fill=a(DIM, 240))
+
+
+def stat(d, x, y, val, lbl, col=ACC, vs=130, ls=28):
+    d.text((x, y), val, font=F(RUSSO, vs), fill=a(col, 255))
+    d.text((x, y + int(vs * 1.14)), lbl, font=F(MONO, ls), fill=a(DIM, 240))
+
 
 # ═════════════ сцена 1: представление ═════════════
 def scene1(base, ov, d, t, l):
     if l < 6.0:
-        d.rectangle([0, 320, 1180, 900], fill=(7, 10, 16, 205))
-        d.rectangle([0, 320, 8, 900], fill=a(ACC, 255))
-        kicker(d, 70, 282, "ТЕХНИЧЕСКИЙ ОБЗОР  //  ПАУК 30Б", ACC, 15)
-        f1 = fit("ПАУК", RUSSO, 168, 1000)
-        wipe_title(d, (70, 340), "ПАУК", f1, TXT, (l - .45) / .7)
-        f1b = F(RUSSO, 96)
-        reveal = c01((l - .75) / .6)
-        if reveal > 0:
-            e = eout(reveal)
-            d.text((76, 512 + (1 - e) * 24), "30Б", font=f1b, fill=a(ACC, 255 * e))
-            d.text((330, 560), "БЫСТРОЗАРЯДНЫЙ", font=F(MONO, 24), fill=a(DIM, 255 * e))
-        d.text((78, 640), "РУЧНОЙ ПЕХОТНЫЙ СЕТКОМЁТ", font=fit("РУЧНОЙ ПЕХОТНЫЙ СЕТКОМЁТ", RUSSO, 36, 900),
-               fill=a(TXT, 255))
-        d.text((78, 692), "ПЕРЕХВАТ МУЛЬТИРОТОРНЫХ ДРОНОВ", font=F(MONO, 20), fill=a(DIM, 245))
-        d.line([(78, 736), (78 + 760 * eout(c01((l - 1.3) / .8)), 736)], fill=a(ACC, 200), width=2)
+        d.rectangle([0, 296, 1240, 1000], fill=(6, 9, 14, 226))
+        d.rectangle([0, 296, 9, 1000], fill=a(ACC, 255))
+        kicker(d, 70, 328, "ТЕХНИЧЕСКИЙ ОБЗОР  //  ПАУК 30Б", ACC, 26)
+        p1 = eout(c01((l - .45) / .8))
+        d.text((66, 396 + (1 - p1) * 26), "ПАУК", font=fit("ПАУК", RUSSO, 200, 900),
+               fill=a(TXT, 255 * p1))
+        p2 = eout(c01((l - .85) / .7))
+        d.text((72, 612 + (1 - p2) * 18), "30Б", font=F(RUSSO, 112), fill=a(ACC, 255 * p2))
+        d.text((368, 668), "БЫСТРОЗАРЯДНЫЙ", font=F(MONO, 34), fill=a(DIM, 255 * p2))
+        p3 = eout(c01((l - 1.15) / .6))
+        d.text((74, 748), "РУЧНОЙ ПЕХОТНЫЙ СЕТКОМЁТ",
+               font=fit("РУЧНОЙ ПЕХОТНЫЙ СЕТКОМЁТ", RUSSO, 50, 1140), fill=a(TXT, 255 * p3))
+        d.text((74, 816), "ПЕРЕХВАТ МУЛЬТИРОТОРНЫХ ДРОНОВ", font=F(MONO, 32), fill=a(DIM, 245 * p3))
 
         chips = ["25–30 М", "6 М²", "400 / 650 Г", "IP54"]
         for i, c in enumerate(chips):
-            pp = c01((l - 1.6 - i * .12) / .45)
+            pp = c01((l - 1.5 - i * .1) / .45)
             if pp <= 0: continue
-            cf = F(MONO, 17); cw = tw(d, c, cf) + 34
-            cx = 78 + i * 214
-            yy = int(770 + (1 - eout(pp)) * 18)
-            d.rounded_rectangle([cx, yy, cx + cw, yy + 42], 2, fill=(11, 16, 24, 240), outline=a(ACC, 120))
-            d.text((cx + 17, yy + 11), c, font=cf, fill=a(TXT, 255 * eout(pp)))
+            cf = F(MONO, 30); cw = tw(d, c, cf) + 44
+            cx = 74 + i * 260
+            yy = int(880 + (1 - eout(pp)) * 16)
+            d.rounded_rectangle([cx, yy, cx + cw, yy + 60], 2, fill=(11, 16, 24, 242), outline=a(ACC, 130))
+            d.text((cx + 22, yy + 15), c, font=cf, fill=a(TXT, 255 * eout(pp)))
 
-        if 1.4 < l < 5.8:
-            ix, iy, iw, ih = 1300, 620, 520, 300
-            d.rectangle([ix - 8, iy - 8, ix + iw + 8, iy + ih + 8], fill=(7, 10, 16, 235))
-            ov.paste(photo_tile("holster", iw, ih, 1.10), (ix, iy))
-            brackets(d, ix - 8, iy - 8, iw + 16, ih + 16, a(ACC, 190))
-            d.rectangle([ix - 8, iy + ih + 8, ix + 290, iy + ih + 46], fill=(8, 11, 17, 245))
-            d.text((ix + 2, iy + ih + 18), "В ЧЕХЛЕ, НА СНАРЯЖЕНИИ", font=F(MONO, 14), fill=a(ACC, 240))
+        if 1.6 < l < 5.8:
+            photo_panel(ov, d, "holster", 1300, 360, 560, 470, t, 1.09, label="В ЧЕХЛЕ, НА СНАРЯЖЕНИИ")
 
     elif l < 12.0:
-        d.rectangle([0, 250, 1080, 890], fill=(7, 10, 16, 210))
-        d.rectangle([0, 250, 8, 890], fill=a(ACC, 255))
-        kicker(d, 70, 282, "ПРИНЦИП РАБОТЫ", ACC)
-        f = fit("НАПРАВИЛ. ВЫСТРЕЛИЛ. ПОЙМАЛ.", RUSSO, 46, 980)
-        reveal_text = c01((l - .15) / .5)
-        d.text((70, 336), "НАПРАВИЛ.", font=f, fill=a(TXT, 255 * eout(reveal_text)))
-        d.text((70, 396), "ВЫСТРЕЛИЛ.", font=f, fill=a(TXT, 255 * eout(c01((l - .3) / .5))))
-        d.text((70, 456), "ПОЙМАЛ.", font=f, fill=a(ACC, 255 * eout(c01((l - .45) / .5))))
-        d.line([(70, 540), (70 + 900 * eout(c01((l - .6) / .7)), 540)], fill=a(ACC, 170), width=2)
+        kicker(d, 70, 100, "ПРИНЦИП РАБОТЫ", ACC, 26)
+        f = fit("НАПРАВИЛ.", RUSSO, 88, 900)
+        for i, (txt, col, dly) in enumerate([("НАПРАВИЛ.", TXT, .1), ("ВЫСТРЕЛИЛ.", TXT, .26),
+                                             ("ПОЙМАЛ.", ACC, .42)]):
+            pp = eout(c01((l - dly) / .45))
+            d.text((70, 186 + i * 96 + (1 - pp) * 22), txt, font=f, fill=a(col, 255 * pp))
+        d.line([(70, 486), (70 + 860 * eout(c01((l - .6) / .7)), 486)], fill=a(ACC, 180), width=3)
 
         steps = [("01", "ПРИЦЕЛИВАНИЕ", "пистолетная рукоять, ровная кисть"),
                  ("02", "ВЫСТРЕЛ", "электронный запал, пиропатрон"),
                  ("03", "ПЕРЕХВАТ", "сеть накрывает винты дрона")]
-        for i, (num, tt, sub) in enumerate(steps):
-            pp = c01((l - .8 - i * .18) / .5)
+        for i, (num, tt, s) in enumerate(steps):
+            pp = c01((l - .75 - i * .18) / .5)
             if pp <= 0: continue
-            yy = int(580 + i * 104 + (1 - eout(pp)) * 24)
-            d.rectangle([70, yy, 1040, yy + 88], fill=(12, 17, 25, 240), outline=a(LINE, 255))
-            d.rectangle([70, yy, 76, yy + 88], fill=a(ACC, 255))
-            d.text((94, yy + 22), num, font=F(RUSSO, 30), fill=a(ACC, 235))
-            d.text((164, yy + 14), tt, font=F(RUSSO, 24), fill=a(TXT, 255 * eout(pp)))
-            d.text((164, yy + 50), sub, font=F(MONO, 16), fill=a(DIM, 255 * eout(pp)))
+            yy = int(556 + i * 128 + (1 - eout(pp)) * 22)
+            d.rectangle([70, yy, 1080, yy + 112], fill=(12, 17, 25, 242), outline=a(LINE, 255))
+            d.rectangle([70, yy, 78, yy + 112], fill=a(ACC, 255))
+            d.text((98, yy + 30), num, font=F(RUSSO, 40), fill=a(ACC, 235))
+            d.text((176, yy + 14), tt, font=F(RUSSO, 38), fill=a(TXT, 255 * eout(pp)))
+            d.text((176, yy + 60), s, font=F(MONO, 28), fill=a(DIM, 255 * eout(pp)))
 
-        photo_panel(ov, d, "set4", 1160, 250, 700, 560, t, 1.04, label="ПАУК 30Б / 4 СНАРЯДА", idx="01")
+        photo_panel(ov, d, "set4", 1160, 190, 700, 620, t, 1.05, label="ПАУК 30Б / 4 СНАРЯДА", idx="01")
 
     elif l < 17.4:
-        # схема перехвата
-        d.rectangle([0, 96, W, 214], fill=(6, 9, 14, 232))
-        kicker(d, 40, 112, "СХЕМА ПЕРЕХВАТА", ACC)
-        d.text((40, 152), "СЕТЬ, А НЕ ПОМЕХА", font=fit("СЕТЬ, А НЕ ПОМЕХА", RUSSO, 44, 900), fill=a(TXT, 255))
+        d.rectangle([0, 96, W, 240], fill=(6, 9, 14, 234))
+        kicker(d, 70, 108, "СХЕМА ПЕРЕХВАТА", ACC, 26)
+        d.text((70, 158), "СЕТЬ, А НЕ ПОМЕХА", font=fit("СЕТЬ, А НЕ ПОМЕХА", RUSSO, 56, 900), fill=a(TXT, 255))
 
-        # поле схемы
-        d.rectangle([40, 250, 1880, 660], fill=(7, 10, 16, 236), outline=a(LINE, 255))
-        # сетка поля
-        for gx2 in range(40, 1880, 60):
-            d.line([(gx2, 250), (gx2, 660)], fill=a((14, 20, 28), 255))
-        for gy2 in range(250, 660, 60):
-            d.line([(40, gy2), (1880, gy2)], fill=a((14, 20, 28), 255))
+        d.rectangle([60, 270, 1860, 790], fill=(7, 10, 16, 240), outline=a(LINE, 255))
+        for gx2 in range(60, 1860, 90):
+            d.line([(gx2, 270), (gx2, 790)], fill=a((13, 19, 27), 255))
+        for gy2 in range(270, 790, 90):
+            d.line([(60, gy2), (1860, gy2)], fill=a((13, 19, 27), 255))
 
-        # стрелок слева — пистолет
-        px0, py0 = 190, 455
-        d.rounded_rectangle([px0 - 70, py0 - 26, px0 + 70, py0 + 26], 8,
-                            fill=(24, 30, 38, 255), outline=a(DIM, 200), width=2)
-        d.rectangle([px0 + 60, py0 - 14, px0 + 130, py0 + 14], fill=(40, 46, 56, 255), outline=a(DIM, 180))
-        d.text((px0, py0 + 58), "ПАУК 30Б", font=F(MONO, 15), fill=a(ACC, 235), anchor="ma")
+        # пистолет
+        px0, py0 = 260, 560
+        d.rounded_rectangle([px0 - 90, py0 - 34, px0 + 90, py0 + 34], 10,
+                            fill=(26, 32, 42, 255), outline=a(DIM, 210), width=3)
+        d.rectangle([px0 + 78, py0 - 18, px0 + 170, py0 + 18], fill=(42, 48, 58, 255), outline=a(DIM, 190))
+        d.line([(px0 - 60, py0 + 34), (px0 - 40, py0 + 120)], fill=a(DIM, 220), width=18)
+        d.text((px0, py0 + 142), "ПАУК 30Б", font=F(MONO, 32), fill=a(ACC, 240), anchor="ma")
 
-        # цель справа
-        drx, dry = 1620, 360
-        bob = math.sin(l * 2.2) * 8
-        d.line([(drx - 52, dry - 20 + bob), (drx + 52, dry - 20 + bob)], fill=a(DIM, 230), width=4)
-        for sx in (-52, 52):
-            d.ellipse([drx + sx - 32, dry - 38 + bob, drx + sx + 32, dry - 2 + bob], outline=a(WARN, 235), width=3)
-        d.rectangle([drx - 24, dry - 4 + bob, drx + 24, dry + 30 + bob], fill=(20, 26, 34, 250), outline=a(WARN, 220))
-        d.text((drx, dry + 58), "ЦЕЛЬ / ДРОН", font=F(MONO, 15), fill=a(WARN, 235), anchor="ma")
+        # дрон
+        drx, dry = 1580, 420
+        bob = math.sin(l * 2.2) * 10
+        d.line([(drx - 70, dry - 26 + bob), (drx + 70, dry - 26 + bob)], fill=a(DIM, 235), width=5)
+        d.rectangle([drx - 34, dry - 26 + bob, drx + 34, dry + 34 + bob], fill=(30, 36, 46, 255), outline=a(WARN, 210), width=3)
+        for sx in (-70, 70):
+            d.ellipse([drx + sx - 26, dry - 52 + bob, drx + sx + 26, dry + bob], outline=a(WARN, 200), width=3)
+        d.text((drx, dry + 78 + bob), "ЦЕЛЬ / ДРОН", font=F(MONO, 32), fill=a(WARN, 240), anchor="ma")
 
         # траектория
-        d.line([(px0 + 140, py0 - 6), (drx - 90, dry + 20)], fill=a(LINE, 255), width=2)
-        for k in range(7):
-            t1 = k / 7.0
-            xx = px0 + 140 + (drx - 90 - px0 - 140) * t1
-            yy = py0 - 6 + (dry + 20 - py0 + 6) * t1
-            d.ellipse([xx - 3, yy - 3, xx + 3, yy + 3], fill=a(ACC, 140))
-        d.text((760, 596), "ЛИНИЯ ВИЗИРОВАНИЯ", font=F(MONO, 14), fill=a(DIM, 210))
+        for k in range(26):
+            xx = 350 + k * 46
+            yy = 560 - k * 5
+            if xx < drx - 90:
+                d.line([(xx, yy), (xx + 22, yy - 2)], fill=a(ACC, 120), width=3)
 
-        # летящая сеть
-        prog = c01((l - .3) / 2.0)
-        nx = 380 + (drx - 560) * eout(prog)
-        ny = 420 - 30 * math.sin(l * 1.6)
-        size = 70 + 90 * eout(prog)
-        step = 26
-        xx = nx - size
-        while xx < nx + size:
-            d.line([(xx, ny - size), (xx, ny + size)], fill=a(ACC, int(150 * c01(prog * 4))))
-            xx += step
-        yy = ny - size
-        while yy < ny + size:
-            d.line([(nx - size, yy), (nx + size, yy)], fill=a(ACC, int(150 * c01(prog * 4))))
-            yy += step
-        d.rectangle([nx - size, ny - size, nx + size, ny + size], outline=a(ACC, 230), width=2)
-        d.text((nx, ny + size + 22), "СЕТЬ 2,5 × 2,5 М", font=F(MONO, 15), fill=a(ACC, 235), anchor="ma")
+        # сеть в полёте
+        pp = eout(c01((l - .4) / 1.6))
+        nx = 360 + int(1080 * pp); ny = 556 - int(110 * pp)
+        size = 40 + int(50 * pp)
+        if l > .4:
+            d.rectangle([nx, ny - size, nx + size * 2, ny + size], outline=a(ACC, 245), width=4)
+            for k in range(1, 4):
+                d.line([(nx + k * size / 2, ny - size), (nx + k * size / 2, ny + size)], fill=a(ACC, 150))
+                d.line([(nx, ny - size + k * size / 2), (nx + size * 2, ny - size + k * size / 2)], fill=a(ACC, 150))
+            d.text((nx, ny - size - 34), "СЕТЬ 6 М²", font=F(MONO, 30), fill=a(ACC, 240), anchor="ma")
 
-        # шкала дальности на поле
-        d.line([(px0, 630), (drx + 60, 630)], fill=a(LINE, 255), width=2)
-        for k in range(4):
-            xx2 = px0 + (drx + 60 - px0) * k / 3
-            d.line([(xx2, 620), (xx2, 640)], fill=a(DIM, 255), width=2)
-            d.text((xx2, 646), f"{int(10 + k*10)} м", font=F(MONO, 13), fill=a(DIM, 210), anchor="ma")
-
-        # карточки
-        for i, (k, v, col) in enumerate([("ДАЛЬНОСТЬ", "25–30 М", ACC), ("СКОРОСТЬ", "30 М/С", ACC2),
-                                          ("ПЛОЩАДЬ", "6 М²", ACC)]):
-            x = 40 + i * 460
-            d.rectangle([x, 700, x + 430, 900], fill=(10, 15, 22, 247), outline=a(col, 130))
-            d.rectangle([x, 700, x + 430, 705], fill=a(col, 255))
-            d.text((x + 26, 726), k, font=F(MONO, 15), fill=a(DIM, 235))
-            d.text((x + 26, 758), v, font=F(RUSSO, 52), fill=a(col, 255))
-            d.rectangle([x + 26, 848, x + 26 + int(360 * eout(c01((l - .4 - i * .15) / 1.0))), 852],
-                        fill=a(col, 110))
-
-        d.rectangle([1440, 700, 1880, 900], fill=(9, 13, 19, 247), outline=a(WARN, 130))
-        d.text((1466, 726), "ЧТО ЭТО ЗНАЧИТ", font=F(MONO, 15), fill=a(WARN, 235))
-        d.text((1466, 760), "по пересечению курса,", font=F(MONO, 18), fill=a(TXT, 245))
-        d.text((1466, 794), "а не по шуму винтов", font=F(MONO, 18), fill=a(TXT, 245))
-        d.text((1466, 842), "электроника цели не подавляется", font=F(MONO, 14), fill=a(DIM, 230))
+        d.line([(70, 800), (1850, 800)], fill=a(LINE, 255), width=2)
+        stats = [("25–30 М", "дальность", ACC), ("30 М/С", "скорость", ACC2), ("< 1 С", "подлёт", TXT)]
+        for i, (v, k, col) in enumerate(stats):
+            x = 70 + i * 600
+            d.text((x, 838), v, font=F(RUSSO, 58), fill=a(col, 255))
+            d.text((x + 4, 912), k, font=F(MONO, 30), fill=a(DIM, 235))
 
     elif l < 22.9:
-        # назначение
-        kicker(d, 40, 112, "НАЗНАЧЕНИЕ", ACC)
-        d.text((40, 152), "ГДЕ ПРИМЕНЯЕТСЯ", font=fit("ГДЕ ПРИМЕНЯЕТСЯ", RUSSO, 46, 900), fill=a(TXT, 255))
-        cards = [("okop", "ПОЗИЦИЯ И ОКОП", "ближняя зона над головой"),
+        d.rectangle([0, 96, W, 250], fill=(6, 9, 14, 234))
+        kicker(d, 70, 108, "НАЗНАЧЕНИЕ", ACC, 26)
+        d.text((70, 158), "ГДЕ ПРИМЕНЯЕТСЯ", font=fit("ГДЕ ПРИМЕНЯЕТСЯ", RUSSO, 56, 1000), fill=a(TXT, 255))
+
+        cards = [("set4", "ПОЗИЦИЯ И ОКОЛ", "ближняя зона над головой"),
                  ("holster", "ПОДРАЗДЕЛЕНИЕ", "повседневное ношение в чехле"),
                  ("full", "ОХРАНА ОБЪЕКТА", "патруль и стационарный пост")]
-        for i, (nm, tt, sub) in enumerate(cards):
-            pp = c01((l - .15 - i * .2) / .55)
+        for i, (nm, tt, s) in enumerate(cards):
+            pp = c01((l - .25 - i * .2) / .55)
             if pp <= 0: continue
-            x = 40 + i * 614
-            y = int(248 + (1 - eout(pp)) * 34)
-            name = nm if nm in P else "set4"
-            d.rectangle([x, y, x + 586, y + 530], fill=(7, 11, 17, 244), outline=a(LINE, 255))
-            ov.paste(photo_tile(name, 570, 420, 1.02 + .03 * math.sin(t * .6 + i)), (x + 8, y + 8))
-            brackets(d, x, y, 586, 530, a(ACC, 170))
-            d.rectangle([x, y + 436, x + 586, y + 522], fill=(9, 12, 18, 250))
-            d.text((x + 18, y + 450), tt, font=F(RUSSO, 21), fill=a(TXT, 255))
-            d.text((x + 18, y + 484), sub, font=F(MONO, 15), fill=a(ACC, 235))
-            d.text((x + 562, y + 20), f"0{i+1}", font=F(MONO, 17), fill=a(ACC, 220), anchor="ra")
+            x = 70 + i * 600
+            y = int(300 + (1 - eout(pp)) * 26)
+            photo_panel(ov, d, nm, x, y, 540, 330, t, 1.04, idx=f"0{i+1}")
+            d.text((x - 10, y + 360), tt, font=F(RUSSO, 36), fill=a(TXT, 255))
+            d.text((x - 10, y + 410), s, font=F(MONO, 28), fill=a(ACC, 235))
 
-        d.rectangle([40, 812, 1640, 900], fill=(10, 15, 22, 246), outline=a(ACC, 120))
-        d.rectangle([40, 812, 46, 900], fill=a(ACC, 255))
-        d.text((70, 832), "ПРОСТОТА РАСЧЁТА: НАПРАВИЛ — ВЫСТРЕЛИЛ — ПОЙМАЛ",
-               font=F(RUSSO, 24), fill=a(TXT, 255))
-        d.text((70, 868), "не требует длительной подготовки оператора", font=F(MONO, 15), fill=a(DIM, 235))
+        d.rectangle([60, 800, 1860, 900], fill=(9, 13, 19, 246), outline=a(ACC, 120))
+        d.text((92, 820), "ПРОСТОТА РАСЧЁТА: НАПРАВИЛ - ВЫСТРЕЛИЛ - ПОЙМАЛ",
+               font=F(RUSSO, 34), fill=a(ACC, 250))
+        d.text((92, 868), "длительная подготовка оператора не требуется", font=F(MONO, 28), fill=a(DIM, 235))
 
     elif l < 27.3:
-        kicker(d, 40, 112, "СРАВНЕНИЕ ПОДХОДОВ", WARN)
-        d.text((40, 152), "ПЕРЕХВАТ ИЛИ ПОДАВЛЕНИЕ", font=fit("ПЕРЕХВАТ ИЛИ ПОДАВЛЕНИЕ", RUSSO, 42, 1200),
-               fill=a(TXT, 255))
-        cols = [("РЭБ / ПОДАВИТЕЛЬ", "глушит канал", "дрон теряет управление,\nно остаётся целым", ACC2),
-                ("СЕТКОМЁТ «ПАУК»", "физический перехват", "сеть наматывается на винты,\nдрон падает рядом", ACC)]
-        for i, (nm, sub, txt, col) in enumerate(cols):
-            pp = c01((l - .2 - i * .25) / .5)
-            if pp <= 0: continue
-            x = 40 + i * 940
-            y = int(260 + (1 - eout(pp)) * 30)
-            d.rectangle([x, y, x + 900, y + 440], fill=(10, 15, 22, 247), outline=a(col, 150))
-            d.rectangle([x, y, x + 900, y + 5], fill=a(col, 255))
-            d.text((x + 28, y + 30), nm, font=F(RUSSO, 30), fill=a(col, 255))
-            d.text((x + 28, y + 82), sub, font=F(MONO, 18), fill=a(TXT, 240))
-            for k, line in enumerate(txt.split("\n")):
-                d.text((x + 28, y + 140 + k * 34), line, font=F(MONO, 17), fill=a(DIM, 235))
-            d.line([(x + 28, y + 250), (x + 872, y + 250)], fill=a(LINE, 255))
-            if i == 0:
-                d.text((x + 28, y + 280), "НУЖЕН РАСЧЁТ И ПИТАНИЕ", font=F(MONO, 16), fill=a(WARN, 220))
-                d.text((x + 28, y + 316), "дрон может вернуться в строй", font=F(MONO, 16), fill=a(DIM, 225))
-            else:
-                d.text((x + 28, y + 280), "НЕ НУЖНО ПИТАНИЯ ДЛЯ ВЫСТРЕЛА", font=F(MONO, 16), fill=a(ACC, 225))
-                d.text((x + 28, y + 316), "снаряд — расходник, ствол — многоразовый", font=F(MONO, 16), fill=a(DIM, 225))
+        d.rectangle([0, 96, W, 250], fill=(6, 9, 14, 234))
+        kicker(d, 70, 108, "СРАВНЕНИЕ ПОДХОДОВ", WARN, 26)
+        d.text((70, 158), "ПЕРЕХВАТ ИЛИ ПОДАВЛЕНИЕ", font=fit("ПЕРЕХВАТ ИЛИ ПОДАВЛЕНИЕ", RUSSO, 56, 1400), fill=a(TXT, 255))
 
-        photo_panel(ov, d, "stack", 40, 730, 900, 180, t, 1.04, label="СМЕННЫЙ БЛОК СНАРЯДОВ")
-        photo_panel(ov, d, "pouch_mc", 980, 730, 900, 180, t, 1.04, label="ПОДСУМОК В MULTICAM")
+        cols = [(70, "РЭБ", "ПОДАВЛЕНИЕ СИГНАЛА", WARN,
+                 ["глушит канал управления", "нужен расчёт и питание", "дрон может вернуться в строй"]),
+                (990, "ПАУК 30Б", "ФИЗИЧЕСКИЙ ПЕРЕХВАТ", ACC,
+                 ["сеть наматывается на винты", "питание нужно только для выстрела", "снаряд — расходник, корпус многоразовый"])]
+        for x, nm, sub_, col, lines in cols:
+            d.rectangle([x, 300, x + 860, 900], fill=(10, 14, 21, 244), outline=a(col, 150), width=2)
+            d.text((x + 34, 320), nm, font=F(RUSSO, 60), fill=a(col, 255))
+            d.text((x + 36, 398), sub_, font=F(MONO, 28), fill=a(TXT, 240))
+            for k, line in enumerate(lines):
+                yy = 480 + k * 90
+                d.rectangle([x + 34, yy + 12, x + 44, yy + 22], fill=a(col, 255))
+                d.text((x + 62, yy), line, font=F(MONO, 32), fill=a(DIM, 240))
+            d.text((x + 34, 790), "ЦЕЛЬ ОСТАЁТСЯ В ВОЗДУХЕ" if col == WARN else "ЦЕЛЬ ПАДАЕТ РЯДОМ",
+                   font=F(RUSSO, 32), fill=a(col, 240))
 
     else:
-        # финал блока 1 — крупный кадр
-        kicker(d, 40, 112, "ИЗДЕЛИЕ", ACC)
-        d.text((40, 152), "ПАУК 30Б В ДЕТАЛЯХ", font=fit("ПАУК 30Б В ДЕТАЛЯХ", RUSSO, 44, 1000), fill=a(TXT, 255))
-        photo_panel(ov, d, "pouch_emr", 40, 240, 620, 470, t, 1.04, label="ЧЕХОЛ В РУССКОМ ЦИФРОВОМ КАМУФЛЯЖЕ", idx="05")
-        photo_panel(ov, d, "pouch3", 686, 240, 620, 470, t, 1.04, label="ТРИ ЧЕХЛА ПОД РАЗНЫЕ КАМУФЛЯЖИ", idx="06")
-        d.rectangle([1332, 240, 1880, 760], fill=(9, 13, 19, 247), outline=a(ACC, 120))
-        d.text((1358, 264), "ВАРИАНТЫ ПОСТАВКИ", font=F(MONO, 15), fill=a(DIM, 235))
-        for i, (n, dsc) in enumerate([("4", "снаряда"), ("6", "снарядов"), ("10", "снарядов")]):
-            yy = 306 + i * 148
-            d.text((1358, yy), n, font=F(RUSSO, 66), fill=a(ACC, 255))
-            d.text((1432, yy + 26), dsc, font=F(MONO, 19), fill=a(TXT, 240))
-            d.rectangle([1358, yy + 96, 1854, yy + 100], fill=a(LINE, 255))
-        photo_panel(ov, d, "pouch2", 40, 760, 1790, 152, t, 1.03, label="СНАРЯЖЕНИЕ: 4, 6 И 10 СНАРЯДОВ")
+        d.rectangle([0, 300, W, 780], fill=(6, 9, 14, 230))
+        kicker(d, 70, 330, "ИЗДЕЛИЕ", ACC, 26)
+        d.text((70, 396), "ПАУК 30Б В ДЕТАЛЯХ", font=fit("ПАУК 30Б В ДЕТАЛЯХ", RUSSO, 70, 1200), fill=a(TXT, 255))
+        for i, (n, dsc) in enumerate([("4", "снаряда базовый"), ("6", "снарядов оптимальный"), ("10", "снарядов максимальный")]):
+            x = 74 + i * 400
+            d.text((x, 540), n, font=F(RUSSO, 140), fill=a(ACC, 255))
+            d.text((x + 4, 720), dsc, font=F(MONO, 28), fill=a(TXT, 235))
 
 
 # ═════════════ сцена 2: ТТХ ═════════════
 def scene2(base, ov, d, t, l):
     if l < 5.6:
-        d.rectangle([0, 96, W, 230], fill=(6, 9, 14, 232))
-        kicker(d, 40, 112, "ТАКТИКО-ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ", ACC)
-        d.text((40, 152), "ГЕОМЕТРИЯ ПЕРЕХВАТА", font=fit("ГЕОМЕТРИЯ ПЕРЕХВАТА", RUSSO, 44, 1100), fill=a(TXT, 255))
+        y = head(d, "ТАКТИКО-ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ", "ГЕОМЕТРИЯ ПЕРЕХВАТА", ACC, 100, 60)
+        # квадрат
+        gx, gy, gs = 74, 330, 470
+        pp = eout(c01((l - .2) / 1.2))
+        d.rectangle([gx, gy, gx + gs, gy + gs], outline=a(ACC, 240), width=4)
+        for k in range(1, 10):
+            xx = gx + k * gs / 10
+            d.line([(xx, gy), (xx, gy + gs)], fill=a(ACC, 80))
+            d.line([(gx, gy + k * gs / 10), (gx + gs, gy + k * gs / 10)], fill=a(ACC, 80))
+        d.text((gx + gs / 2, gy - 58), "2,5 М", font=F(RUSSO, 40), fill=a(ACC, 255), anchor="ma")
+        d.text((gx + gs / 2, gy + gs + 22), "ПЛОЩАДЬ 6 М²", font=F(RUSSO, 40), fill=a(TXT, 255), anchor="ma")
 
-        # квадрат сети 2,5 x 2,5
-        gx, gy, gs = 120, 300, 420
-        pp = eout(c01((l - .25) / 1.0))
-        d.rectangle([gx, gy, gx + gs * pp, gy + gs * pp], outline=a(ACC, 240), width=3)
-        step = 42
-        for k in range(1, int(10 * pp)):
-            xx = gx + k * step * pp
-            d.line([(xx, gy), (xx, gy + gs * pp)], fill=a(ACC, 80))
-            d.line([(gx, gy + k * step * pp), (gx + gs * pp, gy + k * step * pp)], fill=a(ACC, 80))
-        d.line([(gx, gy - 34), (gx + gs * pp, gy - 34)], fill=a(ACC, 200), width=2)
-        d.text((gx + gs * pp / 2, gy - 62), "2,5 М", font=F(RUSSO, 24), fill=a(ACC, 255), anchor="ma")
-        d.line([(gx - 34, gy), (gx - 34, gy + gs * pp)], fill=a(ACC, 200), width=2)
-        d.text((gx - 58, gy + gs * pp / 2), "2,5 М", font=F(RUSSO, 24), fill=a(ACC, 255), anchor="rm")
-        d.text((gx + gs * pp / 2, gy + gs * pp + 22), "ПЛОЩАДЬ 6 М²", font=F(RUSSO, 26), fill=a(TXT, 255), anchor="ma")
-
-        specs = [("МОДИФИКАЦИЯ", "ПАУК 30Б / быстрозарядный"),
-                 ("СЕТЬ", "квадрат 2,5 × 2,5 м"),
-                 ("ПЛОЩАДЬ ПОЛОТНА", "6 м²"),
-                 ("ДАЛЬНОСТЬ", "до 25–30 м"),
-                 ("СКОРОСТЬ СНАРЯДА", "30 м/с"),
-                 ("ГАБАРИТЫ", "190 × 150 × 30 мм")]
-        for i, (k, v) in enumerate(specs):
-            p2 = c01((l - .2 - i * .12) / .45)
-            if p2 <= 0: continue
-            yy = int(300 + i * 104 + (1 - eout(p2)) * 22)
-            d.rectangle([700, yy, 1860, yy + 88], fill=(11, 15, 22, 242), outline=a(LINE, 255))
-            d.rectangle([700, yy, 705, yy + 88], fill=a(ACC, 255))
-            d.text((728, yy + 18), k, font=F(RUSSO, 20), fill=a(ACC, 250))
-            d.text((728, yy + 52), v, font=F(MONO, 18), fill=a(TXT, 255 * eout(p2)))
+        rows = [("МОДИФИКАЦИЯ", "ПАУК 30Б / быстрозарядный"),
+                ("СЕТЬ", "квадрат 2,5 × 2,5 м"),
+                ("ПЛОЩАДЬ", "6 м²"),
+                ("ДАЛЬНОСТЬ", "25–30 м"),
+                ("СКОРОСТЬ", "30 м/с"),
+                ("ГАБАРИТЫ", "190 × 150 × 30 мм")]
+        for i, (k, v) in enumerate(rows):
+            pp2 = c01((l - .3 - i * .12) / .5)
+            if pp2 <= 0: continue
+            yy = int(316 + i * 106 + (1 - eout(pp2)) * 18)
+            row2(d, 660, yy, 1190, k, v, ACC, 96, 34, 30)
 
     elif l < 11.2:
-        # вес и баланс
-        kicker(d, 40, 112, "МАССА", ACC2)
-        f = fit("400 / 650 ГРАММОВ", RUSSO, 52, 1000)
-        d.text((40, 156), "400 / 650 ГРАММОВ", font=f, fill=a(TXT, 255))
-        d.text((40, 226), "снаряжённый — с картриджем, готов к выстрелу", font=F(MONO, 19), fill=a(DIM, 240))
+        head(d, "МАССА", "400 / 650 ГРАММОВ", ACC2, 100, 64)
+        d.text((70, 262), "снаряжённый — с картриджем, готов к выстрелу", font=F(MONO, 30), fill=a(DIM, 240))
 
-        # весы
-        bars = [("БЕЗ КАРТРИДЖА", 400, ACC), ("В СНАРЯЖЁННОМ ВИДЕ", 650, ACC2)]
-        for i, (k, v, col) in enumerate(bars):
-            pp = eout(c01((l - .3 - i * .25) / 1.0))
-            yy = 320 + i * 170
-            d.text((40, yy), k, font=F(MONO, 17), fill=a(DIM, 235))
-            d.text((40, yy + 28), f"{int(v*pp)} г", font=F(RUSSO, 52), fill=a(col, 255))
-            d.rectangle([360, yy + 42, 1000, yy + 62], fill=(15, 22, 32, 240))
-            d.rectangle([360, yy + 42, 360 + int(640 * (v / 700)) , yy + 62], fill=a(col, 255))
-            for kk in range(14):
-                xx = 360 + kk * 45.7
-                d.line([(xx, yy + 42), (xx, yy + 62)], fill=a((8, 11, 17), 255), width=2)
-        d.text((40, 690), "разница 250 г — это масса сменного картриджа", font=F(MONO, 17), fill=a(DIM, 235))
+        for i, (k, v, col) in enumerate([("БЕЗ КАРТРИДЖА", 400, ACC), ("В СНАРЯЖЁННОМ ВИДЕ", 650, ACC2)]):
+            pp = eout(c01((l - .3 - i * .3) / .8))
+            yy = 336 + i * 190
+            d.text((70, yy), k, font=F(MONO, 28), fill=a(DIM, 235))
+            d.text((70, yy + 34), f"{int(v * pp)} г", font=F(RUSSO, 84), fill=a(col, 255))
+            d.rectangle([70, yy + 146, 70 + 620, yy + 160], fill=(16, 22, 30, 255))
+            d.rectangle([70, yy + 146, 70 + int(620 * (v / 700) * pp), yy + 160], fill=a(col, 235))
 
-        # силуэт габаритов
-        d.rectangle([1080, 300, 1880, 900], fill=(9, 13, 19, 246), outline=a(LINE, 255))
-        d.text((1104, 322), "ГАБАРИТЫ, ММ", font=F(MONO, 15), fill=a(DIM, 235))
-        # прямоугольник 190x150x30 в масштабе
-        sc = 2.6
-        bx, by = 1170, 430
-        d.rectangle([bx, by, bx + 150 * sc, by + 190 * sc], outline=a(ACC, 200), width=2)
-        d.text((bx + 75 * sc, by - 26), "190", font=F(MONO, 18), fill=a(ACC, 240), anchor="ma")
-        d.text((bx - 26, by + 95 * sc), "150", font=F(MONO, 18), fill=a(ACC, 240), anchor="rm")
-        d.text((bx + 75 * sc, by + 62 * sc), "30", font=F(RUSSO, 60), fill=a(ACC, 255), anchor="mm")
-        d.text((bx + 75 * sc, by + 190 * sc + 26), "ТОЛЩИНА КОРПУСА", font=F(MONO, 14), fill=a(DIM, 230), anchor="ma")
-        d.text((1340, 820), "помещается в нагрудный подсумок", font=F(MONO, 16), fill=a(ACC, 225))
+        d.text((70, 740), "разница 250 г — масса сменного картриджа", font=F(MONO, 28), fill=a(DIM, 235))
+        photo_panel(ov, d, "holster2", 740, 300, 540, 340, t, 1.05, label="В РУКЕ")
 
-        photo_panel(ov, d, "holster2", 40, 740, 460, 172, t, 1.04, label="В РУКЕ")
-        photo_panel(ov, d, "pouch4", 520, 740, 460, 172, t, 1.04, label="В ПОДСУМКЕ")
+        # габариты
+        d.rectangle([1360, 300, 1850, 780], fill=(10, 14, 21, 242), outline=a(LINE, 255))
+        d.text((1394, 322), "ГАБАРИТЫ, ММ", font=F(MONO, 28), fill=a(DIM, 235))
+        d.text((1394, 372), "190 × 150 × 30", font=fit("190 × 150 × 30", RUSSO, 56, 420), fill=a(ACC, 255))
+        d.text((1394, 470), "помещается", font=F(MONO, 30), fill=a(TXT, 240))
+        d.text((1394, 508), "в нагрудный", font=F(MONO, 30), fill=a(TXT, 240))
+        d.text((1394, 546), "подсумок", font=F(MONO, 30), fill=a(TXT, 240))
 
     elif l < 17.2:
-        # дальность
-        kicker(d, 40, 112, "ДАЛЬНОСТЬ И СКОРОСТЬ", ACC)
-        d.text((40, 156), "25–30 МЕТРОВ", font=fit("25–30 МЕТРОВ", RUSSO, 56, 900), fill=a(TXT, 255))
-        d.text((40, 232), "снаряд идёт 30 м/с — дистанция проходится за секунду", font=F(MONO, 19), fill=a(DIM, 240))
+        head(d, "ДАЛЬНОСТЬ И СКОРОСТЬ", "25–30 МЕТРОВ", ACC, 100, 64)
+        d.text((70, 262), "снаряд идёт 30 м/с — дистанция за секунду", font=F(MONO, 30), fill=a(DIM, 240))
 
-        # шкала дальности
-        gx, gy, gw = 100, 380, 1700
-        d.rectangle([gx, gy, gx + gw, gy + 60], fill=(10, 15, 22, 246), outline=a(LINE, 255))
-        for i in range(31):
-            xx = gx + 40 + i * (gw - 80) / 30
-            hh = 26 if i % 5 == 0 else 14
-            d.line([(xx, gy + 60 - hh), (xx, gy + 60)], fill=a(LINE if i % 5 else DIM, 255), width=2)
-            if i % 5 == 0:
-                d.text((xx, gy + 68), str(i), font=F(MONO, 14), fill=a(DIM, 220), anchor="ma")
-        pp = eout(c01((l - .25) / 1.4))
-        d.rectangle([gx + 40, gy + 20, gx + 40 + int((gw - 80) * 0.90 * pp), gy + 46], fill=a(ACC, 200))
+        gx, gy, gw = 70, 346, 1780
+        d.rectangle([gx, gy, gx + gw, gy + 128], fill=(10, 15, 22, 246), outline=a(LINE, 255))
+        for i in range(7):
+            xx = gx + 50 + i * (gw - 100) / 6
+            d.line([(xx, gy + 76), (xx, gy + 128)], fill=a(LINE, 255), width=2)
+            d.text((xx, gy + 134), str(i * 5), font=F(MONO, 26), fill=a(DIM, 225), anchor="ma")
+        pp = eout(c01((l - .3) / 1.3))
+        d.rectangle([gx + 50, gy + 40, gx + 50 + int((gw - 100) * .92 * pp), gy + 76], fill=a(ACC, 215))
         for xx, lbl in ((25, "25 М"), (30, "30 М")):
-            px = gx + 40 + xx * (gw - 80) / 30
-            d.line([(px, gy - 14), (px, gy + 60)], fill=a(WARN, 220), width=3)
-            d.text((px, gy - 46), lbl, font=F(RUSSO, 22), fill=a(WARN, 255), anchor="ma")
+            px = gx + 50 + xx * (gw - 100) / 30
+            d.line([(px, gy - 14), (px, gy + 76)], fill=a(WARN, 225), width=4)
+            d.text((px, gy - 70), lbl, font=F(RUSSO, 36), fill=a(WARN, 255), anchor="ma")
 
-        # таймлайн полёта
-        d.rectangle([100, 540, 1820, 720], fill=(9, 13, 19, 246), outline=a(LINE, 255))
-        d.text((124, 562), "ВРЕМЯ ПОЛЁТА ДО ЦЕЛИ", font=F(MONO, 15), fill=a(DIM, 235))
-        tt = [("10 м", "0,33 с"), ("20 м", "0,67 с"), ("30 м", "1,0 с")]
-        for i, (dd, tt2) in enumerate(tt):
-            x = 200 + i * 540
-            d.text((x, 596), dd, font=F(RUSSO, 26), fill=a(TXT, 255))
-            d.text((x, 640), tt2, font=F(RUSSO, 40), fill=a(ACC, 255))
-            d.rectangle([x, 694, x + 440, 700], fill=a(LINE, 255))
-            d.rectangle([x, 694, x + int(440 * eout(c01((l - .4 - i * .2) / .9))), 700], fill=a(ACC, 200))
-
-        photo_panel(ov, d, "set6", 100, 744, 830, 168, t, 1.03, label="КОМПЛЕКТ 6 СНАРЯДОВ")
-        photo_panel(ov, d, "set4b", 960, 744, 860, 168, t, 1.03, label="ПИСТОЛЕТ И БОЕКОМПЛЕКТ")
+        d.text((70, 560), "ВРЕМЯ ПОДЛЁТА ДО ЦЕЛИ", font=F(MONO, 28), fill=a(DIM, 235))
+        for i, (dist, tm) in enumerate([("10 М", "0,33 С"), ("20 М", "0,67 С"), ("30 М", "1,0 С")]):
+            x = 70 + i * 600
+            d.rectangle([x, 610, x + 560, 940], fill=(10, 14, 21, 244), outline=a(ACC, 130))
+            d.text((x + 34, 640), dist, font=F(RUSSO, 44), fill=a(TXT, 255))
+            d.text((x + 34, 720), tm, font=F(RUSSO, 110), fill=a(ACC, 255))
 
     elif l < 22.9:
-        # схема снаряда
-        kicker(d, 40, 112, "УСТРОЙСТВО СНАРЯДА", WARN)
-        d.text((40, 156), "ОДНОРАЗОВЫЙ КАРТРИДЖ", font=fit("ОДНОРАЗОВЫЙ КАРТРИДЖ", RUSSO, 42, 1100), fill=a(TXT, 255))
+        head(d, "УСТРОЙСТВО СНАРЯДА", "ОДНОРАЗОВЫЙ КАРТРИДЖ", WARN, 100, 56)
 
-        # анатомия картриджа
-        d.rectangle([250, 230, 1080, 700], fill=(7, 10, 16, 240), outline=a(LINE, 255))
-        cx, cy = 520, 480
-        pp = eout(c01((l - .2) / .9))
-        # корпус картриджа (реальная форма: скруглённый брусок)
-        bw, bh = 118, 300
-        box = [cx - bw, cy - bh // 2, cx + bw, cy + bh // 2]
-        d.rounded_rectangle(box, 26, fill=(26, 31, 39, 255), outline=a((80, 92, 108), 255), width=2)
-        # верхняя площадка со скосом
-        d.rounded_rectangle([cx - bw + 16, cy - bh // 2 + 10, cx + bw - 16, cy - bh // 2 + 96], 18,
-                            fill=(19, 23, 30, 255))
-        # металлический узел
-        d.rounded_rectangle([cx - 42, cy - bh // 2 - 46, cx + 42, cy - bh // 2 + 12], 8,
-                            fill=(126, 132, 142, 255), outline=a((176, 182, 192), 255), width=2)
-        for k in range(4):
-            d.line([(cx - 36, cy - bh // 2 - 40 + k * 12), (cx + 36, cy - bh // 2 - 40 + k * 12)],
-                   fill=a((92, 98, 108), 255), width=2)
-        d.ellipse([cx - 15, cy - bh // 2 - 32, cx + 15, cy - bh // 2 - 2],
-                  fill=(24, 27, 32, 255), outline=a((196, 200, 208), 255), width=2)
-        # надпись и линия
-        d.text((cx, cy + 10), "СЕТЬ", font=F(RUSSO, 20), fill=a(ACC, 210), anchor="mm")
-        d.text((cx, cy + 44), "+ ПИРОПАТРОН", font=F(MONO, 13), fill=a(DIM, 215), anchor="ma")
-        # сетка-намёк на полотно
-        for k in range(-5, 6):
-            d.line([(cx + k * 18, cy + 82), (cx + k * 18 + 60, cy + 190)], fill=a(ACC, 40))
-        d.text((cx, cy + bh // 2 + 34), "ГАБАРИТ 118 × 300", font=F(MONO, 13), fill=a(DIM, 200), anchor="ma")
+        # зона схемы
+        d.rectangle([60, 300, 1080, 900], fill=(7, 10, 16, 242), outline=a(LINE, 255))
+        cx, cy = 330, 590
+        bw, bh = 190, 420
+        d.rounded_rectangle([cx - bw / 2, cy - bh / 2, cx + bw / 2, cy + bh / 2], 26,
+                            fill=(16, 21, 29, 252), outline=a(WARN, 210), width=3)
+        d.text((cx, cy - 70), "СЕТЬ", font=F(RUSSO, 36), fill=a(ACC, 240), anchor="ma")
+        d.text((cx, cy - 20), "6 М²", font=F(MONO, 26), fill=a(DIM, 235), anchor="ma")
+        d.line([(cx - 44, cy + 30), (cx + 44, cy + 30)], fill=a(WARN, 200), width=3)
+        d.text((cx, cy + 56), "ПИРОПАТРОН", font=F(MONO, 24), fill=a(WARN, 235), anchor="ma")
+        d.text((cx, cy + bh / 2 + 22), "ГАБАРИТ 118 × 300", font=F(MONO, 26), fill=a(DIM, 225), anchor="ma")
 
-        callouts = [("МЕТАЛЛИЧЕСКИЙ УЗЕЛ", "быстрая стыковка", cy - 196, cy - 196, ACC2),
-                    ("СЕТЬ 6 М²", "квадрат 2,5 × 2,5 м", cy - 20, cy - 20, ACC),
-                    ("ПИРОПАТРОН", "электронная инициация", cy + 140, cy + 140, WARN)]
-        for i, (k, v, node_y, y, col) in enumerate(callouts):
-            p2 = c01((l - .5 - i * .22) / .5)
-            if p2 <= 0: continue
-            lx0, lx1 = cx + bw + 14, cx + bw + 86
-            # колено, если узел выше подписи
-            d.line([(lx0, node_y), (lx1, node_y)], fill=a(col, 220), width=2)
-            if abs(node_y - y) > 2:
-                d.line([(lx1, node_y), (lx1, y)], fill=a(col, 220), width=2)
-            d.ellipse([lx0 - 5, node_y - 5, lx0 + 5, node_y + 5], fill=a(col, 255))
-            d.text((lx1 + 16, y - 24), k, font=F(RUSSO, 17), fill=a(col, 255 * eout(p2)))
-            d.text((lx1 + 16, y + 2), v, font=F(MONO, 13), fill=a(DIM, 240))
+        calls = [("МЕТАЛЛИЧЕСКИЙ УЗЕЛ", "быстрая стыковка", cy - 150, ACC),
+                 ("СЕТЬ 6 М²", "квадрат 2,5 × 2,5 м", cy - 10, ACC),
+                 ("ПИРОПАТРОН", "электронная инициация", cy + 150, WARN)]
+        for kk, vv, yy2, col in calls:
+            d.line([(cx + bw / 2, yy2), (cx + bw / 2 + 90, yy2)], fill=a(col, 200), width=3)
+            d.ellipse([cx + bw / 2 - 7, yy2 - 7, cx + bw / 2 + 7, yy2 + 7], fill=a(col, 255))
+            d.text((cx + bw / 2 + 110, yy2 - 30), kk, font=F(RUSSO, 32), fill=a(col, 255))
+            d.text((cx + bw / 2 + 110, yy2 + 12), vv, font=F(MONO, 26), fill=a(DIM, 240))
 
-        photo_panel(ov, d, "stack", 1180, 240, 700, 400, t, 1.05, label="БЛОК ИЗ 4 СНАРЯДОВ", idx="07")
-        photo_panel(ov, d, "pouch4", 1180, 690, 336, 242, t, 1.05, label="КАРТРИДЖ")
-        photo_panel(ov, d, "full", 1544, 690, 336, 242, t, 1.05, label="КОМПЛЕКТ")
-
-        d.rectangle([40, 700, 1120, 900], fill=(9, 13, 19, 246), outline=a(WARN, 110))
-        d.text((66, 722), "СНАРЯД — РАСХОДНИК, КОРПУС — МНОГОРАЗОВЫЙ", font=F(MONO, 18), fill=a(WARN, 245))
-        d.text((66, 758), "отстрелял — поставил новый, без разборки и инструментов", font=F(MONO, 16), fill=a(TXT, 235))
-        d.text((66, 794), "сменный блок на 4 снаряда ускоряет снаряжение", font=F(MONO, 16), fill=a(DIM, 225))
+        # правая колонка
+        d.rectangle([1120, 300, 1850, 900], fill=(9, 13, 19, 242), outline=a(ACC, 120))
+        rows = [("СНАРЯД", "одноразовый, с сетью и пиропатроном", WARN),
+                ("КОРПУС", "многоразовый, перезаряжается", ACC),
+                ("БЛОК", "сменный, на 4 снаряда", ACC2)]
+        for i, (k, v, col) in enumerate(rows):
+            pp = c01((l - .35 - i * .2) / .55)
+            if pp <= 0: continue
+            yy = int(340 + i * 176 + (1 - eout(pp)) * 18)
+            d.text((1154, yy), k, font=F(RUSSO, 34), fill=a(col, 255))
+            d.text((1154, yy + 52), v, font=F(MONO, 26), fill=a(TXT, 240))
+        d.text((1154, 848), "отстрелял — поставил новый", font=F(MONO, 26), fill=a(DIM, 230))
 
     elif l < 27.6:
-        # комплектация
-        kicker(d, 40, 112, "КОМПЛЕКТАЦИЯ", ACC)
-        d.text((40, 152), "ВАРИАНТЫ ПОСТАВКИ", font=fit("ВАРИАНТЫ ПОСТАВКИ", RUSSO, 46, 1000), fill=a(TXT, 255))
-        d.text((40, 214), "сеткомёт плюс основной заряд: 4, 6 или 10 снарядов", font=F(MONO, 19), fill=a(DIM, 240))
+        head(d, "КОМПЛЕКТАЦИЯ", "ВАРИАНТЫ ПОСТАВКИ", ACC, 100, 56)
+        d.text((70, 258), "сеткомёт плюс основной заряд: 4, 6 или 10 снарядов", font=F(MONO, 30), fill=a(DIM, 240))
 
-        opts = [("set4", "4 СНАРЯДА", "базовый комплект"), ("set6", "6 СНАРЯДОВ", "оптимальный"),
-                ("full", "10 СНАРЯДОВ", "максимальный запас")]
-        for i, (nm, tt, sub) in enumerate(opts):
-            pp = c01((l - .2 - i * .22) / .55)
+        for i, (nm, n, tt, ss) in enumerate([("set4", "4", "БАЗОВЫЙ", "стартовый комплект"),
+                                            ("set6", "6", "ОПТИМАЛЬНЫЙ", "баланс веса и запаса"),
+                                            ("full", "10", "МАКСИМАЛЬНЫЙ", "длительная работа")]):
+            pp = c01((l - .25 - i * .2) / .55)
             if pp <= 0: continue
-            x = 40 + i * 614
-            y = int(280 + (1 - eout(pp)) * 36)
-            d.rectangle([x, y, x + 586, y + 560], fill=(7, 11, 17, 246), outline=a(LINE, 255))
-            ov.paste(photo_tile(nm, 570, 440, 1.02 + .03 * math.sin(t * .6 + i)), (x + 8, y + 8))
-            brackets(d, x, y, 586, 560, a(ACC, 175))
-            d.rectangle([x, y + 456, x + 586, y + 552], fill=(9, 12, 18, 250))
-            d.rectangle([x, y + 456, x + 6, y + 552], fill=a(ACC, 255))
-            d.text((x + 20, y + 468), tt, font=F(RUSSO, 24), fill=a(TXT, 255))
-            d.text((x + 20, y + 506), sub, font=F(MONO, 15), fill=a(ACC, 235))
+            x = 70 + i * 600
+            y = int(340 + (1 - eout(pp)) * 26)
+            photo_panel(ov, d, nm, x, y, 540, 300, t, 1.04)
+            d.text((x - 10, y + 350), n, font=F(RUSSO, 96), fill=a(ACC, 255))
+            d.text((x + 96, y + 370), tt, font=F(RUSSO, 34), fill=a(TXT, 255))
+            d.text((x + 96, y + 418), ss, font=F(MONO, 26), fill=a(DIM, 240))
 
-        d.rectangle([40, 876, 1880, 964], fill=(10, 15, 22, 246), outline=a(ACC, 120))
-        d.text((66, 894), "В КОМПЛЕКТЕ: ПИСТОЛЕТ 1 ШТ. + ОСНОВНОЙ ЗАРЯД + ЧЕХОЛ  •  ЦВЕТ: ЧЁРНЫЙ / ХАКИ",
-               font=F(MONO, 18), fill=a(TXT, 245))
-        d.text((66, 924), "на изделие есть декларация о соответствии", font=F(MONO, 15), fill=a(DIM, 230))
+        d.rectangle([60, 820, 1860, 940], fill=(9, 13, 19, 246), outline=a(ACC, 120))
+        d.text((92, 842), "В КОМПЛЕКТЕ: ПИСТОЛЕТ + ОСНОВНОЙ ЗАРЯД + ЧЕХОЛ  •  ЦВЕТ: ЧЁРНЫЙ / ХАКИ",
+               font=F(MONO, 28), fill=a(TXT, 245))
+        d.text((92, 892), "на изделие есть декларация о соответствии", font=F(MONO, 28), fill=a(ACC, 235))
 
     else:
-        # резюме блока
-        kicker(d, 40, 112, "ИТОГ БЛОКА", ACC2)
-        d.text((40, 152), "СУХИЕ ЦИФРЫ", font=fit("СУХИЕ ЦИФРЫ", RUSSO, 46, 800), fill=a(TXT, 255))
-        grid = [("25–30 м", "дальность"), ("6 м²", "площадь сети"), ("30 м/с", "скорость снаряда"),
-                ("400 г", "без картриджа"), ("650 г", "снаряжённый"), ("от 2 с", "перезарядка")]
-        for i, (v, k) in enumerate(grid):
-            pp = c01((l - .15 - i * .12) / .45)
+        head(d, "ИТОГ БЛОКА", "СУХИЕ ЦИФРЫ", ACC2, 100, 56)
+        cells = [("25–30", "М ДАЛЬНОСТЬ"), ("6", "М² ПЛОЩАДЬ СЕТИ"),
+                 ("30", "М/С СКОРОСТЬ"), ("650", "Г СНАРЯЖЁННЫЙ")]
+        for i, (v, k) in enumerate(cells):
+            x = 70 + i * 450
+            pp = c01((l - .2 - i * .14) / .5)
             if pp <= 0: continue
-            col = i % 3; row = i // 3
-            x = 40 + col * 614; y = int(260 + row * 300 + (1 - eout(pp)) * 30)
-            d.rectangle([x, y, x + 586, y + 270], fill=(10, 15, 22, 247), outline=a(LINE, 255))
-            d.rectangle([x, y, x + 586, y + 5], fill=a(ACC, 255 * .8))
-            d.text((x + 30, y + 50), v, font=F(RUSSO, 62), fill=a(ACC, 255))
-            d.text((x + 30, y + 140), k, font=F(MONO, 18), fill=a(DIM, 240))
-            d.rectangle([x + 30, y + 190, x + 30 + int(400 * eout(pp)), y + 194], fill=a(ACC, 90))
-
-        d.text((40, 890), "ДАННЫЕ ИЗ ПАСПОРТА ИЗДЕЛИЯ  //  БЕЗ РЕКЛАМНЫХ ОЦЕНОК", font=F(MONO, 15), fill=a(DIM, 190))
+            d.rectangle([x, 320, x + 410, 760], fill=(10, 14, 21, 244), outline=a(ACC2, 130))
+            d.text((x + 34, 380), v, font=F(RUSSO, 96), fill=a(ACC, 255))
+            d.text((x + 34, 540), k, font=F(MONO, 28), fill=a(DIM, 240))
+        d.text((70, 820), "ДАННЫЕ ИЗ ПАСПОРТА ИЗДЕЛИЯ  //  БЕЗ РЕКЛАМНЫХ ОЦЕНОК", font=F(MONO, 28), fill=a(DIM, 215))
 
 
 # ═════════════ сцена 3: механика ═════════════
 def scene3(base, ov, d, t, l):
     if l < 6.0:
-        # перезарядка
-        kicker(d, 40, 112, "ПЕРЕЗАРЯДКА", ACC)
-        d.text((40, 156), "ОТ 2 СЕКУНД", font=fit("ОТ 2 СЕКУНД", RUSSO, 74, 900), fill=a(TXT, 255))
-        d.text((40, 262), "сменный снаряд: снял, поставил, готов", font=F(MONO, 20), fill=a(DIM, 245))
+        head(d, "ПЕРЕЗАРЯДКА", "ОТ 2 СЕКУНД", ACC, 100, 64)
+        d.text((70, 262), "сменный снаряд: снял, поставил, готов", font=F(MONO, 30), fill=a(DIM, 245))
 
-        # таймлайн перезарядки
-        steps = [("СНЯТЬ", "отработанный", .0), ("ПОСТАВИТЬ", "новый снаряд", .45), ("ГОТОВ", "к выстрелу", .9)]
-        for i, (k, sub, xp) in enumerate(steps):
-            pp = c01((l - .3 - i * .3) / .5)
+        steps = [("СНЯТЬ", "отработанный картридж"), ("ПОСТАВИТЬ", "новый снаряд"),
+                 ("ГОТОВ", "к следующему выстрелу")]
+        for i, (k, s) in enumerate(steps):
+            pp = c01((l - .3 - i * .22) / .5)
             if pp <= 0: continue
-            x = 120 + i * 560
-            d.ellipse([x - 46, 470 - 46, x + 46, 470 + 46], fill=(11, 16, 23, 250),
-                      outline=a(ACC, 230), width=3)
-            d.text((x, 458), f"{i+1}", font=F(RUSSO, 34), fill=a(ACC, 255), anchor="ma")
-            d.text((x, 540), k, font=F(RUSSO, 24), fill=a(TXT, 255 * eout(pp)), anchor="ma")
-            d.text((x, 578), sub, font=F(MONO, 15), fill=a(DIM, 240), anchor="ma")
-            if i < 2:
-                d.line([(x + 60, 470), (x + 500 - 60, 470)], fill=a(ACC, 120), width=2)
-        d.rectangle([120, 680, 1800, 700], fill=(15, 22, 32, 240))
-        d.rectangle([120, 680, 120 + int(1680 * eout(c01((l - .3) / 1.6))), 700], fill=a(ACC, 235))
-        d.text((120, 716), "0 С", font=F(MONO, 14), fill=a(DIM, 210))
-        d.text((1740, 716), "2 С", font=F(MONO, 14), fill=a(ACC, 220), anchor="ra")
+            x = 70 + i * 600
+            y = int(360 + (1 - eout(pp)) * 24)
+            d.rectangle([x, y, x + 560, y + 300], fill=(11, 16, 23, 246), outline=a(LINE, 255))
+            d.ellipse([x + 40, y + 40, x + 120, y + 120], fill=(10, 18, 22, 250), outline=a(ACC, 230), width=4)
+            d.text((x + 80, y + 62), f"{i+1}", font=F(RUSSO, 46), fill=a(ACC, 255), anchor="ma")
+            d.text((x + 40, y + 150), k, font=F(RUSSO, 42), fill=a(TXT, 255))
+            d.text((x + 40, y + 212), s, font=F(MONO, 28), fill=a(DIM, 240))
 
-        photo_panel(ov, d, "pouch2", 40, 760, 620, 172, t, 1.03, label="СМЕННЫЙ СНАРЯД")
-        photo_panel(ov, d, "set4", 686, 760, 620, 172, t, 1.03, label="СНАРЯЖЕНИЕ")
-        d.rectangle([1332, 760, 1880, 932], fill=(9, 13, 19, 246), outline=a(ACC2, 120))
-        d.text((1356, 782), "ЦИКЛ", font=F(MONO, 15), fill=a(DIM, 235))
-        d.text((1356, 810), "без инструментов", font=F(RUSSO, 24), fill=a(ACC2, 255))
-        d.text((1356, 852), "в поле, в перчатках", font=F(MONO, 16), fill=a(TXT, 240))
+        d.line([(70, 740), (1850, 740)], fill=a(LINE, 255), width=3)
+        d.text((70, 700), "0 С", font=F(MONO, 28), fill=a(DIM, 215), anchor="ls")
+        d.text((1850, 700), "2 С", font=F(MONO, 28), fill=a(ACC, 230), anchor="rs")
+        pp = eout(c01((l - .5) / 1.4))
+        d.rectangle([70, 726, 70 + int(1780 * pp), 754], fill=a(ACC, 225))
+
+        d.text((70, 820), "ЦИКЛ БЕЗ ИНСТРУМЕНТОВ", font=F(RUSSO, 44), fill=a(ACC2, 255))
+        d.text((70, 886), "в поле, в перчатках, одной рукой", font=F(MONO, 30), fill=a(TXT, 240))
 
     elif l < 12.0:
-        # электроника и питание
-        kicker(d, 40, 112, "ПИТАНИЕ И ЭЛЕКТРОНИКА", ACC2)
-        d.text((40, 156), "5 В / 3,5 А·Ч", font=fit("5 В / 3,5 А·Ч", RUSSO, 56, 900), fill=a(TXT, 255))
-        d.text((40, 232), "USB Type-C, электронная инициация", font=F(MONO, 19), fill=a(DIM, 240))
+        head(d, "ПИТАНИЕ И ЭЛЕКТРОНИКА", "5 В / 3,5 А·Ч", ACC2, 100, 64)
+        d.text((70, 262), "USB Type-C, электронная инициация", font=F(MONO, 30), fill=a(DIM, 240))
 
-        specs = [("НАПРЯЖЕНИЕ", "+5 В"),
-                 ("ИСТОЧНИК", "3,5 А·ч"),
-                 ("ЗАРЯДКА", "USB Type-C 5 В"),
-                 ("ТИП ИНИЦИАЦИИ", "электронная"),
-                 ("ВО ВКЛ. СОСТОЯНИИ", "8 недель"),
-                 ("ПРЕДОХРАНИТЕЛЬ", "двухпозиционный тумблер")]
-        for i, (k, v) in enumerate(specs):
-            p2 = c01((l - .15 - i * .13) / .45)
-            if p2 <= 0: continue
-            yy = int(300 + i * 72 + (1 - eout(p2)) * 18)
-            d.rectangle([40, yy, 980, yy + 60], fill=(11, 15, 22, 242), outline=a(LINE, 255))
-            d.rectangle([40, yy, 45, yy + 60], fill=a(ACC2, 255))
-            d.text((68, yy + 8), k, font=F(RUSSO, 16), fill=a(ACC2, 245))
-            d.text((68, yy + 32), v, font=F(MONO, 16), fill=a(TXT, 255 * eout(p2)))
+        rows = [("ПИТАНИЕ", "+5 В"), ("АККУМУЛЯТОР", "3,5 А·ч"),
+                ("ЗАРЯДКА", "USB Type-C"), ("ПРЕДОХРАНИТЕЛЬ", "двухпозиционный тумблер")]
+        for i, (k, v) in enumerate(rows):
+            pp = c01((l - .25 - i * .13) / .45)
+            if pp <= 0: continue
+            yy = int(340 + i * 150 + (1 - eout(pp)) * 16)
+            row2(d, 70, yy, 1000, k, v, ACC2, 132, 34, 30)
 
-        # индикатор автономности
-        d.rectangle([1050, 300, 1880, 900], fill=(9, 13, 19, 246), outline=a(LINE, 255))
-        d.text((1076, 322), "АВТОНОМНОСТЬ ВО ВКЛЮЧЁННОМ СОСТОЯНИИ", font=F(MONO, 15), fill=a(DIM, 235))
-        pp = eout(c01((l - .3) / 1.6))
-        d.text((1076, 360), f"{int(8 * pp)}", font=F(RUSSO, 130), fill=a(ACC, 255))
-        d.text((1300, 448), "недель", font=F(MONO, 28), fill=a(DIM, 240))
-        # календарная сетка 8 недель x 7 дней
-        for wk in range(8):
-            for dd in range(7):
-                on = (wk * 7 + dd) < int(56 * pp)
-                x = 1080 + dd * 44
-                y = 556 + wk * 36
-                d.rectangle([x, y, x + 34, y + 30],
-                            fill=a(ACC, 230) if on else a((16, 22, 30), 255),
-                            outline=a((28, 40, 54), 255))
-        d.text((1076, 862), "56 дней в готовности без подзарядки", font=F(MONO, 17), fill=a(TXT, 240))
-
-        photo_panel(ov, d, "holster", 40, 792, 460, 140, t, 1.03, label="ПРЕДОХРАНИТЕЛЬ")
-        photo_panel(ov, d, "pouch4", 520, 792, 470, 140, t, 1.03, label="КОРПУС")
+        d.rectangle([1120, 340, 1850, 940], fill=(10, 14, 21, 242), outline=a(ACC, 130))
+        d.text((1154, 366), "АВТОНОМНОСТЬ", font=F(MONO, 28), fill=a(DIM, 235))
+        d.text((1154, 410), "во включённом", font=F(MONO, 30), fill=a(TXT, 240))
+        d.text((1154, 450), "состоянии", font=F(MONO, 30), fill=a(TXT, 240))
+        pp = eout(c01((l - .4) / 1.4))
+        d.text((1154, 520), f"{int(8 * pp)}", font=F(RUSSO, 160), fill=a(ACC, 255))
+        d.text((1400, 660), "недель", font=F(MONO, 34), fill=a(DIM, 240))
+        d.text((1154, 800), "56 дней в готовности", font=F(MONO, 30), fill=a(TXT, 240))
+        d.text((1154, 846), "без подзарядки", font=F(MONO, 30), fill=a(DIM, 235))
 
     elif l < 18.1:
-        # предохранитель и безопасность
-        kicker(d, 40, 112, "БЕЗОПАСНОСТЬ", WARN)
-        d.text((40, 156), "ДВУХПОЗИЦИОННЫЙ ТУМБЛЕР", font=fit("ДВУХПОЗИЦИОННЫЙ ТУМБЛЕР", RUSSO, 40, 1200),
-               fill=a(TXT, 255))
-        d.text((40, 216), "электронный запал не сработает без взведения", font=F(MONO, 19), fill=a(DIM, 240))
+        head(d, "БЕЗОПАСНОСТЬ", "ДВУХПОЗИЦИОННЫЙ ТУМБЛЕР", WARN, 100, 52)
+        d.text((70, 250), "электронный запал не сработает без взведения", font=F(MONO, 30), fill=a(DIM, 240))
 
-        # тумблер
-        cx, cy = 300, 470
-        pp = eout(c01((l - .3) / .8))
-        # подписи позиций
-        d.text((cx - 108, cy + 104), "ЗАЩЁЛКА", font=F(MONO, 16), fill=a(WARN, 240), anchor="ma")
-        d.text((cx + 108, cy + 104), "ВЗВЕДЕНО", font=F(MONO, 16), fill=a(ACC, 240), anchor="ma")
-        d.text((cx, cy - 116), "ДВЕ ПОЗИЦИИ ТУМБЛЕРА", font=F(MONO, 15), fill=a(DIM, 230), anchor="ma")
-
-        d.rounded_rectangle([cx - 185, cy - 62, cx + 185, cy + 62], 34, fill=(12, 17, 24, 252),
+        cx, cy = 560, 520
+        pp = eout(c01((l - .3) / 1.1))
+        knob_x = (cx - 250) + int(500 * pp)
+        d.rounded_rectangle([cx - 400, cy - 90, cx + 400, cy + 90], 50, fill=(12, 17, 24, 252),
                             outline=a(LINE, 255), width=2)
-        knob_x = (cx - 108) + int(216 * pp)
-        d.rounded_rectangle([knob_x - 54, cy - 48, knob_x + 54, cy + 48], 26,
-                            fill=(32, 40, 50, 255), outline=a(WARN, 225), width=3)
-        d.rectangle([knob_x - 22, cy - 20, knob_x + 22, cy + 20], fill=a((18, 23, 30), 255))
-        d.ellipse([knob_x - 8, cy - 8, knob_x + 8, cy + 8], fill=a(WARN, 200))
+        d.rounded_rectangle([knob_x - 110, cy - 70, knob_x + 110, cy + 70], 38,
+                            fill=(32, 40, 50, 255), outline=a(WARN, 225), width=4)
+        d.rectangle([knob_x - 40, cy - 30, knob_x + 40, cy + 30], fill=a((18, 23, 30), 255))
+        d.ellipse([knob_x - 16, cy - 16, knob_x + 16, cy + 16], fill=a(WARN, 205))
+        d.text((cx - 260, cy + 120), "ЗАЩЁЛКА", font=F(MONO, 28), fill=a(WARN, 240), anchor="ma")
+        d.text((cx + 260, cy + 120), "ВЗВЕДЕНО", font=F(MONO, 28), fill=a(ACC, 240), anchor="ma")
 
-        rules = [("ЗАЩЁЛКА", "запал заблокирован, выстрела нет", WARN),
-                 ("ВЗВЕДЕНО", "цепь замкнута, готов к работе", ACC)]
+        rules = [("ЗАЩЁЛКА", "запал заблокирован", WARN), ("ВЗВЕДЕНО", "цепь замкнута", ACC)]
         for i, (k, v, col) in enumerate(rules):
-            p2 = c01((l - .5 - i * .2) / .5)
-            if p2 <= 0: continue
-            yy = int(620 + i * 122 + (1 - eout(p2)) * 20)
-            d.rectangle([40, yy, 780, yy + 102], fill=(11, 15, 22, 244), outline=a(col, 130))
-            d.rectangle([40, yy, 45, yy + 102], fill=a(col, 255))
-            d.text((68, yy + 18), k, font=F(RUSSO, 21), fill=a(col, 250))
-            d.text((68, yy + 54), v, font=F(MONO, 15), fill=a(TXT, 240))
+            yy = 730 + i * 106
+            row2(d, 70, yy, 1000, k, v, col, 96, 34, 28)
 
-        photo_panel(ov, d, "pouch3", 840, 278, 500, 372, t, 1.04, label="ЧЕХЛЫ В РАБОТЕ", idx="08")
-        photo_panel(ov, d, "full", 1366, 278, 514, 372, t, 1.04, label="ПОЛНЫЙ КОМПЛЕКТ", idx="09")
-
-        d.rectangle([840, 752, 1880, 920], fill=(9, 13, 19, 248), outline=a(LINE, 255))
-        d.text((866, 772), "ХРАНЕНИЕ", font=F(MONO, 15), fill=a(DIM, 235))
-        d.text((866, 798), "подсумок с быстрым доступом", font=F(RUSSO, 26), fill=a(TXT, 255))
-        d.text((866, 844), "клапан на фастексе, стропа MOLLE", font=F(MONO, 16), fill=a(ACC, 235))
-        d.text((866, 874), "не мешает при передвижении", font=F(MONO, 16), fill=a(DIM, 230))
+        photo_panel(ov, d, "full", 1120, 300, 700, 500, t, 1.04, label="ПОЛНЫЙ КОМПЛЕКТ С ЧЕХЛАМИ", idx="08")
 
     elif l < 23.5:
-        # выбор камуфляжа
-        kicker(d, 40, 112, "ИСПОЛНЕНИЕ", ACC)
-        d.text((40, 152), "ЧЁРНЫЙ ИЛИ ХАКИ", font=fit("ЧЁРНЫЙ ИЛИ ХАКИ", RUSSO, 46, 1000), fill=a(TXT, 255))
-        d.text((40, 214), "корпус — чёрный полимер, подсумки под цвет снаряжения", font=F(MONO, 18), fill=a(DIM, 240))
+        head(d, "ХРАНЕНИЕ", "ПОДСУМОК С БЫСТРЫМ ДОСТУПОМ", ACC, 100, 52)
+        d.text((70, 250), "клапан на фастексе, стропа MOLLE", font=F(MONO, 30), fill=a(ACC, 235))
 
-        cols = [("pouch_mc", "MULTICAM", "универсальный"), ("pouch_emr", "РУССКИЙ ЦИФРОВОЙ", "лес / поле"),
-                ("pouch4", "OLIVE / ХАКИ", "базовый")]
-        for i, (nm, tt, sub) in enumerate(cols):
-            pp = c01((l - .2 - i * .2) / .55)
+        photo_panel(ov, d, "pouch_mc", 70, 320, 720, 520, t, 1.05, label="ПОДСУМОК НА СНАРЯЖЕНИИ", idx="09")
+
+        rows = [("ОДНА РУКА", "подсумок открывается на ходу"),
+                ("MOLLE", "крепится на любой жилет"),
+                ("НЕ МЕШАЕТ", "плоский профиль, без выступов")]
+        for i, (k, v) in enumerate(rows):
+            pp = c01((l - .3 - i * .18) / .5)
             if pp <= 0: continue
-            x = 40 + i * 614
-            y = int(290 + (1 - eout(pp)) * 34)
-            d.rectangle([x, y, x + 586, y + 540], fill=(7, 11, 17, 246), outline=a(LINE, 255))
-            ov.paste(photo_tile(nm, 570, 420, 1.02 + .03 * math.sin(t * .6 + i)), (x + 8, y + 8))
-            brackets(d, x, y, 586, 540, a(ACC, 175))
-            d.rectangle([x, y + 436, x + 586, y + 532], fill=(9, 12, 18, 250))
-            d.text((x + 20, y + 450), tt, font=F(RUSSO, 21), fill=a(TXT, 255))
-            d.text((x + 20, y + 486), sub, font=F(MONO, 15), fill=a(ACC, 235))
-
-        d.rectangle([40, 860, 1880, 950], fill=(10, 15, 22, 246), outline=a(ACC, 120))
-        d.text((66, 880), "ВЛОЖЕНИЕ В СНАРЯЖЕНИЕ: MOLLE-СТРОПА + ФАСТЕКС", font=F(MONO, 18), fill=a(TXT, 245))
-        d.text((66, 912), "подсумок открывается одной рукой", font=F(MONO, 15), fill=a(DIM, 230))
+            yy = int(340 + i * 128 + (1 - eout(pp)) * 18)
+            row2(d, 870, yy, 980, k, v, ACC, 108, 34, 28)
 
     else:
-        # крупный план механики
-        kicker(d, 40, 112, "МЕХАНИКА", ACC2)
-        d.text((40, 152), "БЫСТРОСЪЁМНЫЙ УЗЕЛ", font=fit("БЫСТРОСЪЁМНЫЙ УЗЕЛ", RUSSO, 44, 1100), fill=a(TXT, 255))
-        photo_panel(ov, d, "stack", 40, 240, 760, 440, t, 1.05, label="БЛОК СНАРЯДОВ И УЗЕЛ СТЫКОВКИ", idx="10")
-        photo_panel(ov, d, "set6b", 826, 240, 514, 440, t, 1.05, label="КОМПЛЕКТ 6")
-        photo_panel(ov, d, "pouch", 1366, 240, 514, 440, t, 1.05, label="ПОДСУМОК")
+        head(d, "ИСПОЛНЕНИЕ", "ЧЁРНЫЙ ИЛИ ХАКИ", ACC, 100, 56)
+        d.text((70, 258), "корпус — чёрный полимер, подсумки под цвет снаряжения", font=F(MONO, 30), fill=a(DIM, 240))
 
-        d.rectangle([40, 720, 1880, 940], fill=(9, 13, 19, 246), outline=a(LINE, 255))
-        facts = [("УЗЕЛ СТЫКОВКИ", "металлический, быстрый"), ("СНАРЯД", "одноразовый, с сетью"),
-                 ("ПЕРЕЗАРЯДКА", "от 2 секунд"), ("ИНСТРУМЕНТ", "не нужен")]
-        for i, (k, v) in enumerate(facts):
-            x = 76 + i * 452
-            d.text((x, 748), k, font=F(MONO, 15), fill=a(DIM, 235))
-            d.text((x, 778), v, font=F(RUSSO, 24), fill=a(ACC, 255))
-            d.rectangle([x, 878, x + 400, 882], fill=a(ACC, 80))
+        cards = [("pouch3", "MULTICAM", "универсальный"), ("pouch_emr", "РУССКИЙ ЦИФРОВОЙ", "лес / поле"),
+                 ("holster", "OLIVE / ХАКИ", "базовый")]
+        for i, (nm, tt, s) in enumerate(cards):
+            pp = c01((l - .25 - i * .2) / .55)
+            if pp <= 0: continue
+            x = 70 + i * 600
+            y = int(330 + (1 - eout(pp)) * 24)
+            photo_panel(ov, d, nm, x, y, 540, 340, t, 1.04)
+            d.text((x - 10, y + 386), tt, font=F(RUSSO, 36), fill=a(TXT, 255))
+            d.text((x - 10, y + 436), s, font=F(MONO, 28), fill=a(ACC, 235))
+
+        d.rectangle([60, 850, 1860, 940], fill=(9, 13, 19, 246), outline=a(ACC, 120))
+        d.text((92, 872), "ВЛОЖЕНИЕ В СНАРЯЖЕНИЕ: MOLLE-СТРОПА + ФАСТЕКС", font=F(MONO, 30), fill=a(TXT, 245))
 
 
 # ═════════════ сцена 4: условия, финал ═════════════
 def scene4(base, ov, d, t, l):
     if l < 5.4:
-        # IP54 + мороз
-        kicker(d, 40, 112, "УСЛОВИЯ ЭКСПЛУАТАЦИИ", ACC2)
-        d.text((40, 156), "IP54  /  −40 °C", font=fit("IP54  /  −40 °C", RUSSO, 54, 1000), fill=a(TXT, 255))
-        d.text((40, 232), "брызги со всех сторон и мороз без отказа электроники", font=F(MONO, 19), fill=a(DIM, 240))
+        head(d, "УСЛОВИЯ ЭКСПЛУАТАЦИИ", "IP54  /  -40 °C", ACC2, 100, 68)
+        d.text((70, 268), "брызги со всех сторон и мороз без отказа электроники", font=F(MONO, 30), fill=a(DIM, 240))
 
-        d.rectangle([40, 340, 900, 530], fill=(10, 15, 22, 246), outline=a(ACC2, 130))
-        d.text((66, 362), "IP54", font=F(RUSSO, 54), fill=a(ACC2, 255))
-        d.text((66, 432), "защита от брызг со всех сторон", font=F(MONO, 18), fill=a(TXT, 240))
-        d.text((66, 466), "пыль и водяные струи под углом", font=F(MONO, 15), fill=a(DIM, 230))
+        blocks = [("IP54", "защита от брызг", "пыль и струи под углом"), ("-40 °C", "морозостойкость", "работа в зимних условиях")]
+        for i, (v, k, s) in enumerate(blocks):
+            x = 70 + i * 620
+            pp = c01((l - .3 - i * .2) / .6)
+            if pp <= 0: continue
+            d.rectangle([x, 350, x + 560, 700], fill=(10, 14, 21, 244), outline=a(ACC2, 140))
+            d.text((x + 36, 380), v, font=fit(v, RUSSO, 92, 480), fill=a(ACC2, 255))
+            d.text((x + 36, 520), k, font=F(RUSSO, 34), fill=a(TXT, 255))
+            d.text((x + 36, 580), s, font=F(MONO, 28), fill=a(DIM, 240))
 
-        d.rectangle([920, 340, 1880, 530], fill=(10, 15, 22, 246), outline=a(ACC2, 130))
-        d.text((946, 362), "−40 °C", font=F(RUSSO, 54), fill=a(ACC2, 255))
-        d.text((946, 432), "морозостойкость изделия", font=F(MONO, 18), fill=a(TXT, 240))
-        d.text((946, 466), "работа в зимних условиях", font=F(MONO, 15), fill=a(DIM, 230))
+        d.rectangle([1320, 350, 1850, 700], fill=(10, 14, 21, 244), outline=a(LINE, 255))
+        d.text((1354, 372), "ТЕМПЕРАТУРНЫЙ ДИАПАЗОН", font=F(MONO, 26), fill=a(DIM, 235))
+        for i in range(5):
+            yy = 430 + i * 52
+            d.text((1354, yy), ["-40 °C", "-24 °C", "-8 °C", "+24 °C", "+56 °C"][i],
+                   font=F(MONO, 28), fill=a(TXT if i < 4 else DIM, 235))
 
-        # температурная шкала
-        gx, gy, gw = 40, 600, 1840
-        d.rectangle([gx, gy, gx + gw, gy + 90], fill=(10, 15, 22, 246), outline=a(LINE, 255))
-        for i in range(6):
-            xx = gx + 30 + i * (gw - 60) / 5
-            val = -40 + i * 15
-            d.line([(xx, gy + 46), (xx, gy + 90)], fill=a(LINE, 255), width=2)
-            d.text((xx, gy + 96), f"{val}", font=F(MONO, 15), fill=a(DIM, 230), anchor="ma")
-        pp = eout(c01((l - .3) / 1.3))
-        d.rectangle([gx + 30, gy + 28, gx + 30 + int((gw - 60) * pp), gy + 46], fill=a(ACC, 205))
-
-        photo_panel(ov, d, "pouch_emr", 40, 730, 620, 200, t, 1.03, label="В РУССКОМ КАМУФЛЯЖЕ")
-        photo_panel(ov, d, "pouch3", 686, 730, 620, 200, t, 1.03, label="ТРИ ВАРИАНТА ЧЕХЛОВ")
-        photo_panel(ov, d, "full", 1332, 730, 548, 200, t, 1.03, label="ПОЛНЫЙ КОМПЛЕКТ")
+        d.rectangle([60, 780, 1860, 900], fill=(9, 13, 19, 246), outline=a(ACC2, 120))
+        d.text((92, 806), "ЗАЯВЛЕННЫЙ РЕСУРС РАБОТЫ — ДО -40 °C", font=F(RUSSO, 38), fill=a(ACC2, 250))
+        d.text((92, 856), "электроника не отказывает на морозе и при брызгах", font=F(MONO, 28), fill=a(DIM, 235))
 
     elif l < 10.8:
-        # декларация и поставка
-        kicker(d, 40, 112, "ДОКУМЕНТЫ И ПОСТАВКА", ACC)
-        d.text((40, 152), "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ", font=fit("ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ", RUSSO, 40, 1200),
-               fill=a(TXT, 255))
-        d.text((40, 210), "на изделие имеется декларация о соответствии", font=F(MONO, 19), fill=a(DIM, 240))
+        head(d, "ДОКУМЕНТЫ И ПОСТАВКА", "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ", ACC, 100, 52)
+        d.text((70, 250), "на изделие имеется декларация о соответствии", font=F(MONO, 30), fill=a(DIM, 240))
 
-        d.rectangle([40, 280, 900, 500], fill=(9, 15, 20, 248), outline=a(ACC, 140))
-        d.text((66, 306), "ДОКУМЕНТ", font=F(MONO, 15), fill=a(DIM, 235))
-        d.text((66, 336), "ДЕКЛАРАЦИЯ", font=F(RUSSO, 44), fill=a(ACC, 255))
-        d.text((66, 392), "О СООТВЕТСТВИИ", font=F(RUSSO, 44), fill=a(ACC, 255))
-        d.text((66, 456), "предъявляется по запросу", font=F(MONO, 16), fill=a(TXT, 235))
+        d.rectangle([70, 330, 900, 700], fill=(10, 14, 21, 244), outline=a(ACC, 160))
+        d.text((106, 356), "ДОКУМЕНТ", font=F(MONO, 26), fill=a(DIM, 235))
+        d.text((106, 400), "ДЕКЛАРАЦИЯ", font=F(RUSSO, 56), fill=a(ACC, 255))
+        d.text((106, 470), "О СООТВЕТСТВИИ", font=F(RUSSO, 56), fill=a(ACC, 255))
+        d.text((106, 590), "предъявляется по запросу", font=F(MONO, 30), fill=a(TXT, 235))
 
-        opts = [("4", "снаряда"), ("6", "снарядов"), ("10", "снарядов")]
-        d.rectangle([940, 280, 1880, 500], fill=(10, 15, 22, 246), outline=a(LINE, 255))
-        d.text((966, 302), "ВАРИАТИВНОСТЬ ПОСТАВКИ", font=F(MONO, 15), fill=a(DIM, 235))
-        for i, (n, dsc) in enumerate(opts):
-            x = 966 + i * 300
-            d.text((x, 336), n, font=F(RUSSO, 76), fill=a(ACC, 255))
-            d.text((x, 432), dsc, font=F(MONO, 17), fill=a(TXT, 240))
+        d.rectangle([960, 330, 1850, 700], fill=(10, 14, 21, 244), outline=a(LINE, 255))
+        d.text((994, 356), "ВАРИАТИВНОСТЬ ПОСТАВКИ", font=F(MONO, 26), fill=a(DIM, 235))
+        for i, (n, dsc) in enumerate([("4", "базовый"), ("6", "оптимальный"), ("10", "максимальный")]):
+            x = 994 + i * 280
+            d.text((x, 400), n, font=F(RUSSO, 110), fill=a(ACC, 255))
+            d.text((x, 570), dsc, font=F(MONO, 26), fill=a(TXT, 240))
 
-        d.rectangle([40, 530, 1880, 700], fill=(9, 13, 19, 246), outline=a(WARN, 110))
-        d.text((66, 552), "СМЕННЫЙ СНАРЯД — ОДНОРАЗОВЫЙ", font=F(RUSSO, 26), fill=a(WARN, 250))
-        d.text((66, 594), "сеть и пиропатрон в одном картридже; корпус пистолета переиспользуется",
-               font=F(MONO, 17), fill=a(TXT, 240))
-        d.text((66, 632), "поставляется отдельно как расходный элемент", font=F(MONO, 16), fill=a(DIM, 230))
-
-        photo_panel(ov, d, "set6b", 40, 700, 470, 240, t, 1.03, label="6 СНАРЯДОВ")
-        photo_panel(ov, d, "stack", 550, 700, 470, 240, t, 1.03, label="БЛОК СНАРЯДОВ")
-        photo_panel(ov, d, "pouch4", 1060, 700, 250, 240, t, 1.05, label="КАРТРИДЖ")
-        photo_panel(ov, d, "pouch", 1350, 700, 250, 240, t, 1.05, label="ПОДСУМОК")
-        photo_panel(ov, d, "holster2", 1640, 700, 240, 240, t, 1.05, label="В СБОРЕ")
+        d.text((70, 750), "СМЕННЫЙ СНАРЯД — ОДНОРАЗОВЫЙ", font=F(RUSSO, 38), fill=a(WARN, 250))
+        d.text((70, 812), "сеть и пиропатрон в одном картридже, корпус переиспользуется", font=F(MONO, 28), fill=a(TXT, 240))
+        d.text((70, 858), "поставляется отдельно как расходный элемент", font=F(MONO, 28), fill=a(DIM, 235))
 
     elif l < 16.2:
-        # сценарии
-        kicker(d, 40, 112, "СЦЕНАРИИ", ACC2)
-        d.text((40, 152), "БЛИЖНЯЯ ЗОНА", font=fit("БЛИЖНЯЯ ЗОНА", RUSSO, 48, 900), fill=a(TXT, 255))
-        d.text((40, 216), "там, где дрон уже над головой и поздно бежать", font=F(MONO, 19), fill=a(DIM, 240))
+        head(d, "СЦЕНАРИИ", "БЛИЖНЯЯ ЗОНА", ACC2, 100, 60)
+        d.text((70, 264), "там, где дрон уже над головой и поздно бежать", font=F(MONO, 30), fill=a(DIM, 240))
 
-        cards = [("ПОЗИЦИЯ", "окоп, блиндаж, наблюдательный пост", "pouch4"),
-                 ("ПАТРУЛЬ", "движение в колонне и пешем порядке", "pouch_mc"),
-                 ("ОБЪЕКТ", "охрана склада, узла связи, КПП", "full")]
-        for i, (tt, sub, nm) in enumerate(cards):
-            pp = c01((l - .2 - i * .22) / .55)
+        cards = [("pouch4", "НАД ГОЛОВОЙ", "подлёт к позиции"), ("set6", "ПАТРУЛЬ", "передвижение в колонне"),
+                 ("stack", "СТАЦИОНАРНЫЙ ПОСТ", "охрана объекта")]
+        for i, (nm, tt, s) in enumerate(cards):
+            pp = c01((l - .25 - i * .2) / .55)
             if pp <= 0: continue
-            x = 40 + i * 614
-            y = int(290 + (1 - eout(pp)) * 34)
-            d.rectangle([x, y, x + 586, y + 540], fill=(7, 11, 17, 246), outline=a(LINE, 255))
-            ov.paste(photo_tile(nm, 570, 420, 1.02 + .03 * math.sin(t * .6 + i)), (x + 8, y + 8))
-            brackets(d, x, y, 586, 540, a(ACC, 175))
-            d.rectangle([x, y + 436, x + 586, y + 532], fill=(9, 12, 18, 250))
-            d.text((x + 20, y + 450), tt, font=F(RUSSO, 22), fill=a(TXT, 255))
-            d.text((x + 20, y + 486), sub, font=F(MONO, 14), fill=a(ACC, 235))
+            x = 70 + i * 600
+            y = int(340 + (1 - eout(pp)) * 24)
+            photo_panel(ov, d, nm, x, y, 540, 330, t, 1.04)
+            d.text((x - 10, y + 376), tt, font=F(RUSSO, 34), fill=a(TXT, 255))
+            d.text((x - 10, y + 424), s, font=F(MONO, 28), fill=a(ACC, 235))
 
-        d.text((40, 880), "РЕНТАБЕЛЬНОСТЬ: КОРПУС МНОГОРАЗОВЫЙ, СНАРЯД — РАСХОДНИК",
-               font=F(MONO, 17), fill=a(DIM, 215))
+        d.text((70, 850), "РЕНТАБЕЛЬНОСТЬ: КОРПУС МНОГОРАЗОВЫЙ, СНАРЯД — РАСХОДНИК",
+               font=F(MONO, 28), fill=a(DIM, 235))
 
     elif l < 21.6:
-        # чек-лист
-        kicker(d, 40, 112, "ЧЕК-ЛИСТ ПЕРЕД ПОКУПКОЙ", ACC)
-        d.text((40, 152), "ЧТО УТОЧНИТЬ", font=fit("ЧТО УТОЧНИТЬ", RUSSO, 46, 900), fill=a(TXT, 255))
-        items = [("ВАРИАНТ ПОСТАВКИ", "4, 6 или 10 снарядов в комплекте"),
-                 ("ЦВЕТ", "чёрный или хаки"),
-                 ("КАМУФЛЯЖ ЧЕХЛА", "multicam / русский цифровой / olive"),
-                 ("ДЕКЛАРАЦИЯ", "запросить документ на партию"),
-                 ("ЗАПАС СНАРЯДОВ", "сменный картридж поставляется отдельно")]
+        head(d, "ЧЕК-ЛИСТ ПЕРЕД ПОКУПКОЙ", "ЧТО УТОЧНИТЬ", ACC, 100, 60)
+        items = [("КОМПЛЕКТАЦИЯ", "4, 6 или 10 снарядов в поставке"),
+                 ("СМЕННЫЕ СНАРЯДЫ", "поставляются отдельно, как расходник"),
+                 ("ЦВЕТ И ЧЕХОЛ", "чёрный / хаки, подсумок под снаряжение"),
+                 ("ДОКУМЕНТЫ", "декларация о соответствии на изделие")]
         for i, (k, v) in enumerate(items):
-            pp = c01((l - .15 - i * .14) / .45)
+            pp = c01((l - .2 - i * .16) / .5)
             if pp <= 0: continue
-            yy = int(240 + i * 130 + (1 - eout(pp)) * 22)
-            d.rectangle([40, yy, 1180, yy + 112], fill=(11, 15, 22, 244), outline=a(LINE, 255))
-            d.rectangle([40, yy, 45, yy + 112], fill=a(ACC, 255))
-            d.text((72, yy + 18), f"0{i+1}", font=F(MONO, 15), fill=a(ACC, 200))
-            d.text((120, yy + 20), k, font=F(RUSSO, 21), fill=a(TXT, 255 * eout(pp)))
-            d.text((120, yy + 58), v, font=F(MONO, 16), fill=a(DIM, 240))
+            yy = int(320 + i * 150 + (1 - eout(pp)) * 18)
+            d.rectangle([70, yy, 1480, yy + 132], fill=(11, 16, 23, 246), outline=a(ACC, 110))
+            d.rectangle([70, yy, 78, yy + 132], fill=a(ACC, 255))
+            d.text((106, yy + 14), f"0{i+1}", font=F(MONO, 26), fill=a(ACC, 200))
+            d.text((176, yy + 14), k, font=F(RUSSO, 36), fill=a(TXT, 255))
+            d.text((176, yy + 68), v, font=F(MONO, 28), fill=a(DIM, 240))
 
-        photo_panel(ov, d, "holster", 1240, 240, 640, 480, t, 1.04, label="ПАУК 30Б", idx="11")
-        d.rectangle([1240, 790, 1880, 900], fill=(9, 13, 19, 246), outline=a(WARN, 120))
-        d.text((1264, 812), "БЕЗ ЦЕН", font=F(RUSSO, 26), fill=a(WARN, 250))
-        d.text((1264, 856), "только характеристики и факты", font=F(MONO, 15), fill=a(DIM, 230))
+        photo_panel(ov, d, "holster2", 1530, 300, 330, 500, t, 1.05)
+        d.text((1530, 830), "БЕЗ ЦЕН", font=F(RUSSO, 44), fill=a(WARN, 250))
+        d.text((1530, 892), "только характеристики", font=F(MONO, 26), fill=a(DIM, 230))
+        d.text((1530, 930), "и факты из паспорта", font=F(MONO, 26), fill=a(DIM, 230))
 
     else:
-        # финал
-        p = eout(c01((l - .15) / .9))
-        d.rectangle([0, 200, W, 900], fill=(5, 8, 13, 228))
-        d.rectangle([0, 200, 8, 900], fill=a(ACC, 255))
-        d.text((100, 248 + (1 - p) * 20), "ПАУК 30Б", font=F(RUSSO, 104), fill=a(TXT, 255 * p))
-        d.text((104, 380), "ПЕРЕХВАТ БПЛА СЕТЬЮ", font=F(RUSSO, 34), fill=a(ACC, 255 * p))
-        d.line([(104, 456), (104 + 1100 * p, 456)], fill=a(ACC, 180), width=2)
+        p = eout(c01((l - .1) / .8))
+        d.rectangle([0, 180, W, 980], fill=(6, 9, 14, 232))
+        d.rectangle([0, 180, 9, 980], fill=a(ACC, 255))
+        d.text((80, 220 + (1 - p) * 20), "ПАУК 30Б", font=F(RUSSO, 130), fill=a(TXT, 255 * p))
+        d.text((84, 386), "ПЕРЕХВАТ БПЛА СЕТЬЮ", font=F(RUSSO, 44), fill=a(ACC, 255 * p))
+        d.text((84, 462), "25–30 М  •  6 М²  •  ОТ 2 С  •  400 / 650 Г", font=F(MONO, 30), fill=a(DIM, 240))
 
-        p2 = c01((l - .6) / .8)
-        d.text((104, 496), "ПОДПИСЫВАЙТЕСЬ НА «В ОКОПЕ»", font=F(MONO, 22), fill=a(DIM, 255 * p2))
+        p2 = c01((l - .5) / .8)
+        d.text((84, 560), "ПОДПИСЫВАЙТЕСЬ НА «В ОКОПЕ»", font=F(MONO, 30), fill=a(TXT, 255 * p2))
+
         links = [("TELEGRAM", "t.me/vokope_ru"), ("VK", "vk.com/vokope_rus"),
                  ("AVITO", "avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241")]
         for i, (k, v) in enumerate(links):
-            pp = c01((l - .9 - i * .22) / .5)
+            pp = c01((l - .8 - i * .16) / .45)
             if pp <= 0: continue
-            yy = int(552 + i * 96 + (1 - eout(pp)) * 18)
-            d.rectangle([104, yy, 1240, yy + 78], fill=(11, 16, 23, 246), outline=a(ACC, 110))
-            d.rectangle([104, yy, 110, yy + 78], fill=a(ACC, 255))
-            d.text((134, yy + 14), k, font=F(RUSSO, 20), fill=a(ACC, 255))
-            d.text((134, yy + 44), v, font=F(MONO, 17), fill=a(TXT, 240))
+            yy = int(640 + i * 106 + (1 - eout(pp)) * 20)
+            d.rectangle([80, yy, 1260, yy + 92], fill=(11, 16, 23, 246), outline=a(ACC, 120))
+            d.rectangle([80, yy, 88, yy + 92], fill=a(ACC, 255))
+            d.text((118, yy + 14), k, font=F(RUSSO, 30), fill=a(ACC, 255))
+            d.text((118, yy + 52), v, font=F(MONO, 24), fill=a(TXT, 240))
 
-        photo_panel(ov, d, "holster2", 1330, 250, 520, 520, t, 1.04, label="ПАУК 30Б / В ЧЕХЛЕ")
-
-        d.text((104, 850), "ТЕХНИЧЕСКИЙ ОБЗОР  //  ФАКТЫ ИЗ ПАСПОРТА  //  БЕЗ РЕКЛАМНЫХ ЦЕН",
-               font=F(MONO, 15), fill=a(DIM, 200))
+        photo_panel(ov, d, "set4b", 1330, 240, 520, 520, t, 1.04, label="ПАУК 30Б / 4 СНАРЯДА")
 
 
 def intro(base, ov, d, t, l):
     p = eout(c01(t / .9))
     d.rectangle([0, H // 2 - 150, W, H // 2 + 120], fill=(5, 8, 13, int(200 * p)))
-    d.text((W // 2, H // 2 - 92), "«В ОКОПЕ»", font=F(RUSSO, 96), fill=a(TXT, int(255 * c01(t / .7))), anchor="ma")
-    d.text((W // 2, H // 2 + 20), "СРЕДСТВА ПРОТИВОДЕЙСТВИЯ БПЛА", font=F(MONO, 22),
+    d.text((W // 2, H // 2 - 92), "«В ОКОПЕ»", font=F(RUSSO, 104), fill=a(TXT, int(255 * c01(t / .7))), anchor="ma")
+    d.text((W // 2, H // 2 + 22), "ПРОТИВОДЕЙСТВИЕ БПЛА", font=F(MONO, 34),
            fill=a(ACC, int(230 * c01((t - .4) / .7))), anchor="ma")
     w = 520 * eout(c01((t - .5) / .8))
     d.rectangle([W // 2 - w / 2, H // 2 + 72, W // 2 + w / 2, H // 2 + 75], fill=a(ACC, 220))
