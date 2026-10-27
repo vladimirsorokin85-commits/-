@@ -10,6 +10,7 @@
     "a10",
     "a11",
     "a12",
+    "a13",
     "a14",
     "a15",
     "a16",
@@ -23,6 +24,8 @@
     "a24",
     "a25",
     "a26",
+    "a27",
+    "a28",
     "a29",
     "a30"
   ],
@@ -37,6 +40,7 @@
     "images/frames/s02e02_03_eye_diagnostics.png",
     "images/frames/s02e02_10_left_knee.png",
     "images/frames/s02e02_11_dream_firewall.png",
+    "images/frames/s02e02_25_biocode_reflection.png",
     "images/frames/s02e02_12_stout_workbench.png",
     "images/frames/s02e02_13_keeper_shift.png",
     "images/frames/s02e02_14_responsibility.png",
@@ -50,8 +54,10 @@
     "images/frames/s02e02_18_sysadmin.png",
     "images/frames/s02e02_24_personal_toolkit.png",
     "images/frames/s02e02_19_shop_trade.png",
+    "images/frames/s02e02_26_trust_inspection.png",
+    "images/frames/s02e02_27_free_beer_calculation.png",
     "images/frames/s02e02_20_ground_loop_fix.png",
     "images/frames/s02e02_21_exit.png"
   ],
-  "note": "25 файлов таймлайна для 30 разговорных сегментов: 24 сюжетных кадра и обложка. Массив актов уникален и упорядочен; временные интервалы берутся из таймлайна микса. Обложка занимает один слот в начале выпуска."
+  "note": "28 файлов таймлайна для 30 разговорных сегментов: 27 сюжетных кадров и обложка. Массив актов уникален и упорядочен; временные интервалы берутся из таймлайна микса. Обложка занимает один из ранних слотов выпуска."
 }
