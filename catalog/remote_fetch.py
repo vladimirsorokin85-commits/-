@@ -337,12 +337,17 @@ def fetch_photos(idx, full_by_id):
     targets = resolve_targets(idx, req)
     limit = int(req.get("limit_per_product") or 4)
     log(f"фото: заявка на {len(targets)} товар(ов), до {limit} фото на товар")
-    # режим «все фото»: для отдельных товаров лимита нет
+    # режим «все фото»: отдельные товары качаем целиком (без лимита) — и тоже в общий список
     all_rows = resolve_targets(idx, {"ids": req.get("all_ids", []), "codes": req.get("all_codes", []),
                                      "queries": req.get("all_queries", [])})
     all_ids = {r["id"] for r in all_rows}
+    known = {r["id"] for r in targets}
+    for r in all_rows:
+        if r["id"] not in known:
+            targets.append(r)
+            known.add(r["id"])
     if all_rows:
-        log(f"фото: режим «все фото» для {len(all_rows)} товар(ов): "
+        log(f"фото: режим «все фото» для {len(all_rows)} товар(ов), всего к съёму {len(targets)}: "
             + "; ".join(r["name"][:45] for r in all_rows[:8]))
     else:
         log("фото: режим «все фото» — по all_ids/all_queries совпадений нет")
