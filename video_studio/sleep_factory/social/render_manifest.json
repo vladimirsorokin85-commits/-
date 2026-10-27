@@ -1,0 +1,23 @@
+{
+  "status": "rendered",
+  "reels": [
+    {
+      "file": "social/reels/reel_01_key_without_door.mp4",
+      "captions": "social/reels/reel_01_key_without_door.srt",
+      "duration_seconds": 37.5,
+      "resolution": "720x1280",
+      "fps": 24,
+      "audio_start_seconds": 395.439,
+      "size_bytes": 1054050
+    },
+    {
+      "file": "social/reels/reel_02_cosmic_bureaucracy.mp4",
+      "captions": "social/reels/reel_02_cosmic_bureaucracy.srt",
+      "duration_seconds": 37.292,
+      "resolution": "720x1280",
+      "fps": 24,
+      "audio_start_seconds": 1376.823,
+      "size_bytes": 1031498
+    }
+  ]
+}
