@@ -273,7 +273,7 @@ def stat(d, x, y, val, lbl, col=ACC, vs=130, ls=28):
 
 # ═════════════ сцена 1: представление ═════════════
 def scene1(base, ov, d, t, l):
-    if l < 6.0:
+    if l < 7.10:
         d.rectangle([0, 296, 1240, 1000], fill=(6, 9, 14, 226))
         d.rectangle([0, 296, 9, 1000], fill=a(ACC, 255))
         kicker(d, 70, 328, "ТЕХНИЧЕСКИЙ ОБЗОР  //  ПАУК 30Б", ACC, 26)
@@ -301,7 +301,7 @@ def scene1(base, ov, d, t, l):
         if 1.6 < l < 5.8:
             photo_panel(ov, d, "holster", 1300, 360, 560, 470, t, 1.09, label="В ЧЕХЛЕ, НА СНАРЯЖЕНИИ")
 
-    elif l < 12.0:
+    elif l < 9.00:
         kicker(d, 70, 100, "ПРИНЦИП РАБОТЫ", ACC, 26)
         f = fit("НАПРАВИЛ.", RUSSO, 88, 900)
         for i, (txt, col, dly) in enumerate([("НАПРАВИЛ.", TXT, .1), ("ВЫСТРЕЛИЛ.", TXT, .26),
@@ -325,7 +325,7 @@ def scene1(base, ov, d, t, l):
 
         photo_panel(ov, d, "set4", 1160, 190, 700, 620, t, 1.05, label="ПАУК 30Б / 4 СНАРЯДА", idx="01")
 
-    elif l < 17.4:
+    elif l < 17.50:
         d.rectangle([0, 96, W, 240], fill=(6, 9, 14, 234))
         kicker(d, 70, 108, "СХЕМА ПЕРЕХВАТА", ACC, 26)
         d.text((70, 158), "СЕТЬ, А НЕ ПОМЕХА", font=fit("СЕТЬ, А НЕ ПОМЕХА", RUSSO, 56, 900), fill=a(TXT, 255))
@@ -378,29 +378,7 @@ def scene1(base, ov, d, t, l):
             d.text((x, 838), v, font=F(RUSSO, 58), fill=a(col, 255))
             d.text((x + 4, 912), k, font=F(MONO, 30), fill=a(DIM, 235))
 
-    elif l < 22.9:
-        d.rectangle([0, 96, W, 250], fill=(6, 9, 14, 234))
-        kicker(d, 70, 108, "НАЗНАЧЕНИЕ", ACC, 26)
-        d.text((70, 158), "ГДЕ ПРИМЕНЯЕТСЯ", font=fit("ГДЕ ПРИМЕНЯЕТСЯ", RUSSO, 56, 1000), fill=a(TXT, 255))
-
-        cards = [("set4", "ПОЗИЦИЯ И ОКОЛ", "ближняя зона над головой"),
-                 ("holster", "ПОДРАЗДЕЛЕНИЕ", "повседневное ношение в чехле"),
-                 ("full", "ОХРАНА ОБЪЕКТА", "патруль и стационарный пост")]
-        for i, (nm, tt, s) in enumerate(cards):
-            pp = c01((l - .25 - i * .2) / .55)
-            if pp <= 0: continue
-            x = 70 + i * 600
-            y = int(300 + (1 - eout(pp)) * 26)
-            photo_panel(ov, d, nm, x, y, 540, 330, t, 1.04, idx=f"0{i+1}")
-            d.text((x - 10, y + 360), tt, font=F(RUSSO, 36), fill=a(TXT, 255))
-            d.text((x - 10, y + 410), s, font=F(MONO, 28), fill=a(ACC, 235))
-
-        d.rectangle([60, 800, 1860, 900], fill=(9, 13, 19, 246), outline=a(ACC, 120))
-        d.text((92, 820), "ПРОСТОТА РАСЧЁТА: НАПРАВИЛ - ВЫСТРЕЛИЛ - ПОЙМАЛ",
-               font=F(RUSSO, 34), fill=a(ACC, 250))
-        d.text((92, 868), "длительная подготовка оператора не требуется", font=F(MONO, 28), fill=a(DIM, 235))
-
-    elif l < 27.3:
+    elif l < 22.20:
         d.rectangle([0, 96, W, 250], fill=(6, 9, 14, 234))
         kicker(d, 70, 108, "СРАВНЕНИЕ ПОДХОДОВ", WARN, 26)
         d.text((70, 158), "ПЕРЕХВАТ ИЛИ ПОДАВЛЕНИЕ", font=fit("ПЕРЕХВАТ ИЛИ ПОДАВЛЕНИЕ", RUSSO, 56, 1400), fill=a(TXT, 255))
@@ -421,18 +399,34 @@ def scene1(base, ov, d, t, l):
                    font=F(RUSSO, 32), fill=a(col, 240))
 
     else:
-        d.rectangle([0, 300, W, 780], fill=(6, 9, 14, 230))
-        kicker(d, 70, 330, "ИЗДЕЛИЕ", ACC, 26)
-        d.text((70, 396), "ПАУК 30Б В ДЕТАЛЯХ", font=fit("ПАУК 30Б В ДЕТАЛЯХ", RUSSO, 70, 1200), fill=a(TXT, 255))
-        for i, (n, dsc) in enumerate([("4", "снаряда базовый"), ("6", "снарядов оптимальный"), ("10", "снарядов максимальный")]):
-            x = 74 + i * 400
-            d.text((x, 540), n, font=F(RUSSO, 140), fill=a(ACC, 255))
-            d.text((x + 4, 720), dsc, font=F(MONO, 28), fill=a(TXT, 235))
+        d.rectangle([0, 96, W, 250], fill=(6, 9, 14, 234))
+        kicker(d, 70, 108, "ДАЛЬНОСТЬ", ACC2, 26)
+        d.text((70, 158), "25-30 МЕТРОВ", font=fit("25-30 МЕТРОВ", RUSSO, 56, 1200), fill=a(TXT, 255))
+
+        gx, gy, gw = 70, 336, 1780
+        d.rectangle([gx, gy, gx + gw, gy + 150], fill=(10, 15, 22, 246), outline=a(LINE, 255))
+        for i in range(7):
+            xx = gx + 50 + i * (gw - 100) / 6
+            d.line([(xx, gy + 92), (xx, gy + 150)], fill=a(LINE, 255), width=2)
+            d.text((xx, gy + 162), str(i * 5), font=F(MONO, 30), fill=a(DIM, 225), anchor="ma")
+        pp = eout(c01((l - .10) / 1.05))
+        d.rectangle([gx + 50, gy + 46, gx + 50 + int((gw - 100) * .92 * pp), gy + 92], fill=a(ACC, 215))
+        for xx, lbl in ((25, "25 М"), (30, "30 М")):
+            px = gx + 50 + xx * (gw - 100) / 30
+            d.line([(px, gy - 18), (px, gy + 92)], fill=a(WARN, 225), width=4)
+            d.text((px, gy - 84), lbl, font=F(RUSSO, 40), fill=a(WARN, 255), anchor="ma")
+
+        stats = [("30 М/С", "скорость снаряда", ACC2), ("1 С", "подлёт на 30 м", ACC),
+                 ("6 М²", "площадь полотна", TXT)]
+        for i, (v, k, col) in enumerate(stats):
+            x = 70 + i * 620
+            d.text((x, 596), v, font=F(RUSSO, 78), fill=a(col, 255))
+            d.text((x + 4, 694), k, font=F(MONO, 30), fill=a(DIM, 235))
 
 
 # ═════════════ сцена 2: ТТХ ═════════════
 def scene2(base, ov, d, t, l):
-    if l < 5.6:
+    if l < 8.75:
         y = head(d, "ТАКТИКО-ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ", "ГЕОМЕТРИЯ ПЕРЕХВАТА", ACC, 100, 60)
         # квадрат
         gx, gy, gs = 74, 330, 470
@@ -457,7 +451,7 @@ def scene2(base, ov, d, t, l):
             yy = int(316 + i * 106 + (1 - eout(pp2)) * 18)
             row2(d, 660, yy, 1190, k, v, ACC, 96, 34, 30)
 
-    elif l < 11.2:
+    elif l < 13.13:
         head(d, "МАССА", "400 / 650 ГРАММОВ", ACC2, 100, 64)
         d.text((70, 262), "снаряжённый — с картриджем, готов к выстрелу", font=F(MONO, 30), fill=a(DIM, 240))
 
@@ -480,31 +474,7 @@ def scene2(base, ov, d, t, l):
         d.text((1394, 508), "в нагрудный", font=F(MONO, 30), fill=a(TXT, 240))
         d.text((1394, 546), "подсумок", font=F(MONO, 30), fill=a(TXT, 240))
 
-    elif l < 17.2:
-        head(d, "ДАЛЬНОСТЬ И СКОРОСТЬ", "25–30 МЕТРОВ", ACC, 100, 64)
-        d.text((70, 262), "снаряд идёт 30 м/с — дистанция за секунду", font=F(MONO, 30), fill=a(DIM, 240))
-
-        gx, gy, gw = 70, 346, 1780
-        d.rectangle([gx, gy, gx + gw, gy + 128], fill=(10, 15, 22, 246), outline=a(LINE, 255))
-        for i in range(7):
-            xx = gx + 50 + i * (gw - 100) / 6
-            d.line([(xx, gy + 76), (xx, gy + 128)], fill=a(LINE, 255), width=2)
-            d.text((xx, gy + 134), str(i * 5), font=F(MONO, 26), fill=a(DIM, 225), anchor="ma")
-        pp = eout(c01((l - .3) / 1.3))
-        d.rectangle([gx + 50, gy + 40, gx + 50 + int((gw - 100) * .92 * pp), gy + 76], fill=a(ACC, 215))
-        for xx, lbl in ((25, "25 М"), (30, "30 М")):
-            px = gx + 50 + xx * (gw - 100) / 30
-            d.line([(px, gy - 14), (px, gy + 76)], fill=a(WARN, 225), width=4)
-            d.text((px, gy - 70), lbl, font=F(RUSSO, 36), fill=a(WARN, 255), anchor="ma")
-
-        d.text((70, 560), "ВРЕМЯ ПОДЛЁТА ДО ЦЕЛИ", font=F(MONO, 28), fill=a(DIM, 235))
-        for i, (dist, tm) in enumerate([("10 М", "0,33 С"), ("20 М", "0,67 С"), ("30 М", "1,0 С")]):
-            x = 70 + i * 600
-            d.rectangle([x, 610, x + 560, 940], fill=(10, 14, 21, 244), outline=a(ACC, 130))
-            d.text((x + 34, 640), dist, font=F(RUSSO, 44), fill=a(TXT, 255))
-            d.text((x + 34, 720), tm, font=F(RUSSO, 110), fill=a(ACC, 255))
-
-    elif l < 22.9:
+    elif l < 18.60:
         head(d, "УСТРОЙСТВО СНАРЯДА", "ОДНОРАЗОВЫЙ КАРТРИДЖ", WARN, 100, 56)
 
         # зона схемы
@@ -541,7 +511,7 @@ def scene2(base, ov, d, t, l):
             d.text((1154, yy + 52), v, font=F(MONO, 26), fill=a(TXT, 240))
         d.text((1154, 848), "отстрелял — поставил новый", font=F(MONO, 26), fill=a(DIM, 230))
 
-    elif l < 27.6:
+    else:
         head(d, "КОМПЛЕКТАЦИЯ", "ВАРИАНТЫ ПОСТАВКИ", ACC, 100, 56)
         d.text((70, 258), "сеткомёт плюс основной заряд: 4, 6 или 10 снарядов", font=F(MONO, 30), fill=a(DIM, 240))
 
@@ -552,33 +522,20 @@ def scene2(base, ov, d, t, l):
             if pp <= 0: continue
             x = 70 + i * 600
             y = int(340 + (1 - eout(pp)) * 26)
-            photo_panel(ov, d, nm, x, y, 540, 300, t, 1.04)
-            d.text((x - 10, y + 350), n, font=F(RUSSO, 96), fill=a(ACC, 255))
-            d.text((x + 96, y + 370), tt, font=F(RUSSO, 34), fill=a(TXT, 255))
-            d.text((x + 96, y + 418), ss, font=F(MONO, 26), fill=a(DIM, 240))
+            photo_panel(ov, d, nm, x, y, 540, 280, t, 1.04)
+            d.text((x - 10, y + 320), n, font=F(RUSSO, 84), fill=a(ACC, 255))
+            d.text((x + 96, y + 330), tt, font=fit(tt, RUSSO, 32, 450), fill=a(TXT, 255))
+            d.text((x + 96, y + 376), ss, font=fit(ss, MONO, 26, 450), fill=a(DIM, 240))
 
         d.rectangle([60, 820, 1860, 940], fill=(9, 13, 19, 246), outline=a(ACC, 120))
         d.text((92, 842), "В КОМПЛЕКТЕ: ПИСТОЛЕТ + ОСНОВНОЙ ЗАРЯД + ЧЕХОЛ  •  ЦВЕТ: ЧЁРНЫЙ / ХАКИ",
                font=F(MONO, 28), fill=a(TXT, 245))
         d.text((92, 892), "на изделие есть декларация о соответствии", font=F(MONO, 28), fill=a(ACC, 235))
 
-    else:
-        head(d, "ИТОГ БЛОКА", "СУХИЕ ЦИФРЫ", ACC2, 100, 56)
-        cells = [("25–30", "М ДАЛЬНОСТЬ"), ("6", "М² ПЛОЩАДЬ СЕТИ"),
-                 ("30", "М/С СКОРОСТЬ"), ("650", "Г СНАРЯЖЁННЫЙ")]
-        for i, (v, k) in enumerate(cells):
-            x = 70 + i * 450
-            pp = c01((l - .2 - i * .14) / .5)
-            if pp <= 0: continue
-            d.rectangle([x, 320, x + 410, 760], fill=(10, 14, 21, 244), outline=a(ACC2, 130))
-            d.text((x + 34, 380), v, font=F(RUSSO, 96), fill=a(ACC, 255))
-            d.text((x + 34, 540), k, font=F(MONO, 28), fill=a(DIM, 240))
-        d.text((70, 820), "ДАННЫЕ ИЗ ПАСПОРТА ИЗДЕЛИЯ  //  БЕЗ РЕКЛАМНЫХ ОЦЕНОК", font=F(MONO, 28), fill=a(DIM, 215))
-
 
 # ═════════════ сцена 3: механика ═════════════
 def scene3(base, ov, d, t, l):
-    if l < 6.0:
+    if l < 5.00:
         head(d, "ПЕРЕЗАРЯДКА", "ОТ 2 СЕКУНД", ACC, 100, 64)
         d.text((70, 262), "сменный снаряд: снял, поставил, готов", font=F(MONO, 30), fill=a(DIM, 245))
 
@@ -604,7 +561,7 @@ def scene3(base, ov, d, t, l):
         d.text((70, 820), "ЦИКЛ БЕЗ ИНСТРУМЕНТОВ", font=F(RUSSO, 44), fill=a(ACC2, 255))
         d.text((70, 886), "в поле, в перчатках, одной рукой", font=F(MONO, 30), fill=a(TXT, 240))
 
-    elif l < 12.0:
+    elif l < 10.00:
         head(d, "ПИТАНИЕ И ЭЛЕКТРОНИКА", "5 В / 3,5 А·Ч", ACC2, 100, 64)
         d.text((70, 262), "USB Type-C, электронная инициация", font=F(MONO, 30), fill=a(DIM, 240))
 
@@ -626,7 +583,7 @@ def scene3(base, ov, d, t, l):
         d.text((1154, 800), "56 дней в готовности", font=F(MONO, 30), fill=a(TXT, 240))
         d.text((1154, 846), "без подзарядки", font=F(MONO, 30), fill=a(DIM, 235))
 
-    elif l < 18.1:
+    elif l < 14.60:
         head(d, "БЕЗОПАСНОСТЬ", "ДВУХПОЗИЦИОННЫЙ ТУМБЛЕР", WARN, 100, 52)
         d.text((70, 250), "электронный запал не сработает без взведения", font=F(MONO, 30), fill=a(DIM, 240))
 
@@ -649,7 +606,7 @@ def scene3(base, ov, d, t, l):
 
         photo_panel(ov, d, "full", 1120, 300, 700, 500, t, 1.04, label="ПОЛНЫЙ КОМПЛЕКТ С ЧЕХЛАМИ", idx="08")
 
-    elif l < 23.5:
+    elif l < 23.18:
         head(d, "ХРАНЕНИЕ", "ПОДСУМОК С БЫСТРЫМ ДОСТУПОМ", ACC, 100, 52)
         d.text((70, 250), "клапан на фастексе, стропа MOLLE", font=F(MONO, 30), fill=a(ACC, 235))
 
@@ -685,7 +642,7 @@ def scene3(base, ov, d, t, l):
 
 # ═════════════ сцена 4: условия, финал ═════════════
 def scene4(base, ov, d, t, l):
-    if l < 5.4:
+    if l < 5.60:
         head(d, "УСЛОВИЯ ЭКСПЛУАТАЦИИ", "IP54  /  -40 °C", ACC2, 100, 68)
         d.text((70, 268), "брызги со всех сторон и мороз без отказа электроники", font=F(MONO, 30), fill=a(DIM, 240))
 
@@ -710,7 +667,7 @@ def scene4(base, ov, d, t, l):
         d.text((92, 806), "ЗАЯВЛЕННЫЙ РЕСУРС РАБОТЫ — ДО -40 °C", font=F(RUSSO, 38), fill=a(ACC2, 250))
         d.text((92, 856), "электроника не отказывает на морозе и при брызгах", font=F(MONO, 28), fill=a(DIM, 235))
 
-    elif l < 10.8:
+    elif l < 10.70:
         head(d, "ДОКУМЕНТЫ И ПОСТАВКА", "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ", ACC, 100, 52)
         d.text((70, 250), "на изделие имеется декларация о соответствии", font=F(MONO, 30), fill=a(DIM, 240))
 
@@ -727,11 +684,27 @@ def scene4(base, ov, d, t, l):
             d.text((x, 400), n, font=F(RUSSO, 110), fill=a(ACC, 255))
             d.text((x, 570), dsc, font=F(MONO, 26), fill=a(TXT, 240))
 
-        d.text((70, 750), "СМЕННЫЙ СНАРЯД — ОДНОРАЗОВЫЙ", font=F(RUSSO, 38), fill=a(WARN, 250))
-        d.text((70, 812), "сеть и пиропатрон в одном картридже, корпус переиспользуется", font=F(MONO, 28), fill=a(TXT, 240))
-        d.text((70, 858), "поставляется отдельно как расходный элемент", font=F(MONO, 28), fill=a(DIM, 235))
+        d.text((70, 790), "варианты поставки: 4, 6 или 10 снарядов", font=F(MONO, 30), fill=a(DIM, 240))
 
-    elif l < 16.2:
+    elif l < 15.30:
+        head(d, "РАСХОДНИК", "ОДНОРАЗОВЫЙ СНАРЯД", WARN, 100, 56)
+        d.text((70, 258), "сеть и пиропатрон в одном картридже", font=F(MONO, 30), fill=a(DIM, 240))
+
+        photo_panel(ov, d, "stack", 70, 330, 700, 470, t, 1.05, label="БЛОК ИЗ 4 СНАРЯДОВ", idx="11")
+
+        rows = [("СНАРЯД", "одноразовый, с сетью и пиропатроном", WARN),
+                ("КОРПУС", "многоразовый, перезаряжается", ACC),
+                ("ПОСТАВКА", "сменный снаряд — отдельно", ACC2)]
+        for i, (k, v, col) in enumerate(rows):
+            pp = c01((l - .25 - i * .18) / .55)
+            if pp <= 0: continue
+            yy = int(350 + i * 158 + (1 - eout(pp)) * 18)
+            d.rectangle([830, yy, 1850, yy + 138], fill=(10, 14, 21, 246), outline=a(col, 130))
+            d.rectangle([830, yy, 838, yy + 138], fill=a(col, 255))
+            d.text((866, yy + 18), k, font=F(RUSSO, 36), fill=a(col, 255))
+            d.text((866, yy + 74), v, font=F(MONO, 28), fill=a(TXT, 240))
+
+    elif l < 19.90:
         head(d, "СЦЕНАРИИ", "БЛИЖНЯЯ ЗОНА", ACC2, 100, 60)
         d.text((70, 264), "там, где дрон уже над головой и поздно бежать", font=F(MONO, 30), fill=a(DIM, 240))
 
@@ -749,7 +722,7 @@ def scene4(base, ov, d, t, l):
         d.text((70, 850), "РЕНТАБЕЛЬНОСТЬ: КОРПУС МНОГОРАЗОВЫЙ, СНАРЯД — РАСХОДНИК",
                font=F(MONO, 28), fill=a(DIM, 235))
 
-    elif l < 21.6:
+    elif l < 24.30:
         head(d, "ЧЕК-ЛИСТ ПЕРЕД ПОКУПКОЙ", "ЧТО УТОЧНИТЬ", ACC, 100, 60)
         items = [("КОМПЛЕКТАЦИЯ", "4, 6 или 10 снарядов в поставке"),
                  ("СМЕННЫЕ СНАРЯДЫ", "поставляются отдельно, как расходник"),
@@ -820,13 +793,13 @@ def render_frame(t):
             if t >= s0 - .001: idx = i
         st, fn = SCENES[idx]; l = t - st
         if idx == 0:
-            name = "set4" if l < 6.0 else ("set6" if l < 12.0 else ("holster2" if l < 17.4 else ("pouch3" if l < 22.9 else "full")))
+            name = "set4" if l < 7.10 else ("set6" if l < 9.00 else ("holster2" if l < 17.50 else ("pouch3" if l < 22.20 else "full")))
         elif idx == 1:
-            name = "stack" if l < 5.6 else ("holster2" if l < 11.2 else ("set6b" if l < 17.2 else ("stack" if l < 22.9 else ("pouch3" if l < 27.6 else "set4"))))
+            name = "stack" if l < 8.75 else ("holster2" if l < 13.13 else ("set6b" if l < 18.60 else "pouch3"))
         elif idx == 2:
-            name = "pouch2" if l < 6.0 else ("holster" if l < 12.0 else ("pouch3" if l < 18.1 else ("pouch_mc" if l < 23.5 else "stack")))
+            name = "pouch2" if l < 5.00 else ("holster" if l < 10.00 else ("pouch3" if l < 14.60 else ("pouch_mc" if l < 23.18 else "stack")))
         else:
-            name = "pouch_emr" if l < 5.4 else ("pouch4" if l < 10.8 else ("pouch_mc" if l < 16.2 else ("holster" if l < 21.6 else "holster2")))
+            name = "pouch_emr" if l < 5.60 else ("pouch4" if l < 10.70 else ("stack" if l < 15.30 else ("pouch_mc" if l < 19.90 else ("holster" if l < 24.30 else "holster2"))))
 
     z0 = 1.02 + .012 * math.sin(t * .9)
     base = camera(name, l, 6.0, z0, z0 + .10, px=.35 * math.sin(t * .13), py=.18 * math.cos(t * .17)).convert("RGBA")

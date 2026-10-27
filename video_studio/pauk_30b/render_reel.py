@@ -184,7 +184,7 @@ def bottom(ov, d, t, total, text="t.me/vokope_ru  •  vk.com/vokope_rus"):
 
 # ═════════════ СЦЕНА 1: ПЕРЕХВАТ ═════════════
 def s1(ov, d, t, l):
-    if l < 3.4:                      # титул
+    if l < 2.25:                     # титул
         p = eout(c01((l - .15) / 1.0))
         d.rectangle([0, 250, W, 1210], fill=(5, 8, 13, 232))
         d.rectangle([0, 250, 8, 1210], fill=a(ACC, 255))
@@ -215,7 +215,7 @@ def s1(ov, d, t, l):
             card(ov, d, "holster", 600, 1250, 424, 400, l, 1.05, None, "01")
             card(ov, d, "set4", 56, 1300, 500, 320, l, 1.03, None, "02")
 
-    elif l < 8.4:                    # геометрия сети
+    elif l < 7.64:                   # геометрия сети
         kicker(d, 56, 196, "ГЕОМЕТРИЯ", ACC, 26)
         f, _ = fit("СЕТЬ", RUSSO, 100, 900)
         rtext(d, (48, 258), "СЕТЬ", f, TXT, (l - .1) / .4)
@@ -239,7 +239,7 @@ def s1(ov, d, t, l):
         d.text((88, 1516), "НАКРЫВАЕТ ВИНТЫ, А НЕ КОРПУС", font=F(RUSSO, 34), fill=a(ACC, 250))
         d.text((88, 1570), "дрон теряет тягу и падает рядом", font=F(MONO, 28), fill=a(DIM, 240))
 
-    elif l < 12.9:                   # дальность
+    elif l < 9.89:                   # дальность
         kicker(d, 56, 196, "ДАЛЬНОСТЬ", ACC2, 26)
         f, _ = fit("25–30 М", RUSSO, 128, 950)
         rtext(d, (48, 258), "25–30 М", f, TXT, (l - .1) / .5)
@@ -296,7 +296,7 @@ def s1(ov, d, t, l):
 
 # ═════════════ СЦЕНА 2: МЕХАНИКА ═════════════
 def s2(ov, d, t, l):
-    if l < 3.6:                      # перезарядка
+    if l < 3.90:                     # перезарядка
         kicker(d, 56, 196, "ПЕРЕЗАРЯДКА", ACC, 26)
         f, _ = fit("ОТ 2 СЕКУНД", RUSSO, 96, 950)
         rtext(d, (48, 258), "ОТ 2", f, TXT, (l - .1) / .4)
@@ -320,7 +320,7 @@ def s2(ov, d, t, l):
         d.text((88, 1622), "КОРПУС МНОГОРАЗОВЫЙ,", font=F(MONO, 26), fill=a(ACC, 245))
         d.text((88, 1656), "СНАРЯД — РАСХОДНИК", font=F(MONO, 26), fill=a(ACC, 245))
 
-    elif l < 7.9:                    # электроника
+    elif l < 9.27:                   # электроника
         kicker(d, 56, 196, "ЭЛЕКТРОНИКА", ACC2, 26)
         f, _ = fit("5 В / 3,5 А·Ч", RUSSO, 80, 960)
         d.text((48, 258), "5 В / 3,5 А·Ч", font=f, fill=a(TXT, 255))
@@ -339,7 +339,7 @@ def s2(ov, d, t, l):
 
         card(ov, d, "holster", 56, 1078, 968, 460, l, 1.03, "КОРПУС И ОРГАНЫ УПРАВЛЕНИЯ", "06")
 
-    elif l < 12.3:                   # автономность
+    elif l < 11.71:                  # автономность
         kicker(d, 56, 196, "АВТОНОМНОСТЬ", ACC, 26)
         f, _ = fit("8 НЕДЕЛЬ", RUSSO, 96, 950)
         d.text((48, 258), "8 НЕДЕЛЬ", font=f, fill=a(TXT, 255))
@@ -393,7 +393,7 @@ def s2(ov, d, t, l):
 
 # ═════════════ СЦЕНА 3: ЭКСПЛУАТАЦИЯ + ФИНАЛ ═════════════
 def s3(ov, d, t, l):
-    if l < 3.6:                      # вес
+    if l < 7.92:                     # вес и габариты
         kicker(d, 56, 196, "МАССА", ACC2, 26)
         f, _ = fit("400 / 650", RUSSO, 104, 970)
         d.text((48, 258), "400 / 650", font=f, fill=a(TXT, 255))
@@ -408,9 +408,12 @@ def s3(ov, d, t, l):
             d.text((92, yy + 56), v, font=F(RUSSO, 82), fill=a(col, 255))
             d.rectangle([92, yy + 158, 92 + int(860 * (int(v[:3]) / 700)), yy + 168], fill=a(col, 230))
 
-        card(ov, d, "holster2", 56, 1010, 968, 540, l, 1.03, "В РУКЕ — БАЛАНС КАК У ПИСТОЛЕТА", "09")
+        card(ov, d, "holster2", 56, 980, 968, 470, l, 1.03, "В РУКЕ — БАЛАНС КАК У ПИСТОЛЕТА", "09")
 
-    elif l < 7.4:                    # IP54 / мороз
+        d.rectangle([56, 1610, 1024, 1690], fill=(9, 13, 19, 250), outline=a(ACC2, 130))
+        d.text((88, 1632), "ГАБАРИТЫ 190 × 150 × 30 ММ", font=F(MONO, 32), fill=a(TXT, 248))
+
+    elif l < 10.72:                  # IP54 / мороз
         kicker(d, 56, 196, "УСЛОВИЯ", ACC2, 26)
         f, _ = fit("IP54", RUSSO, 130, 720)
         d.text((48, 258), "IP54", font=f, fill=a(TXT, 255))
@@ -436,7 +439,7 @@ def s3(ov, d, t, l):
 
         card(ov, d, "pouch_emr", 56, 1130, 968, 450, l, 1.03, "ЧЕХОЛ В РУССКОМ ЦИФРОВОМ", "10")
 
-    elif l < 10.8:                   # комплект поставки
+    elif l < 15.50:                  # комплект поставки
         kicker(d, 56, 196, "ПОСТАВКА", ACC, 26)
         f, _ = fit("4 / 6 / 10", RUSSO, 104, 970)
         d.text((48, 258), "4 / 6 / 10", font=f, fill=a(TXT, 255))
@@ -487,8 +490,8 @@ def s3(ov, d, t, l):
 
 SCENES = [(1.80, s1), (16.94, s2), (32.37, s3)]
 TOTAL = 50.83
-CUTS = [1.8, 3.4, 8.4, 12.9, 16.94, 20.54, 24.84, 29.24,
-        32.37, 35.97, 39.77, 43.17, 46.57]
+CUTS = [1.8, 4.05, 9.44, 11.69, 16.94, 20.84, 26.21, 28.65,
+        32.37, 36.10, 43.09, 47.28, 49.14]
 
 def render_frame(t):
     if t < 1.80:
@@ -499,11 +502,11 @@ def render_frame(t):
             if t >= s0 - .001: idx = i
         st, fn = SCENES[idx]; l = t - st
         if idx == 0:
-            name = "set4" if l < 3.4 else ("set6" if l < 8.4 else ("holster2" if l < 12.9 else "set6b"))
+            name = "set4" if l < 2.25 else ("set6" if l < 7.64 else ("holster2" if l < 9.89 else "set6b"))
         elif idx == 1:
-            name = "pouch2" if l < 3.6 else ("holster" if l < 7.9 else ("pouch3" if l < 12.3 else "full"))
+            name = "pouch2" if l < 3.90 else ("holster" if l < 9.27 else ("pouch3" if l < 11.71 else "full"))
         else:
-            name = "holster2" if l < 3.6 else ("pouch_emr" if l < 7.4 else ("set6" if l < 10.8 else "set4b"))
+            name = "holster2" if l < 7.92 else ("pouch_emr" if l < 10.72 else ("set6" if l < 15.50 else "set4b"))
 
     z0 = 1.03 + .012 * math.sin(t * .9)
     base = cam(name, l, 4.0, z0, z0 + .10, .30 * math.sin(t * .15), .16 * math.cos(t * .19)).convert("RGBA")
