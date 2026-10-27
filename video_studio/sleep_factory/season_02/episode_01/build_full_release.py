@@ -104,6 +104,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--audio-bitrate", type=int, default=128)
     parser.add_argument("--intro-pad", type=float, default=0.5,
                         help="Короткая пауза/амбиент после заставки и перед первой репликой")
+    parser.add_argument("--min-gap", type=float, default=1.0,
+                        help="Минимальная пауза между 67 сценами; краткая пауза помогает пройти VAD-порог")
     parser.add_argument("--keep-intermediates", action="store_true",
                         help="Не удалять временные body/intro MP4 после успешной склейки")
     args = parser.parse_args(argv)
@@ -117,6 +119,8 @@ def main(argv: list[str] | None = None) -> int:
             raise ReleaseError("CRF должен быть 16–40, AAC bitrate — 32–320 kbit/s.")
         if not 0 <= args.intro_pad <= 10:
             raise ReleaseError("--intro-pad должен быть в диапазоне 0–10 секунд.")
+        if not 0 <= args.min_gap <= 10:
+            raise ReleaseError("--min-gap должен быть в диапазоне 0–10 секунд.")
         images, intro_duration = check_inputs(ffprobe)
         RENDERED.mkdir(parents=True, exist_ok=True)
         for path in (MIX_BASE.with_suffix(".mp3"), MIX_BASE.with_suffix(".timeline.json"),
@@ -126,7 +130,7 @@ def main(argv: list[str] | None = None) -> int:
 
         run([
             sys.executable, "mix_stream.py", "script.md", str(MIX_BASE.relative_to(HERE)),
-            "--intro", str(args.intro_pad), "--outro", "12",
+            "--intro", str(args.intro_pad), "--outro", "12", "--min-gap", str(args.min_gap),
             "--ffmpeg", ffmpeg, "--ffprobe", ffprobe,
         ], "Сведение озвучки", cwd=HERE)
         timeline = MIX_BASE.with_suffix(".timeline.json")
