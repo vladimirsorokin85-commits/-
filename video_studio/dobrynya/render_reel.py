@@ -488,7 +488,7 @@ def s4(base, ov, d, t, l):
         d.text((586, 1492), "четыре отверстия", font=F(RUSSO, 40), fill=a(TXT, 255))
         d.text((586, 1566), "под пламенный импульс", font=F(MONO, 26), fill=a(DIM, 238))
 
-    elif l < 17.20:                   # патрон и запреты
+    elif l < 20.45:                   # патрон и запреты
         kicker(d, 56, 190, "ПАТРОН", WARN, 26)
         f, _ = fit("ПсГс — И ТОЛЬКО ОН", RUSSO, 68, 960)
         rtext(d, (48, 250), "ПсГс — И ТОЛЬКО ОН", f, TXT, (l - .08) / .4)
@@ -507,32 +507,49 @@ def s4(base, ov, d, t, l):
 
         card(ov, d, "compare", 56, 1280, 968, 330, l, 1.05, "КАРТРИДЖ И ПАТРОН 12 КАЛИБРА", "03")
 
-    else:                             # финал
-        p = eout(c01((l - .1) / .7))
-        d.rectangle([0, 250, W, 1500], fill=(6, 9, 14, 238))
-        d.rectangle([0, 250, 9, 1500], fill=a(ACC, 255))
-        f, _ = fit("ДОБРЫНЯ", RUSSO, 150, 940)
-        d.text((52, 300 + (1 - p) * 26), "ДОБРЫНЯ", font=f, fill=a(TXT, 255 * p))
-        d.text((56, 470), "ДРОНОБОЙ ДЛЯ АК-74 И АК-12", font=ffit("ДРОНОБОЙ ДЛЯ АК-74 И АК-12", RUSSO, 40, 940), fill=a(ACC, 255 * p))
-        d.text((56, 560), "24 ММ  ·  750 / 800 Г  ·  ДО 200 ДРОБИН", font=F(MONO, 28), fill=a(DIM, 240 * p))
-        d.text((56, 610), "штатный патрон ПсГс", font=F(MONO, 28), fill=a(DIM, 240 * p))
+    else:                             # финальная заставка
+        p0 = eout(c01((l - .05) / .5))
+        d.rectangle([0, 190, W, 1700], fill=(6, 9, 14, int(242 * p0)))
+        d.rectangle([0, 190, 9, 1700], fill=a(ACC, int(255 * p0)))
+        brackets(d, 40, 220, W - 80, 1450, a(ACC, 90), 34, 3)
+        kicker(d, 60, 250, "КАНАЛ  //  В ОКОПЕ", ACC, 26)
 
-        p2 = c01((l - .5) / .6)
-        d.text((56, 720), "ПОДПИСЫВАЙСЯ НА «В ОКОПЕ»", font=F(RUSSO, 38), fill=a(TXT, 255 * p2))
-        links = [("ТЕЛЕГРАМ", "t.me/vokope_ru"), ("ВКОНТАКТЕ", "vk.com/vokope_rus"),
+        p1 = eout(c01((l - .18) / .5))
+        d.text((52, 306 + (1 - p1) * 26), "«В ОКОПЕ»", font=ffit("«В ОКОПЕ»", RUSSO, 118, 940), fill=a(TXT, 255 * p1))
+        p2 = eout(c01((l - .32) / .45))
+        d.text((58, 452), "СРЕДСТВА ПРОТИВОДЕЙСТВИЯ БПЛА", font=F(MONO, 26), fill=a(ACC, 240 * p2))
+        w = 900 * eout(c01((l - .38) / .55))
+        d.rectangle([58, 500, 58 + w, 504], fill=a(ACC, 200))
+
+        p3 = eout(c01((l - .5) / .5))
+        d.text((58, 534), "ДРОНОБОЙ «ДОБРЫНЯ»", font=ffit("ДРОНОБОЙ «ДОБРЫНЯ»", RUSSO, 48, 940), fill=a(TXT, 255 * p3))
+        d.text((60, 604), "АК-74  ·  АК-12", font=F(MONO, 30), fill=a(DIM, 245 * p3))
+
+        links = [("TELEGRAM", "t.me/vokope_ru"), ("ВКОНТАКТЕ", "vk.com/vokope_rus"),
                  ("АВИТО", "avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241")]
         for i, (k, v) in enumerate(links):
-            yy = 800 + i * 176
-            d.rectangle([56, yy, 1024, yy + 152], fill=(9, 13, 19, 248), outline=a(ACC, 130))
-            d.text((92, yy + 16), k, font=F(MONO, 24), fill=a(ACC, 240))
-            d.text((92, yy + 58), v, font=ffit(v, MONO, 30, 900), fill=a(TXT, 245))
-        card(ov, d, "kit", 560, 1330, 464, 330, l, 1.05, "НАСАДКА И КАРТРИДЖИ", "09")
+            pp = c01((l - .62 - i * .18) / .45)
+            if pp <= 0: continue
+            yy = int(700 + i * 196 + (1 - eout(pp)) * 24)
+            d.rectangle([56, yy, 1024, yy + 170], fill=(9, 13, 19, 248), outline=a(ACC, int(150 * eout(pp))))
+            d.rectangle([56, yy, 63, yy + 170], fill=a(ACC, 255))
+            d.text((100, yy + 20), k, font=F(MONO, 26), fill=a(ACC, 245))
+            d.text((100, yy + 68), v, font=ffit(v, MONO, 32, 860), fill=a(TXT, 246))
+
+        pp = c01((l - 1.30) / .5)
+        if pp > 0:
+            pulse = .55 + .45 * math.sin(l * 3.4)
+            d.rectangle([56, 1310, 1024, 1420], fill=(9, 34, 28, 250), outline=a(ACC, 210))
+            d.ellipse([96, 1352, 124, 1380], fill=a(ACC, int(235 * pulse * eout(pp))))
+            d.text((152, 1340), "ПОДПИСЫВАЙТЕСЬ", font=F(RUSSO, 44), fill=a(ACC, 255))
+            d.text((56, 1470), "смотрите следующие разборы", font=F(MONO, 28), fill=a(DIM, 235 * eout(pp)))
+            d.text((56, 1530), "24 мм · 750 / 800 г · до 200 дробин", font=F(MONO, 26), fill=a(DIM, 215 * eout(pp)))
 
 
 SCENES = [(2.80, s1), (15.85, s2), (33.30, s3), (46.55, s4)]
-TOTAL = 69.55
+TOTAL = 74.50
 CUTS = [2.80, 6.40, 11.20, 15.85, 20.65, 25.65, 29.25, 33.30, 39.50, 43.50,
-        46.55, 53.15, 58.00, 63.75, 66.40]
+        46.55, 53.15, 58.00, 67.00, 67.60]
 
 
 def render_frame(t):
@@ -557,6 +574,8 @@ def render_frame(t):
     ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(ov)
 
+    if idx == 3 and l >= 20.45:
+        sec = "ПОДПИСКА"
     top(ov, d, t, TOTAL)
     if fn is None:
         p = eout(c01(t / .9))

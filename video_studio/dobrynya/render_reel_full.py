@@ -7,7 +7,7 @@ AUDIO = os.path.join(BASE, "master_reel_9x16.mp3")
 OUT = os.path.join(BASE, "v_okope_dobrynya_reel_9x16.mp4")
 
 FPS = 30
-DUR = 69.55
+DUR = 74.50
 N = int(DUR * FPS)
 print("frames:", N, flush=True)
 

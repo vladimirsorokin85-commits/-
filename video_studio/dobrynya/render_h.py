@@ -700,29 +700,65 @@ def scene4(base, ov, d, t, l):
 
         photo_panel(ov, d, "rack", 1240, 340, 620, 480, t, 1.04, label="КАРТРИДЖИ В ДЕРЖАТЕЛЯХ", idx="13")
 
-    else:                             # финал
-        p = eout(c01((l - .1) / .8))
-        d.rectangle([0, 180, W, 980], fill=(6, 9, 14, 232))
-        d.rectangle([0, 180, 9, 980], fill=a(ACC, 255))
-        d.text((80, 210 + (1 - p) * 20), "ДОБРЫНЯ", font=fit("ДОБРЫНЯ", RUSSO, 120, 1150), fill=a(TXT, 255 * p))
-        d.text((84, 356), "ДРОНОБОЙ ДЛЯ АК-74 И АК-12", font=F(RUSSO, 40), fill=a(ACC, 255 * p))
-        d.text((84, 428), "24 ММ  •  750 / 800 Г  •  ДО 200 ДРОБИН  •  ПсГс", font=F(MONO, 28), fill=a(DIM, 240))
+    else:                             # финальная заставка
+        p0 = eout(c01((l - .05) / .55))
+        d.rectangle([0, 140, W, 1012], fill=(6, 9, 14, int(240 * p0)))
+        d.rectangle([0, 140, 10, 1012], fill=a(ACC, int(255 * p0)))
+        kicker(d, 80, 186, "КАНАЛ  //  В ОКОПЕ", ACC, 28)
 
-        p2 = c01((l - .45) / .8)
-        d.text((84, 520), "ПОДПИСЫВАЙТЕСЬ НА «В ОКОПЕ»", font=F(MONO, 30), fill=a(TXT, 255 * p2))
+        p1 = eout(c01((l - .18) / .55))
+        d.text((74, 232 + (1 - p1) * 26), "«В ОКОПЕ»", font=fit("«В ОКОПЕ»", RUSSO, 132, 900), fill=a(TXT, 255 * p1))
+        p2 = eout(c01((l - .34) / .5))
+        d.text((84, 392), "СРЕДСТВА ПРОТИВОДЕЙСТВИЯ БПЛА", font=F(MONO, 30), fill=a(ACC, 240 * p2))
+        w = 760 * eout(c01((l - .40) / .6))
+        d.rectangle([84, 442, 84 + w, 446], fill=a(ACC, 200))
 
-        links = [("TELEGRAM", "t.me/vokope_ru"), ("VK", "vk.com/vokope_rus"),
-                 ("AVITO", "avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241")]
-        for i, (k, v) in enumerate(links):
-            pp = c01((l - .70 - i * .16) / .45)
+        p3 = eout(c01((l - .52) / .55))
+        d.text((84, 476), "ДРОНОБОЙ «ДОБРЫНЯ»", font=fit("ДРОНОБОЙ «ДОБРЫНЯ»", RUSSO, 52, 900), fill=a(TXT, 255 * p3))
+        d.text((86, 548), "АК-74  ·  АК-12", font=F(MONO, 30), fill=a(DIM, 245 * p3))
+
+        chips = ["24 ММ", "750 / 800 Г", "ДО 200 ДРОБИН"]
+        cx = 86
+        for i, c in enumerate(chips):
+            pp = c01((l - .68 - i * .08) / .4)
             if pp <= 0: continue
-            yy = int(596 + i * 108 + (1 - eout(pp)) * 20)
-            d.rectangle([80, yy, 1260, yy + 94], fill=(11, 16, 23, 246), outline=a(ACC, 120))
-            d.rectangle([80, yy, 88, yy + 94], fill=a(ACC, 255))
-            d.text((118, yy + 14), k, font=F(RUSSO, 30), fill=a(ACC, 255))
-            d.text((118, yy + 52), v, font=F(MONO, 24), fill=a(TXT, 240))
+            cf = F(MONO, 26); cw = tw(d, c, cf) + 36
+            d.rectangle([cx, 612, cx + cw, 664], fill=(11, 16, 24, 244), outline=a(ACC, 110))
+            d.text((cx + 18, 627), c, font=cf, fill=a(TXT, 245 * eout(pp)))
+            cx += cw + 14
 
-        photo_panel(ov, d, "kit", 1330, 240, 520, 520, t, 1.04, label="НАСАДКА И КАРТРИДЖИ")
+        p4 = c01((l - .90) / .5)
+        pulse = .55 + .45 * math.sin(l * 3.4)
+        d.ellipse([88, 712, 110, 734], fill=a(ACC, int(235 * pulse * p4)))
+        d.text((126, 702), "СМОТРИТЕ СЛЕДУЮЩИЕ РАЗБОРЫ", font=F(MONO, 30), fill=a(TXT, 240 * p4))
+
+        links = [("TELEGRAM", "t.me/vokope_ru"), ("ВКОНТАКТЕ", "vk.com/vokope_rus"),
+                 ("АВИТО", "avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241")]
+        for i, (k, v) in enumerate(links):
+            pp = c01((l - .55 - i * .20) / .45)
+            if pp <= 0: continue
+            yy = int(238 + i * 158 + (1 - eout(pp)) * 26)
+            d.rectangle([1080, yy, 1850, yy + 130], fill=(9, 13, 19, 248), outline=a(ACC, int(150 * eout(pp))))
+            d.rectangle([1080, yy, 1087, yy + 130], fill=a(ACC, 255))
+            d.text((1118, yy + 16), k, font=F(MONO, 26), fill=a(ACC, 245))
+            d.text((1118, yy + 58), v, font=fit(v, MONO, 32, 700), fill=a(TXT, 246))
+
+        pp = c01((l - 1.25) / .5)
+        if pp > 0:
+            bw = 770 * eout(pp)
+            d.rectangle([1080, 738, 1080 + bw, 812], fill=(9, 34, 28, 250), outline=a(ACC, 200))
+            d.text((1118, 752), "ПОДПИСЫВАЙТЕСЬ", font=F(RUSSO, 40), fill=a(ACC, 255))
+
+
+        p5 = c01((l - 1.45) / .5)
+        if p5 > 0:
+            d.rectangle([1080, 836, 1850, 1012], fill=(9, 13, 19, int(244 * p5)), outline=a(ACC, 90))
+            d.text((1118, 858), "ТРИ КАНАЛА СВЯЗИ", font=F(MONO, 24), fill=a(ACC, 235 * p5))
+            d.text((1118, 900), "пишите по изделию", font=F(MONO, 30), fill=a(TXT, 242 * p5))
+            d.text((1118, 946), "и наличию", font=F(MONO, 30), fill=a(TXT, 242 * p5))
+
+        # рамка-уголки
+        brackets(d, 40, 168, W - 80, 812, a(ACC, 90), 34, 3)
 
 
 def intro(base, ov, d, t, l):
@@ -737,9 +773,9 @@ def intro(base, ov, d, t, l):
 
 
 SCENES = [(2.60, scene1), (26.95, scene2), (56.90, scene3), (79.85, scene4)]
-TOTAL = 114.45
+TOTAL = 119.50
 CUTS = [2.60, 8.90, 14.80, 20.60, 24.80, 26.95, 34.55, 41.95, 49.35, 54.35,
-        56.90, 63.10, 69.40, 75.15, 79.85, 85.45, 90.85, 96.25, 104.45, 100.60, 109.45]
+        56.90, 63.10, 69.40, 75.15, 79.85, 85.45, 90.85, 96.25, 104.45, 100.60, 109.45, 112.60]
 
 
 def render_frame(t):
@@ -764,6 +800,8 @@ def render_frame(t):
     ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(ov)
     section = "ПРЕДСТАВЛЕНИЕ" if idx <= 0 else ["ПРЕДСТАВЛЕНИЕ", "ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ", "МЕХАНИКА", "ЭКСПЛУАТАЦИЯ"][idx]
+    if idx == 3 and l >= 29.60:
+        section = "ПОДПИСКА"
     chrome(ov, d, t, TOTAL, section)
     fn(base, ov, d, t, l)
 

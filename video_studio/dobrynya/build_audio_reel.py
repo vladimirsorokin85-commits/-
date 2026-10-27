@@ -8,9 +8,9 @@ MUSIC = "/home/user/-/video_studio/music_downloaded/fvi-BeatOne.ogg"
 
 INTRO = 2.80
 GAP = 1.05
-OUTRO = 3.00
+OUTRO = 0.60
 # целевые длительности речевых блоков
-TARGETS = [12.00, 16.40, 12.20, 20.00]
+TARGETS = [12.00, 16.40, 12.20, 20.00, 6.30]
 STARTS = []
 t = INTRO
 for i, w in enumerate(TARGETS):
@@ -85,7 +85,7 @@ for line in o.splitlines():
 print("MASTER:", OUT, f"{dur(OUT):.2f}s", "| starts", STARTS, "| total", TOTAL)
 
 json.dump({"total": TOTAL, "scenes": [
-    {"idx": i + 1, "start": STARTS[i], "end": round(STARTS[i + 1], 3) if i < 3 else TOTAL}
-    for i in range(4)]},
+    {"idx": i + 1, "start": STARTS[i], "end": round(STARTS[i + 1], 3) if i < len(STARTS) - 1 else TOTAL}
+    for i in range(len(STARTS))]},
     open(os.path.join(BASE, "timeline_reel.json"), "w"), ensure_ascii=False, indent=2)
 print(json.dumps(json.load(open(os.path.join(BASE, "timeline_reel.json"))), ensure_ascii=False))
