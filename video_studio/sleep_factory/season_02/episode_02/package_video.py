@@ -26,7 +26,7 @@ def package_readme(filename: str, parts: list[str], digest: str, duration: float
             "/video_studio/sleep_factory/season_02/episode_02/rendered/github_download/")
     rows = "\n".join(f"{name}:\n{base}{name}\n" for name in parts)
     return (
-        "СБОРКА ВИДЕО S02E02 — «ПРЕМИАЛЬНАЯ ВОНЬ»\n\n"
+        "СБОРКА ВИДЕО S02E02 — ГРИМБАЛЬТ «КЭШ» ПОДГОРНЫЙ-404\n\n"
         f"Полный MP4 разделён на {len(parts)} части по 75 МиБ или меньше.\n"
         "Windows: достаточно скачать и запустить RESTORE_VIDEO_WINDOWS.bat — он "
         "загрузит недостающие или неполные части и соберёт видео. Нужен Windows PowerShell "

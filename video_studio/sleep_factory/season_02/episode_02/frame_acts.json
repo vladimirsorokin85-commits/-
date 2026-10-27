@@ -3,7 +3,9 @@
     "a01",
     "a02",
     "a03",
+    "a04",
     "a05",
+    "a06",
     "a07",
     "a08",
     "a09",
@@ -33,7 +35,9 @@
     "images/frames/s02e02_01_entrance.png",
     "images/frames/s02e02_02_audio_check.png",
     "images/episode_02_cover.png",
+    "images/frames/s02e02_28_kiber_keeper.png",
     "images/frames/s02e02_06_rust_belt.png",
+    "images/frames/s02e02_29_decent_years.png",
     "images/frames/s02e02_07_cybernetic_body.png",
     "images/frames/s02e02_08_arms_history.png",
     "images/frames/s02e02_09_titanium_heart.png",
@@ -59,5 +63,5 @@
     "images/frames/s02e02_20_ground_loop_fix.png",
     "images/frames/s02e02_21_exit.png"
   ],
-  "note": "28 файлов таймлайна для 30 разговорных сегментов: 27 сюжетных кадров и обложка. Массив актов уникален и упорядочен; временные интервалы берутся из таймлайна микса. Обложка занимает один из ранних слотов выпуска."
+  "note": "30 файлов таймлайна для 30 разговорных сегментов: 29 сюжетных кадров и обложка. Каждый акт представлен отдельным кадром; массив уникален и упорядочен. Временные интервалы берутся из таймлайна микса."
 }
