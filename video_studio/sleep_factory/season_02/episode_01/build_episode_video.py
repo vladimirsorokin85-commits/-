@@ -307,7 +307,7 @@ def main(argv: list[str] | None = None) -> int:
             raise BuildError(f"Не найден аудиомикс: {audio}")
         output = args.output.expanduser().resolve()
         images = expand_images(args.images, Path.cwd())
-        if not 30 <= len(images) <= 40:
+        if not 22 <= len(images) <= 40:
             raise BuildError(f"Для полного выпуска нужны 22–40 иллюстраций; получено {len(images)}.")
         ffmpeg = find_binary("ffmpeg", output.parent, args.ffmpeg)
         ffprobe = find_binary("ffprobe", output.parent, args.ffprobe)
