@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Build and QC the complete S02E02 release from the 67 scene MP3s.
+"""Build and QC the complete S02E02 release from all 60 scene MP3s.
 
-This performs the approved series-intro prepend, mix, 22-frame body render,
+This performs the approved series-intro prepend, mix, act-aligned 22–40-frame body render,
 subtitle/chapter generation with intro offsets, final WebRTC-VAD/loudness QC,
 and GitHub-friendly packaging. It refuses to begin unless every scene MP3 and
 all ordered frame assets are present.
@@ -84,12 +84,14 @@ def check_inputs(ffprobe: str) -> tuple[list[str], float]:
     if not isinstance(acts, list) or not isinstance(images, list) or len(acts) != len(images):
         raise ReleaseError("frame_acts.json должен содержать парные списки frame_acts и images.")
     act_pattern = re.compile(r"^a\d{2}$")
-    if (
-        len(images) != 22 or len(acts) != 22 or len(set(acts)) != 22
-        or any(not isinstance(act, str) or not act_pattern.fullmatch(act) for act in acts)
-        or [int(act[1:]) for act in acts] != sorted(int(act[1:]) for act in acts)
-    ):
-        raise ReleaseError("Для S02E02 нужны 22 уникальных кадра, привязанных к возрастающим актам сценария.")
+    if not 22 <= len(images) <= 40 or len(acts) != len(images):
+        raise ReleaseError("Для S02E02 нужны парные списки из 22–40 кадров и актов.")
+    if any(not isinstance(act, str) or not act_pattern.fullmatch(act) for act in acts):
+        raise ReleaseError("Каждый акт в frame_acts.json должен иметь вид a01.")
+    if len(set(acts)) != len(acts) or [int(act[1:]) for act in acts] != sorted(int(act[1:]) for act in acts):
+        raise ReleaseError("Акты кадров должны быть уникальными и идти по возрастанию.")
+    if any(not isinstance(path, str) for path in images):
+        raise ReleaseError("Каждый путь изображения в frame_acts.json должен быть строкой.")
     missing_images = [str(path) for path in images if not (HERE / path).is_file()]
     if missing_images:
         raise ReleaseError("Не найдены кадры: " + ", ".join(missing_images))
@@ -150,7 +152,7 @@ def main(argv: list[str] | None = None) -> int:
             "--frame-acts", str(manifest_path.relative_to(HERE)), "--output", str(BODY.relative_to(HERE)),
             "--crf", str(args.crf), "--preset", args.preset,
             "--audio-bitrate", str(args.audio_bitrate), "--ffmpeg", ffmpeg, "--ffprobe", ffprobe,
-        ], "Рендер 22 сюжетных кадров", cwd=HERE)
+        ], "Рендер сюжетных кадров", cwd=HERE)
 
         run([
             sys.executable, "build_subtitles.py", "--script", "script.md", "--timeline",
