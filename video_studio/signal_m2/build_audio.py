@@ -1,0 +1,101 @@
+# -*- coding: utf-8 -*-
+"""«В ОКОПЕ» — аудио для двух Reels: «Сигнал-М2» и «Комплект станции РЭБ»."""
+import os, re, json, subprocess, sys
+
+BASE = "/home/user/-/video_studio/signal_m2"
+FF = "/home/user/.local/bin/ffmpeg"
+MUSIC = "/home/user/-/video_studio/music_downloaded/fvi-BeatOne.ogg"
+
+INTRO = 2.60
+GAP = 1.00
+OUTRO = 0.70
+
+FILMS = {
+    "sig": {"targets": [7.80, 9.55, 8.90, 11.35],
+            "vo": [f"sig_vo_{i}.mp3" for i in range(1, 5)],
+            "out": "master_signal_m2_9x16.mp3", "timeline": "timeline_signal_m2.json"},
+    "kit": {"targets": [7.80, 6.05, 9.95, 13.95],
+            "vo": [f"kit_vo_{i}.mp3" for i in range(1, 5)],
+            "out": "master_kit_9x16.mp3", "timeline": "timeline_kit.json"},
+}
+
+VO_CHAIN = ("highpass=f=70,"
+            "equalizer=f=120:t=q:w=1.0:g=2.5,"
+            "equalizer=f=3200:t=q:w=1.6:g=3.0,"
+            "acompressor=threshold=-20dB:ratio=4:attack=4:release=60,"
+            "loudnorm=I=-15:TP=-1.5:LRA=9")
+
+
+def dur(p):
+    s = subprocess.run([FF, "-hide_banner", "-i", p], stderr=subprocess.PIPE, text=True).stderr
+    m = re.search(r"Duration: (\d+):(\d+):([\d.]+)", s)
+    h, mi, se = m.groups()
+    return int(h) * 3600 + int(mi) * 60 + float(se)
+
+
+def run(cmd):
+    subprocess.run(cmd, check=True, stderr=subprocess.DEVNULL)
+
+
+def build(tag, cfg):
+    targets = cfg["targets"]
+    starts, t = [], INTRO
+    for i, w in enumerate(targets):
+        starts.append(round(t, 3))
+        t += w + (GAP if i < len(targets) - 1 else 0)
+    total = round(t + OUTRO, 3)
+
+    proc = []
+    for i, (target, start) in enumerate(zip(targets, starts), 1):
+        src = os.path.join(BASE, cfg["vo"][i - 1])
+        d0 = dur(src)
+        tempo = d0 / (target - 0.30)
+        dst = os.path.join(BASE, f"{tag}_proc_{i}.mp3")
+        run([FF, "-y", "-i", src, "-af", f"atempo={tempo:.4f},{VO_CHAIN}",
+             "-ar", "48000", "-ac", "2", "-b:a", "192k", dst])
+        d1 = dur(dst)
+        print(f"[{tag}] vo {i}: raw {d0:.2f}s tempo {tempo:.3f} -> {d1:.2f}s (окно {target:.2f})")
+        if d1 > target - 0.05:
+            sys.exit("!! блок не влезает в окно")
+        proc.append(dst)
+
+    n = len(proc)
+    delays = "".join(
+        f"[{i}:a]adelay={int(s*1000)}|{int(s*1000)},"
+        "aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo"
+        f"[v{i}];" for i, s in enumerate(starts))
+    labels = "".join(f"[v{i}]" for i in range(n))
+    fc = (delays + labels +
+          f"amix=inputs={n}:dropout_transition=0:normalize=0,apad=whole_dur={total}[vo];"
+          f"[{n}:a]atrim=0:{total + 2},asetpts=PTS-STARTPTS,"
+          "aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[bg0];"
+          "[bg0]volume=0.30,afade=t=in:st=0:d=1.2[bg1];"
+          "[vo]asplit=2[vo_sc][vo_out];"
+          "[bg1][vo_sc]sidechaincompress=threshold=0.06:ratio=6:attack=8:release=250[bg_duck];"
+          f"[bg_duck]afade=t=out:st={total - OUTRO - 0.4:.2f}:d={OUTRO + 0.4:.2f}[bgf];"
+          "[vo_out]volume=1.35[vob];"
+          "[bgf][vob]amix=inputs=2:dropout_transition=0:normalize=0,"
+          "alimiter=limit=0.89:attack=4:release=60,loudnorm=I=-14:TP=-1.5:LRA=10[out]")
+
+    cmd = [FF, "-y"]
+    for p in proc:
+        cmd += ["-i", p]
+    cmd += ["-i", MUSIC, "-filter_complex", fc, "-map", "[out]",
+            "-t", f"{total:.2f}", "-ar", "48000", "-c:a", "libmp3lame", "-b:a", "320k",
+            os.path.join(BASE, cfg["out"])]
+    run(cmd)
+
+    out = os.path.join(BASE, cfg["out"])
+    o = subprocess.check_output([FF, "-hide_banner", "-i", out, "-af", "volumedetect",
+                                 "-f", "null", "-"], stderr=subprocess.STDOUT).decode()
+    for line in o.splitlines():
+        if "mean_volume" in line or "max_volume" in line:
+            print("   ", line.strip())
+    print(f"[{tag}] MASTER {out} {dur(out):.2f}s starts {starts} total {total}")
+
+    json.dump({"total": total, "starts": starts, "blocks": targets},
+              open(os.path.join(BASE, cfg["timeline"]), "w"), ensure_ascii=False, indent=2)
+
+
+for tag, cfg in FILMS.items():
+    build(tag, cfg)
