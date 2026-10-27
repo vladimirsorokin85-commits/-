@@ -351,7 +351,7 @@ def scene1(base, ov, d, t, l):
         d.rectangle([drx - 34, dry - 26 + bob, drx + 34, dry + 34 + bob], fill=(30, 36, 46, 255), outline=a(WARN, 210), width=3)
         for sx in (-70, 70):
             d.ellipse([drx + sx - 26, dry - 52 + bob, drx + sx + 26, dry + bob], outline=a(WARN, 200), width=3)
-        d.text((drx, dry + 78 + bob), "ЦЕЛЬ / ДРОН", font=F(MONO, 32), fill=a(WARN, 240), anchor="ma")
+        d.text((drx, dry + 128 + bob), "ЦЕЛЬ / ДРОН", font=F(MONO, 32), fill=a(WARN, 240), anchor="ma")
 
         # траектория
         for k in range(26):
@@ -362,7 +362,7 @@ def scene1(base, ov, d, t, l):
 
         # сеть в полёте
         pp = eout(c01((l - .4) / 1.6))
-        nx = 360 + int(1080 * pp); ny = 556 - int(110 * pp)
+        nx = 360 + int(890 * pp); ny = 556 - int(110 * pp)
         size = 40 + int(50 * pp)
         if l > .4:
             d.rectangle([nx, ny - size, nx + size * 2, ny + size], outline=a(ACC, 245), width=4)
