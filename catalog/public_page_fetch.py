@@ -32,7 +32,7 @@ TARGETS = [
 def main():
     os.makedirs(DATA, exist_ok=True)
     for name, url in TARGETS:
-        st, txt = http(url, timeout=90)
+        st, txt = http(url, timeout=30)
         if st == 200 and txt:
             path = os.path.join(DATA, name)
             with open(path, "w", encoding="utf-8") as f:
