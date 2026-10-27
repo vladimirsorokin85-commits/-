@@ -82,18 +82,17 @@ def main(argv=None):
         name = item["name"]
         descr = (full.get(pid, {}) or {}).get("description") or ""
         files = (man.get(pid, {}) or {}).get("files") or []
-        if not files:
-            missing.append(f"«{name[:45]}»: НЕТ ФОТО")
-            continue
         bl = bullets_from_desc(descr, entry["hook"], int(entry.get("bullets", 4)), name)
         text = build_text(entry, name, bl)
         folder = os.path.join(out_root, f"{n:02d}_{safe_slug(entry['headline'])}")
         os.makedirs(folder, exist_ok=True)
         open(os.path.join(folder, "пост.txt"), "w", encoding="utf-8").write(text)
-        # ВСЕ фото, без ограничения «тройки»
-        saved = save_photos(files, folder, limit=len(files))
+        # ВСЕ фото, без ограничения «тройки» — если у поставщика есть; иначе владелец вставляет свои
+        saved = save_photos(files, folder, limit=len(files)) if files else []
         if saved:
             make_cover(files[0], os.path.join(folder, "обложка.jpg"), entry["headline"])
+        else:
+            missing.append(f"«{name[:45]}»: фото у поставщика нет — владелец вставляет свои")
         all_texts.append(f"{'=' * 68}\n{n:02d}. {entry['headline']}\n{'=' * 68}\n\n{text}\n")
         report.append({"n": n, "name": name, "photos": len(saved), "chars": len(text)})
 
@@ -104,18 +103,25 @@ def main(argv=None):
         "=" * 40, "",
         "Что внутри",
         "----------",
-        f"{len(report)} папок — по одной на модель обуви. В папке: «пост.txt» + ВСЕ фото модели (1.jpg, 2.jpg, …) + «обложка.jpg».",
+        f"{len(report)} папок — по одной на модель обуви. " + (
+            "В папке: «пост.txt» + ВСЕ фото модели (1.jpg, 2.jpg, …) + «обложка.jpg»."
+            if any(r["photos"] for r in report) else
+            "В папке: «пост.txt» — фото вы вставляете сами (у поставщика фото по линейке VELES нет)."),
         "Файл «ВСЕ_ПОСТЫ.txt» — тексты всех постов сразу.",
         "",
         "Как выкладывать",
         "---------------",
         "1. Откройте папку модели.",
-        "2. Загрузите все фото в ВК по порядку (1.jpg — первым).",
+        ("2. Загрузите все фото в ВК по порядку (1.jpg — первым)."
+            if any(r["photos"] for r in report) else
+            "2. Прикрепите к посту свои фото (свои, от поставщика — у Димы их нет)."),
         "3. Скопируйте текст из «пост.txt» целиком и опубликуйте.",
         "",
         "Правила, по которым собрано",
         "---------------------------",
-        "• Фото — все, что есть у поставщика, без отбора «тройки».",
+        ("• Фото — все, что есть у поставщика, без отбора «тройки»."
+            if any(r["photos"] for r in report) else
+            "• Фото — вы вставляете свои: у поставщика фото по линейке VELES нет (проверено 27.10.2026)."),
         "• Цены в постах НЕ указываем — ни розницы, ни «цена в личку».",
         "• Сколько осталось — в постах не пишем: наличие формулируем словами.",
         "• Факты — из описаний поставщика, ничего не досочинено.",
@@ -125,7 +131,8 @@ def main(argv=None):
         "-------",
     ]
     for r in report:
-        readme.append(f"  {r['n']:02d}. {r['name']} — фото: {r['photos']}")
+        note = f"фото: {r['photos']}" if r["photos"] else "фото: вставляете сами"
+        readme.append(f"  {r['n']:02d}. {r['name']} — {note}")
     readme += ["", f"Всего моделей: {len(report)}. Всего фото: {sum(r['photos'] for r in report)}."]
     open(os.path.join(out_root, "README.txt"), "w", encoding="utf-8").write("\n".join(readme) + "\n")
 
