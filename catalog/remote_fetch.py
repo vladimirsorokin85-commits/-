@@ -19,7 +19,10 @@
 
 Заявка на фото (catalog/requests/photos.json):
   {"ids": ["<uuid>", "..."], "codes": ["00895"], "queries": ["ботинки prabos"],
-   "limit_per_product": 4}
+   "limit_per_product": 4,
+   "all_ids": ["<uuid>", "..."], "all_queries": ["велес"]}
+  all_ids/all_codes/all_queries — для этих товаров качаем ВСЕ фото без лимита
+  (режим «все фото», например под отдельную линейку на постинг).
   Пусто/нет файла — фото не качаем, только каталог.
 
 ВАЖНО: фото берём ТОЛЬКО у поставщика (getFullImages / прямая выдача API).
@@ -334,6 +337,15 @@ def fetch_photos(idx, full_by_id):
     targets = resolve_targets(idx, req)
     limit = int(req.get("limit_per_product") or 4)
     log(f"фото: заявка на {len(targets)} товар(ов), до {limit} фото на товар")
+    # режим «все фото»: для отдельных товаров лимита нет
+    all_rows = resolve_targets(idx, {"ids": req.get("all_ids", []), "codes": req.get("all_codes", []),
+                                     "queries": req.get("all_queries", [])})
+    all_ids = {r["id"] for r in all_rows}
+    if all_rows:
+        log(f"фото: режим «все фото» для {len(all_rows)} товар(ов): "
+            + "; ".join(r["name"][:45] for r in all_rows[:8]))
+    else:
+        log("фото: режим «все фото» — по all_ids/all_queries совпадений нет")
     if not targets:
         log("!! заявка не совпала ни с одним товаром — проверь ids/codes/queries")
         return
@@ -381,9 +393,9 @@ def fetch_photos(idx, full_by_id):
 
         files, details = [], []
 
-        def download(refs_list):
+        def download(refs_list, cap):
             files_l, details_l = [], []
-            for i, ref in enumerate(refs_list[:limit], 1):
+            for i, ref in enumerate(refs_list[:cap], 1):
                 got = save_image(ref, dest, f"{slug}_{i}", diag)
                 if got:
                     rel = os.path.relpath(got["path"], ROOT).replace(os.sep, "/")
@@ -395,7 +407,8 @@ def fetch_photos(idx, full_by_id):
                                       "quality": q})
             return files_l, details_l
 
-        files, details = download(refs)
+        cap = len(refs) if row["id"] in all_ids else limit
+        files, details = download(refs, cap)
         if not files and refs and src.startswith("getFullImages"):
             # подписанные ссылки живут ~60 с — если не успели, берём свежие
             diag.append("!! ссылки протухли — перезапрашиваю /getFullImages")
@@ -405,11 +418,12 @@ def fetch_photos(idx, full_by_id):
                     refs = collect_image_refs(json.loads(txt), any_url=True)
                 except Exception:  # noqa: BLE001
                     pass
-                files, details = download(refs)
+                files, details = download(refs, cap)
         manifest.append({
             "id": row["id"], "code": row.get("code"), "name": row["name"],
             "category": row.get("category"), "stock": row.get("stock"),
             "files": files, "details": details, "source": src, "refs_found": len(refs),
+            "all_photos": row["id"] in all_ids,
         })
         best = max((d["w"] for d in details), default=0)
         log(f"   {row['name'][:60]}: фото {len(files)} (источник: {src or '—'}, "

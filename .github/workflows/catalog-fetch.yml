@@ -34,6 +34,11 @@ jobs:
       - name: Тянем каталог (и фото, если есть заявка)
         run: python3 catalog/remote_fetch.py
 
+      - name: Публичная страница каталога (запасной канал, линейка Veles)
+        if: always()
+        continue-on-error: true
+        run: python3 catalog/public_page_fetch.py
+
       - name: Короткая сводка в лог
         if: always()
         run: |
