@@ -9,6 +9,7 @@
 недельные/дневные архивы постов. Владелец открывает страницу на планшете
 и качает нужное одним тапом.
 """
+import datetime as dt
 import glob
 import html
 import os
@@ -32,6 +33,15 @@ def day_title(name):
     return name
 
 
+def week_title(name):
+    m = re.match(r"V_OKOPE_posts_(\d{8})_week\.zip$", name)
+    if not m:
+        return name
+    d0 = dt.datetime.strptime(m.group(1), "%Y%m%d").date()
+    d1 = d0 + dt.timedelta(days=6)
+    return f"Неделя {d0.strftime('%d.%m')} — {d1.strftime('%d.%m')}"
+
+
 def card(href, title, sub, size_mb, badge=""):
     b = f'<span class="badge">{html.escape(badge)}</span>' if badge else ""
     return (f'<a class="card" href="{html.escape(href)}">{b}'
@@ -49,6 +59,7 @@ def main():
     days = [f for f in sorted(files) if re.match(r"V_OKOPE_\d{2}\.\d{2}_", f)]
 
     tuning = [f for f in sorted(files) if f.startswith("V_OKOPE_mgultra_")]
+    veles = [f for f in sorted(files) if f.startswith("V_OKOPE_veles_")]
     avito = [f for f in sorted(files) if f.startswith("V_OKOPE_avito_") and "frontts" not in f]
     frontts = [f for f in sorted(files) if f.startswith("V_OKOPE_avito_frontts_")]
     kit_cards = ""
@@ -77,10 +88,13 @@ def main():
         title = "Фронт-ТС: " + ft_titles.get(key, "все объявления" if key == "vsyo" else key)
         frontts_cards += card(f, title, "папки по товарам: фото + готовое объявление",
                               files[f] / 1024 / 1024)
-    day_cards = "".join(card(f, day_title(f), "6 постов: фото + текст + чек-лист",
+    day_cards = "".join(card(f, day_title(f), "папки постов: фото + текст + чек-лист",
                              files[f] / 1024 / 1024) for f in days)
-    week_cards = "".join(card(f, "Вся неделя 08–14.10", "42 поста одним архивом",
+    week_cards = "".join(card(f, week_title(f), "все посты недели одним архивом",
                               files[f] / 1024 / 1024, badge="всё сразу") for f in week)
+    veles_cards = "".join(card(f, "Обувь VELES (Велес) — вся линейка",
+                               "папка на модель: все фото + готовый текст поста",
+                               files[f] / 1024 / 1024, badge="все фото") for f in veles)
 
     page = f"""<!doctype html>
 <html lang="ru"><head><meta charset="utf-8">
@@ -105,6 +119,8 @@ def main():
 <div class="grid">{kit_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Тюнинг (MG Ultra — ДТКП)</h2>
 <div class="grid">{tuning_cards or '<p class="sub">Пока пусто</p>'}</div>
+<h2>Обувь VELES (Велес, производство РБ)</h2>
+<div class="grid">{veles_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Авито — каталог Димы (20 объявлений)</h2>
 <div class="grid">{avito_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Авито — Фронт-ТС (63 объявления по разделам)</h2>
