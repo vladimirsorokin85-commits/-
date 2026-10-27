@@ -9,7 +9,7 @@
 - `VOICE_MAP.md` — равные соведущие Бульк `voice-07` и Мявскис `voice-08`; Лот `voice-05` сообщает только проверяемые данные.
 - `ART_STYLE.md`, `IMAGE_SHOTLIST.md` — визуальный канон и план кадров; людей, клиентов и дополнительных персонажей не добавлять.
 - `UPLOAD_METADATA.md` — YouTube-заголовок, описание, главы-план и обязательная ссылка DonationAlerts.
-- `mix_stream.py`, `build_subtitles.py`, `build_chapters.py`, `build_episode_video.py`, `package_video.py`, `frame_acts.json` — копии производственного комплекта, адаптированные для идентификаторов S02E01 и 22 сюжетных кадров.
+- `mix_stream.py`, `build_subtitles.py`, `build_chapters.py`, `build_episode_video.py`, `package_video.py`, `qc_episode_media.py`, `requirements-qc.txt`, `frame_acts.json` — производственный комплект S02E01, включая финальную проверку WebRTC VAD активной речи.
 
 ## Текущий статус
 
