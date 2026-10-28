@@ -193,10 +193,24 @@ h2 {{ font-size: 18px; margin: 28px 0 12px; border-bottom: 1px solid var(--borde
 
   <div class="actions">
     <a class="btn primary" style="background:#1f4d36;border-color:#3a8f63" href="/post_rossiya_download.mp4" download="ПОСТ-РОССИЯ_клип_со_звуком_1080p.mp4">🎬 Скачать готовый клип со звуком (MP4 1080p, {dl_mb:.1f} МБ)</a>
-    <a class="btn primary" href="/post_rossiya_images.zip" download="ПОСТ-РОССИЯ_все_104_кадра_по_папкам_с_таймкодами.zip">📦 Скачать ZIP всех 104 кадров по тайм-кодам ({zip_mb:.1f} МБ)</a>
+    <a class="btn primary" href="/covers.zip" download="VES_Post_Rossiya_10_covers.zip">🖼 Скачать все 10 обложек одним ZIP (1.8 МБ)</a>
+    <a class="btn" href="/post_rossiya_images.zip" download="ПОСТ-РОССИЯ_все_104_кадра_по_папкам_с_таймкодами.zip">📦 Скачать ZIP всех 104 кадров ({zip_mb:.1f} МБ)</a>
     {silent_btn}
     <a class="btn" href="/synced_timecodes.md" download="ПОСТ-РОССИЯ_ТАЙМКОДЫ_ПОД_ПЕСНЮ.md">📄 Монтажный лист под песню (.md)</a>
-    <a class="btn" href="/STORYBOARD_PROMPTS.md" download>🗂 Все промпты (.md)</a>
+  </div>
+
+  <h2>0. Десять вариантов обложки «VES - Пост-Россия» (без людей, кликните для скачивания оригинала)</h2>
+  <div class="grid4">
+    <a class="card" href="/media/covers/cover_01_sea_horizon.jpg" download><img src="/media/covers/cover_01_sea_horizon.jpg"><div class="cap"><b>01 · Холодное море и рассвет</b></div></a>
+    <a class="card" href="/media/covers/cover_02_panel_window.jpg" download><img src="/media/covers/cover_02_panel_window.jpg"><div class="cap"><b>02 · Панельный дом и одно окно</b></div></a>
+    <a class="card" href="/media/covers/cover_03_red_flowers_rain.jpg" download><img src="/media/covers/cover_03_red_flowers_rain.jpg"><div class="cap"><b>03 · Гвоздики в дождевой луже</b></div></a>
+    <a class="card" href="/media/covers/cover_04_field_mist_crows.jpg" download><img src="/media/covers/cover_04_field_mist_crows.jpg"><div class="cap"><b>04 · Осеннее поле и вороны</b></div></a>
+    <a class="card" href="/media/covers/cover_05_rusty_swing.jpg" download><img src="/media/covers/cover_05_rusty_swing.jpg"><div class="cap"><b>05 · Пустые ржавые качели</b></div></a>
+    <a class="card" href="/media/covers/cover_06_elektrichka_dawn.jpg" download><img src="/media/covers/cover_06_elektrichka_dawn.jpg"><div class="cap"><b>06 · Пустой вагон электрички</b></div></a>
+    <a class="card" href="/media/covers/cover_07_crows_wires_chimneys.jpg" download><img src="/media/covers/cover_07_crows_wires_chimneys.jpg"><div class="cap"><b>07 · Птицы на проводах и трубы</b></div></a>
+    <a class="card" href="/media/covers/cover_08_night_kitchen_phone.jpg" download><img src="/media/covers/cover_08_night_kitchen_phone.jpg"><div class="cap"><b>08 · Ночная кухня и экран телефона</b></div></a>
+    <a class="card" href="/media/covers/cover_09_bus_stop_highway.jpg" download><img src="/media/covers/cover_09_bus_stop_highway.jpg"><div class="cap"><b>09 · Остановка у туманной трассы</b></div></a>
+    <a class="card" href="/media/covers/cover_10_black_water_mirror.jpg" download><img src="/media/covers/cover_10_black_water_mirror.jpg"><div class="cap"><b>10 · Треснувшее зеркало и чёрная вода</b></div></a>
   </div>
 
   <h2>1. Четыре визуальных эталона (единая вселенная фильма)</h2>
@@ -308,6 +322,8 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
+        elif p == "/covers.zip":
+            self._serve_file(PR_OUT / "VES_Post_Rossiya_10_covers.zip", "application/octet-stream", "VES_Post_Rossiya_10_covers.zip")
         elif p == "/post_rossiya_images.zip":
             self._serve_file(PR_OUT / "post_rossiya_all_images_by_timecode.zip", "application/octet-stream", "POST_ROSSIYA_104_frames_timecoded.zip")
         elif p == "/post_rossiya_master.mp4":
