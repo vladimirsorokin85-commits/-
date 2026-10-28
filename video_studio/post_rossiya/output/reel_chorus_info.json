@@ -1,0 +1,13 @@
+{
+  "reel_video": "video_studio/post_rossiya/output/post_rossiya_reel_chorus_1080x1920.mp4",
+  "size_mb": 17.72,
+  "resolution": "1080x1920",
+  "fps": 30,
+  "duration_sec": 45.61,
+  "song_slice_sec": [
+    111.95,
+    157.56
+  ],
+  "shots": 10,
+  "frames_zip": "video_studio/post_rossiya/output/post_rossiya_reel_10_vertical_frames.zip"
+}

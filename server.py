@@ -192,11 +192,16 @@ h2 {{ font-size: 18px; margin: 28px 0 12px; border-bottom: 1px solid var(--borde
   </div>
 
   <div class="actions">
-    <a class="btn primary" style="background:#1f4d36;border-color:#3a8f63" href="/post_rossiya_download.mp4" download="ПОСТ-РОССИЯ_клип_со_звуком_1080p.mp4">🎬 Скачать готовый клип со звуком (MP4 1080p, {dl_mb:.1f} МБ)</a>
-    <a class="btn primary" href="/covers.zip" download="VES_Post_Rossiya_10_covers.zip">🖼 Скачать все 10 обложек одним ZIP (1.8 МБ)</a>
-    <a class="btn" href="/post_rossiya_images.zip" download="ПОСТ-РОССИЯ_все_104_кадра_по_папкам_с_таймкодами.zip">📦 Скачать ZIP всех 104 кадров ({zip_mb:.1f} МБ)</a>
-    {silent_btn}
-    <a class="btn" href="/synced_timecodes.md" download="ПОСТ-РОССИЯ_ТАЙМКОДЫ_ПОД_ПЕСНЮ.md">📄 Монтажный лист под песню (.md)</a>
+    <a class="btn primary" style="background:#1f4d36;border-color:#3a8f63" href="/download/post_rossiya_reel_chorus.mp4" download="VES_Post_Rossiya_REEL_CHORUS_1080x1920.mp4">📱 Скачать Рилс с припевом 9:16 (MP4 1080×1920, 17.7 МБ)</a>
+    <a class="btn primary" href="/reel_frames.zip" download="VES_Post_Rossiya_REEL_10_vertical_frames.zip">📦 10 вертикальных кадров Рилса (ZIP)</a>
+    <a class="btn primary" href="/post_rossiya_download.mp4" download="ПОСТ-РОССИЯ_клип_со_звуком_1080p.mp4">🎬 Полный клип 16:9 со звуком ({dl_mb:.1f} МБ)</a>
+    <a class="btn" href="/covers.zip" download="VES_Post_Rossiya_10_covers.zip">🖼 10 обложек 16:9 (ZIP)</a>
+    <a class="btn" href="/post_rossiya_images.zip" download="ПОСТ-РОССИЯ_все_104_кадра_по_папкам_с_таймкодами.zip">📦 Все 104 кадра клипа ({zip_mb:.1f} МБ)</a>
+  </div>
+
+  <h2>📱 Отдельный вертикальный Рилс / Shorts 9:16 — Только Припев (0:45.6, 1080×1920, 10 новых кадров)</h2>
+  <div style="display:flex;justify-content:center;margin:14px 0 24px">
+    <video src="/reel_chorus.mp4" controls preload="metadata" poster="/media/reel_chorus/frames/reel_05.jpg" style="max-width:360px;aspect-ratio:9/16"></video>
   </div>
 
   <h2>0. Десять вариантов обложки «VES - Пост-Россия» (без людей, кликните для скачивания оригинала)</h2>
@@ -322,6 +327,12 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
+        elif p == "/reel_chorus.mp4":
+            self._serve_file(PR_OUT / "post_rossiya_reel_chorus_1080x1920.mp4", "video/mp4")
+        elif p == "/download/post_rossiya_reel_chorus.mp4":
+            self._serve_file(PR_OUT / "post_rossiya_reel_chorus_1080x1920.mp4", "application/octet-stream", "VES_Post_Rossiya_REEL_CHORUS_1080x1920.mp4")
+        elif p == "/reel_frames.zip":
+            self._serve_file(PR_OUT / "post_rossiya_reel_10_vertical_frames.zip", "application/octet-stream", "VES_Post_Rossiya_REEL_10_vertical_frames.zip")
         elif p == "/covers.zip":
             self._serve_file(PR_OUT / "VES_Post_Rossiya_10_covers.zip", "application/octet-stream", "VES_Post_Rossiya_10_covers.zip")
         elif p == "/post_rossiya_images.zip":
