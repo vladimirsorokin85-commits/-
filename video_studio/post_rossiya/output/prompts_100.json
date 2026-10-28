@@ -1,0 +1,2796 @@
+{
+  "title": "ПОСТ-РОССИЯ",
+  "subtitle": "Последнее утро, которое продолжается",
+  "duration_seconds": 158.0,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "audio": false,
+  "refs": {
+    "hero": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+    "city": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+    "choir": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+    "color": "video_studio/post_rossiya/refs/ref_04_color.jpg"
+  },
+  "progress": {
+    "refs_done": 4,
+    "main_done": 88,
+    "main_total": 88,
+    "broll_done": 12,
+    "broll_total": 12
+  },
+  "shots": [
+    {
+      "num": 1,
+      "id": "shot_001",
+      "file": "video_studio/post_rossiya/frames/shot_001.jpg",
+      "generated": true,
+      "t0": 0.0,
+      "t1": 1.2,
+      "duration": 1.2,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "0:00–0:03 · Чёрный экран → свет экрана",
+      "desc_ru": "Смартфон в темноте на старом кухонном столе",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": "phone_emerge",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_04_color.jpg",
+      "fallback_crop": [
+        0.5,
+        0.5,
+        1.05
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen cinematic photograph of a smartphone lying flat on a worn scratched wooden table in a pitch-dark Soviet apartment kitchen at night, a very faint cold pale-blue rectangular glow barely illuminating the screen and table grain, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 2,
+      "id": "shot_002",
+      "file": "video_studio/post_rossiya/frames/shot_002.jpg",
+      "generated": true,
+      "t0": 1.2,
+      "t1": 2.1,
+      "duration": 0.9,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "0:00–0:03 · Чёрный экран → свет экрана",
+      "desc_ru": "Сверхкрупный план треснувшего стекла смартфона",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_04_color.jpg",
+      "fallback_crop": [
+        0.5,
+        0.5,
+        1.15
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen extreme macro close-up of cracked glass on a dark smartphone screen at night, fine spiderweb hairline fractures catching a weak cold blue-grey glow in darkness, shot on 100mm macro lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 3,
+      "id": "shot_003",
+      "file": "video_studio/post_rossiya/frames/shot_003.jpg",
+      "generated": true,
+      "t0": 2.1,
+      "t1": 3.0,
+      "duration": 0.9,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "0:00–0:03 · Чёрный экран → свет экрана",
+      "desc_ru": "Отражение человеческого глаза в чёрном экране",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.32,
+        1.45
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen extreme close-up of a switched-off dark smartphone screen reflecting a single tired man's eye in a dark room at night, shot on 85mm macro lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 4,
+      "id": "shot_004",
+      "file": "video_studio/post_rossiya/frames/shot_004.jpg",
+      "generated": true,
+      "t0": 3.0,
+      "t1": 5.0,
+      "duration": 2.0,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "«Я плакал, смотря на чужой инстаграм»",
+      "desc_ru": "Мужчина сидит ночью на кухне панельной квартиры, свет от телефона",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.52,
+        0.44
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.45,
+        1.08
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen cinematic shot of the same 35-year-old tired Russian man in a grey sweater sitting alone at night at a small table in a cramped Soviet panel-apartment kitchen, illuminated only by his smartphone screen, shot on 35mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 5,
+      "id": "shot_005",
+      "file": "video_studio/post_rossiya/frames/shot_005.jpg",
+      "generated": true,
+      "t0": 5.0,
+      "t1": 7.0,
+      "duration": 2.0,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "«Я плакал, смотря на чужой инстаграм»",
+      "desc_ru": "Крупный план лица героя: влажные глаза, сдержанное выражение",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.34,
+        1.32
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen intimate close-up of the same 35-year-old Russian man's face in a dark room lit from below by a phone screen, moist glistening eyes but stoic silent expression without dramatic crying, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 6,
+      "id": "shot_006",
+      "file": "video_studio/post_rossiya/frames/shot_006.jpg",
+      "generated": true,
+      "t0": 7.0,
+      "t1": 9.0,
+      "duration": 2.0,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "«Я плакал, смотря на чужой инстаграм»",
+      "desc_ru": "Вид через дверной проём: маленькая кухня и тёмный двор за окном",
+      "color_state": "dirty_modern",
+      "move": "slow_out",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.5,
+        0.48,
+        1.08
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen shot through a dark hallway doorway into a tiny Soviet kitchen at night: the man sits in silhouette at the table while outside the window yawns a vast dark courtyard of panel buildings, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 7,
+      "id": "shot_007",
+      "file": "video_studio/post_rossiya/frames/shot_007.jpg",
+      "generated": true,
+      "t0": 9.0,
+      "t1": 10.8,
+      "duration": 1.8,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "«Там кто-то вернулся с войны»",
+      "desc_ru": "Фотография: мужчина в гражданской одежде у старого автобуса с тростью",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.44
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.48,
+        1.06
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen candid everyday Russian provincial photograph of a slim 30-year-old man in plain civilian olive-grey autumn jacket and jeans standing beside an old blue-and-white PAZ bus leaning on a black medical walking cane, no military uniform or medals, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 8,
+      "id": "shot_008",
+      "file": "video_studio/post_rossiya/frames/shot_008.jpg",
+      "generated": true,
+      "t0": 10.8,
+      "t1": 12.5,
+      "duration": 1.7,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "«Там кто-то вернулся с войны»",
+      "desc_ru": "Тот же человек на остановке, позади пустая пригородная дорога",
+      "color_state": "dirty_modern",
+      "move": "pan_right",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.55,
+        0.5,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_007.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen shot of the exact same 30-year-old man in civilian jacket standing alone under a weathered concrete suburban bus shelter leaning on the same black cane, empty wet provincial road behind him, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 9,
+      "id": "shot_009",
+      "file": "video_studio/post_rossiya/frames/shot_009.jpg",
+      "generated": true,
+      "t0": 12.5,
+      "t1": 14.0,
+      "duration": 1.5,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "«Там кто-то вернулся с войны»",
+      "desc_ru": "Крупный план ботинка и трости на мокром асфальте",
+      "color_state": "dirty_modern",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.55
+      ],
+      "live_fx": "rain_streaks",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_04_color.jpg",
+      "fallback_crop": [
+        0.52,
+        0.65,
+        1.22
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen low-angle close-up of a worn dark leather boot and the rubber tip of a walking cane resting on wet rain-slicked asphalt beside a puddle, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 10,
+      "id": "shot_010",
+      "file": "video_studio/post_rossiya/frames/shot_010.jpg",
+      "generated": true,
+      "t0": 14.0,
+      "t1": 15.6,
+      "duration": 1.6,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "«Принеся в ноге свинца пару грамм»",
+      "desc_ru": "Рентгеновский снимок ноги на старом негатоскопе с осколком",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_002.jpg",
+      "fallback_crop": [
+        0.5,
+        0.5,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up of a medical leg X-ray film clipped onto an old hospital fluorescent negatoscope in a dim provincial clinic, small white metallic lead fragment visible near the bone, shot on 50mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 11,
+      "id": "shot_011",
+      "file": "video_studio/post_rossiya/frames/shot_011.jpg",
+      "generated": true,
+      "t0": 15.6,
+      "t1": 17.3,
+      "duration": 1.7,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "«Принеся в ноге свинца пару грамм»",
+      "desc_ru": "Мужчина сидит на больничной кровати и массирует ногу",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_004.jpg",
+      "fallback_crop": [
+        0.5,
+        0.5,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_007.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen shot of the same slim 30-year-old man sitting on a narrow provincial hospital bed in grey t-shirt and sweatpants gently massaging his lower leg, black cane leaning nearby, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 12,
+      "id": "shot_012",
+      "file": "video_studio/post_rossiya/frames/shot_012.jpg",
+      "generated": true,
+      "t0": 17.3,
+      "t1": 19.0,
+      "duration": 1.7,
+      "act": "АКТ I · ЧУЖАЯ БОЛЬ",
+      "cue": "«Принеся в ноге свинца пару грамм»",
+      "desc_ru": "Вид из окна больничной палаты на дождливый двор (переход через капли)",
+      "color_state": "dirty_modern",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": "rain_window_transition",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.48,
+        0.48,
+        1.1
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen POV from inside a dim provincial hospital ward looking through a raindrop-streaked window onto a wet courtyard with bare trees and grey panel buildings, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 13,
+      "id": "shot_013",
+      "file": "video_studio/post_rossiya/frames/shot_013.jpg",
+      "generated": true,
+      "t0": 19.0,
+      "t1": 20.5,
+      "duration": 1.5,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«Клали искусственные цветы к могилам»",
+      "desc_ru": "Дешёвые пластиковые цветы в ведре у кладбищенского киоска",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_04_color.jpg",
+      "fallback_crop": [
+        0.42,
+        0.58,
+        1.18
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary shot of cheap stiff artificial plastic flowers in galvanized metal buckets outside a weathered cemetery kiosk in late autumn drizzle, shot on 50mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 14,
+      "id": "shot_014",
+      "file": "video_studio/post_rossiya/frames/shot_014.jpg",
+      "generated": true,
+      "t0": 20.5,
+      "t1": 22.0,
+      "duration": 1.5,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«Клали искусственные цветы к могилам»",
+      "desc_ru": "Женская рука выбирает искусственные красные гвоздики",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_013.jpg",
+      "fallback_crop": [
+        0.45,
+        0.48,
+        1.18
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_013.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up of a middle-aged woman's bare hand in a dark wool coat sleeve choosing cheap artificial red plastic carnations from a bucket in autumn drizzle, shot on 50mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 15,
+      "id": "shot_015",
+      "file": "video_studio/post_rossiya/frames/shot_015.jpg",
+      "generated": true,
+      "t0": 22.0,
+      "t1": 23.4,
+      "duration": 1.4,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«Клали искусственные цветы к могилам»",
+      "desc_ru": "Крупный план пластмассового лепестка с каплей дождя",
+      "color_state": "dirty_modern",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": "rain_streaks",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_04_color.jpg",
+      "fallback_crop": [
+        0.4,
+        0.56,
+        1.35
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen extreme macro close-up of a frayed synthetic plastic red flower petal with visible molded plastic veins and a single cold raindrop on its surface, shot on 100mm macro lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 16,
+      "id": "shot_016",
+      "file": "video_studio/post_rossiya/frames/shot_016.jpg",
+      "generated": true,
+      "t0": 23.4,
+      "t1": 25.0,
+      "duration": 1.6,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«Клали искусственные цветы к могилам»",
+      "desc_ru": "Общий план кладбища поздней осенью с искусственными цветами",
+      "color_state": "dirty_modern",
+      "move": "pan_left",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.45,
+        0.52,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen wide establishing shot of a Russian provincial cemetery in late November with bare black trees, muddy path, metal fences and bright artificial plastic flowers, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 17,
+      "id": "shot_017",
+      "file": "video_studio/post_rossiya/frames/shot_017.jpg",
+      "generated": true,
+      "t0": 25.0,
+      "t1": 26.6,
+      "duration": 1.6,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«И просили простить постфактум»",
+      "desc_ru": "Пожилая женщина стоит перед могилой, держа букет искусственных цветов",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.46,
+        0.45,
+        1.35
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+        "video_studio/post_rossiya/frames/shot_016.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary photograph of a solitary elderly Russian woman in a worn dark coat and grey wool headscarf standing quietly with bowed head before a modest grave fence in a muddy late-autumn cemetery, holding a small bouquet of cheap red plastic carnations, overcast cold damp light, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 18,
+      "id": "shot_018",
+      "file": "video_studio/post_rossiya/frames/shot_018.jpg",
+      "generated": true,
+      "t0": 26.6,
+      "t1": 28.0,
+      "duration": 1.4,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«И просили простить постфактум»",
+      "desc_ru": "Крупный план пожилой руки, сжимающей мокрую чёрную ленту венка",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_014.jpg",
+      "fallback_crop": [
+        0.5,
+        0.5,
+        1.22
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_016.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen macro close-up of an elderly woman's wrinkled hand gently gripping a rain-soaked black mourning ribbon without any text on an artificial pine wreath in cold drizzle, anatomically natural five fingers, shallow depth of field, cold slate-grey light, shot on 85mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 19,
+      "id": "shot_019",
+      "file": "video_studio/post_rossiya/frames/shot_019.jpg",
+      "generated": true,
+      "t0": 28.0,
+      "t1": 30.0,
+      "duration": 2.0,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«И просили простить постфактум»",
+      "desc_ru": "Пустая мокрая скамейка возле могилы (долгий неподвижный план)",
+      "color_state": "dirty_modern",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.54
+      ],
+      "live_fx": "rain_streaks",
+      "fallback_source": "video_studio/post_rossiya/frames/shot_016.jpg",
+      "fallback_crop": [
+        0.35,
+        0.62,
+        1.28
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_016.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen static documentary composition of a small empty wet blue-painted wooden bench beside a modest iron grave fence in a deserted late-autumn Russian cemetery, fallen wet black leaves on the planks, bare trees in mist behind, cold flat overcast light, shot on 35mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 20,
+      "id": "shot_020",
+      "file": "video_studio/post_rossiya/frames/shot_020.jpg",
+      "generated": true,
+      "t0": 30.0,
+      "t1": 32.0,
+      "duration": 2.0,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«Мы были такие красивые»",
+      "desc_ru": "Старая фотография конца 1990-х: молодые люди улыбаются во дворе",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.44
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.44,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen authentic late-1990s Russian provincial analog snapshot of four young twenty-year-old friends—two young men and two young women in simple late-90s windbreakers, sweaters and denim—standing together and smiling warmly in a Soviet panel-building courtyard, slightly faded warm 1998 Kodacolor film aesthetic, full frame without borders or date stamps, shot on 35mm compact camera, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 21,
+      "id": "shot_021",
+      "file": "video_studio/post_rossiya/frames/shot_021.jpg",
+      "generated": true,
+      "t0": 32.0,
+      "t1": 33.8,
+      "duration": 1.8,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«Мы были такие красивые»",
+      "desc_ru": "Та же фотография лежит на кухонном столе рядом с пустым стаканом",
+      "color_state": "dirty_modern",
+      "move": "slow_out",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_001.jpg",
+      "fallback_crop": [
+        0.52,
+        0.5,
+        1.16
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_020.jpg",
+        "video_studio/post_rossiya/frames/shot_001.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up still-life on a worn scratched Soviet kitchen table in dim cold twilight: a slightly curled glossy 10x15 printed photograph showing the exact same four smiling 1990s young friends from the reference image lies next to an empty faceted glass tumbler, cold blue window light, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 22,
+      "id": "shot_022",
+      "file": "video_studio/post_rossiya/frames/shot_022.jpg",
+      "generated": true,
+      "t0": 33.8,
+      "t1": 35.5,
+      "duration": 1.7,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«Мы были такие красивые»",
+      "desc_ru": "Фотография отражается в тёмном оконном стекле на фоне ночного двора",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_006.jpg",
+      "fallback_crop": [
+        0.54,
+        0.46,
+        1.24
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_020.jpg",
+        "video_studio/post_rossiya/frames/shot_006.jpg"
+      ],
+      "prompt": "16:9 widescreen double-reflection documentary shot: the printed 1990s snapshot of the four smiling young friends held near a dark apartment window at night softly reflects as a translucent ghost image across the dark glass over the dim courtyard of grey panel buildings outside, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 23,
+      "id": "shot_023",
+      "file": "video_studio/post_rossiya/frames/shot_023.jpg",
+      "generated": true,
+      "t0": 35.5,
+      "t1": 38.0,
+      "duration": 2.5,
+      "act": "АКТ II · ПОЗДНЕЕ ПРОЩЕНИЕ",
+      "cue": "«Мы были такие красивые»",
+      "desc_ru": "Взрослые версии этих людей стоят в том же дворе спустя 20 лет, уставшие",
+      "color_state": "dirty_modern",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.44
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.46,
+        1.06
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_020.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary photograph of the exact same four friends from the 1990s reference photograph now twenty-five years older in their mid-forties, standing slightly apart in the exact same grey Soviet panel-house courtyard in late autumn, wearing plain dark everyday jackets, naturally aged tired faces with quiet estrangement, barely looking at one another, cold overcast light, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 24,
+      "id": "shot_024",
+      "file": "video_studio/post_rossiya/frames/shot_024.jpg",
+      "generated": true,
+      "t0": 38.0,
+      "t1": 39.8,
+      "duration": 1.8,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Все думали, самые умные, гордые»",
+      "desc_ru": "Молодые мужчины возле старого чёрного седана на фоне гаражей",
+      "color_state": "dirty_modern",
+      "move": "pan_right",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.28,
+        0.62,
+        1.26
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary photograph of three ordinary young Russian provincial men in their late twenties wearing neat dark leather and quilted jackets, standing in self-assured confident casual postures leaning beside an old black 2000s sedan car in front of rusty metal Soviet garages on wet gravel, ordinary faces without caricature villainy, cold grey daylight, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 25,
+      "id": "shot_025",
+      "file": "video_studio/post_rossiya/frames/shot_025.jpg",
+      "generated": true,
+      "t0": 39.8,
+      "t1": 41.4,
+      "duration": 1.6,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Все думали, самые умные, гордые»",
+      "desc_ru": "Крупный план дорогих металлических часов на руке одного из них",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_002.jpg",
+      "fallback_crop": [
+        0.48,
+        0.52,
+        1.22
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_024.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up of a heavy polished stainless-steel luxury wristwatch on a young man's wrist protruding from the cuff of a dark leather jacket as his hand rests on the black car door, cold overcast reflection on steel and wet car paint, no brand logo or readable dial text, shot on 85mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 26,
+      "id": "shot_026",
+      "file": "video_studio/post_rossiya/frames/shot_026.jpg",
+      "generated": true,
+      "t0": 41.4,
+      "t1": 43.0,
+      "duration": 1.6,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Все думали, самые умные, гордые»",
+      "desc_ru": "Отражение их лиц в тёмном боковом стекле автомобиля",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.45
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_003.jpg",
+      "fallback_crop": [
+        0.5,
+        0.45,
+        1.18
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_024.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up of the tinted wet side window of an old black sedan reflecting the muted confident faces of two young men and the grey sky above rusty garages, raindrops on the dark glass, cold slate-blue palette, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 27,
+      "id": "shot_027",
+      "file": "video_studio/post_rossiya/frames/shot_027.jpg",
+      "generated": true,
+      "t0": 43.0,
+      "t1": 44.7,
+      "duration": 1.7,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Оказалось, вывезли за долги»",
+      "desc_ru": "Тот же чёрный автомобиль ночью у заброшенного промздания",
+      "color_state": "dirty_modern",
+      "move": "pan_left",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.62,
+        0.56,
+        1.24
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_024.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen nocturnal documentary wide shot of the exact same old black sedan parked alone at night on muddy ground beside a dark abandoned concrete industrial warehouse on the town outskirts, weak dim headlights cutting into cold mist and puddles, single distant sodium lamp, shot on 35mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 28,
+      "id": "shot_028",
+      "file": "video_studio/post_rossiya/frames/shot_028.jpg",
+      "generated": true,
+      "t0": 44.7,
+      "t1": 46.3,
+      "duration": 1.6,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Оказалось, вывезли за долги»",
+      "desc_ru": "Открытая задняя дверь чёрного автомобиля, в салоне темно",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_001.jpg",
+      "fallback_crop": [
+        0.45,
+        0.52,
+        1.22
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_024.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen medium close-up at night of the flung-open rear passenger door of the old black sedan on a muddy industrial lot, pitch-dark empty car interior inside, mud on the sill and rain droplets on black metal in cold dim blue-yellow twilight, ominous quiet absence, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 29,
+      "id": "shot_029",
+      "file": "video_studio/post_rossiya/frames/shot_029.jpg",
+      "generated": true,
+      "t0": 46.3,
+      "t1": 48.0,
+      "duration": 1.7,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Оказалось, вывезли за долги»",
+      "desc_ru": "Одинокая мужская фигура стоит перед бетонной стеной, лица не видно",
+      "color_state": "dirty_modern",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.48,
+        1.2
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen atmospheric nocturnal shot from behind of a solitary young man's silhouette standing motionless facing a damp stained concrete industrial wall at night, head slightly lowered, face completely unseen, no violence shown, harsh cold side-shadow and wet concrete texture, minimalist social horror, shot on 35mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 30,
+      "id": "shot_030",
+      "file": "video_studio/post_rossiya/frames/shot_030.jpg",
+      "generated": true,
+      "t0": 48.0,
+      "t1": 49.0,
+      "duration": 1.0,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Там и оставили модные и холодные»",
+      "desc_ru": "Дорогая тёмная куртка лежит в грязи и луже возле гаражей",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.55
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_04_color.jpg",
+      "fallback_crop": [
+        0.55,
+        0.6,
+        1.2
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_024.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen low-angle documentary shot of an expensive dark leather jacket lying crumpled and abandoned in cold mud and rainwater puddles beside rusted metal garages at dawn, no blood, no body, quiet eerie aftermath, cold blue-grey pre-dawn light, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 31,
+      "id": "shot_031",
+      "file": "video_studio/post_rossiya/frames/shot_031.jpg",
+      "generated": true,
+      "t0": 49.0,
+      "t1": 50.0,
+      "duration": 1.0,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Там и оставили модные и холодные»",
+      "desc_ru": "Разбитые наручные часы на мокрой земле с остановившимися стрелками",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_002.jpg",
+      "fallback_crop": [
+        0.52,
+        0.48,
+        1.26
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen extreme close-up of a luxury stainless-steel wristwatch lying in wet dark mud and gravel with cracked crystal glass and stopped hands, no brand name or numbers on dial, cold grey morning light reflecting in water droplets, shot on 100mm macro lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 32,
+      "id": "shot_032",
+      "file": "video_studio/post_rossiya/frames/shot_032.jpg",
+      "generated": true,
+      "t0": 50.0,
+      "t1": 50.9,
+      "duration": 0.9,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Там и оставили модные и холодные»",
+      "desc_ru": "Чёрный автомобиль уезжает по пустой сырой дороге, красные задние огни",
+      "color_state": "dirty_modern",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.72,
+        0.58,
+        1.28
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_024.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen wide shot of the old black sedan driving away down a deserted wet asphalt road at cold dusk, glowing red taillights reflecting as long red streaks on the slick wet pavement between bare dark fields, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 33,
+      "id": "shot_033",
+      "file": "video_studio/post_rossiya/frames/shot_033.jpg",
+      "generated": true,
+      "t0": 50.9,
+      "t1": 52.0,
+      "duration": 1.1,
+      "act": "АКТ III · ЦЕНА САМОУВЕРЕННОСТИ",
+      "cue": "«Плати налоги и включай мозги» (резкий дневной срез)",
+      "desc_ru": "Длинная очередь уставших людей в коридоре госучреждения днём",
+      "color_state": "dirty_modern",
+      "move": "pan_right",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.45,
+        1.15
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen deadpan documentary wide shot inside a drab provincial Russian municipal office corridor during daytime: a long silent queue of ordinary tired citizens in autumn coats holding plain paper folders standing along pale beige-green walls under harsh cold fluorescent ceiling lights, dry bureaucratic absurdity, no readable signs or text, shot on 35mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 34,
+      "id": "shot_034",
+      "file": "video_studio/post_rossiya/frames/shot_034.jpg",
+      "generated": true,
+      "t0": 52.0,
+      "t1": 55.0,
+      "duration": 3.0,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«И стонет в лапах бессилия»",
+      "desc_ru": "Огромное пустое осеннее поле, вдалеке на горизонте стоят люди",
+      "color_state": "faded_memory",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": "ground_mist",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.42,
+        1.02
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen vast extreme wide establishing photograph of an immense empty late-autumn Russian field of black wet plowed earth and bleached dry grass stretching under a heavy pale-grey sky, far in the distance tiny dark figures of women stand motionless in low cold mist, shot on 28mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 35,
+      "id": "shot_035",
+      "file": "video_studio/post_rossiya/frames/shot_035.jpg",
+      "generated": true,
+      "t0": 55.0,
+      "t1": 58.0,
+      "duration": 3.0,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«И стонет в лапах бессилия»",
+      "desc_ru": "Средне-общий план: около тридцати женщин в обычных пальто, платках и старых куртках",
+      "color_state": "faded_memory",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": "ground_mist",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.48,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen medium-wide documentary shot of the thirty ordinary Russian provincial women of all ages from the reference image standing together in the misty late-autumn field, dressed in everyday worn coats, drab quilted jackets and wool headscarves, no folk costumes, pale grey sky, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 36,
+      "id": "shot_036",
+      "file": "video_studio/post_rossiya/frames/shot_036.jpg",
+      "generated": true,
+      "t0": 58.0,
+      "t1": 60.0,
+      "duration": 2.0,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«Пост-Россия: прости меня»",
+      "desc_ru": "Крупный план пожилой женщины из хора, смотрящей прямо в объектив",
+      "color_state": "faded_memory",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.4
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.46,
+        0.44,
+        1.48
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen intimate documentary close-up portrait of a 70-year-old Russian grandmother from the choir in a worn grey wool shawl and dark coat, deeply lined exhausted calm face looking directly into the camera lens without blinking, misty field softly blurred behind, pale grey overcast light, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 37,
+      "id": "shot_037",
+      "file": "video_studio/post_rossiya/frames/shot_037.jpg",
+      "generated": true,
+      "t0": 60.0,
+      "t1": 62.0,
+      "duration": 2.0,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«Пост-Россия: прости меня»",
+      "desc_ru": "Средний план нескольких женщин разного возраста, тихо поющих вместе",
+      "color_state": "faded_memory",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.44
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.58,
+        0.46,
+        1.32
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen medium shot of five women of different generations from the choir standing shoulder to shoulder in everyday dark coats and headscarves in the misty autumn field, mouths slightly open singing a solemn chant together, visible cold breath in damp air, shot on 50mm f/2.2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 38,
+      "id": "shot_038",
+      "file": "video_studio/post_rossiya/frames/shot_038.jpg",
+      "generated": true,
+      "t0": 62.0,
+      "t1": 64.0,
+      "duration": 2.0,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«Пост-Россия: прости меня»",
+      "desc_ru": "Общий план хора на фоне низкого бледно-серого неба",
+      "color_state": "faded_memory",
+      "move": "slow_out",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": "ground_mist",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.45,
+        1.06
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen low-angle wide shot of the entire women's choir standing motionless on black wet earth silhouetted softly against an enormous pale-grey overcast November sky and drifting cold fog, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 39,
+      "id": "shot_039",
+      "file": "video_studio/post_rossiya/frames/shot_039.jpg",
+      "generated": true,
+      "t0": 64.0,
+      "t1": 66.2,
+      "duration": 2.2,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«Так пахнет утро последнее»",
+      "desc_ru": "Поле в низком холодном тумане, на горизонте панельный микрорайон",
+      "color_state": "faded_memory",
+      "move": "pan_right",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": "ground_mist",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.5,
+        0.44,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen atmospheric landscape of a dark sodden autumn field blanketed in thick low ground fog, on the distant misty horizon rises the ghostly grey silhouette of a Soviet nine-story panel apartment district under a pale colorless sky, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 40,
+      "id": "shot_040",
+      "file": "video_studio/post_rossiya/frames/shot_040.jpg",
+      "generated": true,
+      "t0": 66.2,
+      "t1": 68.2,
+      "duration": 2.0,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«Так пахнет утро последнее»",
+      "desc_ru": "Пустая бетонная автобусная остановка посреди туманного поля",
+      "color_state": "faded_memory",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": "ground_mist",
+      "fallback_source": "video_studio/post_rossiya/frames/shot_008.jpg",
+      "fallback_crop": [
+        0.36,
+        0.5,
+        1.18
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_008.jpg",
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen static documentary wide shot of a completely deserted weathered grey concrete Soviet bus stop shelter standing alone beside an empty wet road in the middle of a vast misty late-autumn field, no people, pale grey sky, shot on 35mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 41,
+      "id": "shot_041",
+      "file": "video_studio/post_rossiya/frames/shot_041.jpg",
+      "generated": true,
+      "t0": 68.2,
+      "t1": 70.0,
+      "duration": 1.8,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«Так пахнет утро последнее»",
+      "desc_ru": "Ржавый дорожный указатель у обочины совершенно без надписей",
+      "color_state": "faded_memory",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.44
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_008.jpg",
+      "fallback_crop": [
+        0.68,
+        0.46,
+        1.3
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up of a weathered rusted rectangular metal roadside sign on a tilted pole beside a foggy field road, its paint completely peeled and bleached blank with zero letters or symbols, cold water droplets along the bottom edge, pale grey sky behind, shot on 50mm f/2.2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 42,
+      "id": "shot_042",
+      "file": "video_studio/post_rossiya/frames/shot_042.jpg",
+      "generated": true,
+      "t0": 70.0,
+      "t1": 72.3,
+      "duration": 2.3,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«Предосеннее, предрасстрельное»",
+      "desc_ru": "Женщины стоят неподвижно в поле, над ними пролетает стая чёрных ворон",
+      "color_state": "faded_memory",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": "crows_drift",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.38,
+        1.08
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen wide documentary shot of the thirty women in coats and headscarves standing completely motionless in the dark autumn field while a scattered flock of black crows flies across the pale leaden-grey sky above their heads, cold ground fog, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 43,
+      "id": "shot_043",
+      "file": "video_studio/post_rossiya/frames/shot_043.jpg",
+      "generated": true,
+      "t0": 72.3,
+      "t1": 74.5,
+      "duration": 2.2,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«Предосеннее, предрасстрельное»",
+      "desc_ru": "Крупный план молодой женщины из хора: по щеке медленно течёт слеза",
+      "color_state": "faded_memory",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.36,
+        0.42,
+        1.48
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen intimate close-up of a 25-year-old Russian woman standing among the choir in a plain dark wool coat and simple knitted scarf, pale natural face looking forward as a single tear tracks slowly down her cheek, completely quiet restrained expression, cold misty daylight, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 44,
+      "id": "shot_044",
+      "file": "video_studio/post_rossiya/frames/shot_044.jpg",
+      "generated": true,
+      "t0": 74.5,
+      "t1": 77.0,
+      "duration": 2.5,
+      "act": "I ПРИПЕВ · ГОЛОС ПОСТ-РОССИИ",
+      "cue": "«Предосеннее, предрасстрельное»",
+      "desc_ru": "Очень широкий план поля: хор кажется крошечной группой среди пустоты",
+      "color_state": "faded_memory",
+      "move": "slow_out",
+      "focus": [
+        0.5,
+        0.54
+      ],
+      "live_fx": "ground_mist",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.44,
+        1.01
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg"
+      ],
+      "prompt": "16:9 widescreen extreme distant aerial-hilltop perspective over a boundless empty black-and-grey late-autumn Russian plain shrouded in low mist, the women's choir visible only as a tiny fragile cluster of dark figures lost in the overwhelming silent landscape, shot on 24mm wide lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 45,
+      "id": "shot_045",
+      "file": "video_studio/post_rossiya/frames/shot_045.jpg",
+      "generated": true,
+      "t0": 77.0,
+      "t1": 78.4,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Рукомойник наполнить густыми мыслями»",
+      "desc_ru": "Старый эмалированный рукомойник и раковина в коммунальной кухне",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_004.jpg",
+      "fallback_crop": [
+        0.28,
+        0.52,
+        1.28
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary close-up of an old chipped stained white enamel washbasin and brass faucet on a peeling olive-brown wall in a dim Soviet communal apartment kitchen, damp rust stains, earthy swampy shadow tones, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 46,
+      "id": "shot_046",
+      "file": "video_studio/post_rossiya/frames/shot_046.jpg",
+      "generated": true,
+      "t0": 78.4,
+      "t1": 79.8,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Рукомойник наполнить густыми мыслями»",
+      "desc_ru": "Из старого крана медленно течёт густая чёрная маслянистая жидкость",
+      "color_state": "reality_decay",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": "black_liquid_drip",
+      "fallback_source": "video_studio/post_rossiya/frames/shot_002.jpg",
+      "fallback_crop": [
+        0.5,
+        0.5,
+        1.24
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen macro close-up of a tarnished old kitchen faucet pouring a slow heavy stream of thick glossy pitch-black liquid into a stained porcelain sink, understated mundane surrealism looking completely physical and real, dim muddy yellow-brown tungsten light, shot on 85mm macro lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 47,
+      "id": "shot_047",
+      "file": "video_studio/post_rossiya/frames/shot_047.jpg",
+      "generated": true,
+      "t0": 79.8,
+      "t1": 81.2,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Рукомойник наполнить густыми мыслями»",
+      "desc_ru": "Главный герой подставляет ладони под густую чёрную струю",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": "black_liquid_drip",
+      "fallback_source": "video_studio/post_rossiya/frames/shot_004.jpg",
+      "fallback_crop": [
+        0.42,
+        0.65,
+        1.32
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up of the cupped bare hands of the 35-year-old man in rolled-up grey sweater sleeves held beneath an old kitchen tap as thick viscous black water pools in his palms, anatomically correct five-fingered hands, dim earthy brown-green light, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 48,
+      "id": "shot_048",
+      "file": "video_studio/post_rossiya/frames/shot_048.jpg",
+      "generated": true,
+      "t0": 81.2,
+      "t1": 82.6,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Умыть ключевое лицо»",
+      "desc_ru": "Крупный план главного героя перед старым треснувшим зеркалом",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_005.jpg",
+      "fallback_crop": [
+        0.5,
+        0.42,
+        1.14
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen medium close-up of the exact same 35-year-old tired Russian man in grey sweater looking quietly at himself in a tarnished wall mirror crossed by a single diagonal crack in a dim bathroom, sickly warm-brown tungsten bulb light, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 49,
+      "id": "shot_049",
+      "file": "video_studio/post_rossiya/frames/shot_049.jpg",
+      "generated": true,
+      "t0": 82.6,
+      "t1": 84.0,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Умыть ключевое лицо»",
+      "desc_ru": "Герой умывает лицо чёрной водой над раковиной",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_005.jpg",
+      "fallback_crop": [
+        0.5,
+        0.48,
+        1.24
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up of the exact same 35-year-old man leaning over the sink pressing his hands wet with thick black water to his cheeks and forehead, dark droplets running down his skin, completely calm ordinary gesture, dim swampy-brown bathroom light, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 50,
+      "id": "shot_050",
+      "file": "video_studio/post_rossiya/frames/shot_050.jpg",
+      "generated": true,
+      "t0": 84.0,
+      "t1": 85.8,
+      "duration": 1.8,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Умыть ключевое лицо» (аномалия зеркала)",
+      "desc_ru": "Лицо мужчины мокрое в чёрных каплях, но отражение в зеркале абсолютно сухое",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.44
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_005.jpg",
+      "fallback_crop": [
+        0.5,
+        0.4,
+        1.18
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen over-the-shoulder surreal documentary shot at a cracked bathroom mirror: in the foreground profile the 35-year-old man's real cheek and jaw are dripping wet with black water droplets, while his reflection facing us inside the mirror glass has a completely dry clean calm face, uncanny quiet impossibility, dim earthy light, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 51,
+      "id": "shot_051",
+      "file": "video_studio/post_rossiya/frames/shot_051.jpg",
+      "generated": true,
+      "t0": 85.8,
+      "t1": 87.3,
+      "duration": 1.5,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Паразиты, харам, нечистые»",
+      "desc_ru": "Переполненный тусклый подземный переход, люди идут в разные стороны",
+      "color_state": "reality_decay",
+      "move": "pan_left",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.55,
+        0.55,
+        1.2
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary shot inside a crowded grimy post-Soviet concrete pedestrian underpass: dozens of tired commuters in dark autumn coats walking past stained tiled walls in opposite directions with slight motion blur, flickering sickly yellow-green fluorescent ceiling tubes, shot on 35mm f/2.2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 52,
+      "id": "shot_052",
+      "file": "video_studio/post_rossiya/frames/shot_052.jpg",
+      "generated": true,
+      "t0": 87.3,
+      "t1": 88.7,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Паразиты, харам, нечистые»",
+      "desc_ru": "Крупный план грязной бурой воды, стекающей по ступеням перехода",
+      "color_state": "reality_decay",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.55
+      ],
+      "live_fx": "rain_streaks",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_04_color.jpg",
+      "fallback_crop": [
+        0.6,
+        0.68,
+        1.28
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen low-angle close-up of muddy brown slush water trickling slowly down chipped concrete steps of an underground passage past scuffed boots walking by in the blurred background, swampy olive-brown reflection, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 53,
+      "id": "shot_053",
+      "file": "video_studio/post_rossiya/frames/shot_053.jpg",
+      "generated": true,
+      "t0": 88.7,
+      "t1": 90.2,
+      "duration": 1.5,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Паразиты, харам, нечистые»",
+      "desc_ru": "Человек в дорогом костюме стоит среди рабочих, его лицо скрыто густой тенью",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.44
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.48,
+        1.18
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen eerie documentary medium shot inside a dim underpass crowd: a man in an immaculate tailored dark wool overcoat and crisp white collar stands dead still amid passing people in worn work jackets, an overhead broken light fixture casts deep pitch-black shadow completely obscuring his upper face, no caricature, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 54,
+      "id": "shot_054",
+      "file": "video_studio/post_rossiya/frames/shot_054.jpg",
+      "generated": true,
+      "t0": 90.2,
+      "t1": 91.6,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Раньше курицы было яйцо»",
+      "desc_ru": "Простое белое куриное яйцо на старом деревянном кухонном столе",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_001.jpg",
+      "fallback_crop": [
+        0.48,
+        0.48,
+        1.22
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen minimalist close-up still-life of a single plain white raw chicken egg resting on a dark scarred wooden kitchen table in dim earthy afternoon light, shallow depth of field, quiet ominous simplicity, shot on 85mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 55,
+      "id": "shot_055",
+      "file": "video_studio/post_rossiya/frames/shot_055.jpg",
+      "generated": true,
+      "t0": 91.6,
+      "t1": 93.2,
+      "duration": 1.6,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Раньше курицы было яйцо»",
+      "desc_ru": "Из трещины в яичной скорлупе медленно вытекает густая чёрная жидкость",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": "black_liquid_drip",
+      "fallback_source": "video_studio/post_rossiya/frames/shot_002.jpg",
+      "fallback_crop": [
+        0.52,
+        0.52,
+        1.28
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen extreme macro close-up of the white chicken egg on the dark wooden table with a fine jagged crack in its shell from which thick glossy pitch-black viscous liquid slowly oozes onto the wood grain, tactile grounded surrealism echoing the black sink water, shot on 100mm macro lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 56,
+      "id": "shot_056",
+      "file": "video_studio/post_rossiya/frames/shot_056.jpg",
+      "generated": true,
+      "t0": 93.2,
+      "t1": 94.7,
+      "duration": 1.5,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Мы куражимся, нужные, босые»",
+      "desc_ru": "Мужчины в рабочей одежде стоят у старой заводской проходной утром",
+      "color_state": "reality_decay",
+      "move": "pan_right",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.78,
+        0.52,
+        1.28
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary wide shot of several ordinary Russian factory workers in worn dark canvas work jackets standing quietly smoking outside a weathered brick and concrete Soviet factory gatehouse in damp brown-grey morning mist, smokestacks behind, shot on 35mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 57,
+      "id": "shot_057",
+      "file": "video_studio/post_rossiya/frames/shot_057.jpg",
+      "generated": true,
+      "t0": 94.7,
+      "t1": 96.1,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Мы куражимся, нужные, босые»",
+      "desc_ru": "Крупный план тяжёлых грязных ботинок в глине на мокром асфальте",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.58
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_009.jpg",
+      "fallback_crop": [
+        0.5,
+        0.55,
+        1.15
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_009.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen low-angle close-up of two pairs of mud-caked worn work boots standing in brown puddles on cracked wet asphalt outside a factory gate, cigarette butt floating in muddy water, earthy grey-brown palette, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 58,
+      "id": "shot_058",
+      "file": "video_studio/post_rossiya/frames/shot_058.jpg",
+      "generated": true,
+      "t0": 96.1,
+      "t1": 97.6,
+      "duration": 1.5,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Мы куражимся, нужные, босые»",
+      "desc_ru": "Крупный план рабочего: он слабо улыбается, хотя выглядит совершенно измученным",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.4
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.36,
+        1.38
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary close-up portrait of a 42-year-old Russian factory worker in a dusty work jacket with deep dark circles under his eyes and grimy stubble, offering a faint crooked weary smile to a coworker off-camera despite utter exhaustion, natural skin, cold muddy morning light, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 59,
+      "id": "shot_059",
+      "file": "video_studio/post_rossiya/frames/shot_059.jpg",
+      "generated": true,
+      "t0": 97.6,
+      "t1": 99.2,
+      "duration": 1.6,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Улыбаемся милым вам»",
+      "desc_ru": "Работник небольшого магазина вежливо улыбается покупателю",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_004.jpg",
+      "fallback_crop": [
+        0.52,
+        0.42,
+        1.2
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary medium close-up inside a small provincial grocery shop: a tired 38-year-old male clerk in a plain dark blue work vest behind the counter puts on a polite gentle customer-service smile toward a shopper's shoulder in the foreground, greenish-yellow fluorescent ceiling tubes, no readable labels or prices, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 60,
+      "id": "shot_060",
+      "file": "video_studio/post_rossiya/frames/shot_060.jpg",
+      "generated": true,
+      "t0": 99.2,
+      "t1": 100.8,
+      "duration": 1.6,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Улыбаемся милым вам»",
+      "desc_ru": "Тот же работник сидит один на ящике в тесной подсобке, опустив голову",
+      "color_state": "reality_decay",
+      "move": "slow_out",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_011.jpg",
+      "fallback_crop": [
+        0.48,
+        0.48,
+        1.16
+      ],
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_059.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary medium shot inside a cramped dim storage backroom stacked with plain unmarked cardboard boxes: the exact same 38-year-old shop worker in the dark blue vest sits alone on a plastic crate with elbows on knees and head bowed low in silent exhaustion under a bare dim bulb, shot on 35mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 61,
+      "id": "shot_061",
+      "file": "video_studio/post_rossiya/frames/shot_061.jpg",
+      "generated": true,
+      "t0": 100.8,
+      "t1": 102.3,
+      "duration": 1.5,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Но расквасят носы курносые»",
+      "desc_ru": "Двое обычных мужчин напряжённо стоят друг напротив друга у гаражей",
+      "color_state": "reality_decay",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.3,
+        0.58,
+        1.24
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary wide-medium shot of two ordinary tired provincial men in plain dark jackets standing tensely two paces apart facing each other in a muddy alley between rusty metal garages, awkward real human confrontation without action-movie poses, damp overcast twilight, shot on 35mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 62,
+      "id": "shot_062",
+      "file": "video_studio/post_rossiya/frames/shot_062.jpg",
+      "generated": true,
+      "t0": 102.3,
+      "t1": 103.6,
+      "duration": 1.3,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Но расквасят носы курносые»",
+      "desc_ru": "Крупный план туго сжатого мужского кулака у кармана куртки",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_014.jpg",
+      "fallback_crop": [
+        0.52,
+        0.52,
+        1.25
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up of a man's bare cold-reddened hand clenched into a tight reluctant fist beside the frayed cuff of a dark autumn jacket, slightly scraped knuckles, anatomically accurate five fingers, shallow depth of field against muddy garage wall, shot on 85mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 63,
+      "id": "shot_063",
+      "file": "video_studio/post_rossiya/frames/shot_063.jpg",
+      "generated": true,
+      "t0": 103.6,
+      "t1": 105.0,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Но расквасят носы курносые»",
+      "desc_ru": "Крупный план разбитой губы на спокойном уставшем мужском лице",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_005.jpg",
+      "fallback_crop": [
+        0.5,
+        0.55,
+        1.36
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen tight close-up of the lower face and chin of an ordinary 35-year-old stubbled man with a small fresh split and smudge of dark blood on his lower lip, calm numb expression without theatrics, cold damp evening light, natural skin pores, shot on 85mm macro lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 64,
+      "id": "shot_064",
+      "file": "video_studio/post_rossiya/frames/shot_064.jpg",
+      "generated": true,
+      "t0": 105.0,
+      "t1": 106.6,
+      "duration": 1.6,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«За стабильность любимых дам»",
+      "desc_ru": "Женщина спокойно спит под одеялом в полутёмной тёплой комнате",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_004.jpg",
+      "fallback_crop": [
+        0.48,
+        0.45,
+        1.18
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen intimate documentary shot of an ordinary 33-year-old Russian woman sleeping peacefully on her side under a warm patterned duvet in a quiet dim panel-apartment bedroom, faint warm amber streetlight filtering through sheer curtains onto her calm face, tender fragile stillness, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 65,
+      "id": "shot_065",
+      "file": "video_studio/post_rossiya/frames/shot_065.jpg",
+      "generated": true,
+      "t0": 106.6,
+      "t1": 108.1,
+      "duration": 1.5,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«За стабильность любимых дам»",
+      "desc_ru": "Главный герой сидит ночью на кухне, молча разбирая бумажные счета",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_004.jpg",
+      "fallback_crop": [
+        0.5,
+        0.48,
+        1.1
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/frames/shot_004.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary medium shot of the exact same 35-year-old man in his grey sweater sitting late at night at the small kitchen table under a dim warm-yellow hanging lamp, rubbing his forehead while looking down at a stack of plain paper utility bills, no readable text or numbers, shot on 35mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 66,
+      "id": "shot_066",
+      "file": "video_studio/post_rossiya/frames/shot_066.jpg",
+      "generated": true,
+      "t0": 108.1,
+      "t1": 109.6,
+      "duration": 1.5,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«За стабильность любимых дам»",
+      "desc_ru": "На столе лежат ключи от квартиры, квитанции и маленькая семейная фотография",
+      "color_state": "reality_decay",
+      "move": "slow_out",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_001.jpg",
+      "fallback_crop": [
+        0.5,
+        0.52,
+        1.18
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen overhead close-up still-life on an old oilcloth kitchen table under dim yellow lamp light: a simple metal apartment key ring, folded paper utility slips with blurred unreadable lines, and a small worn printed family snapshot of a woman and child, earthy brown-amber shadows, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 67,
+      "id": "shot_067",
+      "file": "video_studio/post_rossiya/frames/shot_067.jpg",
+      "generated": true,
+      "t0": 109.6,
+      "t1": 111.2,
+      "duration": 1.6,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Мы же им позавидуем тихонько»",
+      "desc_ru": "Главный герой стоит под дождём и смотрит на тёплые окна чужого дома",
+      "color_state": "reality_decay",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": "rain_streaks",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.44,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen nocturnal documentary shot of the exact same 35-year-old man in his wet dark autumn jacket standing motionless in cold rain in a dark muddy courtyard, seen from three-quarter back profile looking up toward warm glowing yellow apartment windows on the second floor of a grey panel building, shot on 35mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 68,
+      "id": "shot_068",
+      "file": "video_studio/post_rossiya/frames/shot_068.jpg",
+      "generated": true,
+      "t0": 111.2,
+      "t1": 112.8,
+      "duration": 1.6,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Мы же им позавидуем тихонько»",
+      "desc_ru": "За мокрым стеклом первого этажа семья тихо ужинает под абажуром",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": "rain_streaks",
+      "fallback_source": "video_studio/post_rossiya/frames/shot_006.jpg",
+      "fallback_crop": [
+        0.52,
+        0.48,
+        1.26
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen exterior voyeuristic documentary view from the dark rainy street looking through a rain-beaded apartment window: inside under a warm orange kitchen lampshade a mother, father and child sit quietly eating dinner together, framed by dark cold wet concrete walls outside, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 69,
+      "id": "shot_069",
+      "file": "video_studio/post_rossiya/frames/shot_069.jpg",
+      "generated": true,
+      "t0": 112.8,
+      "t1": 114.4,
+      "duration": 1.6,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«В лес уйдём собирать падальё»",
+      "desc_ru": "Несколько людей в старых куртках идут по сырому осеннему лесу с пустыми корзинами",
+      "color_state": "reality_decay",
+      "move": "pan_right",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.52,
+        0.5,
+        1.16
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen eerie documentary wide shot of four ordinary provincial people in drab mud-colored jackets walking silently single-file among bare black birch and aspen trunks in a sodden late-November forest, carrying empty woven wicker baskets, brown decaying leaf litter and mist, shot on 35mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 70,
+      "id": "shot_070",
+      "file": "video_studio/post_rossiya/frames/shot_070.jpg",
+      "generated": true,
+      "t0": 114.4,
+      "t1": 115.8,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«В лес уйдём собирать падальё»",
+      "desc_ru": "Крупный план мёртвой чёрной птицы среди мокрых бурых осенних листьев",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.54
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_04_color.jpg",
+      "fallback_crop": [
+        0.48,
+        0.62,
+        1.3
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen high-angle documentary close-up of a still dead black rook bird lying peacefully intact among wet rotting brown oak and birch leaves on dark forest soil, rainwater beads on glossy black feathers, understated natural memento mori without gore, shot on 50mm f/2.2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 71,
+      "id": "shot_071",
+      "file": "video_studio/post_rossiya/frames/shot_071.jpg",
+      "generated": true,
+      "t0": 115.8,
+      "t1": 117.2,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«В лес уйдём собирать падальё»",
+      "desc_ru": "Человеческая рука тянется к мокрой листве на земле, но замирает в воздухе",
+      "color_state": "reality_decay",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_014.jpg",
+      "fallback_crop": [
+        0.48,
+        0.54,
+        1.24
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen low-angle close-up near the wet forest floor: a man's bare hand emerging from a dark jacket sleeve reaches hesitantly down toward sodden brown autumn leaves and freezes motionless mid-air inches above the dark earth, anatomically natural five fingers, shallow depth of field, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 72,
+      "id": "shot_072",
+      "file": "video_studio/post_rossiya/frames/shot_072.jpg",
+      "generated": true,
+      "t0": 117.2,
+      "t1": 118.7,
+      "duration": 1.5,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«И весна уже не воротится»",
+      "desc_ru": "Заброшенная советская детская площадка среди голых чёрных деревьев",
+      "color_state": "reality_decay",
+      "move": "pan_left",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.45,
+        0.55,
+        1.18
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen wide documentary photograph of an abandoned Soviet metal playground with peeling faded paint standing in mud and puddles among bare black trees between grey panel houses in late autumn, completely empty, swampy brown-grey overcast light, shot on 35mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 73,
+      "id": "shot_073",
+      "file": "video_studio/post_rossiya/frames/shot_073.jpg",
+      "generated": true,
+      "t0": 118.7,
+      "t1": 120.2,
+      "duration": 1.5,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«И весна уже не воротится»",
+      "desc_ru": "Ржавые пустые качели едва заметно раскачиваются на холодном ветру",
+      "color_state": "reality_decay",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_016.jpg",
+      "fallback_crop": [
+        0.55,
+        0.58,
+        1.26
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen medium close-up of an empty rusted metal playground swing seat suspended on iron rods over a muddy puddle reflecting bare branches, slight diagonal tilt from cold autumn wind, muted brown and steel-grey tones, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 74,
+      "id": "shot_074",
+      "file": "video_studio/post_rossiya/frames/shot_074.jpg",
+      "generated": true,
+      "t0": 120.2,
+      "t1": 121.4,
+      "duration": 1.2,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Про неё нам споёт вороньё»",
+      "desc_ru": "Чёрная ворона сидит на мокрой голой ветке на фоне свинцового неба",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_016.jpg",
+      "fallback_crop": [
+        0.5,
+        0.25,
+        1.38
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen telephoto close-up of a single wet black hooded crow perched motionless on a bare black birch branch silhouetted starkly against a heavy leaden-grey sky, ruffled feathers in cold wind, shot on 85mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 75,
+      "id": "shot_075",
+      "file": "video_studio/post_rossiya/frames/shot_075.jpg",
+      "generated": true,
+      "t0": 121.4,
+      "t1": 122.6,
+      "duration": 1.2,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Про неё нам споёт вороньё»",
+      "desc_ru": "Десятки чёрных ворон срываются и взлетают над тёмным осенним лесом",
+      "color_state": "reality_decay",
+      "move": "tilt_up",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": "crows_drift",
+      "fallback_source": "video_studio/post_rossiya/frames/shot_016.jpg",
+      "fallback_crop": [
+        0.5,
+        0.28,
+        1.22
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen dramatic documentary wide shot of dozens of black crows bursting upward in dark silhouettes from the bare black canopy of a late-autumn forest into a turbulent pale-grey sky, slight wing motion blur, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 76,
+      "id": "shot_076",
+      "file": "video_studio/post_rossiya/frames/shot_076.jpg",
+      "generated": true,
+      "t0": 122.6,
+      "t1": 124.0,
+      "duration": 1.4,
+      "act": "II КУПЛЕТ · РАЗЛОЖЕНИЕ РЕАЛЬНОСТИ",
+      "cue": "«Про неё нам споёт вороньё»",
+      "desc_ru": "Высокий подъём над верхушками деревьев: за лесом бесконечный серый город",
+      "color_state": "reality_decay",
+      "move": "tilt_up",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.55,
+        0.42,
+        1.05
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen high aerial documentary shot rising just above dark bare autumn forest treetops in the foreground to reveal an endless sprawling grey panorama of post-Soviet concrete panel apartment blocks and smoking chimneys stretching to the horizon under a heavy grey sky, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 77,
+      "id": "shot_077",
+      "file": "video_studio/post_rossiya/frames/shot_077.jpg",
+      "generated": true,
+      "t0": 124.0,
+      "t1": 126.6,
+      "duration": 2.6,
+      "act": "ФИНАЛЬНЫЙ ПРИПЕВ · ХОР В ГОРОДЕ",
+      "cue": "«И стонет в лапах бессилия»",
+      "desc_ru": "Широкая пустая городская площадь ранним утром: посреди неё стоит тот же хор",
+      "color_state": "colorless_predawn",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.48,
+        1.04
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen wide establishing documentary shot of a vast completely deserted concrete post-Soviet provincial town square at cold pre-dawn surrounded by grey apartment blocks and administrative buildings: standing right in the middle of the empty wet asphalt is the exact same choir of thirty ordinary women in coats and headscarves, no banners, no monuments with text, nearly monochrome cold light, shot on 28mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 78,
+      "id": "shot_078",
+      "file": "video_studio/post_rossiya/frames/shot_078.jpg",
+      "generated": true,
+      "t0": 126.6,
+      "t1": 129.0,
+      "duration": 2.4,
+      "act": "ФИНАЛЬНЫЙ ПРИПЕВ · ХОР В ГОРОДЕ",
+      "cue": "«И стонет в лапах бессилия»",
+      "desc_ru": "Крупные планы лиц женщин разного возраста на фоне серых домов",
+      "color_state": "colorless_predawn",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.52,
+        0.44,
+        1.38
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen tight medium close-up of four women of different ages from the choir—an elderly grandmother, two middle-aged women and a young woman in plain wool headscarves and coats—singing solemnly in the empty grey city square with blurred panel buildings behind them, pale colorless pre-dawn light, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 79,
+      "id": "shot_079",
+      "file": "video_studio/post_rossiya/frames/shot_079.jpg",
+      "generated": true,
+      "t0": 129.0,
+      "t1": 131.5,
+      "duration": 2.5,
+      "act": "ФИНАЛЬНЫЙ ПРИПЕВ · ХОР В ГОРОДЕ",
+      "cue": "«Пост-Россия: прости меня»",
+      "desc_ru": "Главный герой стоит один посреди площади лицом к поющему хору",
+      "color_state": "colorless_predawn",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.42,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen medium shot of the exact same 35-year-old Russian man in his dark charcoal jacket and grey sweater standing motionless alone in the middle of the empty concrete city square at pre-dawn, looking quietly forward with exhausted eyes, pale colorless morning light, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 80,
+      "id": "shot_080",
+      "file": "video_studio/post_rossiya/frames/shot_080.jpg",
+      "generated": true,
+      "t0": 131.5,
+      "t1": 134.0,
+      "duration": 2.5,
+      "act": "ФИНАЛЬНЫЙ ПРИПЕВ · ХОР В ГОРОДЕ",
+      "cue": "«Пост-Россия: прости меня»",
+      "desc_ru": "Камера за спиной главного героя: перед ним на пустой площади десятки женщин",
+      "color_state": "colorless_predawn",
+      "move": "slow_out",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.46,
+        1.1
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen iconic over-the-shoulder wide shot framed directly behind the dark-jacketed back and short-haired head of the 35-year-old man in the foreground: standing across the wet asphalt square facing him are the thirty women of the choir in coats and headscarves against grey panel buildings, pale monochrome pre-dawn light, shot on 35mm f/2.2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 81,
+      "id": "shot_081",
+      "file": "video_studio/post_rossiya/frames/shot_081.jpg",
+      "generated": true,
+      "t0": 134.0,
+      "t1": 136.4,
+      "duration": 2.4,
+      "act": "ФИНАЛЬНЫЙ ПРИПЕВ · ХОР В ГОРОДЕ",
+      "cue": "«Так пахнет утро последнее»",
+      "desc_ru": "Абсолютно пустая городская улица в холодном бесцветном утреннем свете",
+      "color_state": "colorless_predawn",
+      "move": "pan_right",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.6,
+        0.5,
+        1.1
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen wide documentary photograph of a long straight provincial Russian avenue lined with grey concrete nine-story panel buildings, overhead trolleybus wires and bare trees completely devoid of cars or people in pale colorless pre-dawn light, wet asphalt reflecting the grey sky, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 82,
+      "id": "shot_082",
+      "file": "video_studio/post_rossiya/frames/shot_082.jpg",
+      "generated": true,
+      "t0": 136.4,
+      "t1": 139.0,
+      "duration": 2.6,
+      "act": "ФИНАЛЬНЫЙ ПРИПЕВ · ХОР В ГОРОДЕ",
+      "cue": "«Так пахнет утро последнее»",
+      "desc_ru": "Фасад панельного дома: в окнах один за другим гаснет свет",
+      "color_state": "colorless_predawn",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": "windows_extinguish",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_02_city.jpg",
+      "fallback_crop": [
+        0.52,
+        0.46,
+        1.24
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen straight-on architectural documentary shot filling the frame with the weathered grey concrete grid facade of a nine-story Soviet panel apartment block at pre-dawn, half a dozen scattered apartments still glowing with dim warm yellow light among dozens of dark cold windows, shot on 50mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 83,
+      "id": "shot_083",
+      "file": "video_studio/post_rossiya/frames/shot_083.jpg",
+      "generated": true,
+      "t0": 139.0,
+      "t1": 141.6,
+      "duration": 2.6,
+      "act": "ФИНАЛЬНЫЙ ПРИПЕВ · ХОР В ГОРОДЕ",
+      "cue": "«Предосеннее, предрасстрельное»",
+      "desc_ru": "Хор стоит неподвижно на площади, но вокруг него поднимается сильный ветер",
+      "color_state": "colorless_predawn",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.46
+      ],
+      "live_fx": "red_petals_wind",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.46,
+        1.14
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen medium-wide documentary shot of the women's choir standing rock-still on the empty city square while a sudden cold gust of wind whips the edges of their wool headscarves, coat hems and stray dry leaves across the wet pavement, nearly monochrome pale light, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 84,
+      "id": "shot_084",
+      "file": "video_studio/post_rossiya/frames/shot_084.jpg",
+      "generated": true,
+      "t0": 141.6,
+      "t1": 144.0,
+      "duration": 2.4,
+      "act": "ФИНАЛЬНЫЙ ПРИПЕВ · ХОР В ГОРОДЕ",
+      "cue": "«Предосеннее, предрасстрельное»",
+      "desc_ru": "Искусственные красные цветы гонит ветер по серому асфальту пустой площади",
+      "color_state": "colorless_predawn",
+      "move": "pan_right",
+      "focus": [
+        0.5,
+        0.58
+      ],
+      "live_fx": "red_petals_wind",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_04_color.jpg",
+      "fallback_crop": [
+        0.45,
+        0.55,
+        1.12
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg",
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen low-angle wide shot across a vast empty wet grey asphalt town square at pre-dawn as dozens of loose cheap artificial red plastic carnations tumble and skitter in the wind across the monochrome pavement, the muted red petals providing the sole trace of color, shot on 35mm f/2.2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 85,
+      "id": "shot_085",
+      "file": "video_studio/post_rossiya/frames/shot_085.jpg",
+      "generated": true,
+      "t0": 144.0,
+      "t1": 146.5,
+      "duration": 2.5,
+      "act": "ФИНАЛЬНЫЙ ПРИПЕВ · ХОР В ГОРОДЕ",
+      "cue": "«Предосеннее, предрасстрельное»",
+      "desc_ru": "Крупный план лица главного героя: он медленно закрывает глаза",
+      "color_state": "colorless_predawn",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.42
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/frames/shot_005.jpg",
+      "fallback_crop": [
+        0.5,
+        0.42,
+        1.16
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg"
+      ],
+      "prompt": "16:9 widescreen intimate close-up portrait of the exact same 35-year-old tired Russian man outdoors in cold colorless pre-dawn light, his eyes gently closed in quiet acceptance and exhaustion, wind touching his short dark hair, natural skin texture, nearly monochrome grey-blue tones, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 86,
+      "id": "shot_086",
+      "file": "video_studio/post_rossiya/frames/shot_086.jpg",
+      "generated": true,
+      "t0": 146.5,
+      "t1": 149.2,
+      "duration": 2.7,
+      "act": "ФИНАЛ · ПОСЛЕДНЕЕ УТРО",
+      "cue": "Финальные секунды · Холодное море",
+      "desc_ru": "Холодное свинцовое море ранним утром",
+      "color_state": "predawn_horizon",
+      "move": "slow_in",
+      "focus": [
+        0.5,
+        0.52
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.22,
+        1.35
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen minimalist cinematic seascape of a cold leaden-grey northern sea at early pre-dawn, slow dark ripples washing quietly onto wet dark pebbles and sand in the foreground under a vast pale-grey sky, nearly monochrome steel tones, shot on 35mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 87,
+      "id": "shot_087",
+      "file": "video_studio/post_rossiya/frames/shot_087.jpg",
+      "generated": true,
+      "t0": 149.2,
+      "t1": 152.0,
+      "duration": 2.8,
+      "act": "ФИНАЛ · ПОСЛЕДНЕЕ УТРО",
+      "cue": "Финальные секунды · Берег",
+      "desc_ru": "Главный герой стоит один на берегу моря спиной к камере",
+      "color_state": "predawn_horizon",
+      "move": "slow_out",
+      "focus": [
+        0.5,
+        0.48
+      ],
+      "live_fx": null,
+      "fallback_source": "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+      "fallback_crop": [
+        0.5,
+        0.42,
+        1.06
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg"
+      ],
+      "prompt": "16:9 widescreen wide documentary shot from behind of the solitary 35-year-old man in his dark charcoal jacket standing motionless on a wet stony northern seashore facing the vast grey sea and low overcast horizon at pre-dawn, nearly monochrome palette, shot on 35mm f/2.4 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 88,
+      "id": "shot_088",
+      "file": "video_studio/post_rossiya/frames/shot_088.jpg",
+      "generated": true,
+      "t0": 152.0,
+      "t1": 158.0,
+      "duration": 6.0,
+      "act": "ФИНАЛ · ПОСЛЕДНЕЕ УТРО",
+      "cue": "Финал · Удержание 6 с без титров",
+      "desc_ru": "На самом горизонте над холодным морем проступает слабая тёплая полоска света",
+      "color_state": "predawn_horizon",
+      "move": "static_live",
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "live_fx": "horizon_dawn_line",
+      "fallback_source": "video_studio/post_rossiya/refs/ref_03_choir.jpg",
+      "fallback_crop": [
+        0.5,
+        0.2,
+        1.32
+      ],
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen minimalist wide horizon seascape of calm cold grey sea meeting heavy overcast clouds at pre-dawn, along the distant horizon line glimmers a barely perceptible fragile thin band of pale warm amber-gold dawn light breaking through the monochrome greyness, no people, no text, shot on 50mm f/2.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    }
+  ],
+  "broll": [
+    {
+      "num": 1,
+      "id": "broll_01",
+      "file": "video_studio/post_rossiya/broll/broll_01.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Пустой вагон пригородной электрички",
+      "color_state": "dirty_modern",
+      "move": "slow_in",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary shot looking down the aisle of a completely empty old Russian suburban elektrichka train car at dawn, worn blue-grey vinyl benches, flickering cold fluorescent tube lights, dark wet trees blurring past windows, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 2,
+      "id": "broll_02",
+      "file": "video_studio/post_rossiya/broll/broll_02.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Старый подъезд с облупившейся краской",
+      "color_state": "reality_decay",
+      "move": "tilt_up",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary shot inside a Soviet panel-apartment stairwell (podyezd) with peeling half-green half-white oil paint on concrete walls, dented metal mailboxes without numbers, dim yellow stairwell bulb, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 3,
+      "id": "broll_03",
+      "file": "video_studio/post_rossiya/broll/broll_03.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Крупный план воды, стекающей по ржавой трубе",
+      "color_state": "dirty_modern",
+      "move": "static_live",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen macro close-up of cold rainwater streaming and dripping down a corroded rusty metal drainpipe bolted against a damp grey concrete panel wall, shallow depth of field, shot on 85mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 4,
+      "id": "broll_04",
+      "file": "video_studio/post_rossiya/broll/broll_04.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Одинокая собака на автобусной остановке",
+      "color_state": "faded_memory",
+      "move": "static_live",
+      "refs": [
+        "video_studio/post_rossiya/frames/shot_008.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary shot of a solitary scruffy stray mutt dog sitting calmly on wet asphalt under an empty concrete provincial bus shelter in misty late-autumn morning, waiting quietly, shot on 50mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 5,
+      "id": "broll_05",
+      "file": "video_studio/post_rossiya/broll/broll_05.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Женщина с продуктовой сумкой возле панельного дома",
+      "color_state": "dirty_modern",
+      "move": "pan_right",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary medium-wide shot of an ordinary middle-aged Russian woman in a drab coat walking slowly past a wet grey concrete nine-story panel apartment building carrying a heavy plain cloth grocery bag, cold overcast morning, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 6,
+      "id": "broll_06",
+      "file": "video_studio/post_rossiya/broll/broll_06.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Сломанный детский велосипед у мусорных контейнеров",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg",
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary shot of a rusted broken child's tricycle with a bent wheel lying abandoned on wet asphalt beside green metal courtyard dumpsters and fallen brown leaves, grey panel block behind, shot on 50mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 7,
+      "id": "broll_07",
+      "file": "video_studio/post_rossiya/broll/broll_07.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Дворник, метущий мокрые листья",
+      "color_state": "faded_memory",
+      "move": "pan_left",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen documentary wide shot of an elderly courtyard janitor in a dark padded work vest sweeping wet brown autumn leaves across rain-slicked courtyard asphalt with a birch-twig broom in cold morning mist, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 8,
+      "id": "broll_08",
+      "file": "video_studio/post_rossiya/broll/broll_08.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Пустой школьный коридор",
+      "color_state": "colorless_predawn",
+      "move": "slow_in",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen symmetrical documentary shot of a long completely deserted provincial Russian school corridor with worn linoleum floor reflecting tall cold rainy windows along one side, quiet institutional stillness, no posters or text, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 9,
+      "id": "broll_09",
+      "file": "video_studio/post_rossiya/broll/broll_09.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Мужчина, курящий у открытого окна кухни",
+      "color_state": "dirty_modern",
+      "move": "static_live",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_01_hero.jpg",
+        "video_studio/post_rossiya/frames/shot_004.jpg"
+      ],
+      "prompt": "16:9 widescreen nocturnal documentary medium close-up of the exact same 35-year-old man in his grey sweater leaning silently beside a cracked-open kitchen casement window at night holding a glowing cigarette, thin blue smoke drifting out into the cold dark courtyard, shot on 50mm f/1.8 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 10,
+      "id": "broll_10",
+      "file": "video_studio/post_rossiya/broll/broll_10.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Пластиковая икона на приборной панели автомобиля",
+      "color_state": "reality_decay",
+      "move": "slow_in",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_04_color.jpg"
+      ],
+      "prompt": "16:9 widescreen close-up inside an old Russian car looking at a small weathered plastic triptych icon glued onto the dusty grey dashboard, beyond the rain-streaked windshield stretches a blurred grey provincial road, shot on 50mm f/2 lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 11,
+      "id": "broll_11",
+      "file": "video_studio/post_rossiya/broll/broll_11.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Старые гаражи под низким серым небом",
+      "color_state": "dirty_modern",
+      "move": "pan_right",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen wide documentary shot of endless rows of rusted corrugated metal and brick Soviet garages with muddy ruts and puddles under an oppressive low grey November sky, shot on 35mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    },
+    {
+      "num": 12,
+      "id": "broll_12",
+      "file": "video_studio/post_rossiya/broll/broll_12.jpg",
+      "generated": true,
+      "duration": 4.5,
+      "desc_ru": "Птицы на проводах над промышленной окраиной",
+      "color_state": "colorless_predawn",
+      "move": "static_live",
+      "refs": [
+        "video_studio/post_rossiya/refs/ref_02_city.jpg"
+      ],
+      "prompt": "16:9 widescreen telephoto documentary shot of dozens of black birds perched in a quiet row along sagging utility wires above concrete fences and distant smoking factory chimneys against a pale grey sky, shot on 85mm lens, post-Soviet documentary surrealism photography, natural skin texture, muted desaturated palette, soft 35mm film grain, zero gloss, strictly no text, no readable signs, no logos, no flags, no watermarks"
+    }
+  ]
+}
