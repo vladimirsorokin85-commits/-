@@ -8,3 +8,6 @@ video_studio/reels/captions.srt
 *.timeline.json
 *.qc.json
 __pycache__/
+
+# большие исходники генерации
+infographics/gen/
