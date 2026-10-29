@@ -4,9 +4,16 @@ import os, re, json, subprocess, sys
 
 BASE = "/home/user/-/video_studio/drones_lineup"
 FF = "/home/user/.local/bin/ffmpeg"
-MUSIC = "/home/user/-/video_studio/music_downloaded/fvi-Chronos.ogg"
-MUSIC_OFFSET = 60.0          # плотный участок реального мастера
+MUSIC = "/home/user/-/video_studio/music_downloaded/fvi-BeatOne.ogg"
+MUSIC_OFFSET = 100.0         # плотный участок реального мастера
 assert "/music_downloaded/" in MUSIC, "разрешена ТОЛЬКО реальная скачанная музыка"
+
+# ── правило канала: музыка только ДРАЙВОВАЯ (video_studio/MUSIC_POLICY.md, п.3)
+sys.path.insert(0, "/home/user/-/video_studio/toolkit")
+from music_check import check as drive_check
+_ok, _m, _fails = drive_check(MUSIC)
+if not _ok:
+    sys.exit("!! трек не проходит проверку на драйв: " + "; ".join(_fails))
 
 # границы сцен (совпадают с render.py)
 BOUNDS = [0.00, 4.20, 10.60, 17.40, 23.60, 30.20, 34.60, 40.60]
@@ -60,7 +67,8 @@ fc = (delays + labels +
       f"amix=inputs={n}:dropout_transition=0:normalize=0,apad=whole_dur={total}[vo];"
       f"[{n}:a]atrim={MUSIC_OFFSET}:{MUSIC_OFFSET + total + 2},asetpts=PTS-STARTPTS,"
       "aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[bg0];"
-      "[bg0]highpass=f=38,volume=0.62,afade=t=in:st=0:d=0.6[bg1];"
+      "[bg0]highpass=f=32,bass=g=3.5:f=95:w=0.6,acompressor=threshold=-15dB:ratio=3:attack=8:release=120,"
+      "dynaudnorm=f=300:g=8:p=0.85:m=6,loudnorm=I=-11:TP=-2:LRA=9,afade=t=in:st=0:d=0.45[bg1];"
       "[vo]asplit=2[vo_sc][vo_out];"
       "[bg1][vo_sc]sidechaincompress=threshold=0.030:ratio=9:attack=5:release=180[bg_duck];"
       f"[bg_duck]afade=t=out:st={total - OUTRO - 0.4:.2f}:d={OUTRO + 0.4:.2f}[bgf];"
