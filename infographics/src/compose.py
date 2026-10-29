@@ -31,9 +31,9 @@ YELLOW = (216, 178, 42)
 
 SLIDES = [
     # файл,                  правки «IR SAFE» (cx, cy, w, h, angle), подпись футера
-    ("sw_1_cover.png", None, "ТАКТИЧЕСКАЯ ЭКИПИРОВКА · СДЭК ПО РОССИИ"),
+    ("sw_1_cover.png", None, "МАГАЗИН БРОНИ · В НАЛИЧИИ · СДЭК ПО РОССИИ"),
     ("sw_2_modes.png", None, "ШЛЕМНЫЙ ФОНАРЬ SIDEWINDER GEN 3", 0, "note"),
-    ("sw_3_kit.png", None, "ПОЛЕВОЙ КОМПЛЕКТ · СТЕРИЛЬНО, ПРОЧНО, ПРОВЕРЕНО"),
+    ("sw_3_kit.png", None, "ТАКТИЧЕСКИЙ ФОНАРЬ · В НАЛИЧИИ · СДЭК ПО РОССИИ"),
     ("sw_4_cta.png", None, "ТАКТИЧЕСКИЙ ФОНАРЬ · GEN 3", -58),
 ]
 
@@ -164,23 +164,48 @@ def note_block(canvas):
             font=f2, fill=(168, 162, 132, 255), anchor="la")
 
 
+def logo_lockup(canvas, x, y, emblem_h=52, color="w", alpha=255, word_w=196):
+    """Эмблема + словесный знак «В ОКОПЕ / магазин брони» в ряд."""
+    em = Image.open(ASSETS / f"logo_{color}_emblem.png").convert("RGBA")
+    k = u(emblem_h) / em.height
+    em = em.resize((int(em.width * k), u(emblem_h)), Image.LANCZOS)
+    wd = Image.open(ASSETS / f"logo_{color}_word.png").convert("RGBA")
+    k2 = u(word_w) / wd.width
+    wd = wd.resize((u(word_w), int(wd.height * k2)), Image.LANCZOS)
+    if alpha < 255:
+        for img in (em, wd):
+            img.putalpha(img.getchannel("A").point(lambda v: int(v * alpha / 255)))
+    cx = u(x)
+    canvas.alpha_composite(em, (cx, u(y) + (u(emblem_h) - em.height) // 2))
+    canvas.alpha_composite(wd, (cx + em.width + u(16),
+                                u(y) + (u(emblem_h) - wd.height) // 2))
+    return em.width + u(16) + wd.width
+
+
 def footer(canvas, label, page, total=4):
     d = ImageDraw.Draw(canvas)
-    y = 1258
+    y = 1246
     d.line([(u(48), u(y)), (u(W - 48), u(y))], fill=KHAKI_D + (110,), width=u(1))
-    place_logo(canvas, ASSETS / "logo_vokope_small.png", 48, y + 12, 186, angle=-1.5)
-    f = font("JetBrainsMono-VF.ttf", 14)
-    draw = ImageDraw.Draw(canvas)
-    draw.text((u(56 + 196), u(y + 44)), label, font=f, fill=(158, 152, 124, 255), anchor="lm")
-    # пагинация
+    lw = logo_lockup(canvas, 50, y + 10, emblem_h=64, alpha=240, word_w=182)
+    f = font("JetBrainsMono-VF.ttf", 13)
+    ImageDraw.Draw(canvas).text((u(50) + lw + u(26), u(y + 37)), label, font=f,
+                                fill=(158, 152, 124, 255), anchor="lm")
     for i in range(total):
         cx = W - 60 - (total - 1 - i) * 24
         if i + 1 == page:
-            d.rounded_rectangle([u(cx - 11), u(y + 21), u(cx + 11), u(y + 31)],
+            d.rounded_rectangle([u(cx - 11), u(y + 26), u(cx + 11), u(y + 36)],
                                 radius=u(2), fill=YELLOW + (255,))
         else:
-            d.rectangle([u(cx - 4), u(y + 23), u(cx + 4), u(y + 29)],
+            d.rectangle([u(cx - 4), u(y + 28), u(cx + 4), u(y + 34)],
                         outline=KHAKI_D + (200,), width=u(1))
+
+
+def emblem_watermark(canvas, x, y, h=150, alpha=26):
+    em = Image.open(ASSETS / "logo_k_emblem.png").convert("RGBA")
+    k = u(h) / em.height
+    em = em.resize((int(em.width * k), u(h)), Image.LANCZOS)
+    em.putalpha(em.getchannel("A").point(lambda v: int(v * alpha / 255)))
+    canvas.alpha_composite(em, (u(x), u(y)))
 
 
 def build(src, ir, label, page, dy=0, extra=None):
