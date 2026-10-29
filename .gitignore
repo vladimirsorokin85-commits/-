@@ -8,3 +8,9 @@ video_studio/reels/captions.srt
 *.timeline.json
 *.qc.json
 __pycache__/
+
+# Музыка: только реальные скачанные мастера (см. video_studio/MUSIC_POLICY.md)
+video_studio/music_catalog/
+music_catalog/
+*_174.ogg
+music_dnb.py

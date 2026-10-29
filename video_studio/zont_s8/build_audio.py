@@ -4,8 +4,9 @@ import os, re, json, subprocess, sys
 
 BASE = "/home/user/-/video_studio/zont_s8"
 FF = "/home/user/.local/bin/ffmpeg"
-MUSIC = "/home/user/-/video_studio/music_catalog/dnb_neuro_174.ogg"
-MUSIC_OFFSET = 16.0   # вход в полный грув drum&bass 174 BPM
+MUSIC = "/home/user/-/video_studio/music_downloaded/fvi-BeatOne.ogg"
+MUSIC_OFFSET = 68.0   # самый плотный участок мастера
+assert "/music_downloaded/" in MUSIC, "разрешена ТОЛЬКО реальная скачанная музыка"
 
 INTRO = 2.40
 GAP = 0.85
@@ -60,7 +61,7 @@ fc = (delays + labels +
       f"amix=inputs={n}:dropout_transition=0:normalize=0,apad=whole_dur={total}[vo];"
       f"[{n}:a]atrim={MUSIC_OFFSET}:{MUSIC_OFFSET + total + 2},asetpts=PTS-STARTPTS,"
       "aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[bg0];"
-      "[bg0]highpass=f=38,volume=0.32,afade=t=in:st=0:d=0.7[bg1];"
+      "[bg0]highpass=f=38,volume=0.58,afade=t=in:st=0:d=0.7[bg1];"
       "[vo]asplit=2[vo_sc][vo_out];"
       "[bg1][vo_sc]sidechaincompress=threshold=0.032:ratio=9:attack=5:release=190[bg_duck];"
       f"[bg_duck]afade=t=out:st={total - OUTRO - 0.4:.2f}:d={OUTRO + 0.4:.2f}[bgf];"
