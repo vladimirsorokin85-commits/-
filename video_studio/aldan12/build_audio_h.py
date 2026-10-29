@@ -38,8 +38,16 @@ VO_CHAIN = ("highpass=f=70,"
             "acompressor=threshold=-19dB:ratio=4:attack=4:release=60,"
             "loudnorm=I=-15:TP=-1.8:LRA=9")
 
-CLIPS = [("h1", "1"), ("h2", "2"), ("h3", "3"), ("h4", "4"), ("h5", "5"), ("h6", "6"),
-         ("h7a", "7a"), ("h7b", "7b"), ("h8", "8"), ("h9", "9"), ("h10", "10"), ("h11", "11")]
+# один клип может покрывать несколько блоков: [(блок, срез реплик)]
+CLIPS = [("h12", [("1", None), ("2", None)]),
+         ("h3", [("3", None)]),
+         ("h4", [("4", None)]),
+         ("h5", [("5", None)]),
+         ("h6", [("6", None)]),
+         ("h7a", [("7", slice(0, 10))]),
+         ("h7b", [("7", slice(10, None))]),
+         ("h89", [("8", None), ("9", None)]),
+         ("h1011", [("10", None), ("11", None)])]
 
 
 def dur(p):
@@ -134,16 +142,13 @@ def write_wav(seg, p):
 # ── 1. реплики ───────────────────────────────────────────────────────────────
 blocks = json.load(open(os.path.join(BASE, "vo_blocks.json"), encoding="utf-8"))
 plan = []   # (блок, номер реплики в блоке, текст, файл-клип)
-for clip, key in CLIPS:
-    src_parts = blocks[key[:1]]["parts"] if key in ("1", "2") else None
-    if key.endswith("a"):
-        parts = blocks["7"]["parts"][:10]
-    elif key.endswith("b"):
-        parts = blocks["7"]["parts"][10:]
-    else:
+for clip, specs in CLIPS:
+    for key, sl in specs:
         parts = blocks[key]["parts"]
-    for i, t in enumerate(parts):
-        plan.append((key, i, t, os.path.join(BASE, "vo", clip + ".mp3")))
+        if sl is not None:
+            parts = parts[sl]
+        for i, t in enumerate(parts):
+            plan.append((key, i, t, os.path.join(BASE, "vo", clip + ".mp3")))
 
 print(f"реплик в плане: {len(plan)}")
 missing = sorted({p[3] for p in plan if not os.path.exists(p[3])})
@@ -216,21 +221,16 @@ if TOTAL > TARGET * 1.02:
 # ── 3. музыка: луп с кроссфейдами ────────────────────────────────────────────
 md = dur(MUSIC)
 need = TOTAL + 4
-copies = int(need / (md - 0.8)) + 1
-ins = "".join(f"[0:a]" for _ in range(1))
-fc = []
+copies = int(need / (md - 1.0)) + 2
+split = f"[0:a]asplit={copies}" + "".join(f"[c{i}]" for i in range(copies)) + ";"
+parts = []
 for i in range(copies):
-    fc.append(f"[0:a]asplit={copies}" + "".join(f"[c{j}]" for j in range(copies)) + ";")
-    break
-chain = []
-for i in range(copies):
-    chain.append(f"[c{i}]atrim=0:{md:.3f},asetpts=PTS-STARTPTS[m{i}]")
-prev = "m0"
-for i in range(1, copies):
-    out = f"x{i}"
-    chain.append(f"[{prev}][m{i}]acrossfade=d=0.6:c1=tri:c2=tri[{out}]")
-    prev = out
-graph = "".join(fc) + ";".join(chain) + f";[{prev}]atrim=0:{TOTAL + 2:.2f}[bed]"
+    # короткий фейд на стыке: под голосом стык не слышен, щелчка нет
+    parts.append(f"[c{i}]atrim=0:{md:.3f},asetpts=PTS-STARTPTS,"
+                 f"afade=t=in:st=0:d=0.03,afade=t=out:st={md - 0.30:.3f}:d=0.30[l{i}]")
+graph = (split + ";".join(parts) + ";" +
+         "".join(f"[l{i}]" for i in range(copies)) +
+         f"concat=n={copies}:v=0:a=1,atrim=0:{TOTAL + 2:.2f},asetpts=PTS-STARTPTS[bed]")
 bed = os.path.join(BASE, "music_bed_h.wav")
 run([FF, "-y", "-i", MUSIC, "-filter_complex", graph, "-map", "[bed]",
      "-ar", "48000", "-ac", "2", bed])

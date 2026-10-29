@@ -161,6 +161,32 @@ def chip(d, x, y, text, color=ORG, size=26, pad=18, alpha=255, fill_box=True, an
     return x + tw + pad * 2 + 8
 
 
+def wrap(text, font, max_w, max_lines=3):
+    words, lines, cur = text.split(), [], ""
+    for w in words:
+        probe = (cur + " " + w).strip()
+        if font.getbbox(probe)[2] - font.getbbox(probe)[0] <= max_w or not cur:
+            cur = probe
+        else:
+            lines.append(cur)
+            cur = w
+            if len(lines) == max_lines:
+                break
+    if cur and len(lines) < max_lines:
+        lines.append(cur)
+    return lines
+
+
+def vo_echo(d, text, y, alpha=255, x=92, max_w=800, color=DIM, size=31):
+    """Строка-эхо речи слева: 2–3 строки моно, чтобы кадр не пустовал."""
+    f = F(MONO, size)
+    ls = wrap(text, f, max_w, 3)
+    if len(ls) == 3 and text.split()[-1] not in " ".join(ls):
+        ls[-1] = ls[-1].rstrip(" ,.—-") + "…"
+    for n, ln in enumerate(ls):
+        d.text((x, y + n * (size + 12)), ln, font=f, fill=ac(color, int(alpha * 0.92)))
+
+
 def number_block(d, x, y, num, label, color=ORG):
     d.text((x, y), num, font=F(RUSSO, 260), fill=ac(color, 235), anchor="la")
     d.text((x + 8, y + 300), label, font=F(MONO, 30), fill=ac(DIM, 235), anchor="la")
@@ -168,19 +194,20 @@ def number_block(d, x, y, num, label, color=ORG):
 
 # ── векторная графика ───────────────────────────────────────────────────────
 def art_qr(cv, x, y, s=300, alpha=255, t=0.0):
+    d = ImageDraw.Draw(cv)
     step = s / 21
     for i in range(21):
         for j in range(21):
             corner = (i < 7 and j < 7) or (i < 7 and j > 13) or (i > 13 and j < 7)
             on = corner or random.Random(i * 31 + j * 17).random() > 0.52
             if on:
-                cv.rectangle([x + j * step, y + i * step, x + (j + 1) * step - 1.2,
-                              y + (i + 1) * step - 1.2], fill=ac((235, 238, 242), alpha))
+                d.rectangle([x + j * step, y + i * step, x + (j + 1) * step - 1.2,
+                             y + (i + 1) * step - 1.2], fill=ac((235, 238, 242), alpha))
     for (ox, oy) in ((0, 0), (14, 0), (0, 14)):
-        cv.rectangle([x + ox * step, y + oy * step, x + (ox + 7) * step, y + (oy + 7) * step],
-                     outline=ac(ORG, alpha), width=5)
+        d.rectangle([x + ox * step, y + oy * step, x + (ox + 7) * step, y + (oy + 7) * step],
+                    outline=ac(ORG, alpha), width=5)
     sweep = (t * 0.8) % 1.0
-    cv.rectangle([x, y + s * sweep, x + s, y + s * sweep + 6], fill=ac(ORG, int(120 * alpha / 255)))
+    d.rectangle([x, y + s * sweep, x + s, y + s * sweep + 6], fill=ac(ORG, int(120 * alpha / 255)))
 
 
 def art_antenna(cv, cx, cy, alpha=255, t=0.0):
@@ -297,6 +324,7 @@ def make_vign():
 
 SCAN = make_scan()
 VIGN = make_vign()
+SCANVIGN = Image.alpha_composite(SCAN, VIGN)
 _r = np.random.default_rng(11)
 GRAIN = []
 for _ in range(4):
@@ -349,25 +377,41 @@ BG_BY_BLOCK = {1: "drone_night.jpg", 2: "dark_table.jpg", 3: "hands_phone.jpg",
                10: "hands_phone.jpg", 11: "drone_night.jpg"}
 
 
-def shot_image(i, name, block, lt, total_d):
-    """Один кадр сцены (без HUD/эффектов склейки)."""
-    cv = Image.new("RGBA", (W, H), ac(BG, 255))
-    # фон с медленным движением
-    z = 1.05 + 0.05 * min(1.0, lt / max(1.0, total_d))
+_BASECACHE = {}
+_CACHE_ORDER = []
+
+
+def base_layer(i, block):
+    """Фон сцены + левая плашка. Внутри сцены не меняется — кэшируем (LRU 3)."""
+    if i in _BASECACHE:
+        return _BASECACHE[i].copy()
+    z = 1.07 + 0.03 * math.sin(i * 0.7)
     ox = 0.35 * math.sin(i * 1.7)
     bgname = BG_BY_BLOCK.get(block, "dark_table.jpg")
+    cv = Image.new("RGBA", (W, H), ac(BG, 255))
     cv.paste(background(bgname, z, ox, 0.0, 0.40, (30, 60, 70), 0.07), (0, 0))
-
     ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    d = ImageDraw.Draw(ov)
-    d.rectangle([0, 0, 980, H], fill=(6, 7, 9, 212))          # левая плашка под текст
-    d.rectangle([940, 0, 980, H], fill=ac(ORG, 90))
+    dd = ImageDraw.Draw(ov)
+    dd.rectangle([0, 0, 980, H], fill=(6, 7, 9, 212))          # левая плашка под текст
+    dd.rectangle([940, 0, 980, H], fill=ac(ORG, 90))
     cv.alpha_composite(ov)
+    _BASECACHE[i] = cv
+    _CACHE_ORDER.append(i)
+    while len(_CACHE_ORDER) > 3:
+        _BASECACHE.pop(_CACHE_ORDER.pop(0), None)
+    return cv.copy()
 
-    d = ImageDraw.Draw(cv)
+
+def shot_image(i, name, block, lt, total_d, vo_text=""):
+    """Один кадр сцены (без HUD/эффектов склейки)."""
+    cv = base_layer(i, block)
+
     k = kind_of(name, block)
     a1 = eo(c01(lt / 0.34))
     a2 = eo(c01((lt - 0.16) / 0.34))
+    # текст рисуем в отдельный слой и поднимаем при появлении
+    tlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(tlay)
 
     # ── правый визуальный блок: всегда что-то живое
     rx, ry = 1180, 300
@@ -381,7 +425,8 @@ def shot_image(i, name, block, lt, total_d):
         art_usb(cv, rx + 20, ry + 60, int(250 * a2), lt)
         if "РЕЖИМ" in name or "КНОПК" in name:
             art_buttons(cv, rx + 250, ry + 420, int(240 * a1), lt)
-    elif "A2" in name or "A1" in name or "ФАЙЛ" in name:
+    elif "A2" in name or "A1" in name or "ФАЙЛ" in name or (
+            block == 6 and "ПРИЛОЖЕНИЕ" not in name and "КАНАЛ" not in name):
         art_files(cv, rx + 20, ry + 130, int(250 * a2))
         chip(d, rx + 20, ry + 400, "A2 — 12 · A1 — 8", ORG, 22, 14, int(235 * a2))
     elif "LED" in name or "СВЕТОДИОД" in name:
@@ -410,7 +455,7 @@ def shot_image(i, name, block, lt, total_d):
              "«АЛДАН-12» · ФОТО" if real else "ИЛЛЮСТРАЦИЯ", ORG if real else TEA,
              22, 14, int(230 * a2))
 
-    # ── левая колонка: текст
+    # ── левая колонка: текст (въезд снизу)
     if k == "step":
         num = name.split()[1]
         d.text((90, 210), num, font=F(RUSSO, 250), fill=ac(ORG, int(240 * a1)), anchor="la")
@@ -455,6 +500,12 @@ def shot_image(i, name, block, lt, total_d):
         d.text((92, H - 150), "ПРОШИВКА 1.6  ·  ФАЙЛ A2  ·  8 ШАГОВ  ·  5 ФУНКЦИЙ",
                font=F(MONO, 24), fill=ac(DIM, int(190 * a2)))
 
+    # эхо реплики (кроме чек-листа, где уже есть список)
+    if k != "check" and vo_text:
+        vo_echo(d, vo_text, 640 if k == "card" else 700, int(240 * a2))
+
+    rise = int(26 * (1 - a1))
+    cv.alpha_composite(tlay, (0, rise))
     return cv
 
 
@@ -490,9 +541,10 @@ def endcard(t, alpha):
 
 
 # ── финальный рендер кадра ─────────────────────────────────────────────────
-def render(i, name, block, t, t0, dur, total, last=False):
+def render(i, name, block, t, t0, dur, total, last=False, vo_text=""):
     lt = t - t0
-    cv = shot_image(i, name, block, lt, dur)
+    mid = dur > 4.4 and lt > dur * 0.52
+    cv = shot_image(i, name, block, lt, dur, vo_text)
     if last and lt > max(0.6, dur - 3.6):
         k = eo(c01((lt - max(0.6, dur - 3.6)) / 0.45))
         cv = Image.composite(endcard(t, k), cv, Image.new("L", (W, H), int(255 * k)))
@@ -500,8 +552,7 @@ def render(i, name, block, t, t0, dur, total, last=False):
     if not (last and lt > max(0.6, dur - 3.6) + 0.45):
         hud(ImageDraw.Draw(ui), t, total, block, i)
     out = Image.alpha_composite(cv, ui)
-    out = Image.alpha_composite(out, SCAN)
-    out = Image.alpha_composite(out, VIGN)
+    out = Image.alpha_composite(out, SCANVIGN)
     out = Image.alpha_composite(out, GRAIN[int(t * 15) % 4])
     out = out.convert("RGB")
 
@@ -512,6 +563,12 @@ def render(i, name, block, t, t0, dur, total, last=False):
         z = 1 + 0.045 * kk
         cw, ch = int(W / z), int(H / z)
         out = out.crop(((W - cw) // 2, (H - ch) // 2, (W + cw) // 2, (H + ch) // 2)) \
+                 .resize((W, H), Image.BILINEAR)
+    if mid:
+        # микро-джампкат: другая крупность, эффект «нового плана» без новой сцены
+        z = 1.028
+        cw, ch = int(W / z), int(H / z)
+        out = out.crop(((W - cw) // 2, (H - ch) // 2 + 6, (W + cw) // 2, (H + ch) // 2 + 6)) \
                  .resize((W, H), Image.BILINEAR)
     arr = np.asarray(out).astype(np.float32)
     beat = (t / (60 / 120)) % 1.0
@@ -567,6 +624,6 @@ if __name__ == "__main__":
         tt = float(a)
         it = at(tt, lines)
         im = render(it["n"], it["name"], it["block"], tt, it["start"], it["end"] - it["start"], total,
-                    last=(it["n"] == len(lines)))
+                    last=(it["n"] == len(lines)), vo_text=it.get("text", ""))
         im.save(f"/tmp/chk/hz_{tt:06.2f}.jpg", quality=90)
         print("saved", tt, "кадр", it["n"], it["name"])

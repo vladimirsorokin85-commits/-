@@ -21,27 +21,56 @@ def ts(x):
 
 
 def srt(lines, total, path):
-    out = []
-    for i, it in enumerate(lines, 1):
+    """SRT: длинные реплики делим на два субтитра, чтобы строки были короткими."""
+    import re
+
+    def split2(t):
+        if len(t) <= 92:
+            return [t]
+        best = None
+        for m in re.finditer(r"(?<=[.!?])\s+|(?<=—)\s+|(?<=,)\s+", t):
+            i = m.end()
+            if i < len(t) * 0.25 or i > len(t) * 0.8:
+                continue
+            score = abs(i - len(t) / 2)
+            if best is None or score < best[0]:
+                best = (score, i)
+        if best is None:
+            return [t]
+        return [t[:best[1]].strip(), t[best[1]:].strip()]
+
+    out, n = [], 0
+    for i, it in enumerate(lines):
         a = it["start"]
-        b = lines[i]["start"] if i < len(lines) else total
-        b = min(b, total)
-        txt = it.get("text") or shots.SHOTS[i - 1][2]
-        # реплики длиннее 2 строк режем по границе предложения
-        out.append(f"{i}\n{ts(a)} --> {ts(b)}\n{txt}\n")
+        b = lines[i + 1]["start"] if i + 1 < len(lines) else total
+        parts = split2(it.get("text") or "")
+        if len(parts) == 1:
+            n += 1
+            out.append(f"{n}\n{ts(a)} --> {ts(b)}\n{parts[0]}\n")
+        else:
+            w = [len(p) for p in parts]
+            mid = a + (b - a) * w[0] / sum(w)
+            n += 1
+            out.append(f"{n}\n{ts(a)} --> {ts(mid)}\n{parts[0]}\n")
+            n += 1
+            out.append(f"{n}\n{ts(mid)} --> {ts(b)}\n{parts[1]}\n")
     open(path, "w", encoding="utf-8").write("\n".join(out))
     return path
 
 
 def fmt(x):
-    return f"{int(x // 60):02d}:{x % 60:05.2f}"
+    m = int(x // 60)
+    sec = int(round(x % 60))
+    if sec == 60:
+        m, sec = m + 1, 0
+    return f"{m:02d}:{sec:02d}"""
 
 
 def chapters(lines):
     """Главы = начало блока (для описания YouTube/VK)."""
     out, seen = [], set()
     for it in lines:
-        b = it["block"]
+        b = int(it["block"])
         if b in seen:
             continue
         seen.add(b)
