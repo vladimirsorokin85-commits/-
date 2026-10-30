@@ -1,0 +1,103 @@
+name: Fetch thermal video (Яндекс.Диск → артефакт)
+
+# Зачем: рабочая песочница не имеет доступа в интернет (только GitHub/PyPI),
+# а раннер GitHub Actions — имеет. Поэтому видео по публичной ссылке скачивает
+# этот workflow и отдаёт артефактом (артефакты не попадают в историю git).
+#
+# Заявка: assets/requests/thermal_video.json
+#   {"urls": ["https://disk.yandex.ru/i/XXXX", "https://disk.yandex.ru/i/YYYY"],
+#    "max_seconds": 60}
+#
+# Забрать результат локально:  gh run download <run-id> -n thermal-video -D /tmp/thermal
+
+on:
+  push:
+    paths:
+      - "assets/requests/thermal_video.json"
+      - ".github/workflows/fetch-thermal-video.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fetch-thermal-video
+  cancel-in-progress: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Скачиваем по публичным ссылкам
+        run: |
+          set -e
+          mkdir -p /tmp/in assets/inbox
+          python3 - <<'PY'
+          import json, os, subprocess, urllib.parse
+
+          req = json.load(open("assets/requests/thermal_video.json", encoding="utf-8"))
+          urls = req.get("urls", [])
+          print("ссылок в заявке:", len(urls))
+
+          def direct(pub):
+              api = ("https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key="
+                     + urllib.parse.quote(pub, safe=""))
+              r = subprocess.run(["curl", "-sSL", "--max-time", "60", api],
+                                 capture_output=True, text=True)
+              try:
+                  return json.loads(r.stdout)["href"]
+              except Exception:
+                  print("   не разобрал ответ API:", r.stdout[:200])
+                  return None
+
+          for i, u in enumerate(urls, 1):
+              href = direct(u)
+              if not href:
+                  print(f"::warning::ссылка {i} не разрешилась")
+                  continue
+              out = f"/tmp/in/v{i}.mp4"
+              r = subprocess.run(["curl", "-L", "--max-time", "1500", "--retry", "2",
+                                  "-A", "Mozilla/5.0", "-o", out,
+                                  "-w", "%{http_code} %{size_download} %{content_type}", href],
+                                 capture_output=True, text=True)
+              print(f"  ссылка {i}: {r.stdout.strip()}")
+              sz = os.path.getsize(out) if os.path.exists(out) else 0
+              if sz < 100000:
+                  print(f"::warning::файл {i} слишком мал ({sz} байт)")
+                  os.path.exists(out) and os.remove(out)
+          PY
+
+      - name: Что скачали — ffprobe
+        run: |
+          shopt -s nullglob
+          for f in /tmp/in/*.mp4; do
+            echo "=== $f"
+            ffprobe -hide_banner -v error -show_entries format=duration,size,bit_rate \
+              -show_entries stream=codec_type,codec_name,width,height,r_frame_rate,sample_rate \
+              -of default=nw=1 "$f" || true
+            cp "$f" "assets/inbox/$(basename "$f")"
+          done
+
+      - name: Контактный лист и прокси для быстрого просмотра
+        run: |
+          shopt -s nullglob
+          for f in /tmp/in/*.mp4; do
+            b=$(basename "$f" .mp4)
+            dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f" | cut -d. -f1)
+            echo "$b: ${dur}s"
+            ffmpeg -hide_banner -loglevel error -y -i "$f" \
+              -vf "fps=1/6,scale=320:-1,tile=4x4" -frames:v 1 "assets/inbox/${b}_sheet.jpg" || true
+            ffmpeg -hide_banner -loglevel error -y -t 60 -i "$f" \
+              -vf "scale=854:-2" -c:v libx264 -crf 30 -preset veryfast -an "assets/inbox/${b}_proxy1m.mp4" || true
+          done
+
+      - name: Отдаём артефактом
+        uses: actions/upload-artifact@v4
+        with:
+          name: thermal-video
+          path: assets/inbox/*
+          if-no-files-found: warn
+          retention-days: 7
