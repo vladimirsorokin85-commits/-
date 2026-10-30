@@ -148,13 +148,13 @@ jobs:
                   os.makedirs(OUT, exist_ok=True)
                   open(OUT + "/diag.log", "w", encoding="utf-8").write("\n".join(LOG) + "\n")
           PYEOF
-          sed -i 's/^          //' /tmp/fetch.py
           python3 /tmp/fetch.py
 
       - name: Публикуем в ветку assets-inbox-thermal
         if: always()
         run: |
           set -e
+          mkdir -p assets/inbox
           git config user.name "fetch-bot"
           git config user.email "fetch-bot@users.noreply.github.com"
           git checkout -B assets-inbox-thermal
