@@ -60,6 +60,7 @@ def main():
 
     tuning = [f for f in sorted(files) if f.startswith("V_OKOPE_mgultra_")]
     veles = [f for f in sorted(files) if f.startswith("V_OKOPE_veles_")]
+    sasha = [f for f in sorted(files) if f.startswith("V_OKOPE_sasha_")]
     avito = [f for f in sorted(files) if f.startswith("V_OKOPE_avito_") and "frontts" not in f]
     frontts = [f for f in sorted(files) if f.startswith("V_OKOPE_avito_frontts_")]
     kit_cards = ""
@@ -95,6 +96,9 @@ def main():
     veles_cards = "".join(card(f, "Обувь VELES (Велес) — вся линейка",
                                "папка на модель: все фото + готовый текст поста",
                                files[f] / 1024 / 1024, badge="все фото") for f in veles)
+    sasha_cards = "".join(card(f, "Подборка по прайсу Саши (30.10) — 12 постов",
+                               "папка на позицию: фото + готовый текст; цены в постах нет — в ЛС",
+                               files[f] / 1024 / 1024, badge="без цен") for f in sasha)
 
     page = f"""<!doctype html>
 <html lang="ru"><head><meta charset="utf-8">
@@ -121,6 +125,8 @@ def main():
 <div class="grid">{tuning_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Обувь VELES (Велес, производство РБ)</h2>
 <div class="grid">{veles_cards or '<p class="sub">Пока пусто</p>'}</div>
+<h2>Подборка по прайсу Саши (Багратионовский, 30.10)</h2>
+<div class="grid">{sasha_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Авито — каталог Димы (20 объявлений)</h2>
 <div class="grid">{avito_cards or '<p class="sub">Пока пусто</p>'}</div>
 <h2>Авито — Фронт-ТС (63 объявления по разделам)</h2>
