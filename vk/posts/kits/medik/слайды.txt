@@ -1,0 +1,9 @@
+01. cover: КОМПЛЕКТ «МЕДИК»
+02. product: Сумка-рюкзак фельдшерский MR.MARTIN 65 литров (олива)
+03. product: Аптечка RHINO RESCUE SE Pro
+04. product: Жгут-турникет FIRSTAR
+05. product: Бинт каолиновый 7,5×375
+06. product: Турникет Rhino Rescue Gen2
+07. product: Носилки бескаркасные
+08. summary: Что входит в комплект
+09. cta: Соберём под ваш размер и задачу
