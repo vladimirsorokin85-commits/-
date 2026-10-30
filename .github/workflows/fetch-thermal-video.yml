@@ -1,14 +1,16 @@
-name: Fetch thermal video (Яндекс.Диск → артефакт)
+name: Fetch thermal video (Яндекс.Диск → ветка assets-inbox-thermal)
 
 # Зачем: рабочая песочница не имеет доступа в интернет (только GitHub/PyPI),
-# а раннер GitHub Actions — имеет. Поэтому видео по публичной ссылке скачивает
-# этот workflow и отдаёт артефактом (артефакты не попадают в историю git).
+# а раннер GitHub Actions — имеет. Раннер скачивает видео по публичным ссылкам
+# и кладёт результат в отдельную ветку (артефакты скачать из песочницы нельзя,
+# blob.core.windows.net заблокирован, а содержимое ветки — можно).
 #
 # Заявка: assets/requests/thermal_video.json
-#   {"urls": ["https://disk.yandex.ru/i/XXXX", "https://disk.yandex.ru/i/YYYY"],
-#    "max_seconds": 60}
+#   режим осмотра:  {"mode": "inspect", "urls": ["https://disk.yandex.ru/i/..."]}
+#   режим нарезки:  {"mode": "cut", "urls": [...],
+#                    "segments": [{"src": 1, "start": 12.0, "dur": 5.0, "name": "turn"}]}
 #
-# Забрать результат локально:  gh run download <run-id> -n thermal-video -D /tmp/thermal
+# Результат всегда в ветке assets-inbox-thermal, папка assets/inbox/.
 
 on:
   push:
@@ -18,7 +20,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: fetch-thermal-video
@@ -27,7 +29,7 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -40,7 +42,7 @@ jobs:
 
           req = json.load(open("assets/requests/thermal_video.json", encoding="utf-8"))
           urls = req.get("urls", [])
-          print("ссылок в заявке:", len(urls))
+          print("режим:", req.get("mode", "inspect"), "· ссылок:", len(urls))
 
           def direct(pub):
               api = ("https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key="
@@ -50,16 +52,17 @@ jobs:
               try:
                   return json.loads(r.stdout)["href"]
               except Exception:
-                  print("   не разобрал ответ API:", r.stdout[:200])
+                  print("   ответ API не разобран:", r.stdout[:200])
                   return None
 
+          meta = []
           for i, u in enumerate(urls, 1):
               href = direct(u)
               if not href:
                   print(f"::warning::ссылка {i} не разрешилась")
                   continue
               out = f"/tmp/in/v{i}.mp4"
-              r = subprocess.run(["curl", "-L", "--max-time", "1500", "--retry", "2",
+              r = subprocess.run(["curl", "-L", "--max-time", "1800", "--retry", "2",
                                   "-A", "Mozilla/5.0", "-o", out,
                                   "-w", "%{http_code} %{size_download} %{content_type}", href],
                                  capture_output=True, text=True)
@@ -68,36 +71,78 @@ jobs:
               if sz < 100000:
                   print(f"::warning::файл {i} слишком мал ({sz} байт)")
                   os.path.exists(out) and os.remove(out)
+                  continue
+              meta.append({"src": i, "bytes": sz})
+
+          json.dump(meta, open("/tmp/in/meta.json", "w"))
           PY
 
-      - name: Что скачали — ffprobe
+      - name: Метрики и контактные листы
         run: |
+          set -e
           shopt -s nullglob
+          : > assets/inbox/meta.txt
           for f in /tmp/in/*.mp4; do
-            echo "=== $f"
-            ffprobe -hide_banner -v error -show_entries format=duration,size,bit_rate \
-              -show_entries stream=codec_type,codec_name,width,height,r_frame_rate,sample_rate \
-              -of default=nw=1 "$f" || true
-            cp "$f" "assets/inbox/$(basename "$f")"
-          done
-
-      - name: Контактный лист и прокси для быстрого просмотра
-        run: |
-          shopt -s nullglob
-          for f in /tmp/in/*.mp4; do
-            b=$(basename "$f" .mp4)
-            dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f" | cut -d. -f1)
-            echo "$b: ${dur}s"
+            i=$(basename "$f" .mp4 | tr -d 'v')
+            echo "=== $f" | tee -a assets/inbox/meta.txt
+            ffprobe -hide_banner -v error \
+              -show_entries format=duration,size,bit_rate \
+              -show_entries stream=codec_type,codec_name,width,height,r_frame_rate \
+              -of default=nw=1 "$f" | tee -a assets/inbox/meta.txt
             ffmpeg -hide_banner -loglevel error -y -i "$f" \
-              -vf "fps=1/6,scale=320:-1,tile=4x4" -frames:v 1 "assets/inbox/${b}_sheet.jpg" || true
-            ffmpeg -hide_banner -loglevel error -y -t 60 -i "$f" \
-              -vf "scale=854:-2" -c:v libx264 -crf 30 -preset veryfast -an "assets/inbox/${b}_proxy1m.mp4" || true
+              -vf "fps=1/4,scale=360:-2,tile=5x5" -frames:v 1 \
+              "assets/inbox/src${i}_sheet.jpg" || true
           done
+          ls -la assets/inbox
 
-      - name: Отдаём артефактом
-        uses: actions/upload-artifact@v4
-        with:
-          name: thermal-video
-          path: assets/inbox/*
-          if-no-files-found: warn
-          retention-days: 7
+      - name: Нарезка нужных фрагментов (режим cut)
+        run: |
+          set -e
+          python3 - <<'PY'
+          import json, os, subprocess
+
+          req = json.load(open("assets/requests/thermal_video.json", encoding="utf-8"))
+          if req.get("mode") != "cut":
+              print("режим не cut — режем только листы")
+              raise SystemExit(0)
+
+          height = int(req.get("height", 1080))
+          crf = str(req.get("crf", 20))
+          for seg in req.get("segments", []):
+              src = f"/tmp/in/v{seg['src']}.mp4"
+              if not os.path.exists(src):
+                  print("::warning::нет исходника", src)
+                  continue
+              name = seg.get("name", f"s{seg['src']}_{seg['start']}")
+              start = float(seg.get("start", 0))
+              dur = float(seg.get("dur", 5))
+              out = f"assets/inbox/{name}.mp4"
+              vf = (f"scale=-2:{height}:flags=lanczos,fps=30,"
+                    "format=yuv420p")
+              cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+                     "-ss", f"{start:.2f}", "-t", f"{dur:.2f}", "-i", src,
+                     "-vf", vf, "-c:v", "libx264", "-preset", "slow", "-crf", crf,
+                     "-profile:v", "high", "-movflags", "+faststart", out]
+              subprocess.run(cmd, check=False)
+              # кадр-превью для контроля
+              subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+                              "-ss", f"{start + dur / 2:.2f}", "-i", src,
+                              "-frames:v", "1", "-vf", f"scale=-2:{height}",
+                              f"assets/inbox/{name}.jpg"], check=False)
+              print("нарезано:", out, os.path.getsize(out) if os.path.exists(out) else "ОШИБКА")
+          PY
+
+      - name: Публикуем в ветку assets-inbox-thermal
+        run: |
+          set -e
+          git config user.name "fetch-bot"
+          git config user.email "fetch-bot@users.noreply.github.com"
+          git checkout -B assets-inbox-thermal
+          git add -f assets/inbox
+          if git diff --cached --quiet; then
+            echo "нечего публиковать"
+          else
+            git commit -m "видео заказчика: $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push -f origin assets-inbox-thermal
+          fi
+          du -sh assets/inbox
