@@ -1,0 +1,32 @@
+режим: inspect · ссылок: 2
+   API: {"method":"GET","href":"https://downloader.disk.yandex.ru/disk/ea93cd91465fd29edded72a767ad45d1df64e38712d4ff180f52146955a0f295/6ae4a540/Oq6mJyR8FFXhyH1cQ-CFqEy
+  ссылка 1 : 200 2128815 video/mp4
+   API: {"method":"GET","href":"https://downloader.disk.yandex.ru/disk/777cfb90fd8c011c4168457c9d3efe987a04273ac15e2bacefbfdf430df4e0e3/6ae4a549/Oq6mJyR8FFXhyH1cQ-CFqHd
+  ссылка 2 : 200 1200287 video/mp4
+скачано файлов: 2
+--- v1.mp4 (2.1 МБ)
+    codec_name=h264
+    codec_type=video
+    width=720
+    height=1280
+    r_frame_rate=30000/1001
+    codec_name=aac
+    codec_type=audio
+    r_frame_rate=0/0
+    duration=16.984323
+    size=2128815
+    bit_rate=1002719
+    исходник сохранён в ветку: raw1.mp4
+--- v2.mp4 (1.2 МБ)
+    codec_name=h264
+    codec_type=video
+    width=720
+    height=1280
+    r_frame_rate=30000/1001
+    codec_name=aac
+    codec_type=audio
+    r_frame_rate=0/0
+    duration=10.714323
+    size=1200287
+    bit_rate=896211
+    исходник сохранён в ветку: raw2.mp4
