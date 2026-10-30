@@ -40,6 +40,26 @@ def clean(text):
     return text
 
 
+def reels_texts():
+    """Все строковые литералы рендерера рилса (экранные тексты и титры)."""
+    import io
+    import tokenize
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "render_reel.py")
+    if not os.path.exists(path):
+        return []
+    out = []
+    with open(path, "rb") as fh:
+        for tok in tokenize.tokenize(io.BytesIO(fh.read()).readline):
+            if tok.type == tokenize.STRING:
+                try:
+                    v = eval(tok.string, {"__builtins__": {}})
+                except Exception:
+                    continue
+                if isinstance(v, str) and len(v) > 2:
+                    out.append(v)
+    return out
+
+
 def scan():
     bad = []
     for src, items in (("ГОРИЗОНТАЛЬ", SHOTS), ("ТИЗЕР", TEASER)):
@@ -54,6 +74,12 @@ def scan():
                     m = re.search(rx, t, flags=re.I)
                     if m:
                         bad.append((src, field, why, m.group(0), txt))
+    for txt in reels_texts():
+        t = clean(txt)
+        for rx, why in BANNED:
+            m = re.search(rx, t, flags=re.I)
+            if m:
+                bad.append(("РИЛС", "экран", why, m.group(0), txt))
     return bad
 
 

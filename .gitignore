@@ -9,6 +9,9 @@ video_studio/reels/captions.srt
 *.qc.json
 __pycache__/
 
+# «Тепловизор 360°»: кадры из видео заказчика пересоздаются make_vidfr.sh
+video_studio/thermal_360/assets/vidfr/
+
 # Музыка: только реальные скачанные мастера (см. video_studio/MUSIC_POLICY.md)
 video_studio/music_catalog/
 music_catalog/
