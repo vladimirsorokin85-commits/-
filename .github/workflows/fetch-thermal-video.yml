@@ -37,8 +37,9 @@ jobs:
         run: |
           set -e
           mkdir -p /tmp/in assets/inbox
+          exec > >(tee -a assets/inbox/diag.log) 2>&1
           python3 - <<'PY'
-          import json, os, subprocess, urllib.parse
+          import json, os, re, subprocess, urllib.parse
 
           req = json.load(open("assets/requests/thermal_video.json", encoding="utf-8"))
           urls = req.get("urls", [])
@@ -47,12 +48,20 @@ jobs:
           def direct(pub):
               api = ("https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key="
                      + urllib.parse.quote(pub, safe=""))
-              r = subprocess.run(["curl", "-sSL", "--max-time", "60", api],
-                                 capture_output=True, text=True)
+              r = subprocess.run(["curl", "-sSL", "--max-time", "60", "-w", "\nHTTP:%{http_code}",
+                                  api], capture_output=True, text=True)
+              print("   API:", r.stdout[:400].replace("\n", " "))
               try:
-                  return json.loads(r.stdout)["href"]
+                  return json.loads(r.stdout.split("\nHTTP:")[0])["href"]
               except Exception:
-                  print("   ответ API не разобран:", r.stdout[:200])
+                  # запасной путь: тянем HTML страницы и ищем прямую ссылку
+                  h = subprocess.run(["curl", "-sSL", "--max-time", "60", "-A", "Mozilla/5.0",
+                                      pub], capture_output=True, text=True).stdout
+                  print("   HTML len:", len(h), "· captcha:", "captcha" in h.lower(),
+                        "· downloader:", "downloader.disk.yandex.ru" in h)
+                  m = re.search(r'"(https://downloader\.disk\.yandex\.ru/[^"]+)"', h)
+                  if m:
+                      return m.group(1).replace("\\/", "/")
                   return None
 
           meta = []

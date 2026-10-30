@@ -1,7 +1,8 @@
 {
-  "mode": "inspect",
-  "urls": [
-    "https://disk.yandex.ru/i/NiVdiZw-H9whjg",
-    "https://disk.yandex.ru/i/_I6tctvF4pqKJg"
-  ]
+ "mode": "inspect",
+ "urls": [
+  "https://disk.yandex.ru/i/NiVdiZw-H9whjg",
+  "https://disk.yandex.ru/i/_I6tctvF4pqKJg"
+ ],
+ "note": "diag run"
 }
