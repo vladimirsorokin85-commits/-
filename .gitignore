@@ -8,3 +8,17 @@ video_studio/reels/captions.srt
 *.timeline.json
 *.qc.json
 __pycache__/
+
+# «Тепловизор 360°»: кадры из видео заказчика пересоздаются make_vidfr.sh
+video_studio/thermal_360/assets/vidfr/
+
+# Музыка: только реальные скачанные мастера (см. video_studio/MUSIC_POLICY.md)
+video_studio/music_catalog/
+music_catalog/
+*_174.ogg
+music_dnb.py
+
+# «Алдан-12»: промежуточные аудио-заготовки (реплики и музыкальный бед большие)
+video_studio/aldan12/vo/lines/
+video_studio/aldan12/music_bed_h.wav
+video_studio/aldan12/master_aldan_horizontal.mp3

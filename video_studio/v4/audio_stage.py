@@ -28,8 +28,12 @@ SR = 48000
 TMP = Path("/tmp/smk4")
 TMP.mkdir(parents=True, exist_ok=True)
 AUD = ROOT / "audio_v4"
-MUSIC_A = ROOT / "music_catalog" / "dnb_neuro_174.ogg"
-MUSIC_B = ROOT / "music_catalog" / "jungle_hoover_174.ogg"
+# ⚠️ ТОЛЬКО РЕАЛЬНЫЕ СКАЧАННЫЕ МАСТЕРА. Любая процедурная/сгенерированная музыка
+#    удалена из проекта навсегда (см. video_studio/MUSIC_POLICY.md).
+MUSIC_A = Path("/home/user/-/video_studio/music_downloaded/fvi-BeatOne.ogg")
+MUSIC_B = Path("/home/user/-/video_studio/music_downloaded/fvi-Arpent.ogg")
+for _m in (MUSIC_A, MUSIC_B):
+    assert "music_downloaded" in str(_m), f"запрещённый источник музыки: {_m}"
 BAR = 4 * 60 / 174
 
 BODY_TEMPO = 1.2
