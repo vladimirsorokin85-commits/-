@@ -42,6 +42,13 @@ MG_ABOUT = ("ДТКП закрытого типа — не глушитель: �
             "бесшумной стрельбы не будет.")
 MG_SKIP = ("отгрузка", "закажите", "технический специалист", "свяжется с вами", "консультацию по телефону")
 
+SASHA_CTA = [
+    "Отправляем СДЭК по России. Цена и наличие — в личных сообщениях.",
+    "СДЭК по всей России. Цену и наличие напишу в ЛС.",
+    "Доставка СДЭК. Пишите в сообщения — скажу цену и наличие.",
+    "СДЭК по РФ. Вопросы, цена и наличие — в личку.",
+]
+
 FT_GROUP = {"odezhda": "одежда", "ragruzka": "разгрузка", "podacha": "подача",
             "med": "медицина", "ryukzaki": "рюкзаки", "instrument": "инструмент",
             "tunning": "тюнинг"}
@@ -75,9 +82,15 @@ def build_text(entry, name, category, bullets, slot):
         body.append("")
     body.append(availability_line(entry.get("sizes_note")))
     body.append("")
-    body.append(MG_CTA if entry["source"] == "mgultra" else CTA[slot % len(CTA)])
+    if entry["source"] == "mgultra":
+        cta = MG_CTA
+    elif entry["source"] == "sasha":
+        cta = SASHA_CTA[slot % len(SASHA_CTA)]
+    else:
+        cta = CTA[slot % len(CTA)]
+    body.append(cta)
     body.append("")
-    body.append(hashtags(name, category))
+    body.append(hashtags(name, category, tuple(entry.get("extra_tags") or ())))
     text = "\n".join(body).strip() + "\n"
     check_public_text(text)
     return text
@@ -103,6 +116,9 @@ def main(argv=None):
 
     mg_cat = json.load(open(os.path.join(ROOT, "suppliers", "mgultra", "catalog.json"), encoding="utf-8"))
     mg_models = {m["id"]: m for m in mg_cat["models"]}
+
+    sasha_sel = {i["slug"]: i for i in json.load(open(
+        os.path.join(HERE, "posts", "sasha_selection.json"), encoding="utf-8"))["items"]}
 
     out_root = os.path.join(HERE, "posts", f"pack_{plan['start']}")
     shutil.rmtree(out_root, ignore_errors=True)
@@ -135,6 +151,17 @@ def main(argv=None):
                 fdir = os.path.join(ROOT, "suppliers", "frontts", "photos", f"item-{entry['ref']}")
                 files = [os.path.relpath(p, ROOT) for p in sorted(glob.glob(os.path.join(fdir, "*")))]
                 bl = bullets_from_desc(descr, entry["hook"], int(entry.get("bullets", 3)), name)
+            elif src == "sasha":
+                sel = sasha_sel.get(entry["ref"])
+                if not sel:
+                    missing.append(f"{day['date']} sasha/{entry['ref']}: нет в sasha_selection.json")
+                    continue
+                name, category = sel["name"], sel.get("category", "экипировка")
+                fdir = os.path.join(ROOT, "suppliers", "sasha", "photos", entry["ref"])
+                files = [os.path.relpath(p, ROOT) for p in sorted(glob.glob(os.path.join(fdir, "*")))
+                         if p.lower().endswith((".jpg", ".jpeg", ".png", ".webp"))]
+                bl = [b.strip() for b in (entry.get("facts") or sel.get("bullets") or []) if b.strip()] or [entry["hook"]]
+                entry.setdefault("extra_tags", sel.get("extra_tags", []))
             else:  # mgultra
                 m = mg_models.get(entry["ref"])
                 if not m:
@@ -184,9 +211,9 @@ def main(argv=None):
         "Источники (микс): " + ", ".join(f"{k}: {v}" for k, v in sorted(by_src.items())),
         "  · dima — основной каталог (обувь, одежда, защита, оптика, связь, медицина, РЭБ);",
         "  · frontts — тактическая одежда «Голиаф»/«Страж», разгрузка, медицина RHINO RESCUE, рюкзаки, штурмовой инструмент, тюнинг;",
-        "  · mgultra — ДТКП закрытого типа (подберём под карабин и резьбу).",
-        "  · power и Саша (Багратионовский) — пока без фото, в пакет не вошли;",
-        "  · mgultra (ДТКП) — не используем на этой неделе (решение владельца).",
+        "  · sasha — прайс Багратионовского 30.10 (дроны, электростанции, генераторы, прицелы, рации):",
+        "    фото подобраны в интернете по прямому разрешению владельца; цены в постах нет — только в ЛС;",
+        "  · mgultra (ДТКП) — не используем (решение владельца).",
         "",
         "Как выкладывать",
         "---------------",
@@ -208,7 +235,7 @@ def main(argv=None):
         "• Цены в постах НЕ указываем — ни розницы, ни «цена в личку».",
         "• Сколько осталось — в постах не пишем: наличие формулируем словами.",
         "• Факты — из описаний поставщиков, ничего не досочинено.",
-        "• Фото — только от поставщиков (Дима / front-ts / MG Ultra).",
+        "• Фото — от поставщиков (Дима / front-ts); для позиций Саши — подобранные в интернете фото (разрешение владельца 30.10, только Саша).",
         "• ДТКП — не глушитель; подбор по карабину и резьбе — в ЛС.",
         "",
         f"Всего постов: {sum(len(d['posts']) for d in plan['days'])}.",
