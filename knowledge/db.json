@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-07",
+ "updated": "2026-10-30",
  "entries": [
   {
    "id": "kb-001",
@@ -522,6 +522,20 @@
    ],
    "confidence": "high",
    "added": "2026-10-30"
+  },
+  {
+   "id": "kb-039",
+   "topic": "посты по прайсу Саши",
+   "title": "Подборка ВК по прайсу Саши (Багратионовский) 30.10.2026 — собрана",
+   "fact": "12 позиций (Mavic 3 Pro, Mavic 4T, DJI Power 2000, EcoFlow DELTA 3 Max, Jackery Explorer 2000 V2, панель JQB 200W, TSS SGG 3000Si, дизель 5 кВт, Инкубатор 3.0, Arkon Arma V.2 HR50L, Holosun HS510C, TYT MD-9600): пост.txt + гугл-фото (suppliers/sasha/photos/<slug>/, вне git) + обложка; zip V_OKOPE_sasha_posts.zip (1.8 МБ, 22 фото) в vk/dist; генератор vk/sasha_pack.py, подборка vk/posts/sasha_selection.json; факты проверены через веб-поиск; цены в постах НЕТ — CTA «цена и наличие — в ЛС». Коммит 0f12b99.",
+   "source": "prices/sasha_bagrationovsky_2026-10-30.txt + решение владельца 30.10 (веб-фото для Саши, цены не указывать)",
+   "tags": [
+    "саша",
+    "прайс",
+    "посты",
+    "вк",
+    "фото-из-Интернета"
+   ]
   }
  ]
 }
