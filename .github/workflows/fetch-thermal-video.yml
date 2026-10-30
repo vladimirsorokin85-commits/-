@@ -30,6 +30,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Ставим ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
       - name: Скачать, разобрать, нарезать
         run: |
           cat > /tmp/fetch.py <<'PYEOF'
