@@ -5,10 +5,9 @@ name: Fetch thermal video (Яндекс.Диск → ветка assets-inbox-the
 # и публикует результат в ветку assets-inbox-thermal (артефакты из песочницы не забрать).
 #
 # Заявка: assets/requests/thermal_video.json
-#   осмотр: {"mode": "inspect", "urls": [...]}
-#   нарезка: {"mode": "cut", "urls": [...], "height": 1080, "crf": 20,
+#   осмотр:  {"mode": "inspect", "keep_raw": true, "urls": [...]}
+#   нарезка: {"mode": "cut", "height": 1080, "crf": 20, "urls": [...],
 #             "segments": [{"src": 1, "start": 12.0, "dur": 5.0, "name": "turn"}]}
-#   keep_raw: true — положить исходники в ветку, если они не больше max_raw_mb (по умолчанию 60).
 
 on:
   push:
@@ -33,25 +32,16 @@ jobs:
 
       - name: Скачать, разобрать, нарезать
         run: |
-          python3 - <<'PY'
-          import json, os, re, subprocess, urllib.parse, shutil
+          cat > /tmp/fetch.py <<'PYEOF'
+          import json, os, re, subprocess, urllib.parse, shutil, traceback
 
-          IN = "/tmp/in"
-          OUT = "assets/inbox"
-          os.makedirs(IN, exist_ok=True)
-          shutil.rmtree(OUT, ignore_errors=True)
-          os.makedirs(OUT, exist_ok=True)
-          log = []
+          IN, OUT = "/tmp/in", "assets/inbox"
+          LOG = []
 
           def say(*a):
               line = " ".join(str(x) for x in a)
               print(line, flush=True)
-              log.append(line)
-
-          req = json.load(open("assets/requests/thermal_video.json", encoding="utf-8"))
-          mode = req.get("mode", "inspect")
-          urls = req.get("urls", [])
-          say(f"режим: {mode} · ссылок: {len(urls)}")
+              LOG.append(line)
 
           def direct(pub):
               api = ("https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key="
@@ -59,7 +49,7 @@ jobs:
               r = subprocess.run(["curl", "-sSL", "--max-time", "60", "-w", "\nHTTP:%{http_code}", api],
                                  capture_output=True, text=True)
               body = r.stdout.split("\nHTTP:")[0]
-              say("   API:", body[:180].replace("\n", " "))
+              say("   API:", body[:160].replace("\n", " "))
               try:
                   return json.loads(body)["href"]
               except Exception:
@@ -69,76 +59,100 @@ jobs:
                   m = re.search(r'"(https://downloader\.disk\.yandex\.ru/[^"]+)"', h)
                   return m.group(1).replace("\\/", "/") if m else None
 
-          raws = []
-          for i, u in enumerate(urls, 1):
-              href = direct(u)
-              if not href:
-                  say(f"!! ссылка {i} не разрешилась")
-                  continue
-              out = f"{IN}/v{i}.mp4"
-              r = subprocess.run(["curl", "-L", "--max-time", "1800", "--retry", "2",
-                                  "-A", "Mozilla/5.0", "-o", out,
-                                  "-w", "%{http_code} %{size_download} %{content_type}", href],
-                                 capture_output=True, text=True)
-              say(f"  ссылка {i}:", r.stdout.strip())
-              sz = os.path.getsize(out) if os.path.exists(out) else 0
-              if sz < 50000:
-                  say(f"!! файл {i} слишком мал: {sz}")
-                  continue
-              raws.append((i, out, sz))
-
-          say("скачано файлов:", len(raws))
-          meta = []
-          for i, path, sz in raws:
+          def probe(path):
               pr = subprocess.run(["ffprobe", "-hide_banner", "-v", "error",
                                    "-show_entries", "format=duration,size,bit_rate",
                                    "-show_entries", "stream=codec_type,codec_name,width,height,r_frame_rate",
                                    "-of", "default=nw=1", path], capture_output=True, text=True)
-              info = pr.stdout.strip()
-              say(f"--- v{i}.mp4 ({sz/1e6:.1f} МБ)")
-              for line in info.splitlines():
-                  say("    " + line)
-              dur = re.search(r"duration=([\d.]+)", info)
-              wh = re.search(r"width=(\d+)", info), re.search(r"height=(\d+)", info)
-              meta.append({"src": i, "bytes": sz,
-                           "duration": float(dur.group(1)) if dur else None,
-                           "width": int(wh[0].group(1)) if wh[0] else None,
-                           "height": int(wh[1].group(1)) if wh[1] else None})
-              # контактный лист: 25 кадров равномерно по всему файлу
-              subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", path,
-                              "-vf", "fps=1/3,scale=360:-2,tile=5x5", "-frames:v", "1",
-                              f"{OUT}/src{i}_sheet.jpg"], check=False)
-              if req.get("keep_raw") and sz <= float(req.get("max_raw_mb", 60)) * 1e6:
-                  shutil.copy(path, f"{OUT}/raw{i}.mp4")
-                  say(f"    исходник сохранён в ветку: raw{i}.mp4")
+              return pr.stdout.strip()
 
-          json.dump(meta, open(f"{OUT}/meta.json", "w"), ensure_ascii=False, indent=1)
+          def main():
+              os.makedirs(IN, exist_ok=True)
+              shutil.rmtree(OUT, ignore_errors=True)
+              os.makedirs(OUT, exist_ok=True)
 
-          if mode == "cut":
-              height = int(req.get("height", 1080))
-              crf = str(req.get("crf", 20))
-              for seg in req.get("segments", []):
-                  src = f"{IN}/v{seg['src']}.mp4"
-                  if not os.path.exists(src):
-                      say("!! нет исходника", src)
+              req = json.load(open("assets/requests/thermal_video.json", encoding="utf-8"))
+              mode = req.get("mode", "inspect")
+              urls = req.get("urls", [])
+              say("режим:", mode, "· ссылок:", len(urls))
+
+              raws = []
+              for i, u in enumerate(urls, 1):
+                  href = direct(u)
+                  if not href:
+                      say("!! ссылка", i, "не разрешилась")
                       continue
-                  name = seg.get("name", f"s{seg['src']}_{seg['start']}")
-                  start, dur = float(seg.get("start", 0)), float(seg.get("dur", 5))
-                  out = f"{OUT}/{name}.mp4"
-                  subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-                                  "-ss", f"{start:.2f}", "-t", f"{dur:.2f}", "-i", src,
-                                  "-vf", f"scale=-2:{height}:flags=lanczos,fps=30,format=yuv420p",
-                                  "-c:v", "libx264", "-preset", "slow", "-crf", crf,
-                                  "-profile:v", "high", "-movflags", "+faststart", out], check=False)
-                  subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-                                  "-ss", f"{start + dur/2:.2f}", "-i", src, "-frames:v", "1",
-                                  "-vf", f"scale=-2:{height}", f"{OUT}/{name}.jpg"], check=False)
-                  say("нарезано:", out, os.path.getsize(out) if os.path.exists(out) else "ОШИБКА")
+                  out = os.path.join(IN, "v%d.mp4" % i)
+                  r = subprocess.run(["curl", "-L", "--max-time", "1800", "--retry", "2",
+                                      "-A", "Mozilla/5.0", "-o", out,
+                                      "-w", "%{http_code} %{size_download} %{content_type}", href],
+                                     capture_output=True, text=True)
+                  say("  ссылка", i, ":", r.stdout.strip())
+                  sz = os.path.getsize(out) if os.path.exists(out) else 0
+                  if sz < 50000:
+                      say("!! файл", i, "слишком мал:", sz)
+                      continue
+                  raws.append((i, out, sz))
 
-          open(f"{OUT}/diag.log", "w", encoding="utf-8").write("\n".join(log) + "\n")
-          PY
+              say("скачано файлов:", len(raws))
+              meta = []
+              for i, path, sz in raws:
+                  info = probe(path)
+                  say("--- v%d.mp4 (%.1f МБ)" % (i, sz / 1e6))
+                  for line in info.splitlines():
+                      say("    " + line)
+                  d = re.search(r"duration=([\d.]+)", info)
+                  w = re.search(r"\nwidth=(\d+)", "\n" + info)
+                  hh = re.search(r"\nheight=(\d+)", "\n" + info)
+                  meta.append({"src": i, "bytes": sz,
+                               "duration": float(d.group(1)) if d else None,
+                               "width": int(w.group(1)) if w else None,
+                               "height": int(hh.group(1)) if hh else None})
+                  subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", path,
+                                  "-vf", "fps=1/3,scale=360:-2,tile=5x5", "-frames:v", "1",
+                                  "%s/src%d_sheet.jpg" % (OUT, i)], check=False)
+                  if req.get("keep_raw") and sz <= float(req.get("max_raw_mb", 60)) * 1e6:
+                      shutil.copy(path, "%s/raw%d.mp4" % (OUT, i))
+                      say("    исходник сохранён в ветку: raw%d.mp4" % i)
+
+              json.dump(meta, open(OUT + "/meta.json", "w"), ensure_ascii=False, indent=1)
+
+              if mode == "cut":
+                  height = int(req.get("height", 1080))
+                  crf = str(req.get("crf", 20))
+                  for seg in req.get("segments", []):
+                      src = os.path.join(IN, "v%s.mp4" % seg["src"])
+                      if not os.path.exists(src):
+                          say("!! нет исходника", src)
+                          continue
+                      name = seg.get("name", "s%s_%s" % (seg["src"], seg["start"]))
+                      start, dur = float(seg.get("start", 0)), float(seg.get("dur", 5))
+                      out = "%s/%s.mp4" % (OUT, name)
+                      subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+                                      "-ss", "%.2f" % start, "-t", "%.2f" % dur, "-i", src,
+                                      "-vf", "scale=-2:%d:flags=lanczos,fps=30,format=yuv420p" % height,
+                                      "-c:v", "libx264", "-preset", "slow", "-crf", crf,
+                                      "-profile:v", "high", "-movflags", "+faststart", out], check=False)
+                      subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+                                      "-ss", "%.2f" % (start + dur / 2), "-i", src, "-frames:v", "1",
+                                      "-vf", "scale=-2:%d" % height, "%s/%s.jpg" % (OUT, name)], check=False)
+                      say("нарезано:", out, os.path.getsize(out) if os.path.exists(out) else "ОШИБКА")
+
+          if __name__ == "__main__":
+              try:
+                  main()
+              except Exception:
+                  say("!!! УПАЛО:")
+                  say(traceback.format_exc())
+              finally:
+                  os.makedirs(OUT, exist_ok=True)
+                  open(OUT + "/diag.log", "w", encoding="utf-8").write("\n".join(LOG) + "\n")
+          PYEOF
+          sed -i 's/^          //' /tmp/fetch.py
+          python3 /tmp/fetch.py
 
       - name: Публикуем в ветку assets-inbox-thermal
+        if: always()
         run: |
           set -e
           git config user.name "fetch-bot"
