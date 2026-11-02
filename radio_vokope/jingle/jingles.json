@@ -1,0 +1,37 @@
+[
+ {
+  "file": "vokope_jingle_1_udar.mp3",
+  "duration": 3.6,
+  "lufs": "-13.0 LUFS",
+  "vo_boost_db": 44.4,
+  "file_path": "/home/user/-/radio_vokope/jingle/vokope_jingle_1_udar.mp3"
+ },
+ {
+  "file": "vokope_jingle_2_pozyvnye.mp3",
+  "duration": 3.9,
+  "lufs": "-13.0 LUFS",
+  "vo_boost_db": 18.5,
+  "file_path": "/home/user/-/radio_vokope/jingle/vokope_jingle_2_pozyvnye.mp3"
+ },
+ {
+  "file": "vokope_jingle_3_drayv.mp3",
+  "duration": 3.8,
+  "lufs": "-13.0 LUFS",
+  "vo_boost_db": 8.1,
+  "file_path": "/home/user/-/radio_vokope/jingle/vokope_jingle_3_drayv.mp3"
+ },
+ {
+  "file": "vokope_jingle_4_marsh.mp3",
+  "duration": 4.4,
+  "lufs": "-13.3 LUFS",
+  "vo_boost_db": 32.5,
+  "file_path": "/home/user/-/radio_vokope/jingle/vokope_jingle_4_marsh.mp3"
+ },
+ {
+  "file": "vokope_jingle_5_podlozhka.mp3",
+  "duration": 3.5,
+  "lufs": "-12.8 LUFS",
+  "vo_boost_db": null,
+  "file_path": "/home/user/-/radio_vokope/jingle/vokope_jingle_5_podlozhka.mp3"
+ }
+]
