@@ -1,0 +1,27 @@
+{
+ "total": 46.0,
+ "starts": [
+  0.1,
+  4.1,
+  11.1,
+  15.1,
+  19.6,
+  24.1,
+  27.6,
+  31.6,
+  36.1
+ ],
+ "music": "/home/user/-/video_studio/music_downloaded/fvi-Chronos.ogg",
+ "offset": 24.0,
+ "vo": [
+  "t1.mp3",
+  "t2.mp3",
+  "t3.mp3",
+  "t4.mp3",
+  "t5.mp3",
+  "t6.mp3",
+  "t7.mp3",
+  "t8.mp3",
+  "t9.mp3"
+ ]
+}

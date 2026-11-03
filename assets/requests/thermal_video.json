@@ -1,0 +1,10 @@
+{
+ "mode": "inspect",
+ "keep_raw": true,
+ "max_raw_mb": 60,
+ "urls": [
+  "https://disk.yandex.ru/i/NiVdiZw-H9whjg",
+  "https://disk.yandex.ru/i/_I6tctvF4pqKJg"
+ ],
+ "note": "run 2"
+}

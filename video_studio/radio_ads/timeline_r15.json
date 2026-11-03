@@ -1,0 +1,46 @@
+{
+ "total": 15.0,
+ "bpm": 120,
+ "track": "fvi-Favorite.ogg",
+ "offset": 38.4,
+ "vo": {
+  "file": "/home/user/-/video_studio/radio_ads/vo/v_r15.mp3",
+  "start": 0.25,
+  "dur": 14.58
+ },
+ "scenes": [
+  [
+   "trench",
+   0.25
+  ],
+  [
+   "cab",
+   2.145
+  ],
+  [
+   "kitchen",
+   4.041
+  ],
+  [
+   "wave",
+   6.082
+  ],
+  [
+   "logo",
+   7.54
+  ],
+  [
+   "songs",
+   8.415
+  ],
+  [
+   "nostop",
+   11.768
+  ],
+  [
+   "end",
+   13.08
+  ]
+ ],
+ "tempo": 1.4647
+}

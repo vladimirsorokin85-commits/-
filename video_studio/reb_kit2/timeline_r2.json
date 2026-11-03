@@ -1,0 +1,37 @@
+{
+ "total": 24.05,
+ "music": "fvi-Chronos.ogg",
+ "offset": 61.35,
+ "scenes": {
+  "specs1": 0.5,
+  "specs2": 8.4,
+  "use": 15.79,
+  "outro": 20.05
+ },
+ "vo": [
+  {
+   "scene": "specs1",
+   "file": "/home/user/-/video_studio/reb_kit2/vo/p_k4.mp3",
+   "start": 0.5,
+   "dur": 7.48
+  },
+  {
+   "scene": "specs2",
+   "file": "/home/user/-/video_studio/reb_kit2/vo/p_k5.mp3",
+   "start": 8.4,
+   "dur": 6.97
+  },
+  {
+   "scene": "use",
+   "file": "/home/user/-/video_studio/reb_kit2/vo/p_k6.mp3",
+   "start": 15.79,
+   "dur": 4.19
+  },
+  {
+   "scene": "outro",
+   "file": "/home/user/-/video_studio/reb_kit2/vo/p_k7.mp3",
+   "start": 20.4,
+   "dur": 2.18
+  }
+ ]
+}

@@ -1,0 +1,52 @@
+{
+ "total": 30.65,
+ "music": "fvi-Chronos.ogg",
+ "offset": 61.35,
+ "scenes": {
+  "hook": 0.55,
+  "why": 4.61,
+  "narrow": 11.33,
+  "access": 17.36,
+  "molle": 20.21,
+  "colors": 24.13,
+  "outro": 27.9
+ },
+ "vo": [
+  {
+   "scene": "hook",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r1_a.mp3",
+   "start": 0.55,
+   "dur": 3.51
+  },
+  {
+   "scene": "why",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r1_b.mp3",
+   "start": 4.61,
+   "dur": 6.27
+  },
+  {
+   "scene": "narrow",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r1_c.mp3",
+   "start": 11.33,
+   "dur": 5.58
+  },
+  {
+   "scene": "access",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r1_d.mp3",
+   "start": 17.36,
+   "dur": 2.4
+  },
+  {
+   "scene": "molle",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r1_e.mp3",
+   "start": 20.21,
+   "dur": 3.47
+  },
+  {
+   "scene": "colors",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r1_f.mp3",
+   "start": 24.13,
+   "dur": 3.77
+  }
+ ]
+}

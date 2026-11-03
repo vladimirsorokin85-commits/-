@@ -3,7 +3,8 @@
 # Requires: pip install --break-system-packages pillow numpy scipy imageio-ffmpeg ; `ffmpeg` on PATH.
 set -euo pipefail
 cd "$(dirname "$0")"
-[ -f ../music_catalog/dnb_neuro_174.ogg ] || python3 music_dnb.py     # DnB / jungle beds
+# Музыка — только реальные скачанные мастера (../music_downloaded/).
+# Сгенерированная музыка удалена из проекта навсегда — см. ../MUSIC_POLICY.md
 python3 audio_stage.py                        # voice + timeline + mix -> /tmp/smk4
 python3 render_stage.py part 0 2 &            # frames in 2 parallel halves
 python3 render_stage.py part 1 2

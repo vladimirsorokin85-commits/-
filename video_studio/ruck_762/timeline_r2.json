@@ -1,0 +1,38 @@
+{
+ "total": 31.19,
+ "music": "fvi-BeatOne.ogg",
+ "offset": 47.25,
+ "scenes": {
+  "lid": 0.5,
+  "zip": 7.25,
+  "bottom": 15.0,
+  "harness": 20.9,
+  "outro": 28.34
+ },
+ "vo": [
+  {
+   "scene": "lid",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r2_a.mp3",
+   "start": 0.5,
+   "dur": 6.3
+  },
+  {
+   "scene": "zip",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r2_b.mp3",
+   "start": 7.25,
+   "dur": 7.3
+  },
+  {
+   "scene": "bottom",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r2_c.mp3",
+   "start": 15.0,
+   "dur": 5.45
+  },
+  {
+   "scene": "harness",
+   "file": "/home/user/-/video_studio/ruck_762/vo/p_r2_d.mp3",
+   "start": 20.9,
+   "dur": 7.44
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+[
+ {
+  "file": "vokope_jingle_1_udar",
+  "dur": 3.6,
+  "peak_dbfs": -1.6,
+  "max_gap": 0.0
+ },
+ {
+  "file": "vokope_jingle_2_pozyvnye",
+  "dur": 3.9,
+  "peak_dbfs": -1.3,
+  "max_gap": 0.0
+ },
+ {
+  "file": "vokope_jingle_3_drayv",
+  "dur": 3.8,
+  "peak_dbfs": -1.2,
+  "max_gap": 0.0
+ },
+ {
+  "file": "vokope_jingle_4_marsh",
+  "dur": 4.4,
+  "peak_dbfs": -1.2,
+  "max_gap": 0.0
+ },
+ {
+  "file": "vokope_jingle_5_podlozhka",
+  "dur": 3.5,
+  "peak_dbfs": -4.2,
+  "max_gap": 0.0
+ }
+]

@@ -1,0 +1,30 @@
+{
+ "total": 5.0,
+ "bpm": 162,
+ "track": "fvi-BeatOne.ogg",
+ "offset": 47.25,
+ "vo": {
+  "file": "/home/user/-/video_studio/radio_ads/vo/v_r5.mp3",
+  "start": 0.22,
+  "dur": 4.61
+ },
+ "scenes": [
+  [
+   "boom",
+   0.22
+  ],
+  [
+   "logo",
+   1.511
+  ],
+  [
+   "slogan",
+   2.894
+  ],
+  [
+   "end",
+   4.092
+  ]
+ ],
+ "tempo": 1.0804
+}
