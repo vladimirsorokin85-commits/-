@@ -1,0 +1,70 @@
+{
+ "total": 30.0,
+ "bpm": 120,
+ "track": "fvi-Chronos.ogg",
+ "offset": 61.35,
+ "vo": {
+  "file": "/home/user/-/video_studio/radio_ads/vo/v_r30.mp3",
+  "start": 0.38,
+  "dur": 29.46
+ },
+ "scenes": [
+  [
+   "front",
+   0.38
+  ],
+  [
+   "road",
+   2.442
+  ],
+  [
+   "home",
+   4.504
+  ],
+  [
+   "wave",
+   6.272
+  ],
+  [
+   "logo",
+   7.598
+  ],
+  [
+   "clock",
+   8.923
+  ],
+  [
+   "songs",
+   11.575
+  ],
+  [
+   "ours",
+   14.815
+  ],
+  [
+   "brief",
+   17.172
+  ],
+  [
+   "allours",
+   22.475
+  ],
+  [
+   "logo2",
+   23.359
+  ],
+  [
+   "platforms",
+   25.421
+  ],
+  [
+   "request",
+   26.894
+  ],
+  [
+   "end",
+   28.956
+  ]
+ ],
+ "tempo": 1.3597
+}
