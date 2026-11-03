@@ -172,7 +172,12 @@ def text(cv, s, fn, size, x, y, col, p=1.0, anchor="lt", maxw=None, stroke=0, sc
     al = eo(min(1, p * 2.6))
     if al < 0.995:
         lay.putalpha(lay.getchannel("A").point(lambda v: int(v * al)))
-    px = int(x - lay.width / 2) if anchor[0] == "m" else int(x)
+    if anchor[0] == "m":
+        px = int(x - lay.width / 2)
+    elif anchor[0] == "r":
+        px = int(x - lay.width)
+    else:
+        px = int(x)
     py = int(y - lay.height / 2) if len(anchor) > 1 and anchor[1] == "m" else int(y)
     cv.alpha_composite(lay, (px, py))
 
@@ -254,8 +259,8 @@ def header(cv, d, t, total, date_txt, shift, accent=GOLD):
     d.line([(196, 16), (196, 50)], fill=ac(accent, 90), width=2)
     text(cv, "СВОДКА · ЕЖЕДНЕВНО", MONO, 14, 212, 26, ac(DIM, 225), 1.0)
     # дата справа
-    text(cv, date_txt.upper(), RUSSO, 21, W - 214, 14, ac(TXT, 240), 1.0, "rt")
-    text(cv, shift.upper(), MONO, 15, W - 214, 40, ac(accent, 240), 1.0, "rt")
+    text(cv, date_txt.upper(), RUSSO, 21, W - 24, 14, ac(TXT, 240), 1.0, "rt")
+    text(cv, shift.upper(), MONO, 15, W - 24, 41, ac(accent, 240), 1.0, "rt")
     # прогресс
     d.rectangle([0, 64, W, 67], fill=(18, 22, 17, 235))
     d.rectangle([0, 64, int(W * cl(t / max(total, .01))), 67], fill=ac(accent, 235))
@@ -315,3 +320,57 @@ def counter(cv, num, label, p=1.0, accent=GOLD):
     lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     ImageDraw.Draw(lay).rectangle([92, 448, 92 + int(120 * eo(p)), 451], fill=ac(accent, 220))
     cv.alpha_composite(lay)
+
+def wrap(s, fn, size, maxw, maxlines=2, min_size=30):
+    """Перенос по словам с автоподбором кегля: возвращает (строки, кегль)."""
+    size = int(size)
+    while True:
+        f = F(fn, size)
+        words, lines, cur = s.split(), [], ""
+        for w in words:
+            t = (cur + " " + w).strip()
+            if f.getlength(t) <= maxw or not cur:
+                cur = t
+            else:
+                lines.append(cur)
+                cur = w
+        if cur:
+            lines.append(cur)
+        if len(lines) <= maxlines or size <= min_size:
+            return lines, size
+        size -= 2
+
+
+def wrap_at(s, fn, size, maxw):
+    """Жёсткий перенос при заданном кегле — без автоподбора."""
+    f = F(fn, size)
+    words, lines, cur = s.split(), [], ""
+    for w in words:
+        t = (cur + " " + w).strip()
+        if f.getlength(t) <= maxw or not cur:
+            cur = t
+        else:
+            lines.append(cur)
+            cur = w
+    if cur:
+        lines.append(cur)
+    return lines
+
+
+def pick_size(s, fn, maxw, sizes=(112, 96, 84, 72, 62), maxlines=2, maxh=270):
+    """Наибольший кегль, при котором тезис укладывается в maxlines и по высоте."""
+    for size in sizes:
+        rows = wrap_at(s, fn, size, maxw)
+        if len(rows) <= maxlines and size * 1.10 * len(rows) <= maxh:
+            return rows, size
+    size = sizes[-1]
+    return wrap_at(s, fn, size, maxw), size
+
+
+def lines_at(cv, s, fn, size, x, y, col, p, lead=1.12, maxw=None, anchor="lt"):
+    rows, size2 = wrap(s, fn, size, maxw or (W - 80), 2, int(size * 0.62))
+    yy = y
+    for i, r in enumerate(rows):
+        text(cv, r, fn, size2, x, yy, col, p, anchor)
+        yy += int(size2 * lead)
+    return yy

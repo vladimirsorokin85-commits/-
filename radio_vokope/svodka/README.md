@@ -11,6 +11,8 @@
 | `studio/gfx.py` | Графика: фон, шапка с щитом и датой, прогресс, футер, тезисы, плашки |
 | `studio/scenes.py` | Типы сцен: заставка, порядок выпуска, плитки, стоп-лист, правило, строка направлений, благодарность, CTA, финал |
 | `studio/build.py` | Сборка: озвучка → тайминг → подложка → мастер → кадры → mp4 + mp3 + txt |
+| `studio/make_script.py` | Факты владельца (markdown) → сценарий выпуска + проверки объёма и стоп-листа |
+| `studio/check.py` | Приёмка готового mp4 по ТЗ: разрешение, fps, кодеки, длительность, LUFS, пик, .txt |
 | `studio/scripts/*.json` | Сценарий выпуска: тексты, сцены, паузы (движок не знает текста) |
 | `studio/vo/<slug>/` | Реплики озвучки (в git не кладём) |
 | `studio/out/` | Мастер, mp4, mp3, txt (в git не кладём; сдача — отдельным файлом) |
@@ -19,10 +21,17 @@
 
 ```bash
 cd radio_vokope/svodka/studio
-python3 build.py scripts/demo_format.json --audio     # только звук + тайминг (быстро)
-python3 build.py scripts/demo_format.json --still 2 40 87   # кадры для проверки вёрстки
-python3 build.py scripts/demo_format.json             # полная сборка mp4 + mp3 + txt
+python3 make_script.py ../../facts_2026-11-04_utro.md -o scripts/svodka_2026-11-04_utro.json
+python3 build.py scripts/svodka_2026-11-04_utro.json --audio    # только звук + тайминг
+python3 build.py scripts/svodka_2026-11-04_utro.json --still 12 40 87   # кадры для проверки
+python3 build.py scripts/svodka_2026-11-04_utro.json            # mp4 + mp3 + txt
+python3 check.py out/svodka_2026-11-04_utro.mp4                 # приёмка перед сдачей
 ```
+
+`make_script.py` сам собирает структуру ТЗ (заход → факты → «где наши работают» →
+благодарность → CTA → финал), считает слова и ругается, если текст короче 340 слов,
+длиннее 430 или в нём есть стоп-лист. Входной формат — `facts_TEMPLATE.md`
+рядом с этим README.
 
 Полная сборка 90-секундного выпуска — около 3 минут (≈13 кадров/с).
 
@@ -39,6 +48,10 @@ python3 build.py scripts/demo_format.json             # полная сборк�
 
 Демо: `studio/out/demo_format.mp4`, `.mp3`, `.txt`. В кадре справа сверху стоит
 пометка «ДЕМО ФОРМАТА» — в боевых выпусках её нет (`"demo": true` в сценарии).
+
+Сцена `fact` (факт выпуска) в демо не показана — она для боевых выпусков:
+номер «ФАКТ 3 ИЗ 6», пипсы прогресса, тезис крупно с автоподбором кегля
+(112 → 62 px, не длиннее двух строк) и пояснение под золотой линией.
 
 ## Решения, которые надо знать
 

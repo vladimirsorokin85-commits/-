@@ -68,7 +68,8 @@ def build_audio(spec):
     for s in spec["segments"]:
         src = os.path.join(vo_dir, s["vo"])
         if est_all or not os.path.exists(src):
-            words = len(re.findall(r"[\wА-Яа-яЁё]+", s.get("sub", "") or s.get("head", "")))
+            src_txt = s.get("say") or s.get("sub", "") or s.get("head", "")
+            words = len(re.findall(r"[\wА-Яа-яЁё]+", src_txt))
             d_est = max(1.6, words / 2.35 + 0.45)
             src = os.path.join(tmp, "e_" + s["vo"].replace(".mp3", ".wav"))
             run([ffmpeg(), "-y", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
@@ -195,7 +196,7 @@ def frame(seglist, tl, t):
     G.header(hud, hd, t, tl["total"], tl["date"], tl["shift"])
     if tl.get("demo"):
         cw = int(G.F(G.MONO, 15).getlength("ДЕМО ФОРМАТА")) + 32
-        G.chip(hd, G.W - 214 - cw - 26, 15, "ДЕМО ФОРМАТА", G.GOLD, 15, 34, 235)
+        G.chip(hd, 396, 15, "ДЕМО ФОРМАТА", G.GOLD, 15, 34, 235)
     G.footer(hud, hd, t, tl["total"])
     G.tick_marks(hd)
     out = Image.alpha_composite(out, hud)

@@ -164,7 +164,48 @@ def s_outro(cv, d, t, l, sc):
     subtitle(cv, sc.get("sub", ""), G.c01((l - .55) / .3))
 
 
+def s_fact(cv, d, t, l, sc):
+    """Факт выпуска: номер, тезис крупно, пояснение, пипсы прогресса."""
+    n = int(sc.get("n", 6))
+    idx = int(sc.get("idx", 1))
+    p = G.c01(l / .30)
+    if p <= 0:
+        return
+    text(cv, "%02d" % idx, RUSSO, 150, W - 64, 92, ac(GOLD, int(34 * p)), p, "rt")
+    text(cv, "ФАКТ %d ИЗ %d" % (idx, n), MONO, 20, 130, 116, ac(GOLD, 245 * p), p)
+    for i in range(n):
+        x = 130 + i * 30
+        on = i < idx
+        d.rectangle([x, 150, x + 20, 154], fill=ac(GOLD if on else DIM, 220 if on else 90))
+
+    maxw = W - 300
+    head = sc.get("head", "")
+    rows, size = G.pick_size(head, COND, maxw)
+    note = sc.get("note", "")
+    nrows = G.wrap(note, COND, 34, maxw, 2)[0] if note else []
+    head_h = int(size * 1.10) * len(rows)
+    block = head_h + (26 + 40 + int(34 * 1.16) * len(nrows) if nrows else 0)
+    y = max(168, int(392 - block / 2))
+
+    yy = y
+    for r in rows:
+        text(cv, r, COND, size, 130, yy, ac(TXT, 252), p, "lt")
+        yy += int(size * 1.10)
+    if l > .26:
+        q = G.c01((l - .26) / .28)
+        lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        ImageDraw.Draw(lay).rectangle([130, yy + 8, 130 + int(120 * G.eo(q)), yy + 12],
+                                      fill=ac(GOLD, 230))
+        cv.alpha_composite(lay)
+        ny = yy + 30
+        for r in nrows:
+            text(cv, r, COND, 34, 130, ny, ac(GOLD2, 240 * q), q, "lt")
+            ny += int(34 * 1.16)
+    subtitle(cv, sc.get("sub", ""), G.c01((l - .55) / .30))
+
+
 FN = {
     "title": s_title, "flow": s_flow, "cards": s_cards, "rules": s_rules,
     "rule": s_rule, "line": s_line, "thanks": s_thanks, "cta": s_cta, "outro": s_outro,
+    "fact": s_fact,
 }
