@@ -253,7 +253,7 @@ def header(cv, d, t, total, date_txt, shift, accent=GOLD):
     """Верхняя плашка: щит, «В ОКОПЕ · РАДИО», дата, утро/вечер."""
     d.rectangle([0, 0, W, 64], fill=(6, 9, 7, 232))
     d.rectangle([0, 0, W, 3], fill=ac(accent, 255))
-    shield(cv, 26, 10, 44, 1.0, accent)
+    logo_at(cv, 46, 9, 46, 1.0)
     text(cv, "В ОКОПЕ", RUSSO, 25, 76, 17, ac(TXT, 255), 1.0)
     text(cv, "РАДИО", MONO, 15, 77, 42, ac(accent, 245), 1.0)
     d.line([(196, 16), (196, 50)], fill=ac(accent, 90), width=2)
@@ -374,3 +374,34 @@ def lines_at(cv, s, fn, size, x, y, col, p, lead=1.12, maxw=None, anchor="lt"):
         text(cv, r, fn, size2, x, yy, col, p, anchor)
         yy += int(size2 * lead)
     return yy
+
+# ─────────────────────────────── логотип
+LOGO_FILE = os.path.join(os.path.dirname(BASE), "assets", "logo_shield.png")
+_LOGO = {"img": None, "tried": False}
+
+
+def logo_img():
+    """Настоящий лого-щит владельца, если файл положили в assets/logo_shield.png."""
+    if not _LOGO["tried"]:
+        _LOGO["tried"] = True
+        if os.path.exists(LOGO_FILE):
+            try:
+                _LOGO["img"] = Image.open(LOGO_FILE).convert("RGBA")
+            except Exception:
+                _LOGO["img"] = None
+    return _LOGO["img"]
+
+
+def logo_at(cv, cx, top, h, p=1.0):
+    """Логотип по центру cx высотой h. Нет файла — рисуем щит заглушкой."""
+    if p <= 0:
+        return
+    im = logo_img()
+    if im is None:
+        shield(cv, int(cx - h * 0.41), top, h, p, GOLD)
+        return
+    w = max(2, int(im.width * h / im.height))
+    im2 = im.resize((w, int(h)), Image.LANCZOS)
+    if p < 0.999:
+        im2.putalpha(im2.getchannel("A").point(lambda v: int(v * p)))
+    cv.alpha_composite(im2, (int(cx - w / 2), int(top)))

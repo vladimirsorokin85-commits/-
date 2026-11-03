@@ -58,7 +58,7 @@ def vo_chain(spec):
 
 def build_audio(spec):
     slug = spec["slug"]
-    vo_dir = os.path.join(BASE, "vo", slug)
+    vo_dir = os.path.join(BASE, "vo", spec.get("vo_dir", slug))
     tmp = os.path.join(BASE, "out", slug)
     os.makedirs(tmp, exist_ok=True)
     os.makedirs(vo_dir, exist_ok=True)
@@ -67,6 +67,8 @@ def build_audio(spec):
     est_all = "--estimate" in sys.argv
     for s in spec["segments"]:
         src = os.path.join(vo_dir, s["vo"])
+        if not est_all and not os.path.exists(src):
+            raise RuntimeError("нет реплики: %s (сначала озвучить этот сценарий)" % src)
         if est_all or not os.path.exists(src):
             src_txt = s.get("say") or s.get("sub", "") or s.get("head", "")
             words = len(re.findall(r"[\wА-Яа-яЁё]+", src_txt))
@@ -115,15 +117,23 @@ def build_audio(spec):
     fc.append("".join("[v%d]" % i for i in range(len(segs))) +
               "amix=inputs=%d:dropout_transition=0:normalize=0,apad=whole_dur=%.2f[vo]"
               % (len(segs), total))
-    # подложка: тихая, без верха (речь ведущая), дакинг под голос
+    # подложка: два режима — тихая (ТЗ) и драйв (MUSIC_POLICY канала)
+    mode = (spec["music"].get("mode") or "quiet").lower()
     fc.append("[%d:a]atrim=%.2f:%.2f,asetpts=PTS-STARTPTS,"
               "aformat=sample_fmts=fltp:sample_rates=44100:channel_layouts=stereo[bg0]"
               % (len(segs), off, off + total + 3))
-    fc.append("[bg0]highpass=f=45,lowpass=f=4200,volume=%.3f,"
-              "acompressor=threshold=-24dB:ratio=2.0:attack=20:release=250,"
-              "afade=t=in:st=0:d=1.2,afade=t=out:st=%.2f:d=2.0[bg1]" % (lvl, total - 2.4))
+    if mode == "drive":
+        fc.append("[bg0]highpass=f=30,acompressor=threshold=-18dB:ratio=3:attack=8:release=120,"
+                  "loudnorm=I=-12:TP=-3:LRA=6,"
+                  "afade=t=in:st=0:d=1.2,afade=t=out:st=%.2f:d=2.0[bg1]" % (total - 2.4))
+        duck = "threshold=0.05:ratio=9:attack=5:release=180"
+    else:
+        fc.append("[bg0]highpass=f=45,lowpass=f=4200,volume=%.3f,"
+                  "acompressor=threshold=-24dB:ratio=2.0:attack=20:release=250,"
+                  "afade=t=in:st=0:d=1.2,afade=t=out:st=%.2f:d=2.0[bg1]" % (lvl, total - 2.4))
+        duck = "threshold=0.028:ratio=12:attack=8:release=220"
     fc.append("[vo]asplit=2[vo_sc][vo_out]")
-    fc.append("[bg1][vo_sc]sidechaincompress=threshold=0.028:ratio=12:attack=8:release=220[bgd]")
+    fc.append("[bg1][vo_sc]sidechaincompress=%s[bgd]" % duck)
     fc.append("[bgd][vo_out]amix=inputs=2:dropout_transition=0:normalize=0,"
               "alimiter=limit=0.88:attack=6:release=70[out]")
 

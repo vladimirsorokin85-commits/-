@@ -154,7 +154,7 @@ def s_cta(cv, d, t, l, sc):
 
 def s_outro(cv, d, t, l, sc):
     p = G.c01(l / .34)
-    G.shield(cv, W // 2 - 48, 128, 118, p, GOLD)
+    G.logo_at(cv, W // 2, 128, 118, p)
     if l > .18:
         slam(cv, "СВОИХ НЕ БРОСАЕМ", RUSSO, 72, W // 2, 300, ac(TXT, 255), G.c01((l - .18) / .30),
              "ma", maxw=W - 200)
