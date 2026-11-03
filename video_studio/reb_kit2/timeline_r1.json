@@ -1,0 +1,37 @@
+{
+ "total": 17.34,
+ "music": "fvi-BeatOne.ogg",
+ "offset": 47.25,
+ "scenes": {
+  "hook": 0.55,
+  "price": 5.0,
+  "promo": 9.32,
+  "outro": 13.34
+ },
+ "vo": [
+  {
+   "scene": "hook",
+   "file": "/home/user/-/video_studio/reb_kit2/vo/p_k1.mp3",
+   "start": 0.55,
+   "dur": 4.03
+  },
+  {
+   "scene": "price",
+   "file": "/home/user/-/video_studio/reb_kit2/vo/p_k2.mp3",
+   "start": 5.0,
+   "dur": 3.9
+  },
+  {
+   "scene": "promo",
+   "file": "/home/user/-/video_studio/reb_kit2/vo/p_k3.mp3",
+   "start": 9.32,
+   "dur": 3.95
+  },
+  {
+   "scene": "outro",
+   "file": "/home/user/-/video_studio/reb_kit2/vo/p_k7.mp3",
+   "start": 13.69,
+   "dur": 2.18
+  }
+ ]
+}
