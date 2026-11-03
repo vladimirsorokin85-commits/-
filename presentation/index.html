@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Исследование рынка YouTube — Военная ниша «В Окопе»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Аудио-атмосфера опционально, без автовоспроизведения -->
+
+<!-- Прогресс-бар -->
+<div class="progress-bar"><div class="progress-fill"></div></div>
+
+<!-- Навигация -->
+<nav class="slide-nav" id="nav">
+  <div class="nav-item" onclick="goToSlide(0)">1</div>
+  <div class="nav-item" onclick="goToSlide(1)">2</div>
+  <div class="nav-item" onclick="goToSlide(2)">3</div>
+  <div class="nav-item" onclick="goToSlide(3)">4</div>
+  <div class="nav-item" onclick="goToSlide(4)">5</div>
+  <div class="nav-item" onclick="goToSlide(5)">6</div>
+  <div class="nav-item" onclick="goToSlide(6)">7</div>
+  <div class="nav-item" onclick="goToSlide(7)">8</div>
+  <div class="nav-item" onclick="goToSlide(8)">9</div>
+  <div class="nav-item" onclick="goToSlide(9)">10</div>
+  <div class="nav-item" onclick="goToSlide(10)">11</div>
+  <div class="nav-item" onclick="goToSlide(11)">12</div>
+  <div class="nav-item" onclick="goToSlide(12)">13</div>
+</nav>
+
+<!-- Презентация -->
+<main class="deck" id="deck">
+
+  <!-- ========== СЛАЙД 0: ТИТУЛ ========== -->
+  <section class="slide" id="s0" data-index="0">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <div class="kicker">Исследование рынка YouTube · Военная ниша</div>
+      <h1>Магазин «В Окопе»</h1>
+      <div class="subtitle">Какие темы видео и Shorts набирают просмотры — и как их повторять</div>
+      <div class="meta-row">
+        <span class="badge">OSINT · GitHub-скилы</span>
+        <span class="badge">2025–2026</span>
+        <span class="badge">RU / СНГ аудитория</span>
+      </div>
+      <div class="date">25 октября 2026 · Нижний Новгород</div>
+    </div>
+    <div class="slide-footer">Агент Arena.ai · Сайт-презентация</div>
+  </section>
+
+  <!-- ========== СЛАЙД 1: КЛЮЧЕВЫЕ ВЫВОДЫ ========== -->
+  <section class="slide" id="s1" data-index="1">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Ключевые выводы рынка</h2>
+      <div class="grid grid-3">
+        <div class="card stat-card">
+          <div class="stat-big">200 млрд</div>
+          <div class="stat-label">просмотров Shorts в день</div>
+          <div class="stat-sub">июль 2025, CEO YouTube Нил Мохан</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-big">17–22 сек</div>
+          <div class="stat-label">идеальная длина Shorts</div>
+          <div class="stat-sub">удержание выше 85%</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-big">1 окт 2026</div>
+          <div class="stat-label">оригинальный контент в приоритете</div>
+          <div class="stat-sub">перезаливы чужих роликов урезают охват</div>
+        </div>
+      </div>
+      <div class="insight-box">
+        <h3>Суть для «В Окопе»</h3>
+        <p>Не изобретать новые темы — повторять те, которые уже доказали спрос. В военной нише заходят:<br>
+        <strong>защита от FPV/тепловизоров, фронтовые лайфхаки за копейки, проверка снаряжения и документов, советы выживания.</strong></p>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 2 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 2: СОСТОЯНИЕ РЫНКА ========== -->
+  <section class="slide" id="s2" data-index="2">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Как работает YouTube сейчас (осень 2025 — 2026)</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Shorts (вертикал 9:16)</h3>
+          <ul>
+            <li>Более 200 млрд просмотров в день</li>
+            <li>Решают первые часы после публикации</li>
+            <li>Идеальная длина: 17–22 сек (удержание >85%)</li>
+            <li>Оптимальный диапазон: 30–58 сек</li>
+            <li>Хук за 1–2 секунды обязателен</li>
+            <li>Регулярность: 3–4 ролика в неделю</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Длинные видео (Long-form)</h3>
+          <ul>
+            <li>Главное: CTR (обложка + заголовок) и удержание в первые 30–60 сек</li>
+            <li>Таймкоды, главы и чёткая структура повышают завершённость</li>
+            <li>Оптимальный формат: 6–12 минут</li>
+            <li>Субтитры, главы, тихая музыка под голосом</li>
+          </ul>
+        </div>
+      </div>
+      <div class="warn-box">
+        <strong>Ограничение рынка:</strong> без YouTube Data API ключа полная статистика чужих каналов закрыта. Все инструменты ниже работают без ключей через открытые GitHub-репозитории.
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 3 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 3: КОНКУРЕНТЫ ========== -->
+  <section class="slide" id="s3" data-index="3">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Конкурентный ландшафт военной ниши (RU / СНГ)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Канал / источник</th><th>Формат</th><th>Что набирает просмотры</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Военные Сводки (@militarySummary_ru)</td><td>Оперативные сводки, комментарии к боям</td><td>Разбор ситуации на фронте, атаки дронов, освобождение населённых пунктов</td></tr>
+            <tr><td>WarLeaks</td><td>Боевые кадры, шлемо-камеры, высокая скорость техники</td><td>Реальные кадры с фронта (до 433 тыс. просмотров за месяц)</td></tr>
+            <tr><td>Военное время</td><td>Разбор событий и тенденций военной техники</td><td>Обзор новой тактики, оружия, тренды</td></tr>
+            <tr><td>Азов / Третий армейский корпус</td><td>Честная документалистика фронта, быт военных</td><td>Искренняя хроника без лобовой рекламы — близко по стилю к гайду магазина</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight-box">
+        <h3>Вывод</h3>
+        <p>В военной нише два полюса: <strong>быстрая актуальная информация</strong> (сводки, дроны, тактика) и <strong>практичная полезная информация</strong> (лайфхаки, выживание, проверка снаряжения). Магазину «В Окопе» выгоднее занимать второй полюс.</p>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 4 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 4: ТЕМЫ РЫНКА ========== -->
+  <section class="slide" id="s4" data-index="4">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>7 рабочих тем, которые набирают просмотры</h2>
+      <div class="filter-chips" style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="chip active" data-filter="all" onclick="filterTopics(this, 'all')">Все</button>
+        <button class="chip" data-filter="shorts" onclick="filterTopics(this, 'shorts')">Shorts / рилс</button>
+        <button class="chip" data-filter="long" onclick="filterTopics(this, 'long')">Длинное видео</button>
+        <button class="chip" data-filter="hybrid" onclick="filterTopics(this, 'hybrid')">Оба формата</button>
+      </div>
+      <div class="table-wrap" id="topics-table">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Тема</th><th>Формат</th><th>Почему заходит</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Защита от FPV-дронов (сетка рабица, пенофол, «мангал»)</td><td>Shorts 30–60 с + длинное 6–9 мин</td><td>Страх被发现 + дешёвые материалы из военного магазина</td></tr>
+            <tr><td>2</td><td>Маскировка от тепловизора (пенофол внутри, фольга вниз)</td><td>Shorts + длинное видео</td><td>Бойцы боятся тепловизоров; простые физические решения вызывают интерес</td></tr>
+            <tr><td>3</td><td>Фронтовые лайфхаки за копейки (чулок на прицеле, автозеркало, удочка 500 ₽)</td><td>Shorts 30–60 с, серия</td><td>Любопытство, «хакерский» азарт, легко повторить, активные комментарии</td></tr>
+            <tr><td>4</td><td>Проверка снаряжения (V50 239 м/с, ИК-защита, паспорт, протокол, ГОСТ/С2)</td><td>Рилс 1:30–2:30 + разбор</td><td>Бойцы боятся подделок; нужда в чек-листе и экспертном разборе документов</td></tr>
+            <tr><td>5</td><td>Как выжить на войне (советы ветеранов, обувь, носки, перепонки)</td><td>Длинное видео 6–12 мин</td><td>Вечный спрос, высокая эмоциональная вовлечённость, личные истории в комментах</td></tr>
+            <tr><td>6</td><td>Новая тактика 2025–2026 (дроны-ждуны, килл-зоны, малые штурмовые группы)</td><td>Длинные видео + Shorts-аанонсы</td><td>Актуально, обсуждается в military-сообществах, высокая доля репостов</td></tr>
+            <tr><td>7</td><td>Сравнение «дешёвое самодельное vs заводское»</td><td>Shorts + длинное видео</td><td>Аудитория ищет способ сэкономить, не теряя в безопасности</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+      </div>
+    <div class="slide-footer">Слайд 5 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 5: КОНТЕНТ-СТОЛПЫ ========== -->
+  <section class="slide" id="s5" data-index="5">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Три контентных столпа для «В Окопе»</h2>
+      <div class="grid grid-3">
+        <div class="card pillar-card pillar-a">
+          <div class="pillar-letter">А</div>
+          <h3>«Окопная смекалка»</h3>
+          <p>Лайфхаки, короткое видео. Чулок на прицеле, пенофол в блиндаже, удочка за 500 ₽, сетка рабица против FPV.</p>
+          <div class="pillar-meta"><strong>Формат:</strong> Shorts / VK Клипы / Дзен, 30–60 с<br><strong>Частота:</strong> 3–4 в неделю</div>
+        </div>
+        <div class="card pillar-card pillar-b">
+          <div class="pillar-letter">Б</div>
+          <h3>«Проверка перед покупкой»</h3>
+          <p>Доверие к бренду. V50, три документа, ИК-защита ≠ невидимость, температура −40…+40 °C, гарантия 24 месяца.</p>
+          <div class="pillar-meta"><strong>Формат:</strong> вертикальный рилс 1:30–2:30 (9:16)<br><strong>Пример в репо:</strong> <em>oplot-infrared</em></div>
+        </div>
+        <div class="card pillar-card pillar-c">
+          <div class="pillar-letter">В</div>
+          <h3>«Выживание и тактика»</h3>
+          <p>Авторитет, длинное видео. Как не попасть под тепловизор, советы ветеранов, тактика дронов-ждунов, как выбрать бронепленку.</p>
+          <div class="pillar-meta"><strong>Формат:</strong> 6–12 мин, заставка, главы, таймкоды<br><strong>Частота:</strong> 1 видео в 1–2 недели</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 6 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 6: КОНТЕНТ-ПЛАН ========== -->
+  <section class="slide" id="s6" data-index="6">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Контент-план на первый месяц</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Неделя</th><th>Shorts / рилс</th><th>Длинное видео</th><th>Где публиковать</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>3× «Окопная смекалка» (чулок, пенофол, удочка)</td><td>«Окопная смекалка» (7–9 мин)</td><td>YouTube Shorts + длинное, VK Клипы, Дзен, Telegram</td></tr>
+            <tr><td>2</td><td>2× «Защита от FPV» (рабица, «мангал»)</td><td>«Маскировка от тепловизора: реальная защита на передке»</td><td>YouTube + VK + Telegram</td></tr>
+            <tr><td>3</td><td>2× «Проверка снаряжения» (V50, 3 документа)</td><td>«Как выбрать бронепленку: чек-лист перед покупкой»</td><td>YouTube + Дзен + Avito (в описании)</td></tr>
+            <tr><td>4</td><td>2× «Выживание» (обувь, носки, перепонки)</td><td>«Как выжить на войне: советы ветеранов»</td><td>YouTube + VK + Telegram</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight-box">
+        <h3>Правило масштабирования</h3>
+        <p>Если Shorts зашёл (удержание &gt; 70 %, просмотры растут в первые 24 часа) — переснимать ту же тему с другим товаром/примером. Если зашёл «чулок на прицеле» — сделать «чулок на бинокль», «чулок на ночник» и т.д.</p>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 7 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 7: ХУКИ И ОБЛОЖКИ ========== -->
+  <section class="slide" id="s7" data-index="7">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Готовые хуки и заголовки</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Shorts / рилс (хук за 1–2 сек)</h3>
+          <ul>
+            <li>«Дрон не пробьёт: сетка от FPV за копейки»</li>
+            <li>«Чулок на прицеле — и снайпер не видит блик»</li>
+            <li>«Пенофол внутри блиндажа = термос против тепловизора»</li>
+            <li>«239 м/с — что на самом деле значит V50?»</li>
+            <li>«Три документа перед покупкой бронепленки»</li>
+            <li>«Удочка за 500 ₽ заменит 4 вещи на фронте»</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>A/B-тесты обложек (уже в репо)</h3>
+          <ul>
+            <li><strong>А</strong> — «ЧУЛОК НА ПРИЦЕЛЕ?!» (лицо + деталь, интрига)</li>
+            <li><strong>Б</strong> — «ДРОН НЕ ПРОБЬЁТ» (экшен, страх/защита)</li>
+            <li><strong>В</strong> — «5 ВЕЩЕЙ ЗА КОПЕЙКИ» (любопытство, перечень)</li>
+          </ul>
+          <div class="warn-box">Правило: если CTR &lt; 4–6 % — меняем обложку/заголовок. Тестируем А→Б→В по очереди.</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 8 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 8: МЕТРИКИ ========== -->
+  <section class="slide" id="s8" data-index="8">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Метрики и KPI</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Shorts</h3>
+          <table class="kpi-table">
+            <tr><td>Удержание (AVD)</td><td>&gt; 70 %</td></tr>
+            <tr><td>Повторные просмотры</td><td>растут в первые 24 ч</td></tr>
+            <tr><td>CTR обложки</td><td>&gt; 6 %</td></tr>
+            <tr><td>Рост подписчиков за 24 ч</td><td>положительная динамика</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Длинные видео</h3>
+          <table class="kpi-table">
+            <tr><td>CTR</td><td>&gt; 4–6 %</td></tr>
+            <tr><td>Средняя продолжительность просмотра</td><td>&gt; 40 % от длительности</td></tr>
+            <tr><td>Отток в первые 30 с</td><td>минимальный</td></tr>
+            <tr><td>Клики по ссылкам в описании</td><td>конверсия в лиды/продажи</td></tr>
+          </table>
+        </div>
+      </div>
+      <canvas id="metricsChart" height="200"></canvas>
+    </div>
+    <div class="slide-footer">Слайд 9 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 9: ГИТХАБ-СКИЛЫ ========== -->
+  <section class="slide" id="s9" data-index="9">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>6 GitHub-скилов для исследования рынка</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Скил (GitHub)</th><th>Что делает</th><th>API-ключ</th><th>Роль для «В Окопе»</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>miloagents/niche-hook-miner</td><td>Валидация ниши + 10 хуков в 6 структурах</td><td>Нет</td><td>Оценить нишу и сгенерировать хуки для Shorts</td></tr>
+            <tr><td>2</td><td>lxgicstudios/yt-meta</td><td>Метаданные видео/каналов без API-ключа</td><td>Нет</td><td>Собрать просмотры, заголовки, теги конкурентов</td></tr>
+            <tr><td>3</td><td>svllvsxprod/Shorts_Tracker</td><td>Дашборд аналитики Shorts (YouTube, TikTok, Instagram)</td><td>Нет</td><td>Отслеживать динамику просмотров каналов</td></tr>
+            <tr><td>4</td><td>kusmierekmikolaj-wq/reel-intel</td><td>Транскрипты и разбор структуры коротких видео</td><td>Нет</td><td>Расшифровать структуру и хуки конкурентов</td></tr>
+            <tr><td>5</td><td>mikesmith-ge/youtube-shorts-downloader-python</td><td>Скачивание Shorts и метаданных без квот API</td><td>Нет</td><td>Скачать топ Shorts для разбора формата</td></tr>
+            <tr><td>6</td><td>youtube-outliers</td><td>Поиск аномальных видео (3x выше среднего канала)</td><td>Часть — да</td><td>Найти «выстрелившие» видео и повторить packaging</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="code-box">
+        <pre><code># Пример: поиск аномальных видео без API-ключа
+pip install -U yt-dlp
+python find_outliers.py --keywords-file MILITARY_KEYWORDS.txt --out outliers.csv</code></pre>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 10 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 10: ТЕХНИКА ========== -->
+  <section class="slide" id="s10" data-index="10">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Техническая реализация на базе репозитория</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Сборка вертикального видео</h3>
+          <pre><code>python3 server.py                    # предпросмотр http://0.0.0.0:8000
+cp video_studio/reels/project.example.json project.json
+python3 -m video_studio.reels project.json --dry-run
+python3 -m video_studio.reels project.json</code></pre>
+        </div>
+        <div class="card">
+          <h3>Субтитры (локально)</h3>
+          <pre><code>python3 -m video_studio.reels.captions --transcribe</code></pre>
+          <p>Инструмент: <code>video_studio/reels/</code> — сборка MP4 9:16, 1–20 мин, субтитры burn/soft, ffprobe QC.</p>
+        </div>
+      </div>
+      <div class="insight-box">
+        <h3>Готовые материалы в репо</h3>
+        <ul>
+          <li><code>youtube_smekalka_description.md</code> — название, описание, теги, таймкоды, варианты обложек</li>
+          <li><code>video_studio/STYLE_AND_DELIVERY_GUIDE.md</code> — стиль съёмки и монтажа</li>
+          <li><code>video_studio/reels/products/oplot-infrared/</code> — пример рилса про проверку снаряжения</li>
+          <li><code>video_studio/assets/smekalka_01…30.jpg</code> — кадры для первого выпуска</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 11 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 11: РИСКИ ========== -->
+  <section class="slide" id="s11" data-index="11">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Риски и ограничения</h2>
+      <div class="grid grid-2">
+        <div class="card risk-card">
+          <h4>Правовые</h4>
+          <p>Не использовать чужие боевые кадры без авторского права; снимать собственное или использовать легальные стоковые материалы.</p>
+        </div>
+        <div class="card risk-card">
+          <h4>Платформенные</h4>
+          <p>YouTube ограничивает перезаливы (с 1 октября 2026); всё должно быть оригинальным контентом.</p>
+        </div>
+        <div class="card risk-card">
+          <h4>Тематические</h4>
+          <p>Избегать прямой агитации, призывов к насилию и запрещённой символики; следовать правилам YouTube и законодательству РФ.</p>
+        </div>
+        <div class="card risk-card">
+          <h4>Рекламные</h4>
+          <p>Не обещать пулестойкость или «невидимость», где это не подтверждено протоколами (см. пример <em>oplot-infrared</em> — осторожные формулировки).</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 12 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 12: ПЛАН ДЕЙСТВИЙ ========== -->
+  <section class="slide" id="s12" data-index="12">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>План действий «Сделай прямо сейчас»</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Выбрать одну тему</strong> из Столпа А (например, «чулок на прицеле»).</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Снять 3 Shorts</strong> под разными углами, без заставки, хук за 1–2 секунды.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Запустить A/B-тест обложек</strong> А/Б/В (готовы в репозитории).</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>По метрикам</strong> (CTR + удержание) понять, какой формат заходит.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Масштабировать</strong> эту же тему на другие товары магазина («чулок на бинокль», «чулок на ночник» и т.д.).</div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-text"><strong>Собирать данные о конкурентах</strong> через 6 GitHub-скилов и ежемесячно корректировать план.</div>
+        </div>
+      </div>
+      <div class="cta-box">
+        <h3>Готовый файл исследования:</h3>
+        <p><code>RESEARCH_YOUTUBE_MARKET.md</code> · <code>SKILLS_APPLICATION.md</code> · <code>MILITARY_KEYWORDS.txt</code> · <code>find_outliers.py</code></p>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 13 из 14</div>
+  </section>
+
+  <!-- ========== СЛАЙД 13: ЗАКЛЮЧЕНИЕ ========== -->
+  <section class="slide" id="s13" data-index="13">
+    <div class="slide-bg"></div>
+    <div class="content-wrap">
+      <h2>Итог</h2>
+      <div class="final-box">
+        <p class="final-big">Рынок уже показал, что заходит в военной нише YouTube.</p>
+        <p>Повторяйте эти темы своим голосом, показывайте товары магазина в полевых условиях (не витрина), публикуйте регулярно Shorts + длинные видео — и канал «В Окопе» будет расти.</p>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Ссылки магазина «В Окопе»</h3>
+          <ul>
+            <li>Telegram: <a href="https://t.me/vokope_ru" target="_blank">t.me/vokope_ru</a></li>
+            <li>ВКонтакте: <a href="https://vk.com/vokope_rus" target="_blank">vk.com/vokope_rus</a></li>
+            <li>Авито: бренд магазина</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Репозиторий</h3>
+          <ul>
+            <li>Ветка: <code>arena/6fcfd4f9-repo</code></li>
+            <li>Автор исследования: агент Arena.ai</li>
+            <li>Дата: 25 октября 2026</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">Слайд 14 из 14</div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
