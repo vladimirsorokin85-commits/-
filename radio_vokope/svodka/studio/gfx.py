@@ -363,8 +363,24 @@ def pick_size(s, fn, maxw, sizes=(112, 96, 84, 72, 62), maxlines=2, maxh=270):
         rows = wrap_at(s, fn, size, maxw)
         if len(rows) <= maxlines and size * 1.10 * len(rows) <= maxh:
             return rows, size
+    # совсем длинный тезис — ужимаем ниже минимального, но держим maxlines
     size = sizes[-1]
-    return wrap_at(s, fn, size, maxw), size
+    while size > 40:
+        rows = wrap_at(s, fn, size, maxw)
+        if len(rows) <= maxlines:
+            return rows, size
+        size -= 2
+    return wrap_at(s, fn, 40, maxw), 40
+
+
+def lines_center(cv, s, fn, size, y, col, p, maxw=None, lead=1.14, maxlines=2):
+    """Две строки по центру — для длинных подписей, чтобы не ужимать в одну."""
+    rows, sz = wrap(s, fn, size, maxw or (W - 160), maxlines, int(size * 0.7))
+    yy = y
+    for r in rows:
+        text(cv, r, fn, sz, W // 2, yy, col, p, "ma")
+        yy += int(sz * lead)
+    return yy
 
 
 def lines_at(cv, s, fn, size, x, y, col, p, lead=1.12, maxw=None, anchor="lt"):
@@ -405,3 +421,29 @@ def logo_at(cv, cx, top, h, p=1.0):
     if p < 0.999:
         im2.putalpha(im2.getchannel("A").point(lambda v: int(v * p)))
     cv.alpha_composite(im2, (int(cx - w / 2), int(top)))
+
+def chips_block(d, y, items, alpha=255, size=26, h=58, gap=14, maxw=None, col=GOLD):
+    """Плашки-чипы в одну строку, а если не влезают — в две, с автоподбором кегля."""
+    maxw = maxw or (W - 160)
+    items = [(x, col, False) for x in items]
+    if not items:
+        return
+    for sz in (size, size - 2, size - 4, size - 6, 18):
+        ws = [int(F(MONO, sz).getlength(t)) + 32 for t, _, _ in items]
+        total = sum(ws) + gap * (len(items) - 1)
+        if total <= maxw:
+            hh = int(h * sz / size)
+            x = int((W - total) / 2)
+            for (t, c, solid), w in zip(items, ws):
+                chip(d, x, y, t, c, sz, hh, alpha, solid)
+                x += w + gap
+            return
+    # две строки
+    half = (len(items) + 1) // 2
+    for k, chunk in enumerate((items[:half], items[half:])):
+        ws = [int(F(MONO, 22).getlength(t)) + 32 for t, _, _ in chunk]
+        total = sum(ws) + gap * (len(chunk) - 1)
+        x = int((W - total) / 2)
+        for (t, c, solid), w in zip(chunk, ws):
+            chip(d, x, y + k * (h + 12), t, c, 22, h, alpha, solid)
+            x += w + gap

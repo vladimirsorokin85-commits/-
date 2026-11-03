@@ -174,7 +174,8 @@ def build_script(data, facts_max=7):
 
     words = sum(len(s["say"].split()) for s in segs)
     spec = {
-        "slug": "svodka_%s_%s" % (data["date"], data["shift"]),
+        # имя файла — строго латиницей, как требует ТЗ: svodka_YYYY-MM-DD_utro|vecher
+        "slug": "svodka_%s_%s" % (data["date"], "utro" if shift_word == "утро" else "vecher"),
         "date": up_date, "shift": shift_word,
         "title_line": "СВОДКА · %s · %s" % (up_date.lower(), shift_word),
         "source": data["source"] or "—",

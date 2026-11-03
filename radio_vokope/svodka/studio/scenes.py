@@ -106,7 +106,8 @@ def s_rule(cv, d, t, l, sc):
     if l > .30:
         q = G.c01((l - .30) / .30)
         plate(cv, [140, 352, W - 140, 444], (12, 14, 10), int(225 * q), GOLD, int(140 * q), 1)
-        text(cv, sc.get("note", ""), COND, 30, W // 2, 380, ac(GOLD, 245 * q), q, "mt", maxw=W - 340)
+        G.lines_center(cv, sc.get("note", ""), COND, 32, 372, ac(GOLD, 245 * q), q,
+                       maxw=W - 360)
     subtitle(cv, sc.get("sub", ""), G.c01((l - .45) / .3))
 
 
@@ -117,8 +118,7 @@ def s_line(cv, d, t, l, sc):
     _head(cv, sc.get("head", ""), G.c01((l - .10) / .28), y=232, size=56)
     if l > .34:
         q = G.c01((l - .34) / .30)
-        chips_row(d, 352, [(x, GOLD, False) for x in sc.get("items", [])][:3],
-                  int(245 * q), size=26, h=58)
+        G.chips_block(d, 352, sc.get("items", []), int(245 * q), size=26, h=58)
     subtitle(cv, sc.get("sub", ""), G.c01((l - .5) / .3))
 
 
@@ -128,7 +128,7 @@ def s_thanks(cv, d, t, l, sc):
     _head(cv, sc.get("head", ""), G.c01((l - .08) / .28), y=226, size=54)
     items = sc.get("items", [])
     y = 322
-    step = 48 if len(items) > 4 else 56
+    step = 42 if len(items) > 5 else (48 if len(items) > 4 else 56)
     for i, it in enumerate(items):
         q = G.c01((l - .30 - i * .12) / .26)
         if q <= 0:
@@ -148,7 +148,8 @@ def s_cta(cv, d, t, l, sc):
     _head(cv, sc.get("head", ""), G.c01((l - .08) / .28), y=252, size=58)
     if l > .30:
         q = G.c01((l - .30) / .30)
-        text(cv, sc.get("note", ""), COND, 34, W // 2, 384, ac(TXT, 245 * q), q, "ma", maxw=W - 260)
+        G.lines_center(cv, sc.get("note", ""), COND, 36, 366, ac(TXT, 245 * q), q,
+                       maxw=W - 280)
     subtitle(cv, sc.get("sub", ""), G.c01((l - .5) / .3))
 
 
@@ -194,10 +195,10 @@ def s_fact(cv, d, t, l, sc):
     if l > .26:
         q = G.c01((l - .26) / .28)
         lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-        ImageDraw.Draw(lay).rectangle([130, yy + 8, 130 + int(120 * G.eo(q)), yy + 12],
+        ImageDraw.Draw(lay).rectangle([130, yy + 14, 130 + int(120 * G.eo(q)), yy + 18],
                                       fill=ac(GOLD, 230))
         cv.alpha_composite(lay)
-        ny = yy + 30
+        ny = yy + 36
         for r in nrows:
             text(cv, r, COND, 34, 130, ny, ac(GOLD2, 240 * q), q, "lt")
             ny += int(34 * 1.16)
