@@ -76,17 +76,19 @@ def parse(md_path):
         source = m.group(1).strip()
 
     def block(name):
-        m = re.search(r"^##\s+%s\s*$(.*?)(?=^##\s|\Z)" % re.escape(name), raw, re.M | re.S)
+        m = re.search(r"^##\s+%s\s*$(.*?)(?=^##\s|\Z)" % re.escape(name), raw, re.M | re.S | re.I)
         return m.group(1).strip() if m else ""
 
     facts = []
-    for line in block("Факты").splitlines():
+    for line in block("факты").splitlines():
         line = line.strip()
-        if not line.startswith(("-", "*")):
+        if not re.match(r"^([-*•]|\d+[.)])\s+", line):
             continue
-        body = line.lstrip("-* ").strip()
+        body = re.sub(r"^([-*•]|\d+[.)])\s+", "", line).strip()
         if "|" in body:
             head, say = [x.strip() for x in body.split("|", 1)]
+        elif re.search(r"\s[—–-]\s", body) and len(body.split("—")[0].split()) <= 8:
+            head, say = [x.strip() for x in re.split(r"\s[—–-]\s", body, 1)]
         else:
             head, say = "", body
         say = re.sub(r"\s+", " ", say)
@@ -99,8 +101,8 @@ def parse(md_path):
                 note = re.split(r",|\s—\s", parts[2] if len(parts) > 2 else parts[1])[0].strip()
                 note = " ".join(note.split()[:10])
             facts.append({"head": head, "say": say, "note": note})
-    dirs = [x.strip() for x in re.split(r"[·•|]", block("Где наши работают")) if x.strip()]
-    thanks = [x.strip() for x in re.split(r"[·•|]", block("Благодарность")) if x.strip()]
+    dirs = [x.strip() for x in re.split(r"[·•|,]", block("Где наши работают")) if x.strip()]
+    thanks = [x.strip() for x in re.split(r"[·•|,]", block("Благодарность")) if x.strip()]
     cta = block("Куда идти") or "Адреса и сборы — в описании выпуска"
     return {"date": date, "shift": shift, "source": source, "facts": facts,
             "dirs": dirs, "thanks": thanks, "cta": re.sub(r"\s+", " ", cta)}
@@ -121,14 +123,15 @@ def build_script(data, facts_max=7):
         print("ВНИМАНИЕ: фактов %d, по ТЗ нужно 5–7" % len(facts), file=sys.stderr)
     say_date, up_date = date_words(data["date"])
     shift_word = "утро" if data["shift"] == "утро" else "вечер"
-    shift_gen = "утра" if shift_word == "утро" else "вечера"
+    shift_gen = "утра" if shift_word == "утро" else "вечера"   # «до вечера», «с утра»
+    shift_acc = shift_word                                     # «сводка на утро / на вечер»
 
     segs = [{
         "id": "s01", "vo": "s01.mp3", "scene": "title", "gap": 1.10,
-        "say": "Сводка на %s. Это радио «В ОКОПЕ». %s." % (shift_gen, say_date.capitalize()),
+        "say": "Сводка на %s. Это радио «В ОКОПЕ». %s." % (shift_acc, say_date.capitalize()),
         "title": "СВОДКА", "kicker": "ЕЖЕДНЕВНАЯ ПЕРЕДАЧА",
         "badge": "%s · %s" % (shift_word.upper(), "08:00" if shift_word == "утро" else "20:00"),
-        "date": up_date, "sub": "Сводка на %s. Это радио «В ОКОПЕ»." % shift_gen,
+        "date": up_date, "sub": "Сводка на %s. Это радио «В ОКОПЕ»." % shift_acc,
     }]
 
     n = len(facts)
@@ -171,6 +174,29 @@ def build_script(data, facts_max=7):
         "note": data["cta"], "sub": data["cta"],
         "sub2": "Своих не бросаем. Радио «В ОКОПЕ».",
     })
+
+    # не больше 10 реплик за один ход синтеза: склеиваем «где наши» и «спасибо»
+    if len(segs) > 10:
+        li = next(i for i, x in enumerate(segs) if x["scene"] == "line")
+        ti = next(i for i, x in enumerate(segs) if x["scene"] == "thanks")
+        ln, th = segs[li], segs[ti]
+        cut = round(len(ln["say"]) / float(len(ln["say"]) + len(th["say"]) + 1), 3)
+        merged = {
+            "id": ln["id"], "vo": ln["vo"], "scene": "line", "scene2": "thanks",
+            "cut": cut, "gap": th["gap"],
+            "say": ln["say"] + " " + th["say"],
+            "kicker": ln["kicker"], "head": ln["head"], "items": ln["items"],
+            "sub": ln["sub"],
+            "spec2": {"kicker": th["kicker"], "head": th["head"],
+                      "items": th["items"], "sub": th["sub"]},
+            "sub2": th["sub"],
+        }
+        segs = [x for i, x in enumerate(segs) if i not in (li, ti)]
+        segs.insert(li, merged)
+        for n2, x in enumerate(segs, 1):
+            x["id"] = "s%02d" % n2
+            x["vo"] = "s%02d.mp3" % n2
+        print("реплик больше 10 — «где наши» и «спасибо» склеены в одну")
 
     words = sum(len(s["say"].split()) for s in segs)
     spec = {

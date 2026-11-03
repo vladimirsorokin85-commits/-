@@ -95,6 +95,12 @@ def build_audio(spec):
              "-ar", "44100", "-ac", "2", clean])
         run([ffmpeg(), "-y", "-i", clean, "-af", vo_chain(spec), "-ar", "44100", "-ac", "2", ready])
         d = dur(ready)
+        words = len(re.findall(r"[А-Яа-яЁёA-Za-z]+", s.get("say", "")))
+        if words and d > 0.4:
+            wpm = words / d * 60.0
+            if not (95 <= wpm <= 175):
+                print("  ! темп %s: %.0f слов/мин (%.2f с, %d слов) — проверить реплику"
+                      % (s["id"], wpm, d, words))
         segs.append({"id": s["id"], "scene": s["scene"], "file": ready,
                      "start": round(t, 3), "dur": round(d, 3), "spec": s})
         t += d + float(s.get("gap", 1.0))
@@ -195,6 +201,7 @@ def frame(seglist, tl, t):
     if seg["spec"].get("scene2") and seg["dur"] and l >= seg["dur"] * cut:
         l2 = l - seg["dur"] * cut
         spec2 = dict(seg["spec"])
+        spec2.update(seg["spec"].get("spec2") or {})
         spec2["sub"] = seg["spec"].get("sub2", seg["spec"].get("sub", ""))
         S.FN[seg["spec"]["scene2"]](cv, d, t, l2, spec2)
     else:
