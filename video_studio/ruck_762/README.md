@@ -65,3 +65,14 @@ python3 check_facts.py
 
 Проверка одного кадра без полного рендера: `python3 render.py r1 6.5 19.0`
 (складывает jpg в `/tmp/rk`).
+
+## Скачать (ссылки выдаются с тегом, не с веткой)
+
+Ветка содержит слэш, поэтому в ссылках указывается тег `delivery_2026_11_03`:
+
+- ролик 1: https://github.com/vladimirsorokin85-commits/-/blob/delivery_2026_11_03/video_studio/ruck_762/v_okope_ruck762_r1_9x16.mp4
+- ролик 2: https://github.com/vladimirsorokin85-commits/-/blob/delivery_2026_11_03/video_studio/ruck_762/v_okope_ruck762_r2_9x16.mp4
+- обложки: `thumb_r1_1080x1920.jpg`, `thumb_r2_1080x1920.jpg` в той же папке
+- прямо файлом: заменить `/blob/` на `/raw/`
+
+Правило зафиксировано в `video_studio/LINKS_POLICY.md`.
