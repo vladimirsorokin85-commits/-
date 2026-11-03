@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "file": "/home/user/-/video_studio/sleep_factory/season_02/episode_02/rendered/s02e02_full.mp4",
+  "duration_seconds": 2104.648,
+  "duration_minutes": 35.077,
+  "video": {
+    "codec": "h264",
+    "resolution": [
+      1280,
+      720
+    ],
+    "fps": 24.0
+  },
+  "audio": {
+    "codec": "aac",
+    "sample_rate_hz": "44100",
+    "channels": 1
+  },
+  "active_speech": {
+    "method": "WebRTC VAD mode 2",
+    "sample_rate_hz": 16000,
+    "frame_ms": 30,
+    "active_frames": 64431,
+    "total_frames": 70155,
+    "active_speech_seconds": 1932.93,
+    "vad_audio_seconds": 2104.65,
+    "speech_share": 0.918409236690186,
+    "trailing_unanalysed_seconds": 0.0067
+  },
+  "loudness": {
+    "integrated_lufs": -19.92,
+    "true_peak_dbtp": -2.08,
+    "loudness_range_lu": 3.7,
+    "gate_threshold_lufs": -30.68,
+    "measurement_only": true,
+    "analysis_target_lufs": -16.0,
+    "analysis_target_true_peak_dbtp": -1.5
+  },
+  "thresholds": {
+    "minimum_duration_seconds": 2100.0,
+    "minimum_active_speech_share": 0.85
+  },
+  "checks": {
+    "minimum_duration": true,
+    "resolution_1280x720": true,
+    "video_h264": true,
+    "audio_aac": true,
+    "frame_rate_24fps": true,
+    "full_decode": true,
+    "minimum_active_speech_share": true,
+    "no_clipping_true_peak": true
+  },
+  "failures": []
+}

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "duration_seconds": 2200.125,
+  "resolution": [
+    1280,
+    720
+  ],
+  "fps": 24.0,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "file_size_bytes": 66445432,
+  "video_crf": 32,
+  "video_preset": "veryfast",
+  "audio_bitrate_kbps": 128,
+  "size_target_mb": null,
+  "size_target_met": null,
+  "note": "Visual stream retained at CRF 32; audio remuxed at 128 kb/s to prioritize fidelity; no file-size cap applied."
+}

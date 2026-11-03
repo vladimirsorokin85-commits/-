@@ -1,0 +1,89 @@
+{
+  "status": "passed",
+  "project_targets": {
+    "minimum_video_seconds": 2100,
+    "minimum_speech_share": 0.85,
+    "actual_video_seconds": 2286.525717,
+    "actual_video_hms": "00:38:06.526",
+    "speech_seconds": 1964.52,
+    "speech_hms": "00:32:44.520",
+    "speech_share": 0.85917249,
+    "speech_share_percent": 85.9172,
+    "targets_met": true,
+    "speech_measurement": "WebRTC VAD mode 2; 30 ms frames at 16 kHz; detector reset for each of 66 scene windows; decoded final MP4 AAC; denominator is the full finished MP4 duration."
+  },
+  "final_video": {
+    "filename": "s01e05_full.mp4",
+    "size_bytes": 162360188,
+    "sha256": "6412a49524d0d32ee73e192d6740d609b9f96fcf79d59daa3766ccee98f2c0ea",
+    "resolution": "1280x720",
+    "fps": 24,
+    "video_frames": 54876,
+    "video_codec": "h264",
+    "video_crf": 20,
+    "video_preset": "slow",
+    "audio_codec": "aac",
+    "audio_sample_rate_hz": 44100,
+    "audio_channels": 1,
+    "audio_integrated_loudness_lufs": -19.7,
+    "audio_loudness_range_lu": 4.9,
+    "audio_true_peak_dbtp": -2.0
+  },
+  "mix": {
+    "filename": "s01e05_mix.mp3",
+    "timeline_target_duration_seconds": 2281.852,
+    "measured_mp3_duration_seconds": 2281.900375,
+    "source_voice_seconds": 2139.852,
+    "scene_count": 66,
+    "inter_scene_gap_seconds": 2.0,
+    "mp3_bitrate_target_kbps": 192
+  },
+  "series_intro": {
+    "image": "../images/episode_05_intro.png",
+    "approved_sting_audio_seconds": 3.6,
+    "video_segment_seconds": 4.586,
+    "note": "Recognizable shared intro with one small story detail changed; approved logo sting, switch clicks and soft ship hum retained; no synthesized melody."
+  },
+  "subtitles": {
+    "filename": "s01e05_ru.srt",
+    "cue_count": 1130,
+    "intro_offset_seconds": 4.586,
+    "last_cue_end_seconds": 2274.438,
+    "timing_method": "Estimated within each TTS scene by text-character weight; not word-level forced alignment."
+  },
+  "chapters": {
+    "filename": "s01e05_chapters.txt",
+    "count": 22,
+    "first_chapter_at_zero": true
+  },
+  "package": {
+    "directory": "github_download",
+    "part_count": 3,
+    "part_sizes_bytes": [78643200, 78643200, 5073788],
+    "parts_reassembled_byte_for_byte": true,
+    "embedded_sha256_in_windows_bat": true,
+    "windows_bat_downloads_missing_helper_and_parts": true,
+    "windows_helper_filename": "restore_video_windows.ps1",
+    "windows_helper_sha256": "ed585e28368effe0f470f6be216944500178e3195dd65e3678fb07a117f5c6bc",
+    "windows_batch_static_checks": "passed",
+    "windows_batch_runtime_executed": false,
+    "windows_batch_runtime_note": "No Windows CMD/PowerShell runtime was available. The generated BAT/helper source list, exact part sizes, helper hash and embedded video checksum were checked; the same part set was reassembled and verified byte-for-byte with the shell restore path."
+  },
+  "checks": {
+    "all_66_voice_files_structurally_valid_opus": true,
+    "mix_timeline_ids_match_script": true,
+    "body_render_qc": "passed",
+    "final_video_ffprobe_streams_duration_and_frame_count": "passed",
+    "full_video_audio_video_decode": "passed",
+    "speech_share_threshold": "passed",
+    "split_parts_reassembled_byte_for_byte": "passed",
+    "visual_frame_samples": [
+      "intro 00:00:02.2",
+      "opening source frame 01 at approximately 00:00:04.583 (decoded frame n=110)",
+      "source frame 02 at approximately 00:01:20.667 (decoded frame n=1936)",
+      "source frame 27/map at 00:34:10",
+      "source frame 30/closing hosts at 00:38:00"
+    ],
+    "visual_review": "All 30 source stills were reviewed. Decoded final-video samples preserve the intended sequence: frame 01 opens the body, frame 02 follows, frame 27 appears in its expected late segment with one suspended map, three silver ribbons, eight amber nodes and one intentional gap, and frame 30 closes the story. No people, screens, captions, duplicate flat map or tray/case appear in the episode visuals."
+  }
+}

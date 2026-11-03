@@ -1,0 +1,117 @@
+{
+  "status": "passed",
+  "project_targets": {
+    "minimum_video_seconds": 2100,
+    "minimum_speech_share": 0.85,
+    "actual_video_seconds": 2245.135011,
+    "actual_video_hms": "00:37:25.135",
+    "speech_seconds": 1924.35,
+    "speech_hms": "00:32:04.350",
+    "speech_share": 0.8571199463,
+    "speech_share_percent": 85.712,
+    "targets_met": true,
+    "speech_measurement": "WebRTC VAD mode 2; 30 ms frames at 16 kHz; detector reset for each of 66 scene windows beginning at the 4.586 s intro offset plus mix-timeline scene boundaries; denominator is the full finished MP4 duration."
+  },
+  "final_video": {
+    "filename": "s01e06_full.mp4",
+    "size_bytes": 145468947,
+    "sha256": "dceb02b0edf3a6bfc9a46399b9b4417d842eefc68532dcd77d537c29f7f836b5",
+    "resolution": "1280x720",
+    "fps": 24,
+    "video_stream_seconds": 2245.125,
+    "video_frames": 53883,
+    "video_codec": "h264",
+    "video_crf": 20,
+    "video_preset": "slow",
+    "audio_codec": "aac",
+    "audio_sample_rate_hz": 44100,
+    "audio_channels": 1,
+    "audio_integrated_loudness_lufs": -19.8,
+    "audio_loudness_range_lu": 5.0,
+    "audio_true_peak_dbfs": -2.0
+  },
+  "mix": {
+    "filename": "s01e06_mix.mp3",
+    "timeline_target_duration_seconds": 2240.501,
+    "measured_mp3_duration_seconds": 2240.548,
+    "source_voice_seconds": 2092.501,
+    "scene_count": 66,
+    "inter_scene_gap_seconds": 2.0,
+    "mp3_bitrate_target_kbps": 192
+  },
+  "series_intro": {
+    "image": "../images/episode_06_intro.png",
+    "approved_sting_audio_seconds": 3.6,
+    "video_segment_seconds": 4.586,
+    "note": "Recognizable shared intro structure retained; approved switch clicks and soft hum retained; no synthesized melody."
+  },
+  "frame_timing": {
+    "mapping_file": "../frame_acts.json",
+    "timeline_file": "s01e06_mix.timeline.json",
+    "method": "Each mapped act's real timeline interval is divided evenly among its stills; integer frame counts use largest-remainder allocation so the 53,773-frame body total is preserved.",
+    "body_frame_count": 53773,
+    "image_count": 30,
+    "timing_mode": "act-aligned",
+    "repair_images_follow_diagnosis": true
+  },
+  "subtitles": {
+    "filename": "s01e06_ru.srt",
+    "cue_count": 1110,
+    "intro_offset_seconds": 4.586,
+    "last_cue_end_seconds": 2233.087,
+    "timing_method": "Estimated within each TTS scene by text-character weight; not word-level forced alignment."
+  },
+  "chapters": {
+    "filename": "s01e06_chapters.txt",
+    "count": 22,
+    "first_chapter_at_zero": true,
+    "last_chapter": "00:35:35"
+  },
+  "package": {
+    "directory": "github_download",
+    "part_count": 2,
+    "part_sizes_bytes": [78643200, 66825747],
+    "parts_reassembled_byte_for_byte": true,
+    "shell_restore_runtime_executed": true,
+    "shell_restore_passed": true,
+    "embedded_sha256_in_restore_scripts": true,
+    "windows_helper_filename": "restore_video_windows.ps1",
+    "windows_helper_sha256": "3f4d3b52daf46b4c29cb006d0245fa2453b50435893e5d42e4126a663148c891",
+    "windows_batch_static_checks": "passed",
+    "windows_batch_runtime_executed": false,
+    "windows_batch_runtime_note": "No Windows CMD/PowerShell runtime was available. The generated BAT, helper hash, embedded MP4 checksum, part names and sizes were statically checked; the same parts were reassembled and verified byte-for-byte with the executed shell restore path."
+  },
+  "supporting_reel": {
+    "filename": "../../reels/reel_01_bulq_season.mp4",
+    "duration_seconds": 40.0,
+    "resolution": "720x1280",
+    "fps": 24,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "caption_cues": 18,
+    "caption_timing": "estimated, inherited from S01E05 scene-level SRT; no forced alignment",
+    "full_decode_passed": true,
+    "size_bytes": 1432586,
+    "sha256": "9224f795722f2a5377c0d6fdee64e1cedf8cdedc99212726f2335a1d0104fd18",
+    "scope": "Promotes the whole first season; remains separate from the long episode and does not overwrite pilot Reels."
+  },
+  "checks": {
+    "all_66_voice_files_structurally_valid_opus": true,
+    "mix_timeline_ids_match_script": true,
+    "body_render_qc": "passed",
+    "act_timing_frame_counts_sum_to_target": true,
+    "final_video_ffprobe_streams_duration_and_frame_count": "passed",
+    "full_video_audio_video_decode": "passed",
+    "speech_share_threshold": "passed",
+    "split_parts_reassembled_byte_for_byte": "passed",
+    "visual_frame_samples": [
+      "intro at 00:00:02.2",
+      "pre-install comparison frame at 00:31:50",
+      "installation frame after the diagnosis act begins at 00:32:20",
+      "post-repair frame at 00:34:10",
+      "closing frame at 00:37:10"
+    ],
+    "visual_review": "The 29 unique source stills were reviewed; five decoded final-video samples confirm the shared intro, the pre-install comparison before the repair action, installation only after the diagnosis act begins, the post-repair sequence and the closing co-hosts."
+  },
+  "story_status": "Рабочее предложение «Три стука в пустом трюме» не отмечено как отдельно подтверждённое пользователем."
+}

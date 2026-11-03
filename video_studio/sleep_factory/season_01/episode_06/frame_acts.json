@@ -1,0 +1,27 @@
+{
+  "frame_acts": [
+    "a01", "a01",
+    "a02", "a02",
+    "a03", "a03",
+    "a04",
+    "a05",
+    "a06",
+    "a07",
+    "a08",
+    "a09",
+    "a10",
+    "a11",
+    "a12",
+    "a13",
+    "a14",
+    "a15",
+    "a16",
+    "a17",
+    "a18",
+    "a19",
+    "a20", "a20", "a20",
+    "a21", "a21",
+    "a22", "a22", "a22"
+  ],
+  "note": "Each frame is held within its mapped narrative act. When an act has several frames, its actual timeline interval is divided evenly among them; act start times come from the final mix timeline. Scene 07 reuses the empty-hold still from scene 03."
+}

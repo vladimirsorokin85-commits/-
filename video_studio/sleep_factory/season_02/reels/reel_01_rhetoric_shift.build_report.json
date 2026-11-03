@@ -1,0 +1,42 @@
+{
+  "title": "Бордель закрылся, автосписание — нет: Премиальная вонь",
+  "duration_seconds": 40.0,
+  "video": {
+    "codec_name": "h264",
+    "codec_type": "video",
+    "width": 720,
+    "height": 1280,
+    "r_frame_rate": "24/1",
+    "nb_frames": "960"
+  },
+  "audio": {
+    "codec_name": "aac",
+    "codec_type": "audio",
+    "sample_rate": "44100",
+    "channels": 1,
+    "r_frame_rate": "0/0",
+    "nb_frames": "1720"
+  },
+  "size_bytes": 1468987,
+  "speech_seconds": 31.032,
+  "speech_share_estimate": 0.7758,
+  "subtitle_timing": "Estimated by character weight within each generated clip; not word-level forced alignment.",
+  "visuals": [
+    "approved season intro",
+    "reverse-valve macro",
+    "empty abandoned spa service bay",
+    "sealed controlled-cartridge prop",
+    "S02E01 cover with only the two canon co-hosts"
+  ],
+  "series_voice_tags": {
+    "Bulq": "voice-07",
+    "Mr. Meowskis": "voice-08"
+  },
+  "speech_tool_voice_ids": {
+    "Bulq": "voice-09",
+    "Mr. Meowskis": "voice-10"
+  },
+  "intro_sting_seconds": 3.6,
+  "full_decode_passed": true,
+  "sha256": "173f3ba8f001c9272d895027dba41cad6bdee2692a4ac50139c9f2a4808a7184"
+}

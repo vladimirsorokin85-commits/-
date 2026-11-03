@@ -1,0 +1,206 @@
+{
+  "duration_seconds": 2200.062,
+  "voice_seconds": 2112.06,
+  "speech_share": 0.96,
+  "inter_scene_gap_seconds": 3.333,
+  "scenes": [
+    {
+      "id": "s01e02_a01",
+      "voice": "voice-06",
+      "tag": "ЗАСТАВКА",
+      "title": "Спасение не входит в гарантию",
+      "start": 6.0,
+      "end": 88.882,
+      "audio": "../voice2/s01e02_a01.opus"
+    },
+    {
+      "id": "s01e02_a02",
+      "voice": "voice-04",
+      "tag": "ВИТРИНА",
+      "title": "Маяк без гарантии",
+      "start": 92.215,
+      "end": 193.777,
+      "audio": "../voice2/s01e02_a02.opus"
+    },
+    {
+      "id": "s01e02_a03",
+      "voice": "voice-06",
+      "tag": "ПОКУПАТЕЛЬ",
+      "title": "Капитан Отвод",
+      "start": 197.111,
+      "end": 286.23,
+      "audio": "../voice2/s01e02_a03.opus"
+    },
+    {
+      "id": "s01e02_a04",
+      "voice": "voice-04",
+      "tag": "ПРОВЕРКА",
+      "title": "Сначала контакты",
+      "start": 289.563,
+      "end": 385.766,
+      "audio": "../voice2/s01e02_a04.opus"
+    },
+    {
+      "id": "s01e02_a05",
+      "voice": "voice-05",
+      "tag": "ЛОТ",
+      "title": "Проверка маяка",
+      "start": 389.099,
+      "end": 500.146,
+      "audio": "../voice2/s01e02_a05.opus"
+    },
+    {
+      "id": "s01e02_a06",
+      "voice": "voice-06",
+      "tag": "ОТЛЁТ",
+      "title": "За чужой счёт",
+      "start": 503.479,
+      "end": 597.086,
+      "audio": "../voice2/s01e02_a06.opus"
+    },
+    {
+      "id": "s01e02_a07",
+      "voice": "voice-04",
+      "tag": "СКАЧОК",
+      "title": "Маршрут на Актуария-Ноль",
+      "start": 600.419,
+      "end": 701.326,
+      "audio": "../voice2/s01e02_a07.opus"
+    },
+    {
+      "id": "s01e02_a08",
+      "voice": "voice-06",
+      "tag": "ПРИБЫТИЕ",
+      "title": "Станция претензий",
+      "start": 704.659,
+      "end": 801.791,
+      "audio": "../voice2/s01e02_a08.opus"
+    },
+    {
+      "id": "s01e02_a09",
+      "voice": "voice-04",
+      "tag": "ЗАЛ ОЖИДАНИЯ",
+      "title": "Убыток без повреждений",
+      "start": 805.124,
+      "end": 910.235,
+      "audio": "../voice2/s01e02_a09.opus"
+    },
+    {
+      "id": "s01e02_a10",
+      "voice": "voice-06",
+      "tag": "ОБЪЯСНЕНИЕ",
+      "title": "Герой без чека",
+      "start": 913.568,
+      "end": 1008.4,
+      "audio": "../voice2/s01e02_a10.opus"
+    },
+    {
+      "id": "s01e02_a11",
+      "voice": "voice-05",
+      "tag": "ЛОТ",
+      "title": "Запрос данных",
+      "start": 1011.733,
+      "end": 1107.58,
+      "audio": "../voice2/s01e02_a11.opus"
+    },
+    {
+      "id": "s01e02_a12",
+      "voice": "voice-06",
+      "tag": "ОКНО",
+      "title": "Плата за ожидание",
+      "start": 1110.913,
+      "end": 1210.394,
+      "audio": "../voice2/s01e02_a12.opus"
+    },
+    {
+      "id": "s01e02_a13",
+      "voice": "voice-04",
+      "tag": "МАСТЕРСКАЯ",
+      "title": "Писк и вода",
+      "start": 1213.728,
+      "end": 1315.642,
+      "audio": "../voice2/s01e02_a13.opus"
+    },
+    {
+      "id": "s01e02_a14",
+      "voice": "voice-06",
+      "tag": "ОЦЕНЩИК",
+      "title": "Предотвращённый ущерб",
+      "start": 1318.976,
+      "end": 1412.87,
+      "audio": "../voice2/s01e02_a14.opus"
+    },
+    {
+      "id": "s01e02_a15",
+      "voice": "voice-05",
+      "tag": "ЛОТ",
+      "title": "Журнал маршрута",
+      "start": 1416.203,
+      "end": 1511.49,
+      "audio": "../voice2/s01e02_a15.opus"
+    },
+    {
+      "id": "s01e02_a16",
+      "voice": "voice-04",
+      "tag": "РАССКАЗ",
+      "title": "Что было в коридоре",
+      "start": 1514.823,
+      "end": 1614.93,
+      "audio": "../voice2/s01e02_a16.opus"
+    },
+    {
+      "id": "s01e02_a17",
+      "voice": "voice-06",
+      "tag": "РЫНОК",
+      "title": "Старый кабель",
+      "start": 1618.263,
+      "end": 1709.12,
+      "audio": "../voice2/s01e02_a17.opus"
+    },
+    {
+      "id": "s01e02_a18",
+      "voice": "voice-04",
+      "tag": "ВОСПОМИНАНИЕ",
+      "title": "Ржавый болт",
+      "start": 1712.453,
+      "end": 1808.448,
+      "audio": "../voice2/s01e02_a18.opus"
+    },
+    {
+      "id": "s01e02_a19",
+      "voice": "voice-06",
+      "tag": "СЛУШАНИЕ",
+      "title": "Ноль повреждений",
+      "start": 1811.781,
+      "end": 1903.45,
+      "audio": "../voice2/s01e02_a19.opus"
+    },
+    {
+      "id": "s01e02_a20",
+      "voice": "voice-05",
+      "tag": "ЛОТ",
+      "title": "Сверка записи",
+      "start": 1906.784,
+      "end": 1984.91,
+      "audio": "../voice2/s01e02_a20.opus"
+    },
+    {
+      "id": "s01e02_a21",
+      "voice": "voice-04",
+      "tag": "РЕШЕНИЕ",
+      "title": "Компенсация за то, чего нет",
+      "start": 1988.244,
+      "end": 2097.822,
+      "audio": "../voice2/s01e02_a21.opus"
+    },
+    {
+      "id": "s01e02_a22",
+      "voice": "voice-06",
+      "tag": "ФИНАЛ",
+      "title": "Не всякая прибыль звенит",
+      "start": 2101.155,
+      "end": 2188.062,
+      "audio": "../voice2/s01e02_a22.opus"
+    }
+  ]
+}

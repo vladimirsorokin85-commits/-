@@ -1,0 +1,41 @@
+{
+  "title": "Бульк меняет риторику — второй сезон без сахарной пудры",
+  "duration_seconds": 40.0,
+  "video": {
+    "codec_name": "h264",
+    "codec_type": "video",
+    "width": 720,
+    "height": 1280,
+    "r_frame_rate": "24/1",
+    "nb_frames": "960"
+  },
+  "audio": {
+    "codec_name": "aac",
+    "codec_type": "audio",
+    "sample_rate": "44100",
+    "channels": 1,
+    "r_frame_rate": "0/0",
+    "nb_frames": "1719"
+  },
+  "size_bytes": 1453056,
+  "speech_seconds": 31.44,
+  "speech_share_estimate": 0.786,
+  "subtitle_timing": "Estimated by character weight within each generated clip; not word-level forced alignment.",
+  "visuals": [
+    "approved season intro",
+    "reverse-valve macro",
+    "empty abandoned spa service bay",
+    "S02E01 cover with only the two canon co-hosts"
+  ],
+  "series_voice_tags": {
+    "Bulq": "voice-07",
+    "Mr. Meowskis": "voice-08"
+  },
+  "speech_tool_voice_ids": {
+    "Bulq": "voice-09",
+    "Mr. Meowskis": "voice-10"
+  },
+  "intro_sting_seconds": 3.6,
+  "full_decode_passed": true,
+  "sha256": "13a688b2ad296480bd5c9bc92a8e266b0925c9c3b15594619b3ea3e5ea4a993e"
+}
