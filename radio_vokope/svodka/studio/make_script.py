@@ -88,7 +88,10 @@ def parse(md_path):
         if not re.match(r"^([-*•]|\d+[.)])\s+", line):
             continue
         body = re.sub(r"^([-*•]|\d+[.)])\s+", "", line).strip()
-        if "|" in body:
+        explicit_note = ""
+        if body.count("|") >= 2:                     # «Тезис | текст | пояснение в кадре»
+            head, say, explicit_note = [x.strip() for x in body.split("|", 2)]
+        elif "|" in body:
             head, say = [x.strip() for x in body.split("|", 1)]
         elif re.search(r"\s[—–-]\s", body) and len(body.split("—")[0].split()) <= 8:
             head, say = [x.strip() for x in re.split(r"\s[—–-]\s", body, 1)]
@@ -98,17 +101,28 @@ def parse(md_path):
         if say:
             if not head:
                 head = re.split(r"[.!?]\s", say)[0][:90].strip()
-            note = ""
-            parts = [x.strip() for x in re.split(r"(?<=[.!?])\s+", say) if x.strip()]
-            if len(parts) > 1 and len(head.split()) <= 5:
-                note = re.split(r",|\s—\s", parts[2] if len(parts) > 2 else parts[1])[0].strip()
-                note = " ".join(note.split()[:10])
+            note = explicit_note
+            if not note:
+                parts = [x.strip() for x in re.split(r"(?<=[.!?])\s+", say) if x.strip()]
+                if len(parts) > 1 and len(head.split()) <= 5:
+                    note = re.split(r",|\s—\s", parts[-1])[0].strip()
+                    note = " ".join(note.split()[:10])
             facts.append({"head": head, "say": say, "note": note})
-    dirs = [x.strip() for x in re.split(r"[·•|,]", block("Где наши работают")) if x.strip()]
+    dirs_raw = block("Где наши работают")
+    dirs_say = ""
+    keep = []
+    for ln in dirs_raw.splitlines():
+        ln = ln.strip()
+        if ln.startswith(">"):                       # своя фраза для озвучки
+            dirs_say = ln.lstrip(">").strip()
+        elif ln:
+            keep.append(ln)
+    dirs = [x.strip() for x in re.split(r"[·•|,]", " ".join(keep)) if x.strip()]
     thanks = [x.strip() for x in re.split(r"[·•|,]", block("Благодарность")) if x.strip()]
     cta = block("Куда идти") or "Адреса и сборы — в описании выпуска"
     return {"date": date, "shift": shift, "source": source, "facts": facts,
-            "dirs": dirs, "thanks": thanks, "cta": re.sub(r"\s+", " ", cta)}
+            "dirs": dirs, "dirs_say": dirs_say, "thanks": thanks,
+            "cta": re.sub(r"\s+", " ", cta)}
 
 
 def _glossary():
@@ -169,7 +183,9 @@ def build_script(data, facts_max=7, use_respell=False):
     dirs = data["dirs"][:4]
     segs.append({
         "id": "s%02d" % idx, "vo": "s%02d.mp3" % idx, "scene": "line", "gap": 1.05,
-        "say": "Отдельная строка — где наши работают. %s." % (", ".join(dirs) if dirs else "Направления коротко."),
+        "say": "Отдельная строка — где наши работают. %s" % (
+            data.get("dirs_say") or
+            (", ".join(x.lower() for x in dirs) + "." if dirs else "направления коротко.")),
         "kicker": "ОТДЕЛЬНАЯ СТРОКА", "head": "ГДЕ НАШИ РАБОТАЮТ",
         "items": [d.upper() for d in dirs] or ["НАПРАВЛЕНИЯ"],
         "sub": "Где наши работают — направления",
@@ -239,15 +255,32 @@ def build_script(data, facts_max=7, use_respell=False):
     return spec, words
 
 
+NEG_WORDS = re.compile(r"(?<![А-Яа-яЁёA-Za-z])(ни|без|не|никак\w*|нельзя|запрещ\w*|"
+                       r"не\s+будет|не\s+услышишь|не\s+берём|не\s+бер[её]м)(?![А-Яа-яЁёA-Za-z])",
+                       re.I)
+
+
+def _is_negated(text, pos):
+    """«ни координат», «без политики», «чего не будет» — объяснение стоп-листа, не нарушение."""
+    left = text.rfind(".", 0, pos)
+    left = text.rfind("!", 0, pos) if text.rfind("!", 0, pos) > left else left
+    left = text.rfind("?", 0, pos) if text.rfind("?", 0, pos) > left else left
+    return bool(NEG_WORDS.search(text[left + 1:pos]))
+
+
 def check(spec, words):
     say_all = " ".join(s["say"] for s in spec["segments"])
     bad = []
     for rx, name in STOP_HARD:
-        if re.search(rx, say_all, re.I):
-            bad.append("СТОП-ЛИСТ: " + name)
+        for m in re.finditer(rx, say_all, re.I):
+            if not _is_negated(say_all, m.start()):
+                bad.append("СТОП-ЛИСТ: " + name)
+                break
     for rx, name in STOP_SOFT:
-        if re.search(rx, say_all, re.I):
-            bad.append("проверить вручную: " + name)
+        for m in re.finditer(rx, say_all, re.I):
+            if not _is_negated(say_all, m.start()):
+                bad.append("проверить вручную: " + name)
+                break
     clips = len(spec["segments"])
     if clips > 10:
         bad.append("реплик %d — больше 10 за один ход (озвучивать в два хода)" % clips)
