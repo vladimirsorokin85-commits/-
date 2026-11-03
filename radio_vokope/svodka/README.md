@@ -28,6 +28,9 @@ python3 build.py scripts/svodka_2026-11-04_utro.json --audio    # только �
 python3 build.py scripts/svodka_2026-11-04_utro.json --still 12 40 87   # кадры для проверки
 python3 build.py scripts/svodka_2026-11-04_utro.json            # mp4 + mp3 + txt
 python3 check.py out/svodka_2026-11-04_utro.mp4                 # приёмка перед сдачей
+
+# если текст длинный и выпуск вылезает за 180 с — добор темпа без переозвучки:
+python3 build.py scripts/svodka_2026-11-04_utro.json --fit 176
 ```
 
 `make_script.py` разбирает факты терпимо: нумерованный список, маркеры `- * •`,

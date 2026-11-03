@@ -237,7 +237,23 @@ def main():
     spec_path = sys.argv[1]
     with open(spec_path, encoding="utf-8") as f:
         spec = json.load(f)
+    fit = None
+    if "--fit" in sys.argv:
+        fit = float(sys.argv[sys.argv.index("--fit") + 1])
+    spec.setdefault("tempo", 1.0)
     tl, master = build_audio(spec)
+    if fit:
+        tries = 0
+        while tl["total"] > fit and spec["tempo"] < 1.28 and tries < 4:
+            spec["tempo"] = round(min(1.28, spec["tempo"] * tl["total"] / fit), 3)
+            print("не влезли в %.0f с (%.1f) — темп %.2f, пересобираю звук"
+                  % (fit, tl["total"], spec["tempo"]))
+            tl, master = build_audio(spec)
+            tries += 1
+        print("итог: %.1f с при темпе %.2f" % (tl["total"], spec["tempo"]))
+        if tl["total"] > fit:
+            print("  ! в окно не влезли даже на предельном темпе — сократить текст на %d слов"
+                  % int((tl["total"] - fit) * 2.2))
     with open(os.path.join(BASE, "out", "%s_segments.json" % spec["slug"]), encoding="utf-8") as f:
         seglist = json.load(f)
 
