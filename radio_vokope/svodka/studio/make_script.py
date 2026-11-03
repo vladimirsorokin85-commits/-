@@ -202,15 +202,17 @@ def build_script(data, facts_max=7, use_respell=False):
     })
 
     idx += 1
-    cta_say = "Куда идти помогать — %s." % data["cta"].rstrip(".")
+    cta_lc = data["cta"][:1].lower() + data["cta"][1:]      # в речи — со строчной
+    cta_say = "Куда идти помогать — %s." % cta_lc.rstrip(".")
     outro_say = "Своих не бросаем. Радио «В ОКОПЕ»."
     cut = round(len(cta_say) / float(len(cta_say) + len(outro_say) + 1), 3)
+    cta_note = data["cta"][:1].upper() + data["cta"][1:]     # с заглавной в кадре
     segs.append({
         "id": "s%02d" % idx, "vo": "s%02d.mp3" % idx, "scene": "cta", "scene2": "outro",
         "cut": cut, "gap": 0.0, "say": cta_say + " " + outro_say,
         "kicker": "КУДА ИДТИ", "head": "ПОМОГАТЬ ЕСТЬ КУДА",
-        "note": data["cta"], "sub": data["cta"],
-        "sub2": "Своих не бросаем. Радио «В ОКОПЕ».",
+        "note": cta_note, "sub": "",
+        "sub2": "",
     })
 
     # не больше 10 реплик за один ход синтеза: склеиваем «где наши» и «спасибо»

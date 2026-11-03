@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Сцены «СВОДКИ». Все параметры приходят из script.json — движок не знает текста."""
+import re
+
 from PIL import Image, ImageDraw
 
 import gfx as G
@@ -146,11 +148,14 @@ def s_cta(cv, d, t, l, sc):
     p = G.c01(l / .26)
     text(cv, sc.get("kicker", "КУДА ИДТИ"), MONO, 19, W // 2, 214, ac(GOLD, 245 * p), p, "ma")
     _head(cv, sc.get("head", ""), G.c01((l - .08) / .28), y=252, size=58)
-    if l > .30:
+    note = sc.get("note", "")
+    if l > .30 and note:
         q = G.c01((l - .30) / .30)
-        G.lines_center(cv, sc.get("note", ""), COND, 36, 366, ac(TXT, 245 * q), q,
-                       maxw=W - 280)
-    subtitle(cv, sc.get("sub", ""), G.c01((l - .5) / .3))
+        G.lines_center(cv, note, COND, 36, 366, ac(TXT, 245 * q), q, maxw=W - 280)
+    sub = sc.get("sub", "")
+    if _same_text(sub, note) or _same_text(sub, sc.get("head", "")):
+        sub = ""            # то же самое уже крупно в кадре — не повторяем
+    subtitle(cv, sub, G.c01((l - .5) / .3))
 
 
 def s_outro(cv, d, t, l, sc):
@@ -162,7 +167,6 @@ def s_outro(cv, d, t, l, sc):
     if l > .40:
         q = G.c01((l - .40) / .30)
         text(cv, "РАДИО «В ОКОПЕ» · 24/7", MONO, 24, W // 2, 400, ac(GOLD, 250 * q), q, "ma")
-    subtitle(cv, sc.get("sub", ""), G.c01((l - .55) / .3))
 
 
 def s_fact(cv, d, t, l, sc):
@@ -210,3 +214,8 @@ FN = {
     "rule": s_rule, "line": s_line, "thanks": s_thanks, "cta": s_cta, "outro": s_outro,
     "fact": s_fact,
 }
+
+
+def _same_text(a, b):
+    norm = lambda t: re.sub(r"[^\wА-Яа-яЁё]+", "", t.lower())
+    return bool(a) and norm(a) == norm(b)
