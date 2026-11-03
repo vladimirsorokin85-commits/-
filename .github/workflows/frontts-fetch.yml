@@ -1,0 +1,73 @@
+name: Front-TS fetch (front-ts.ru → ветка frontts-data)
+
+# «МОСТ»: песочница агента не ходит на front-ts.ru, а GitHub Actions — ходит.
+# Разведка сайта и разбор карточек товаров идут здесь, результат публикуется
+# в ветку `frontts-data`. Забрать к себе:  bash tools/frontts_pull.sh
+#
+# Заявка/настройки: suppliers/frontts/plan.json  (host, mode, лимиты)
+#   mode=discovery — обойти сайт, собрать структуру и список URL товаров
+#   mode=products  — разобрать URL из suppliers/frontts/data/urls.txt (+фото)
+# Список URL для products коммитит агент: suppliers/frontts/data/urls.txt
+
+on:
+  push:
+    paths:
+      - "suppliers/frontts/**"
+      - ".github/workflows/frontts-fetch.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: frontts-fetch
+  cancel-in-progress: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Pillow (сжатие фото)
+        run: pip install --quiet Pillow
+
+      - name: Обход сайта
+        run: |
+          set -o pipefail
+          python3 suppliers/frontts/crawl.py 2>&1 | tee suppliers/frontts/data/run.log
+        env:
+          FRONTTS_MODE: ${{ github.event.inputs.mode || '' }}
+
+      - name: Сводка
+        if: always()
+        run: |
+          echo "--- что нашли ---"
+          head -c 4000 suppliers/frontts/data/discovery.json 2>/dev/null || true
+          head -c 2000 suppliers/frontts/data/summary.txt 2>/dev/null || true
+          du -sh suppliers/frontts/data suppliers/frontts/photos 2>/dev/null || true
+
+      - name: Публикуем в ветку frontts-data
+        if: always()
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          tmp=$(mktemp -d)
+          mkdir -p "$tmp/suppliers/frontts"
+          cp -r suppliers/frontts/data "$tmp/suppliers/frontts/data"
+          [ -d suppliers/frontts/photos ] && cp -r suppliers/frontts/photos "$tmp/suppliers/frontts/photos" || true
+          cd "$tmp"
+          git init -q
+          git checkout -q -b frontts-data
+          git add -A
+          git -c user.name="frontts-bot" -c user.email="frontts-bot@users.noreply.github.com" \
+              commit -qm "front-ts.ru $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push -q --force "https://x-access-token:${TOKEN}@github.com/${REPO}.git" frontts-data \
+            || echo "::warning::не удалось опубликовать ветку frontts-data"
