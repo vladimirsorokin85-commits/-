@@ -58,6 +58,23 @@ def loudness(path):
     return i, peak
 
 
+def edge_max(path, fps=2, w=320, h=180, band=6):
+    """Самая яркая точка в кромке кадра: ловит текст, уехавший за поля."""
+    import numpy as np
+    raw = subprocess.run([ffmpeg(), "-v", "quiet", "-i", path,
+                          "-vf", "fps=%d,scale=%d:%d" % (fps, w, h),
+                          "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                         capture_output=True).stdout
+    a = np.frombuffer(raw, dtype=np.uint8)
+    n = len(a) // (w * h * 3)
+    if not n:
+        return None
+    a = a[:n * w * h * 3].reshape(n, h, w, 3).mean(axis=3)
+    edge = max(a[:, :, :band].max(), a[:, :, -band:].max(),
+               a[:, :band, :].max(), a[:, -band:, :].max())
+    return int(edge)
+
+
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
@@ -89,6 +106,9 @@ def main():
     i, peak = loudness(mp4)
     add("громкость −14,5 ±1 LUFS", "%s LUFS" % i, i is not None and -15.5 <= i <= -13.5)
     add("пик не выше −1,0 dBFS", "%s dBFS" % peak, peak is not None and peak <= -1.0)
+
+    em = edge_max(mp4)
+    add("нет текста у края кадра", "макс %s" % em, em is not None and em <= 190)
 
     if os.path.exists(txt):
         with open(txt, encoding="utf-8") as f:

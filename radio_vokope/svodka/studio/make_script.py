@@ -33,6 +33,9 @@ import os
 import re
 import sys
 
+GLOSSARY = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "..", "..", "..", "video_studio", "toolkit", "glossary_stress.json")
+
 DAYS = ["первое", "второе", "третье", "четвёртое", "пятое", "шестое", "седьмое",
         "восьмое", "девятое", "десятое", "одиннадцатое", "двенадцатое", "тринадцатое",
         "четырнадцатое", "пятнадцатое", "шестнадцатое", "семнадцатое", "восемнадцатое",
@@ -108,12 +111,31 @@ def parse(md_path):
             "dirs": dirs, "thanks": thanks, "cta": re.sub(r"\s+", " ", cta)}
 
 
+def _glossary():
+    try:
+        with open(os.path.normpath(GLOSSARY), encoding="utf-8") as f:
+            return json.load(f)["terms"]
+    except Exception:
+        return {}
+
+
+def respell(text, terms):
+    """Только для озвучки: термины заменяем на фонетическую запись из словаря студии."""
+    for word, item in terms.items():
+        say = (item.get("say") or "").strip()
+        if not say or say.lower() == word.lower():
+            continue
+        text = re.sub(r"(?<![А-Яа-яЁёA-Za-z])" + re.escape(word) + r"(?![А-Яа-яЁёA-Za-z])",
+                      say, text)
+    return text
+
+
 def date_words(iso):
     y, mo, d = [int(x) for x in iso.split("-")]
     return "%s %s" % (DAYS[d - 1], MONTHS[mo - 1]), "%d %s %d" % (d, MONTHS[mo - 1].upper(), y)
 
 
-def build_script(data, facts_max=7):
+def build_script(data, facts_max=7, use_respell=False):
     if not data["date"]:
         sys.exit("во входном файле нет строки «# СВОДКА YYYY-MM-DD утро|вечер»")
     if not data["shift"]:
@@ -198,6 +220,11 @@ def build_script(data, facts_max=7):
             x["vo"] = "s%02d.mp3" % n2
         print("реплик больше 10 — «где наши» и «спасибо» склеены в одну")
 
+    if use_respell:
+        terms = _glossary()
+        for x in segs:
+            x["say"] = respell(x["say"], terms)
+
     words = sum(len(s["say"].split()) for s in segs)
     spec = {
         # имя файла — строго латиницей, как требует ТЗ: svodka_YYYY-MM-DD_utro|vecher
@@ -242,8 +269,10 @@ def main():
     ap.add_argument("facts")
     ap.add_argument("-o", "--out", required=True)
     ap.add_argument("--max-facts", type=int, default=7)
+    ap.add_argument("--respell", action="store_true",
+                    help="прогнать реплики через словарь произношения студии (РЭБ, БПЛА и т.п.)")
     a = ap.parse_args()
-    spec, words = build_script(parse(a.facts), a.max_facts)
+    spec, words = build_script(parse(a.facts), a.max_facts, a.respell)
     ok = check(spec, words)
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:
