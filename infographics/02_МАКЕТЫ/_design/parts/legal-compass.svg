@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="sx sx-legal" viewBox="0 0 952 340" width="952" height="340" role="img" aria-labelledby="sx-legal-title">
+  <title id="sx-legal-title">Правовой компас: купить можно, включать — только с законным правом; четыре легальные схемы</title>
+  <style>
+    .sx {
+      --sx-ink: var(--fg, #1D1E1A);
+      --sx-dim: var(--fg-dim, rgba(29, 30, 26, 0.66));
+      --sx-faint: var(--fg-faint, rgba(29, 30, 26, 0.40));
+      --sx-line: var(--line, rgba(29, 30, 26, 0.18));
+      --sx-line2: var(--line-strong, rgba(29, 30, 26, 0.38));
+      --sx-accent: var(--accent, #C8451F);
+      --sx-acc-ink: var(--accent-ink, #F4F1EA);
+      --sx-paper: var(--bg, #F4F1EA);
+    }
+    .sx .sx-ln { fill: none; stroke: var(--sx-line); stroke-width: 1; }
+    .sx .sx-ln2 { fill: none; stroke: var(--sx-line2); stroke-width: 1.2; }
+    .sx .sx-tick { fill: none; stroke: var(--sx-line2); stroke-width: 5; }
+    .sx .sx-acc { fill: var(--sx-accent); }
+    .sx .sx-paper { fill: var(--sx-paper); }
+    .sx .sx-t-kick { font-family: "Oswald", "Segoe UI", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.12em; fill: var(--sx-dim); }
+    .sx .sx-t-center { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.05em; fill: var(--sx-ink); }
+    .sx .sx-t-center-sm { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.04em; fill: var(--sx-dim); }
+    .sx .sx-num { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; fill: var(--sx-acc-ink); }
+    .sx .sx-num-dim { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; letter-spacing: 0.04em; fill: var(--sx-faint); }
+    .sx .sx-t-title { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.03em; fill: var(--sx-ink); }
+    .sx .sx-t-desc { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-dim); }
+    .sx .sx-note { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-faint); }
+    .sx .a-mid { text-anchor: middle; }
+  </style>
+
+  <!-- ================= КОМПАС (компактно, слева) ================= -->
+  <circle class="sx-tick" cx="140" cy="160" r="111.5" stroke-dasharray="1 8.73"/>
+  <circle class="sx-ln2" cx="140" cy="160" r="108"/>
+  <line class="sx-ln" x1="140" y1="64" x2="140" y2="256"/>
+  <line class="sx-ln" x1="44" y1="160" x2="236" y2="160"/>
+
+  <!-- узлы-направления -->
+  <rect class="sx-acc" x="128" y="45" width="24" height="24"/>
+  <text class="sx-num a-mid" x="140" y="57">1</text>
+  <rect class="sx-acc" x="236" y="148" width="24" height="24"/>
+  <text class="sx-num a-mid" x="248" y="160">2</text>
+  <rect class="sx-acc" x="128" y="261" width="24" height="24"/>
+  <text class="sx-num a-mid" x="140" y="273">3</text>
+  <rect class="sx-acc" x="20" y="148" width="24" height="24"/>
+  <text class="sx-num a-mid" x="32" y="160">4</text>
+
+  <!-- центр -->
+  <circle class="sx-paper" cx="140" cy="160" r="56"/>
+  <circle class="sx-ln2" cx="140" cy="160" r="56"/>
+  <text class="sx-t-center a-mid" x="140" y="150">КУПИТЬ МОЖНО</text>
+  <line class="sx-ln2" x1="116" y1="161" x2="164" y2="161"/>
+  <text class="sx-t-center-sm a-mid" x="140" y="178">ВКЛЮЧАТЬ —</text>
+  <text class="sx-t-center-sm a-mid" x="140" y="193">С ПРАВОМ</text>
+
+  <!-- примечание под компасом -->
+  <text class="sx-note" x="0" y="316">126-ФЗ «О связи» · ПП РФ № 1800 · ПП РФ № 1331 (с 01.03.2027)</text>
+
+  <!-- ================= ЛЕГЕНДА: 4 схемы в одну колонку ================= -->
+  <rect class="sx-acc" x="300" y="27" width="22" height="2"/>
+  <text class="sx-t-kick" x="332" y="34">ЧЕТЫРЕ ЛЕГАЛЬНЫЕ СХЕМЫ</text>
+
+  <!-- 1 -->
+  <text class="sx-num-dim" x="300" y="68">1</text>
+  <text class="sx-t-title" x="328" y="68">УПОЛНОМОЧЕННОЕ ПОДРАЗДЕЛЕНИЕ</text>
+  <text class="sx-t-desc" x="328" y="88">Объект с полномочиями по закону: ведомственная охрана, транспортная безопасность.</text>
+  <line class="sx-ln" x1="300" y1="106" x2="952" y2="106"/>
+
+  <!-- 2 -->
+  <text class="sx-num-dim" x="300" y="134">2</text>
+  <text class="sx-t-title" x="328" y="134">ПОДРЯДЧИК С ПРАВОМ</text>
+  <text class="sx-t-desc" x="328" y="154">Организация с правом на применение; договор, допуск и ответственность.</text>
+  <line class="sx-ln" x1="300" y1="172" x2="952" y2="172"/>
+
+  <!-- 3 -->
+  <text class="sx-num-dim" x="300" y="200">3</text>
+  <text class="sx-t-title" x="328" y="200">РЕЖИМ ОБНАРУЖЕНИЯ</text>
+  <text class="sx-t-desc" x="328" y="220">Пассивный приём без излучения: «Сигнал-М2» как первый этап контура.</text>
+  <line class="sx-ln" x1="300" y1="238" x2="952" y2="238"/>
+
+  <!-- 4 -->
+  <text class="sx-num-dim" x="300" y="266">4</text>
+  <text class="sx-t-title" x="328" y="266">ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</text>
+  <text class="sx-t-desc" x="328" y="286">ГКРЧ и Роскомнадзор; с 01.03.2027 — только при наличии права по закону.</text>
+</svg>

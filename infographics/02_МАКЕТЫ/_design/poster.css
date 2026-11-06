@@ -1,0 +1,1654 @@
+/* ==========================================================================
+   «ДВА ГОРИЗОНТА» — ИНФОГРАФИКА 2026
+   ФАЙЛ: poster.css — каркас, сетка и компоненты постера 1080×1350.
+   Подключается ПОСЛЕ tokens.css:
+       <link rel="stylesheet" href="../_design/tokens.css">
+       <link rel="stylesheet" href="../_design/poster.css">
+
+   ГЛАВНЫЕ ПРАВИЛА (подробно — _design/README.md):
+   — один постер = один вывод; если макет нельзя пересказать фразой — режем;
+   — один акцент на макет: цвет --accent — сигнал (кикер, ключевая цифра, CTA),
+     не фон и не украшение. Никаких вторых цветов и «своих» палитр;
+   — объём дают линии и воздух; теней, градиентов, неона, скруглённых карточек нет;
+   — фото — только реальные вырезки из img/, всегда на бумажной плашке .p-plate;
+   — цифры — только из 01_ФАКТЫ/claims.json, тексты — из 00_СТРАТЕГИЯ/;
+   — минимальный кегль подписи 13px, поля 64px, зона безопасности 24px;
+   — никаких Google Fonts и внешних картинок: файл должен открываться офлайн.
+
+   КАК СТРОИТЬ НОВЫЙ ПОСТЕР: копируй template.html → меняй тему, тексты и блоки.
+   Форматы: .poster (1080×1350) · .poster--wide (1920×1080) · .poster--story (1080×1920).
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. БАЗА РЕНДЕРА. Холст фиксированный: масштабируется только зумом браузера.
+   -------------------------------------------------------------------------- */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg, #f4f1ea);
+  color: var(--fg, #1d1e1a);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: auto;
+}
+
+body.grain {
+  position: relative;
+}
+
+/* зерно печати — единственный «эффект»; в poster.css не дублируем, живёт в tokens */
+
+/* --------------------------------------------------------------------------
+   2. КАРКАС ПОСТЕРА: шапка / вывод / рабочая зона / футер.
+   Шапка и футер не тянутся, рабочая зона забирает всё свободное место.
+   -------------------------------------------------------------------------- */
+
+.poster {
+  position: relative;
+  width: var(--p-w);
+  height: var(--p-h);
+  padding: var(--p-pad);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--p-body);
+  line-height: var(--lh-body);
+  overflow: hidden;
+}
+
+.poster__head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--p-gap-wide);
+}
+
+/* логотип-вербалка «В ОКОПЕ»: светлая версия инвертируется на светлой теме */
+.poster__brand img {
+  display: block;
+  width: 176px;
+  height: auto;
+}
+
+.theme-quiet .poster__brand img {
+  filter: invert(1); /* белый wordmark → графит, как на обложке каталога */
+}
+
+.poster__issuer {
+  display: flex;
+  gap: 40px;
+  text-align: right;
+}
+
+/* служебная подпись: 13px — минимальный кегль на холсте */
+.p-label {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.3;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.p-label b {
+  display: block;
+  color: var(--fg);
+  font-weight: 500;
+  letter-spacing: 0.13em;
+}
+
+/* --- вступление: кикер / плакатный заголовок / вывод --------------------- */
+
+.poster__intro {
+  flex: 0 0 auto;
+  padding-top: 46px;
+}
+
+.p-kicker {
+  display: flex;
+  align-items: center;
+  margin: 0 0 20px;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-kicker);
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.p-kicker::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 30px;
+  height: 2px;
+  margin-right: 14px;
+  background: currentColor;
+}
+
+.p-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--p-title);
+  line-height: 0.84;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+.p-title--sm {
+  font-size: var(--p-title-sm);
+}
+
+.p-accent {
+  color: var(--accent);
+}
+
+.p-lead {
+  margin: 24px 0 0;
+  max-width: 42ch;
+  font-size: var(--p-lead);
+  line-height: 1.32;
+  font-weight: 400;
+  color: var(--fg-dim);
+  text-wrap: pretty;
+}
+
+.p-lead strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.poster__main {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* --------------------------------------------------------------------------
+   3. ФУТЕР: CTA и выходные данные. Отбит сильной линией, как правило в паспорте.
+   -------------------------------------------------------------------------- */
+
+.poster__foot {
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: var(--p-rule-strong) solid var(--line-strong);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.p-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.p-cta__main {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  color: var(--fg);
+}
+
+.p-cta__main .p-cta__sep {
+  margin: 0 10px;
+  font-weight: 400;
+  color: var(--fg-dim);
+}
+
+.p-cta__main .p-cta__accent {
+  color: var(--accent);
+}
+
+.p-cta__sub {
+  font-size: var(--p-small);
+  line-height: 1.3;
+  color: var(--fg-dim);
+}
+
+.p-colophon {
+  font-family: var(--font-tech);
+  font-size: var(--p-label);
+  line-height: 1.55;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   4. СЕТКА И УТИЛИТЫ. 12 колонок — общая сетка; компоненты собираются из неё.
+   Используй .p-grid + .p-c-1…12, а не произвольные ширины.
+   -------------------------------------------------------------------------- */
+
+.p-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--p-gap);
+}
+
+.p-c-1 { grid-column: span 1; }
+.p-c-2 { grid-column: span 2; }
+.p-c-3 { grid-column: span 3; }
+.p-c-4 { grid-column: span 4; }
+.p-c-5 { grid-column: span 5; }
+.p-c-6 { grid-column: span 6; }
+.p-c-7 { grid-column: span 7; }
+.p-c-8 { grid-column: span 8; }
+.p-c-9 { grid-column: span 9; }
+.p-c-10 { grid-column: span 10; }
+.p-c-11 { grid-column: span 11; }
+.p-c-12 { grid-column: span 12; }
+
+.p-cols-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--p-gap-wide);
+}
+
+.p-cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--p-gap-wide);
+}
+
+.p-cols-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--p-gap-wide);
+}
+
+.p-rule {
+  border: 0;
+  border-top: var(--p-rule) solid var(--line);
+  margin: 0;
+}
+
+.p-dim { color: var(--fg-dim); }
+.p-faint { color: var(--fg-dim); }
+.p-tight { letter-spacing: -0.01em; }
+.p-nowrap { white-space: nowrap; }
+.p-measure { max-width: 52ch; }
+
+/* подпись-пояснение под блоком: 13px, серым, без курсива */
+.p-caption-line {
+  margin: 12px 0 0;
+  font-size: var(--p-label);
+  line-height: 1.45;
+  color: var(--fg-dim);
+}
+
+.p-caption-line b {
+  font-weight: 600;
+  color: var(--fg-dim);
+}
+
+/* вывод-лид на широкую строку: для двух коротких предложений в одну-две строки */
+.p-lead--wide {
+  max-width: none;
+}
+
+/* приборная цифра/метка */
+.p-tech {
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+/* крупная цифра-аргумент («8000+», «41»): цифра графитом, единица акцентом */
+.p-big {
+  display: block;
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: 78px;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--fg);
+}
+
+.p-big i {
+  margin-left: 4px;
+  font-style: normal;
+  font-size: 0.36em;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+
+.p-big__cap {
+  display: block;
+  margin-top: 10px;
+  max-width: 28ch;
+  font-size: var(--p-small);
+  line-height: 1.4;
+  color: var(--fg-dim);
+}
+
+.p-big__note {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* отладочная сетка: <body class="debug"> — видны границы всех блоков */
+body.debug .poster * {
+  outline: 1px solid rgba(255, 0, 0, 0.28);
+}
+
+/* --------------------------------------------------------------------------
+   5. ЗАГОЛОВОК СЕКЦИИ. Не карточка: только подпись + линия.
+   -------------------------------------------------------------------------- */
+
+.p-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--p-gap);
+  padding-bottom: 11px;
+  border-bottom: var(--p-rule) solid var(--line);
+}
+
+.p-section__title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.p-section__meta {
+  font-family: var(--font-tech);
+  font-size: var(--p-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   6. ФОТО-ПЛАШКА. Фото всегда «напечатано на бумаге»: светлая плашка,
+   волосяная рамка, multiply растворяет белый фон съёмки. Тени нет.
+   -------------------------------------------------------------------------- */
+
+.p-plate {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.p-plate__img {
+  position: relative;
+  display: block;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--photo-plate, #fbfaf6);
+  border: var(--p-rule) solid var(--line);
+}
+
+/* на тёмной теме плашка — тот же «бумажный» лист, рамка не нужна */
+.theme-field .p-plate__img {
+  background: var(--surface);
+  border-color: transparent;
+}
+
+/* изображение вписано в плашку без искажений: абсолютный бокс + object-fit */
+.p-plate__img img {
+  position: absolute;
+  left: var(--plate-pad, 12px);
+  top: var(--plate-pad, 12px);
+  width: calc(100% - 2 * var(--plate-pad, 12px));
+  height: calc(100% - 2 * var(--plate-pad, 12px));
+  object-fit: contain;
+  mix-blend-mode: multiply; /* белая студийная подложка растворяется в бумаге */
+}
+
+.p-plate__cap {
+  margin-top: 9px;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* --------------------------------------------------------------------------
+   7. ФАКТЫ. Полоса из 4 приборных цифр — «нижний регистр» постера.
+   -------------------------------------------------------------------------- */
+
+.p-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--p-gap-wide);
+  padding-top: 18px;
+  border-top: var(--p-rule) solid var(--line);
+}
+
+.p-fact__val {
+  display: block;
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: var(--p-fact);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--fg);
+}
+
+/* единица измерения — акцент: цифра остаётся графитом */
+.p-fact__val i {
+  margin-left: 2px;
+  font-style: normal;
+  font-size: 0.5em;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+
+/* длинная цифра («300–5900») не влезает в 4 колонки: либо 3 факта,
+   либо кегль на ступень меньше. Выбирай по контенту, не молча. */
+.p-facts--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.p-fact__val--sm {
+  font-size: 30px;
+}
+
+.p-fact__cap {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* --------------------------------------------------------------------------
+   8. ТЕХ-ТАБЛИЦА. Открытый «реестр» на волосяных линиях, без рамок-карточек.
+   -------------------------------------------------------------------------- */
+
+.p-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-table__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--p-gap);
+  padding: 10px 0;
+  border-top: var(--p-rule) solid var(--line);
+}
+
+.p-table__row:last-child {
+  border-bottom: var(--p-rule) solid var(--line);
+}
+
+.p-table__k {
+  font-size: var(--p-small);
+  line-height: 1.35;
+  color: var(--fg-dim);
+}
+
+.p-table__v {
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: var(--p-small);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  text-align: right;
+}
+
+.p-table__v--accent {
+  color: var(--accent);
+}
+
+/* головная строка: подписи капсом, тот же ритм линий */
+.p-table__row--head {
+  padding: 8px 0;
+}
+
+.p-table__row--head .p-table__k,
+.p-table__row--head .p-table__v {
+  font-family: var(--font-head);
+  font-size: var(--p-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* --------------------------------------------------------------------------
+   9. ДВА ГОРИЗОНТА (P01). Две колонки, разделённые линией, — не «две карточки».
+   -------------------------------------------------------------------------- */
+
+.p-horizons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.p-horizon--l {
+  padding-right: 32px;
+}
+
+.p-horizon--r {
+  padding-left: 32px;
+  border-left: var(--p-rule) solid var(--line);
+}
+
+.p-horizon__top {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.p-horizon__num {
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--fg-dim);
+}
+
+.p-horizon__kind {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.p-horizon__title {
+  margin: 8px 0 10px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 29px;
+  line-height: 1.02;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.p-horizon__who {
+  margin: 0 0 14px;
+  font-size: var(--p-small);
+  line-height: 1.42;
+  color: var(--fg-dim);
+}
+
+.p-horizon__who b {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.p-horizon__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.p-horizon__list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: var(--p-small);
+  line-height: 1.4;
+  color: var(--fg-dim);
+}
+
+.p-horizon__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 8px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.p-horizon__list b {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   10. ЛИНЕЙКА 41 ПОЗИЦИЯ / 5 СЕМЕЙСТВ. Шкала как в паспортном чертеже.
+   -------------------------------------------------------------------------- */
+
+.p-ruler {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.p-ruler__ticks {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 26px;
+}
+
+.p-ruler__ticks span {
+  flex: 0 0 auto;
+  width: 1px;
+  height: 10px;
+  background: var(--line-strong);
+}
+
+/* каждое 10-е деление — длиннее; первое/последнее — акцентная метка */
+.p-ruler__ticks .is-major {
+  height: 20px;
+  background: var(--fg-dim);
+}
+
+.p-ruler__ticks .is-accent {
+  height: 26px;
+  background: var(--accent);
+}
+
+.p-ruler__labels {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--p-gap);
+}
+
+.p-ruler__label {
+  padding-top: 8px;
+  border-top: var(--p-rule-strong) solid var(--line-strong);
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.p-ruler__label b {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.p-ruler__scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-tech);
+  font-size: var(--p-label);
+  letter-spacing: 0.06em;
+  color: var(--fg-dim);
+}
+
+/* --------------------------------------------------------------------------
+   11. ЯДРО ДОВЕРИЯ. Линейка аргументов: косой крестик-метка + текст.
+   -------------------------------------------------------------------------- */
+
+.p-trust {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 30px;
+}
+
+.p-trust--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.p-trust__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: var(--p-rule) solid var(--line);
+  font-size: var(--p-small);
+  line-height: 1.35;
+  color: var(--fg-dim);
+}
+
+.p-trust__item b {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.p-trust__mark {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  margin-top: 6px;
+  background: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   12. СЕМЕЙСТВА ЛИНЕЙКИ (P02). Строка = семья: фото / модели / цифра.
+   -------------------------------------------------------------------------- */
+
+.p-families {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-family {
+  display: grid;
+  grid-template-columns: 136px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  padding: 13px 0;
+  border-top: var(--p-rule) solid var(--line);
+}
+
+.p-family:last-child {
+  border-bottom: var(--p-rule) solid var(--line);
+}
+
+.p-family .p-plate__img {
+  --plate-pad: 8px;
+  height: 92px;
+}
+
+.p-family__kicker {
+  margin-bottom: 4px;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.25;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.p-family__title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.p-family__models {
+  margin: 5px 0 0;
+  font-size: var(--p-small);
+  line-height: 1.35;
+  color: var(--fg-dim);
+}
+
+.p-family__models b {
+  font-family: var(--font-tech);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.p-family__metric {
+  max-width: 138px;
+  text-align: right;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.p-family__metric b {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-tech);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg);
+}
+
+/* --------------------------------------------------------------------------
+   13. ЭШЕЛОН: ступени 01→05. Вертикальная рельса-линия = последовательность.
+   Для широкого формата есть горизонтальный вариант .p-steps--row.
+   -------------------------------------------------------------------------- */
+
+.p-steps {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.p-steps::before {
+  content: "";
+  position: absolute;
+  left: 28px;
+  top: 24px;
+  bottom: 24px;
+  width: 1px;
+  background: var(--line-strong);
+}
+
+.p-step {
+  display: grid;
+  grid-template-columns: 56px 104px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 13px 0;
+  border-top: var(--p-rule) solid var(--line);
+}
+
+.p-step:last-child {
+  border-bottom: var(--p-rule) solid var(--line);
+}
+
+/* номер «пропускает» рельсу: цифра на фоне бумаги, линия прерывается */
+.p-step__n {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  padding: 4px 0;
+  background: var(--bg);
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: var(--p-step);
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--fg-dim);
+}
+
+.p-step .p-plate__img {
+  --plate-pad: 7px;
+  height: 78px;
+}
+
+.p-step__title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 23px;
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.p-step__model {
+  margin: 4px 0 0;
+  font-size: var(--p-small);
+  line-height: 1.32;
+  color: var(--fg-dim);
+}
+
+.p-step__model b {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.p-step__spec {
+  max-width: 150px;
+  text-align: right;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.p-step__spec b {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-tech);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg);
+}
+
+/* горизонтальная рельса для wide: 5 равных колонок, линия сверху */
+.p-steps--row {
+  flex-direction: row;
+  gap: var(--p-gap-wide);
+}
+
+.p-steps--row::before {
+  left: 0;
+  right: 0;
+  top: 18px;
+  bottom: auto;
+  width: auto;
+  height: 1px;
+}
+
+.p-steps--row .p-step {
+  position: relative;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 34px 0 0;
+  border-top: 0;
+}
+
+.p-steps--row .p-step:last-child {
+  border-bottom: 0;
+}
+
+.p-steps--row .p-step__n {
+  position: absolute;
+  top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   14. КУПОЛЬНАЯ СХЕМА — «паспортный чертёж». SVG рисуется currentColor,
+   размеры — акцентом. Рамка с разрывом под подпись «Рис. 1».
+   -------------------------------------------------------------------------- */
+
+.p-dome {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-dome__frame {
+  position: relative;
+  padding: 20px 24px 8px;
+  border: var(--p-rule) solid var(--line);
+}
+
+.p-dome__fig {
+  position: absolute;
+  top: -9px;
+  left: 16px;
+  padding: 0 8px;
+  background: var(--bg);
+  font-family: var(--font-tech);
+  font-size: var(--p-label);
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.p-dome svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  color: var(--fg);
+}
+
+/* подписи внутри SVG: заливка, без обводки */
+.p-dome svg text {
+  stroke: none;
+  fill: currentColor;
+}
+
+.p-dome svg .p-dome__accent {
+  stroke: var(--accent);
+}
+
+.p-dome svg .p-dome__fill-accent {
+  stroke: none;
+  fill: var(--accent);
+}
+
+.p-dome svg .p-dome__ghost {
+  stroke: var(--line-strong);
+}
+
+/* маска под подпись внутри чертежа: прерывает линии, как в паспортном чертеже */
+.p-dome svg .p-dome__mask {
+  stroke: none;
+  fill: var(--bg);
+}
+
+.p-dome__cap {
+  margin: 8px 0 0;
+  font-size: var(--p-label);
+  line-height: 1.4;
+  color: var(--fg-dim);
+}
+
+/* легенда: подпись + значение, всегда капсом, значение — приборным шрифтом */
+.p-legend {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--p-gap-wide);
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: var(--p-rule) solid var(--line);
+}
+
+.p-legend--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.p-legend__item {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.p-legend__item b {
+  display: block;
+  margin-bottom: 3px;
+  font-family: var(--font-tech);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg);
+}
+
+/* --------------------------------------------------------------------------
+   15. ПЛАКАТНАЯ ЦИТАТА / СКВОЗНОЙ СЛОГАН. Одна строка, акцентная черта слева.
+   -------------------------------------------------------------------------- */
+
+.p-pull {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 31px;
+  line-height: 1.12;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.p-pull::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 3px;
+  height: 1.1em;
+  margin-top: 0.08em;
+  background: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   16. ФОРМАТ 1920×1080 (wide). Правило: шапка и футер — во всю ширину,
+   рабочая зона — две колонки (.p-wide-layout). Заголовок крупнее.
+   -------------------------------------------------------------------------- */
+
+.poster--wide {
+  width: var(--p-w-wide);
+  height: var(--p-h-wide);
+  padding: var(--p-pad-wide);
+}
+
+.poster--wide .poster__intro {
+  padding-top: 34px;
+}
+
+.poster--wide .p-title {
+  font-size: 148px;
+}
+
+.poster--wide .p-lead {
+  max-width: 50ch;
+  font-size: 28px;
+}
+
+.poster--wide .poster__main {
+  padding-top: 30px;
+  gap: 28px;
+}
+
+/* рабочая зона wide: текст слева, схема/фото справа */
+.p-wide-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 64px;
+  align-items: start;
+  min-height: 0;
+}
+
+.poster--wide .p-facts {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* --------------------------------------------------------------------------
+   17. ФОРМАТ 1080×1920 (story). Правило: больше воздуха, крупнее фото,
+   факты в 2 колонки, рабочие блоки идут столбцом.
+   -------------------------------------------------------------------------- */
+
+.poster--story {
+  width: var(--p-w-story);
+  height: var(--p-h-story);
+}
+
+.poster--story .poster__intro {
+  padding-top: 56px;
+}
+
+.poster--story .p-title {
+  font-size: 138px;
+}
+
+.poster--story .p-lead {
+  font-size: 28px;
+  max-width: 40ch;
+}
+
+.poster--story .poster__main {
+  padding-top: 44px;
+  gap: 40px;
+}
+
+.poster--story .p-facts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: 22px;
+}
+
+.poster--story .p-family {
+  grid-template-columns: 152px minmax(0, 1fr);
+}
+
+.poster--story .p-family .p-plate__img {
+  height: 108px;
+  --plate-pad: 10px;
+}
+
+.poster--story .p-family__metric {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   18. ПЕЧАТЬ. В PDF постер вставляется как страница; фон не должен «плыть».
+   -------------------------------------------------------------------------- */
+
+@media print {
+  html,
+  body {
+    background: none;
+  }
+
+  .poster {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   19. ДОСТУПНОСТЬ. Контраст основного текста ≥ 4.5:1, фокус видимый.
+   Ограничения reduced-motion уже в tokens.css; анимаций в постерах нет.
+   -------------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  .p-ruler__ticks .is-accent,
+  .p-trust__mark,
+  .p-pull::before {
+    background: CanvasText;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   20. ФОТО-ЛИНЕЙКА СЕМЕЙСТВ (P02). Пять семейств на одном бумажном листе:
+   фото в равных ячейках, товары «стоят» на общей линии, подписи — на бумаге,
+   ТТХ и модели — под листом, колонки совпадают с ячейками.
+   -------------------------------------------------------------------------- */
+
+.p-lineup {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-lineup__sheet {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background: var(--photo-plate, #fbfaf6);
+  border: var(--p-rule) solid var(--line);
+}
+
+.theme-field .p-lineup__sheet {
+  background: var(--surface);
+  border-color: transparent;
+}
+
+.p-lineup__cell {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-left: var(--p-rule) solid var(--on-paper-line, var(--line));
+}
+
+.p-lineup__cell:first-child {
+  border-left: 0;
+}
+
+/* фото вписано в ячейку без искажений; по центру, чтобы поля над/под были равны */
+.p-lineup__photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 256px;
+  padding: 14px 10px;
+}
+
+.p-lineup__photo img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.p-lineup__body {
+  padding: 12px 14px 16px;
+}
+
+.p-lineup__num {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-tech);
+  font-size: var(--p-label);
+  letter-spacing: 0.08em;
+  color: var(--on-paper-dim, var(--fg-dim));
+}
+
+.p-lineup__name {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--on-paper-ink, var(--fg));
+}
+
+.p-lineup__purpose {
+  margin: 5px 0 0;
+  font-size: var(--p-label);
+  line-height: 1.35;
+  color: var(--on-paper-dim, var(--fg-dim));
+}
+
+/* строки с моделями и ТТХ под листом, в тех же пяти колонках */
+.p-lineup__details {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 12px;
+}
+
+.p-lineup__detail {
+  min-width: 0;
+  padding: 0 16px 0 0;
+}
+
+.p-lineup__detail + .p-lineup__detail {
+  padding-left: 16px;
+  border-left: var(--p-rule) solid var(--line);
+}
+
+.p-lineup__models {
+  margin: 0;
+  font-size: var(--p-small);
+  line-height: 1.35;
+  color: var(--fg-dim);
+}
+
+.p-lineup__models b {
+  font-family: var(--font-tech);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.p-lineup__spec {
+  margin: 8px 0 0;
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+
+.p-lineup__note {
+  margin: 6px 0 0;
+  font-size: var(--p-label);
+  line-height: 1.35;
+  color: var(--fg-dim);
+}
+
+/* --------------------------------------------------------------------------
+   21. ЦЕПОЧКА КОНТУРА (P02). Пять ступеней одной строкой со стрелками:
+   чтение «карты» семейств, без второй схемы. Подробная схема — P03.
+   -------------------------------------------------------------------------- */
+
+.p-chain {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 16px;
+  border-top: var(--p-rule) solid var(--line);
+  border-bottom: var(--p-rule) solid var(--line);
+}
+
+.p-chain__step {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  min-width: 0;
+}
+
+.p-chain__step b {
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: var(--p-label);
+  letter-spacing: 0.06em;
+  color: var(--fg-dim);
+}
+
+.p-chain__step span {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.p-chain__arrow {
+  flex: 0 0 auto;
+  align-self: center;
+  padding: 0 12px;
+  font-family: var(--font-tech);
+  font-size: 18px;
+  color: var(--accent);
+}
+
+.p-chain__note {
+  margin: 12px 0 0;
+  max-width: 72ch;
+  font-size: var(--p-small);
+  line-height: 1.4;
+  color: var(--fg-dim);
+}
+
+.p-chain__note b {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* --------------------------------------------------------------------------
+   22. ЭШЕЛОН ЗАЩИТЫ (P03). Доминирующая схема: купол контура + пять ступеней
+   на общей линии, крупные номера 01–05 и реальные фото. Это схема, а не список:
+   последовательность показывают стрелки на базовой линии.
+   -------------------------------------------------------------------------- */
+
+.p-echelon {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-echelon__canopy svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  color: var(--fg);
+}
+
+.p-echelon__canopy svg text {
+  stroke: none;
+  fill: currentColor;
+}
+
+.p-echelon__canopy svg .p-dome__accent {
+  stroke: var(--accent);
+}
+
+.p-echelon__canopy svg .p-dome__fill-accent {
+  stroke: none;
+  fill: var(--accent);
+}
+
+.p-echelon__canopy svg .p-dome__ghost {
+  stroke: var(--line-strong);
+}
+
+.p-echelon__steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--p-gap);
+  margin-top: 10px;
+}
+
+.p-echelon__step {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.p-echelon__n {
+  margin-bottom: 10px;
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+
+.p-echelon__step .p-plate__img {
+  --plate-pad: 10px;
+  height: 200px;
+}
+
+.p-echelon__title {
+  margin: 12px 0 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.02;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.p-echelon__model {
+  margin: 6px 0 0;
+  min-height: 4.1em; /* три строки: выравнивает линейки ТТХ между колонками */
+  font-size: var(--p-label);
+  line-height: 1.35;
+  color: var(--fg-dim);
+}
+
+.p-echelon__model b {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.p-echelon__spec {
+  margin: 10px 0 0;
+  padding-top: 8px;
+  border-top: var(--p-rule) solid var(--line);
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: var(--p-small);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+
+/* --------------------------------------------------------------------------
+   23. РЕЕСТР ДОКУМЕНТОВ (P10). Открытый список на волосяных линиях:
+   номер / название / что подтверждает / реквизиты моноширинным.
+   -------------------------------------------------------------------------- */
+
+.p-docs {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-doc {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 14px;
+  padding: 13px 0;
+  border-top: var(--p-rule) solid var(--line);
+}
+
+.p-doc:last-child {
+  border-bottom: var(--p-rule) solid var(--line);
+}
+
+.p-doc__num {
+  padding-top: 2px;
+  font-family: var(--font-tech);
+  font-size: var(--p-label);
+  letter-spacing: 0.06em;
+  color: var(--fg-dim);
+}
+
+.p-doc__title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.p-doc__text {
+  margin: 4px 0 0;
+  font-size: var(--p-small);
+  line-height: 1.4;
+  color: var(--fg-dim);
+}
+
+.p-doc__text b {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* реквизиты: номера не сокращать, переносить только по словам */
+.p-doc__id {
+  margin: 4px 0 0;
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: var(--p-label);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--fg);
+}
+
+.p-doc__id--accent {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   24. ДИСКЛЕЙМЕР (P10). Мелкий, но читаемый; целиком в кадре и с отступом
+   ≥24 px до футера. Две колонки, чтобы текст не превращался в «мелкую простыню».
+   -------------------------------------------------------------------------- */
+
+.p-disclaimer {
+  margin-bottom: var(--p-safe); /* не ближе 24 px до футера — требование QA */
+  padding-top: 12px;
+  border-top: var(--p-rule-strong) solid var(--line-strong);
+}
+
+.p-disclaimer__title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: var(--p-label);
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.p-disclaimer__grid {
+  margin-top: 5px;
+  column-count: 2;
+  column-gap: 32px;
+}
+
+/* плотный юридический текст: три колонки (если нужно место) */
+.p-disclaimer__grid--3 {
+  column-count: 3;
+  column-gap: 24px;
+}
+
+.p-disclaimer__grid p {
+  margin: 0 0 4px;
+  break-inside: avoid;
+  font-size: var(--p-label);
+  line-height: 1.38;
+  color: var(--fg-dim);
+}
+
+.p-disclaimer__grid p:last-child {
+  margin-bottom: 0;
+}

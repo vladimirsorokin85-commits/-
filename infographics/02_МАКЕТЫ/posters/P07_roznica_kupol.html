@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P07 · КУПОЛ НА СВОЙ ТРАНСПОРТ — «В ОКОПЕ» × НПО «Киловатт»</title>
+<!--
+  ПОСТЕР P07 · «КУПОЛ НА СВОЙ ТРАНСПОРТ» · розница, витринный, тёмная тема.
+  Тема: .theme-field. Формат: 1080×1350 (+ wide 16:9, story 9:16 — вторым эшелоном).
+  Текст: 00_СТРАТЕГИЯ/04_КОПИРАЙТ_ПОСТЕРОВ.md §7 (v1).
+  Факты: claims.json — C016 (К-8М), C019–C021 (К-12М), C023 (ФПВ-8М), C025 (ФПВ-7 мото),
+  C084–C090 (розница, крепление, питание, дача), C092 (цена по запросу), C106 (слоган).
+  Фото: реальная съёмка производителя (img/product/k8m.png) на бумажной плашке.
+-->
+<link rel="stylesheet" href="../_design/tokens.css">
+<link rel="stylesheet" href="../_design/poster.css">
+<style>
+  /* локальные блоки P07 (designer-b) */
+  .db-hero {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 16px;
+    align-items: stretch;
+  }
+  .db-hero__photo { grid-column: span 7; }
+  .db-hero__photo .p-plate__img { height: 300px; padding: 18px; }
+  .db-hero__text { grid-column: span 5; display: flex; flex-direction: column; }
+  .db-hero__lead {
+    margin: 10px 0 16px;
+    font-size: 16px;
+    line-height: 1.46;
+    color: var(--fg-dim);
+  }
+  .db-hero__lead b { color: var(--fg); font-weight: 600; }
+  .db-legend { display: flex; flex-direction: column; gap: 9px; margin-top: auto; }
+  .db-legend__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 8px;
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: var(--p-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+  .db-legend__item b {
+    font-family: var(--font-tech);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+  .db-models { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .db-model { border-top: 2px solid var(--line-strong); padding-top: 11px; }
+  .db-model__name {
+    margin: 0;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+  .db-model__num {
+    margin-top: 7px;
+    font-family: var(--font-tech);
+    font-size: 15px;
+    line-height: 1.2;
+    color: var(--accent);
+  }
+  .db-model__spec {
+    margin: 7px 0 0;
+    font-size: var(--p-label);
+    line-height: 1.45;
+    color: var(--fg-dim);
+  }
+  .db-feats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .db-feat { border-top: 1px solid var(--line); padding-top: 10px; }
+  .db-feat__title {
+    margin: 0;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+  .db-feat__text {
+    margin: 6px 0 0;
+    font-size: var(--p-label);
+    line-height: 1.45;
+    color: var(--fg-dim);
+  }
+  .db-caveat {
+    margin: 0;
+    font-size: var(--p-label);
+    line-height: 1.35;
+    color: var(--fg-faint);
+  }
+</style>
+</head>
+
+<body class="theme-field grain">
+
+<main class="poster" id="p07">
+
+  <header class="poster__head">
+    <div class="poster__brand">
+      <img src="../_design/img/brand/logo_w_word.png" alt="В ОКОПЕ — магазин брони">
+    </div>
+    <div class="poster__issuer">
+      <span class="p-label"><b>НПО «Киловатт»</b>производитель</span>
+      <span class="p-label"><b>P07 · 11.2026</b>розница</span>
+    </div>
+  </header>
+
+  <section class="poster__intro">
+    <p class="p-kicker">Розница · авто · мото · дача</p>
+    <h1 class="p-title">Купол на свой транспорт</h1>
+    <p class="p-lead">
+      Для авто, мото и дачи: купол на крышу или кронштейн, питание от 12/24 В,
+      <strong>включение из кабины.</strong>
+    </p>
+  </section>
+
+  <section class="poster__main">
+
+    <!-- герой: реальное фото + что это + ключевые цифры -->
+    <div class="db-hero">
+      <figure class="p-plate db-hero__photo">
+        <div class="p-plate__img">
+          <img src="../_design/img/product/k8m.png" alt="Станция «Капюшон» К-8М, реальное фото">
+        </div>
+        <figcaption class="p-plate__cap">«Капюшон» К-8М · купол 600 мм · 20 кг</figcaption>
+      </figure>
+
+      <div class="db-hero__text">
+        <p class="p-label" style="color: var(--fg-dim)">Что это</p>
+        <p class="db-hero__lead">
+          Купольная станция противодействия БПЛА. <b>Ставится на крышу машины</b>,
+          включается из кабины; питание — от бортовой сети.
+        </p>
+        <div class="db-legend">
+          <div class="db-legend__item">Дальность подавления <b>50–200 м</b></div>
+          <div class="db-legend__item">Питание <b>12/24 В</b></div>
+          <div class="db-legend__item">Каналов <b>8–12</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- три модели -->
+    <div>
+      <div class="p-section__head">
+        <h2 class="p-section__title">Модели под транспорт</h2>
+        <span class="p-section__meta">паспортные ТТХ</span>
+      </div>
+      <div class="db-models" style="margin-top:16px">
+        <div class="db-model">
+          <h3 class="db-model__name">«Капюшон» К-8М</h3>
+          <div class="db-model__num">8 каналов · 160 Вт</div>
+          <p class="db-model__spec">400–1020, 2100–2800, 5680–5900 МГц.
+            50–200 м · 20 кг · купол 600 мм.</p>
+        </div>
+        <div class="db-model">
+          <h3 class="db-model__name">«Капюшон» К-12М</h3>
+          <div class="db-model__num">12 каналов · до 240 Вт</div>
+          <p class="db-model__spec">300–5900 МГц. 50–200 м · 24 кг.
+            Борт 12/24 В и сеть 220 В через преобразователь.</p>
+        </div>
+        <div class="db-model">
+          <h3 class="db-model__name">«Капюшон» ФПВ-8М</h3>
+          <div class="db-model__num">8 каналов · до 160 Вт</div>
+          <p class="db-model__spec">300–1020 и 2100–2800 МГц.
+            50–200 м · 20 кг · под FPV-дроны.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- как ставится / мото / дача -->
+    <div class="db-feats">
+      <div class="db-feat">
+        <h3 class="db-feat__title">Поставил и работает</h3>
+        <p class="db-feat__text">Крепление на магнитах или кронштейне, питание
+          от бортовой сети, включение из кабины.</p>
+      </div>
+      <div class="db-feat">
+        <h3 class="db-feat__title">Для мото</h3>
+        <p class="db-feat__text">ФПВ-7 мото: купол 400 мм, 10 кг, дальность 50–120 м.</p>
+      </div>
+      <div class="db-feat">
+        <h3 class="db-feat__title">Дача и дом</h3>
+        <p class="db-feat__text">Стационарно на кронштейн или треногу, питание
+          от сети 220 В через преобразователь.</p>
+      </div>
+    </div>
+<p class="db-caveat">Дальность зависит от условий эксплуатации: рельеф, погода,
+      помеховая обстановка. Значения — по паспортам изделий.</p>
+
+  </section>
+
+  <footer class="poster__foot">
+    <div class="p-cta">
+      <div class="p-cta__main">
+        Telegram <span class="p-cta__accent">@vokope_ru</span>
+        <span class="p-cta__sep">·</span> +7 999 136-71-42
+      </div>
+      <div class="p-cta__sub">Цена по запросу · Сначала обнаружь. Потом подави. · Доставка по РФ · Самовывоз в Москве</div>
+    </div>
+    <div class="p-colophon">В ОКОПЕ · НПО «Киловатт»<br>P07 · 11.2026</div>
+  </footer>
+
+</main>
+
+</body>
+</html>

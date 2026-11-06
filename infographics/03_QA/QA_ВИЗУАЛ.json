@@ -1,0 +1,1330 @@
+{
+  "generated": "2026-11-06 21:13:52",
+  "version": "1.0",
+  "posters": {
+    "P01": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P01_dva_gorizonta_1920.html",
+      "mtime": "2026-11-06 21:12:05",
+      "kind": "wide",
+      "layout": {
+        "width": 1920,
+        "height": 1080,
+        "minFont": 13,
+        "small": [],
+        "overflow": [],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 28,
+          "Sofia Sans Cond": 2,
+          "Segoe UI": 19,
+          "Tektur": 8
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          },
+          {
+            "src": "k8m.png",
+            "natW": 705,
+            "natH": 430,
+            "dispW": 550,
+            "dispH": 290,
+            "scale": 1.28
+          }
+        ],
+        "contrast": [],
+        "disclaimer": null,
+        "textLen": 1273,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P01 · 11.2026 ДВА ГОРИЗОНТА · 16:9"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P01 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "В ОКОПЕ × НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-title",
+            "fs": 148,
+            "text": "ДВА ГОРИЗОНТА"
+          },
+          {
+            "cls": "p-accent",
+            "fs": 148,
+            "text": "ГОРИЗОНТА"
+          },
+          {
+            "cls": "p-lead",
+            "fs": 24,
+            "text": "Одна линейка. Один поставщик. Два горизонта продаж. Розница и объект: "
+          },
+          {
+            "cls": "",
+            "fs": 24,
+            "text": "общий склад и документы."
+          },
+          {
+            "cls": "p-horizon__num",
+            "fs": 20,
+            "text": "01"
+          },
+          {
+            "cls": "p-horizon__kind",
+            "fs": 13,
+            "text": "ДОМ / ТРАНСПОРТ"
+          },
+          {
+            "cls": "p-horizon__title",
+            "fs": 29,
+            "text": "РОЗНИЦА"
+          }
+        ],
+        "safeMargin": {
+          "left": 80,
+          "top": 80,
+          "right": 80,
+          "bottom": 80
+        }
+      }
+    },
+    "P02": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P02_karta_linejki_1920.html",
+      "mtime": "2026-11-06 21:12:05",
+      "kind": "wide",
+      "layout": {
+        "width": 1920,
+        "height": 1080,
+        "minFont": 13,
+        "small": [],
+        "overflow": [],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 13,
+          "Sofia Sans Cond": 2,
+          "Segoe UI": 13,
+          "Tektur": 16
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          },
+          {
+            "src": "k12m.png",
+            "natW": 794,
+            "natH": 496,
+            "dispW": 332,
+            "dispH": 207,
+            "scale": 2.39
+          },
+          {
+            "src": "tp-7-100.png",
+            "natW": 318,
+            "natH": 660,
+            "dispW": 131,
+            "dispH": 272,
+            "scale": 2.43
+          },
+          {
+            "src": "shtora-k12.png",
+            "natW": 715,
+            "natH": 697,
+            "dispW": 279,
+            "dispH": 272,
+            "scale": 2.56
+          },
+          {
+            "src": "signal-m2.png",
+            "natW": 748,
+            "natH": 800,
+            "dispW": 254,
+            "dispH": 272,
+            "scale": 2.94
+          },
+          {
+            "src": "ip-24-100.png",
+            "natW": 623,
+            "natH": 619,
+            "dispW": 274,
+            "dispH": 272,
+            "scale": 2.28
+          }
+        ],
+        "contrast": [],
+        "disclaimer": null,
+        "textLen": 1069,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P02 · 11.2026 КАРТА ЛИНЕЙКИ · 16:9"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P02 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "5 СЕМЕЙСТВ · ОДНА ЛИНЕЙКА"
+          },
+          {
+            "cls": "p-title",
+            "fs": 148,
+            "text": "КАРТА ЛИНЕЙКИ"
+          },
+          {
+            "cls": "p-accent",
+            "fs": 148,
+            "text": "ЛИНЕЙКИ"
+          },
+          {
+            "cls": "p-lead",
+            "fs": 24,
+            "text": "От купола на транспорт до стационарного комплекса и питания. Пять семе"
+          },
+          {
+            "cls": "",
+            "fs": 24,
+            "text": "Пять семейств, из которых собирается контур под задачу."
+          },
+          {
+            "cls": "p-lineup__num",
+            "fs": 13,
+            "text": "01"
+          },
+          {
+            "cls": "p-lineup__name",
+            "fs": 17,
+            "text": "КУПОЛЬНЫЕ"
+          },
+          {
+            "cls": "p-lineup__purpose",
+            "fs": 13,
+            "text": "купол на транспорт"
+          }
+        ],
+        "safeMargin": {
+          "left": 80,
+          "top": 80,
+          "right": 80,
+          "bottom": 80
+        }
+      }
+    },
+    "P03": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html",
+      "mtime": "2026-11-06 21:12:05",
+      "kind": "wide",
+      "layout": {
+        "width": 1920,
+        "height": 1080,
+        "minFont": 13,
+        "small": [],
+        "overflow": [],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 14,
+          "Sofia Sans Cond": 2,
+          "Segoe UI": 16,
+          "Tektur": 11
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          },
+          {
+            "src": "signal-m2.png",
+            "natW": 748,
+            "natH": 800,
+            "dispW": 303,
+            "dispH": 192,
+            "scale": 2.47
+          },
+          {
+            "src": "k12m.png",
+            "natW": 794,
+            "natH": 496,
+            "dispW": 303,
+            "dispH": 192,
+            "scale": 2.62
+          },
+          {
+            "src": "pole-31.png",
+            "natW": 847,
+            "natH": 539,
+            "dispW": 303,
+            "dispH": 192,
+            "scale": 2.8
+          },
+          {
+            "src": "ip-24-100.png",
+            "natW": 623,
+            "natH": 619,
+            "dispW": 303,
+            "dispH": 192,
+            "scale": 2.06
+          },
+          {
+            "src": "t-9.png",
+            "natW": 540,
+            "natH": 638,
+            "dispW": 303,
+            "dispH": 192,
+            "scale": 1.78
+          }
+        ],
+        "contrast": [],
+        "disclaimer": null,
+        "textLen": 1057,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P03 · 11.2026 ЭШЕЛОН ЗАЩИТЫ · 16:9"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P03 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "СНАЧАЛА ОБНАРУЖЬ. ПОТОМ ПОДАВИ."
+          },
+          {
+            "cls": "p-title",
+            "fs": 148,
+            "text": "ЭШЕЛОН ЗАЩИТЫ"
+          },
+          {
+            "cls": "p-accent",
+            "fs": 148,
+            "text": "ЗАЩИТЫ"
+          },
+          {
+            "cls": "p-lead",
+            "fs": 24,
+            "text": "Пять ступеней контура. Собираются под задачу объекта — без переплаты з"
+          },
+          {
+            "cls": "",
+            "fs": 24,
+            "text": "без переплаты за лишнее."
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 15,
+            "text": ""
+          },
+          {
+            "cls": "p-echelon__n",
+            "fs": 56,
+            "text": "01"
+          },
+          {
+            "cls": "p-echelon__title",
+            "fs": 20,
+            "text": "ОБНАРУЖЕНИЕ"
+          }
+        ],
+        "safeMargin": {
+          "left": 80,
+          "top": 80,
+          "right": 80,
+          "bottom": 80
+        }
+      }
+    },
+    "P04": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P04_chto_zashchishchaem.html",
+      "mtime": "2026-11-06 21:12:19",
+      "kind": "default",
+      "layout": {
+        "width": 1080,
+        "height": 1350,
+        "minFont": 13,
+        "small": [],
+        "overflow": [],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 44,
+          "Sofia Sans Cond": 1,
+          "Segoe UI": 22,
+          "Tektur": 8
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          },
+          {
+            "src": "rebus-4.png",
+            "natW": 1039,
+            "natH": 988,
+            "dispW": 80,
+            "dispH": 76,
+            "scale": 13
+          },
+          {
+            "src": "shtora-k12.png",
+            "natW": 715,
+            "natH": 697,
+            "dispW": 78,
+            "dispH": 76,
+            "scale": 9.17
+          }
+        ],
+        "contrast": [
+          {
+            "cls": "p-kicker",
+            "ratio": 4.3,
+            "fs": 14,
+            "text": "СЕМЬ ОБЪЕКТОВ · СЕМЬ КОНФИГУРАЦИЙ"
+          },
+          {
+            "cls": "p-cta__accent",
+            "ratio": 4.3,
+            "fs": 25,
+            "text": "@vokope_ru"
+          }
+        ],
+        "disclaimer": null,
+        "textLen": 1488,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P04 · 11.2026 ОБЪЕКТ → КОНТУР"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P04 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "СЕМЬ ОБЪЕКТОВ · СЕМЬ КОНФИГУРАЦИЙ"
+          },
+          {
+            "cls": "p-title p-title--sm",
+            "fs": 96,
+            "text": "ЧТО ЗАЩИЩАЕМ → ЧТО БЕРЁМ"
+          },
+          {
+            "cls": "p-lead",
+            "fs": 26,
+            "text": "От АЗС до промышленной площадки. Состав контура определяет объект, а н"
+          },
+          {
+            "cls": "",
+            "fs": 26,
+            "text": "объект"
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 13,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 13,
+            "text": ""
+          }
+        ],
+        "safeMargin": {
+          "left": 64,
+          "top": 64,
+          "right": 64,
+          "bottom": 64
+        }
+      }
+    },
+    "P05": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P05_b2b_pochemu_sejchas.html",
+      "mtime": "2026-11-06 21:03:29",
+      "kind": "default",
+      "layout": {
+        "width": 1080,
+        "height": 1350,
+        "minFont": 13,
+        "small": [],
+        "overflow": [],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 13,
+          "Sofia Sans Cond": 3,
+          "Segoe UI": 25,
+          "Tektur": 9
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          }
+        ],
+        "contrast": [
+          {
+            "cls": "p-kicker",
+            "ratio": 4.3,
+            "fs": 14,
+            "text": "РЫНОК И ПРАВО · 2025–2027"
+          },
+          {
+            "cls": "p-cta__accent",
+            "ratio": 4.3,
+            "fs": 25,
+            "text": "@vokope_ru"
+          }
+        ],
+        "disclaimer": {
+          "fs": 13,
+          "text": "Оборудование является радиоэлектронным средством. Порядок приобретения, регистрации и применения определяется законодате"
+        },
+        "textLen": 1445,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P05 · 11.2026 РЫНОК И ПРАВО"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P05 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "РЫНОК И ПРАВО · 2025–2027"
+          },
+          {
+            "cls": "p-title",
+            "fs": 124,
+            "text": "B2B: ПОЧЕМУ СЕЙЧАС"
+          },
+          {
+            "cls": "p-lead",
+            "fs": 26,
+            "text": "Рынок анти-БПЛА растёт на 20% в год. Правила ужесточаются: выигрывает "
+          },
+          {
+            "cls": "",
+            "fs": 26,
+            "text": "с документами и сервисом."
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 13,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 13,
+            "text": ""
+          }
+        ],
+        "safeMargin": {
+          "left": 64,
+          "top": 64,
+          "right": 64,
+          "bottom": 64
+        }
+      }
+    },
+    "P06": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P06_pravovoj_kompas.html",
+      "mtime": "2026-11-06 21:04:49",
+      "kind": "default",
+      "layout": {
+        "width": 1080,
+        "height": 1350,
+        "minFont": 12,
+        "small": [
+          {
+            "tag": "P",
+            "cls": "",
+            "fs": 12,
+            "text": "Оборудование является радиоэлектронным средством. Порядок приобретения, регистрации и прим"
+          }
+        ],
+        "overflow": [],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 18,
+          "Sofia Sans Cond": 1,
+          "Segoe UI": 29,
+          "Tektur": 11
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          }
+        ],
+        "contrast": [
+          {
+            "cls": "p-kicker",
+            "ratio": 4.3,
+            "fs": 14,
+            "text": "ПРАВО И ПРАКТИКА"
+          },
+          {
+            "cls": "p-cta__accent",
+            "ratio": 4.3,
+            "fs": 25,
+            "text": "@vokope_ru"
+          }
+        ],
+        "disclaimer": {
+          "fs": 12,
+          "text": "Оборудование является радиоэлектронным средством. Порядок приобретения, регистрации и применения определяется законодате"
+        },
+        "textLen": 2706,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P06 · 11.2026 ПРАВО И ПРАКТИКА"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P06 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "ПРАВО И ПРАКТИКА"
+          },
+          {
+            "cls": "p-title",
+            "fs": 124,
+            "text": "ПРАВОВОЙ КОМПАС"
+          },
+          {
+            "cls": "p-lead",
+            "fs": 26,
+            "text": "Купить можно. Включать — только с законным правом. Пять пунктов для пр"
+          },
+          {
+            "cls": "",
+            "fs": 26,
+            "text": "Пять пунктов для проверки до сделки."
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 13,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 13,
+            "text": ""
+          }
+        ],
+        "safeMargin": {
+          "left": 64,
+          "top": 64,
+          "right": 64,
+          "bottom": 64
+        }
+      }
+    },
+    "P07": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P07_roznica_kupol.html",
+      "mtime": "2026-11-06 21:03:51",
+      "kind": "default",
+      "layout": {
+        "width": 1080,
+        "height": 1350,
+        "minFont": 13,
+        "small": [],
+        "overflow": [],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 20,
+          "Sofia Sans Cond": 1,
+          "Segoe UI": 12,
+          "Tektur": 8
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          },
+          {
+            "src": "k8m.png",
+            "natW": 705,
+            "natH": 430,
+            "dispW": 523,
+            "dispH": 274,
+            "scale": 1.35
+          }
+        ],
+        "contrast": [],
+        "disclaimer": null,
+        "textLen": 1337,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P07 · 11.2026 РОЗНИЦА"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P07 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "РОЗНИЦА · АВТО · МОТО · ДАЧА"
+          },
+          {
+            "cls": "p-title",
+            "fs": 124,
+            "text": "КУПОЛ НА СВОЙ ТРАНСПОРТ"
+          },
+          {
+            "cls": "p-lead",
+            "fs": 26,
+            "text": "Для авто, мото и дачи: купол на крышу или кронштейн, питание от 12/24 "
+          },
+          {
+            "cls": "",
+            "fs": 26,
+            "text": "включение из кабины."
+          },
+          {
+            "cls": "p-plate__cap",
+            "fs": 13,
+            "text": "«КАПЮШОН» К-8М · КУПОЛ 600 ММ · 20 КГ"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "ЧТО ЭТО"
+          },
+          {
+            "cls": "db-hero__lead",
+            "fs": 16,
+            "text": "Купольная станция противодействия БПЛА. Ставится на крышу машины, вклю"
+          },
+          {
+            "cls": "",
+            "fs": 16,
+            "text": "Ставится на крышу машины"
+          }
+        ],
+        "safeMargin": {
+          "left": 64,
+          "top": 64,
+          "right": 64,
+          "bottom": 64
+        }
+      }
+    },
+    "P08": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P08_sravnenie_modelej.html",
+      "mtime": "2026-11-06 21:12:19",
+      "kind": "default",
+      "layout": {
+        "width": 1080,
+        "height": 1350,
+        "minFont": 13,
+        "small": [],
+        "overflow": [],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 25,
+          "Sofia Sans Cond": 1,
+          "Segoe UI": 14,
+          "Tektur": 36
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          },
+          {
+            "src": "k8m.png",
+            "natW": 705,
+            "natH": 430,
+            "dispW": 72,
+            "dispH": 44,
+            "scale": 9.77
+          },
+          {
+            "src": "shtora-k12.png",
+            "natW": 715,
+            "natH": 697,
+            "dispW": 45,
+            "dispH": 44,
+            "scale": 15.84
+          },
+          {
+            "src": "rebus-4.png",
+            "natW": 1039,
+            "natH": 988,
+            "dispW": 46,
+            "dispH": 44,
+            "scale": 22.46
+          }
+        ],
+        "contrast": [
+          {
+            "cls": "p-kicker",
+            "ratio": 4.3,
+            "fs": 14,
+            "text": "ПАСПОРТНЫЕ ТТХ · МОДЕЛИ ЛИНЕЙКИ"
+          },
+          {
+            "cls": "p-cta__accent",
+            "ratio": 4.3,
+            "fs": 25,
+            "text": "@vokope_ru"
+          }
+        ],
+        "disclaimer": null,
+        "textLen": 1795,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P08 · 11.2026 СРАВНЕНИЕ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P08 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "ПАСПОРТНЫЕ ТТХ · МОДЕЛИ ЛИНЕЙКИ"
+          },
+          {
+            "cls": "p-title",
+            "fs": 124,
+            "text": "СРАВНЕНИЕ МОДЕЛЕЙ"
+          },
+          {
+            "cls": "p-lead",
+            "fs": 26,
+            "text": "Модели линейки в одной таблице: назначение, каналы, дальность, питание"
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "МОДЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НАЗНАЧЕНИЕ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "ДИАПАЗОНЫ, МГЦ"
+          }
+        ],
+        "safeMargin": {
+          "left": 64,
+          "top": 64,
+          "right": 64,
+          "bottom": 64
+        }
+      }
+    },
+    "P09": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html",
+      "mtime": "2026-11-06 21:09:52",
+      "kind": "default",
+      "layout": {
+        "width": 1080,
+        "height": 1350,
+        "minFont": 13,
+        "small": [],
+        "overflow": [
+          {
+            "cls": "p-plate__img",
+            "scrollW": 398,
+            "clientW": 386
+          }
+        ],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 21,
+          "Sofia Sans Cond": 1,
+          "Segoe UI": 22,
+          "Tektur": 7
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          },
+          {
+            "src": "k12m.png",
+            "natW": 794,
+            "natH": 496,
+            "dispW": 386,
+            "dispH": 264,
+            "scale": 2.06
+          }
+        ],
+        "contrast": [],
+        "disclaimer": null,
+        "textLen": 1185,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P09 · 11.2026 КАК КУПИТЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P09 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "ОТ ЗАЯВКИ ДО ВКЛЮЧЕНИЯ"
+          },
+          {
+            "cls": "p-title p-title--sm",
+            "fs": 96,
+            "text": "КАК КУПИТЬ: ШЕСТЬ ШАГОВ"
+          },
+          {
+            "cls": "p-lead",
+            "fs": 26,
+            "text": "Разбор задачи, КП, документы, поставка, ввод и сервис. Ответ — в рабоч"
+          },
+          {
+            "cls": "",
+            "fs": 26,
+            "text": "Ответ — в рабочее время."
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 16,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 13,
+            "text": ""
+          },
+          {
+            "cls": "[object SVGAnimatedString]",
+            "fs": 13,
+            "text": ""
+          }
+        ],
+        "safeMargin": {
+          "left": 64,
+          "top": 64,
+          "right": 64,
+          "bottom": 64
+        }
+      }
+    },
+    "P10": {
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P10_dokumenty_i_servis.html",
+      "mtime": "2026-11-06 21:12:04",
+      "kind": "default",
+      "layout": {
+        "width": 1080,
+        "height": 1350,
+        "minFont": 11,
+        "small": [
+          {
+            "tag": "P",
+            "cls": "",
+            "fs": 11,
+            "text": "Оборудование является радиоэлектронным средством. Порядок приобретения, регистрации и прим"
+          },
+          {
+            "tag": "P",
+            "cls": "",
+            "fs": 11,
+            "text": "Технические характеристики — по паспорту изделия; значения дальности зависят от условий эк"
+          }
+        ],
+        "overflow": [],
+        "outside": [],
+        "fonts": {
+          "Sofia Sans Cond": true,
+          "Oswald": true,
+          "Tektur": true,
+          "Unbounded": false
+        },
+        "families": {
+          "Oswald": 17,
+          "Sofia Sans Cond": 2,
+          "Segoe UI": 15,
+          "Tektur": 14
+        },
+        "images": [
+          {
+            "src": "logo_w_word.png",
+            "natW": 983,
+            "natH": 239,
+            "dispW": 176,
+            "dispH": 43,
+            "scale": 5.59
+          },
+          {
+            "src": "k12m.png",
+            "natW": 794,
+            "natH": 496,
+            "dispW": 361,
+            "dispH": 224,
+            "scale": 2.2
+          }
+        ],
+        "contrast": [
+          {
+            "cls": "p-kicker",
+            "ratio": 4.3,
+            "fs": 14,
+            "text": "ПОЧЕМУ ЭТО ВАЖНЕЕ СКИДКИ"
+          },
+          {
+            "cls": "p-accent",
+            "ratio": 4.3,
+            "fs": 124,
+            "text": "И СЕРВИС"
+          },
+          {
+            "cls": "",
+            "ratio": 4.3,
+            "fs": 23,
+            "text": "месяцев"
+          },
+          {
+            "cls": "p-cta__accent",
+            "ratio": 4.3,
+            "fs": 25,
+            "text": "@vokope_ru"
+          }
+        ],
+        "disclaimer": {
+          "fs": 11,
+          "text": "Оборудование является радиоэлектронным средством. Порядок приобретения, регистрации и применения определяется законодате"
+        },
+        "textLen": 2201,
+        "smallest": [
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ» ПРОИЗВОДИТЕЛЬ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "НПО «КИЛОВАТТ»"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "P10 · 11.2026 ДОКУМЕНТЫ И СЕРВИС"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "P10 · 11.2026"
+          },
+          {
+            "cls": "p-kicker",
+            "fs": 14,
+            "text": "ПОЧЕМУ ЭТО ВАЖНЕЕ СКИДКИ"
+          },
+          {
+            "cls": "p-title",
+            "fs": 124,
+            "text": "ДОКУМЕНТЫ И СЕРВИС"
+          },
+          {
+            "cls": "p-accent",
+            "fs": 124,
+            "text": "И СЕРВИС"
+          },
+          {
+            "cls": "p-lead p-lead--wide",
+            "fs": 26,
+            "text": "Паспорт изделия. По «Капюшон» К-12М — сертификат и декларация ЕАЭС. ГК"
+          },
+          {
+            "cls": "",
+            "fs": 26,
+            "text": "Гарантия 12 месяцев и сервис."
+          },
+          {
+            "cls": "p-plate__cap",
+            "fs": 13,
+            "text": "«КАПЮШОН» К-12М: ПАСПОРТ С ОТМЕТКАМИ ПРОВЕРОК — В КОМПЛЕКТЕ"
+          },
+          {
+            "cls": "p-label",
+            "fs": 13,
+            "text": "ИЗГОТОВИТЕЛЬ — ПО ПАСПОРТУ"
+          },
+          {
+            "cls": "",
+            "fs": 13,
+            "text": "«Капюшон» — ООО «НПО «КИЛОВАТТ»». «Ребус-4», «Штора» — ООО «НПО «МЕГАВ"
+          }
+        ],
+        "safeMargin": {
+          "left": 64,
+          "top": 64,
+          "right": 64,
+          "bottom": 64
+        }
+      }
+    }
+  }
+}

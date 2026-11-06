@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P06 · ПРАВОВОЙ КОМПАС — «В ОКОПЕ» × НПО «Киловатт»</title>
+<!--
+  ПОСТЕР P06 · «ПРАВОВОЙ КОМПАС» · B2B, светлая тема.
+  Тема: .theme-quiet. Формат: 1080×1350.
+  Текст: 00_СТРАТЕГИЯ/04_КОПИРАЙТ_ПОСТЕРОВ.md §6 (v1).
+  Факты: claims.json — C057 (99-ФЗ), C059–C060 (58-ФЗ), C066 (кто вправе),
+  C061–C062 (ПП 1331), C005 (сертификат/декларация), C081 (изготовитель), C083 (КоАП);
+  дисклеймер — C076–C080 дословно (решение Lead).
+  Схема: _design/parts/legal-compass.svg (компактная, инлайн).
+  Правки Lead 06.11.2026: диаграмма уменьшена, 4 схемы — в одну колонку;
+  «кто вправе» и «что проверить» — две колонки; дисклеймер — нижней полосой
+  кеглем 12 px с отступом 24 px над футером.
+-->
+<link rel="stylesheet" href="../_design/tokens.css">
+<link rel="stylesheet" href="../_design/poster.css">
+<style>
+  /* локальные блоки P06 (designer-b) */
+  .db-compass svg { display: block; width: 952px; height: auto; }
+  .db-twocol {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+  }
+  .db-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 12px;
+  }
+  .db-list__item {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--fg-dim);
+  }
+  .db-list__item b { color: var(--fg); font-weight: 600; }
+  .db-disclaimer {
+    border-top: 2px solid var(--line-strong);
+    padding-top: 10px;
+    margin-bottom: 24px;
+  }
+  .db-disclaimer p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--fg-dim);
+  }
+</style>
+</head>
+
+<body class="theme-quiet grain">
+
+<main class="poster" id="p06">
+
+  <header class="poster__head">
+    <div class="poster__brand">
+      <img src="../_design/img/brand/logo_w_word.png" alt="В ОКОПЕ — магазин брони">
+    </div>
+    <div class="poster__issuer">
+      <span class="p-label"><b>НПО «Киловатт»</b>производитель</span>
+      <span class="p-label"><b>P06 · 11.2026</b>право и практика</span>
+    </div>
+  </header>
+
+  <section class="poster__intro">
+    <p class="p-kicker">Право и практика</p>
+    <h1 class="p-title">Правовой компас</h1>
+    <p class="p-lead">
+      Купить можно. Включать — только с законным правом.
+      <strong>Пять пунктов для проверки до сделки.</strong>
+    </p>
+  </section>
+
+  <section class="poster__main" style="gap:20px">
+
+    <!-- компас: четыре легальные схемы (parts/legal-compass.svg, инлайн) -->
+    <div class="db-compass">
+      <svg xmlns="http://www.w3.org/2000/svg" class="sx sx-legal" viewBox="0 0 952 340" width="952" height="340" role="img" aria-labelledby="sx-legal-title">
+  <title id="sx-legal-title">Правовой компас: купить можно, включать — только с законным правом; четыре легальные схемы</title>
+  <style>
+    .sx {
+      --sx-ink: var(--fg, #1D1E1A);
+      --sx-dim: var(--fg-dim, rgba(29, 30, 26, 0.66));
+      --sx-faint: var(--fg-faint, rgba(29, 30, 26, 0.40));
+      --sx-line: var(--line, rgba(29, 30, 26, 0.18));
+      --sx-line2: var(--line-strong, rgba(29, 30, 26, 0.38));
+      --sx-accent: var(--accent, #C8451F);
+      --sx-acc-ink: var(--accent-ink, #F4F1EA);
+      --sx-paper: var(--bg, #F4F1EA);
+    }
+    .sx .sx-ln { fill: none; stroke: var(--sx-line); stroke-width: 1; }
+    .sx .sx-ln2 { fill: none; stroke: var(--sx-line2); stroke-width: 1.2; }
+    .sx .sx-tick { fill: none; stroke: var(--sx-line2); stroke-width: 5; }
+    .sx .sx-acc { fill: var(--sx-accent); }
+    .sx .sx-paper { fill: var(--sx-paper); }
+    .sx .sx-t-kick { font-family: "Oswald", "Segoe UI", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.12em; fill: var(--sx-dim); }
+    .sx .sx-t-center { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.05em; fill: var(--sx-ink); }
+    .sx .sx-t-center-sm { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.04em; fill: var(--sx-dim); }
+    .sx .sx-num { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; fill: var(--sx-acc-ink); }
+    .sx .sx-num-dim { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; letter-spacing: 0.04em; fill: var(--sx-faint); }
+    .sx .sx-t-title { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.03em; fill: var(--sx-ink); }
+    .sx .sx-t-desc { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-dim); }
+    .sx .sx-note { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-faint); }
+    .sx .a-mid { text-anchor: middle; }
+  </style>
+
+  <!-- ================= КОМПАС (компактно, слева) ================= -->
+  <circle class="sx-tick" cx="140" cy="160" r="111.5" stroke-dasharray="1 8.73"/>
+  <circle class="sx-ln2" cx="140" cy="160" r="108"/>
+  <line class="sx-ln" x1="140" y1="64" x2="140" y2="256"/>
+  <line class="sx-ln" x1="44" y1="160" x2="236" y2="160"/>
+
+  <!-- узлы-направления -->
+  <rect class="sx-acc" x="128" y="45" width="24" height="24"/>
+  <text class="sx-num a-mid" x="140" y="57">1</text>
+  <rect class="sx-acc" x="236" y="148" width="24" height="24"/>
+  <text class="sx-num a-mid" x="248" y="160">2</text>
+  <rect class="sx-acc" x="128" y="261" width="24" height="24"/>
+  <text class="sx-num a-mid" x="140" y="273">3</text>
+  <rect class="sx-acc" x="20" y="148" width="24" height="24"/>
+  <text class="sx-num a-mid" x="32" y="160">4</text>
+
+  <!-- центр -->
+  <circle class="sx-paper" cx="140" cy="160" r="56"/>
+  <circle class="sx-ln2" cx="140" cy="160" r="56"/>
+  <text class="sx-t-center a-mid" x="140" y="150">КУПИТЬ МОЖНО</text>
+  <line class="sx-ln2" x1="116" y1="161" x2="164" y2="161"/>
+  <text class="sx-t-center-sm a-mid" x="140" y="178">ВКЛЮЧАТЬ —</text>
+  <text class="sx-t-center-sm a-mid" x="140" y="193">С ПРАВОМ</text>
+
+  <!-- примечание под компасом -->
+  <text class="sx-note" x="0" y="316">126-ФЗ «О связи» · ПП РФ № 1800 · ПП РФ № 1331 (с 01.03.2027)</text>
+
+  <!-- ================= ЛЕГЕНДА: 4 схемы в одну колонку ================= -->
+  <rect class="sx-acc" x="300" y="27" width="22" height="2"/>
+  <text class="sx-t-kick" x="332" y="34">ЧЕТЫРЕ ЛЕГАЛЬНЫЕ СХЕМЫ</text>
+
+  <!-- 1 -->
+  <text class="sx-num-dim" x="300" y="68">1</text>
+  <text class="sx-t-title" x="328" y="68">УПОЛНОМОЧЕННОЕ ПОДРАЗДЕЛЕНИЕ</text>
+  <text class="sx-t-desc" x="328" y="88">Объект с полномочиями по закону: ведомственная охрана, транспортная безопасность.</text>
+  <line class="sx-ln" x1="300" y1="106" x2="952" y2="106"/>
+
+  <!-- 2 -->
+  <text class="sx-num-dim" x="300" y="134">2</text>
+  <text class="sx-t-title" x="328" y="134">ПОДРЯДЧИК С ПРАВОМ</text>
+  <text class="sx-t-desc" x="328" y="154">Организация с правом на применение; договор, допуск и ответственность.</text>
+  <line class="sx-ln" x1="300" y1="172" x2="952" y2="172"/>
+
+  <!-- 3 -->
+  <text class="sx-num-dim" x="300" y="200">3</text>
+  <text class="sx-t-title" x="328" y="200">РЕЖИМ ОБНАРУЖЕНИЯ</text>
+  <text class="sx-t-desc" x="328" y="220">Пассивный приём без излучения: «Сигнал-М2» как первый этап контура.</text>
+  <line class="sx-ln" x1="300" y1="238" x2="952" y2="238"/>
+
+  <!-- 4 -->
+  <text class="sx-num-dim" x="300" y="266">4</text>
+  <text class="sx-t-title" x="328" y="266">ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</text>
+  <text class="sx-t-desc" x="328" y="286">ГКРЧ и Роскомнадзор; с 01.03.2027 — только при наличии права по закону.</text>
+</svg>
+    </div>
+
+    <!-- кто вправе по закону / что проверить до сделки -->
+    <div class="db-twocol">
+
+      <div>
+        <div class="p-section__head">
+          <h2 class="p-section__title">Кто вправе по закону</h2>
+          <span class="p-section__meta">на 06.11.2026</span>
+        </div>
+        <div class="db-list">
+          <div class="db-list__item"><b>Ведомственная охрана</b> — с 02.05.2025 (99-ФЗ):
+            спецсредства и радиоэлектронные устройства против БПЛА.</div>
+          <div class="db-list__item"><b>Специализированные ЧОП</b> на объектах ТЭК,
+            стратегических и КВО — с 23.03.2026 (58-ФЗ); прямого права на РЭБ закон
+            не устанавливает.</div>
+          <div class="db-list__item"><b>Органы и организации,</b> на которые законом
+            возложены полномочия по пресечению БВС.</div>
+          <div class="db-list__item"><b>Остальным</b> — три схемы: подрядчик с правом, режим обнаружения без излучения, индивидуальное согласование. Разбор — с юристом по объекту.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="p-section__head">
+          <h2 class="p-section__title">Что проверить до сделки</h2>
+          <span class="p-section__meta">пять пунктов</span>
+        </div>
+        <div class="db-list">
+          <div class="db-list__item"><b>Статус объекта</b> — есть ли полномочия
+            по федеральному закону.</div>
+          <div class="db-list__item"><b>Основание применения</b> — право по закону;
+            с 01.03.2027 регистрация по ПП № 1331.</div>
+          <div class="db-list__item"><b>Документы изделия</b> — паспорт, сертификат
+            и декларация по модели, решения ГКРЧ.</div>
+          <div class="db-list__item"><b>Изготовитель</b> — в договоре как в паспорте
+            изделия.</div>
+          <div class="db-list__item"><b>Риски</b> — КоАП 13.3/13.4: 30 000–60 000 ₽,
+            ч. 3 — 45 000–90 000 ₽; возможна конфискация РЭС.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- дисклеймер C076–C080, дословно; нижняя полоса с отступом 24px от футера -->
+    <div class="db-disclaimer">
+      <p>Оборудование является радиоэлектронным средством. Порядок приобретения, регистрации
+        и применения определяется законодательством РФ, в том числе Федеральным законом
+        № 126-ФЗ «О связи», постановлениями Правительства РФ № 1800 и № 1331, решениями ГКРЧ.
+        Возможность применения на конкретном объекте подтверждается заказчиком в установленном
+        порядке до ввода в эксплуатацию. Поставщик не оказывает юридических услуг и не гарантирует
+        получение заказчиком разрешений/регистрации. Ответственность за соблюдение условий
+        применения несёт владелец (эксплуатант) оборудования. Технические характеристики — по
+        паспорту изделия; значения дальности зависят от условий эксплуатации (рельеф, помеховая
+        обстановка, погода) и не являются гарантией поражения конкретного БПЛА. Информация о ценах
+        и наличии актуальна на дату публикации и не является публичной офертой. Сведения о правовом
+        статусе и порядке применения в настоящем каталоге носят информационный характер и требуют
+        проверки юристом заказчика.</p>
+    </div>
+
+  </section>
+
+  <footer class="poster__foot">
+    <div class="p-cta">
+      <div class="p-cta__main">
+        Telegram <span class="p-cta__accent">@vokope_ru</span>
+        <span class="p-cta__sep">·</span> +7 999 136-71-42
+      </div>
+      <div class="p-cta__sub">Вопросы по объекту · Доставка по РФ · Самовывоз в Москве</div>
+    </div>
+    <div class="p-colophon">В ОКОПЕ · НПО «Киловатт»<br>P06 · 11.2026</div>
+  </footer>
+
+</main>
+
+</body>
+</html>

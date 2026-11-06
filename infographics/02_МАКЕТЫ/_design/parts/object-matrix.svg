@@ -1,0 +1,131 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" class="sx sx-objects" viewBox="0 0 952 604" width="952" height="604" role="img" aria-labelledby="sx-objects-title">
+  <title id="sx-objects-title">Матрица «объект → рекомендованная конфигурация»: семь типовых объектов, аэропорт — особый случай</title>
+  <style>
+    .sx {
+      --sx-ink: var(--fg, #1D1E1A);
+      --sx-dim: var(--fg-dim, rgba(29, 30, 26, 0.66));
+      --sx-faint: var(--fg-faint, rgba(29, 30, 26, 0.40));
+      --sx-line: var(--line, rgba(29, 30, 26, 0.18));
+      --sx-line2: var(--line-strong, rgba(29, 30, 26, 0.38));
+      --sx-accent: var(--accent, #C8451F);
+      --sx-paper: var(--bg, #F4F1EA);
+    }
+    .sx .t-head { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.15em; fill: var(--sx-dim); }
+    .sx .t-num { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; letter-spacing: 0.08em; fill: var(--sx-faint); }
+    .sx .t-obj { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 600; font-size: 14.5px; letter-spacing: 0.045em; fill: var(--sx-ink); }
+    .sx .t-conf { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 500; font-size: 14px; letter-spacing: 0.01em; fill: var(--sx-ink); }
+    .sx .t-com { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-dim); }
+    .sx .t-com-acc { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; font-weight: 600; fill: var(--sx-accent); }
+    .sx .ln { fill: none; stroke: var(--sx-line); stroke-width: 1; }
+    .sx .ln-strong { fill: none; stroke: var(--sx-line2); stroke-width: 1.4; }
+    .sx .ln-ink { fill: none; stroke: var(--sx-ink); stroke-width: 1.2; }
+    .sx .acc { fill: var(--sx-accent); }
+    .sx .fill-ink { fill: var(--sx-ink); }
+  </style>
+
+  <!-- Шапка матрицы -->
+  <text class="t-head" x="0" y="24">ОБЪЕКТ</text>
+  <text class="t-head" x="388" y="24">ЧТО СТАВИМ</text>
+  <rect class="acc" x="356" y="15" width="22" height="2"/>
+  <text class="t-head" x="704" y="24">КОММЕНТАРИЙ</text>
+  <line class="ln-strong" x1="0" y1="40" x2="952" y2="40"/>
+
+  <!-- 01 Промплощадка / завод -->
+  <g>
+    <text class="t-num" x="0" y="80">01</text>
+    <text class="t-obj" x="28" y="67">ПРОМЫШЛЕННАЯ</text>
+    <text class="t-obj" x="28" y="89">ПЛОЩАДКА / ЗАВОД</text>
+    <line class="ln-ink" x1="344" y1="82" x2="370" y2="82"/>
+    <path class="fill-ink" d="M 376 82 L 366 77.5 L 366 86.5 Z"/>
+    <text class="t-conf" x="388" y="69">«Ребус-4» 360° + «Сигнал-М2»</text>
+    <text class="t-conf" x="388" y="91">«Штора» на периметр</text>
+    <text class="t-com" x="704" y="69">Площадной объект — нужен</text>
+    <text class="t-com" x="704" y="86">круговой контур</text>
+  </g>
+  <line class="ln" x1="0" y1="120" x2="952" y2="120"/>
+
+  <!-- 02 Склад / логистика -->
+  <g>
+    <text class="t-num" x="0" y="160">02</text>
+    <text class="t-obj" x="28" y="147">СКЛАД /</text>
+    <text class="t-obj" x="28" y="169">ЛОГИСТИКА</text>
+    <line class="ln-ink" x1="344" y1="162" x2="370" y2="162"/>
+    <path class="fill-ink" d="M 376 162 L 366 157.5 L 366 166.5 Z"/>
+    <text class="t-conf" x="388" y="149">«Штора» К-12/700 + «Сигнал-М2»</text>
+    <text class="t-conf" x="388" y="171">направленно — на подлёт</text>
+    <text class="t-com" x="704" y="149">4-моноблочный «Ребус» —</text>
+    <text class="t-com" x="704" y="166">для круговой площадки</text>
+  </g>
+  <line class="ln" x1="0" y1="200" x2="952" y2="200"/>
+
+  <!-- 03 Периметр / охрана -->
+  <g>
+    <text class="t-num" x="0" y="240">03</text>
+    <text class="t-obj" x="28" y="227">ПЕРИМЕТР /</text>
+    <text class="t-obj" x="28" y="249">ОХРАНА</text>
+    <line class="ln-ink" x1="344" y1="242" x2="370" y2="242"/>
+    <path class="fill-ink" d="M 376 242 L 366 237.5 L 366 246.5 Z"/>
+    <text class="t-conf" x="388" y="229">«Сигнал-М2» — обнаружение</text>
+    <text class="t-conf" x="388" y="251">«Штора-М» / «Ребус-4» на углах</text>
+    <text class="t-com" x="704" y="229">Начинать с обнаружения:</text>
+    <text class="t-com" x="704" y="246">реагировать по факту</text>
+  </g>
+  <line class="ln" x1="0" y1="280" x2="952" y2="280"/>
+
+  <!-- 04 ТЭК / ЛЭП / мосты -->
+  <g>
+    <text class="t-num" x="0" y="320">04</text>
+    <text class="t-obj" x="28" y="307">ТЭК / ЛЭП / МОСТЫ</text>
+    <text class="t-obj" x="28" y="329">ТРУБОПРОВОДЫ</text>
+    <line class="ln-ink" x1="344" y1="322" x2="370" y2="322"/>
+    <path class="fill-ink" d="M 376 322 L 366 317.5 L 366 326.5 Z"/>
+    <text class="t-conf" x="388" y="309">«Поле-31» + «Ребус-4»</text>
+    <text class="t-conf" x="388" y="331">навигация + локальные площадки</text>
+    <text class="t-com" x="704" y="309">Протяжённые объекты:</text>
+    <text class="t-com" x="704" y="326">нужны обе задачи</text>
+  </g>
+  <line class="ln" x1="0" y1="360" x2="952" y2="360"/>
+
+  <!-- 05 АЗС / топливо -->
+  <g>
+    <text class="t-num" x="0" y="400">05</text>
+    <text class="t-obj" x="28" y="387">АЗС /</text>
+    <text class="t-obj" x="28" y="409">ТОПЛИВО</text>
+    <line class="ln-ink" x1="344" y1="402" x2="370" y2="402"/>
+    <path class="fill-ink" d="M 376 402 L 366 397.5 L 366 406.5 Z"/>
+    <text class="t-conf" x="388" y="389">«Штора-М» К-8/600</text>
+    <text class="t-conf" x="388" y="411">или «Капюшон» К-8М</text>
+    <text class="t-com" x="704" y="389">Компактно, быстро</text>
+    <text class="t-com" x="704" y="406">разворачивается</text>
+  </g>
+  <line class="ln" x1="0" y1="440" x2="952" y2="440"/>
+
+  <!-- 06 АПК / поля -->
+  <g>
+    <text class="t-num" x="0" y="480">06</text>
+    <text class="t-obj" x="28" y="467">АПК /</text>
+    <text class="t-obj" x="28" y="489">ПОЛЯ</text>
+    <line class="ln-ink" x1="344" y1="482" x2="370" y2="482"/>
+    <path class="fill-ink" d="M 376 482 L 366 477.5 L 366 486.5 Z"/>
+    <text class="t-conf" x="388" y="469">«Штора» — поля, «Капюшон» —</text>
+    <text class="t-conf" x="388" y="491">на технику, «Сигнал-М2» — контроль</text>
+    <text class="t-com" x="704" y="469">Поля и техника —</text>
+    <text class="t-com" x="704" y="486">разные решения</text>
+  </g>
+  <line class="ln" x1="0" y1="520" x2="952" y2="520"/>
+
+  <!-- 07 Аэропорт — особый случай (правовая оговорка обязательна) -->
+  <g>
+    <text class="t-num" x="0" y="560">07</text>
+    <text class="t-obj" x="28" y="547">АЭРОПОРТ /</text>
+    <text class="t-obj" x="28" y="569">ПРИАЭРОДРОМНАЯ ЗОНА</text>
+    <line class="ln-ink" x1="344" y1="562" x2="370" y2="562"/>
+    <path class="fill-ink" d="M 376 562 L 366 557.5 L 366 566.5 Z"/>
+    <text class="t-conf" x="388" y="549">«Ребус-4» / «Штора»</text>
+    <text class="t-conf" x="388" y="571">К-12/700 — технически</text>
+    <text class="t-com-acc" x="704" y="549">ОСОБЫЙ СЛУЧАЙ: только через</text>
+    <text class="t-com" x="704" y="566">уполномоченные структуры</text>
+    <text class="t-com" x="704" y="583">и после юридической проверки</text>
+  </g>
+  <line class="ln-strong" x1="0" y1="600" x2="952" y2="600"/>
+</svg>

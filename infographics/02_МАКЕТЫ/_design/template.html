@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>КАРКАС ПОСТЕРА 1080×1350 · «В ОКОПЕ» × НПО «Киловатт»</title>
+
+<!-- ==========================================================================
+     КАК ПОЛЬЗОВАТЬСЯ ЭТИМ ФАЙЛОМ
+     1. Скопируй template.html в ../posters/ и назови по конвенции:
+        P01_dva_gorizonta.html и т.д.
+     2. Поменяй ТЕМУ на <body>: class="theme-quiet grain" (B2B, тёплый белый)
+        или class="theme-field grain" (розница/поле, графит-олива).
+     3. Поменяй тексты: кикер, заголовок, ОДИН вывод-лид. Заголовок ≤ 2 строк,
+        вывод ≤ 3 строк. Всё остальное — цифры и короткие подписи.
+     4. Собери рабочую зону из компонентов (см. шпаргалку внизу файла).
+     5. Проверь рендером 1080×1350 (Chrome headless) и глазами: ничего не
+        обрезано, подписи ≥13px, фото на бумажной плашке, один акцент.
+     ТЕМЫ: .theme-quiet — графит #1D1E1A + акцент #C8451F на тёплой бумаге;
+            .theme-field — бумажный белый #EDE8D7 + акцент #C9F24B на оливе.
+     ФОРМАТЫ: .poster (1080×1350) · .poster--wide (1920×1080) ·
+              .poster--story (1080×1920). Класс — на <main>.
+     ========================================================================= -->
+
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="poster.css">
+</head>
+
+<!-- тема и зерно печати задаются на body; grain — единственная текстура (opacity 0.05) -->
+<body class="theme-quiet grain">
+
+<main class="poster">
+
+  <!-- ======================= ШАПКА =========================================
+       Логотип-вербалка «В ОКОПЕ» + строка производителя и номер постера.
+       Не меняй местами, не добавляй навигацию/кнопки — это печатный лист.
+       ==================================================================== -->
+  <header class="poster__head">
+    <div class="poster__brand">
+      <img src="img/brand/logo_w_word.png" alt="В ОКОПЕ — магазин брони">
+    </div>
+    <div class="poster__issuer">
+      <span class="p-label"><b>НПО «Киловатт»</b>производитель</span>
+      <span class="p-label"><b>Шаблон · P00</b>ноябрь 2026</span>
+    </div>
+  </header>
+
+  <!-- ======================= ВСТУПЛЕНИЕ ====================================
+       Кикер (надзаголовок), плакатный заголовок, вывод-лид.
+       В заголовке можно выделить одно слово: <span class="p-accent">…</span>.
+       ==================================================================== -->
+  <section class="poster__intro">
+    <p class="p-kicker">Дизайн-система «Два горизонта» · 1080×1350</p>
+    <h1 class="p-title">Шаблон <span class="p-accent">постера</span></h1>
+    <p class="p-lead">
+      Копируй каркас и меняй содержимое: <strong>тему, заголовок, один вывод
+      и рабочую зону.</strong> Один постер — один вывод, один акцент, цифры —
+      только из claims.json.
+    </p>
+  </section>
+
+  <!-- ======================= РАБОЧАЯ ЗОНА ==================================
+       Свободная высота между вступлением и футером. Собирай из компонентов
+       (12-колоночная сетка .p-grid / .p-cols-2/3/4). Никаких карточек.
+       ==================================================================== -->
+  <section class="poster__main">
+
+    <div class="p-grid">
+
+      <!-- фото-плашка: только реальная вырезка из img/ + подпись -->
+      <figure class="p-plate p-c-5">
+        <div class="p-plate__img" style="height:268px">
+          <img src="img/cut/k12m.png" alt="Станция «Капюшон» К-12М, реальное фото">
+        </div>
+        <figcaption class="p-plate__cap">Пример · фото на бумажной плашке</figcaption>
+      </figure>
+
+      <!-- тех-таблица: паспортные ТТХ, значения — приборным шрифтом -->
+      <div class="p-c-7">
+        <div class="p-section__head">
+          <h2 class="p-section__title">Пример · тех-таблица</h2>
+          <span class="p-section__meta">Tektur</span>
+        </div>
+        <div class="p-table">
+          <div class="p-table__row"><span class="p-table__k">Диапазон частот</span><span class="p-table__v">300–5900 МГц</span></div>
+          <div class="p-table__row"><span class="p-table__k">Каналов подавления</span><span class="p-table__v">12</span></div>
+          <div class="p-table__row"><span class="p-table__k">Мощность передатчиков</span><span class="p-table__v">до 240 Вт</span></div>
+          <div class="p-table__row"><span class="p-table__k">Дальность подавления</span><span class="p-table__v">50–200 м</span></div>
+          <div class="p-table__row"><span class="p-table__k">Питание</span><span class="p-table__v">12/24 В · 220 В</span></div>
+          <div class="p-table__row"><span class="p-table__k">Масса</span><span class="p-table__v">24 кг</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- второй ряд: купольная схема + слоган/ядро доверия -->
+    <div class="p-grid">
+
+      <figure class="p-dome p-c-6">
+        <div class="p-dome__frame">
+          <span class="p-dome__fig">Рис. 1 · купольная схема</span>
+          <svg viewBox="0 0 600 258" role="img" aria-label="Пример купольной схемы">
+            <defs>
+              <path id="domeArc" d="M 62 196 A 238 146 0 0 1 538 196"/>
+            </defs>
+            <!-- земля -->
+            <line x1="14" y1="196" x2="586" y2="196"/>
+            <!-- купол зоны -->
+            <path d="M 62 196 A 238 146 0 0 1 538 196"/>
+            <text font-family="Oswald, Arial, sans-serif" font-size="16"
+                  letter-spacing="3" fill="currentColor" fill-opacity="0.62">
+              <textPath href="#domeArc" startOffset="30%">ЗОНА ЭФФЕКТИВНОГО ПРОТИВОДЕЙСТВИЯ</textPath>
+            </text>
+            <!-- размер зоны: единственное, что окрашено акцентом -->
+            <line class="p-dome__accent" x1="62" y1="214" x2="538" y2="214"/>
+            <line class="p-dome__accent" x1="62" y1="207" x2="62" y2="221"/>
+            <line class="p-dome__accent" x1="538" y1="207" x2="538" y2="221"/>
+            <line class="p-dome__ghost" x1="62" y1="196" x2="62" y2="207" stroke-dasharray="2 3"/>
+            <line class="p-dome__ghost" x1="538" y1="196" x2="538" y2="207" stroke-dasharray="2 3"/>
+            <text class="p-dome__fill-accent" x="300" y="244" text-anchor="middle"
+                  font-family="Oswald, Arial, sans-serif" font-size="18"
+                  letter-spacing="3">2000–3000 М</text>
+            <!-- сектор подавления у станции -->
+            <line class="p-dome__ghost" x1="300" y1="168" x2="408" y2="168"/>
+            <line class="p-dome__ghost" x1="300" y1="168" x2="300" y2="196"/>
+            <line class="p-dome__ghost" x1="408" y1="168" x2="408" y2="196"/>
+            <text x="354" y="158" text-anchor="middle" fill="currentColor" fill-opacity="0.62"
+                  font-family="Oswald, Arial, sans-serif" font-size="15"
+                  letter-spacing="2">50–200 М</text>
+            <!-- станция на линии объектовой обороны -->
+            <ellipse cx="300" cy="196" rx="52" ry="5" fill="currentColor" fill-opacity="0.12"/>
+            <path d="M 272 188 L 272 196 L 328 196 L 328 188 Z" fill="currentColor" fill-opacity="0.85"/>
+            <line class="p-dome__ghost" x1="300" y1="196" x2="300" y2="207"/>
+          </svg>
+        </div>
+        <figcaption class="p-dome__cap">Пример · в SVG чертёж идёт currentColor, размеры — p-dome__accent.</figcaption>
+      </figure>
+
+      <div class="p-c-6">
+        <p class="p-pull">Сначала обнаружь. Потом подави.</p>
+        <div class="p-trust" style="margin-top:22px">
+          <div class="p-trust__item"><span class="p-trust__mark"></span><span><b>Паспортные цифры</b>без «примерно»</span></div>
+          <div class="p-trust__item"><span class="p-trust__mark"></span><span><b>Реальные фото</b>вырезки из съёмки</span></div>
+          <div class="p-trust__item"><span class="p-trust__mark"></span><span><b>Один акцент</b>сигнал, не фон</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- полоса приборных цифр: 3–4 факта, единицы — акцентом.
+         Если цифры длинные («300–5900») — .p-facts--3 или .p-fact__val--sm. -->
+    <div class="p-facts">
+      <div>
+        <span class="p-fact__val">12 <i>каналов</i></span>
+        <span class="p-fact__cap">пример · полоса фактов</span>
+      </div>
+      <div>
+        <span class="p-fact__val">50–200 <i>м</i></span>
+        <span class="p-fact__cap">пример · единица акцентом</span>
+      </div>
+      <div>
+        <span class="p-fact__val">24 <i>кг</i></span>
+        <span class="p-fact__cap">пример · без лишних слов</span>
+      </div>
+      <div>
+        <span class="p-fact__val">12 <i>мес</i></span>
+        <span class="p-fact__cap">пример · заводская гарантия</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======================= ФУТЕР =========================================
+       CTA строго по брифу + выходные данные. Меняется только номер постера.
+       Номер и дата: «P01 · 11.2026 · 1/10» — в правой колонке.
+       ==================================================================== -->
+  <footer class="poster__foot">
+    <div class="p-cta">
+      <div class="p-cta__main">
+        Telegram <span class="p-cta__accent">@vokope_ru</span>
+        <span class="p-cta__sep">·</span> +7 999 136-71-42
+      </div>
+      <div class="p-cta__sub">Доставка по РФ · Самовывоз в Москве</div>
+    </div>
+    <div class="p-colophon">В ОКОПЕ · НПО «Киловатт»<br>Шаблон · P00 · 11.2026</div>
+  </footer>
+
+</main>
+
+
+<!-- ==========================================================================
+     ШПАРГАЛКА КОМПОНЕНТОВ — копируй нужный блок в .poster__main.
+     Все классы уже описаны в poster.css; не изобретай новые без нужды.
+
+     --- ДВА ГОРИЗОНТА (P01) ---------------------------------------------------
+     <div class="p-horizons">
+       <article class="p-horizon p-horizon--l">
+         <div class="p-horizon__top">
+           <span class="p-horizon__num">01</span>
+           <span class="p-horizon__kind">розница</span>
+         </div>
+         <h3 class="p-horizon__title">Дом / транспорт</h3>
+         <p class="p-horizon__who"><b>Кто:</b> авто, мото, дача, дом.</p>
+         <ul class="p-horizon__list">
+           <li><b>Купол на крышу</b> — поставил и работает</li>
+         </ul>
+       </article>
+       <article class="p-horizon p-horizon--r"> … </article>
+     </div>
+
+     --- СЕМЕЙСТВА ЛИНЕЙКИ (P02) -----------------------------------------------
+     <div class="p-families">
+       <article class="p-family">
+         <figure class="p-plate">
+           <div class="p-plate__img"><img src="img/cut/k12m.png" alt=""></div>
+           <figcaption class="p-plate__cap">К-12М</figcaption>  (подпись можно убрать)
+         </figure>
+         <div>
+           <div class="p-family__kicker">Семейство 01 · купол на транспорт</div>
+           <h3 class="p-family__title">Купольные станции</h3>
+           <p class="p-family__models"><b>К-8М · К-12М · К-15М</b> — на крышу техники</p>
+         </div>
+         <div class="p-family__metric"><b>50–200</b>м подавление</div>
+       </article>
+     </div>
+
+     --- ЭШЕЛОН / СТУПЕНИ (P03) ------------------------------------------------
+     <ol class="p-steps">
+       <li class="p-step">
+         <span class="p-step__n">01</span>
+         <figure class="p-plate"><div class="p-plate__img"><img src="img/cut/signal-m2.png" alt=""></div></figure>
+         <div>
+           <h3 class="p-step__title">Обнаружил</h3>
+           <p class="p-step__model"><b>Сигнал-М2</b> — автозапуск РЭБ</p>
+         </div>
+         <div class="p-step__spec"><b>1000–5000</b>м обнаружение</div>
+       </li>
+     </ol>
+     Горизонтальная рельса для wide: <ol class="p-steps p-steps--row">…</ol>
+
+     --- КУПОЛЬНАЯ СХЕМА («паспортный чертёж») ---------------------------------
+     <figure class="p-dome">
+       <div class="p-dome__frame">
+         <span class="p-dome__fig">Рис. 1 · контур защиты</span>
+         <svg viewBox="0 0 900 300" role="img" aria-label="Схема купола">
+           <line x1="0" y1="240" x2="900" y2="240"/>
+           <path d="M 80 240 A 370 190 0 0 1 820 240"/>
+           <line class="p-dome__ghost" x1="80" y1="240" x2="820" y2="240" stroke-dasharray="3 4"/>
+           <line class="p-dome__accent" x1="80" y1="262" x2="820" y2="262"/>
+         </svg>
+       </div>
+       <figcaption class="p-dome__cap">Источник: паспорт изделия.</figcaption>
+     </figure>
+     В SVG: stroke="currentColor" для чертежа, класс p-dome__accent для размеров.
+
+     --- ЛЕГЕНДА ---------------------------------------------------------------
+     <div class="p-legend">
+       <span class="p-legend__item"><b>2000–3000 м</b>удаление оператора</span>
+       <span class="p-legend__item"><b>50–200 м</b>дальность подавления</span>
+     </div>
+
+     --- ЯДРО ДОВЕРИЯ ----------------------------------------------------------
+     <div class="p-trust">
+       <div class="p-trust__item"><span class="p-trust__mark"></span><span><b>Паспортные цифры</b>без «примерно»</span></div>
+     </div>
+
+     --- ЛИНЕЙКА 41 ПОЗИЦИЯ / 5 СЕМЕЙСТВ --------------------------------------
+     <div class="p-ruler">
+       <div class="p-ruler__ticks">41 × <span></span> (каждое 10-е — .is-major)</div>
+       <div class="p-ruler__labels">
+         <div class="p-ruler__label"><b>01</b>Купольные</div> … 5 штук
+       </div>
+       <div class="p-ruler__scale"><span>01</span><span>41</span></div>
+     </div>
+
+     --- СКВОЗНОЙ СЛОГАН -------------------------------------------------------
+     <p class="p-pull">Сначала обнаружь. Потом подави.</p>
+
+     --- ПРАВИЛА, КОТОРЫЕ НЕ ОБСУЖДАЮТСЯ --------------------------------------
+     • Цены не публикуем: «КП под задачу» / «цена по запросу».
+     • Один акцент на макет: --accent — сигнал, а не фон.
+     • Фото только реальные вырезки, всегда на бумажной плашке .p-plate.
+     • Никаких теней, градиентов, неона, стекла, скруглённых карточек.
+     • Тексты — из 00_СТРАТЕГИЯ/04_КОПИРАЙТ_ПОСТЕРОВ.md, цифры — из 01_ФАКТЫ/claims.json.
+     • Минимум подписи 13px (переменная --p-label), поля 64px, безопасная зона 24px.
+     ========================================================================= -->
+
+</body>
+</html>

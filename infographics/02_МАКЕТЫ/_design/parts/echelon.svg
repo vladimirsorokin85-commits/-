@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="sx sx-echelon" viewBox="0 0 952 340" width="952" height="340" role="img" aria-labelledby="sx-echelon-title">
+  <title id="sx-echelon-title">Эшелон защиты: пять шагов — обнаружить, подавить, прикрыть навигацию, запитать, проверить</title>
+  <style>
+    .sx {
+      --sx-ink: var(--fg, #1D1E1A);
+      --sx-dim: var(--fg-dim, rgba(29, 30, 26, 0.66));
+      --sx-faint: var(--fg-faint, rgba(29, 30, 26, 0.40));
+      --sx-line: var(--line, rgba(29, 30, 26, 0.18));
+      --sx-line2: var(--line-strong, rgba(29, 30, 26, 0.38));
+      --sx-accent: var(--accent, #C8451F);
+      --sx-paper: var(--bg, #F4F1EA);
+    }
+    .sx .ln { fill: none; stroke: var(--sx-line2); stroke-width: 1.4; stroke-linecap: butt; }
+    .sx .ln-ink { fill: none; stroke: var(--sx-ink); stroke-width: 1.4; }
+    .sx .ln-hair { fill: none; stroke: var(--sx-line2); stroke-width: 1; }
+    .sx .fill-ink { fill: var(--sx-ink); }
+    .sx .acc { fill: var(--sx-accent); }
+    .sx .acc-stroke { fill: none; stroke: var(--sx-accent); stroke-width: 2; }
+    .sx .t-idx { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; letter-spacing: 0.16em; fill: var(--sx-faint); }
+    .sx .t-title { font-family: "Oswald", "Sofia Sans Cond", "Bahnschrift Condensed", "Segoe UI", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.05em; fill: var(--sx-ink); }
+    .sx .t-sub { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; letter-spacing: 0.01em; fill: var(--sx-dim); }
+    .sx .a-mid { text-anchor: middle; }
+  </style>
+
+  <!-- ============ РЕЛЬСЫ ПУТИ ============ -->
+  <line class="ln-hair" x1="40" y1="300" x2="912" y2="300"/>
+  <g>
+    <line class="ln-hair" x1="95" y1="274" x2="95" y2="300"/>
+    <line class="ln-hair" x1="286" y1="274" x2="286" y2="300"/>
+    <line class="ln-hair" x1="476" y1="274" x2="476" y2="300"/>
+    <line class="ln-hair" x1="666" y1="274" x2="666" y2="300"/>
+    <line class="ln-hair" x1="857" y1="274" x2="857" y2="300"/>
+  </g>
+  <!-- акцент: направление последовательности -->
+  <line class="acc-stroke" x1="828" y1="300" x2="908" y2="300"/>
+  <path class="acc" d="M 912 300 L 899 293.5 L 899 306.5 Z"/>
+
+  <!-- ============ ШАГ 01 — ОБНАРУЖИТЬ ============ -->
+  <g>
+    <text class="t-idx a-mid" x="95" y="30">01</text>
+    <g class="ln">
+      <path d="M 59 112 A 36 36 0 0 1 131 112"/>
+      <path d="M 71 112 A 24 24 0 0 1 119 112"/>
+      <path d="M 83 112 A 12 12 0 0 1 107 112"/>
+    </g>
+    <circle class="fill-ink" cx="95" cy="112" r="2.6"/>
+    <text class="t-title a-mid" x="95" y="218">ОБНАРУЖИТЬ</text>
+    <text class="t-sub a-mid" x="95" y="246">«Сигнал-М2» · 300–10 000 МГц</text>
+  </g>
+
+  <!-- ============ ШАГ 02 — ПОДАВИТЬ ============ -->
+  <g>
+    <text class="t-idx a-mid" x="286" y="30">02</text>
+    <g class="ln-ink">
+      <path d="M 288 66 L 316 116 L 256 116 Z"/>
+      <rect x="278" y="58" width="16" height="6"/>
+    </g>
+    <g class="ln">
+      <line x1="274.5" y1="84" x2="297.5" y2="84"/>
+      <line x1="265.2" y1="100" x2="306.8" y2="100"/>
+      <line x1="250" y1="116" x2="322" y2="116"/>
+    </g>
+    <text class="t-title a-mid" x="286" y="218">ПОДАВИТЬ</text>
+    <text class="t-sub a-mid" x="286" y="246">«Капюшон» · «Штора»</text>
+  </g>
+
+  <!-- ============ ШАГ 03 — ПРИКРЫТЬ НАВИГАЦИЮ ============ -->
+  <g>
+    <text class="t-idx a-mid" x="476" y="30">03</text>
+    <g class="ln">
+      <circle cx="476" cy="92" r="19"/>
+      <line x1="446" y1="92" x2="506" y2="92"/>
+      <line x1="476" y1="62" x2="476" y2="122"/>
+    </g>
+    <line class="ln-ink" x1="454" y1="118" x2="498" y2="66"/>
+    <text class="t-title a-mid" x="476" y="196">ПРИКРЫТЬ</text>
+    <text class="t-title a-mid" x="476" y="218">НАВИГАЦИЮ</text>
+    <text class="t-sub a-mid" x="476" y="246">«Поле-31»</text>
+  </g>
+
+  <!-- ============ ШАГ 04 — ЗАПИТАТЬ ============ -->
+  <g>
+    <text class="t-idx a-mid" x="666" y="30">04</text>
+    <g class="ln">
+      <rect x="634" y="80" width="58" height="28" rx="2"/>
+      <rect x="692" y="90" width="6" height="8" rx="1"/>
+    </g>
+    <path class="fill-ink" d="M 668 84 L 657 96 L 665 96 L 661 106 L 675 92 L 667 92 Z"/>
+    <text class="t-title a-mid" x="666" y="218">ЗАПИТАТЬ</text>
+    <text class="t-sub a-mid" x="666" y="246">ИП-24/100 · 220/24 В</text>
+  </g>
+
+  <!-- ============ ШАГ 05 — ПРОВЕРИТЬ ============ -->
+  <g>
+    <text class="t-idx a-mid" x="857" y="30">05</text>
+    <g class="ln">
+      <circle cx="851" cy="88" r="17"/>
+      <line x1="863" y1="100" x2="879" y2="116"/>
+    </g>
+    <path class="ln-ink" d="M 843 88 L 849 94 L 860 82"/>
+    <text class="t-title a-mid" x="857" y="218">ПРОВЕРИТЬ</text>
+    <text class="t-sub a-mid" x="857" y="246">РЭБ-тестер Т-9</text>
+  </g>
+</svg>

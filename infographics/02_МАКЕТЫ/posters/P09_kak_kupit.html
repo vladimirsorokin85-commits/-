@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P09 · КАК КУПИТЬ: ШЕСТЬ ШАГОВ — «В ОКОПЕ» × НПО «Киловатт»</title>
+<!--
+  ПОСТЕР P09 · «КАК КУПИТЬ: 6 ШАГОВ» · все аудитории, тёмная тема.
+  Тема: .theme-field. Формат: 1080×1350 (+ story 9:16 — вторым эшелоном).
+  Текст: 00_СТРАТЕГИЯ/04_КОПИРАЙТ_ПОСТЕРОВ.md §9 (v1).
+  Факты: claims.json — C094 (шесть шагов), C095 (ответ в рабочее время),
+  C096 (пять вводных для КП), C098 (ПНР/обучение по договору), C100 (тестер Т-9),
+  C101 (2–3 варианта), C044 (комплект поставки), C091 (доставка), C092 (цена по запросу),
+  C106 (слоган). Без цифр SLA (решение Lead).
+  Схема: _design/parts/funnel-6.svg (инлайн, чтобы работали шрифты системы).
+-->
+<link rel="stylesheet" href="../_design/tokens.css">
+<link rel="stylesheet" href="../_design/poster.css">
+<style>
+  /* локальные блоки P09 (designer-b) */
+  .db-flow {
+    display: grid;
+    grid-template-columns: 540px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  .db-flow svg { display: block; width: 540px; height: auto; }
+  .db-kp__list {
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: kp;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .db-kp__list li {
+    position: relative;
+    padding-left: 26px;
+    font-size: var(--p-label);
+    line-height: 1.42;
+    color: var(--fg-dim);
+  }
+  .db-kp__list li::before {
+    counter-increment: kp;
+    content: counter(kp);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-family: var(--font-tech);
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .db-kp__list b { color: var(--fg); font-weight: 600; }
+  .db-kp__photo { margin: 18px 0 0; }
+  .db-kp__photo .p-plate__img { height: 300px; overflow: hidden; }
+  .db-kp__photo .p-plate__img img { width: auto; max-width: 100%; max-height: 264px; }
+  .db-strip {
+    border-top: 2px solid var(--line-strong);
+    padding-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .db-strip span {
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: var(--p-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+  .db-strip b { color: var(--fg); font-weight: 500; }
+</style>
+</head>
+
+<body class="theme-field grain">
+
+<main class="poster" id="p09">
+
+  <header class="poster__head">
+    <div class="poster__brand">
+      <img src="../_design/img/brand/logo_w_word.png" alt="В ОКОПЕ — магазин брони">
+    </div>
+    <div class="poster__issuer">
+      <span class="p-label"><b>НПО «Киловатт»</b>производитель</span>
+      <span class="p-label"><b>P09 · 11.2026</b>как купить</span>
+    </div>
+  </header>
+
+  <section class="poster__intro">
+    <p class="p-kicker">От заявки до включения</p>
+    <h1 class="p-title p-title--sm">Как купить: шесть шагов</h1>
+    <p class="p-lead">
+      Разбор задачи, КП, документы, поставка, ввод и сервис.
+      <strong>Ответ — в рабочее время.</strong>
+    </p>
+  </section>
+
+  <section class="poster__main">
+
+    <!-- воронка 6 шагов + пять вводных для КП -->
+    <div class="db-flow">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="sx sx-funnel" viewBox="0 0 540 640" width="540" height="640" role="img" aria-labelledby="sx-funnel-title">
+  <title id="sx-funnel-title">Шесть шагов покупки: заявка, разбор задачи, подбор и КП, договор и документы, поставка, ввод и сервис</title>
+  <style>
+    .sx {
+      --sx-ink: var(--fg, #1D1E1A);
+      --sx-dim: var(--fg-dim, rgba(29, 30, 26, 0.66));
+      --sx-faint: var(--fg-faint, rgba(29, 30, 26, 0.40));
+      --sx-line: var(--line, rgba(29, 30, 26, 0.18));
+      --sx-line2: var(--line-strong, rgba(29, 30, 26, 0.38));
+      --sx-accent: var(--accent, #C8451F);
+      --sx-acc-ink: var(--accent-ink, #F4F1EA);
+      --sx-paper: var(--bg, #F4F1EA);
+    }
+    .sx .sx-ln2 { fill: none; stroke: var(--sx-line2); stroke-width: 1.2; }
+    .sx .sx-kick { font-family: "Oswald", "Segoe UI", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.13em; fill: var(--sx-dim); }
+    .sx .sx-num { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; fill: var(--sx-ink); }
+    .sx .sx-num-acc { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; fill: var(--sx-acc-ink); }
+    .sx .sx-title { font-family: "Oswald", "Sofia Sans Cond", "Segoe UI", sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.05em; fill: var(--sx-ink); }
+    .sx .sx-sub { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-dim); }
+    .sx .sx-note { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-faint); }
+    .sx .sx-node { fill: var(--sx-paper); stroke: var(--sx-line2); stroke-width: 1.2; }
+    .sx .sx-node-acc { fill: var(--sx-accent); }
+    .sx .a-mid { text-anchor: middle; }
+  </style>
+
+  <text class="sx-kick" x="0" y="22">ШЕСТЬ ШАГОВ — ОТ ЗАЯВКИ ДО СЕРВИСА</text>
+
+  <!-- соединительная линия -->
+  <line class="sx-ln2" x1="26" y1="58" x2="26" y2="542"/>
+
+  <!-- 01 ЗАЯВКА -->
+  <rect class="sx-node" x="9" y="47" width="34" height="34"/>
+  <text class="sx-num a-mid" x="26" y="69">01</text>
+  <text class="sx-title" x="68" y="63">ЗАЯВКА</text>
+  <text class="sx-sub" x="68" y="83">Telegram, телефон или сайт — 5 вводных для КП</text>
+
+  <!-- 02 РАЗБОР ЗАДАЧИ -->
+  <rect class="sx-node" x="9" y="139" width="34" height="34"/>
+  <text class="sx-num a-mid" x="26" y="161">02</text>
+  <text class="sx-title" x="68" y="155">РАЗБОР ЗАДАЧИ</text>
+  <text class="sx-sub" x="68" y="175">объект, площадь, задачи, питание, сроки</text>
+
+  <!-- 03 ПОДБОР И КП -->
+  <rect class="sx-node" x="9" y="231" width="34" height="34"/>
+  <text class="sx-num a-mid" x="26" y="253">03</text>
+  <text class="sx-title" x="68" y="247">ПОДБОР И КП</text>
+  <text class="sx-sub" x="68" y="267">конфигурация, документы, сроки, стоимость</text>
+
+  <!-- 04 ДОГОВОР И ДОКУМЕНТЫ -->
+  <rect class="sx-node" x="9" y="323" width="34" height="34"/>
+  <text class="sx-num a-mid" x="26" y="345">04</text>
+  <text class="sx-title" x="68" y="339">ДОГОВОР И ДОКУМЕНТЫ</text>
+  <text class="sx-sub" x="68" y="359">комплектация, гарантия, правовой чек-лист</text>
+
+  <!-- 05 ПОСТАВКА -->
+  <rect class="sx-node" x="9" y="415" width="34" height="34"/>
+  <text class="sx-num a-mid" x="26" y="437">05</text>
+  <text class="sx-title" x="68" y="431">ПОСТАВКА</text>
+  <text class="sx-sub" x="68" y="451">склад, доставка по РФ, самовывоз в Москве</text>
+
+  <!-- 06 ВВОД И СЕРВИС -->
+  <rect class="sx-node-acc" x="9" y="507" width="34" height="34"/>
+  <text class="sx-num-acc a-mid" x="26" y="529">06</text>
+  <text class="sx-title" x="68" y="523">ВВОД И СЕРВИС</text>
+  <text class="sx-sub" x="68" y="543">монтаж, проверка Т-9, обучение, 12 месяцев</text>
+
+  <line class="sx-ln2" x1="0" y1="578" x2="540" y2="578"/>
+  <text class="sx-note" x="0" y="602">Гарантия 12 месяцев · сервис производителя · обучение по договору</text>
+</svg>
+      </div>
+
+      <div>
+        <p class="p-label" style="color: var(--fg-dim)">Пять вводных для КП</p>
+        <ol class="db-kp__list">
+          <li><b>Объект</b> — площадь или периметр, регион.</li>
+          <li><b>Тип угрозы</b> — FPV, разведка, дроны по навигации.</li>
+          <li><b>Техника и питание</b> — борт 12/24 В, 220 В, автоном.</li>
+          <li><b>Документы</b> — закупка, тендер, юрлицо.</li>
+          <li><b>Срок</b> — когда нужно и кто платит.</li>
+        </ol>
+
+        <figure class="p-plate db-kp__photo">
+          <div class="p-plate__img">
+            <img src="../_design/img/cut/k12m.png" alt="Станция «Капюшон» К-12М, реальное фото">
+          </div>
+          <figcaption class="p-plate__cap">Комплект поставки: станция, кабели, пульт,
+            кронштейн или тренога, паспорт</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- что в ответ -->
+    <div class="db-strip">
+      <span><b>Ответ — в рабочее время</b></span>
+      <span><b>2–3 варианта конфигурации</b></span>
+      <span><b>Цена по запросу · КП под объект</b></span>
+    </div>
+
+    <p class="p-pull">Сначала обнаружь. Потом подави.</p>
+
+  </section>
+
+  <footer class="poster__foot">
+    <div class="p-cta">
+      <div class="p-cta__main">
+        Telegram <span class="p-cta__accent">@vokope_ru</span>
+        <span class="p-cta__sep">·</span> +7 999 136-71-42
+      </div>
+      <div class="p-cta__sub">Цена по запросу · Доставка по РФ · Самовывоз в Москве</div>
+    </div>
+    <div class="p-colophon">В ОКОПЕ · НПО «Киловатт»<br>P09 · 11.2026</div>
+  </footer>
+
+</main>
+
+</body>
+</html>
