@@ -148,7 +148,7 @@
     var box = $("[data-grid]");
     if (!box) return;
     var list = filtered();
-    $("[data-count]").textContent = list.length + "\u00A0" + plural(list.length, ["позиция", "позиции", "позиций"]);
+    $("[data-count]").textContent = "показано\u00A0" + list.length + "\u00A0из\u00A0" + DATA.products.length;
     if (!list.length) {
       box.innerHTML = '<div class="empty">Ничего не нашлось. Попробуйте другой запрос или категорию.</div>';
       return;
