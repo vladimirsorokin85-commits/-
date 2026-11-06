@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P05 · B2B: ПОЧЕМУ СЕЙЧАС — «В ОКОПЕ» × НПО «Киловатт»</title>
+<!--
+  ПОСТЕР P05 · «B2B: ПОЧЕМУ СЕЙЧАС» · рынок + право, светлая тема.
+  Тема: .theme-quiet. Формат: 1080×1350.
+  Текст: 00_СТРАТЕГИЯ/04_КОПИРАЙТ_ПОСТЕРОВ.md §5 (v1).
+  Факты: claims.json — C046 (12 млрд ₽, +20%), C047 (+20–25%), C048 (70%),
+  C049 (обнаружение ≈+50%), C057 (99-ФЗ), C059–C060 (58-ФЗ), C061–C062 (ПП 1331),
+  дисклеймер C076.
+  Схема: _design/parts/market-bars.svg (инлайн, чтобы работали шрифты системы).
+-->
+<link rel="stylesheet" href="../_design/tokens.css">
+<link rel="stylesheet" href="../_design/poster.css">
+<style>
+  /* локальные блоки P05 (designer-b) */
+  .db-chart { display: block; width: 952px; height: auto; }
+  .db-law {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .db-law__item {
+    border-top: 2px solid var(--line-strong);
+    padding-top: 11px;
+  }
+  .db-law__date {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-tech);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    color: var(--fg);
+  }
+  .db-law__txt {
+    display: block;
+    font-size: var(--p-label);
+    line-height: 1.42;
+    color: var(--fg-dim);
+  }
+  .db-law__txt b { color: var(--fg); font-weight: 600; }
+  .db-disclaimer {
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+  }
+  .db-disclaimer p {
+    margin: 0;
+    font-size: var(--p-label);
+    line-height: 1.44;
+    color: var(--fg-dim);
+  }
+  .db-src {
+    margin: 0;
+    font-size: var(--p-label);
+    line-height: 1.3;
+    color: var(--fg-faint);
+  }
+</style>
+</head>
+
+<body class="theme-quiet grain">
+
+<main class="poster" id="p05">
+
+  <header class="poster__head">
+    <div class="poster__brand">
+      <img src="../_design/img/brand/logo_w_word.png" alt="В ОКОПЕ — магазин брони">
+    </div>
+    <div class="poster__issuer">
+      <span class="p-label"><b>НПО «Киловатт»</b>производитель</span>
+      <span class="p-label"><b>P05 · 11.2026</b>рынок и право</span>
+    </div>
+  </header>
+
+  <section class="poster__intro">
+    <p class="p-kicker">Рынок и право · 2025–2027</p>
+    <h1 class="p-title">B2B: почему сейчас</h1>
+    <p class="p-lead">
+      Рынок анти-БПЛА растёт на 20% в год. Правила ужесточаются:
+      выигрывает поставщик <strong>с документами и сервисом.</strong>
+    </p>
+  </section>
+
+  <section class="poster__main" style="gap:26px">
+
+    <!-- рынок: 12 млрд ₽, +20–25%, 70% спроса, обнаружение +50% -->
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" class="sx sx-market" viewBox="0 0 952 444" width="952" height="444" role="img" aria-labelledby="sx-market-title">
+  <title id="sx-market-title">Рынок анти-БПЛА в России: 12 млрд рублей в 2025 году, +20% к 2024, прогноз +20–25% к концу 2026; 70% спроса — ТЭК, металлургия, АПК; обнаружение +50%</title>
+  <style>
+    .sx {
+      --sx-ink: var(--fg, #1D1E1A);
+      --sx-dim: var(--fg-dim, rgba(29, 30, 26, 0.66));
+      --sx-faint: var(--fg-faint, rgba(29, 30, 26, 0.40));
+      --sx-line: var(--line, rgba(29, 30, 26, 0.18));
+      --sx-line2: var(--line-strong, rgba(29, 30, 26, 0.38));
+      --sx-accent: var(--accent, #C8451F);
+      --sx-paper: var(--bg, #F4F1EA);
+    }
+    .sx .sx-ln { fill: none; stroke: var(--sx-line); stroke-width: 1; }
+    .sx .sx-ln2 { fill: none; stroke: var(--sx-line2); stroke-width: 1.2; }
+    .sx .sx-ink { fill: var(--sx-ink); }
+    .sx .sx-acc { fill: var(--sx-accent); }
+    .sx .sx-hollow { fill: none; stroke: var(--sx-line2); stroke-width: 1.2; }
+    .sx .sx-kick { font-family: "Oswald", "Segoe UI", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.13em; fill: var(--sx-dim); }
+    .sx .sx-big { font-family: "Sofia Sans Cond", "Oswald", "Segoe UI", sans-serif; font-weight: 800; font-size: 44px; letter-spacing: -0.01em; fill: var(--sx-ink); }
+    .sx .sx-val { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 18px; letter-spacing: 0.01em; fill: var(--sx-ink); }
+    .sx .sx-cap-ink { font-family: "Oswald", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.03em; fill: var(--accent-ink, #F4F1EA); }
+    .sx .sx-acc-val { font-family: "Oswald", "Segoe UI", sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.03em; fill: var(--sx-accent); }
+    .sx .sx-year { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; letter-spacing: 0.08em; fill: var(--sx-dim); }
+    .sx .sx-cap { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-dim); }
+    .sx .sx-note { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-faint); }
+    .sx .a-mid { text-anchor: middle; }
+    .sx .a-end { text-anchor: end; }
+  </style>
+
+  <text class="sx-kick" x="0" y="24">РЫНОК ГРАЖДАНСКИХ СРЕДСТВ ПРОТИВОДЕЙСТВИЯ БПЛА В РФ</text>
+
+  <!-- оси и сетка -->
+  <g class="sx-ln">
+    <line x1="72" y1="60" x2="72" y2="372"/>
+    <line x1="72" y1="372" x2="650" y2="372"/>
+    <line x1="72" y1="304" x2="650" y2="304"/>
+    <line x1="72" y1="236" x2="650" y2="236"/>
+    <line x1="72" y1="168" x2="650" y2="168"/>
+    <line x1="72" y1="100" x2="650" y2="100"/>
+  </g>
+  <text class="sx-note a-end" x="62" y="377">0</text>
+  <text class="sx-note a-end" x="62" y="309">4</text>
+  <text class="sx-note a-end" x="62" y="241">8</text>
+  <text class="sx-note a-end" x="62" y="173">12</text>
+  <text class="sx-note a-end" x="62" y="105">16</text>
+  <text class="sx-kick" x="0" y="86">МЛРД ₽</text>
+
+  <!-- 2024 — база для +20% (без абсолютной цифры) -->
+  <rect class="sx-hollow" x="150" y="202" width="132" height="170"/>
+  <text class="sx-year a-mid" x="216" y="398">2024</text>
+  <text class="sx-note a-mid" x="216" y="416">база</text>
+
+  <!-- 2025 — 12 млрд ₽ (+20% к 2024) -->
+  <rect class="sx-ink" x="330" y="168" width="132" height="204"/>
+  <rect class="sx-acc" x="330" y="168" width="132" height="34"/>
+  <text class="sx-val a-mid" x="396" y="152">12 МЛРД ₽</text>
+  <text class="sx-year a-mid" x="396" y="398">2025</text>
+
+  <!-- 2026 — прогноз +20–25% -->
+  <rect class="sx-ink" x="510" y="168" width="132" height="204"/>
+  <rect class="sx-acc" x="510" y="122" width="132" height="46"/>
+  <text class="sx-cap-ink a-mid" x="576" y="150">+20–25%</text>
+  <text class="sx-year a-mid" x="576" y="398">2026</text>
+  <text class="sx-note a-mid" x="576" y="416">прогноз</text>
+
+  <!-- аннотация +20% -->
+  <path class="sx-ln2" d="M 292 198 L 318 176"/>
+  <path class="sx-ink" d="M 322 172 L 311 176.5 L 316 183.5 Z"/>
+  <text class="sx-acc-val a-mid" x="307" y="158">+20%</text>
+
+  <!-- правая колонка: структура спроса -->
+  <line class="sx-ln" x1="690" y1="60" x2="690" y2="372"/>
+  <text class="sx-big" x="706" y="174">70%</text>
+  <text class="sx-cap" x="706" y="198">спроса — ТЭК,</text>
+  <text class="sx-cap" x="706" y="216">металлургия, АПК</text>
+  <line class="sx-ln" x1="706" y1="248" x2="952" y2="248"/>
+  <text class="sx-big" x="706" y="314">+50%</text>
+  <text class="sx-cap" x="706" y="338">рост обнаружения и</text>
+  <text class="sx-cap" x="706" y="356">радиотехнической разведки</text>
+
+  <text class="sx-note" x="0" y="440">Источник: RUБЕЖ, 31.03.2026 · оценка «Кросс Скай Технолоджис»</text>
+</svg>
+    </div>
+
+    <!-- право: три даты -->
+    <div>
+      <div class="p-section__head">
+        <h2 class="p-section__title">Право · что меняется</h2>
+        <span class="p-section__meta">01.03.2027 — новая регистрация</span>
+      </div>
+      <div class="db-law" style="margin-top:14px">
+        <div class="db-law__item">
+          <span class="db-law__date">21.04.2025</span>
+          <span class="db-law__txt"><b>99-ФЗ:</b> ведомственная охрана вправе применять
+            радиоэлектронные устройства против БПЛА.</span>
+        </div>
+        <div class="db-law__item">
+          <span class="db-law__date">23.03.2026</span>
+          <span class="db-law__txt"><b>58-ФЗ:</b> специализированные ЧОП на ТЭК и КВО
+            получают оружие против БПЛА; прямого права на РЭБ нет.</span>
+        </div>
+        <div class="db-law__item">
+          <span class="db-law__date">01.03.2027</span>
+          <span class="db-law__txt"><b>ПП № 1331:</b> регистрация РЭС подавления —
+            только для уполномоченных федеральным законом.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- дисклеймер C076 -->
+    <div class="db-disclaimer">
+      <p>Оборудование является радиоэлектронным средством. Порядок приобретения, регистрации
+        и применения определяется законодательством РФ, в том числе Федеральным законом
+        № 126-ФЗ «О связи», постановлениями Правительства РФ № 1800 и № 1331, решениями ГКРЧ.
+        Возможность применения на конкретном объекте подтверждается заказчиком в установленном
+        порядке до ввода в эксплуатацию.</p>
+    </div>
+
+    <p class="db-src">Источники: обзор RUБЕЖ от 31.03.2026 · официальные публикации правовых актов · по состоянию на 06.11.2026</p>
+
+  </section>
+
+  <footer class="poster__foot">
+    <div class="p-cta">
+      <div class="p-cta__main">
+        Telegram <span class="p-cta__accent">@vokope_ru</span>
+        <span class="p-cta__sep">·</span> +7 999 136-71-42
+      </div>
+      <div class="p-cta__sub">КП под объект · Доставка по РФ · Самовывоз в Москве</div>
+    </div>
+    <div class="p-colophon">В ОКОПЕ · НПО «Киловатт»<br>P05 · 11.2026</div>
+  </footer>
+
+</main>
+
+</body>
+</html>

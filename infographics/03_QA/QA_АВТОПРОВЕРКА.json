@@ -1,0 +1,1943 @@
+{
+  "generated": "2026-11-06 21:16:30",
+  "version": "1.0",
+  "inputs": {
+    "claims": "ok",
+    "claims_error": "",
+    "banned": "BANNED.md: 77 запрещённых + 7 стоп-слов нейрослопа",
+    "banned_note": "BANNED.md: 77 запрещённых + 7 стоп-слов нейрослопа",
+    "posters_found": 13
+  },
+  "summary": {
+    "blockers": 0,
+    "warnings": 3,
+    "infos": 17,
+    "numbers_checked": 186,
+    "numbers_exact": 179,
+    "numbers_within": 2,
+    "numbers_unknown": 0,
+    "numbers_verified": 179,
+    "claims_count": 127,
+    "claims_mismatch": 0,
+    "banned_phrases": 77,
+    "banned_hard": 77,
+    "banned_soft": 7,
+    "banned_note": "BANNED.md: 77 запрещённых + 7 стоп-слов нейрослопа"
+  },
+  "posters": {
+    "P01": {
+      "rel": "02_МАКЕТЫ\\posters\\P01_dva_gorizonta.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P01_dva_gorizonta.html",
+      "findings": [],
+      "stats": {
+        "numbers_checked": 22,
+        "numbers_exact": 22,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 22,
+        "bare_numbers": 9,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 18,
+        "text_len": 1329
+      }
+    },
+    "P02": {
+      "rel": "02_МАКЕТЫ\\posters\\P02_karta_linejki.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P02_karta_linejki.html",
+      "findings": [
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "Ступени добавляются под задачу объекта. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ··",
+          "poster": "P02",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P02_karta_linejki.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 17,
+        "numbers_exact": 17,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 17,
+        "bare_numbers": 17,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 32,
+        "text_len": 1375
+      }
+    },
+    "P03": {
+      "rel": "02_МАКЕТЫ\\posters\\P03_eshelon_zashchity.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P03_eshelon_zashchity.html",
+      "findings": [
+        {
+          "code": "З",
+          "msg": "цифра внутри подтверждённого диапазона факт-базы (250–5800 МГц) — сверить привязку к модели вручную",
+          "quote": "…05 Контроль РЭБ-тестер Т-9 проверка перед вводом и в сервисе 9 частот 250–5800 МГц Схема контура: обнаружение → подавление → навигация → питание → контр…",
+          "poster": "P03",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P03_eshelon_zashchity.html"
+        },
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "адной объект. Платите за нужные ступени. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+          "poster": "P03",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P03_eshelon_zashchity.html"
+        },
+        {
+          "code": "И",
+          "msg": "фото t-9: модель/слово не найдено в тексте постера — сверить вручную",
+          "quote": "../_design/img/product/t-9.png",
+          "poster": "P03",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P03_eshelon_zashchity.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 11,
+        "numbers_exact": 10,
+        "numbers_within": 1,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 10,
+        "bare_numbers": 13,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 18,
+        "text_len": 1177
+      }
+    },
+    "P04": {
+      "rel": "02_МАКЕТЫ\\posters\\P04_chto_zashchishchaem.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P04_chto_zashchishchaem.html",
+      "findings": [
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "проверки Конфигурации — типовые; точный состав и совместимость проверяются в КП Цена по запросу «·······»: ··········· · ···· «Штора» ········ На фото: «·······",
+          "poster": "P04",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P04_chto_zashchishchaem.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 5,
+        "numbers_exact": 5,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 5,
+        "bare_numbers": 10,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 20,
+        "text_len": 1480
+      }
+    },
+    "P05": {
+      "rel": "02_МАКЕТЫ\\posters\\P05_b2b_pochemu_sejchas.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P05_b2b_pochemu_sejchas.html",
+      "findings": [
+        {
+          "code": "И",
+          "msg": "₽-число «16 МЛРД ₽» похоже на деление шкалы графика, а не на факт",
+          "quote": "…ервисом. РЫНОК ГРАЖДАНСКИХ СРЕДСТВ ПРОТИВОДЕЙСТВИЯ БПЛА В РФ 0 4 8 12 16 МЛРД ₽ 2024 база 12 МЛРД ₽ 2025 +20–25% 2026 прогноз +20% 70% спроса — ТЭК,…",
+          "poster": "P05",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P05_b2b_pochemu_sejchas.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 7,
+        "numbers_exact": 5,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 5,
+        "bare_numbers": 5,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": [
+          "D1",
+          "D6"
+        ],
+        "claims_linked": 25,
+        "text_len": 1442
+      }
+    },
+    "P06": {
+      "rel": "02_МАКЕТЫ\\posters\\P06_pravovoj_kompas.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P06_pravovoj_kompas.html",
+      "findings": [
+        {
+          "code": "И",
+          "msg": "юридическая мелкая печать 12px (Lead: норма для сносок 12px)",
+          "quote": ".db-disclaimer p { font-size: 12px",
+          "poster": "P06",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P06_pravovoj_kompas.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 2,
+        "numbers_exact": 0,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 0,
+        "bare_numbers": 14,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": [
+          "D1",
+          "D2",
+          "D3",
+          "D4",
+          "D5",
+          "D6",
+          "D7"
+        ],
+        "claims_linked": 32,
+        "text_len": 2706
+      }
+    },
+    "P07": {
+      "rel": "02_МАКЕТЫ\\posters\\P07_roznica_kupol.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P07_roznica_kupol.html",
+      "findings": [
+        {
+          "code": "И",
+          "msg": "единица счёта уточняется по контексту (распознано как «8–12 Модели»)",
+          "quote": "…бортовой сети. Дальность подавления 50–200 м Питание 12/24 В Каналов 8–12 Модели под транспорт паспортные ТТХ «Капюшон» К-8М 8 каналов · 160 Вт 400–10…",
+          "poster": "P07",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P07_roznica_kupol.html"
+        },
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "ановка. Значения — по паспортам изделий. Telegram @vokope_ru · ················ Цена по запросу · Сначала обнаружь. Потом подави. · Доставка по РФ · Самовывоз в",
+          "poster": "P07",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P07_roznica_kupol.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 28,
+        "numbers_exact": 27,
+        "numbers_within": 0,
+        "numbers_loose": 1,
+        "numbers_unknown": 0,
+        "numbers_verified": 27,
+        "bare_numbers": 8,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 25,
+        "text_len": 1318
+      }
+    },
+    "P08": {
+      "rel": "02_МАКЕТЫ\\posters\\P08_sravnenie_modelej.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P08_sravnenie_modelej.html",
+      "findings": [
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "Капюшон» ···· «Штора» ········ «·······» Telegram @vokope_ru · ················ Цена по запросу · Подбор под задачу · Доставка по РФ · Самовывоз в Москве В ОКОП",
+          "poster": "P08",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P08_sravnenie_modelej.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 36,
+        "numbers_exact": 36,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 36,
+        "bare_numbers": 66,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 22,
+        "text_len": 1787
+      }
+    },
+    "P09": {
+      "rel": "02_МАКЕТЫ\\posters\\P09_kak_kupit.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html",
+      "findings": [
+        {
+          "code": "И",
+          "msg": "упоминание цены/стоимости без значения — не публикация цены",
+          "quote": "площадь, задачи, питание, сроки ·· ПОДБОР И КП конфигурация, документы, сроки, стоимость ·· ДОГОВОР И ДОКУМЕНТЫ комплектация, гарантия, правовой чек-лист ·· ПОС",
+          "poster": "P09",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html"
+        },
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "ронштейн или тренога, паспорт Ответ — в рабочее время ·–· варианта конфигурации Цена по запросу · КП под объект Сначала обнаружь. Потом подави. Telegram @vokope",
+          "poster": "P09",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html"
+        },
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "д объект Сначала обнаружь. Потом подави. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+          "poster": "P09",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html"
+        },
+        {
+          "code": "И",
+          "msg": "фото k12m: модель/слово не найдено в тексте постера — сверить вручную",
+          "quote": "../_design/img/cut/k12m.png",
+          "poster": "P09",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 6,
+        "numbers_exact": 6,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 6,
+        "bare_numbers": 11,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 20,
+        "text_len": 1177
+      }
+    },
+    "P10": {
+      "rel": "02_МАКЕТЫ\\posters\\P10_dokumenty_i_servis.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P10_dokumenty_i_servis.html",
+      "findings": [
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "ликации и не является публичной офертой. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+          "poster": "P10",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P10_dokumenty_i_servis.html"
+        },
+        {
+          "code": "З",
+          "msg": "кегль 11px меньше нормы 13px для содержательных подписей (бриф §5)",
+          "quote": "padding-top:36px margin-top:18px padding-top:24px;gap:20px height:250p { font-size: 11px",
+          "poster": "P10",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P10_dokumenty_i_servis.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 3,
+        "numbers_exact": 3,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 3,
+        "bare_numbers": 15,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": [
+          "D1",
+          "D3",
+          "D4",
+          "D6"
+        ],
+        "claims_linked": 26,
+        "text_len": 2183
+      }
+    },
+    "P01-wide": {
+      "rel": "02_МАКЕТЫ\\posters\\wide\\P01_dva_gorizonta_1920.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P01_dva_gorizonta_1920.html",
+      "findings": [],
+      "stats": {
+        "numbers_checked": 22,
+        "numbers_exact": 22,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 22,
+        "bare_numbers": 9,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 18,
+        "text_len": 1263
+      }
+    },
+    "P02-wide": {
+      "rel": "02_МАКЕТЫ\\posters\\wide\\P02_karta_linejki_1920.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P02_karta_linejki_1920.html",
+      "findings": [
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "ля · доп. модули ···–··· и ············· Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+          "poster": "P02-wide",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P02_karta_linejki_1920.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 16,
+        "numbers_exact": 16,
+        "numbers_within": 0,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 16,
+        "bare_numbers": 12,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 32,
+        "text_len": 1040
+      }
+    },
+    "P03-wide": {
+      "rel": "02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html",
+      "findings": [
+        {
+          "code": "З",
+          "msg": "цифра внутри подтверждённого диапазона факт-базы (250–5800 МГц) — сверить привязку к модели вручную",
+          "quote": "…05 Контроль РЭБ-тестер Т-9 проверка перед вводом и в сервисе 9 частот 250–5800 МГц Схема контура: обнаружение → подавление → навигация → питание → контр…",
+          "poster": "P03-wide",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html"
+        },
+        {
+          "code": "И",
+          "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+          "quote": "льность зависит от условий эксплуатации. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+          "poster": "P03-wide",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html"
+        },
+        {
+          "code": "И",
+          "msg": "фото t-9: модель/слово не найдено в тексте постера — сверить вручную",
+          "quote": "../../_design/img/product/t-9.png",
+          "poster": "P03-wide",
+          "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html"
+        }
+      ],
+      "stats": {
+        "numbers_checked": 11,
+        "numbers_exact": 10,
+        "numbers_within": 1,
+        "numbers_loose": 0,
+        "numbers_unknown": 0,
+        "numbers_verified": 10,
+        "bare_numbers": 13,
+        "bare_unknown": 0,
+        "banned_hits": 0,
+        "price_hits": 0,
+        "cta": true,
+        "disclaimer": "n/a",
+        "claims_linked": 18,
+        "text_len": 1037
+      }
+    }
+  },
+  "posters_order": [
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P01_dva_gorizonta.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P02_karta_linejki.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P03_eshelon_zashchity.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P04_chto_zashchishchaem.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P05_b2b_pochemu_sejchas.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P06_pravovoj_kompas.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P07_roznica_kupol.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P08_sravnenie_modelej.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P09_kak_kupit.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\P10_dokumenty_i_servis.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\wide\\P01_dva_gorizonta_1920.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\wide\\P02_karta_linejki_1920.html",
+      "parsed": true
+    },
+    {
+      "rel": "02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html",
+      "parsed": true
+    }
+  ],
+  "missing_posters": {},
+  "findings": [
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "Ступени добавляются под задачу объекта. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ··",
+      "poster": "P02",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P02_karta_linejki.html"
+    },
+    {
+      "code": "З",
+      "msg": "цифра внутри подтверждённого диапазона факт-базы (250–5800 МГц) — сверить привязку к модели вручную",
+      "quote": "…05 Контроль РЭБ-тестер Т-9 проверка перед вводом и в сервисе 9 частот 250–5800 МГц Схема контура: обнаружение → подавление → навигация → питание → контр…",
+      "poster": "P03",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P03_eshelon_zashchity.html"
+    },
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "адной объект. Платите за нужные ступени. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+      "poster": "P03",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P03_eshelon_zashchity.html"
+    },
+    {
+      "code": "И",
+      "msg": "фото t-9: модель/слово не найдено в тексте постера — сверить вручную",
+      "quote": "../_design/img/product/t-9.png",
+      "poster": "P03",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P03_eshelon_zashchity.html"
+    },
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "проверки Конфигурации — типовые; точный состав и совместимость проверяются в КП Цена по запросу «·······»: ··········· · ···· «Штора» ········ На фото: «·······",
+      "poster": "P04",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P04_chto_zashchishchaem.html"
+    },
+    {
+      "code": "И",
+      "msg": "₽-число «16 МЛРД ₽» похоже на деление шкалы графика, а не на факт",
+      "quote": "…ервисом. РЫНОК ГРАЖДАНСКИХ СРЕДСТВ ПРОТИВОДЕЙСТВИЯ БПЛА В РФ 0 4 8 12 16 МЛРД ₽ 2024 база 12 МЛРД ₽ 2025 +20–25% 2026 прогноз +20% 70% спроса — ТЭК,…",
+      "poster": "P05",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P05_b2b_pochemu_sejchas.html"
+    },
+    {
+      "code": "И",
+      "msg": "юридическая мелкая печать 12px (Lead: норма для сносок 12px)",
+      "quote": ".db-disclaimer p { font-size: 12px",
+      "poster": "P06",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P06_pravovoj_kompas.html"
+    },
+    {
+      "code": "И",
+      "msg": "единица счёта уточняется по контексту (распознано как «8–12 Модели»)",
+      "quote": "…бортовой сети. Дальность подавления 50–200 м Питание 12/24 В Каналов 8–12 Модели под транспорт паспортные ТТХ «Капюшон» К-8М 8 каналов · 160 Вт 400–10…",
+      "poster": "P07",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P07_roznica_kupol.html"
+    },
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "ановка. Значения — по паспортам изделий. Telegram @vokope_ru · ················ Цена по запросу · Сначала обнаружь. Потом подави. · Доставка по РФ · Самовывоз в",
+      "poster": "P07",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P07_roznica_kupol.html"
+    },
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "Капюшон» ···· «Штора» ········ «·······» Telegram @vokope_ru · ················ Цена по запросу · Подбор под задачу · Доставка по РФ · Самовывоз в Москве В ОКОП",
+      "poster": "P08",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P08_sravnenie_modelej.html"
+    },
+    {
+      "code": "И",
+      "msg": "упоминание цены/стоимости без значения — не публикация цены",
+      "quote": "площадь, задачи, питание, сроки ·· ПОДБОР И КП конфигурация, документы, сроки, стоимость ·· ДОГОВОР И ДОКУМЕНТЫ комплектация, гарантия, правовой чек-лист ·· ПОС",
+      "poster": "P09",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html"
+    },
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "ронштейн или тренога, паспорт Ответ — в рабочее время ·–· варианта конфигурации Цена по запросу · КП под объект Сначала обнаружь. Потом подави. Telegram @vokope",
+      "poster": "P09",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html"
+    },
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "д объект Сначала обнаружь. Потом подави. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+      "poster": "P09",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html"
+    },
+    {
+      "code": "И",
+      "msg": "фото k12m: модель/слово не найдено в тексте постера — сверить вручную",
+      "quote": "../_design/img/cut/k12m.png",
+      "poster": "P09",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P09_kak_kupit.html"
+    },
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "ликации и не является публичной офертой. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+      "poster": "P10",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P10_dokumenty_i_servis.html"
+    },
+    {
+      "code": "З",
+      "msg": "кегль 11px меньше нормы 13px для содержательных подписей (бриф §5)",
+      "quote": "padding-top:36px margin-top:18px padding-top:24px;gap:20px height:250p { font-size: 11px",
+      "poster": "P10",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\P10_dokumenty_i_servis.html"
+    },
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "ля · доп. модули ···–··· и ············· Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+      "poster": "P02-wide",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P02_karta_linejki_1920.html"
+    },
+    {
+      "code": "З",
+      "msg": "цифра внутри подтверждённого диапазона факт-базы (250–5800 МГц) — сверить привязку к модели вручную",
+      "quote": "…05 Контроль РЭБ-тестер Т-9 проверка перед вводом и в сервисе 9 частот 250–5800 МГц Схема контура: обнаружение → подавление → навигация → питание → контр…",
+      "poster": "P03-wide",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html"
+    },
+    {
+      "code": "И",
+      "msg": "допустимая формулировка про цену («по запросу»/оферта)",
+      "quote": "льность зависит от условий эксплуатации. Telegram @vokope_ru · ················ Цена по запросу · Доставка по РФ · Самовывоз в Москве В ОКОПЕ · НПО «Киловатт» ·",
+      "poster": "P03-wide",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html"
+    },
+    {
+      "code": "И",
+      "msg": "фото t-9: модель/слово не найдено в тексте постера — сверить вручную",
+      "quote": "../../_design/img/product/t-9.png",
+      "poster": "P03-wide",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\02_МАКЕТЫ\\posters\\wide\\P03_eshelon_zashchity_1920.html"
+    }
+  ],
+  "claims_audit": [
+    {
+      "id": "C001",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\data\\_scripts\\kw_channel_all.txt"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C002",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C003",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C004",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\KILOWATT_FACTS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C005",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C006",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C007",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C008",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C009",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C010",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C011",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C012",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C014",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\data\\audit.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\data\\products.json",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\_tools\\out\\site\\products.json"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C015",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C016",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C017",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C018",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C019",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C020",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C021",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C022",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C023",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C024",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C025",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C026",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C027",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C028",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C029",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C030",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C031",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C032",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C033",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C034",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C035",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C036",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C037",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C038",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C039",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C040",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C041",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C042",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C043",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C044",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C045",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C046",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C047",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C048",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C049",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C050",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C051",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C052",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C053",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C054",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C055",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C056",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C057",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C058",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C059",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C060",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C061",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C062",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C063",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C064",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C065",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C066",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C067",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C068",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C069",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C070",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C071",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C072",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C073",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C074",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C075",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C076",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C077",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C078",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C079",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C080",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C081",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C082",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C083",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C084",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C085",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C086",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C087",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C088",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C089",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C090",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C091",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\00_БРИФ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C092",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C093",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C094",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C095",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\02_СТРАТЕГИЯ\\02_Воронка_и_KPI.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C096",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C097",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C098",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C099",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C100",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C101",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\02_СТРАТЕГИЯ\\01_Стратегия_кампании.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\08_ДИСТРИБУЦИЯ\\02_Скрипты_ответов_в_ЛС.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C102",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\00_БРИФ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C103",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\00_БРИФ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C104",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C105",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C106",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\00_БРИФ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C107",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C108",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C109",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C110",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C111",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C112",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C113",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C114",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C115",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C116",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C117",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_БРИФ_ИНФОГРАФИКИ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C118",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C119",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C120",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\sources.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C121",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\github\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\infographics\\00_СТРАТЕГИЯ\\04_КОПИРАЙТ_ПОСТЕРОВ.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C122",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C123",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\07_QA\\02_Фактчек_по_базе.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C124",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md",
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\catalog_texts.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C125",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\video_campaign\\01_ИССЛЕДОВАНИЕ\\APPROVED_CLAIMS.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C126",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\docs\\market_brief.md"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C127",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    },
+    {
+      "id": "C128",
+      "sources": [
+        "D:\\Проекты Дипсик\\В ОКОПЕ\\kilowatt\\catalog\\assets\\js\\data.js"
+      ],
+      "missing_numbers": [],
+      "missing_refs": [],
+      "status": "ok"
+    }
+  ]
+}

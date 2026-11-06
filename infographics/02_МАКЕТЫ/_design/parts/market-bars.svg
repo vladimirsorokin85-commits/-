@@ -1,0 +1,82 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" class="sx sx-market" viewBox="0 0 952 444" width="952" height="444" role="img" aria-labelledby="sx-market-title">
+  <title id="sx-market-title">Рынок анти-БПЛА в России: 12 млрд рублей в 2025 году, +20% к 2024, прогноз +20–25% к концу 2026; 70% спроса — ТЭК, металлургия, АПК; обнаружение +50%</title>
+  <style>
+    .sx {
+      --sx-ink: var(--fg, #1D1E1A);
+      --sx-dim: var(--fg-dim, rgba(29, 30, 26, 0.66));
+      --sx-faint: var(--fg-faint, rgba(29, 30, 26, 0.40));
+      --sx-line: var(--line, rgba(29, 30, 26, 0.18));
+      --sx-line2: var(--line-strong, rgba(29, 30, 26, 0.38));
+      --sx-accent: var(--accent, #C8451F);
+      --sx-paper: var(--bg, #F4F1EA);
+    }
+    .sx .sx-ln { fill: none; stroke: var(--sx-line); stroke-width: 1; }
+    .sx .sx-ln2 { fill: none; stroke: var(--sx-line2); stroke-width: 1.2; }
+    .sx .sx-ink { fill: var(--sx-ink); }
+    .sx .sx-acc { fill: var(--sx-accent); }
+    .sx .sx-hollow { fill: none; stroke: var(--sx-line2); stroke-width: 1.2; }
+    .sx .sx-kick { font-family: "Oswald", "Segoe UI", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.13em; fill: var(--sx-dim); }
+    .sx .sx-big { font-family: "Sofia Sans Cond", "Oswald", "Segoe UI", sans-serif; font-weight: 800; font-size: 44px; letter-spacing: -0.01em; fill: var(--sx-ink); }
+    .sx .sx-val { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 18px; letter-spacing: 0.01em; fill: var(--sx-ink); }
+    .sx .sx-cap-ink { font-family: "Oswald", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.03em; fill: var(--accent-ink, #F4F1EA); }
+    .sx .sx-acc-val { font-family: "Oswald", "Segoe UI", sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.03em; fill: var(--sx-accent); }
+    .sx .sx-year { font-family: "Tektur", "Consolas", "Segoe UI", monospace; font-size: 13px; letter-spacing: 0.08em; fill: var(--sx-dim); }
+    .sx .sx-cap { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-dim); }
+    .sx .sx-note { font-family: "Segoe UI", "Inter", Arial, sans-serif; font-size: 13px; fill: var(--sx-faint); }
+    .sx .a-mid { text-anchor: middle; }
+    .sx .a-end { text-anchor: end; }
+  </style>
+
+  <text class="sx-kick" x="0" y="24">РЫНОК ГРАЖДАНСКИХ СРЕДСТВ ПРОТИВОДЕЙСТВИЯ БПЛА В РФ</text>
+
+  <!-- оси и сетка -->
+  <g class="sx-ln">
+    <line x1="72" y1="60" x2="72" y2="372"/>
+    <line x1="72" y1="372" x2="650" y2="372"/>
+    <line x1="72" y1="304" x2="650" y2="304"/>
+    <line x1="72" y1="236" x2="650" y2="236"/>
+    <line x1="72" y1="168" x2="650" y2="168"/>
+    <line x1="72" y1="100" x2="650" y2="100"/>
+  </g>
+  <text class="sx-note a-end" x="62" y="377">0</text>
+  <text class="sx-note a-end" x="62" y="309">4</text>
+  <text class="sx-note a-end" x="62" y="241">8</text>
+  <text class="sx-note a-end" x="62" y="173">12</text>
+  <text class="sx-note a-end" x="62" y="105">16</text>
+  <text class="sx-kick" x="0" y="86">МЛРД ₽</text>
+
+  <!-- 2024 — база для +20% (без абсолютной цифры) -->
+  <rect class="sx-hollow" x="150" y="202" width="132" height="170"/>
+  <text class="sx-year a-mid" x="216" y="398">2024</text>
+  <text class="sx-note a-mid" x="216" y="416">база</text>
+
+  <!-- 2025 — 12 млрд ₽ (+20% к 2024) -->
+  <rect class="sx-ink" x="330" y="168" width="132" height="204"/>
+  <rect class="sx-acc" x="330" y="168" width="132" height="34"/>
+  <text class="sx-val a-mid" x="396" y="152">12 МЛРД ₽</text>
+  <text class="sx-year a-mid" x="396" y="398">2025</text>
+
+  <!-- 2026 — прогноз +20–25% -->
+  <rect class="sx-ink" x="510" y="168" width="132" height="204"/>
+  <rect class="sx-acc" x="510" y="122" width="132" height="46"/>
+  <text class="sx-cap-ink a-mid" x="576" y="150">+20–25%</text>
+  <text class="sx-year a-mid" x="576" y="398">2026</text>
+  <text class="sx-note a-mid" x="576" y="416">прогноз</text>
+
+  <!-- аннотация +20% -->
+  <path class="sx-ln2" d="M 292 198 L 318 176"/>
+  <path class="sx-ink" d="M 322 172 L 311 176.5 L 316 183.5 Z"/>
+  <text class="sx-acc-val a-mid" x="307" y="158">+20%</text>
+
+  <!-- правая колонка: структура спроса -->
+  <line class="sx-ln" x1="690" y1="60" x2="690" y2="372"/>
+  <text class="sx-big" x="706" y="174">70%</text>
+  <text class="sx-cap" x="706" y="198">спроса — ТЭК,</text>
+  <text class="sx-cap" x="706" y="216">металлургия, АПК</text>
+  <line class="sx-ln" x1="706" y1="248" x2="952" y2="248"/>
+  <text class="sx-big" x="706" y="314">+50%</text>
+  <text class="sx-cap" x="706" y="338">рост обнаружения и</text>
+  <text class="sx-cap" x="706" y="356">радиотехнической разведки</text>
+
+  <text class="sx-note" x="0" y="440">Источник: RUБЕЖ, 31.03.2026 · оценка «Кросс Скай Технолоджис»</text>
+</svg>

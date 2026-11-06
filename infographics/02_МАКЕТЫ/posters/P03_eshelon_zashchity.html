@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P03 · ЭШЕЛОН ЗАЩИТЫ — «В ОКОПЕ» × НПО «Киловатт»</title>
+<!--
+  ПОСТЕР P03 · «ЭШЕЛОН ЗАЩИТЫ».
+  Тема: .theme-field (тёмная, гибрид «схема»). Формат: 1080×1350 (+ wide 16:9).
+  Текст: 00_СТРАТЕГИЯ/04_КОПИРАЙТ_ПОСТЕРОВ.md §3 (v1).
+  Решение Lead 06.11.2026: по одной модели на ступень; крупные номера 01–05;
+  доминирующая схема, а не список.
+  Цифры: C033/C034 (Сигнал-М2), C019 (К-12М), C032 (Поле-31),
+  C039/C045 (ИП-24/100), C040/C100 (Т-9), C106 (слоган), C102/C103/C091 (CTA).
+-->
+<link rel="stylesheet" href="../_design/tokens.css">
+<link rel="stylesheet" href="../_design/poster.css">
+</head>
+
+<body class="theme-field grain">
+
+<main class="poster" id="p03">
+
+  <header class="poster__head">
+    <div class="poster__brand">
+      <img src="../_design/img/brand/logo_w_word.png" alt="В ОКОПЕ — магазин брони">
+    </div>
+    <div class="poster__issuer">
+      <span class="p-label"><b>НПО «Киловатт»</b>производитель</span>
+      <span class="p-label"><b>P03 · 11.2026</b>эшелон защиты</span>
+    </div>
+  </header>
+
+  <section class="poster__intro" style="padding-top:38px">
+    <p class="p-kicker">Сначала обнаружь. Потом подави.</p>
+    <h1 class="p-title">Эшелон <span class="p-accent">защиты</span></h1>
+    <p class="p-lead p-lead--wide" style="margin-top:20px">
+      Пять ступеней контура. Собираются под задачу объекта — <strong>без переплаты
+      за лишнее.</strong>
+    </p>
+  </section>
+
+  <section class="poster__main" style="padding-top:26px;gap:22px">
+
+    <!-- доминирующая схема: купол контура + пять ступеней на общей линии -->
+    <div class="p-echelon">
+
+      <div class="p-echelon__canopy">
+        <svg viewBox="0 0 952 128" role="img" aria-label="Контур защиты объекта: пять ступеней">
+          <defs>
+            <path id="p03arc" d="M 12 120 A 464 100 0 0 1 940 120"/>
+          </defs>
+          <!-- земля/база контура -->
+          <line x1="0" y1="120" x2="952" y2="120"/>
+          <!-- купол контура: акцент — сам контур, а не украшение -->
+          <path class="p-dome__accent" d="M 12 120 A 464 100 0 0 1 940 120"/>
+          <text font-family="Oswald, Arial, sans-serif" font-size="14"
+                letter-spacing="3.2" fill="currentColor" fill-opacity="0.78">
+            <textPath href="#p03arc" startOffset="28%">КОНТУР ЗАЩИТЫ ОБЪЕКТА · ПЯТЬ СТУПЕНЕЙ</textPath>
+          </text>
+          <!-- засечки по центрам пяти колонок: 88.8 / 282.4 / 476 / 669.6 / 863.2 -->
+          <g class="p-dome__ghost">
+            <line x1="88.8" y1="120" x2="88.8" y2="111"/>
+            <line x1="282.4" y1="120" x2="282.4" y2="111"/>
+            <line x1="476" y1="120" x2="476" y2="111"/>
+            <line x1="669.6" y1="120" x2="669.6" y2="111"/>
+            <line x1="863.2" y1="120" x2="863.2" y2="111"/>
+          </g>
+          <!-- стрелки последовательности: бумажный цвет, акцент остаётся за куполом -->
+          <g fill="currentColor">
+            <path d="M 181.6 115 L 190.6 120 L 181.6 125 Z"/>
+            <path d="M 375.2 115 L 384.2 120 L 375.2 125 Z"/>
+            <path d="M 568.8 115 L 577.8 120 L 568.8 125 Z"/>
+            <path d="M 762.4 115 L 771.4 120 L 762.4 125 Z"/>
+          </g>
+        </svg>
+      </div>
+
+      <ol class="p-echelon__steps">
+        <li class="p-echelon__step">
+          <span class="p-echelon__n">01</span>
+          <figure class="p-plate">
+            <div class="p-plate__img">
+              <img src="../_design/img/cut/signal-m2.png" alt="Обнаружитель «Сигнал-М2», реальное фото">
+            </div>
+          </figure>
+          <h2 class="p-echelon__title">Обнаружение</h2>
+          <p class="p-echelon__model"><b>«Сигнал-М2»</b><br>автоматически включает подавление</p>
+          <p class="p-echelon__spec">300–10 000 МГц<br>1000–5000 м</p>
+        </li>
+
+        <li class="p-echelon__step">
+          <span class="p-echelon__n">02</span>
+          <figure class="p-plate">
+            <div class="p-plate__img">
+              <img src="../_design/img/cut/k12m.png" alt="Купольная станция «Капюшон» К-12М, реальное фото">
+            </div>
+          </figure>
+          <h2 class="p-echelon__title">Подавление</h2>
+          <p class="p-echelon__model"><b>«Капюшон» К-12М</b><br>купол на транспорт<br>для объекта — «Штора» / «Ребус-4»</p>
+          <p class="p-echelon__spec">50–200 м<br>до 240 Вт</p>
+        </li>
+
+        <li class="p-echelon__step">
+          <span class="p-echelon__n">03</span>
+          <figure class="p-plate">
+            <div class="p-plate__img">
+              <img src="../_design/img/cut/pole-31.png" alt="Станция «Поле-31», реальное фото">
+            </div>
+          </figure>
+          <h2 class="p-echelon__title">Навигация</h2>
+          <p class="p-echelon__model"><b>«Поле-31»</b><br>GPS · ГЛОНАСС · BeiDou · Galileo</p>
+          <p class="p-echelon__spec">не менее 2000 м<br>до 240 Вт</p>
+        </li>
+
+        <li class="p-echelon__step">
+          <span class="p-echelon__n">04</span>
+          <figure class="p-plate">
+            <div class="p-plate__img">
+              <img src="../_design/img/cut/ip-24-100.png" alt="Источник питания ИП-24/100, реальное фото">
+            </div>
+          </figure>
+          <h2 class="p-echelon__title">Питание</h2>
+          <p class="p-echelon__model"><b>ИП-24/100</b><br>борт 12/24 В · сеть 220 В</p>
+          <p class="p-echelon__spec">24 В · 105 А·ч<br>до 4 потребителей</p>
+        </li>
+
+        <li class="p-echelon__step">
+          <span class="p-echelon__n">05</span>
+          <figure class="p-plate">
+            <div class="p-plate__img">
+              <img src="../_design/img/product/t-9.png" alt="РЭБ-тестер Т-9, реальное фото">
+            </div>
+          </figure>
+          <h2 class="p-echelon__title">Контроль</h2>
+          <p class="p-echelon__model"><b>РЭБ-тестер Т-9</b><br>проверка перед вводом и в сервисе</p>
+          <p class="p-echelon__spec">9 частот<br>250–5800 МГц</p>
+        </li>
+      </ol>
+
+    </div>
+
+    <!-- подпись к схеме: обязательная расшифровка ступеней -->
+    <p class="p-caption-line" style="margin:0">
+      <b>Схема контура:</b> обнаружение → подавление → навигация → питание → контроль.
+      Ступени 01–05 собираются под объект: стационар ставится на площадной объект,
+      купол — на транспорт. Дальность зависит от условий эксплуатации.
+    </p>
+
+    <!-- «по шагам»: правило сборки контура -->
+    <div>
+      <div class="p-section__head">
+        <h2 class="p-section__title">По шагам</h2>
+        <span class="p-section__meta">ступени собираются под объект</span>
+      </div>
+      <p class="p-lead" style="font-size:18px;line-height:1.4;margin:12px 0 0;max-width:88ch">
+        Начинаем с обнаружения, добавляем подавление на транспорт и периметр,
+        стационар ставим на площадной объект. <strong>Платите за нужные ступени.</strong>
+      </p>
+    </div>
+
+  </section>
+
+  <footer class="poster__foot" style="padding-top:16px">
+    <div class="p-cta">
+      <div class="p-cta__main">
+        Telegram <span class="p-cta__accent">@vokope_ru</span>
+        <span class="p-cta__sep">·</span> +7 999 136-71-42
+      </div>
+      <div class="p-cta__sub">Цена по запросу · Доставка по РФ · Самовывоз в Москве</div>
+    </div>
+    <div class="p-colophon">В ОКОПЕ · НПО «Киловатт»<br>P03 · 11.2026</div>
+  </footer>
+
+</main>
+
+</body>
+</html>

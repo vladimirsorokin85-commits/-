@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P08 · СРАВНЕНИЕ МОДЕЛЕЙ — «В ОКОПЕ» × НПО «Киловатт»</title>
+<!--
+  ПОСТЕР P08 · «СРАВНЕНИЕ МОДЕЛЕЙ» · B2B + розница, светлая тема.
+  Тема: .theme-quiet. Формат: 1080×1350.
+  Текст: 00_СТРАТЕГИЯ/04_КОПИРАЙТ_ПОСТЕРОВ.md §8 (v1) + правки Lead 06.11.2026:
+  счётчик моделей не публикуем (QA: нет claim), «600 Вт» у «Шторы» не публикуем (C120 исключён),
+  вес «Ребус-4» — «—» (нет claim), питание: «220 В» только у К-12М по C020.
+  Факты: claims.json — C016 (К-8М), C023 (ФПВ-8М), C019–C020 (К-12М), C022 (К-15М, каналы «—»),
+  C038 (ТП 8-100: 1,5 ч / 10 кг), C027 (Штора К-12/700), C030–C031 (Ребус-4),
+  C043/C081 (изготовитель), C078 (оговорка о дальности).
+  Подложка таблицы: _design/parts/spec-grid.svg (инлайн, 7 строк).
+-->
+<link rel="stylesheet" href="../_design/tokens.css">
+<link rel="stylesheet" href="../_design/poster.css">
+<style>
+  /* локальные блоки P08 (designer-b) */
+  .db-table { position: relative; }
+  .db-table__bg { position: absolute; left: 0; top: 0; }
+  .db-table__bg svg { display: block; width: 952px; height: auto; }
+  .db-table__content { position: relative; }
+  .db-row {
+    display: grid;
+    grid-template-columns: 150px 160px 215px 110px 105px 130px 82px;
+  }
+  .db-row--head { height: 44px; align-items: center; }
+  .db-row--head span {
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.2;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    padding-right: 12px;
+  }
+  .db-row--data { height: 72px; align-items: center; }
+  .db-cell {
+    padding-right: 14px;
+    font-size: var(--p-label);
+    line-height: 1.38;
+    color: var(--fg-dim);
+  }
+  .db-cell--model {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+  .db-cell--tech {
+    font-family: var(--font-tech);
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: var(--fg);
+  }
+  .db-row--data .db-cell:last-child { white-space: nowrap; }
+  .db-notes {
+    border-top: 2px solid var(--line-strong);
+    padding-top: 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .db-notes p {
+    margin: 0;
+    font-size: var(--p-label);
+    line-height: 1.36;
+    color: var(--fg-dim);
+  }
+  .db-photos .p-plate__img { height: 72px; overflow: hidden; }
+  .db-photos .p-plate__img img { width: auto; max-width: 100%; max-height: 44px; }
+</style>
+</head>
+
+<body class="theme-quiet grain">
+
+<main class="poster" id="p08">
+
+  <header class="poster__head">
+    <div class="poster__brand">
+      <img src="../_design/img/brand/logo_w_word.png" alt="В ОКОПЕ — магазин брони">
+    </div>
+    <div class="poster__issuer">
+      <span class="p-label"><b>НПО «Киловатт»</b>производитель</span>
+      <span class="p-label"><b>P08 · 11.2026</b>сравнение</span>
+    </div>
+  </header>
+
+  <section class="poster__intro">
+    <p class="p-kicker">Паспортные ТТХ · модели линейки</p>
+    <h1 class="p-title">Сравнение моделей</h1>
+    <p class="p-lead">
+      Модели линейки в одной таблице: назначение, каналы, дальность, питание, вес.
+      Прочерк — параметр уточняется в КП.
+    </p>
+  </section>
+
+  <section class="poster__main" style="gap:18px">
+
+    <!-- таблица: подложка spec-grid + текст поверх -->
+    <div class="db-table">
+      <div class="db-table__bg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="sx sx-specgrid" viewBox="0 0 952 548" width="952" height="548" role="img" aria-labelledby="sx-specgrid-title">
+  <title id="sx-specgrid-title">Подложка технической таблицы: шапка и семь строк, семь колонок</title>
+  <style>
+    .sx {
+      --sx-line: var(--line, rgba(29, 30, 26, 0.16));
+      --sx-line2: var(--line-strong, rgba(29, 30, 26, 0.38));
+      --sx-accent: var(--accent, #C8451F);
+    }
+    .sx .sx-ln { fill: none; stroke: var(--sx-line); stroke-width: 1; }
+    .sx .sx-ln2 { fill: none; stroke: var(--sx-line2); stroke-width: 1.4; }
+    .sx .sx-acc { fill: var(--sx-accent); }
+  </style>
+
+  <!-- вертикали: 150 / 160 / 215 / 110 / 105 / 130 / 82 = 952 -->
+  <g class="sx-ln">
+    <line x1="150" y1="0" x2="150" y2="548"/>
+    <line x1="310" y1="0" x2="310" y2="548"/>
+    <line x1="525" y1="0" x2="525" y2="548"/>
+    <line x1="635" y1="0" x2="635" y2="548"/>
+    <line x1="740" y1="0" x2="740" y2="548"/>
+    <line x1="870" y1="0" x2="870" y2="548"/>
+  </g>
+
+  <!-- горизонтали: шапка 44 + 7 строк по 72 -->
+  <g class="sx-ln">
+    <line x1="0" y1="116" x2="952" y2="116"/>
+    <line x1="0" y1="188" x2="952" y2="188"/>
+    <line x1="0" y1="260" x2="952" y2="260"/>
+    <line x1="0" y1="332" x2="952" y2="332"/>
+    <line x1="0" y1="404" x2="952" y2="404"/>
+    <line x1="0" y1="476" x2="952" y2="476"/>
+  </g>
+
+  <!-- контур таблицы -->
+  <line class="sx-ln2" x1="0" y1="0" x2="952" y2="0"/>
+  <line class="sx-ln2" x1="0" y1="44" x2="952" y2="44"/>
+  <line class="sx-ln2" x1="0" y1="548" x2="952" y2="548"/>
+
+  <!-- акцентная метка начала таблицы -->
+  <rect class="sx-acc" x="0" y="0" width="28" height="2"/>
+</svg>
+      </div>
+      <div class="db-table__content">
+
+        <div class="db-row db-row--head">
+          <span>Модель</span>
+          <span>Назначение</span>
+          <span>Диапазоны, МГц</span>
+          <span>Дальность</span>
+          <span>Каналы ·<br>мощность</span>
+          <span>Питание</span>
+          <span>Вес</span>
+        </div>
+
+        <!-- К-8М -->
+        <div class="db-row db-row--data">
+          <span class="db-cell db-cell--model">«Капюшон» К-8М</span>
+          <span class="db-cell">купольная на транспорт</span>
+          <span class="db-cell db-cell--tech">400–1020, 2100–2800, 5680–5900</span>
+          <span class="db-cell db-cell--tech">50–200 м</span>
+          <span class="db-cell db-cell--tech">8 · 160 Вт</span>
+          <span class="db-cell db-cell--tech">12/24 В · 220 В</span>
+          <span class="db-cell db-cell--tech">20 кг</span>
+        </div>
+
+        <!-- ФПВ-8М -->
+        <div class="db-row db-row--data">
+          <span class="db-cell db-cell--model">«Капюшон» ФПВ-8М</span>
+          <span class="db-cell">купольная на транспорт</span>
+          <span class="db-cell db-cell--tech">300–1020, 2100–2800</span>
+          <span class="db-cell db-cell--tech">50–200 м</span>
+          <span class="db-cell db-cell--tech">8 · до 160 Вт</span>
+          <span class="db-cell db-cell--tech">12/24 В · 220 В</span>
+          <span class="db-cell db-cell--tech">20 кг</span>
+        </div>
+
+        <!-- К-12М -->
+        <div class="db-row db-row--data">
+          <span class="db-cell db-cell--model">«Капюшон» К-12М</span>
+          <span class="db-cell">купольная на транспорт</span>
+          <span class="db-cell db-cell--tech">300–1020, 1080–1360, 2100–2800, 5100–5300, 5680–5900</span>
+          <span class="db-cell db-cell--tech">50–200 м</span>
+          <span class="db-cell db-cell--tech">12 · до 240 Вт</span>
+          <span class="db-cell db-cell--tech">12/24 В, 220 В через ПН</span>
+          <span class="db-cell db-cell--tech">24 кг</span>
+        </div>
+
+        <!-- К-15М (каналы не утверждены — прочерк) -->
+        <div class="db-row db-row--data">
+          <span class="db-cell db-cell--model">«Капюшон» К-15М</span>
+          <span class="db-cell">старшая купольная</span>
+          <span class="db-cell db-cell--tech">200–1020, 1080–1360, 2100–2800, 5100–5300, 5680–5900</span>
+          <span class="db-cell db-cell--tech">50–200 м</span>
+          <span class="db-cell db-cell--tech">— · до 300 Вт</span>
+          <span class="db-cell db-cell--tech">12/24 В · 220 В</span>
+          <span class="db-cell db-cell--tech">24 кг</span>
+        </div>
+
+        <!-- ТП 8-100 -->
+        <div class="db-row db-row--data">
+          <span class="db-cell db-cell--model">«Капюшон» ТП 8-100</span>
+          <span class="db-cell">рюкзак, носимый</span>
+          <span class="db-cell db-cell--tech">400–1020, 2100–2800, 5680–5900</span>
+          <span class="db-cell db-cell--tech">50–100 м</span>
+          <span class="db-cell db-cell--tech">— · до 160 Вт</span>
+          <span class="db-cell db-cell--tech">АКБ 24 В · 25 А·ч · 1,5 ч</span>
+          <span class="db-cell db-cell--tech">10 кг</span>
+        </div>
+
+        <!-- Штора К-12/700 -->
+        <div class="db-row db-row--data">
+          <span class="db-cell db-cell--model">«Штора» К-12/700</span>
+          <span class="db-cell">стационарная направленная</span>
+          <span class="db-cell db-cell--tech">240–1020, 2100–2800, 3300–3500, 5100–5300, 5680–5900</span>
+          <span class="db-cell db-cell--tech">до 1000 м</span>
+          <span class="db-cell db-cell--tech">12 ген. · до 1000 м</span>
+          <span class="db-cell db-cell--tech">220 В / ИП-24/100</span>
+          <span class="db-cell db-cell--tech">41 кг</span>
+        </div>
+
+        <!-- Ребус-4 -->
+        <div class="db-row db-row--data">
+          <span class="db-cell db-cell--model">«Ребус-4»</span>
+          <span class="db-cell">стационарный комплекс 360°</span>
+          <span class="db-cell db-cell--tech">240–1020, 2100–2800, 3300–3500, 5100–5300, 5680–5900</span>
+          <span class="db-cell db-cell--tech">разведка до 5 км, ударные до 1 км</span>
+          <span class="db-cell db-cell--tech">4 моноблока · до 2400 Вт</span>
+          <span class="db-cell db-cell--tech">220/380 В</span>
+          <span class="db-cell db-cell--tech">—</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- сноски -->
+    <div class="db-notes">
+      <p>Прочерк в таблице — параметр не публикуется в паспортной выжимке и уточняется в КП.
+        Значения — по паспортам изделий.</p>
+      <p>Дальность зависит от условий эксплуатации: рельеф, погода, помеховая обстановка;
+        не является гарантией нейтрализации конкретного БПЛА.</p>
+      <p>Изготовитель в паспорте: «Капюшон» — НПО «Киловатт»; «Ребус-4», «Штора» — НПО «МегаВатт».
+        В договоре — как в паспорте изделия.</p>
+    </div>
+
+    <!-- реальные фото моделей -->
+    <div class="p-grid db-photos" style="align-items:start">
+      <figure class="p-plate p-c-4">
+        <div class="p-plate__img"><img src="../_design/img/product/k8m.png" alt="Станция «Капюшон» К-8М, реальное фото"></div>
+        <figcaption class="p-plate__cap">«Капюшон» К-8М</figcaption>
+      </figure>
+      <figure class="p-plate p-c-4">
+        <div class="p-plate__img"><img src="../_design/img/cut/shtora-k12.png" alt="Станция «Штора» К-12/700, реальное фото"></div>
+        <figcaption class="p-plate__cap">«Штора» К-12/700</figcaption>
+      </figure>
+      <figure class="p-plate p-c-4">
+        <div class="p-plate__img"><img src="../_design/img/cut/rebus-4.png" alt="Комплекс «Ребус-4», реальное фото"></div>
+        <figcaption class="p-plate__cap">«Ребус-4»</figcaption>
+      </figure>
+    </div>
+
+  </section>
+
+  <footer class="poster__foot">
+    <div class="p-cta">
+      <div class="p-cta__main">
+        Telegram <span class="p-cta__accent">@vokope_ru</span>
+        <span class="p-cta__sep">·</span> +7 999 136-71-42
+      </div>
+      <div class="p-cta__sub">Цена по запросу · Подбор под задачу · Доставка по РФ · Самовывоз в Москве</div>
+    </div>
+    <div class="p-colophon">В ОКОПЕ · НПО «Киловатт»<br>P08 · 11.2026</div>
+  </footer>
+
+</main>
+
+</body>
+</html>
