@@ -86,8 +86,29 @@ def main() -> int:
     # --- PNG 1×/2× ---
     pngs = scan_pngs()
     expected_total = 72 + 12   # 18×(poster+square)×2 масштаба + 6 сторис×2
+    # ожидаемые имена по текущим HTML (устаревшие/переименованные — из ignored_html.txt)
+    ignored = L.ignored_html()
+    expected_names = set()
+    for d in (L.HTML_DIR, L.STORY_DIR):
+        if not d.is_dir():
+            continue
+        for p in d.glob("*.html"):
+            if p.name in ignored:
+                continue
+            base, fmt, pid = L.classify(p.stem)
+            if fmt:
+                for sc in (1, 2):
+                    expected_names.add(L.output_name(p.stem, sc))
+    extra = sorted(p.name for p in L.PNG_DIR.glob("*.png")) if L.PNG_DIR.is_dir() else []
+    extra = [n for n in extra if n not in expected_names]
+    data["expected_png_names"] = len(expected_names)
+    data["extra_png"] = extra
+    if extra:
+        add("FAIL", f"в 05_ГОТОВОЕ остались устаревшие/лишние PNG: {len(extra)} "
+                    f"({', '.join(extra[:6])}{'…' if len(extra) > 6 else ''})")
     md.append("## PNG 1× и 2× по форматам\n")
-    md.append(f"Ожидание: 18 моделей × 2 формата × 2 масштаба + 6 сторис × 2 = {expected_total} PNG.\n")
+    md.append(f"Ожидание: 18 моделей × 2 формата × 2 масштаба + 6 сторис × 2 = {expected_total} PNG. "
+              f"Файлов по текущим HTML: {len(expected_names)}; лишних в папке: {len(extra)}.\n")
     counts = {}
     for fmt in ("poster", "square", "story"):
         ids = L.ORDER if fmt != "story" else L.STORY_IDS

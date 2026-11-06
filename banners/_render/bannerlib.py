@@ -141,3 +141,18 @@ def png_dims(path: Path):
 def ensure_dirs(*dirs: Path) -> None:
     for d in dirs:
         Path(d).mkdir(parents=True, exist_ok=True)
+
+
+IGNORE_FILE = RENDER_DIR / "ignored_html.txt"
+
+
+def ignored_html() -> set[str]:
+    """Устаревшие HTML (переименованные/удалённые), которые не индексируем."""
+    if not IGNORE_FILE.is_file():
+        return set()
+    names = set()
+    for line in IGNORE_FILE.read_text(encoding="utf-8").splitlines():
+        s = line.strip()
+        if s and not s.startswith("#"):
+            names.add(Path(s).name)
+    return names

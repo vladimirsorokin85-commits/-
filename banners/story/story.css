@@ -207,3 +207,43 @@
   font-size: 11.5px;
   line-height: 1.45;
 }
+
+/* 9. V3: блок «КОРОТКО О МОДЕЛИ» + чипы «ЗАДАЧИ» (banner.css §22).
+   В сторис — компактно, перед футером; название модели и фото остаются главными. */
+.banner--story .b-tech {
+  margin-top: 20px;
+  padding-top: 11px;
+}
+
+.banner--story .b-tech__head {
+  margin-bottom: 9px;
+  font-size: 12px;
+}
+
+.banner--story .b-tech__row {
+  padding: 7px 0;
+}
+
+.banner--story .b-tech__k {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.banner--story .b-tech__v {
+  font-size: 16px;
+}
+
+.banner--story .b-tasks {
+  margin: 14px 0 0;
+  gap: 9px;
+}
+
+.banner--story .b-task {
+  padding: 5px 10px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.banner--story .b-tech__grid--single {
+  grid-template-columns: minmax(0, 1fr);
+}

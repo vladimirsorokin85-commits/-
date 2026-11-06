@@ -85,6 +85,25 @@ LEGAL_MARKERS = [
 PRICE_WORD_RE = re.compile(r"\bцен[аыуеи]\b|\bстоимост\w*|\bпрайс\w*", re.I)
 PRICE_OK_RE = re.compile(r"цен[аыуеи]\s+по\s+запросу|по\s+запросу|кп\s+под\s+задачу", re.I)
 
+# ---------------------------------------------------------------- v3: техблок
+CANON_PATH = PROJECT / "kilowatt" / "docs" / "КАНОН_цифры_и_факты.md"
+TECH_ROWS_MIN, TECH_ROWS_MAX = 4, 6
+TECH_LABEL_MAX = 18
+TECH_VALUE_MAX = 28
+TASK_VOCAB = [
+    "fpv", "разведка", "каналы управления", "видеоканал", "навигация",
+    "периметр", "транспорт", "группа", "сервис", "питание",
+]
+# запреты для техблока, даже если число встречается в каноне/claims
+TECH_PROHIBIT = [
+    (re.compile(r"\b411\s*кг", re.I), "411 кг — запрещено (SPORY S05)"),
+    (re.compile(r"41\s+позици", re.I), "«41 позиция» — запрещено (канон §1)"),
+    (re.compile(r"\b600\s*Вт", re.I), "600 Вт — не для публичных баннеров (C120/канон §4)"),
+    (re.compile(r"(?:штора|штор[а-я]*)[^.;]{0,30}\b[25]\s*км\b|\b[25]\s*км\b[^.;]{0,30}(?:mavic|fpv)", re.I),
+     "2/5 км «Шторы» — запрещено (канон §4)"),
+    (re.compile(r"пожизненн", re.I), "пожизненная гарантия — запрещено (12 мес)"),
+]
+
 
 @dataclass
 class Finding:
@@ -99,14 +118,124 @@ def as_dict(f: Finding) -> dict:
     return {"code": f.code, "banner": f.banner, "msg": f.msg, "path": f.path, "quote": f.quote}
 
 
+DASH_VOLT_RE = re.compile(r"(?<=\d)\s*[–—−]\s*(?=\d+\s*В\b)")
+
+
 def extract_banner(text: str):
-    """числа баннера: id B01 маскируем, чтобы не считались фактом."""
+    """числа баннера: id B01 маскируем, dash-диапазоны вольт приводим к «12/24 В»."""
+    text = DASH_VOLT_RE.sub("/", text)
     masked = BID_RE.sub(lambda m: "·" * len(m.group(0)), text)
     return shared.extract_all(masked)
 
 
 def norm(s: str) -> str:
     return shared.norm_match(s or "")
+
+
+def load_canon(path: Path = CANON_PATH):
+    """Цифровой канон (kilowatt/docs/КАНОН_цифры_и_факты.md) как второй разрешённый источник."""
+    if not path.is_file():
+        return None
+    text = shared.read_text(path)
+    ex = shared.extract_all(text)
+    allowed = shared.build_match_index(ex.facts)
+    bare = [v for f in ex.facts for v in f.ends()]
+    return {"text": text, "allowed": allowed, "bare": bare, "compact": shared.norm_compact(text)}
+
+
+def strict_fact_source(fact, claims, allowed_ids: list[str], canon):
+    """-> ('claim', cid) | ('canon', None) | (None, None). Только claims из списка баннера или канон."""
+    for fc, cid, _pids in claims.fact_meta:
+        if allowed_ids and cid not in allowed_ids:
+            continue
+        st, _ = shared.match_fact(fact, shared.build_match_index([fc]), fc.ends())
+        if st in ("exact", "within"):
+            return "claim", cid
+    if canon:
+        st, _ = shared.match_fact(fact, canon["allowed"], canon["bare"])
+        if st in ("exact", "within"):
+            return "canon", None
+    return None, None
+
+
+def tech_rows(banner: dict) -> list[dict]:
+    out = []
+    for row in banner.get("tech") or []:
+        if isinstance(row, dict):
+            label = str(row.get("label", "")).strip()
+            value = str(row.get("value", "")).strip()
+            if label or value:
+                out.append({"label": label, "value": value})
+        elif isinstance(row, str):
+            out.append({"label": "", "value": row.strip()})
+    return out
+
+
+def task_chips(banner: dict) -> list[str]:
+    return [str(t).strip() for t in (banner.get("tasks") or []) if isinstance(t, str) and str(t).strip()]
+
+
+def task_ok(chip: str) -> bool:
+    c = norm(chip)
+    return any(c == norm(x) or c.startswith(norm(x)) or norm(x).startswith(c) for x in TASK_VOCAB)
+
+
+NUM_TOKEN_RE = re.compile(r"\d+(?:[ \u00a0\u202f]\d{3})*(?:[.,]\d+)?")
+
+
+def numeric_corpus(claims, canon) -> str:
+    """Числовой корпус: claims.json (содержательные поля) + канон, в компактном виде."""
+    corpus = claims.corpus_compact or ""
+    if canon:
+        corpus += "§" + canon["compact"]
+    return corpus
+
+
+def token_allowed(token: str, corpus: str) -> bool:
+    t = shared.norm_compact(token)
+    if not t:
+        return True
+    # убираем десятичную запятую/точку для сравнения с компактным корпусом
+    variants = {t, t.replace(",", ".")}
+    return any(v in corpus for v in variants)
+
+
+def check_tech_block(banner: dict, banner_id: str, claims, canon, path: str):
+    """v3: tech 4–6 строк, tasks 2–3 чипа, tech-цифры — только claims/канон, с запрет-оверрайдами."""
+    findings: list[Finding] = []
+    tech = tech_rows(banner)
+    tasks = task_chips(banner)
+    if not tech and not tasks:
+        return findings, {}
+    corpus = numeric_corpus(claims, canon)
+    if len(tech) < TECH_ROWS_MIN or len(tech) > TECH_ROWS_MAX:
+        findings.append(Finding("З", banner_id, f"tech-строк {len(tech)} (бриф v3: 4–6)", path))
+    for row in tech:
+        label, value = row["label"], row["value"]
+        if not label or not value:
+            findings.append(Finding("Б3", banner_id, "tech-строка без label/value", path, f"{label}: {value}"))
+            continue
+        if len(label) > TECH_LABEL_MAX:
+            findings.append(Finding("З", banner_id, f"tech label длиннее {TECH_LABEL_MAX} знаков ({len(label)})", path, label))
+        if len(value) > TECH_VALUE_MAX:
+            findings.append(Finding("З", banner_id, f"tech value длиннее {TECH_VALUE_MAX} знаков ({len(value)})", path, value))
+        row_text = f"{label}: {value}"
+        for pat, msg in TECH_PROHIBIT:
+            if pat.search(row_text):
+                findings.append(Finding("Б1", banner_id, f"tech: {msg}", path, row_text))
+        ex = extract_banner(row_text)
+        for f in ex.facts:
+            if f.kind == "money":
+                findings.append(Finding("Б5", banner_id, f"tech: денежная цифра {f.raw}", path, "••• ₽"))
+        for tok in NUM_TOKEN_RE.findall(row_text):
+            if not token_allowed(tok, corpus):
+                findings.append(Finding("Б1", banner_id, f"tech-цифра не подтверждена claims/каноном: {tok.strip()}", path, row_text))
+    if len(tasks) < 2 or len(tasks) > 3:
+        findings.append(Finding("З", banner_id, f"чипов задач {len(tasks)} (бриф v3: 2–3)", path, ", ".join(tasks)))
+    for chip in tasks:
+        if not task_ok(chip):
+            findings.append(Finding("З", banner_id, f"чип вне списка задач брифа: «{chip}»", path))
+    return findings, {"tech_rows": len(tech), "tasks": len(tasks)}
 
 
 def collect_texts(banner: dict) -> list[str]:
@@ -154,8 +283,8 @@ def claim_ids(banner: dict) -> list[str]:
     return out
 
 
-def check_numbers_text(texts: list[str], claims, allowed_ids: list[str], banner_id: str, path: str):
-    """сверка цифр текста с claims; возвращает (findings, checked, exact, within, unknown)."""
+def check_numbers_text(texts: list[str], claims, allowed_ids: list[str], banner_id: str, path: str, canon=None):
+    """сверка цифр текста с claims (+канон); возвращает (findings, checked, exact, within, unknown)."""
     findings: list[Finding] = []
     ex = extract_banner(" ; ".join(texts))
     checked = exact = within = unknown = 0
@@ -200,6 +329,13 @@ def check_numbers_text(texts: list[str], claims, allowed_ids: list[str], banner_
                     Finding("И", banner_id, f"цифра {f.raw} подтверждена полем numbers claim {fallback_ids[0]} (единица не распознана автоматически)", path, f.raw)
                 )
                 continue
+            # канон (kilowatt/docs/КАНОН_цифры_и_факты.md) — разрешённый второй источник для баннеров v3
+            if canon:
+                st2, _ = shared.match_fact(f, canon["allowed"], canon["bare"])
+                if st2 in ("exact", "within"):
+                    within += 1
+                    findings.append(Finding("И", banner_id, f"цифра {f.raw} подтверждена КАНОНом (в claims.json нет) — просьба фактчекеру добавить claim", path, f.raw))
+                    continue
             unknown += 1
             findings.append(Finding("Б1", banner_id, f"цифра не подтверждена claims.json: {f.raw} — {detail}", path, f.raw))
             continue
@@ -265,7 +401,7 @@ def legal_present(text: str) -> list[str]:
 
 
 # ---------------------------------------------------------------- данные
-def check_data(data, claims, banned_hard, data_path: Path):
+def check_data(data, claims, banned_hard, data_path: Path, canon=None):
     findings: list[Finding] = []
     banners: list[dict] = []
     if isinstance(data, list):
@@ -332,8 +468,11 @@ def check_data(data, claims, banned_hard, data_path: Path):
         texts = collect_texts(b)
         findings.extend(check_text_rules(texts, bid, path, banned_hard, claims, cids))
         # цифры
-        tf, checked, exact, within, unknown = check_numbers_text(number_texts(b), claims, cids, bid, path)
+        tf, checked, exact, within, unknown = check_numbers_text(number_texts(b), claims, cids, bid, path, canon)
         findings.extend(tf)
+        # v3: техблок и чипы задач
+        tech_f, tech_stats = check_tech_block(b, bid, claims, canon, path)
+        findings.extend(tech_f)
         # CTA в данных (мягко: вёрстка добавит футер)
         joined = " ".join(texts)
         tg, ph = cta_present(joined)
@@ -341,7 +480,7 @@ def check_data(data, claims, banned_hard, data_path: Path):
             findings.append(Finding("И", bid, "CTA @vokope_ru/телефон не в данных (ожидается в шаблоне вёрстки)", path))
         # юрстрока в данных не обязательна — её добавляет шаблон (проверяется в HTML)
         b["_stats"] = {"numbers_checked": checked, "numbers_exact": exact, "numbers_within": within,
-                       "numbers_unknown": unknown, "claims": len(cids)}
+                       "numbers_unknown": unknown, "claims": len(cids), **tech_stats}
     return findings, by_id
 
 
@@ -361,8 +500,9 @@ def expected_html_names() -> dict[str, dict[str, re.Pattern]]:
     return out
 
 
-def check_html(html_dir: Path, by_id: dict, claims, banned_hard, banners_root: Path):
+def check_html(html_dir: Path, by_id: dict, claims, banned_hard, banners_root: Path, canon=None):
     findings: list[Finding] = []
+    corpus = numeric_corpus(claims, canon)
     files = sorted(html_dir.rglob("*.html")) if html_dir.is_dir() else []
     if not files:
         return [Finding("И", "html", "HTML баннеров ещё не созданы — прогон промежуточный", str(html_dir))], {}
@@ -380,6 +520,9 @@ def check_html(html_dir: Path, by_id: dict, claims, banned_hard, banners_root: P
         for fmt in ("poster", "square"):
             if not found[bid][fmt]:
                 findings.append(Finding("Б3", bid, f"нет HTML формата {fmt} ({FORMATS[fmt]}) в banners/html/", str(html_dir)))
+            elif len(found[bid][fmt]) > 1:
+                names = ", ".join(sorted(p.name for p in found[bid][fmt]))
+                findings.append(Finding("Б3", bid, f"несколько HTML для формата {fmt} — устаревшие имена не удалены: {names}", str(html_dir)))
     # по каждому файлу
     for bid in EXPECTED_IDS:
         for fmt in ("poster", "square"):
@@ -397,12 +540,12 @@ def check_html(html_dir: Path, by_id: dict, claims, banned_hard, banners_root: P
                 if not tg:
                     findings.append(Finding("Б4", bid, f"нет CTA Telegram @vokope_ru ({fmt})", str(p), ""))
                 if not ph:
-                    findings.append(Finding("Б4", bid, f"нет CTA-телефона +7 999 136-71-42 ({fmt})", str(p), ""))
+                    findings.append(Finding("Б4", bid, f"нет CTA-телефона +7 (999) 136-71-42 ({fmt})", str(p), ""))
                 lm = legal_present(text)
                 if len(lm) < 2:
                     findings.append(Finding("Б4", bid, f"нет юрстроки ({fmt}): найдено {lm or '—'}", str(p), ""))
                 # цифры
-                tf, checked, exact, within, unknown = check_numbers_text([text], claims, claim_ids(by_id.get(bid, {})), bid, str(p))
+                tf, checked, exact, within, unknown = check_numbers_text([text], claims, claim_ids(by_id.get(bid, {})), bid, str(p), canon)
                 findings.extend(tf)
                 # фото модели
                 hint = MODELS[bid]["photo"]
@@ -430,6 +573,32 @@ def check_html(html_dir: Path, by_id: dict, claims, banned_hard, banners_root: P
                 name_short = str(pdata.get("name_short") or "").strip()
                 if name_short and norm(name_short) not in norm(text):
                     findings.append(Finding("З", bid, f"название модели «{name_short}» не найдено в вёрстке ({fmt})", str(p), name_short))
+                # v3: техблок в вёрстке
+                tech = tech_rows(pdata)
+                tasks = task_chips(pdata)
+                if tech or tasks:
+                    t_norm = norm(text)
+                    t_compact = shared.norm_compact(text)
+                    block_present = bool(re.search(r"коротко|параметр\w*|техническ\w*", t_norm)) or "b-tech" in poster.html_source.lower() or "tech" in poster.html_source.lower()
+                    if not block_present:
+                        findings.append(Finding("Б3", bid, f"v3: техблок не найден в вёрстке ({fmt})", str(p)))
+                    for row in tech:
+                        label, value = row["label"], row["value"]
+                        if label and norm(label) not in t_norm:
+                            findings.append(Finding("З", bid, f"v3: tech-label «{label}» не найден в вёрстке ({fmt})", str(p)))
+                        for pat, msg in TECH_PROHIBIT:
+                            if pat.search(f"{label}: {value}"):
+                                findings.append(Finding("Б1", bid, f"tech: {msg} ({fmt})", str(p), f"{label}: {value}"))
+                        for tok in NUM_TOKEN_RE.findall(f"{label} {value}"):
+                            if not token_allowed(tok, corpus):
+                                findings.append(Finding("Б1", bid, f"v3: tech-цифра в вёрстке не подтверждена claims/каноном: {tok.strip()} ({fmt})", str(p), value))
+                            elif shared.norm_compact(tok) not in t_compact:
+                                findings.append(Finding("З", bid, f"v3: tech-значение {tok.strip()} не найдено в тексте вёрстки ({fmt})", str(p), value))
+                        if not NUM_TOKEN_RE.search(value) and value and shared.norm_compact(value) not in t_compact:
+                            findings.append(Finding("З", bid, f"v3: tech-value «{value}» не найдено в вёрстке ({fmt})", str(p)))
+                    for chip in tasks:
+                        if norm(chip) not in t_norm:
+                            findings.append(Finding("З", bid, f"v3: чип «{chip}» не найден в вёрстке ({fmt})", str(p)))
                 # синхронность данных и вёрстки
                 dtext = norm(" ".join(collect_texts(pdata)))
                 if pdata.get("hook") and norm(str(pdata["hook"])) not in dtext:
@@ -486,6 +655,11 @@ def check_png(png_dir: Path):
                            ("square1", "1080×1080"), ("square2", "2160×2160 @2x")):
             if not ok[key]:
                 findings.append(Finding("Б3", bid, f"нет PNG {label}", str(png_dir)))
+        # лишние файлы = устаревшие имена после переименования (ожидаем 4, для сторис-моделей 6)
+        expected_cnt = 6 if bid in ("B01", "B02", "B07", "B08", "B10", "B12") else 4
+        if len(bfiles) > expected_cnt:
+            extra = sorted(p.name for p in bfiles)
+            findings.append(Finding("Б3", bid, f"лишние PNG ({len(bfiles)} вместо {expected_cnt}) — устаревшие имена: {', '.join(extra[:6])}", str(png_dir)))
     return findings, report
 
 
@@ -510,18 +684,20 @@ def render_md(result: dict) -> str:
     ap("")
     ap("## 1. Данные и HTML по баннерам")
     ap("")
-    ap("| Баннер | Модель | Данные | Poster 4:5 | Square 1:1 | Цифры | CTA | Юрстрока | Итог |")
-    ap("|---|---|---|---|---|---|---|---|---|")
+    ap("| Баннер | Модель | Данные | Poster 4:5 | Square 1:1 | Цифры | Техблок v3 | CTA | Юрстрока | Итог |")
+    ap("|---|---|---|---|---|---|---|---|---|---|")
     by_id = result["by_id"]
     for bid in EXPECTED_IDS:
         b = by_id.get(bid)
         d = result["data_stats"].get(bid, {})
         h = result["html_stats"].get(bid, {})
         nums = f"{d.get('numbers_exact', 0)}/{d.get('numbers_checked', 0)}"
+        tr, tc = d.get("tech_rows", 0), d.get("tasks", 0)
+        tech = f"{tr} строк / {tc} чипа" if tr else "—"
         codes = [f["code"] for f in result["findings"] if f["banner"] == bid]
         verdict = "❌" if any(c.startswith("Б") for c in codes) else ("⚠" if codes else "✅")
         data_ok = "✅" if b and d.get("numbers_unknown", 0) == 0 else "⚠"
-        ap(f"| {bid} | {MODELS[bid]['model']} | {data_ok} | {h.get('poster', '—')} | {h.get('square', '—')} | {nums} | "
+        ap(f"| {bid} | {MODELS[bid]['model']} | {data_ok} | {h.get('poster', '—')} | {h.get('square', '—')} | {nums} | {tech} | "
            f"{h.get('cta', '—')} | {h.get('legal', '—')} | {verdict} |")
     ap("")
     ap("## 2. Блокеры")
@@ -562,6 +738,9 @@ def render_md(result: dict) -> str:
     ap("- Запрещённые формулировки — `infographics\\01_ФАКТЫ\\BANNED.md`; военная риторика — те же правила, что в инфографике.")
     ap("- Цены: любые ₽/руб. с суммой — блокер; «Цена по запросу» разрешена.")
     ap("- CTA и юрстрока обязательны в каждом HTML обоих форматов; в данных допускается их отсутствие (их добавляет шаблон).")
+    ap("- **v3 техблок:** `tech` 4–6 строк (label ≤18, value ≤28), `tasks` 2–3 чипа из списка брифа; tech-цифры проверяются")
+    ap("  по числовому корпусу claims.json + `kilowatt\\docs\\КАНОН_цифры_и_факты.md`, плюс запрет-оверрайды")
+    ap("  (600 Вт «Шторы», 411 кг, 41 позиция, 2/5 км, пожизненная гарантия). Наличие техблока в HTML обязательно.")
     ap("- Визуальный аудит финальных PNG (читаемость названия/цифр, фото, наложения) выполняется вручную через read_image.")
     return "\n".join(L) + "\n"
 
@@ -571,6 +750,7 @@ def run(data_path: Path, html_dir: Path, png_dir: Path, claims_path: Path, banne
     generated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     claims = shared.load_claims(claims_path)
     banned_hard, banned_soft, banned_note = shared.parse_banned(banned_path)
+    canon = load_canon()
 
     data = None
     data_status = "missing"
@@ -585,12 +765,12 @@ def run(data_path: Path, html_dir: Path, png_dir: Path, claims_path: Path, banne
     by_id: dict = {}
     data_stats: dict = {}
     if data is not None:
-        df, by_id = check_data(data, claims, banned_hard, data_path)
+        df, by_id = check_data(data, claims, banned_hard, data_path, canon)
         findings.extend(df)
         for bid, b in by_id.items():
             data_stats[bid] = b.get("_stats", {})
 
-    hf, found = check_html(html_dir, by_id, claims, banned_hard, BANNERS)
+    hf, found = check_html(html_dir, by_id, claims, banned_hard, BANNERS, canon)
     findings.extend(hf)
     html_stats: dict = {}
     for bid in EXPECTED_IDS:
@@ -700,12 +880,27 @@ def selftest() -> int:
         "numbers": [{"value": "99999", "unit": "МГц", "label": "диапазон"}],
         "audience": "объект", "tone": "field", "photo": "k12m.png",
         "claims": ["C019"], "cta": "Купить",
+        "ids": None,
     }
+    good["tasks"] = ["FPV", "транспорт"]
+    good["tech"] = [
+        {"label": "Диапазоны", "value": "400–1020, 2100–2800, 5680–5900 МГц"},
+        {"label": "Дальность", "value": "50–200 м"},
+        {"label": "Мощность", "value": "160 Вт"},
+        {"label": "Масса", "value": "20 кг"},
+    ]
+    bad["tasks"] = ["100%", "всё"]
+    bad["tech"] = [
+        {"label": "Диапазон", "value": "99999 МГц"},
+        {"label": "Дальность", "value": "50–200 м"},
+        {"label": "Мощность", "value": "160 Вт"},
+        {"label": "Масса", "value": "20 кг"},
+    ]
     (tmp / "00_КОПИРАЙТ" / "banners_data.json").write_text(
         json.dumps({"banners": [good, bad]} if False else [good, bad], ensure_ascii=False), encoding="utf-8")
 
-    def good_html(bid: str, model: str, hook: str, num_html: str, cta: bool = True, legal: bool = True) -> str:
-        footer = ('<div class="cta">@vokope_ru · +7 999 136-71-42</div>'
+    def good_html(bid: str, model: str, hook: str, num_html: str, cta: bool = True, legal: bool = True, tech_html: str = "") -> str:
+        footer = ('<div class="cta">@vokope_ru · +7 (999) 136-71-42</div>'
                   '<div class="sub">Цена по запросу · Доставка по РФ · Самовывоз в Москве</div>') if cta else '<div>Купить</div>'
         legal_html = ('<div class="legal">Оборудование является радиоэлектронным средством. '
                       'Порядок применения — по законодательству РФ. Характеристики — по паспорту изделия. '
@@ -715,8 +910,14 @@ def selftest() -> int:
 <div class="banner"><div class="brand"><img src="../_design/img/brand/logo_w_word.png" alt="В ОКОПЕ"></div>
 <div class="hook">{hook}</div><h1 class="title">{model}</h1>
 <div class="stage"><img src="../_design/img/product/k8m.png" alt="{model}"></div>
-{num_html}{footer}{legal_html}</div></body></html>"""
+{num_html}{tech_html}{footer}{legal_html}</div></body></html>"""
 
+    b01_tech_html = (
+        '<div class="b-tech"><div class="b-tech__title">КОРОТКО О МОДЕЛИ</div>'
+        '<div>Диапазоны: 400–1020, 2100–2800, 5680–5900 МГц</div><div>Дальность: 50–200 м</div>'
+        '<div>Мощность: 160 Вт</div><div>Масса: 20 кг</div>'
+        '<div class="b-tasks"><span>FPV</span><span>транспорт</span></div></div>'
+    )
     for bid, model, hook, nums, fmt in [
         ("B01", "К-8М", "КУПОЛ НАД МАШИНОЙ", "<div>8 каналов</div><div>50–200 м</div><div>20 кг</div>", "1080x1350"),
         ("B01", "К-8М", "КУПОЛ НАД МАШИНОЙ", "<div>8 каналов</div><div>50–200 м</div><div>20 кг</div>", "1080x1080"),
@@ -725,7 +926,8 @@ def selftest() -> int:
     ]:
         name = f"{bid}_test_{fmt}.html"
         (tmp / "html" / name).write_text(
-            good_html(bid, model, hook, nums, cta=(bid == "B01"), legal=(bid == "B01")), encoding="utf-8")
+            good_html(bid, model, hook, nums, cta=(bid == "B01"), legal=(bid == "B01"),
+                      tech_html=(b01_tech_html if bid == "B01" else "")), encoding="utf-8")
 
     from PIL import Image
     for bid in ("B01", "B02"):
@@ -745,6 +947,9 @@ def selftest() -> int:
         ("B02: неподтверждённая цифра -> Б1", any(f["banner"] == "B02" and f["code"] == "Б1" for f in res["findings"]), ""),
         ("B02: нет CTA -> Б4", any(f["banner"] == "B02" and f["code"] == "Б4" and "Telegram" in f["msg"] for f in res["findings"]), ""),
         ("B02: нет юрстроки -> Б4", any(f["banner"] == "B02" and f["code"] == "Б4" and "юрстрок" in f["msg"] for f in res["findings"]), ""),
+        ("B01 v3: техблок принят (нет Б по B01)", not any(f["banner"] == "B01" and f["code"].startswith("Б") for f in res["findings"]), ""),
+        ("B02 v3: tech-цифра 99999 -> Б1", any(f["banner"] == "B02" and f["code"] == "Б1" and "tech-цифра" in f["msg"] for f in res["findings"]), ""),
+        ("B02 v3: нет техблока в вёрстке -> Б3", any(f["banner"] == "B02" and f["code"] == "Б3" and "техблок" in f["msg"] for f in res["findings"]), ""),
         ("PNG: 8 файлов на 2 модели", sum(len(v) for v in res["png"].values()) == 8, str({k: len(v) for k, v in res["png"].items()})),
         ("HTML: форматы найдены", res["inputs"]["html"].startswith("4"), res["inputs"]["html"]),
     ]

@@ -1331,3 +1331,471 @@ body {
 .banner--poster.layout-split .b-plate-cap {
   margin-top: 14px;
 }
+/* ==========================================================================
+   22. V3: ТЕХБЛОК «КОРОТКО О МОДЕЛИ» + ЧИПЫ «ЗАДАЧИ».
+   Заказчик: «баннеры пустые, это сложные технические устройства».
+   Правило: информация есть, но баннер остаётся рекламой — название крупнее
+   всего, фото заметнее прочего, техблок — тонкие линии и мелкий служебный текст.
+   ========================================================================== */
+
+.b-tasks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 0;
+}
+
+.b-task {
+  display: inline-block;
+  padding: 4px 9px;
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+
+.b-task:first-child {
+  border-color: var(--accent);
+  color: var(--fg);
+}
+
+.b-tech {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.b-tech__head {
+  margin: 0 0 8px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.b-tech__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+}
+
+.b-tech__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+}
+
+.b-tech__row:nth-child(1),
+.b-tech__row:nth-child(2) {
+  border-top: 0;
+  padding-top: 2px;
+}
+
+.b-tech__k {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.b-tech__v {
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  text-align: right;
+}
+
+/* --- фото ужимаем на 10–15% (но оно остаётся самым заметным) ------------ */
+.banner--poster.layout-hero .b-stage {
+  max-height: 480px;
+}
+
+.banner--poster.layout-split .b-plate {
+  max-height: 600px;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  max-height: 230px;
+}
+
+/* --- сплит-постер: техблок в левой колонке под цифрами ----------------- */
+.banner--poster.layout-split .b-body {
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "intro photo"
+    "stats photo"
+    "tech photo";
+}
+
+.banner--poster.layout-split .b-tech {
+  grid-area: tech;
+  margin-top: 14px;
+}
+
+/* --- «цифры»: техблок под цифрами, фото ниже и компактнее --------------- */
+.layout-numbers.banner--poster .b-tech {
+  order: 3;
+  margin-top: 14px;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  order: 4;
+  margin-top: 14px;
+}
+
+/* --- квадрат: техблок компактнее (2 колонки × 2–3 строки) --------------- */
+.banner--square .b-tasks {
+  margin-top: 8px;
+  gap: 6px;
+}
+
+.banner--square .b-task {
+  padding: 3px 7px;
+  font-size: 10px;
+}
+
+.banner--square .b-tech {
+  margin-top: 12px;
+  padding-top: 8px;
+}
+
+.banner--square .b-tech__head {
+  margin-bottom: 6px;
+  font-size: 10px;
+}
+
+.banner--square .b-tech__grid {
+  column-gap: 20px;
+}
+
+.banner--square .b-tech__row {
+  padding: 4px 0;
+  gap: 8px;
+}
+
+.banner--square .b-tech__k {
+  font-size: 10px;
+}
+
+.banner--square .b-tech__v {
+  font-size: 13px;
+}
+
+.banner--square.layout-hero .b-stage {
+  max-height: 320px;
+}
+
+.banner--square.layout-split .b-body {
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "intro photo"
+    "stats photo"
+    "tech photo";
+}
+
+.banner--square.layout-split .b-tech {
+  grid-area: tech;
+  margin-top: 12px;
+}
+
+.banner--square.layout-split .b-plate {
+  max-height: 420px;
+}
+
+.banner--square.layout-numbers .b-body {
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "intro photo"
+    "stats photo"
+    "tech tech";
+}
+
+.banner--square.layout-numbers .b-tech {
+  grid-area: tech;
+  margin-top: 10px;
+}
+/* ==========================================================================
+   23. V3 «ЦИФРЫ»-постер: цифры 2×2 слева, крупное фото справа, техблок под ними.
+   Чтобы после добавления техблока фото не превращалось в миниатюру.
+   ========================================================================== */
+
+.layout-numbers.banner--poster .b-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "intro intro"
+    "stats photo"
+    "tech tech";
+  column-gap: 24px;
+  row-gap: 14px;
+  align-content: stretch;
+}
+
+.layout-numbers.banner--poster .b-intro { grid-area: intro; }
+
+.layout-numbers.banner--poster .b-stats {
+  grid-area: stats;
+  order: 0;
+  align-self: start;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.layout-numbers.banner--poster .b-stats .b-stat {
+  border-top: 1px solid var(--line);
+  padding: 14px 10px 12px;
+}
+
+.layout-numbers.banner--poster .b-stats .b-stat:nth-child(odd) {
+  border-left: 0;
+}
+
+.layout-numbers.banner--poster .b-stats .b-stat__v {
+  font-size: 54px;
+}
+
+.layout-numbers.banner--poster .b-stats--4 .b-stat__v {
+  font-size: 46px;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  grid-area: photo;
+  order: 0;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  max-height: none;
+  height: auto;
+  min-height: 0;
+}
+
+.layout-numbers.banner--poster .b-plate {
+  flex: 0 1 auto;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  max-height: 430px;
+  aspect-ratio: var(--photo-ar, 1.4);
+}
+
+.layout-numbers.banner--poster .b-plate-cap {
+  display: block;
+  text-align: center;
+}
+
+.layout-numbers.banner--poster .b-tech {
+  grid-area: tech;
+  order: 0;
+  margin-top: 4px;
+}
+/* --- «цифры»-постер: фото получает конкретную высоту, иначе grid-строка схлопывается --- */
+.layout-numbers.banner--poster .b-body {
+  grid-template-rows: auto auto auto;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  height: 400px;
+  max-height: 400px;
+}
+
+.layout-numbers.banner--poster .b-plate {
+  height: 100%;
+  width: auto;
+  max-height: 100%;
+}
+/* ==========================================================================
+   24. V3.1: техблок в узких колонках — метка над значением (иначе длинные
+   диапазоны налезают на метку в сплит-компоновках). Плюс баланс «цифр»-постера.
+   ========================================================================== */
+
+.banner--poster.layout-split .b-tech__grid,
+.banner--square.layout-split .b-tech__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 24px;
+}
+
+.banner--poster.layout-split .b-tech__row,
+.banner--square.layout-split .b-tech__row {
+  display: block;
+  padding: 6px 0;
+}
+
+.banner--poster.layout-split .b-tech__k,
+.banner--square.layout-split .b-tech__k {
+  display: block;
+}
+
+.banner--poster.layout-split .b-tech__v,
+.banner--square.layout-split .b-tech__v {
+  display: block;
+  margin-top: 2px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.banner--square.layout-split .b-tech__v {
+  font-size: 12px;
+}
+
+/* баланс «цифры»-постера: цифры по центру относительно высокого фото */
+.layout-numbers.banner--poster .b-stats {
+  align-self: center;
+}
+/* ==========================================================================
+   25. V3.1 финал: numbers-компоновка — цифры сразу под строкой/чипами,
+   фото справа крупно (ширина ≥420, высота 400), без пустоты сверху.
+   Короткие значения техблока в сплит-компоновках — в одну строку с меткой.
+   ========================================================================== */
+
+.layout-numbers.banner--poster .b-body {
+  grid-template-rows: auto auto auto;
+  row-gap: 12px;
+}
+
+.layout-numbers.banner--poster .b-model {
+  font-size: 106px;
+}
+
+.layout-numbers.banner--poster .b-stats {
+  align-self: start;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  height: 400px;
+  max-height: 400px;
+  align-self: stretch;
+}
+
+.layout-numbers.banner--poster .b-plate {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  max-height: none;
+}
+
+.layout-numbers.banner--poster .b-plate-cap {
+  margin-top: 8px;
+}
+
+/* короткие значения («4», «8», «12») — метка и значение в одну строку */
+.banner--poster.layout-split .b-tech__row--inline,
+.banner--square.layout-split .b-tech__row--inline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 10px;
+}
+
+.banner--poster.layout-split .b-tech__row--inline .b-tech__k,
+.banner--parent.layout-split .b-tech__row--inline .b-tech__k {
+  display: block;
+}
+
+.banner--poster.layout-split .b-tech__row--inline .b-tech__v,
+.banner--square.layout-split .b-tech__row--inline .b-tech__v {
+  margin-top: 0;
+  text-align: right;
+}
+/* ==========================================================================
+   26. V3.1 final+: numbers-постер — цифры под строкой, техблок под цифрами
+   в левой колонке, фото справа на всю высоту блока (без пустоты).
+   ========================================================================== */
+
+.layout-numbers.banner--poster .b-body {
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "intro intro"
+    "stats photo"
+    "tech photo";
+  column-gap: 24px;
+  row-gap: 12px;
+}
+
+.layout-numbers.banner--poster .b-tech {
+  grid-area: tech;
+  margin-top: 4px;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  grid-area: photo;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  align-self: stretch;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.layout-numbers.banner--poster .b-plate {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  max-height: 100%;
+}
+
+.layout-numbers.banner--poster .b-plate-cap {
+  display: block;
+  margin-top: 8px;
+}
+/* --- numbers-постер: техблок в левой колонке — метка над значением (без наложений) --- */
+.layout-numbers.banner--poster .b-tech__row {
+  display: block;
+  padding: 6px 0;
+}
+
+.layout-numbers.banner--poster .b-tech__k {
+  display: block;
+}
+
+.layout-numbers.banner--poster .b-tech__v {
+  display: block;
+  margin-top: 2px;
+  text-align: left;
+  font-size: 15px;
+}
+/* ==========================================================================
+   27. QA-фикс: B08 «Штора» 1:1 — 4 цифры в квадрате-сплите снова 2×2,
+   иначе «12 генераторов» налезает на «90 мин» в строке из 4 ячеек.
+   ========================================================================== */
+
+.banner--square.layout-split .b-stats--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat {
+  padding: 9px 8px 8px;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(3) {
+  border-left: 0;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(3),
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(4) {
+  border-top: 1px solid var(--line);
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat__v {
+  font-size: 30px;
+}

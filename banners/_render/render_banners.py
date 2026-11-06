@@ -301,11 +301,12 @@ def discover(fmts: list[str], only: set[str] | None) -> list[dict]:
     dirs = [L.HTML_DIR]
     if "story" in fmts:
         dirs.append(L.STORY_DIR)
+    ignored = L.ignored_html()
     for d in dirs:
         if not d.is_dir():
             continue
         for p in sorted(d.glob("*.html")):
-            if p.name.startswith(("_", ".")):
+            if p.name.startswith(("_", ".")) or p.name in ignored:
                 continue
             base, fmt, bid = L.classify(p.stem)
             if fmt not in fmts:
@@ -349,6 +350,8 @@ def main() -> int:
     ap.add_argument("--out", default="")
     ap.add_argument("--engine", default="cdp", choices=["cdp", "cli"])
     ap.add_argument("--only-new", action="store_true")
+    ap.add_argument("--prune", action="store_true",
+                    help="удалить из каталога вывода PNG, которых нет среди ожидаемых (чтобы не осталось старых файлов)")
     ap.add_argument("--json", default="")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
@@ -461,6 +464,25 @@ def main() -> int:
     warn = sum(1 for r in results if r["status"] == "WARN")
     fail = sum(1 for r in results if r["status"] == "FAIL")
     total_bytes = sum(r["bytes"] for r in results)
+
+    pruned = []
+    if args.prune and out_dir.is_dir() and (args.all or not args.files):
+        expected = {j["out"].name for j in jobs}
+        if args.only_new:
+            # при --only-new jobs — только изменившиеся; ожидаемый набор берём шире
+            expected_all = set()
+            for t in discover(fmts, None):
+                for sc in scales:
+                    expected_all.add(L.output_name(t["stem"], sc))
+            expected = expected_all
+        for p in out_dir.glob("*.png"):
+            if p.name not in expected:
+                pruned.append(p.name)
+                p.unlink()
+        if pruned:
+            print(f"PRUNE: удалено устаревших PNG: {len(pruned)} ({', '.join(pruned[:6])}"
+                  + ("…" if len(pruned) > 6 else "") + ")")
+
     print("-" * 100)
     print(f"Итого: {len(results)} файл(ов) | OK: {ok} | WARN: {warn} | FAIL: {fail} | "
           f"{L.human_size(total_bytes)} за {time.time() - started:.1f} с")

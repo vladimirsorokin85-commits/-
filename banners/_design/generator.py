@@ -164,6 +164,42 @@ def clean_stat_label(unit: str, label: str) -> str:
     return label
 
 
+def tasks_html(tasks):
+    """Чипы «ЗАДАЧИ» рядом с рекламной строкой (2–3 штуки)."""
+    items = [str(t).strip() for t in (tasks or []) if str(t).strip()][:3]
+    if not items:
+        return ""
+    chips = "".join('<span class="b-task">%s</span>' % esc(t) for t in items)
+    return '<p class="b-tasks">%s</p>' % chips
+
+
+def tech_html(tech):
+    """Компактный техблок «КОРОТКО О МОДЕЛИ»: 4–6 строк ПАРАМЕТР → значение."""
+    rows = []
+    for it in (tech or [])[:6]:
+        if not isinstance(it, dict):
+            continue
+        label = str(it.get("label") or "").strip()
+        value = str(it.get("value") or "").strip()
+        if not label or not value:
+            continue
+        row_cls = " b-tech__row--inline" if len(value) <= 4 else ""
+        rows.append(
+            '        <div class="b-tech__row%s">'
+            '<span class="b-tech__k">%s</span>'
+            '<span class="b-tech__v">%s</span>'
+            "</div>" % (row_cls, esc(label), esc(value))
+        )
+    if not rows:
+        return ""
+    return (
+        '    <section class="b-tech">\n'
+        '      <p class="b-tech__head">Коротко о модели</p>\n'
+        '      <div class="b-tech__grid">\n%s\n      </div>\n'
+        "    </section>" % "\n".join(rows)
+    )
+
+
 def numbers_html(numbers):
     items = [n for n in (numbers or []) if str(n.get("value", "")).strip()][:4]
     if not items:
@@ -227,6 +263,7 @@ PAGE = """<!DOCTYPE html>
       <h1 class="b-headline {headline_cls}">{hook}</h1>
       <p class="b-model {model_cls}">{name_short}</p>
       <p class="b-line">{line}</p>
+      {tasks}
     </div>
 
     <figure class="b-stage b-stage--{orient}" style="--photo-ar:{photo_ar}">
@@ -238,6 +275,8 @@ PAGE = """<!DOCTYPE html>
     </figure>
 
     {numbers}
+
+    {tech}
 
   </div>
 
@@ -292,6 +331,8 @@ def build_item_html(item, fmt, fmt_class, source):
         caption=esc(item.get("caption") or model),
         side=esc(item.get("side") or "паспортные ТТХ · реальное фото"),
         numbers=numbers_html(item.get("numbers")),
+        tasks=tasks_html(item.get("tasks")),
+        tech=tech_html(item.get("tech")),
         legal=esc(LEGAL),
         gen="generator.py",
         source=os.path.basename(source),
@@ -323,6 +364,7 @@ def main():
     os.makedirs(args.out, exist_ok=True)
 
     made = 0
+    expected = set()
     for item in data:
         bid = (item.get("id") or "").upper()
         if only and bid not in only:
@@ -330,13 +372,27 @@ def main():
         slug = item.get("slug") or slugify(item.get("model") or bid)
         for fmt, fmt_class in FORMATS:
             fname = "%s_%s_%s.html" % (bid, slug, fmt)
+            expected.add(fname)
             path = os.path.join(args.out, fname)
             with open(path, "w", encoding="utf-8", newline="\n") as f:
                 f.write(build_item_html(item, fmt, fmt_class, source))
             made += 1
         print("  %s · %-24s · %s -> 2 HTML" % (bid, item.get("model"), item.get("tone", "field")))
 
-    print("Готово: %d HTML в %s (данные: %s)" % (made, args.out, os.path.basename(source)))
+    # чистим устаревшие файлы от прежних slug-ов (например, «…_4_28a_b_…»
+    # после переименования модели) — иначе в пакет попадут дубли
+    removed = 0
+    if os.path.isdir(args.out):
+        for fname in sorted(os.listdir(args.out)):
+            if not fname.lower().endswith(".html"):
+                continue
+            if re.match(r"^B\d{2}_", fname) and fname not in expected:
+                os.remove(os.path.join(args.out, fname))
+                removed += 1
+
+    print("Готово: %d HTML в %s (данные: %s)%s"
+          % (made, args.out, os.path.basename(source),
+             (", удалено устаревших: %d" % removed) if removed else ""))
 
 
 if __name__ == "__main__":

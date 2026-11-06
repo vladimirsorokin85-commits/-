@@ -1,16 +1,16 @@
 {
-  "generated": "2026-11-06 21:55:51",
+  "generated": "2026-11-06 22:25:58",
   "version": "1.0",
   "inputs": {
     "data": "ok",
     "html": "36 файлов",
     "png": "84 PNG",
-    "claims": 127,
+    "claims": 132,
     "banned": "BANNED.md: 77 запрещённых + 7 стоп-слов нейрослопа"
   },
   "summary": {
     "blockers": 0,
-    "warnings": 20,
+    "warnings": 23,
     "infos": 1
   },
   "by_id": {
@@ -42,6 +42,37 @@
           "label": "вес станции"
         }
       ],
+      "tasks": [
+        "FPV",
+        "разведка",
+        "транспорт"
+      ],
+      "tech": [
+        {
+          "label": "Каналов помех",
+          "value": "8"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "400–1020"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "2100–2800 · 5680–5900"
+        },
+        {
+          "label": "Мощность",
+          "value": "160 Вт"
+        },
+        {
+          "label": "Питание",
+          "value": "12/24 В, борт"
+        },
+        {
+          "label": "Масса",
+          "value": "20 кг"
+        }
+      ],
       "audience": "авто · транспорт",
       "tone": "field",
       "photo": "k8m.png",
@@ -56,7 +87,9 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 3
+        "claims": 3,
+        "tech_rows": 6,
+        "tasks": 3
       }
     },
     "B02": {
@@ -87,6 +120,37 @@
           "label": "вес станции"
         }
       ],
+      "tasks": [
+        "разведка",
+        "каналы управления",
+        "транспорт"
+      ],
+      "tech": [
+        {
+          "label": "Каналов помех",
+          "value": "12"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "300–1020 · 1080–1360"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "2100–2800 · 5100–5300"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "5680–5900"
+        },
+        {
+          "label": "Питание",
+          "value": "12/24 В · 220 В"
+        },
+        {
+          "label": "Масса",
+          "value": "24 кг"
+        }
+      ],
       "audience": "техника · объект",
       "tone": "field",
       "photo": "k12m.png",
@@ -101,7 +165,9 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 3
+        "claims": 3,
+        "tech_rows": 6,
+        "tasks": 3
       }
     },
     "B03": {
@@ -132,6 +198,37 @@
           "label": "питание"
         }
       ],
+      "tasks": [
+        "разведка",
+        "каналы управления",
+        "транспорт"
+      ],
+      "tech": [
+        {
+          "label": "Диапазоны, МГц",
+          "value": "200–1020 · 1080–1360"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "2100–2800 · 5100–5300"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "5680–5900"
+        },
+        {
+          "label": "Мощность",
+          "value": "до 300 Вт"
+        },
+        {
+          "label": "Питание",
+          "value": "12/24 В · 220 В"
+        },
+        {
+          "label": "Масса",
+          "value": "24 кг"
+        }
+      ],
       "audience": "техника · объект",
       "tone": "field",
       "photo": "k15m.png",
@@ -145,7 +242,9 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 2
+        "claims": 2,
+        "tech_rows": 6,
+        "tasks": 3
       }
     },
     "B04": {
@@ -176,6 +275,37 @@
           "label": "вес"
         }
       ],
+      "tasks": [
+        "транспорт",
+        "разведка",
+        "каналы управления"
+      ],
+      "tech": [
+        {
+          "label": "Каналов помех",
+          "value": "12"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "300–1020 · 1080–1360"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "2100–2800 · 5100–5300"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "5680–5900"
+        },
+        {
+          "label": "Питание",
+          "value": "12/24 В"
+        },
+        {
+          "label": "Масса",
+          "value": "24 кг"
+        }
+      ],
       "audience": "транспорт · скрытая установка",
       "tone": "field",
       "photo": "k12m-bag-box.png",
@@ -190,7 +320,9 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 3
+        "claims": 3,
+        "tech_rows": 6,
+        "tasks": 3
       }
     },
     "B05": {
@@ -221,6 +353,37 @@
           "label": "вес станции"
         }
       ],
+      "tasks": [
+        "FPV",
+        "видеоканал",
+        "транспорт"
+      ],
+      "tech": [
+        {
+          "label": "Каналов помех",
+          "value": "8"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "300–1020 · 2100–2800"
+        },
+        {
+          "label": "Мощность",
+          "value": "160 Вт"
+        },
+        {
+          "label": "Питание",
+          "value": "12/24 В"
+        },
+        {
+          "label": "Крепление",
+          "value": "магниты"
+        },
+        {
+          "label": "Масса",
+          "value": "20 кг"
+        }
+      ],
       "audience": "транспорт · FPV",
       "tone": "field",
       "photo": "fpv-8m.png",
@@ -234,7 +397,9 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 2
+        "claims": 2,
+        "tech_rows": 6,
+        "tasks": 3
       }
     },
     "B06": {
@@ -265,6 +430,33 @@
           "label": "вес станции"
         }
       ],
+      "tasks": [
+        "FPV",
+        "видеоканал",
+        "транспорт"
+      ],
+      "tech": [
+        {
+          "label": "Каналов помех",
+          "value": "12"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "300–1020 · 2100–2800"
+        },
+        {
+          "label": "Мощность",
+          "value": "240 Вт"
+        },
+        {
+          "label": "Питание",
+          "value": "12/24 В · 220 В"
+        },
+        {
+          "label": "Масса",
+          "value": "24 кг"
+        }
+      ],
       "audience": "транспорт · FPV",
       "tone": "field",
       "photo": "fpv-12.png",
@@ -278,7 +470,9 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 2
+        "claims": 2,
+        "tech_rows": 5,
+        "tasks": 3
       }
     },
     "B07": {
@@ -304,6 +498,33 @@
           "label": "дальность подавления"
         }
       ],
+      "tasks": [
+        "FPV",
+        "разведка",
+        "транспорт"
+      ],
+      "tech": [
+        {
+          "label": "Диапазоны, МГц",
+          "value": "400–1020 · 2100–2800"
+        },
+        {
+          "label": "Купол",
+          "value": "400 мм"
+        },
+        {
+          "label": "Питание",
+          "value": "12/24 В"
+        },
+        {
+          "label": "Крепление",
+          "value": "магниты"
+        },
+        {
+          "label": "Масса",
+          "value": "10 кг"
+        }
+      ],
       "audience": "мото · мототехника",
       "tone": "field",
       "photo": "fpv-7-moto.png",
@@ -317,7 +538,9 @@
         "numbers_exact": 3,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 2
+        "claims": 2,
+        "tech_rows": 5,
+        "tasks": 3
       }
     },
     "B08": {
@@ -348,6 +571,37 @@
           "label": "вес станции"
         }
       ],
+      "tasks": [
+        "периметр",
+        "разведка",
+        "каналы управления"
+      ],
+      "tech": [
+        {
+          "label": "Генераторов",
+          "value": "12"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "240–1020 · 2100–2800"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "3300–3500 · 5100–5300"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "5680–5900"
+        },
+        {
+          "label": "Питание",
+          "value": "220 В / ИП-24/100"
+        },
+        {
+          "label": "Масса",
+          "value": "41 кг"
+        }
+      ],
       "audience": "объект · периметр",
       "tone": "quiet",
       "photo": "shtora-k12.png",
@@ -361,7 +615,9 @@
         "numbers_exact": 3,
         "numbers_within": 1,
         "numbers_unknown": 0,
-        "claims": 2
+        "claims": 2,
+        "tech_rows": 6,
+        "tasks": 3
       }
     },
     "B09": {
@@ -387,11 +643,42 @@
           "label": "мощность передатчиков"
         }
       ],
+      "tasks": [
+        "периметр",
+        "каналы управления"
+      ],
+      "tech": [
+        {
+          "label": "Генераторов",
+          "value": "8"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "240–1020 · 2100–2800"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "3300–3500 · 5100–5300"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "5680–5900"
+        },
+        {
+          "label": "Мощность",
+          "value": "до 260 Вт"
+        },
+        {
+          "label": "Масса",
+          "value": "20 кг"
+        }
+      ],
       "audience": "объект · сектор",
       "tone": "quiet",
       "photo": "shtora-m.png",
       "claims": [
-        "C029"
+        "C029",
+        "C132"
       ],
       "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
       "_stats": {
@@ -399,7 +686,9 @@
         "numbers_exact": 3,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 1
+        "claims": 2,
+        "tech_rows": 6,
+        "tasks": 2
       }
     },
     "B10": {
@@ -430,12 +719,44 @@
           "label": "разведка, до"
         }
       ],
+      "tasks": [
+        "периметр",
+        "разведка",
+        "каналы управления"
+      ],
+      "tech": [
+        {
+          "label": "Моноблоков",
+          "value": "4"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "240–1020 · 2100–2800"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "3300–3500 · 5100–5300"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "5680–5900"
+        },
+        {
+          "label": "Мощность",
+          "value": "до 2400 Вт"
+        },
+        {
+          "label": "Масса",
+          "value": "306,5 кг"
+        }
+      ],
       "audience": "площадка · периметр",
       "tone": "quiet",
       "photo": "rebus-4.png",
       "claims": [
         "C030",
-        "C031"
+        "C031",
+        "C130"
       ],
       "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
       "_stats": {
@@ -443,7 +764,9 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 2
+        "claims": 3,
+        "tech_rows": 6,
+        "tasks": 3
       }
     },
     "B11": {
@@ -474,6 +797,32 @@
           "label": "диапазон"
         }
       ],
+      "tasks": [
+        "навигация",
+        "периметр"
+      ],
+      "tech": [
+        {
+          "label": "Диапазоны, МГц",
+          "value": "1162–1300 · 1550–1630"
+        },
+        {
+          "label": "Мощность",
+          "value": "до 240 Вт"
+        },
+        {
+          "label": "Дальность",
+          "value": "не менее 2000 м"
+        },
+        {
+          "label": "Масса",
+          "value": "24 кг"
+        },
+        {
+          "label": "Установка",
+          "value": "тренога"
+        }
+      ],
       "audience": "ТЭК · навигация",
       "tone": "quiet",
       "photo": "pole-31.png",
@@ -486,7 +835,9 @@
         "numbers_exact": 3,
         "numbers_within": 1,
         "numbers_unknown": 0,
-        "claims": 1
+        "claims": 1,
+        "tech_rows": 5,
+        "tasks": 2
       }
     },
     "B12": {
@@ -512,12 +863,40 @@
           "label": "запуск РЭБ"
         }
       ],
+      "tasks": [
+        "FPV",
+        "разведка",
+        "каналы управления"
+      ],
+      "tech": [
+        {
+          "label": "Диапазон, МГц",
+          "value": "300–10000"
+        },
+        {
+          "label": "Дальность",
+          "value": "1000–5000 м"
+        },
+        {
+          "label": "Питание",
+          "value": "18–28 В · 200 мА"
+        },
+        {
+          "label": "Масса",
+          "value": "3,0 кг"
+        },
+        {
+          "label": "Управление",
+          "value": "автозапуск РЭБ"
+        }
+      ],
       "audience": "объект · обнаружение",
       "tone": "quiet",
       "photo": "signal-m2.png",
       "claims": [
         "C033",
-        "C034"
+        "C034",
+        "C131"
       ],
       "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
       "_stats": {
@@ -525,13 +904,15 @@
         "numbers_exact": 2,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 2
+        "claims": 3,
+        "tech_rows": 5,
+        "tasks": 3
       }
     },
     "B13": {
       "id": "B13",
-      "model": "«Капюшон» ТП 4-28А/Б",
-      "name_short": "ТП 4-28",
+      "model": "«Капюшон» ТП 4-28А",
+      "name_short": "ТП 4-28А",
       "hook": "РЮКЗАК НА ПЛЕЧИ",
       "line": "Носимый рюкзак на 5 часов: 28 А·ч, 3,2 кг, дальность 50–100 м.",
       "numbers": [
@@ -556,11 +937,42 @@
           "label": "вес"
         }
       ],
+      "tasks": [
+        "группа",
+        "FPV"
+      ],
+      "tech": [
+        {
+          "label": "Диапазоны, МГц",
+          "value": "720–1020 · 2300–2500"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "5680–5900"
+        },
+        {
+          "label": "Мощность",
+          "value": "20 Вт"
+        },
+        {
+          "label": "Автономность",
+          "value": "5 ч"
+        },
+        {
+          "label": "АКБ",
+          "value": "28 А·ч"
+        },
+        {
+          "label": "Масса",
+          "value": "3,2 кг"
+        }
+      ],
       "audience": "группа · носимый",
       "tone": "field",
       "photo": "tp-4-28a.png",
       "claims": [
-        "C035"
+        "C035",
+        "C129"
       ],
       "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
       "_stats": {
@@ -568,13 +980,15 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 1
+        "claims": 2,
+        "tech_rows": 6,
+        "tasks": 2
       }
     },
     "B14": {
       "id": "B14",
-      "model": "«Капюшон» ТП 4-50А/Б",
-      "name_short": "ТП 4-50",
+      "model": "«Капюшон» ТП 4-50А",
+      "name_short": "ТП 4-50А",
       "hook": "ДО ДЕСЯТИ ЧАСОВ РАБОТЫ",
       "line": "Большой рюкзак на 10 часов: 50 А·ч, 5,1 кг, дальность 50–100 м.",
       "numbers": [
@@ -599,11 +1013,42 @@
           "label": "вес"
         }
       ],
+      "tasks": [
+        "группа",
+        "FPV"
+      ],
+      "tech": [
+        {
+          "label": "Диапазоны, МГц",
+          "value": "720–1020 · 2300–2500"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "5680–5900"
+        },
+        {
+          "label": "Мощность",
+          "value": "20 Вт"
+        },
+        {
+          "label": "Автономность",
+          "value": "10 ч"
+        },
+        {
+          "label": "АКБ",
+          "value": "50 А·ч"
+        },
+        {
+          "label": "Масса",
+          "value": "5,1 кг"
+        }
+      ],
       "audience": "группа · носимый",
       "tone": "field",
       "photo": "tp-4-50a.png",
       "claims": [
-        "C036"
+        "C036",
+        "C129"
       ],
       "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
       "_stats": {
@@ -611,7 +1056,9 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 1
+        "claims": 2,
+        "tech_rows": 6,
+        "tasks": 2
       }
     },
     "B15": {
@@ -642,6 +1089,36 @@
           "label": "вес"
         }
       ],
+      "tasks": [
+        "группа",
+        "каналы управления"
+      ],
+      "tech": [
+        {
+          "label": "Диапазон, МГц",
+          "value": "400–1020"
+        },
+        {
+          "label": "Диапазоны, МГц",
+          "value": "2300–2500 · 5680–5900"
+        },
+        {
+          "label": "Полос частот",
+          "value": "7"
+        },
+        {
+          "label": "Автономность",
+          "value": "12 ч"
+        },
+        {
+          "label": "АКБ",
+          "value": "100 А·ч"
+        },
+        {
+          "label": "Масса",
+          "value": "10,6 кг"
+        }
+      ],
       "audience": "группа · носимый",
       "tone": "field",
       "photo": "tp-7-100.png",
@@ -654,7 +1131,9 @@
         "numbers_exact": 3,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 1
+        "claims": 1,
+        "tech_rows": 6,
+        "tasks": 2
       }
     },
     "B16": {
@@ -685,6 +1164,37 @@
           "label": "вес"
         }
       ],
+      "tasks": [
+        "группа",
+        "FPV",
+        "каналы управления"
+      ],
+      "tech": [
+        {
+          "label": "Диапазоны, МГц",
+          "value": "400–1020 · 2100–2800"
+        },
+        {
+          "label": "Диапазон, МГц",
+          "value": "5680–5900"
+        },
+        {
+          "label": "Мощность",
+          "value": "160 Вт"
+        },
+        {
+          "label": "Автономность",
+          "value": "1,5 ч"
+        },
+        {
+          "label": "АКБ",
+          "value": "24 В · 25 А·ч"
+        },
+        {
+          "label": "Масса",
+          "value": "10 кг"
+        }
+      ],
       "audience": "группа · носимый",
       "tone": "field",
       "photo": "tp-8-100.png",
@@ -697,7 +1207,9 @@
         "numbers_exact": 4,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 1
+        "claims": 1,
+        "tech_rows": 6,
+        "tasks": 3
       }
     },
     "B17": {
@@ -728,6 +1240,36 @@
           "label": "вес"
         }
       ],
+      "tasks": [
+        "питание",
+        "группа"
+      ],
+      "tech": [
+        {
+          "label": "Тип АКБ",
+          "value": "LiFePO4"
+        },
+        {
+          "label": "Напряжение",
+          "value": "24 В"
+        },
+        {
+          "label": "Ёмкость",
+          "value": "105 А·ч"
+        },
+        {
+          "label": "Ток разряда",
+          "value": "150 А"
+        },
+        {
+          "label": "Потребителей",
+          "value": "до 4"
+        },
+        {
+          "label": "Масса",
+          "value": "25,6 кг"
+        }
+      ],
       "audience": "питание · автономность",
       "tone": "quiet",
       "photo": "ip-24-100.png",
@@ -740,7 +1282,9 @@
         "numbers_exact": 2,
         "numbers_within": 0,
         "numbers_unknown": 0,
-        "claims": 1
+        "claims": 1,
+        "tech_rows": 6,
+        "tasks": 2
       }
     },
     "B18": {
@@ -766,6 +1310,28 @@
           "label": "верхняя частота"
         }
       ],
+      "tasks": [
+        "сервис",
+        "FPV"
+      ],
+      "tech": [
+        {
+          "label": "Частот",
+          "value": "9"
+        },
+        {
+          "label": "Диапазон",
+          "value": "250–5800 МГц"
+        },
+        {
+          "label": "Назначение",
+          "value": "проверка станций"
+        },
+        {
+          "label": "Индикация",
+          "value": "ВЧ-поле"
+        }
+      ],
       "audience": "сервис · проверка",
       "tone": "quiet",
       "photo": "t-9.png",
@@ -778,7 +1344,9 @@
         "numbers_exact": 1,
         "numbers_within": 1,
         "numbers_unknown": 0,
-        "claims": 1
+        "claims": 1,
+        "tech_rows": 4,
+        "tasks": 2
       }
     }
   },
@@ -788,126 +1356,162 @@
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 3
+      "claims": 3,
+      "tech_rows": 6,
+      "tasks": 3
     },
     "B02": {
       "numbers_checked": 4,
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 3
+      "claims": 3,
+      "tech_rows": 6,
+      "tasks": 3
     },
     "B03": {
       "numbers_checked": 4,
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 2
+      "claims": 2,
+      "tech_rows": 6,
+      "tasks": 3
     },
     "B04": {
       "numbers_checked": 4,
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 3
+      "claims": 3,
+      "tech_rows": 6,
+      "tasks": 3
     },
     "B05": {
       "numbers_checked": 4,
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 2
+      "claims": 2,
+      "tech_rows": 6,
+      "tasks": 3
     },
     "B06": {
       "numbers_checked": 4,
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 2
+      "claims": 2,
+      "tech_rows": 5,
+      "tasks": 3
     },
     "B07": {
       "numbers_checked": 3,
       "numbers_exact": 3,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 2
+      "claims": 2,
+      "tech_rows": 5,
+      "tasks": 3
     },
     "B08": {
       "numbers_checked": 4,
       "numbers_exact": 3,
       "numbers_within": 1,
       "numbers_unknown": 0,
-      "claims": 2
+      "claims": 2,
+      "tech_rows": 6,
+      "tasks": 3
     },
     "B09": {
       "numbers_checked": 3,
       "numbers_exact": 3,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 1
+      "claims": 2,
+      "tech_rows": 6,
+      "tasks": 2
     },
     "B10": {
       "numbers_checked": 4,
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 2
+      "claims": 3,
+      "tech_rows": 6,
+      "tasks": 3
     },
     "B11": {
       "numbers_checked": 4,
       "numbers_exact": 3,
       "numbers_within": 1,
       "numbers_unknown": 0,
-      "claims": 1
+      "claims": 1,
+      "tech_rows": 5,
+      "tasks": 2
     },
     "B12": {
       "numbers_checked": 2,
       "numbers_exact": 2,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 2
+      "claims": 3,
+      "tech_rows": 5,
+      "tasks": 3
     },
     "B13": {
       "numbers_checked": 4,
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 1
+      "claims": 2,
+      "tech_rows": 6,
+      "tasks": 2
     },
     "B14": {
       "numbers_checked": 4,
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 1
+      "claims": 2,
+      "tech_rows": 6,
+      "tasks": 2
     },
     "B15": {
       "numbers_checked": 3,
       "numbers_exact": 3,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 1
+      "claims": 1,
+      "tech_rows": 6,
+      "tasks": 2
     },
     "B16": {
       "numbers_checked": 4,
       "numbers_exact": 4,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 1
+      "claims": 1,
+      "tech_rows": 6,
+      "tasks": 3
     },
     "B17": {
       "numbers_checked": 2,
       "numbers_exact": 2,
       "numbers_within": 0,
       "numbers_unknown": 0,
-      "claims": 1
+      "claims": 1,
+      "tech_rows": 6,
+      "tasks": 2
     },
     "B18": {
       "numbers_checked": 2,
       "numbers_exact": 1,
       "numbers_within": 1,
       "numbers_unknown": 0,
-      "claims": 1
+      "claims": 1,
+      "tech_rows": 4,
+      "tasks": 2
     }
   },
   "html_stats": {
@@ -1106,16 +1710,16 @@
       "B12_signal_m2_1080x1920@2x.png"
     ],
     "B13": [
-      "B13_kapyushon_tp_4_28a_b_1080x1080.png",
-      "B13_kapyushon_tp_4_28a_b_1080x1080@2x.png",
-      "B13_kapyushon_tp_4_28a_b_1080x1350.png",
-      "B13_kapyushon_tp_4_28a_b_1080x1350@2x.png"
+      "B13_kapyushon_tp_4_28a_1080x1080.png",
+      "B13_kapyushon_tp_4_28a_1080x1080@2x.png",
+      "B13_kapyushon_tp_4_28a_1080x1350.png",
+      "B13_kapyushon_tp_4_28a_1080x1350@2x.png"
     ],
     "B14": [
-      "B14_kapyushon_tp_4_50a_b_1080x1080.png",
-      "B14_kapyushon_tp_4_50a_b_1080x1080@2x.png",
-      "B14_kapyushon_tp_4_50a_b_1080x1350.png",
-      "B14_kapyushon_tp_4_50a_b_1080x1350@2x.png"
+      "B14_kapyushon_tp_4_50a_1080x1080.png",
+      "B14_kapyushon_tp_4_50a_1080x1080@2x.png",
+      "B14_kapyushon_tp_4_50a_1080x1350.png",
+      "B14_kapyushon_tp_4_50a_1080x1350@2x.png"
     ],
     "B15": [
       "B15_kapyushon_tp_7_100_1080x1080.png",
@@ -1264,9 +1868,23 @@
     },
     {
       "code": "З",
+      "banner": "B11",
+      "msg": "цифра 24 кг не привязана ни к одному claim из списка ['C032']",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B11_pole_31_1080x1350.html",
+      "quote": "24 кг"
+    },
+    {
+      "code": "З",
+      "banner": "B12",
+      "msg": "цифра 18/28 В не привязана ни к одному claim из списка ['C033', 'C034', 'C131']",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B12_signal_m2_1080x1350.html",
+      "quote": "18/28 В"
+    },
+    {
+      "code": "З",
       "banner": "B13",
       "msg": "очень маленькое фото 197×403: ../_design/img/cut/tp-4-28a.png",
-      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B13_kapyushon_tp_4_28a_b_1080x1350.html",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B13_kapyushon_tp_4_28a_1080x1350.html",
       "quote": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\_design\\img\\cut\\tp-4-28a.png"
     },
     {
@@ -1289,6 +1907,13 @@
       "msg": "цифра «7 полос полос частот» из данных не найдена в вёрстке (square)",
       "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B15_kapyushon_tp_7_100_1080x1080.html",
       "quote": "7 полос полос частот"
+    },
+    {
+      "code": "З",
+      "banner": "B18",
+      "msg": "цифра 250–5800 МГц не привязана ни к одному claim из списка ['C040']",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B18_reb_tester_t_9_1080x1350.html",
+      "quote": "250–5800 МГц"
     }
   ]
 }

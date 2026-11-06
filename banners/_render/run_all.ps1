@@ -49,7 +49,7 @@ function Invoke-Step([string]$Name, [scriptblock]$Body) {
 
 if (-not $SkipRender) {
     Invoke-Step "1/6 Рендер PNG баннеров" {
-        $pyArgs = @((Join-Path $RenderDir "render_banners.py"), "--all")
+        $pyArgs = @((Join-Path $RenderDir "render_banners.py"), "--all", "--prune")
         if ($OnlyNew) { $pyArgs += "--only-new" }
         & $Python @pyArgs
         if ($LASTEXITCODE -eq 2) { throw "рендер не смог запуститься" }
