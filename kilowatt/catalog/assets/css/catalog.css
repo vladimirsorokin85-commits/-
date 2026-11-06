@@ -426,6 +426,8 @@ body.theme-quiet .badge--archive { background: var(--paper-lo); color: var(--oxi
 .footer__brand span { font-family: var(--f-data); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--olive-soft); }
 .footer__meta { font-family: var(--f-data); font-size: 11px; letter-spacing: 0.08em; color: var(--olive-soft); text-align: right; line-height: 1.7; }
 .footer__line { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--paper-line); display: flex; justify-content: space-between; gap: 20px; font-family: var(--f-data); font-size: 10px; letter-spacing: 0.1em; color: var(--olive-soft); flex-wrap: wrap; }
+.footer__pdf a { color: var(--accent); border-bottom: 1px solid transparent; }
+.footer__pdf a:hover { border-bottom-color: var(--accent); }
 
 /* ---------- модалка ---------- */
 .modal { position: fixed; inset: 0; z-index: 80; display: none; }
