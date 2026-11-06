@@ -1,0 +1,465 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>В ОКОПЕ × НПО «Киловатт» — каталог 2026 · обложка 02 «Зона»</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  /* ========================================================================
+     ОБЛОЖКА 02 — «ЗОНА»
+     Механизм: обложка = паспортная схема зоны противодействия, растянутая
+     на страницу. Единственный предмет — купол станции; всё остальное —
+     чертёж, цифры и воздух.
+     Тёплый белый + графит + ОДИН акцент: сигнальный оранжевый (размер, а не фон).
+     ======================================================================== */
+
+  .cover {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+    background: var(--bg);
+    color: var(--fg);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* --- шапка ----------------------------------------------------------- */
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-5);
+    padding: clamp(14px, 2.2vw, 28px) var(--gutter) 0;
+  }
+
+  .brand img {
+    width: clamp(104px, 8.4vw, 126px);
+    height: auto;
+    filter: invert(1); /* белый wordmark -> графит */
+  }
+
+  .issuer {
+    display: flex;
+    gap: clamp(16px, 3.4vw, 56px);
+    text-align: right;
+  }
+
+  .issuer .label {
+    display: block;
+    color: var(--fg-faint);
+  }
+
+  .issuer .label b {
+    display: block;
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  /* --- заголовочный блок ------------------------------------------------ */
+  .head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+    align-items: end;
+    gap: clamp(20px, 4vw, 72px);
+    padding: clamp(18px, 4.4vh, 52px) var(--gutter) 0;
+  }
+
+  .kicker {
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: var(--t-xs);
+    letter-spacing: var(--ls-accent);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 var(--sp-4);
+    display: flex;
+    align-items: center;
+  }
+
+  .kicker::before {
+    content: "";
+    width: 26px;
+    height: 1px;
+    background: currentColor;
+    margin-right: 12px;
+    flex: 0 0 auto;
+  }
+
+  .h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(52px, 7vw, 104px);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .h1-sub {
+    display: block;
+    margin-top: clamp(10px, 1.6vh, 18px);
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: clamp(11px, 0.95vw, 13px);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+
+  .lead {
+    margin: 0 0 2px;
+    max-width: 30em;
+    font-size: clamp(15px, 1.05vw, 17px);
+    line-height: 1.55;
+    color: var(--fg-dim);
+  }
+
+  .lead strong {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  /* --- чертёж ----------------------------------------------------------- */
+  .draw {
+    position: relative;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    padding: clamp(4px, 1.4vh, 16px) var(--gutter) 0;
+    min-height: 0;
+  }
+
+  .draw svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .draw .svg-desktop {
+    max-height: 48vh;
+  }
+
+  .draw .svg-mobile {
+    display: none;
+  }
+
+  .legend {
+    display: none;
+  }
+
+  /* --- подпись к чертежу и выходные данные ------------------------------ */
+  .caption {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-5);
+    align-items: flex-start;
+    padding: var(--sp-2) var(--gutter) 0;
+    position: relative;
+    z-index: 3;
+  }
+
+  .caption p {
+    margin: 0;
+    max-width: 52ch;
+    font-family: var(--font-mono);
+    font-size: var(--t-micro);
+    line-height: 1.65;
+    letter-spacing: 0.02em;
+    color: var(--fg-faint);
+  }
+
+  .caption p b {
+    color: var(--fg-dim);
+    font-weight: 400;
+  }
+
+  .colophon {
+    font-family: var(--font-tech);
+    font-size: var(--t-micro);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    text-align: right;
+    line-height: 1.8;
+    white-space: nowrap;
+  }
+
+  /* --- факты ------------------------------------------------------------ */
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(12px, 2.2vw, 36px);
+    margin: clamp(12px, 2.4vh, 26px) var(--gutter) clamp(16px, 3.2vh, 32px);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--line);
+  }
+
+  .fact .val {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(22px, 2.5vw, 34px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .fact .val i {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .fact .cap {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--font-head);
+    font-size: var(--t-micro);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    line-height: 1.4;
+  }
+
+  /* ---------------------------------------------------------------------
+     АДАПТИВ
+     --------------------------------------------------------------------- */
+  @media (max-width: 980px) {
+    .head {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: var(--sp-4);
+    }
+    .lead {
+      max-width: 44em;
+    }
+    .draw .svg-desktop {
+      max-height: 42vh;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .cover {
+      grid-template-rows: auto auto auto auto auto auto;
+      overflow: visible;
+      align-content: start;
+    }
+    .brand img {
+      width: 94px;
+    }
+    .issuer .label:first-child {
+      display: none;
+    }
+    .h1 {
+      font-size: clamp(44px, 12vw, 68px);
+    }
+    /* на узком экране — отдельная версия схемы, без мелких подписей */
+    .draw .svg-desktop {
+      display: none;
+    }
+    .draw .svg-mobile {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: none;
+    }
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--sp-3);
+      margin: var(--sp-3) var(--gutter) 0;
+      padding-top: var(--sp-2);
+      border-top: 1px solid var(--line);
+      font-family: var(--font-head);
+      font-size: var(--t-micro);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-faint);
+      line-height: 1.5;
+    }
+    .legend b {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: 0;
+      color: var(--fg);
+      text-transform: none;
+      margin-bottom: 3px;
+    }
+    .caption {
+      flex-direction: column;
+      gap: var(--sp-2);
+      padding-top: var(--sp-4);
+    }
+    .colophon {
+      text-align: left;
+      white-space: normal;
+    }
+    .facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--sp-4);
+    }
+    .fact .val {
+      font-size: 22px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .facts {
+      grid-template-columns: 1fr;
+      gap: var(--sp-2);
+    }
+    .fact {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--sp-3);
+      border-top: 1px solid var(--line);
+      padding-top: var(--sp-2);
+    }
+    .fact .cap {
+      margin: 0;
+      text-align: right;
+    }
+    .issuer .label:first-child {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body class="theme-quiet grain cover">
+
+  <header class="top">
+    <a class="brand" href="#" aria-label="В ОКОПЕ — магазин брони">
+      <img src="refs/logo-voida-word.png" alt="В ОКОПЕ">
+    </a>
+    <div class="issuer">
+      <span class="label"><b>НПО «Киловатт»</b>производитель</span>
+      <span class="label"><b>Каталог 2026</b>33 позиции в каталоге</span>
+    </div>
+  </header>
+
+  <section class="head">
+    <div>
+      <p class="kicker">Станции РЭБ «Капюшон» · противодействие БПЛА</p>
+      <h1 class="h1">
+        Капюшон
+        <span class="h1-sub">станция противодействия БПЛА · К-12М</span>
+      </h1>
+    </div>
+    <p class="lead">
+      Защита объектов, автотранспорта (колонн), ББМ и личного состава от ударных
+      и разведывательных БПЛА. Купол накрывает сектор помехой:
+      <strong>оператор работает из укрытия</strong>, зона защиты — 2–3 км.
+      Каталог НПО «Киловатт» на 2026 год.
+    </p>
+  </section>
+
+  <figure class="draw" aria-label="Схема зоны эффективного противодействия БПЛА для станции К-12М">
+    <svg class="svg-desktop" viewBox="0 0 1200 400" role="img" fill="none"
+         preserveAspectRatio="xMidYMid meet">
+      <!-- земля -->
+      <line x1="0" y1="292" x2="1200" y2="292" stroke="#1D1E1A" stroke-width="1"/>
+      <!-- купол зоны -->
+      <path d="M 210 292 A 470 232 0 0 1 1150 292" stroke="#1D1E1A" stroke-width="1"/>
+      <defs>
+        <path id="arc" d="M 210 292 A 470 232 0 0 1 1150 292"/>
+      </defs>
+      <text font-family="Oswald, Arial, sans-serif" font-size="12.5"
+            letter-spacing="3.2" fill="#1D1E1A" fill-opacity="0.6">
+        <textPath href="#arc" startOffset="30%">ЗОНА ЭФФЕКТИВНОГО ПРОТИВОДЕЙСТВИЯ БПЛА</textPath>
+      </text>
+
+      <!-- размер зоны: единственное, что окрашено акцентом -->
+      <g stroke="#C8451F" stroke-width="1">
+        <line x1="210" y1="320" x2="1150" y2="320"/>
+        <line x1="210" y1="312" x2="210" y2="328"/>
+        <line x1="1150" y1="312" x2="1150" y2="328"/>
+        <line x1="210" y1="292" x2="210" y2="312" stroke-dasharray="2 3"/>
+        <line x1="1150" y1="292" x2="1150" y2="312" stroke-dasharray="2 3"/>
+      </g>
+      <text x="680" y="348" text-anchor="middle"
+            font-family="Oswald, Arial, sans-serif" font-size="13" letter-spacing="3"
+            fill="#C8451F">2000–3000 М</text>
+
+      <!-- дальность подавления у станции -->
+      <g stroke="#1D1E1A" stroke-opacity="0.55" stroke-width="1">
+        <line x1="700" y1="272" x2="700" y2="292"/>
+        <line x1="840" y1="272" x2="840" y2="292"/>
+        <line x1="700" y1="272" x2="840" y2="272"/>
+      </g>
+      <text x="770" y="262" text-anchor="middle"
+            font-family="Oswald, Arial, sans-serif" font-size="11" letter-spacing="2"
+            fill="#1D1E1A" fill-opacity="0.55">50–200 М</text>
+
+
+      <!-- центр: станция на линии объектовой обороны -->
+      <ellipse cx="630" cy="292" rx="62" ry="6" fill="#1D1E1A" fill-opacity="0.10"/>
+      <image href="refs/cut/k12m-frame-14-cut.png" x="548" y="188" width="164" height="102"/>
+      <line x1="630" y1="292" x2="630" y2="308" stroke="#1D1E1A" stroke-opacity="0.35" stroke-width="1"/>
+    </svg>
+
+    <!-- та же схема для узкого экрана: подписи крупнее относительно холста -->
+    <svg class="svg-mobile" viewBox="0 0 400 250" role="img" fill="none"
+         preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <line x1="0" y1="188" x2="400" y2="188" stroke="#1D1E1A" stroke-width="1"/>
+      <path d="M 16 188 A 184 148 0 0 1 384 188" stroke="#1D1E1A" stroke-width="1"/>
+      <g stroke="#C8451F" stroke-width="1">
+        <line x1="16" y1="204" x2="384" y2="204"/>
+        <line x1="16" y1="197" x2="16" y2="211"/>
+        <line x1="384" y1="197" x2="384" y2="211"/>
+        <line x1="16" y1="188" x2="16" y2="197" stroke-dasharray="2 3"/>
+        <line x1="384" y1="188" x2="384" y2="197" stroke-dasharray="2 3"/>
+      </g>
+      <text x="200" y="228" text-anchor="middle"
+            font-family="Oswald, Arial, sans-serif" font-size="11" letter-spacing="2.4"
+            fill="#C8451F">2000–3000 М</text>
+      <g stroke="#1D1E1A" stroke-opacity="0.5" stroke-width="1">
+        <line x1="248" y1="172" x2="248" y2="188"/>
+        <line x1="312" y1="172" x2="312" y2="188"/>
+        <line x1="248" y1="172" x2="312" y2="172"/>
+      </g>
+      <text x="280" y="164" text-anchor="middle"
+            font-family="Oswald, Arial, sans-serif" font-size="9.5" letter-spacing="1.6"
+            fill="#1D1E1A" fill-opacity="0.55">50–200 М</text>
+      <ellipse cx="200" cy="188" rx="38" ry="4" fill="#1D1E1A" fill-opacity="0.10"/>
+      <image href="refs/cut/k12m-frame-14-cut.png" x="156" y="133" width="88" height="55"/>
+    </svg>
+  </figure>
+
+  <div class="legend" aria-hidden="true">
+    <span><b>2000–3000 м</b>зона при операторе в укрытии</span>
+    <span><b>50–200 м</b>дальность подавления</span>
+    <span><b>до 240 Вт</b>выходная мощность</span>
+  </div>
+
+  <div class="caption">
+    <p><b>Рис. 1.</b> Зона эффективного противодействия БПЛА для станции «Капюшон» К-12М.
+      Дальность подавления 50–200 м при удалении оператора 2000–3000 м.
+      Источник: паспорт изделия.</p>
+    <p class="colophon">В ОКОПЕ · каталог 2026<br>по паспортам НПО «Киловатт»</p>
+  </div>
+
+  <section class="facts" aria-label="Ключевые характеристики">
+    <div class="fact">
+      <span class="val">300–5900 <i>МГц</i></span>
+      <span class="cap">пять диапазонов подавления</span>
+    </div>
+    <div class="fact">
+      <span class="val">24 <i>кг</i></span>
+      <span class="cap">масса изделия, 700×257 мм</span>
+    </div>
+    <div class="fact">
+      <span class="val">−20…+40 <i>°C</i></span>
+      <span class="cap">подтверждённый диапазон температур</span>
+    </div>
+    <div class="fact">
+      <span class="val">12/24 <i>В</i></span>
+      <span class="cap">бортсеть, 220 В или ИП-24/100</span>
+    </div>
+  </section>
+
+</body>
+</html>

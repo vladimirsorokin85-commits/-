@@ -1,0 +1,372 @@
+/* ==========================================================================
+   «В ОКОПЕ» × НПО «КИЛОВАТТ» — КАТАЛОГ 2026
+   ФАЙЛ: tokens.css — единственный источник цвета, шрифта, шкал и линий.
+   Ни один макет не вводит собственные цвета вне этого файла.
+
+   ТРИ ЯЗЫКА ОДНОГО КАТАЛОГА:
+   .theme-field  — полевой милитари: олива/графит + один кислотный акцент.
+   .theme-quiet  — сдержанный B2B: тёплый белый/графит + один акцент.
+   .theme-doc    — паспорт изделия: бумага/типографская краска + штамп.
+
+   ЖЁСТКИЕ ПРАВИЛА (design.txt):
+   — никакого чёрного с золотом;
+   — никаких градиентов, неона, свечения, частиц, стекломорфизма;
+   — никаких «висящих» UI-карточек и теней: только линии, поля и типографика;
+   — один акцент на макет. Акцент — это сигнал, а не украшение.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. ШРИФТЫ. Все — OFL, лежат локально в fonts/, проверены на кириллицу.
+   Никаких обращений к fonts.googleapis.com: каталог должен открываться офлайн.
+   -------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Sofia Sans Cond";
+  src: url("fonts/SofiaSansExtraCondensed-VF.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("fonts/Oswald-VF.ttf") format("truetype");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tektur";
+  src: url("fonts/Tektur-VF.ttf") format("truetype");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Unbounded";
+  src: url("fonts/Unbounded-VF.ttf") format("truetype");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Dela Gothic";
+  src: url("fonts/DelaGothicOne-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Days One";
+  src: url("fonts/DaysOne-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --------------------------------------------------------------------------
+   2. СЕМЕЙСТВА И РОЛИ
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* крупный заголовок: сверхузкий гротеск — «плакатная» типографика */
+  --font-display: "Sofia Sans Cond", "Oswald", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+  /* служебный заголовок/подзаголовок: конденсата с характером */
+  --font-head: "Oswald", "Sofia Sans Cond", "Bahnschrift", "Arial Narrow", sans-serif;
+  /* технические подписи и цифры: «приборный» гротеск */
+  --font-tech: "Tektur", "Consolas", "PT Mono", ui-monospace, monospace;
+  /* основной текст: системный стек с гарантированной кириллицей */
+  --font-body: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  /* документ/паспорт: моноширинный набор */
+  --font-mono: "Consolas", "PT Mono", "Courier New", ui-monospace, monospace;
+  /* документ/паспорт: текст набора */
+  --font-doc: Georgia, "PT Serif", "Times New Roman", serif;
+
+  /* ------------------------------------------------------------------------
+     3. ТИПОГРАФИЧЕСКАЯ ШКАЛА (от 11 до плакатного кегля, fluid)
+     ------------------------------------------------------------------------ */
+  --t-micro: 10px;   /* технические отметки, штампы */
+  --t-xs: 11px;      /* надзаголовки капсом */
+  --t-sm: 13px;      /* подписи, таблицы ТТХ */
+  --t-base: 16px;    /* основной текст */
+  --t-md: 18px;      /* лид каталога */
+  --t-lg: 22px;
+  --t-xl: 28px;
+  --t-2xl: 36px;
+  --t-h3: clamp(22px, 2.2vw, 30px);
+  --t-h2: clamp(30px, 4.4vw, 56px);
+  --t-h1: clamp(40px, 6.2vw, 92px);
+  --t-display: clamp(64px, 13.5vw, 210px);
+
+  --lh-tight: 0.82;  /* плакатный кегль */
+  --lh-head: 1.02;
+  --lh-body: 1.55;
+  --lh-table: 1.35;
+
+  --ls-accent: 0.14em;  /* разрядка технических подписей */
+  --ls-tight: -0.015em;
+  --ls-display: -0.02em;
+
+  /* ------------------------------------------------------------------------
+     4. ПРОСТРАНСТВО. Сетка кратна 4. Пустота — тоже единица измерения.
+     ------------------------------------------------------------------------ */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10: 128px;
+  --sp-11: 160px;
+
+  --gutter: clamp(16px, 4.2vw, 64px);   /* поля страницы */
+  --max-page: 1440px;                    /* ширина обложки/страницы */
+  --max-content: 1180px;                 /* рабочая ширина текста */
+  --max-read: 62ch;                      /* длина строки основного текста */
+
+  /* колонки: 12 — универсальная сетка каталога */
+  --col-gap: clamp(12px, 1.6vw, 24px);
+
+  /* ------------------------------------------------------------------------
+     5. ЛИНИИ, СКРУГЛЕНИЯ, ТЕНИ
+     ------------------------------------------------------------------------ */
+  --hair: 1px;
+  --rule: 2px;
+  --r-0: 0;       /* основной каталог: печать, прямые углы */
+  --r-1: 2px;     /* только фото-плашки и кнопки */
+  --r-pill: 999px;/* только служебные точки/чипы в интерфейсе */
+
+  --shadow: none; /* теней нет по правилам: объём даёт только линия */
+
+  /* ------------------------------------------------------------------------
+     6. ДВИЖЕНИЕ. Только служебное, 120–200 мс.
+     ------------------------------------------------------------------------ */
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur: 160ms;
+}
+
+/* --------------------------------------------------------------------------
+   7. ПАЛИТРА 1 — «ПОЛЕ». Олива + графит + ОДИН акцент: кислотный сигнал.
+   Кислотный цвет = сигнал (метка, цифра, линия), никогда — фон.
+   -------------------------------------------------------------------------- */
+
+.theme-field {
+  --bg: #1C2317;            /* графит-олива, глубже продукта */
+  --bg-2: #2C3722;
+  --fg: #EDE8D7;            /* тёплый «бумажный» белый */
+  --fg-dim: rgba(237, 232, 215, 0.62);
+  --fg-faint: rgba(237, 232, 215, 0.34);
+  --line: rgba(237, 232, 215, 0.20);
+  --line-strong: rgba(237, 232, 215, 0.42);
+  --accent: #C9F24B;        /* единственный акцент: кислотный лайм */
+  --accent-ink: #1C2317;    /* текст на акценте */
+  --accent-dim: rgba(201, 242, 75, 0.22);
+  --surface: #F0EBDC;       /* светлая плашка/«бумага» внутри поля */
+  --surface-ink: #1C2317;
+  --photo-plate: rgba(237, 232, 215, 0.06);
+}
+
+/* --------------------------------------------------------------------------
+   8. ПАЛИТРА 2 — «ТИХИЙ». Тёплый белый + графит + ОДИН акцент: сигнальный
+   оранжевый. Много воздуха, тонкие линии, ничего не «висит».
+   -------------------------------------------------------------------------- */
+
+.theme-quiet {
+  --bg: #F4F1EA;            /* тёплый белый */
+  --bg-2: #EAE5D8;
+  --bg-3: #FBF9F4;
+  --fg: #1D1E1A;            /* графит */
+  --fg-dim: rgba(29, 30, 26, 0.68);
+  --fg-faint: rgba(29, 30, 26, 0.40);
+  --line: rgba(29, 30, 26, 0.16);
+  --line-strong: rgba(29, 30, 26, 0.36);
+  --accent: #C8451F;        /* единственный акцент: сигнальный оранжевый */
+  --accent-ink: #F4F1EA;
+  --accent-dim: rgba(200, 69, 31, 0.12);
+  --surface: #FFFFFF;
+  --surface-ink: #1D1E1A;
+  --photo-plate: #FBFAF6;
+  --olive: #39432B;         /* структурный тёмный блок, не акцент */
+  --ink-deep: #1C2317;      /* шапка/подвал каталога: полевой графит */
+  --on-dark: #EDE8D7;       /* текст на графите */
+  --on-dark-dim: rgba(237, 232, 215, 0.64);
+}
+
+/* --------------------------------------------------------------------------
+   9. ПАЛИТРА 3 — «ПАСПОРТ». Бумага + типографская краска + штамп.
+   -------------------------------------------------------------------------- */
+
+.theme-doc {
+  --bg: #E9E2D1;
+  --bg-2: #F2EDE0;
+  --fg: #22231E;
+  --fg-dim: rgba(34, 35, 30, 0.72);
+  --fg-faint: rgba(34, 35, 30, 0.44);
+  --line: #B7AE99;
+  --line-strong: #8E8570;
+  --accent: #B0352A;        /* штамп */
+  --accent-ink: #F2EDE0;
+  --accent-dim: rgba(176, 53, 42, 0.14);
+  --surface: #F2EDE0;
+  --surface-ink: #22231E;
+}
+
+/* --------------------------------------------------------------------------
+   10. СБРОС И ОБЩИЕ ЭЛЕМЕНТЫ. Без библиотек, без «карточек».
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg, #F4F1EA);
+  color: var(--fg, #1D1E1A);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+::selection {
+  background: var(--accent, #C8451F);
+  color: var(--accent-ink, #F4F1EA);
+}
+
+/* --------------------------------------------------------------------------
+   11. СЛУЖЕБНЫЕ КЛАССЫ. Ровно столько, сколько нужно каталогу.
+   -------------------------------------------------------------------------- */
+
+/* техническая подпись капсом */
+.label {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: var(--t-xs);
+  line-height: 1.2;
+  letter-spacing: var(--ls-accent);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* приборная цифра/значение */
+.tech {
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+/* плакатная строка */
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-page);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* линия-разделитель вместо карточки */
+.rule {
+  border: 0;
+  border-top: var(--hair) solid var(--line);
+  margin: 0;
+}
+
+.rule--strong {
+  border-top-color: var(--line-strong);
+}
+
+/* акцентная линия-маркер: 24px кислоты перед подписью */
+.accent-tick {
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  vertical-align: middle;
+  margin-right: 12px;
+}
+
+/* печатное зерно: тонкое, не «фильтр ради фильтра» */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* фото-плашка: снимок «напечатан» на бумаге, без тени и без рамки-скругления */
+.photo-plate {
+  background: var(--photo-plate, #FBFAF6);
+  border: var(--hair) solid var(--line);
+}
+
+.photo-plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply; /* белый фон съёмочной студии растворяется в бумаге */
+}
+
+/* доступность: видимый фокус, уважение reduced motion */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}

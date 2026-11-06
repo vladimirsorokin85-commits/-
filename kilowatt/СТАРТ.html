@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>СДАЧА: каталог НПО «Киловатт» — «В ОКОПЕ»</title>
+<style>
+  @font-face { font-family:"Oswald"; src:url("catalog/assets/fonts/Oswald-VF.ttf"); font-weight:200 700; }
+  @font-face { font-family:"Tektur"; src:url("catalog/assets/fonts/Tektur-VF.ttf"); font-weight:400 900; }
+  @font-face { font-family:"Unbounded"; src:url("catalog/assets/fonts/Unbounded-VF.ttf"); font-weight:200 900; }
+  @font-face { font-family:"Sofia"; src:url("catalog/assets/fonts/SofiaSansExtraCondensed-VF.ttf"); font-weight:100 900; }
+  :root {
+    --paper:#f4f1ea; --paper2:#faf7f0; --ink:#1d1e1a; --graph:#2a2b26; --olive:#5b5f52;
+    --soft:#74786a; --accent:#c8451f; --line:rgba(29,30,26,.16); --line2:rgba(29,30,26,.4);
+    --lime:#c9f24b; --dark:#20261b;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:"Sofia",Arial,sans-serif; font-size:17px; line-height:1.45; }
+  a { color:inherit; }
+  .wrap { max-width:1320px; margin:0 auto; padding:0 clamp(18px,4vw,48px); }
+  .mono { font-family:"Tektur",monospace; }
+  .head { padding:26px 0 18px; border-bottom:1px solid var(--line2); }
+  .head__in { display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .brand__mark { background:var(--ink); width:46px; height:46px; display:flex; align-items:center; justify-content:center; }
+  .brand__mark img { height:34px; }
+  .brand b { font-family:"Unbounded",sans-serif; font-weight:800; font-size:17px; letter-spacing:-.02em; display:block; line-height:1.1; }
+  .brand span { font-family:"Tektur",monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--soft); }
+  .head__meta { font-family:"Tektur",monospace; font-size:11px; letter-spacing:.1em; color:var(--soft); text-align:right; line-height:1.7; text-transform:uppercase; }
+  h1 { font-family:"Oswald",sans-serif; font-weight:500; text-transform:uppercase; font-size:clamp(34px,5vw,64px); line-height:.98; letter-spacing:-.01em; margin:34px 0 10px; }
+  .lead { font-size:19px; color:var(--graph); max-width:74ch; margin:0 0 22px; }
+  .chips { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+  .chip { font-family:"Oswald",sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; border:1px solid var(--line2); padding:7px 11px; }
+  .chip b { font-family:"Tektur",monospace; color:var(--accent); }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin:26px 0; }
+  .var { background:var(--paper2); padding:0 0 24px; display:flex; flex-direction:column; }
+  .var__shot { border-bottom:1px solid var(--line); background:#e9e2d1; aspect-ratio:16/9; overflow:hidden; }
+  .var__shot img { display:block; width:100%; height:100%; object-fit:cover; object-position:top center; }
+  .var__body { padding:20px 24px 0; }
+  .var__num { font-family:"Tektur",monospace; font-size:11px; letter-spacing:.16em; color:var(--accent); }
+  .var h2 { font-family:"Oswald",sans-serif; font-weight:500; text-transform:uppercase; font-size:28px; line-height:1.02; margin:8px 0 8px; }
+  .var p { color:var(--graph); font-size:16px; margin:0 0 16px; }
+  .btns { display:flex; gap:10px; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; gap:8px; font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.07em; font-size:13px; padding:11px 16px; border:1px solid var(--ink); text-decoration:none; }
+  .btn--solid { background:var(--ink); color:var(--paper2); }
+  .btn--solid:hover { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn:hover { border-color:var(--accent); color:var(--accent); }
+  .btn--dark { border-color:#3a4132; color:var(--lime); background:var(--dark); }
+  .btn--dark:hover { background:#2a3223; color:var(--lime); border-color:var(--lime); }
+  .facts { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin:8px 0 34px; }
+  .fact { background:var(--paper2); padding:18px 20px; }
+  .fact b { display:block; font-family:"Tektur",monospace; font-size:24px; font-weight:600; letter-spacing:-.02em; }
+  .fact span { font-family:"Oswald",sans-serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--soft); }
+  .block { border-top:1px solid var(--line2); padding:22px 0; display:grid; grid-template-columns:220px 1fr; gap:26px; }
+  .block h3 { font-family:"Oswald",sans-serif; font-weight:500; text-transform:uppercase; font-size:17px; letter-spacing:.05em; margin:0; }
+  .block .num { font-family:"Tektur",monospace; font-size:11px; color:var(--accent); display:block; margin-bottom:6px; }
+  .block ul { margin:0; padding:0; list-style:none; }
+  .block li { padding:8px 0; border-bottom:1px solid var(--line); font-size:16px; }
+  .block li:last-child { border:0; }
+  .block li b { font-family:"Tektur",monospace; font-size:13px; }
+  .warn { background:var(--dark); color:#e7e2d2; padding:22px 26px; margin:10px 0 26px; }
+  .warn h3 { color:var(--lime); font-family:"Oswald",sans-serif; text-transform:uppercase; font-weight:500; letter-spacing:.06em; margin:0 0 10px; font-size:18px; }
+  .warn p { color:#cfcaBA; font-size:15px; margin:0 0 8px; }
+  .warn p:last-child { margin:0; }
+  .warn b { color:#fff; }
+  .todo { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin:8px 0 30px; }
+  .todo__item { border:1px solid var(--line2); padding:16px 18px; background:var(--paper2); }
+  .todo__item b { display:block; font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.05em; font-size:15px; margin-bottom:5px; }
+  .todo__item span { font-size:14.5px; color:var(--graph); }
+  .links { display:flex; gap:10px; flex-wrap:wrap; margin:6px 0 40px; }
+  .foot { border-top:1px solid var(--line2); padding:20px 0 34px; font-family:"Tektur",monospace; font-size:11px; letter-spacing:.1em; color:var(--soft); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  @media (max-width:980px) { .grid2, .todo { grid-template-columns:1fr; } .facts { grid-template-columns:1fr 1fr; } .block { grid-template-columns:1fr; gap:10px; } }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="wrap head__in">
+    <div class="brand">
+      <span class="brand__mark"><img src="catalog/assets/img/brand/logo_w_emblem.png" alt=""></span>
+      <span><b>В ОКОПЕ</b><span>сдача · каталог НПО «Киловатт»</span></span>
+    </div>
+    <div class="head__meta">06.11.2026 · чат «Лидер»<br>PR #12 · ветка lead/kilowatt-catalog</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <h1>Каталог готов.<br>Осталось выбрать вариант</h1>
+  <p class="lead">Два каталога линейки НПО «Киловатт»: интерактивный HTML и PDF A4.
+    Светлый вариант переработан 07.11 — «ведомость» вместо коробочной сетки, стенд флагманов,
+    моушн и выверенная типографика; hero сохранён как был. Здесь всё открывается одним кликом.</p>
+  <div class="chips">
+    <span class="chip"><b>43</b> позиции</span>
+    <span class="chip"><b>27</b> с ценой Димы</span>
+    <span class="chip"><b>100</b> фото</span>
+    <span class="chip"><b>2</b> варианта дизайна</span>
+    <span class="chip"><b>PDF</b> 13 стр. × 2</span>
+    <span class="chip">HTML + PDF</span>
+  </div>
+
+  <div class="grid2">
+    <div class="var">
+      <a class="var__shot" href="catalog/index.html" title="Открыть каталог"><img src="preview/v1-cover.png" alt="Вариант 1 — обложка"></a>
+      <div class="var__body">
+        <div class="var__num">ВАРИАНТ 1</div>
+        <h2>«Тёмное поле»</h2>
+        <p>Олива и графит, кремовая типографика, кислотный лайм. Техника — герой, настроение —
+          поле и железо. Для молодой мужской аудитории и соцсетей.</p>
+        <div class="btns">
+          <a class="btn btn--solid" href="catalog/index.html">Открыть каталог →</a>
+          <a class="btn" href="catalog/pdf/catalog-v1-field.pdf">PDF</a>
+        </div>
+      </div>
+    </div>
+    <div class="var">
+      <a class="var__shot" href="catalog/variant-2.html" title="Открыть каталог"><img src="preview/v2-catalog.png" alt="Вариант 2 — новая ведомость"></a>
+      <div class="var__body">
+        <div class="var__num">ВАРИАНТ 2 · НОВЫЙ (07.11)</div>
+        <h2>«Зона защиты»</h2>
+        <p>Тёплая бумага, графит, один оксидный акцент. Hero прежний; ниже — редакционная
+          «ведомость»: строки-индекс с полем образца, стенд флагманов, моушн и выверенная
+          типографика. Для B2B: закупщиков, тендеров, проектных отделов.</p>
+        <div class="btns">
+          <a class="btn btn--solid" href="catalog/variant-2.html">Открыть каталог →</a>
+          <a class="btn" href="catalog/pdf/catalog-v2-quiet.pdf">PDF</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><b>300–5900</b><span>МГц диапазон</span></div>
+    <div class="fact"><b>до 2400</b><span>Вт мощность передатчиков</span></div>
+    <div class="fact"><b>12 мес</b><span>гарантия по паспорту</span></div>
+    <div class="fact"><b>+7 (999) 136-71-42</b><span>телефон в каталоге</span></div>
+  </div>
+
+  <div class="warn" style="background:#1d1e1a;">
+    <h3>Готово к отправке: один HTML и отдельный PDF</h3>
+    <p><b>Каталог_Киловатт_2026_В_ОКОПЕ.html</b> (~9,2 МБ) — один самодостаточный файл: все стили, скрипты,
+      шрифты и 105 изображений внутри. Открывается в любом браузере без интернета и папок. Это версия для email/переписок.</p>
+    <p><b>Каталог_Киловатт_2026_В_ОКОПЕ.pdf</b> (1,9 МБ, 11 стр. A4) — печатный каталог в новом стиле «ведомость».</p>
+    <div class="btns" style="margin-top:10px;">
+      <a class="btn btn--dark" href="dist/Каталог_Киловатт_2026_В_ОКОПЕ.html">Открыть HTML-каталог →</a>
+      <a class="btn btn--dark" href="dist/Каталог_Киловатт_2026_В_ОКОПЕ.pdf">Открыть PDF →</a>
+      <a class="btn btn--dark" href="КАК_ОТПРАВИТЬ.md">Как отправлять (тексты письма)</a>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3><span class="num">01</span>Внутри каталога</h3>
+    <ul>
+      <li><b>43 позиции</b> — 33 актуальные страницы сайта + 10 архивных со статусом «вне сайта · наличие уточняется».</li>
+      <li><b>6 категорий:</b> купольные станции (14), стационарные (5), переносные рюкзаки (7), детекторы (2), доп. модули (4), аксессуары (11).</li>
+      <li><b>ТТХ по паспортам</b>, расхождения сайт/паспорт/дилер — в предупреждениях карточки и в data/audit.md.</li>
+      <li><b>Светлый вариант переработан:</b> «ведомость» строк с полем образца (hover/focus), стенд флагманов, моушн-кит, выверенная типографика (0 нарушений), QA 34/0/0.</li>
+      <li><b>Сравнение трёх флагманов</b> в одной таблице (диапазон, мощность, дальность, питание, вес, гарантия, цена) + отдельный фильтр «Вне сайта».</li>
+      <li><b>Цены поставщика</b> (Дима/Ховрино) без наценки: 27 из 43 позиций; «Ребус-4» — по запросу.</li>
+      <li><b>Заявка</b> собирается на устройстве, полный правовой блок, телефон + QR-код на звонок (HTML и PDF).</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3><span class="num">02</span>Проверено</h3>
+    <ul>
+      <li>PDF: 12 страниц каждый, кириллица и фото в порядке. <b>HTML:</b> 0 битых ссылок и фото.</li>
+      <li>Мобильная вёрстка обоих вариантов — 390 px.</li>
+      <li>Факт-чек: <b>«Ребус-4» и «Штора» по паспорту — ООО «НПО «МегаВатт»»</b>, К-12М — НПО «Киловатт».</li>
+      <li>Общий PR: <b>#12</b>, ветка lead/kilowatt-catalog (в main не мержил — жду твоего «ок»).</li>
+    </ul>
+  </div>
+
+  <div class="warn">
+    <h3>Важно перед публикацией</h3>
+    <p><b>Цены.</b> В каталоге стоят цены поставщика (для работы). Для публичной версии решаем: оставить или заменить на «по запросу».</p>
+    <p><b>Право.</b> Применение РЭБ гражданскими объектами ограничено (КоАП 13.3/13.4, 126-ФЗ, ПП 1800/1331). В каталоге нет обещаний «включи и защищай» — только подбор, обнаружение, документы и дисклеймер.</p>
+    <p><b>Юрлицо.</b> В договоре указывать изготовителя по паспорту изделия, а не «Киловатт» для всех позиций.</p>
+  </div>
+
+  <div class="block">
+    <h3><span class="num">03</span>Что решить</h3>
+    <ul>
+      <li><b>Вариант:</b> 1 «Тёмное поле» / 2 «Зона защиты» / 1 обложкой + 2 интерьером.</li>
+      <li><b>Arena:</b> запустить сессию по промпту из arena/PROMPT.md — 10 арт-изображений, PR от Arena; после этого встрою в выбранный вариант.</li>
+      <li><b>Цены:</b> публичная версия — с ценами или «по запросу».</li>
+      <li><b>PR #12:</b> мержим или дорабатываем.</li>
+    </ul>
+  </div>
+
+  <div class="links">
+    <a class="btn" href="СДАЧА.md">СДАЧА.md</a>
+    <a class="btn" href="README.md">README</a>
+    <a class="btn" href="docs/КАНОН_цифры_и_факты.md">Канон цифр/ТТХ</a>
+    <a class="btn" href="docs/market_brief.md">Рынок и юрблок</a>
+    <a class="btn" href="data/audit.md">Аудит данных</a>
+    <a class="btn btn--dark" href="arena/PROMPT.md">Arena: промпт</a>
+    <a class="btn btn--dark" href="redesign/build/REPORT.md">Редизайн: отчёт</a>
+    <a class="btn btn--dark" href="redesign/qa/final/report.md">QA-отчёт</a>
+  </div>
+
+  <div class="foot">
+    <span>© 2026 «В ОКОПЕ» · каталог НПО «Киловатт»</span>
+    <span>Цены поставщика · не публичная оферта · в репозитории PDF не коммитятся (работают в локальной сдаче)</span>
+  </div>
+</div>
+</body>
+</html>
+

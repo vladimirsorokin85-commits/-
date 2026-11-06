@@ -1,0 +1,88 @@
+/* ============================================================
+   ВАРИАНТ 2 — «ЗОНА ЗАЩИТЫ»
+   Тёплая бумага, графит, один оксидный акцент.
+   Обложка — инженерная схема зоны противодействия (SVG),
+   внутренние страницы — тихий документный язык.
+   ============================================================ */
+
+body.theme-quiet {
+  --paper: #f4f1ea;
+  --paper-hi: #faf7f0;
+  --paper-lo: #e9e2d1;
+  --ink: #1d1e1a;
+  --graphite: #2a2b26;
+  --olive: #5b5f52;
+  --olive-soft: #74786a;
+  --accent: #c8451f;
+  --oxide: #b0352a;
+  --line: rgba(29, 30, 26, 0.15);
+  --line-hard: rgba(29, 30, 26, 0.4);
+  --paper-line: rgba(29, 30, 26, 0.12);
+}
+
+body.theme-quiet .brand__mark { background: var(--ink); }
+body.theme-quiet .hero__bg {
+  background-image:
+    repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 96px);
+  opacity: 0.5;
+}
+
+/* --- hero: схема зоны вместо крупного фото --- */
+body.theme-quiet .hero__in { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); align-items: center; }
+body.theme-quiet .hero__plate { min-height: 0; }
+body.theme-quiet .hero__plate::before, body.theme-quiet .hero__plate::after { display: none; }
+body.theme-quiet .hero__photo { display: none; }
+body.theme-quiet .hero__zone { display: block; }
+body.theme-quiet .hero__cross { display: none; }
+body.theme-quiet .hero__mark-line { background: var(--accent); }
+
+/* --- флагманы на бумаге --- */
+body.theme-quiet .section--dark { background: var(--paper-lo); color: var(--ink); }
+body.theme-quiet .section--dark .sec__num,
+body.theme-quiet .section--dark .small-caps { color: var(--olive); }
+body.theme-quiet .section--dark .sec__aside { color: var(--olive); }
+body.theme-quiet .section--dark .rule { background: var(--line); }
+body.theme-quiet .flags { background: var(--line); }
+body.theme-quiet .flag { background: var(--paper-hi); color: var(--ink); }
+body.theme-quiet .flag:hover { background: #ffffff; }
+body.theme-quiet .flag__media { border-bottom-color: var(--line); }
+body.theme-quiet .flag__media img { filter: drop-shadow(0 16px 20px rgba(29, 30, 26, 0.16)); }
+body.theme-quiet .flag__kicker { color: var(--oxide); }
+body.theme-quiet .flag__short { color: var(--graphite); }
+body.theme-quiet .flag__specs li { border-top-color: var(--line); }
+body.theme-quiet .flag__specs span { color: var(--olive); }
+body.theme-quiet .flag__specs b { color: var(--ink); }
+body.theme-quiet .flag .price { color: var(--ink); }
+body.theme-quiet .flag .price__cur { color: var(--olive); }
+body.theme-quiet .flag .btn--ghost { border-color: var(--line-hard); color: var(--ink); }
+body.theme-quiet .flag .btn--ghost:hover { background: var(--ink); color: var(--paper-hi); border-color: var(--ink); }
+body.theme-quiet .flag-mark { color: var(--oxide); }
+
+/* --- поставка на бумаге --- */
+body.theme-quiet .steps { background: var(--line); border-color: var(--line); }
+body.theme-quiet .step { background: var(--paper-hi); color: var(--ink); }
+body.theme-quiet .step b { color: var(--oxide); }
+body.theme-quiet .step h3 { color: var(--ink); }
+body.theme-quiet .step p { color: var(--olive); }
+
+/* --- акценты --- */
+body.theme-quiet .hero h1 .mark::after { background: var(--accent); }
+body.theme-quiet .hero__kicker::before { background: var(--accent); }
+body.theme-quiet .hero__kicker .mono { color: var(--oxide); }
+body.theme-quiet .hero__stat:nth-child(2n) b { color: var(--oxide); }
+body.theme-quiet .btn--solid { background: var(--ink); }
+body.theme-quiet .btn--solid:hover { background: var(--accent); border-color: var(--accent); }
+body.theme-quiet .badge--flag { background: var(--accent); color: #fff; }
+body.theme-quiet .app:hover { background: linear-gradient(90deg, transparent, rgba(200, 69, 31, 0.09) 45%, rgba(200, 69, 31, 0.09) 55%, transparent); }
+body.theme-quiet .app__num { color: var(--oxide); }
+body.theme-quiet .legal h3 { color: var(--oxide); }
+body.theme-quiet .doc--warn { background: var(--ink); }
+body.theme-quiet .doc--warn .stamp { border-color: var(--accent); color: var(--accent); }
+body.theme-quiet .order__side { background: var(--ink); }
+body.theme-quiet .cart__head b { background: var(--accent); }
+body.theme-quiet .scrollbar { background: var(--oxide); }
+
+@media (max-width: 1180px) {
+  body.theme-quiet .hero__in { grid-template-columns: 1fr; }
+}
