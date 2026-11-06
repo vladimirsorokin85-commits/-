@@ -6,7 +6,7 @@
 
   var DATA = window.CATALOG || { products: [], content: {}, generated: "" };
   var CONTACTS = window.SITE_CONTACTS || { tg: "", phone: "", email: "", note: "" };
-  var state = { cat: "all", q: "", sort: "default", cart: [], active: null, gallery: 0 };
+  var state = { cat: "all", q: "", sort: "default", cart: [], active: null, gallery: 0, archiveOnly: false };
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
@@ -45,6 +45,46 @@
     onScroll();
   }
 
+  /* ---------- СРАВНЕНИЕ ФЛАГМАНОВ ---------- */
+  function specFind(p, pats) {
+    var specs = p.specs || [];
+    for (var i = 0; i < specs.length; i++) {
+      var l = (specs[i].label || "").toLowerCase();
+      for (var j = 0; j < pats.length; j++) {
+        if (l.indexOf(pats[j]) >= 0) return specs[i].value;
+      }
+    }
+    return null;
+  }
+  function renderCompare() {
+    var box = $("[data-compare]");
+    if (!box) return;
+    var flags = DATA.products.filter(function (p) { return p.flagship; }).slice(0, 3);
+    if (!flags.length) return;
+    var rows = [
+      ["Диапазон частот", ["диапазон"]],
+      ["Мощность передатчиков", ["мощность передатчиков", "выходная мощность", "суммарная"]],
+      ["Дальность", ["дальность"]],
+      ["Питание", ["питание"]],
+      ["Вес", ["вес"]],
+      ["Гарантия", ["гарантия"]]
+    ];
+    var head = '<thead><tr><th class="cmp__label">Характеристика</th>' + flags.map(function (p) {
+      return '<th><span class="cmp__cat">' + esc(p.category) + "</span><b>" + esc(p.name) + "</b>" +
+        '<button class="btn btn--mini" data-open="' + esc(p.id) + '">Подробнее</button></th>';
+    }).join("") + "</tr></thead>";
+    var body = "<tbody>" + rows.map(function (r) {
+      return '<tr><th class="cmp__label">' + esc(r[0]) + "</th>" + flags.map(function (p) {
+        var v = specFind(p, r[1]);
+        return "<td>" + esc(v || "—") + "</td>";
+      }).join("") + "</tr>";
+    }).join("") +
+      '<tr class="cmp__price"><th class="cmp__label">Цена поставщика</th>' + flags.map(function (p) {
+        return "<td>" + priceHtml(p) + "</td>";
+      }).join("") + "</tr></tbody>";
+    box.innerHTML = '<div class="cmp__scroll"><table class="cmp">' + head + body + "</table></div>";
+  }
+
   /* ---------- ФЛАГМАНЫ ---------- */
   function renderFlagships() {
     var box = $("[data-flagships]");
@@ -81,16 +121,19 @@
     var cats = categories();
     var counts = {};
     DATA.products.forEach(function (p) { counts[p.category] = (counts[p.category] || 0) + 1; });
+    var archiveN = DATA.products.filter(function (p) { return p.on_site === false; }).length;
     box.innerHTML = '<button class="chip chip--btn is-active" data-cat="all">Все <b>' + DATA.products.length + "</b></button>" +
       cats.map(function (c) {
         return '<button class="chip chip--btn" data-cat="' + esc(c) + '">' + esc(c) + " <b>" + (counts[c] || 0) + "</b></button>";
-      }).join("");
+      }).join("") +
+      (archiveN ? '<button class="chip chip--btn chip--archive" data-archive="1">Вне сайта <b>' + archiveN + "</b></button>" : "");
   }
 
   /* ---------- СЕТКА КАТАЛОГА ---------- */
   function filtered() {
     var q = state.q.toLowerCase().trim();
     var list = DATA.products.filter(function (p) {
+      if (state.archiveOnly && p.on_site !== false) return false;
       if (state.cat !== "all" && p.category !== state.cat) return false;
       if (!q) return true;
       var blob = [p.name, p.category, p.short, p.description].concat((p.specs || []).map(function (s) { return s.label + " " + s.value; })).join(" ").toLowerCase();
@@ -286,6 +329,12 @@
         $$("[data-cat]").forEach(function (b) { b.classList.toggle("is-active", b === cat); });
         renderGrid(); return;
       }
+      var ar = e.target.closest("[data-archive]");
+      if (ar) {
+        state.archiveOnly = !state.archiveOnly;
+        $$("[data-archive]").forEach(function (b) { b.classList.toggle("is-active", state.archiveOnly); });
+        renderGrid(); return;
+      }
       if (e.target.closest("[data-cart-toggle]")) { openCart(); return; }
       if (e.target.closest("[data-cart-close]") || e.target.closest("[data-overlay]")) { closeCart(); return; }
       if (e.target.closest("[data-copy-request]")) { copyText(cartText(""), e.target.closest("[data-copy-request]")); return; }
@@ -321,6 +370,7 @@
   function init() {
     initScroll();
     renderFlagships();
+    renderCompare();
     renderChips();
     renderGrid();
     renderCart();

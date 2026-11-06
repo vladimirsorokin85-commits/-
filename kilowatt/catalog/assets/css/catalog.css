@@ -361,6 +361,25 @@ body.theme-quiet .badge--archive { background: var(--paper-lo); color: var(--oxi
 .about__fact b { font-family: var(--f-data); font-weight: 600; font-size: clamp(20px, 2vw, 28px); letter-spacing: -0.02em; }
 .about__fact span { font-family: var(--f-head); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--olive-soft); line-height: 1.2; margin-top: auto; }
 
+/* ---------- сравнение флагманов ---------- */
+.cmp__scroll { overflow-x: auto; border: 1px solid var(--line); background: var(--paper-hi); }
+.cmp { width: 100%; border-collapse: collapse; min-width: 840px; }
+.cmp th, .cmp td { text-align: left; padding: 14px 16px; border-top: 1px solid var(--line); vertical-align: top; }
+.cmp thead th { border-top: 0; border-bottom: 1px solid var(--line-hard); vertical-align: bottom; }
+.cmp thead th b { display: block; font-family: var(--f-head); text-transform: uppercase; font-weight: 500; font-size: 19px; line-height: 1.05; margin: 6px 0 12px; }
+.cmp__cat { font-family: var(--f-data); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--olive-soft); }
+.cmp__label { font-family: var(--f-head); text-transform: uppercase; font-size: 12px; letter-spacing: 0.06em; color: var(--olive); width: 200px; font-weight: 500; background: var(--paper); }
+.cmp td { font-family: var(--f-data); font-size: 13px; }
+.cmp__price td { padding-top: 18px; }
+.cmp__price .price__num { font-size: 18px; }
+body.theme-quiet .cmp__label { background: var(--paper-lo); }
+body.theme-field .cmp__label { background: var(--paper-lo); }
+
+/* ---------- QR-контакт ---------- */
+.order__qr { display: flex; align-items: center; gap: 14px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--paper-line); }
+.order__qr img { width: 92px; height: 92px; background: #fff; padding: 6px; flex: none; }
+.order__qr span { font-family: var(--f-head); text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em; color: var(--paper-lo); line-height: 1.5; }
+
 /* ---------- применение ---------- */
 .apps { border-top: 1px solid var(--line-hard); }
 .app { display: grid; grid-template-columns: 70px 1.1fr 1.6fr 170px; gap: 22px; padding: 22px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
