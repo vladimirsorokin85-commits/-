@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Рекламные баннеры «Киловатт» — В ОКОПЕ — ноябрь 2026</title>
+<style>
+@font-face { font-family:'SofiaCond'; src:url('file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/kilowatt/design/fonts/SofiaSansExtraCondensed-VF.ttf') format('truetype'); font-weight:100 900; }
+@font-face { font-family:'Oswald'; src:url('file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/kilowatt/design/fonts/Oswald-VF.ttf') format('truetype'); font-weight:200 700; }
+@font-face { font-family:'Tektur'; src:url('file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/kilowatt/design/fonts/Tektur-VF.ttf') format('truetype'); font-weight:400 900; }
+:root { --paper:#F4F1EA; --ink:#1D1E1A; --accent:#C8451F; --muted:#5A5A4F; }
+* { box-sizing: border-box; }
+@page { size: A4 portrait; margin: 0; }
+html, body { margin:0; padding:0; }
+body { color:var(--ink); font-family:"Segoe UI", Arial, sans-serif;
+       -webkit-print-color-adjust:exact; print-color-adjust:exact; background:#fff; }
+.page { width:210mm; height:296.8mm; position:relative; overflow:hidden;
+        page-break-after:always; break-after:page; background:var(--paper); }
+.page:last-of-type { page-break-after:auto; break-after:auto; }
+.banner { display:flex; align-items:center; justify-content:center; }
+.banner img { display:block; }
+.cover { padding:14mm 16mm 12mm; display:flex; flex-direction:column; }
+.cover .top { display:flex; justify-content:space-between; align-items:flex-start; gap:10mm; }
+.cover .wordmark img { display:block; width:44mm; height:auto; }
+.cover .wordmark-text { font-family:'Oswald','Segoe UI',sans-serif; font-weight:600; font-size:7mm; letter-spacing:.16em; }
+.cover .issuer { font-family:'Oswald','Segoe UI',sans-serif; font-size:3.0mm; line-height:1.55; text-align:right;
+                 letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.cover .issuer b { font-weight:500; color:var(--ink); }
+.cover .kicker { margin-top:12mm; font-family:'Oswald','Segoe UI',sans-serif; font-size:3.4mm;
+                 letter-spacing:.24em; text-transform:uppercase; color:var(--accent); }
+.cover h1 { margin:3mm 0 0; font-family:'SofiaCond','Segoe UI',sans-serif; font-weight:800;
+            font-size:23mm; line-height:0.94; text-transform:uppercase; }
+.cover .sub { margin-top:6mm; font-family:'Oswald','Segoe UI',sans-serif; font-weight:500;
+              font-size:5.0mm; line-height:1.35; color:#2A2B25; max-width:160mm; }
+.cover .rule { margin-top:8mm; height:.5mm; background:var(--ink); opacity:.22; }
+.cover .art { margin-top:auto; padding-top:6mm; text-align:center; }
+.cover .art img { display:block; margin:0 auto; }
+.cover .meta { margin-top:6mm; display:flex; justify-content:space-between;
+               font-family:'Tektur','Segoe UI',sans-serif; font-size:2.9mm; letter-spacing:.09em;
+               text-transform:uppercase; color:#6A6A5E; }
+.final { padding:22mm 18mm 16mm; display:flex; flex-direction:column; }
+.final .kicker { font-family:'Oswald','Segoe UI',sans-serif; font-size:3.4mm; letter-spacing:.24em;
+                 text-transform:uppercase; color:var(--accent); }
+.final h2 { margin:4mm 0 0; font-family:'SofiaCond','Segoe UI',sans-serif; font-weight:800;
+            font-size:15mm; line-height:0.96; text-transform:uppercase; }
+.final .lead { margin-top:5mm; font-family:'Oswald','Segoe UI',sans-serif; font-size:4.6mm;
+               line-height:1.4; color:#2A2B25; max-width:160mm; }
+.final .cta { margin-top:10mm; border-top:.7mm solid var(--accent); padding-top:6mm; }
+.final .cta .big { font-family:'Tektur','Segoe UI',sans-serif; font-size:6.2mm; line-height:1.55; }
+.final .cta .big b { color:var(--accent); font-weight:700; }
+.final .delivery { margin-top:5mm; font-family:'Oswald','Segoe UI',sans-serif; font-size:4.2mm; letter-spacing:.05em; }
+.final .index { margin-top:auto; display:grid; grid-template-columns:1fr 1fr; gap:1.8mm 12mm;
+                font-size:3.1mm; line-height:1.28; padding-top:8mm; }
+.final .index .row { display:flex; gap:3mm; }
+.final .index .num { font-family:'Tektur','Segoe UI',sans-serif; color:var(--accent);
+                     width:10mm; flex:none; }
+.final .issuer { margin-top:8mm; padding-top:4mm; border-top:.4mm solid #C9C4B4; display:flex;
+                 justify-content:space-between; gap:6mm; font-family:'Oswald','Segoe UI',sans-serif;
+                 font-size:3.0mm; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+</style>
+</head>
+<body>
+<section class="page cover">
+  <div class="top">
+    <div class="wordmark"><img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/kilowatt/catalog/assets/img/brand/logo_d_full.png" alt="В ОКОПЕ"></div>
+    <div class="issuer"><b>НПО «Киловатт»</b> · производитель<br>магазин «В ОКОПЕ» · подбор и поставка</div>
+  </div>
+  <div class="kicker">Реклама для соцсетей · 18 моделей × 2 формата</div>
+  <h1>РЕКЛАМНЫЕ<br>БАННЕРЫ</h1>
+  <div class="sub">Одна модель — один баннер.<br>Пост 1080×1350 и квадрат 1080×1080, PNG 1× и 2×.</div>
+  <div class="rule"></div>
+  <div class="art"><img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B01_kapyushon_k_8m_1080x1350@2x.png" style="width:94.4mm;height:118mm" alt="B01"></div>
+  <div class="meta"><span>Ноябрь 2026</span><span>18 моделей · 36 баннеров</span></div>
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B01_kapyushon_k_8m_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B01 «Капюшон» К-8М">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B02_kapyushon_k_12m_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B02 «Капюшон» К-12М">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B03_kapyushon_k_15m_i_vip_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B03 «Капюшон» К-15М (и ВИП)">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B04_kapyushon_k_12m_bagazhnyj_boks_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B04 «Капюшон» К-12 багажный бокс">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B05_kapyushon_fpv_8m_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B05 ФПВ-8М">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B06_kapyushon_fpv_12_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B06 ФПВ-12">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B07_kapyushon_fpv_7_moto_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B07 ФПВ-5 мото">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B08_shtora_k_12_700_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B08 «Штора» К-12/700">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B09_shtora_m_k_8_600_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B09 «Штора-М» К-8/600">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B10_rebus_4_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B10 «Ребус-4»">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B11_pole_31_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B11 «Поле-31»">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B12_signal_m2_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B12 «Сигнал-М2»">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B13_kapyushon_tp_4_28a_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B13 Рюкзак ТП 4-28А/Б">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B14_kapyushon_tp_4_50a_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B14 Рюкзак ТП 4-50А/Б">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B15_kapyushon_tp_7_100_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B15 Рюкзак ТП 7-100">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B16_kapyushon_tp_8_100_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B16 Рюкзак ТП 8-100">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B17_ip_24_100_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B17 ИП-24/100">
+</section>
+<section class="page banner">
+  <img src="file:///D:/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B%20%D0%94%D0%B8%D0%BF%D1%81%D0%B8%D0%BA/%D0%92%20%D0%9E%D0%9A%D0%9E%D0%9F%D0%95/banners/05_%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9E%D0%95/png/B18_reb_tester_t_9_1080x1350@2x.png" style="width:194mm;height:242.5mm" alt="B18 РЭБ-тестер Т-9">
+</section>
+</body>
+</html>

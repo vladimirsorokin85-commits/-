@@ -1,0 +1,249 @@
+/* ==========================================================================
+   «В ОКОПЕ» × НПО «КИЛОВАТТ» — РЕКЛАМНЫЕ ИСТОРИИ 1080×1920
+   ФАЙЛ: story.css — вертикальная компоновка на базе banner.css/tokens.css.
+   Автор: designer-b (второй эшелон). Подключать ПОСЛЕ:
+       <link rel="stylesheet" href="../_design/tokens.css">
+       <link rel="stylesheet" href="../_design/banner.css">
+       <link rel="stylesheet" href="story.css">
+   Правило: те же токены, шрифты и грамматика, что у основных баннеров;
+   сторис — не растяжка, а перекомпоновка: название сверху, фото по центру,
+   цифры-козыри внизу, футер CTA. Один акцент, без градиентов/теней.
+   ========================================================================== */
+
+/* 1. Холст 9:16 */
+.banner--story {
+  width: 1080px;
+  height: 1920px;
+  padding: 72px 80px 56px;
+}
+
+/* засечки по углам — как на основных баннерах, но по полям 80 px */
+.banner--story .b-tick--tl { left: 80px; }
+.banner--story .b-tick--tr { right: 80px; }
+.banner--story .b-tick--bl { left: 80px; }
+.banner--story .b-tick--br { right: 80px; }
+
+/* 2. Шапка */
+.banner--story .b-brand img { width: 190px; }
+.banner--story .b-issuer { font-size: 13px; letter-spacing: 0.16em; }
+
+/* 3. Тело: интро → фото → цифры, заполняет высоту */
+.banner--story .b-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 42px;
+}
+
+.banner--story .b-intro { flex: 0 0 auto; }
+
+.banner--story .b-eyebrow {
+  font-size: 17px;
+  letter-spacing: 0.2em;
+}
+
+.banner--story .b-headline {
+  margin-top: 26px;
+  font-size: 138px;
+  line-height: 0.86;
+}
+
+/* ступени под длину хука */
+.banner--story .b-headline--l { font-size: 116px; }
+.banner--story .b-headline--m { font-size: 102px; }
+.banner--story .b-headline--s { font-size: 90px; }
+
+.banner--story .b-model {
+  margin-top: 8px;
+  font-size: 176px;
+  line-height: 0.84;
+}
+
+.banner--story .b-model--l { font-size: 150px; }
+.banner--story .b-model--m { font-size: 128px; }
+
+.banner--story .b-line {
+  margin-top: 24px;
+  max-width: 900px;
+  font-size: 25px;
+  line-height: 1.36;
+}
+
+/* 4. Фото: крупная бумажная плашка, заполняет середину */
+.banner--story .b-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner--story .b-plate {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 20px;
+  position: relative;
+}
+
+/* процентные max-height внутри grid не ограничивают фото — держим contain
+   абсолютной рамкой с отступом, чтобы товар не «прилипал» к краю плашки */
+.banner--story .b-plate img {
+  position: absolute;
+  inset: 26px;
+  width: calc(100% - 52px);
+  height: calc(100% - 52px);
+  object-fit: contain;
+  object-position: center;
+}
+
+.banner--story .b-plate-cap {
+  margin-top: 12px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+}
+
+.banner--story .b-side { display: none; }
+
+/* 5. Цифры-козыри: крупно, 3 — в строку, 4 — сеткой 2×2 */
+.banner--story .b-stats {
+  margin-top: 32px;
+}
+
+.banner--story .b-stat {
+  padding: 20px 16px 18px;
+}
+
+.banner--story .b-stat__v {
+  font-size: 72px;
+}
+
+/* 3 цифры в строку: кегль чуть меньше, чтобы значения с единицами не клипались */
+.banner--story .b-stats--3 .b-stat__v {
+  font-size: 62px;
+}
+
+.banner--story .b-stat__l {
+  margin-top: 10px;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+}
+
+/* 4 цифры: сетка 2×2, чтобы значения не сжимались */
+.banner--story .b-stats--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.banner--story .b-stats--4 .b-stat {
+  padding: 22px 18px 20px;
+}
+
+.banner--story .b-stats--4 .b-stat__v {
+  font-size: 68px;
+}
+
+.banner--story .b-stats--4 .b-stat:nth-child(3) {
+  border-left: 0;
+}
+
+.banner--story .b-stats--4 .b-stat:nth-child(n + 3) {
+  border-top: 1px solid var(--line);
+}
+
+/* 3 цифры, но одна длинная: две сверху, третья во всю ширину */
+.banner--story .b-stats--3w {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.banner--story .b-stats--3w .b-stat {
+  padding: 22px 18px 20px;
+}
+
+.banner--story .b-stats--3w .b-stat__v {
+  font-size: 68px;
+}
+
+.banner--story .b-stats--3w .b-stat:nth-child(3) {
+  grid-column: 1 / -1;
+  border-left: 0;
+  border-top: 1px solid var(--line);
+}
+
+.banner--story .b-stats--3w .b-stat:nth-child(3) .b-stat__v {
+  font-size: 54px;
+}
+
+/* 7. Совместимость с banner.css v2:
+   designer-a добавил глобальные .b-plate/.b-stat{overflow:hidden} (для основных
+   форматов). В сторис это срезает уголки-засечки плашки и глифы крупных цифр
+   (render_report: clipped у .b-plate и .b-stat__v). Возвращаем видимость —
+   контент сторис и так вписан с inset'ом. */
+.banner--story .b-plate { overflow: visible; }
+.banner--story .b-stat { overflow: visible; }
+.banner--story .b-stat__v { overflow: visible; }
+
+/* 8. Футер и юрстрока */
+.banner--story .b-foot {
+  padding-top: 30px;
+}
+
+.banner--story .b-cta-main {
+  font-size: 42px;
+}
+
+.banner--story .b-cta-sub {
+  margin-top: 9px;
+  font-size: 19px;
+}
+
+.banner--story .b-calc {
+  font-size: 12px;
+}
+
+.banner--story .b-legal {
+  margin-top: 22px;
+  padding-top: 14px;
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+/* 9. V3: блок «КОРОТКО О МОДЕЛИ» + чипы «ЗАДАЧИ» (banner.css §22).
+   В сторис — компактно, перед футером; название модели и фото остаются главными. */
+.banner--story .b-tech {
+  margin-top: 20px;
+  padding-top: 11px;
+}
+
+.banner--story .b-tech__head {
+  margin-bottom: 9px;
+  font-size: 12px;
+}
+
+.banner--story .b-tech__row {
+  padding: 7px 0;
+}
+
+.banner--story .b-tech__k {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.banner--story .b-tech__v {
+  font-size: 16px;
+}
+
+.banner--story .b-tasks {
+  margin: 14px 0 0;
+  gap: 9px;
+}
+
+.banner--story .b-task {
+  padding: 5px 10px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.banner--story .b-tech__grid--single {
+  grid-template-columns: minmax(0, 1fr);
+}

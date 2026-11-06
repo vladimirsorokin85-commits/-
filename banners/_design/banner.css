@@ -1,0 +1,1801 @@
+/* ==========================================================================
+   «В ОКОПЕ» × НПО «КИЛОВАТТ» — РЕКЛАМНЫЕ БАННЕРЫ 2026
+   ФАЙЛ: banner.css — каркас рекламного плаката на одну модель.
+   Подключается после tokens.css (темы/шрифты/правила — оттуда).
+
+   СТИЛЬ: рекламный постер, не инфографика. Огромное название модели,
+   3–4 цифры-козыря, одно крупное фото на бумажной плашке, один хук,
+   крупный CTA, отдельная нижняя зона юрстроки.
+   Запрещено: градиенты, тени, неон, стекло, стоковые люди, ИИ-фото.
+
+   ФОРМАТЫ: .banner--poster 1080×1350 (4:5) · .banner--square 1080×1080 (1:1).
+   КОМПОНОВКИ: .layout-hero (фото крупно по центру) ·
+               .layout-split (фото справа, текст слева) ·
+               .layout-numbers (цифры в центре, фото компактно).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. ХОЛСТ
+   -------------------------------------------------------------------------- */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg, #1c2317);
+  color: var(--fg, #ede8d7);
+  font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+}
+
+.banner--poster {
+  width: 1080px;
+  height: 1350px;
+  padding: 56px 60px 40px;
+}
+
+.banner--square {
+  width: 1080px;
+  height: 1080px;
+  padding: 48px 52px 36px;
+}
+
+/* печатное зерно — единственная текстура, как в каталоге */
+.banner.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* приборные засечки по углам — «печатный лист» */
+.b-tick {
+  position: absolute;
+  z-index: 55;
+  width: 1px;
+  height: 12px;
+  background: var(--fg-faint);
+}
+
+.b-tick--tl { left: 60px; top: 0; }
+.b-tick--tr { right: 60px; top: 0; }
+.b-tick--bl { left: 60px; bottom: 0; }
+.b-tick--br { right: 60px; bottom: 0; }
+
+.banner--square .b-tick--tl { left: 52px; }
+.banner--square .b-tick--tr { right: 52px; }
+.banner--square .b-tick--bl { left: 52px; }
+.banner--square .b-tick--br { right: 52px; }
+
+/* --------------------------------------------------------------------------
+   2. ШАПКА
+   -------------------------------------------------------------------------- */
+
+.b-top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.b-brand img {
+  display: block;
+  width: 150px;
+  height: auto;
+}
+
+.theme-quiet .b-brand img {
+  filter: invert(1); /* светлая вербалка → графит на бумаге */
+}
+
+.b-issuer {
+  text-align: right;
+  font-family: var(--font-head);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.b-issuer b {
+  display: block;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.banner--square .b-brand img {
+  width: 138px;
+}
+
+/* --------------------------------------------------------------------------
+   3. ТЕЛО: интро (айбрау · хук · модель · строка) + фото + цифры.
+   Компоновки переставляют блоки, не меняя разметку.
+   -------------------------------------------------------------------------- */
+
+.b-body {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* --- интро --------------------------------------------------------------- */
+
+.b-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.b-eyebrow::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 30px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.b-headline {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 126px;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+.b-model {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 150px;
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-wrap: balance;
+}
+
+/* размерные ступени под длину текста (ставит генератор) */
+.b-headline--xl { font-size: 132px; }
+.b-headline--l { font-size: 116px; }
+.b-headline--m { font-size: 100px; }
+.b-headline--s { font-size: 86px; }
+
+.b-model--xl { font-size: 162px; }
+.b-model--l { font-size: 140px; }
+.b-model--m { font-size: 120px; }
+.b-model--s { font-size: 100px; }
+
+.b-line {
+  margin: 16px 0 0;
+  max-width: 860px;
+  font-size: 22px;
+  line-height: 1.34;
+  color: var(--fg-dim);
+}
+
+.b-line b {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* --- фото ---------------------------------------------------------------- */
+
+.b-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.b-plate {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+  padding: 14px;
+  background: var(--surface); /* бумажная плашка */
+  border: var(--p-rule, 1px) solid var(--line);
+  display: grid;
+  place-items: center;
+}
+
+.theme-field .b-plate {
+  border-color: transparent;
+}
+
+/* уголки-засечки «паспортный чертёж» */
+.b-plate::before,
+.b-plate::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--line-strong);
+}
+
+.b-plate::before {
+  left: -8px;
+  top: -8px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.b-plate::after {
+  right: -8px;
+  bottom: -8px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.b-plate img {
+  display: block;
+  max-width: 94%;
+  max-height: 90%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.b-plate-cap {
+  flex: 0 0 auto;
+  margin-top: 8px;
+  font-family: var(--font-tech);
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* вертикальная боковая подпись (только hero, десктопная компоновка) */
+.b-side {
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font-family: var(--font-head);
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  white-space: nowrap;
+}
+
+/* --- цифры-козыри -------------------------------------------------------- */
+
+.b-stats {
+  display: grid;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.b-stats--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.b-stats--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.b-stat {
+  min-width: 0;
+  padding: 16px 10px 14px;
+}
+
+.b-stat + .b-stat {
+  border-left: 1px solid var(--line);
+}
+
+.b-stat__v {
+  display: block;
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.b-stats--4 .b-stat__v {
+  font-size: 42px;
+}
+
+.b-stat__v em {
+  margin-left: 3px;
+  font-style: normal;
+  font-size: 0.48em;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+
+.b-stat__l {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* --------------------------------------------------------------------------
+   4. ФУТЕР: крупный CTA + калькулятор-подпись. Юрстрока — отдельная зона ниже.
+   -------------------------------------------------------------------------- */
+
+.b-foot {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 18px;
+}
+
+.b-cta-main {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.b-cta-main .b-tg {
+  color: var(--accent);
+}
+
+.b-cta-sub {
+  margin-top: 7px;
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--fg-dim);
+}
+
+.b-calc {
+  flex: 0 0 auto;
+  text-align: right;
+  font-family: var(--font-tech);
+  font-size: 11px;
+  line-height: 1.55;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+}
+
+.b-calc b {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* --------------------------------------------------------------------------
+   5. ЮРСТРОКА — отдельная нижняя зона, с линией и воздухом (правка Lead).
+   -------------------------------------------------------------------------- */
+
+.b-legal {
+  flex: 0 0 auto;
+  margin: 14px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 10.5px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--fg-dim);
+}
+
+/* --------------------------------------------------------------------------
+   6. КОМПОНОВКА «ГЕРОЙ»: хук+название сверху, фото крупно по центру,
+   цифры одной строкой. Для транспорта и носимых (field).
+   -------------------------------------------------------------------------- */
+
+.banner--poster.layout-hero .b-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 26px;
+}
+
+.layout-hero .b-stage {
+  flex: 1 1 auto;
+  margin-top: 14px;
+}
+
+.layout-hero .b-stats {
+  margin-top: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   7. КОМПОНОВКА «СПЛИТ»: текст слева, фото справа, цифры под текстом.
+   Для стационарных и обнаружения (quiet).
+   -------------------------------------------------------------------------- */
+
+.layout-split .b-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "intro photo"
+    "stats photo";
+  column-gap: 30px;
+  row-gap: 18px;
+  margin-top: 26px;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.layout-split .b-intro { grid-area: intro; }
+.layout-split .b-stage { grid-area: photo; }
+.layout-split .b-stats { grid-area: stats; align-self: end; }
+
+.layout-split .b-headline { font-size: 100px; }
+.layout-split .b-model { font-size: 118px; }
+
+.layout-split .b-line {
+  font-size: 20px;
+  max-width: 100%;
+}
+
+.layout-split .b-stats--4 .b-stat__v,
+.layout-split .b-stat__v {
+  font-size: 40px;
+}
+
+.layout-split .b-stat {
+  padding: 12px 8px 10px;
+}
+
+.layout-split .b-stage .b-plate {
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   8. КОМПОНОВКА «ЦИФРЫ»: цифры-козыри в центре крупно, фото компактно.
+   Для рюкзаков (часы/вес/дальность) и питания.
+   -------------------------------------------------------------------------- */
+
+.layout-numbers .b-body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 22px;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.layout-numbers .b-headline {
+  font-size: 104px;
+}
+
+.layout-numbers .b-model {
+  font-size: 124px;
+}
+
+.layout-numbers .b-stage {
+  order: 3;
+  flex: 0 0 auto;
+  width: 62%;
+  align-self: center;
+  height: 268px;
+  margin-top: 18px;
+}
+
+.layout-numbers .b-plate {
+  height: 100%;
+}
+
+.layout-numbers .b-stats {
+  order: 2;
+  margin-top: 22px;
+  border-top: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.layout-numbers .b-stats .b-stat {
+  flex: 1 1 0;
+  border-left: 0;
+  border-top: 1px solid var(--line);
+  padding: 20px 12px 16px;
+}
+
+.layout-numbers .b-stats--3 .b-stat { min-width: 30%; }
+.layout-numbers .b-stats--4 .b-stat { min-width: 22%; }
+
+.layout-numbers .b-stats .b-stat__v {
+  font-size: 62px;
+}
+
+.layout-numbers .b-stats--4 .b-stat__v {
+  font-size: 54px;
+}
+
+.layout-numbers .b-line {
+  margin-top: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   9. КВАДРАТ 1080×1080 — перекомпоновка: меньше воздуха, фото сверху/сбоку,
+   текст компактнее. Цифры те же 3–4.
+   -------------------------------------------------------------------------- */
+
+.banner--square .b-eyebrow {
+  font-size: 13px;
+  margin-top: 18px;
+}
+
+.banner--square .b-headline {
+  margin-top: 6px;
+  font-size: 92px;
+}
+
+.banner--square .b-model {
+  font-size: 112px;
+}
+
+.banner--square .b-headline--xl { font-size: 96px; }
+.banner--square .b-headline--l { font-size: 86px; }
+.banner--square .b-headline--m { font-size: 76px; }
+.banner--square .b-headline--s { font-size: 66px; }
+
+.banner--square .b-model--xl { font-size: 122px; }
+.banner--square .b-model--l { font-size: 108px; }
+.banner--square .b-model--m { font-size: 94px; }
+.banner--square .b-model--s { font-size: 80px; }
+
+.banner--square .b-line {
+  margin-top: 10px;
+  font-size: 18px;
+  max-width: 640px;
+}
+
+.banner--square .b-body {
+  margin-top: 14px;
+}
+
+.banner--square .b-stat__v { font-size: 42px; }
+.banner--square .b-stats--4 .b-stat__v { font-size: 36px; }
+.banner--square .b-stat { padding: 12px 8px 10px; }
+.banner--square .b-stat__l { font-size: 10px; margin-top: 5px; }
+.banner--square .b-stats { margin-top: 12px; }
+
+.banner--square .b-cta-main { font-size: 28px; gap: 10px; }
+.banner--square .b-cta-sub { font-size: 13px; margin-top: 5px; }
+.banner--square .b-foot { padding-top: 12px; }
+.banner--square .b-legal {
+  margin-top: 10px;
+  padding-top: 8px;
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+/* квадрат-«герой»: фото сверху под названием, крупно, но компактнее */
+.banner--square.layout-hero .b-stage {
+  flex: 1 1 auto;
+  margin-top: 10px;
+}
+
+.banner--square.layout-hero .b-plate-cap { margin-top: 6px; }
+
+/* квадрат-«сплит»: текст слева + фото справа в одном боксе */
+.banner--square.layout-split .b-body {
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  column-gap: 24px;
+  row-gap: 12px;
+}
+
+.banner--square.layout-split .b-headline { font-size: 78px; }
+.banner--square.layout-split .b-model { font-size: 92px; }
+.banner--square.layout-split .b-line { font-size: 17px; }
+.banner--square.layout-split .b-stat__v { font-size: 36px; }
+.banner--square.layout-split .b-stats--4 .b-stat__v { font-size: 32px; }
+
+/* квадрат-«цифры»: 2×2 крупные цифры слева, компактное фото справа */
+.banner--square.layout-numbers .b-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "intro photo"
+    "stats photo";
+  column-gap: 24px;
+  row-gap: 12px;
+}
+
+.banner--square.layout-numbers .b-intro { grid-area: intro; }
+.banner--square.layout-numbers .b-stage {
+  grid-area: photo;
+  width: 100%;
+  height: auto;
+  align-self: stretch;
+  margin-top: 0;
+}
+.banner--square.layout-numbers .b-stats {
+  grid-area: stats;
+  align-self: end;
+  margin-top: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: grid;
+}
+.banner--square.layout-numbers .b-stats .b-stat {
+  border-top: 1px solid var(--line);
+  padding: 12px 10px 10px;
+}
+.banner--square.layout-numbers .b-stats .b-stat + .b-stat { border-left: 1px solid var(--line); }
+.banner--square.layout-numbers .b-stats .b-stat__v { font-size: 44px; }
+.banner--square.layout-numbers .b-stats--4 .b-stat__v { font-size: 40px; }
+.banner--square.layout-numbers .b-headline { font-size: 78px; }
+.banner--square.layout-numbers .b-model { font-size: 92px; }
+
+/* --------------------------------------------------------------------------
+   10. СЛУЖЕБНОЕ
+   -------------------------------------------------------------------------- */
+
+.b-side { display: none; }
+.layout-hero.banner--poster .b-side { display: block; }
+
+@media print {
+  html,
+  body {
+    background: none;
+  }
+
+  .banner {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* ==========================================================================
+   13. ФИКСЫ v2 (по замечаниям Lead):
+   — 4 цифры в квадрате-сплите: сетка 2×2, без наложений;
+   — плашка фото по аспекту товара (нет пустого верха/полей бумаги);
+   — «цифры»-компоновка: фото заполняет остаток высоты, а не висит в пустоте.
+   ========================================================================== */
+
+.b-plate {
+  overflow: visible; /* уголки-засечки выходят за плашку — не клипаем */
+}
+
+/* --- квадрат-сплит: 4 цифры в 2×2 ------------------------------------- */
+.banner--square.layout-split .b-stats--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat {
+  padding: 10px 8px 9px;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(3) {
+  border-left: 0;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(3),
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(4) {
+  border-top: 1px solid var(--line);
+}
+
+/* --- фото в квадрате-сплите: бумага по аспекту товара ------------------ */
+.banner--square.layout-split .b-stage {
+  align-self: start;
+  height: auto;
+}
+
+.banner--square.layout-split .b-plate {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--photo-ar, 1.4);
+  max-height: 560px;
+}
+
+/* --- «цифры», постер: фото заполняет остаток высоты -------------------- */
+.layout-numbers.banner--poster .b-stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout-numbers.banner--poster .b-plate {
+  flex: 0 1 auto;
+  height: 100%;
+  width: auto;
+  max-width: 72%;
+  aspect-ratio: var(--photo-ar, 1.4);
+}
+
+.layout-numbers.banner--poster .b-plate-cap {
+  display: none;
+}
+
+/* --- «цифры», квадрат: фото в правой колонке по аспекту ---------------- */
+.banner--square.layout-numbers .b-stage {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner--square.layout-numbers .b-plate {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: var(--photo-ar, 1.4);
+}
+/* --- квадрат-сплит v3: фото справа в верхней зоне, цифры во всю ширину --- */
+.banner--square.layout-split .b-body {
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "intro photo"
+    "stats stats";
+  column-gap: 24px;
+  row-gap: 14px;
+}
+
+.banner--square.layout-split .b-stats,
+.banner--square.layout-split .b-stats--3,
+.banner--square.layout-split .b-stats--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.banner--square.layout-split .b-stats--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.banner--square.layout-split .b-stats .b-stat,
+.banner--square.layout-split .b-stats--4 .b-stat {
+  padding: 10px 8px 9px;
+  border-top: 1px solid var(--line);
+}
+
+.banner--square.layout-split .b-stats .b-stat:first-child {
+  border-left: 0;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(3) {
+  border-left: 1px solid var(--line);
+}
+
+.banner--square.layout-split .b-stats .b-stat__v {
+  font-size: 34px;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat__v {
+  font-size: 32px;
+}
+
+.banner--square.layout-split .b-stage {
+  align-self: stretch;
+  height: auto;
+}
+
+.banner--square.layout-split .b-plate {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  max-height: none;
+}
+/* --- квадрат-сплит v4: бумага по аспекту товара (без пустого верха) ----- */
+.banner--square.layout-split .b-stage {
+  align-self: start;
+  height: auto;
+}
+
+.banner--square.layout-split .b-plate {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--photo-ar, 1.4);
+  max-height: 100%;
+}
+
+.banner--square.layout-split .b-plate img {
+  max-width: 100%;
+  max-height: 100%;
+}
+/* --- квадрат-сплит v5: цифры 2×2 под текстом, фото справа на всю высоту --- */
+.banner--square.layout-split .b-body {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "intro photo"
+    "stats photo";
+  align-content: center;
+  column-gap: 24px;
+  row-gap: 16px;
+}
+
+.banner--square.layout-split .b-stats,
+.banner--square.layout-split .b-stats--3,
+.banner--square.layout-split .b-stats--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-self: start;
+}
+
+.banner--square.layout-split .b-stats .b-stat,
+.banner--square.layout-split .b-stats--4 .b-stat {
+  border-top: 1px solid var(--line);
+}
+
+.banner--square.layout-split .b-stats .b-stat:nth-child(odd) {
+  border-left: 0;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(3) {
+  border-left: 0;
+}
+
+.banner--square.layout-split .b-stage {
+  align-self: center;
+  height: auto;
+}
+
+.banner--square.layout-split .b-plate {
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--photo-ar, 1.4);
+  max-height: 100%;
+  flex: 0 0 auto;
+}
+/* ==========================================================================
+   14. ФИКС QA: переполнение стат-строки в quiet-теме.
+   Причина: 4 длинные цифры в одну строку (300–10000 / 1000–5000 / 1162–1300)
+   и длинные единицы («генераторов», «моноблока») не влезают в 4 колонки.
+   Решение: в сплит-постере 4 цифры → сетка 2×2; длинные значения получают
+   класс --long и кегль меньше; минимальная ширина ячейки и клип — страховка.
+   ========================================================================== */
+
+.b-stat {
+  min-width: 0;
+}
+
+.b-stat__v {
+  min-width: 0;
+}
+
+/* 4 цифры в сплит-постере — 2×2, а не в одну строку */
+.banner--poster.layout-split .b-stats--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.banner--poster.layout-split .b-stats--4 .b-stat {
+  padding: 12px 8px 10px;
+}
+
+.banner--poster.layout-split .b-stats--4 .b-stat:nth-child(3) {
+  border-left: 0;
+}
+
+.banner--poster.layout-split .b-stats--4 .b-stat:nth-child(3),
+.banner--poster.layout-split .b-stats--4 .b-stat:nth-child(4) {
+  border-top: 1px solid var(--line);
+}
+
+/* длинные значения и единицы — мельче */
+.b-stat__v--long {
+  font-size: 0.76em;
+  letter-spacing: -0.02em;
+}
+
+.b-stat__v--long em {
+  font-size: 0.42em;
+}
+
+.banner--poster.layout-split .b-stats--4 .b-stat__v {
+  font-size: 38px;
+}
+
+.banner--square.layout-split .b-stats .b-stat__v {
+  font-size: 32px;
+}
+
+.banner--square.layout-split .b-stats .b-stat__v--long {
+  font-size: 24px;
+}
+/* ==========================================================================
+   15. ФИКС QA v2 — финальные правила стат-строк.
+   ========================================================================== */
+
+/* текстовый чип (например «АВТО» у B12) — не цифра, кегль меньше */
+.b-stat__v--text {
+  font-size: 0.6em;
+  letter-spacing: 0.06em;
+}
+
+/* сплит-постер, 3 цифры: 2 сверху + чип/третья во всю ширину снизу */
+.banner--poster.layout-split .b-stats--3 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.banner--poster.layout-split .b-stats--3 .b-stat:nth-child(3) {
+  grid-column: 1 / -1;
+  border-left: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* сплит-постер: значения не обрезаем — даём колонкам воздух */
+.banner--poster.layout-split .b-stat__v {
+  font-size: 36px;
+}
+
+.banner--poster.layout-split .b-stats--4 .b-stat__v {
+  font-size: 34px;
+}
+
+/* квадрат-сплит v6: текст крупнее, цифры во всю ширину внизу, фото справа */
+.banner--square.layout-split .b-body {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "intro photo"
+    "stats stats";
+  align-content: stretch;
+  column-gap: 24px;
+  row-gap: 14px;
+}
+
+.banner--square.layout-split .b-headline {
+  font-size: 94px;
+}
+
+.banner--square.layout-split .b-model {
+  font-size: 112px;
+}
+
+.banner--square.layout-split .b-line {
+  font-size: 19px;
+}
+
+.banner--square.layout-split .b-stats,
+.banner--square.layout-split .b-stats--3,
+.banner--square.layout-split .b-stats--4 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-self: stretch;
+}
+
+.banner--square.layout-split .b-stats--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.banner--square.layout-split .b-stats .b-stat,
+.banner--square.layout-split .b-stats--4 .b-stat {
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  padding: 10px 8px 9px;
+}
+
+.banner--square.layout-split .b-stats .b-stat:first-child {
+  border-left: 0;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(3) {
+  border-left: 1px solid var(--line);
+}
+
+.banner--square.layout-split .b-stats .b-stat__v {
+  font-size: 34px;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat__v {
+  font-size: 30px;
+}
+
+.banner--square.layout-split .b-stage {
+  align-self: stretch;
+  height: auto;
+}
+
+.banner--square.layout-split .b-plate {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  max-height: none;
+  flex: 1 1 auto;
+}
+/* ==========================================================================
+   16. ФИКС QA v3 — длинные значения и высокие фото в сплит-постере.
+   ========================================================================== */
+
+/* явные кегли для длинных значений и текстовых чипов: специфичность выше общих */
+.banner--poster.layout-split .b-stat__v.b-stat__v--long {
+  font-size: 26px;
+  letter-spacing: -0.01em;
+}
+
+.banner--poster.layout-split .b-stat__v.b-stat__v--text {
+  font-size: 22px;
+  letter-spacing: 0.06em;
+}
+
+.banner--poster.layout-split .b-stat__v em {
+  font-size: 0.4em;
+}
+
+.banner--square.layout-split .b-stat__v.b-stat__v--long {
+  font-size: 21px;
+}
+
+.banner--square.layout-split .b-stat__v.b-stat__v--text {
+  font-size: 19px;
+}
+
+/* фото в сплит-постере: бумага по аспекту товара, прижата к верху */
+.banner--poster.layout-split .b-stage {
+  align-self: start;
+  height: auto;
+  min-height: 0;
+}
+
+.banner--poster.layout-split .b-plate {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--photo-ar, 1.4);
+  max-height: 100%;
+}
+
+.banner--poster.layout-split .b-plate img {
+  max-width: 100%;
+  max-height: 100%;
+}
+/* ==========================================================================
+   17. ФИКС КВАДРАТОВ-ГЕРОЕВ (B02/B03/B06): фото и заголовок не должны
+   выдавливать стат-строку в футер. Сжимаем заголовки и жёстко ограничиваем тело.
+   ========================================================================== */
+
+.banner--square.layout-hero .b-headline {
+  font-size: 78px;
+}
+
+.banner--square.layout-hero .b-headline--xl { font-size: 82px; }
+.banner--square.layout-hero .b-headline--l { font-size: 76px; }
+.banner--square.layout-hero .b-headline--m { font-size: 68px; }
+.banner--square.layout-hero .b-headline--s { font-size: 60px; }
+
+.banner--square.layout-hero .b-model {
+  font-size: 92px;
+}
+
+.banner--square.layout-hero .b-model--xl { font-size: 98px; }
+.banner--square.layout-hero .b-model--l { font-size: 90px; }
+.banner--square.layout-hero .b-model--m { font-size: 80px; }
+.banner--square.layout-hero .b-model--s { font-size: 70px; }
+
+.banner--square.layout-hero .b-line {
+  margin-top: 8px;
+  font-size: 17px;
+  max-width: none;
+}
+
+.banner--square.layout-hero .b-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.banner--square.layout-hero .b-stage {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.banner--square.layout-hero .b-plate {
+  flex: 1 1 0;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.banner--square.layout-hero .b-plate img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.banner--square.layout-hero .b-stats {
+  margin-top: 10px;
+}
+
+.banner--square.layout-hero .b-cta-main {
+  font-size: 25px;
+}
+/* ==========================================================================
+   18. ФИКС2: сплит-постер — статы 2×2 сразу под текстом, фото крупно справа.
+   Левая колонка заполняет высоту сеткой, правая — фото-зона на всю высоту.
+   ========================================================================== */
+
+.banner--poster.layout-split .b-body {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "intro photo"
+    "stats photo";
+  align-content: stretch;
+  column-gap: 30px;
+  row-gap: 18px;
+}
+
+.banner--poster.layout-split .b-headline {
+  font-size: 108px;
+}
+
+.banner--poster.layout-split .b-model {
+  font-size: 126px;
+}
+
+.banner--poster.layout-split .b-line {
+  font-size: 21px;
+}
+
+.banner--poster.layout-split .b-stats,
+.banner--poster.layout-split .b-stats--3,
+.banner--poster.layout-split .b-stats--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  align-self: stretch;
+  margin-top: 2px;
+}
+
+.banner--poster.layout-split .b-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px 10px;
+}
+
+.banner--poster.layout-split .b-stats--3 .b-stat:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+.banner--poster.layout-split .b-stage {
+  grid-area: photo;
+  align-self: stretch;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner--poster.layout-split .b-plate {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--photo-ar, 1.4);
+  max-height: 100%;
+}
+
+.banner--poster.layout-split .b-plate img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* --- B12: текстовый чип «АВТО» — акцентная плашка, не серый текст --------- */
+.b-stat__v--text,
+.banner--poster.layout-split .b-stat__v.b-stat__v--text,
+.banner--square.layout-split .b-stat__v.b-stat__v--text,
+.banner--square.layout-numbers .b-stat__v.b-stat__v--text {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 7px 12px 6px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  font-variant-numeric: normal;
+}
+/* ==========================================================================
+   19. ФИКС2 финал: сплит-постер — компактные цифры 2×2, крупное фото справа,
+   контент центрируется по вертикали (без «пустоты в середине»).
+   ========================================================================== */
+
+.banner--poster.layout-split .b-headline {
+  font-size: 104px;
+}
+
+.banner--poster.layout-split .b-model {
+  font-size: 110px;
+}
+
+.banner--poster.layout-split .b-line {
+  font-size: 20px;
+}
+
+.banner--poster.layout-split .b-body {
+  grid-template-rows: auto auto;
+  align-content: center;
+}
+
+.banner--poster.layout-split .b-stats,
+.banner--poster.layout-split .b-stats--3,
+.banner--poster.layout-split .b-stats--4 {
+  grid-auto-rows: auto;
+  align-self: start;
+  margin-top: 18px;
+}
+
+.banner--poster.layout-split .b-stat {
+  padding: 14px 10px;
+  justify-content: flex-start;
+}
+
+.banner--poster.layout-split .b-stat__v {
+  font-size: 46px;
+}
+
+.banner--poster.layout-split .b-stats--4 .b-stat__v {
+  font-size: 40px;
+}
+
+.banner--poster.layout-split .b-stage {
+  justify-content: center;
+}
+
+.banner--poster.layout-split .b-plate {
+  width: 100%;
+  max-height: 660px;
+}
+/* ==========================================================================
+   20. ФИКС3: детектор наложений/клипов = 0.
+   — снимаем overflow у квадрата-героя (ничего не режем, всё вписывается);
+   — длинные значения: единица уходит под число, чтобы не наезжать на соседнюю цифру.
+   ========================================================================== */
+
+.banner--square.layout-hero .b-body,
+.banner--square.layout-hero .b-stage,
+.banner--square.layout-hero .b-plate {
+  overflow: visible;
+}
+
+.b-stat__v--long em {
+  display: block;
+  margin-left: 0;
+  font-size: 0.5em;
+  line-height: 1.1;
+}
+
+.banner--poster.layout-split .b-stat__v.b-stat__v--long {
+  font-size: 24px;
+}
+
+.banner--poster.layout-split .b-stat__v.b-stat__v--long em {
+  font-size: 0.44em;
+}
+/* ==========================================================================
+   21. ФИКС4: изображение в плашке — абсолютный бокс (надёжно в любом флексе),
+   подписи на квадратах не показываем (название и так крупно).
+   ========================================================================== */
+
+.b-plate {
+  position: relative;
+}
+
+.b-plate img {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: calc(100% - 28px);
+  height: calc(100% - 28px);
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.banner--square .b-plate-cap {
+  display: none;
+}
+
+.banner--poster.layout-split .b-plate-cap {
+  margin-top: 14px;
+}
+/* ==========================================================================
+   22. V3: ТЕХБЛОК «КОРОТКО О МОДЕЛИ» + ЧИПЫ «ЗАДАЧИ».
+   Заказчик: «баннеры пустые, это сложные технические устройства».
+   Правило: информация есть, но баннер остаётся рекламой — название крупнее
+   всего, фото заметнее прочего, техблок — тонкие линии и мелкий служебный текст.
+   ========================================================================== */
+
+.b-tasks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 0;
+}
+
+.b-task {
+  display: inline-block;
+  padding: 4px 9px;
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+
+.b-task:first-child {
+  border-color: var(--accent);
+  color: var(--fg);
+}
+
+.b-tech {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.b-tech__head {
+  margin: 0 0 8px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.b-tech__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+}
+
+.b-tech__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+}
+
+.b-tech__row:nth-child(1),
+.b-tech__row:nth-child(2) {
+  border-top: 0;
+  padding-top: 2px;
+}
+
+.b-tech__k {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.b-tech__v {
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  text-align: right;
+}
+
+/* --- фото ужимаем на 10–15% (но оно остаётся самым заметным) ------------ */
+.banner--poster.layout-hero .b-stage {
+  max-height: 480px;
+}
+
+.banner--poster.layout-split .b-plate {
+  max-height: 600px;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  max-height: 230px;
+}
+
+/* --- сплит-постер: техблок в левой колонке под цифрами ----------------- */
+.banner--poster.layout-split .b-body {
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "intro photo"
+    "stats photo"
+    "tech photo";
+}
+
+.banner--poster.layout-split .b-tech {
+  grid-area: tech;
+  margin-top: 14px;
+}
+
+/* --- «цифры»: техблок под цифрами, фото ниже и компактнее --------------- */
+.layout-numbers.banner--poster .b-tech {
+  order: 3;
+  margin-top: 14px;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  order: 4;
+  margin-top: 14px;
+}
+
+/* --- квадрат: техблок компактнее (2 колонки × 2–3 строки) --------------- */
+.banner--square .b-tasks {
+  margin-top: 8px;
+  gap: 6px;
+}
+
+.banner--square .b-task {
+  padding: 3px 7px;
+  font-size: 10px;
+}
+
+.banner--square .b-tech {
+  margin-top: 12px;
+  padding-top: 8px;
+}
+
+.banner--square .b-tech__head {
+  margin-bottom: 6px;
+  font-size: 10px;
+}
+
+.banner--square .b-tech__grid {
+  column-gap: 20px;
+}
+
+.banner--square .b-tech__row {
+  padding: 4px 0;
+  gap: 8px;
+}
+
+.banner--square .b-tech__k {
+  font-size: 10px;
+}
+
+.banner--square .b-tech__v {
+  font-size: 13px;
+}
+
+.banner--square.layout-hero .b-stage {
+  max-height: 320px;
+}
+
+.banner--square.layout-split .b-body {
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "intro photo"
+    "stats photo"
+    "tech photo";
+}
+
+.banner--square.layout-split .b-tech {
+  grid-area: tech;
+  margin-top: 12px;
+}
+
+.banner--square.layout-split .b-plate {
+  max-height: 420px;
+}
+
+.banner--square.layout-numbers .b-body {
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "intro photo"
+    "stats photo"
+    "tech tech";
+}
+
+.banner--square.layout-numbers .b-tech {
+  grid-area: tech;
+  margin-top: 10px;
+}
+/* ==========================================================================
+   23. V3 «ЦИФРЫ»-постер: цифры 2×2 слева, крупное фото справа, техблок под ними.
+   Чтобы после добавления техблока фото не превращалось в миниатюру.
+   ========================================================================== */
+
+.layout-numbers.banner--poster .b-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "intro intro"
+    "stats photo"
+    "tech tech";
+  column-gap: 24px;
+  row-gap: 14px;
+  align-content: stretch;
+}
+
+.layout-numbers.banner--poster .b-intro { grid-area: intro; }
+
+.layout-numbers.banner--poster .b-stats {
+  grid-area: stats;
+  order: 0;
+  align-self: start;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.layout-numbers.banner--poster .b-stats .b-stat {
+  border-top: 1px solid var(--line);
+  padding: 14px 10px 12px;
+}
+
+.layout-numbers.banner--poster .b-stats .b-stat:nth-child(odd) {
+  border-left: 0;
+}
+
+.layout-numbers.banner--poster .b-stats .b-stat__v {
+  font-size: 54px;
+}
+
+.layout-numbers.banner--poster .b-stats--4 .b-stat__v {
+  font-size: 46px;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  grid-area: photo;
+  order: 0;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  max-height: none;
+  height: auto;
+  min-height: 0;
+}
+
+.layout-numbers.banner--poster .b-plate {
+  flex: 0 1 auto;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  max-height: 430px;
+  aspect-ratio: var(--photo-ar, 1.4);
+}
+
+.layout-numbers.banner--poster .b-plate-cap {
+  display: block;
+  text-align: center;
+}
+
+.layout-numbers.banner--poster .b-tech {
+  grid-area: tech;
+  order: 0;
+  margin-top: 4px;
+}
+/* --- «цифры»-постер: фото получает конкретную высоту, иначе grid-строка схлопывается --- */
+.layout-numbers.banner--poster .b-body {
+  grid-template-rows: auto auto auto;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  height: 400px;
+  max-height: 400px;
+}
+
+.layout-numbers.banner--poster .b-plate {
+  height: 100%;
+  width: auto;
+  max-height: 100%;
+}
+/* ==========================================================================
+   24. V3.1: техблок в узких колонках — метка над значением (иначе длинные
+   диапазоны налезают на метку в сплит-компоновках). Плюс баланс «цифр»-постера.
+   ========================================================================== */
+
+.banner--poster.layout-split .b-tech__grid,
+.banner--square.layout-split .b-tech__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 24px;
+}
+
+.banner--poster.layout-split .b-tech__row,
+.banner--square.layout-split .b-tech__row {
+  display: block;
+  padding: 6px 0;
+}
+
+.banner--poster.layout-split .b-tech__k,
+.banner--square.layout-split .b-tech__k {
+  display: block;
+}
+
+.banner--poster.layout-split .b-tech__v,
+.banner--square.layout-split .b-tech__v {
+  display: block;
+  margin-top: 2px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.banner--square.layout-split .b-tech__v {
+  font-size: 12px;
+}
+
+/* баланс «цифры»-постера: цифры по центру относительно высокого фото */
+.layout-numbers.banner--poster .b-stats {
+  align-self: center;
+}
+/* ==========================================================================
+   25. V3.1 финал: numbers-компоновка — цифры сразу под строкой/чипами,
+   фото справа крупно (ширина ≥420, высота 400), без пустоты сверху.
+   Короткие значения техблока в сплит-компоновках — в одну строку с меткой.
+   ========================================================================== */
+
+.layout-numbers.banner--poster .b-body {
+  grid-template-rows: auto auto auto;
+  row-gap: 12px;
+}
+
+.layout-numbers.banner--poster .b-model {
+  font-size: 106px;
+}
+
+.layout-numbers.banner--poster .b-stats {
+  align-self: start;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  height: 400px;
+  max-height: 400px;
+  align-self: stretch;
+}
+
+.layout-numbers.banner--poster .b-plate {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  max-height: none;
+}
+
+.layout-numbers.banner--poster .b-plate-cap {
+  margin-top: 8px;
+}
+
+/* короткие значения («4», «8», «12») — метка и значение в одну строку */
+.banner--poster.layout-split .b-tech__row--inline,
+.banner--square.layout-split .b-tech__row--inline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 10px;
+}
+
+.banner--poster.layout-split .b-tech__row--inline .b-tech__k,
+.banner--parent.layout-split .b-tech__row--inline .b-tech__k {
+  display: block;
+}
+
+.banner--poster.layout-split .b-tech__row--inline .b-tech__v,
+.banner--square.layout-split .b-tech__row--inline .b-tech__v {
+  margin-top: 0;
+  text-align: right;
+}
+/* ==========================================================================
+   26. V3.1 final+: numbers-постер — цифры под строкой, техблок под цифрами
+   в левой колонке, фото справа на всю высоту блока (без пустоты).
+   ========================================================================== */
+
+.layout-numbers.banner--poster .b-body {
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "intro intro"
+    "stats photo"
+    "tech photo";
+  column-gap: 24px;
+  row-gap: 12px;
+}
+
+.layout-numbers.banner--poster .b-tech {
+  grid-area: tech;
+  margin-top: 4px;
+}
+
+.layout-numbers.banner--poster .b-stage {
+  grid-area: photo;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  align-self: stretch;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.layout-numbers.banner--poster .b-plate {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  max-height: 100%;
+}
+
+.layout-numbers.banner--poster .b-plate-cap {
+  display: block;
+  margin-top: 8px;
+}
+/* --- numbers-постер: техблок в левой колонке — метка над значением (без наложений) --- */
+.layout-numbers.banner--poster .b-tech__row {
+  display: block;
+  padding: 6px 0;
+}
+
+.layout-numbers.banner--poster .b-tech__k {
+  display: block;
+}
+
+.layout-numbers.banner--poster .b-tech__v {
+  display: block;
+  margin-top: 2px;
+  text-align: left;
+  font-size: 15px;
+}
+/* ==========================================================================
+   27. QA-фикс: B08 «Штора» 1:1 — 4 цифры в квадрате-сплите снова 2×2,
+   иначе «12 генераторов» налезает на «90 мин» в строке из 4 ячеек.
+   ========================================================================== */
+
+.banner--square.layout-split .b-stats--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat {
+  padding: 9px 8px 8px;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(3) {
+  border-left: 0;
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(3),
+.banner--square.layout-split .b-stats--4 .b-stat:nth-child(4) {
+  border-top: 1px solid var(--line);
+}
+
+.banner--square.layout-split .b-stats--4 .b-stat__v {
+  font-size: 30px;
+}

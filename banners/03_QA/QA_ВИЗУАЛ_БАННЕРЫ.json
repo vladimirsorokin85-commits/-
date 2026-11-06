@@ -1,0 +1,5982 @@
+{
+  "generated": "2026-11-06 22:23:03",
+  "version": "1.0",
+  "files": [
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 98px, max 98px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 98px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 98,
+        "text": "КАПЮШОН К-8М",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 98,
+        "text": "КАПЮШОН К-8М",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 976,
+          "cw": 976,
+          "sh": 84,
+          "ch": 71,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ НАД МАШИНОЙ"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 976,
+          "cw": 976,
+          "sh": 98,
+          "ch": 80,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН К-8М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 228,
+          "cw": 228,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "8каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "160Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "20кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 143,
+          "cw": 143,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 224,
+          "cw": 224,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B01_kapyushon_k_8m_1080x1080.html",
+      "bid": "B01",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 162px, max 162px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 162px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 162,
+        "text": "КАПЮШОН К-8М",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 162,
+        "text": "КАПЮШОН К-8М",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 136,
+          "ch": 114,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ НАД МАШИНОЙ"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 163,
+          "ch": 133,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН К-8М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 220,
+          "cw": 220,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "8каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "160Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "20кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B01_kapyushon_k_8m_1080x1350.html",
+      "bid": "B01",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 90px, max 90px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 90px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 90,
+        "text": "КАПЮШОН К-12М",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 90,
+        "text": "КАПЮШОН К-12М",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--l",
+          "sw": 976,
+          "cw": 976,
+          "sh": 78,
+          "ch": 65,
+          "ov": "visible/visible/visible",
+          "text": "ДВЕНАДЦАТЬ КАНАЛОВ НА КРЫШУ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 976,
+          "cw": 976,
+          "sh": 90,
+          "ch": 74,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН К-12М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 228,
+          "cw": 228,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "12каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "240Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "24кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 143,
+          "cw": 143,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 224,
+          "cw": 224,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B02_kapyushon_k_12m_1080x1080.html",
+      "bid": "B02",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 140px, max 140px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 140px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 140,
+        "text": "КАПЮШОН К-12М",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 140,
+        "text": "КАПЮШОН К-12М",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 219,
+          "ch": 200,
+          "ov": "visible/visible/visible",
+          "text": "ДВЕНАДЦАТЬ КАНАЛОВ НА КРЫШУ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 141,
+          "ch": 115,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН К-12М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 220,
+          "cw": 220,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "12каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "240Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "24кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B02_kapyushon_k_12m_1080x1350.html",
+      "bid": "B02",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 90px, max 90px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 90px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 90,
+        "text": "КАПЮШОН К-15М",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 90,
+        "text": "КАПЮШОН К-15М",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 976,
+          "cw": 976,
+          "sh": 84,
+          "ch": 71,
+          "ov": "visible/visible/visible",
+          "text": "СТАРШИЙ КУПОЛ ЛИНЕЙКИ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 976,
+          "cw": 976,
+          "sh": 90,
+          "ch": 74,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН К-15М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 228,
+          "cw": 228,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "300Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "24кг"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "12/24В"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 143,
+          "cw": 143,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 224,
+          "cw": 224,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B03_kapyushon_k_15m_i_vip_1080x1080.html",
+      "bid": "B03",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 140px, max 140px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 140px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 140,
+        "text": "КАПЮШОН К-15М",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 140,
+        "text": "КАПЮШОН К-15М",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 250,
+          "ch": 227,
+          "ov": "visible/visible/visible",
+          "text": "СТАРШИЙ КУПОЛ ЛИНЕЙКИ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 141,
+          "ch": 115,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН К-15М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 220,
+          "cw": 220,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "300Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "24кг"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "12/24В"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B03_kapyushon_k_15m_i_vip_1080x1350.html",
+      "bid": "B03",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 98px, max 98px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 98px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 98,
+        "text": "К-12 БОКС",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 98,
+        "text": "К-12 БОКС",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--l",
+          "sw": 976,
+          "cw": 976,
+          "sh": 78,
+          "ch": 65,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ, КОТОРЫЙ НЕ ВИДНО"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 976,
+          "cw": 976,
+          "sh": 98,
+          "ch": 80,
+          "ov": "visible/visible/visible",
+          "text": "К-12 БОКС"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 228,
+          "cw": 228,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "12каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "240Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "24кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 143,
+          "cw": 143,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 224,
+          "cw": 224,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B04_kapyushon_k_12m_bagazhnyj_boks_1080x1080.html",
+      "bid": "B04",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 162px, max 162px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 162px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 162,
+        "text": "К-12 БОКС",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 162,
+        "text": "К-12 БОКС",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 219,
+          "ch": 200,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ, КОТОРЫЙ НЕ ВИДНО"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 163,
+          "ch": 133,
+          "ov": "visible/visible/visible",
+          "text": "К-12 БОКС"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 220,
+          "cw": 220,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "12каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "240Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "24кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B04_kapyushon_k_12m_bagazhnyj_boks_1080x1350.html",
+      "bid": "B04",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 90px, max 90px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 90px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 90,
+        "text": "КАПЮШОН ФПВ-8М",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 90,
+        "text": "КАПЮШОН ФПВ-8М",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 976,
+          "cw": 976,
+          "sh": 84,
+          "ch": 71,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ ПРОТИВ FPV"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 976,
+          "cw": 976,
+          "sh": 90,
+          "ch": 74,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ФПВ-8М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 228,
+          "cw": 228,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "8каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "160Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "20кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 143,
+          "cw": 143,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 224,
+          "cw": 224,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B05_kapyushon_fpv_8m_1080x1080.html",
+      "bid": "B05",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 140px, max 140px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 140px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 140,
+        "text": "КАПЮШОН ФПВ-8М",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 140,
+        "text": "КАПЮШОН ФПВ-8М",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 136,
+          "ch": 114,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ ПРОТИВ FPV"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 141,
+          "ch": 115,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ФПВ-8М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 220,
+          "cw": 220,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "8каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "160Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "20кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B05_kapyushon_fpv_8m_1080x1350.html",
+      "bid": "B05",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 90px, max 90px)",
+          true
+        ],
+        [
+          "техблок найден (14 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 90px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 90,
+        "text": "КАПЮШОН ФПВ-12",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 90,
+        "text": "КАПЮШОН ФПВ-12",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 14,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 976,
+          "cw": 976,
+          "sh": 84,
+          "ch": 71,
+          "ov": "visible/visible/visible",
+          "text": "ДВЕНАДЦАТЬ КАНАЛОВ FPV"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 976,
+          "cw": 976,
+          "sh": 90,
+          "ch": 74,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ФПВ-12"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 228,
+          "cw": 228,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "12каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "240Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 227,
+          "cw": 227,
+          "sh": 41,
+          "ch": 36,
+          "ov": "visible/visible/visible",
+          "text": "24кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 143,
+          "cw": 143,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 224,
+          "cw": 224,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B06_kapyushon_fpv_12_1080x1080.html",
+      "bid": "B06",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 140px, max 140px)",
+          true
+        ],
+        [
+          "техблок найден (14 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 140px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 140,
+        "text": "КАПЮШОН ФПВ-12",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 140,
+        "text": "КАПЮШОН ФПВ-12",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 14,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 250,
+          "ch": 227,
+          "ov": "visible/visible/visible",
+          "text": "ДВЕНАДЦАТЬ КАНАЛОВ FPV"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 141,
+          "ch": 115,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ФПВ-12"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 220,
+          "cw": 220,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "12каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "240Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "24кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B06_kapyushon_fpv_12_1080x1350.html",
+      "bid": "B06",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 90px, max 90px)",
+          true
+        ],
+        [
+          "техблок найден (14 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 90px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 90,
+        "text": "КАПЮШОН ФПВ-7 МОТО",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 90,
+        "text": "КАПЮШОН ФПВ-7 МОТО",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 14,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 976,
+          "cw": 976,
+          "sh": 84,
+          "ch": 71,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ ДЛЯ МОТОТЕХНИКИ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 976,
+          "cw": 976,
+          "sh": 90,
+          "ch": 74,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ФПВ-7 МОТО"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 309,
+          "cw": 309,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "10кг"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 308,
+          "cw": 308,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "400мм"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 308,
+          "cw": 308,
+          "sh": 48,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "50–120м"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 143,
+          "cw": 143,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 224,
+          "cw": 224,
+          "sh": 29,
+          "ch": 25,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B07_kapyushon_fpv_7_moto_1080x1080.html",
+      "bid": "B07",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 140px, max 140px)",
+          true
+        ],
+        [
+          "техблок найден (14 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 140px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 140,
+        "text": "КАПЮШОН ФПВ-7 МОТО",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 140,
+        "text": "КАПЮШОН ФПВ-7 МОТО",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 14,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 250,
+          "ch": 227,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ ДЛЯ МОТОТЕХНИКИ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 256,
+          "ch": 230,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ФПВ-7 МОТО"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 300,
+          "cw": 300,
+          "sh": 57,
+          "ch": 50,
+          "ov": "visible/visible/visible",
+          "text": "10кг"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 299,
+          "cw": 299,
+          "sh": 57,
+          "ch": 50,
+          "ov": "visible/visible/visible",
+          "text": "400мм"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 299,
+          "cw": 299,
+          "sh": 57,
+          "ch": 50,
+          "ov": "visible/visible/visible",
+          "text": "50–120м"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B07_kapyushon_fpv_7_moto_1080x1350.html",
+      "bid": "B07",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 112px, max 112px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 12px)",
+          false
+        ],
+        [
+          "техблок не перебивает название (12px < 112px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 112,
+        "text": "ШТОРА К-12/700",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 112,
+        "text": "ШТОРА К-12/700",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 10,
+        "max_fs": 12
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 524,
+          "cw": 524,
+          "sh": 177,
+          "ch": 162,
+          "ov": "visible/visible/visible",
+          "text": "ЛУЧ ДО КИЛОМЕТРА"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 524,
+          "cw": 524,
+          "sh": 205,
+          "ch": 184,
+          "ov": "visible/visible/visible",
+          "text": "ШТОРА К-12/700"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "1000м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 245,
+          "cw": 245,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "12генераторов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "90мин"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 245,
+          "cw": 245,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "41кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B08_shtora_k_12_700_1080x1080.html",
+      "bid": "B08",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 110px, max 110px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 14px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (14px < 110px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 110,
+        "text": "ШТОРА К-12/700",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 110,
+        "text": "ШТОРА К-12/700",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 11,
+        "max_fs": 14
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 456,
+          "cw": 456,
+          "sh": 196,
+          "ch": 179,
+          "ov": "visible/visible/visible",
+          "text": "ЛУЧ ДО КИЛОМЕТРА"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 456,
+          "cw": 456,
+          "sh": 201,
+          "ch": 180,
+          "ov": "visible/visible/visible",
+          "text": "ШТОРА К-12/700"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 212,
+          "cw": 212,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "1000м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 211,
+          "cw": 211,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "12генераторов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 212,
+          "cw": 212,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "90мин"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 211,
+          "cw": 211,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "41кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B08_shtora_k_12_700_1080x1350.html",
+      "bid": "B08",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 112px, max 112px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 12px)",
+          false
+        ],
+        [
+          "техблок не перебивает название (12px < 112px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 112,
+        "text": "ШТОРА-М К-8/600",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 112,
+        "text": "ШТОРА-М К-8/600",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 10,
+        "max_fs": 12
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 524,
+          "cw": 524,
+          "sh": 177,
+          "ch": 162,
+          "ov": "visible/visible/visible",
+          "text": "НАПРАВЛЕННО НА СЕКТОР"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 524,
+          "cw": 524,
+          "sh": 205,
+          "ch": 184,
+          "ov": "visible/visible/visible",
+          "text": "ШТОРА-М К-8/600"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 159,
+          "cw": 159,
+          "sh": 39,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "8генераторов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 159,
+          "cw": 159,
+          "sh": 39,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "260Вт"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B09_shtora_m_k_8_600_1080x1080.html",
+      "bid": "B09",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 110px, max 110px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 14px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (14px < 110px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 110,
+        "text": "ШТОРА-М К-8/600",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 110,
+        "text": "ШТОРА-М К-8/600",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 11,
+        "max_fs": 14
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 471,
+          "cw": 456,
+          "sh": 196,
+          "ch": 179,
+          "ov": "visible/visible/visible",
+          "text": "НАПРАВЛЕННО НА СЕКТОР"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 456,
+          "cw": 456,
+          "sh": 201,
+          "ch": 180,
+          "ov": "visible/visible/visible",
+          "text": "ШТОРА-М К-8/600"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 208,
+          "cw": 208,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "8генераторов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 436,
+          "cw": 436,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "260Вт"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B09_shtora_m_k_8_600_1080x1350.html",
+      "bid": "B09",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 112px, max 112px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 12px)",
+          false
+        ],
+        [
+          "техблок не перебивает название (12px < 112px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 112,
+        "text": "РЕБУС-4",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 112,
+        "text": "РЕБУС-4",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 10,
+        "max_fs": 12
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 524,
+          "cw": 524,
+          "sh": 177,
+          "ch": 162,
+          "ov": "visible/visible/visible",
+          "text": "КРУГОВОЙ КОНТУР 360°"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 524,
+          "cw": 524,
+          "sh": 113,
+          "ch": 92,
+          "ov": "visible/visible/visible",
+          "text": "РЕБУС-4"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "360°"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 245,
+          "cw": 245,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "4моноблока"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "2400Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 245,
+          "cw": 245,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "5км"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B10_rebus_4_1080x1080.html",
+      "bid": "B10",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 110px, max 110px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 14px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (14px < 110px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 110,
+        "text": "РЕБУС-4",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 110,
+        "text": "РЕБУС-4",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 11,
+        "max_fs": 14
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 456,
+          "cw": 456,
+          "sh": 196,
+          "ch": 179,
+          "ov": "visible/visible/visible",
+          "text": "КРУГОВОЙ КОНТУР 360°"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 456,
+          "cw": 456,
+          "sh": 111,
+          "ch": 90,
+          "ov": "visible/visible/visible",
+          "text": "РЕБУС-4"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 212,
+          "cw": 212,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "360°"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 211,
+          "cw": 211,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "4моноблока"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 212,
+          "cw": 212,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "2400Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 211,
+          "cw": 211,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "5км"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B10_rebus_4_1080x1350.html",
+      "bid": "B10",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 112px, max 112px)",
+          true
+        ],
+        [
+          "техблок найден (13 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 12px)",
+          false
+        ],
+        [
+          "техблок не перебивает название (12px < 112px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 112,
+        "text": "ПОЛЕ-31",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 112,
+        "text": "ПОЛЕ-31",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 13,
+        "min_fs": 10,
+        "max_fs": 12
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--l",
+          "sw": 524,
+          "cw": 524,
+          "sh": 258,
+          "ch": 242,
+          "ov": "visible/visible/visible",
+          "text": "ПРОТИВ СПУТНИКОВОЙ НАВИГАЦИИ"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 524,
+          "cw": 524,
+          "sh": 113,
+          "ch": 92,
+          "ov": "visible/visible/visible",
+          "text": "ПОЛЕ-31"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "2000м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 245,
+          "cw": 245,
+          "sh": 34,
+          "ch": 30,
+          "ov": "visible/visible/visible",
+          "text": "240Вт"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B11_pole_31_1080x1080.html",
+      "bid": "B11",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 110px, max 110px)",
+          true
+        ],
+        [
+          "техблок найден (13 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 14px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (14px < 110px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 110,
+        "text": "ПОЛЕ-31",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 110,
+        "text": "ПОЛЕ-31",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 13,
+        "min_fs": 11,
+        "max_fs": 14
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--l",
+          "sw": 479,
+          "cw": 456,
+          "sh": 286,
+          "ch": 268,
+          "ov": "visible/visible/visible",
+          "text": "ПРОТИВ СПУТНИКОВОЙ НАВИГАЦИИ"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 456,
+          "cw": 456,
+          "sh": 111,
+          "ch": 90,
+          "ov": "visible/visible/visible",
+          "text": "ПОЛЕ-31"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 212,
+          "cw": 212,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "2000м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 211,
+          "cw": 211,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "240Вт"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B11_pole_31_1080x1350.html",
+      "bid": "B11",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 112px, max 112px)",
+          true
+        ],
+        [
+          "техблок найден (14 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 12px)",
+          false
+        ],
+        [
+          "техблок не перебивает название (12px < 112px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 112,
+        "text": "СИГНАЛ-М2",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 112,
+        "text": "СИГНАЛ-М2",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 14,
+        "min_fs": 10,
+        "max_fs": 12
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 524,
+          "cw": 524,
+          "sh": 177,
+          "ch": 162,
+          "ov": "visible/visible/visible",
+          "text": "СНАЧАЛА ОБНАРУЖЬ"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 524,
+          "cw": 524,
+          "sh": 113,
+          "ch": 92,
+          "ov": "visible/visible/visible",
+          "text": "СИГНАЛ-М2"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B12_signal_m2_1080x1080.html",
+      "bid": "B12",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 110px, max 110px)",
+          true
+        ],
+        [
+          "техблок найден (14 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 14px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (14px < 110px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R60/B40)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 110,
+        "text": "СИГНАЛ-М2",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 110,
+        "text": "СИГНАЛ-М2",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 14,
+        "min_fs": 11,
+        "max_fs": 14
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 456,
+          "cw": 456,
+          "sh": 196,
+          "ch": 179,
+          "ov": "visible/visible/visible",
+          "text": "СНАЧАЛА ОБНАРУЖЬ"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 456,
+          "cw": 456,
+          "sh": 111,
+          "ch": 90,
+          "ov": "visible/visible/visible",
+          "text": "СИГНАЛ-М2"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 60,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B12_signal_m2_1080x1350.html",
+      "bid": "B12",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 92px, max 92px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 92px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 92,
+        "text": "КАПЮШОН ТП 4-28А/Б",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 92,
+        "text": "КАПЮШОН ТП 4-28А/Б",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 533,
+          "cw": 533,
+          "sh": 80,
+          "ch": 67,
+          "ov": "visible/visible/visible",
+          "text": "РЮКЗАК НА ПЛЕЧИ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 533,
+          "cw": 533,
+          "sh": 168,
+          "ch": 151,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ТП 4-28А/Б"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 247,
+          "cw": 247,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "5ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "28А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "20Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "3,2кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B13_kapyushon_tp_4_28a_b_1080x1080.html",
+      "bid": "B13",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 106px, max 106px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 106px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R20/B40)",
+          false
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 106,
+        "text": "КАПЮШОН ТП 4-28А/Б",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 106,
+        "text": "КАПЮШОН ТП 4-28А/Б",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 107,
+          "ch": 89,
+          "ov": "visible/visible/visible",
+          "text": "РЮКЗАК НА ПЛЕЧИ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 106,
+          "ch": 87,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ТП 4-28А/Б"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "5ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "28А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "20Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "3,2кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 20,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B13_kapyushon_tp_4_28a_b_1080x1350.html",
+      "bid": "B13",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 92px, max 92px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 92px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 92,
+        "text": "КАПЮШОН ТП 4-50А/Б",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 92,
+        "text": "КАПЮШОН ТП 4-50А/Б",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 533,
+          "cw": 533,
+          "sh": 147,
+          "ch": 134,
+          "ov": "visible/visible/visible",
+          "text": "ДО ДЕСЯТИ ЧАСОВ РАБОТЫ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 533,
+          "cw": 533,
+          "sh": 168,
+          "ch": 151,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ТП 4-50А/Б"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 247,
+          "cw": 247,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "10ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "50А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "20Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "5,1кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B14_kapyushon_tp_4_50a_b_1080x1080.html",
+      "bid": "B14",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 106px, max 106px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 106px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R20/B40)",
+          false
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 106,
+        "text": "КАПЮШОН ТП 4-50А/Б",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 106,
+        "text": "КАПЮШОН ТП 4-50А/Б",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 107,
+          "ch": 89,
+          "ov": "visible/visible/visible",
+          "text": "ДО ДЕСЯТИ ЧАСОВ РАБОТЫ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 106,
+          "ch": 87,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ТП 4-50А/Б"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "10ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "50А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "20Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "5,1кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 20,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B14_kapyushon_tp_4_50a_b_1080x1350.html",
+      "bid": "B14",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 92px, max 92px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 92px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 92,
+        "text": "КАПЮШОН ТП 7-100",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 92,
+        "text": "КАПЮШОН ТП 7-100",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 533,
+          "cw": 533,
+          "sh": 147,
+          "ch": 134,
+          "ov": "visible/visible/visible",
+          "text": "ДО ДВЕНАДЦАТИ ЧАСОВ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 533,
+          "cw": 533,
+          "sh": 168,
+          "ch": 151,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ТП 7-100"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 247,
+          "cw": 247,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "12ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "100А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "7полос"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "10,6кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B15_kapyushon_tp_7_100_1080x1080.html",
+      "bid": "B15",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 106px, max 106px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 106px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R20/B40)",
+          false
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 106,
+        "text": "КАПЮШОН ТП 7-100",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 106,
+        "text": "КАПЮШОН ТП 7-100",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 107,
+          "ch": 89,
+          "ov": "visible/visible/visible",
+          "text": "ДО ДВЕНАДЦАТИ ЧАСОВ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 106,
+          "ch": 87,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ТП 7-100"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "12ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "100А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "7полос"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "10,6кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 20,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B15_kapyushon_tp_7_100_1080x1350.html",
+      "bid": "B15",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 92px, max 92px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 92px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 92,
+        "text": "КАПЮШОН ТП 8-100",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 92,
+        "text": "КАПЮШОН ТП 8-100",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 533,
+          "cw": 533,
+          "sh": 80,
+          "ch": 67,
+          "ov": "visible/visible/visible",
+          "text": "160 ВАТТ В РЮКЗАКЕ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 533,
+          "cw": 533,
+          "sh": 168,
+          "ch": 151,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ТП 8-100"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 247,
+          "cw": 247,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "160Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "1,5ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "25А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "10кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B16_kapyushon_tp_8_100_1080x1080.html",
+      "bid": "B16",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 106px, max 106px)",
+          true
+        ],
+        [
+          "техблок найден (16 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 106px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R20/B40)",
+          false
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 106,
+        "text": "КАПЮШОН ТП 8-100",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 106,
+        "text": "КАПЮШОН ТП 8-100",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 16,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 107,
+          "ch": 89,
+          "ov": "visible/visible/visible",
+          "text": "160 ВАТТ В РЮКЗАКЕ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 106,
+          "ch": 87,
+          "ov": "visible/visible/visible",
+          "text": "КАПЮШОН ТП 8-100"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "160Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "1,5ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "25А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "10кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 20,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B16_kapyushon_tp_8_100_1080x1350.html",
+      "bid": "B16",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 92px, max 92px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 92px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 92,
+        "text": "ИП-24/100",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 92,
+        "text": "ИП-24/100",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 533,
+          "cw": 533,
+          "sh": 147,
+          "ch": 134,
+          "ov": "visible/visible/visible",
+          "text": "ПИТАНИЕ ДЛЯ КУПОЛА"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 533,
+          "cw": 533,
+          "sh": 93,
+          "ch": 75,
+          "ov": "visible/visible/visible",
+          "text": "ИП-24/100"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 247,
+          "cw": 247,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "105А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "150А"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "4потребителя"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 46,
+          "ch": 40,
+          "ov": "visible/visible/visible",
+          "text": "25,6кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B17_ip_24_100_1080x1080.html",
+      "bid": "B17",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 106px, max 106px)",
+          true
+        ],
+        [
+          "техблок найден (15 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 106px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R20/B40)",
+          false
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 106,
+        "text": "ИП-24/100",
+        "cls": "b-model b-model--xl"
+      },
+      "max": {
+        "fs": 106,
+        "text": "ИП-24/100",
+        "cls": "b-model b-model--xl"
+      },
+      "tech": {
+        "found": true,
+        "items": 15,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 107,
+          "ch": 89,
+          "ov": "visible/visible/visible",
+          "text": "ПИТАНИЕ ДЛЯ КУПОЛА"
+        },
+        {
+          "cls": "b-model b-model--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 106,
+          "ch": 87,
+          "ov": "visible/visible/visible",
+          "text": "ИП-24/100"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "105А·ч"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "150А"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "4потребителя"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 53,
+          "ch": 46,
+          "ov": "visible/visible/visible",
+          "text": "25,6кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 20,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B17_ip_24_100_1080x1350.html",
+      "bid": "B17",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 92px, max 92px)",
+          true
+        ],
+        [
+          "техблок найден (11 элементов, labels 10px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 13px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (13px < 92px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L52/T48/R52/B36)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 92,
+        "text": "РЭБ-ТЕСТЕР Т-9",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 92,
+        "text": "РЭБ-ТЕСТЕР Т-9",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 11,
+        "min_fs": 10,
+        "max_fs": 13
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 533,
+          "cw": 533,
+          "sh": 80,
+          "ch": 67,
+          "ov": "visible/visible/visible",
+          "text": "ПРОВЕРЬ СТАНЦИЮ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 533,
+          "cw": 533,
+          "sh": 93,
+          "ch": 75,
+          "ov": "visible/visible/visible",
+          "text": "РЭБ-ТЕСТЕР Т-9"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 247,
+          "cw": 247,
+          "sh": 50,
+          "ch": 44,
+          "ov": "visible/visible/visible",
+          "text": "9частот"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 50,
+          "ch": 44,
+          "ov": "visible/visible/visible",
+          "text": "250МГц"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 246,
+          "cw": 246,
+          "sh": 50,
+          "ch": 44,
+          "ov": "visible/visible/visible",
+          "text": "5800МГц"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 161,
+          "cw": 161,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 251,
+          "cw": 251,
+          "sh": 32,
+          "ch": 28,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 52,
+        "t": 48,
+        "r": 52,
+        "b": 36
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B18_reb_tester_t_9_1080x1080.html",
+      "bid": "B18",
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 106px, max 106px)",
+          true
+        ],
+        [
+          "техблок найден (11 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 15px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (15px < 106px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L60/T56/R20/B40)",
+          false
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 106,
+        "text": "РЭБ-ТЕСТЕР Т-9",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 106,
+        "text": "РЭБ-ТЕСТЕР Т-9",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 11,
+        "min_fs": 11,
+        "max_fs": 15
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--xl",
+          "sw": 960,
+          "cw": 960,
+          "sh": 107,
+          "ch": 89,
+          "ov": "visible/visible/visible",
+          "text": "ПРОВЕРЬ СТАНЦИЮ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 960,
+          "cw": 960,
+          "sh": 106,
+          "ch": 87,
+          "ov": "visible/visible/visible",
+          "text": "РЭБ-ТЕСТЕР Т-9"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 62,
+          "ch": 54,
+          "ov": "visible/visible/visible",
+          "text": "9частот"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 62,
+          "ch": 54,
+          "ov": "visible/visible/visible",
+          "text": "250МГц"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 219,
+          "cw": 219,
+          "sh": 62,
+          "ch": 54,
+          "ov": "visible/visible/visible",
+          "text": "5800МГц"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 195,
+          "cw": 195,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 304,
+          "cw": 304,
+          "sh": 40,
+          "ch": 34,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 60,
+        "t": 56,
+        "r": 20,
+        "b": 40
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B18_reb_tester_t_9_1080x1350.html",
+      "bid": "B18",
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 176px, max 176px)",
+          true
+        ],
+        [
+          "техблок найден (11 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 16px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (16px < 176px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L80/T72/R80/B56)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 176,
+        "text": "К-8М",
+        "cls": "b-model"
+      },
+      "max": {
+        "fs": 176,
+        "text": "К-8М",
+        "cls": "b-model"
+      },
+      "tech": {
+        "found": true,
+        "items": 11,
+        "min_fs": 11,
+        "max_fs": 16
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline",
+          "sw": 920,
+          "cw": 920,
+          "sh": 260,
+          "ch": 237,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ НАД МАШИНОЙ"
+        },
+        {
+          "cls": "b-model",
+          "sw": 920,
+          "cw": 920,
+          "sh": 179,
+          "ch": 148,
+          "ov": "visible/visible/visible",
+          "text": "К-8М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 424,
+          "cw": 424,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "8каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 423,
+          "cw": 423,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 424,
+          "cw": 424,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "160Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 423,
+          "cw": 423,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "20кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 241,
+          "cw": 241,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 376,
+          "cw": 376,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 80,
+        "t": 72,
+        "r": 80,
+        "b": 56
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\story\\B01_kapyushon_k_8m_1080x1920.html",
+      "bid": "B01",
+      "size": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 176px, max 176px)",
+          true
+        ],
+        [
+          "техблок найден (11 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 16px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (16px < 176px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L80/T72/R80/B56)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 176,
+        "text": "К-12М",
+        "cls": "b-model"
+      },
+      "max": {
+        "fs": 176,
+        "text": "К-12М",
+        "cls": "b-model"
+      },
+      "tech": {
+        "found": true,
+        "items": 11,
+        "min_fs": 11,
+        "max_fs": 16
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline b-headline--l",
+          "sw": 920,
+          "cw": 920,
+          "sh": 219,
+          "ch": 200,
+          "ov": "visible/visible/visible",
+          "text": "ДВЕНАДЦАТЬ КАНАЛОВ НА КРЫШУ"
+        },
+        {
+          "cls": "b-model",
+          "sw": 920,
+          "cw": 920,
+          "sh": 179,
+          "ch": 148,
+          "ov": "visible/visible/visible",
+          "text": "К-12М"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 424,
+          "cw": 424,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "12каналов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 423,
+          "cw": 423,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "50–200м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 424,
+          "cw": 424,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "240Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 423,
+          "cw": 423,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "24кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 241,
+          "cw": 241,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 376,
+          "cw": 376,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 80,
+        "t": 72,
+        "r": 80,
+        "b": 56
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\story\\B02_kapyushon_k_12m_1080x1920.html",
+      "bid": "B02",
+      "size": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 150px, max 150px)",
+          true
+        ],
+        [
+          "техблок найден (11 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 16px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (16px < 150px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L80/T72/R80/B56)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 150,
+        "text": "ФПВ-7 МОТО",
+        "cls": "b-model b-model--l"
+      },
+      "max": {
+        "fs": 150,
+        "text": "ФПВ-7 МОТО",
+        "cls": "b-model b-model--l"
+      },
+      "tech": {
+        "found": true,
+        "items": 11,
+        "min_fs": 11,
+        "max_fs": 16
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline",
+          "sw": 920,
+          "cw": 920,
+          "sh": 260,
+          "ch": 237,
+          "ov": "visible/visible/visible",
+          "text": "КУПОЛ ДЛЯ МОТОТЕХНИКИ"
+        },
+        {
+          "cls": "b-model b-model--l",
+          "sw": 920,
+          "cw": 920,
+          "sh": 153,
+          "ch": 126,
+          "ov": "visible/visible/visible",
+          "text": "ФПВ-7 МОТО"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 275,
+          "cw": 275,
+          "sh": 71,
+          "ch": 62,
+          "ov": "visible/visible/visible",
+          "text": "10кг"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 274,
+          "cw": 274,
+          "sh": 71,
+          "ch": 62,
+          "ov": "visible/visible/visible",
+          "text": "400мм"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 274,
+          "cw": 274,
+          "sh": 71,
+          "ch": 62,
+          "ov": "visible/visible/visible",
+          "text": "50–120м"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 241,
+          "cw": 241,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 376,
+          "cw": 376,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 80,
+        "t": 72,
+        "r": 80,
+        "b": 56
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\story\\B07_kapyushon_fpv_7_moto_1080x1920.html",
+      "bid": "B07",
+      "size": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 176px, max 176px)",
+          true
+        ],
+        [
+          "техблок найден (11 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 16px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (16px < 176px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L80/T72/R80/B56)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 176,
+        "text": "ШТОРА",
+        "cls": "b-model"
+      },
+      "max": {
+        "fs": 176,
+        "text": "ШТОРА",
+        "cls": "b-model"
+      },
+      "tech": {
+        "found": true,
+        "items": 11,
+        "min_fs": 11,
+        "max_fs": 16
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline",
+          "sw": 920,
+          "cw": 920,
+          "sh": 141,
+          "ch": 119,
+          "ov": "visible/visible/visible",
+          "text": "ЛУЧ ДО КИЛОМЕТРА"
+        },
+        {
+          "cls": "b-model",
+          "sw": 920,
+          "cw": 920,
+          "sh": 179,
+          "ch": 148,
+          "ov": "visible/visible/visible",
+          "text": "ШТОРА"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 424,
+          "cw": 424,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "1000м"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 423,
+          "cw": 423,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "12генераторов"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 424,
+          "cw": 424,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "90мин"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 423,
+          "cw": 423,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "41кг"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 241,
+          "cw": 241,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 376,
+          "cw": 376,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 80,
+        "t": 72,
+        "r": 80,
+        "b": 56
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\story\\B08_shtora_k_12_700_1080x1920.html",
+      "bid": "B08",
+      "size": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 176px, max 176px)",
+          true
+        ],
+        [
+          "техблок найден (11 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 16px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (16px < 176px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L80/T72/R80/B56)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 176,
+        "text": "РЕБУС-4",
+        "cls": "b-model"
+      },
+      "max": {
+        "fs": 176,
+        "text": "РЕБУС-4",
+        "cls": "b-model"
+      },
+      "tech": {
+        "found": true,
+        "items": 11,
+        "min_fs": 11,
+        "max_fs": 16
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline",
+          "sw": 920,
+          "cw": 920,
+          "sh": 260,
+          "ch": 237,
+          "ov": "visible/visible/visible",
+          "text": "КРУГОВОЙ КОНТУР 360°"
+        },
+        {
+          "cls": "b-model",
+          "sw": 920,
+          "cw": 920,
+          "sh": 179,
+          "ch": 148,
+          "ov": "visible/visible/visible",
+          "text": "РЕБУС-4"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 424,
+          "cw": 424,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "360°"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 423,
+          "cw": 423,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "4моноблока"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 424,
+          "cw": 424,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "2400Вт"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 423,
+          "cw": 423,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "5км"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 241,
+          "cw": 241,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 376,
+          "cw": 376,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 80,
+        "t": 72,
+        "r": 80,
+        "b": 56
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\story\\B10_rebus_4_1080x1920.html",
+      "bid": "B10",
+      "size": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "название модели найдено",
+          true
+        ],
+        [
+          "название модели — самый крупный текст (model 176px, max 176px)",
+          true
+        ],
+        [
+          "техблок найден (9 элементов, labels 11px)",
+          true
+        ],
+        [
+          "техблок читается: значения ≥ 13px (min 16px)",
+          true
+        ],
+        [
+          "техблок не перебивает название (16px < 176px)",
+          true
+        ],
+        [
+          "нет наложений текста (0 пересечений)",
+          true
+        ],
+        [
+          "нет обрезки текста (0 переполнений)",
+          true
+        ],
+        [
+          "нет выхода за холст (0 элементов)",
+          true
+        ],
+        [
+          "безопасные поля ≥ 24px (L80/T72/R80/B56)",
+          true
+        ]
+      ],
+      "notes": [],
+      "model": {
+        "fs": 176,
+        "text": "СИГНАЛ-М2",
+        "cls": "b-model"
+      },
+      "max": {
+        "fs": 176,
+        "text": "СИГНАЛ-М2",
+        "cls": "b-model"
+      },
+      "tech": {
+        "found": true,
+        "items": 9,
+        "min_fs": 11,
+        "max_fs": 16
+      },
+      "overflow": [],
+      "overflow_soft": [
+        {
+          "cls": "b-headline",
+          "sw": 920,
+          "cw": 920,
+          "sh": 141,
+          "ch": 119,
+          "ov": "visible/visible/visible",
+          "text": "СНАЧАЛА ОБНАРУЖЬ"
+        },
+        {
+          "cls": "b-model",
+          "sw": 920,
+          "cw": 920,
+          "sh": 179,
+          "ch": 148,
+          "ov": "visible/visible/visible",
+          "text": "СИГНАЛ-М2"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 424,
+          "cw": 424,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "300МГц"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 423,
+          "cw": 423,
+          "sh": 78,
+          "ch": 68,
+          "ov": "visible/visible/visible",
+          "text": "10000МГц"
+        },
+        {
+          "cls": "b-stat__v",
+          "sw": 884,
+          "cw": 884,
+          "sh": 62,
+          "ch": 54,
+          "ov": "visible/visible/visible",
+          "text": "1000–5000м"
+        },
+        {
+          "cls": "b-tg",
+          "sw": 241,
+          "cw": 241,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "@vokope_ru"
+        },
+        {
+          "cls": "",
+          "sw": 376,
+          "cw": 376,
+          "sh": 49,
+          "ch": 42,
+          "ov": "visible/visible/visible",
+          "text": "+7 (999) 136-71-42"
+        }
+      ],
+      "outside": [],
+      "overlaps": [],
+      "safe": {
+        "l": 80,
+        "t": 72,
+        "r": 80,
+        "b": 56
+      },
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\story\\B12_signal_m2_1080x1920.html",
+      "bid": "B12",
+      "size": [
+        1080,
+        1920
+      ]
+    }
+  ]
+}
