@@ -70,6 +70,9 @@ banners\
 
 ## GitHub
 
-BLANK_PLACEHOLDER
+PR **#13**: https://github.com/vladimirsorokin85-commits/-/pull/13 · ветка `creative/banners-2026-11`
+(базовая ветка `main`). Ссылки на файлы после merge — по тегу/SHA, не по ветке со слэшем.
+В коммит входят исходники (HTML/сторис/дизайн/копирайт/QA/_render), PNG **1×** (42), PDF, галерея, превью JPG;
+`@2x`, `_qa`, `_reference`, `_tmp` — не входят. Цены не публикуются.
 
 _Обновлено: 06.11.2026._
