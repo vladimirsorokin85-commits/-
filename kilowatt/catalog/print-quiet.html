@@ -83,6 +83,21 @@
   .fl__price { margin-top:2.5mm; font-family:"Tektur",monospace; font-size:7.4pt; color:var(--soft); }
   .fl__price b { font-size:11pt; color:var(--ink); font-weight:600; }
 
+  /* сравнение */
+  .cm { width:100%; border-collapse:collapse; }
+  .cm th, .cm td { text-align:left; padding:2.6mm 3mm; border-top:1px solid var(--line); vertical-align:top; }
+  .cm thead th { border-top:0; border-bottom:1px solid var(--line); vertical-align:bottom; }
+  .cm thead th b { display:block; font-family:"Oswald",sans-serif; font-weight:500; text-transform:uppercase; font-size:11pt; line-height:1.02; margin-top:1.5mm; }
+  .cm__cat { font-family:"Tektur",monospace; font-size:5.8pt; letter-spacing:.12em; text-transform:uppercase; color:var(--soft); }
+  .cm__label { width:34mm; font-family:"Oswald",sans-serif; font-weight:500; text-transform:uppercase; font-size:7pt; letter-spacing:.05em; color:var(--olive); background:transparent; }
+  .cm td { font-family:"Tektur",monospace; font-size:7.2pt; }
+  .cm__price td b { font-size:9.5pt; }
+  .cm-photos { display:grid; grid-template-columns:repeat(3,1fr); gap:5mm; margin-top:9mm; }
+  .cm-photo { margin:0; background:var(--paper2); padding:3.5mm 3mm 2.5mm; text-align:center; }
+  .cm-photo img { height:40mm; max-width:100%; object-fit:contain; filter:drop-shadow(0 4mm 4mm rgba(0,0,0,0.12)); }
+  .cm-photo figcaption { font-family:"Tektur",monospace; font-size:6.2pt; letter-spacing:.08em; text-transform:uppercase; color:var(--soft); margin-top:2.4mm; }
+  .cm-noimg { height:40mm; display:flex; align-items:center; justify-content:center; font-family:"Tektur",monospace; font-size:6pt; color:var(--soft); }
+
   /* карточки каталога */
   .grid4 { display:grid; grid-template-columns:1fr 1fr; gap:6mm 7mm; }
   .pc { display:flex; flex-direction:column; border-top:1px solid var(--line); padding-top:3mm; page-break-inside:avoid; }
@@ -230,6 +245,16 @@
   <div class="pg-num">03</div>
 </section>
 
+
+<section class="page">
+  <div class="pg-head"><b>Флагманы в цифрах</b><span class="small">02.1 / СРАВНЕНИЕ</span></div>
+  <p style="margin:0 0 5mm;font-size:8.8pt;max-width:150mm">Три модели рядом — что выбрать под объект. Данные по паспортам изделий, цены — поставщика (ориентиры, подтверждаются в КП).</p>
+  <table class="cm"><thead><tr><th class="cm__label">Характеристика</th><th><span class="cm__cat">Купольные станции</span><b>Станция РЭБ Капюшон К-12М</b></th><th><span class="cm__cat">Стационарные</span><b>Комплекс РЭБ Ребус-4</b></th><th><span class="cm__cat">Стационарные</span><b>Станция РЭБ Штора К-12/700</b></th></tr></thead><tbody><tr><th class="cm__label">Диапазон частот</th><td>300–1020, 1080–1360, 2100–2800, 5100–5300, 5680–5900 МГц</td><td>240–1020, 2100–2800, 3300–3500, 5100–5300, 5680–5900 МГц</td><td>240–1020, 2100–2800, 3300–3500, 5100–5300, 5680–5900 МГц</td></tr><tr><th class="cm__label">Мощность передатчиков</th><td>до 240 Вт</td><td>до 2400 Вт (по паспорту)</td><td>до 600 Вт</td></tr><tr><th class="cm__label">Дальность</th><td>50–200 м (оператор 2000–3000 м)</td><td>разведка — до 5 км; ударные — до 1 км (по паспорту)</td><td>до 1000 м от объекта защиты</td></tr><tr><th class="cm__label">Питание</th><td>12/24 В, 220 В через ПН, автономно ИП-24/100</td><td>220/380 В через стационарный щит питания</td><td>ИП-24/100 или 220 В через преобразователь</td></tr><tr><th class="cm__label">Вес</th><td>24 кг нетто / 29 кг брутто</td><td>306,5 кг (комплект)</td><td>41 кг станция / 90 кг комплект</td></tr><tr><th class="cm__label">Гарантия</th><td>12 месяцев</td><td>12 месяцев</td><td>12 месяцев</td></tr><tr class="cm__price"><th class="cm__label">Цена поставщика</th><td><b>800 000 ₽</b></td><td><b>по запросу</b></td><td><b>1 900 000 ₽</b></td></tr></tbody></table>
+  <div class="cm-photos"><figure class="cm-photo"><img src="assets/img/products/stancziya-reb-kapyushon-k-12m/01.webp" alt=""><figcaption>Станция РЭБ Капюшон К-12М</figcaption></figure><figure class="cm-photo"><img src="assets/img/products/kompleks-reb-rebus-4/01.webp" alt=""><figcaption>Комплекс РЭБ Ребус-4</figcaption></figure><figure class="cm-photo"><img src="assets/img/products/stancziya-reb-shtora-k12-700/01.webp" alt=""><figcaption>Станция РЭБ Штора К-12/700</figcaption></figure></div>
+  <p style="margin-top:6mm;font-size:7pt;color:var(--soft)">Дальность зависит от рельефа, помеховой обстановки и погоды; не является гарантией нейтрализации конкретного аппарата. «Ребус-4» — цена по запросу.</p>
+  <div class="pg-num">04</div>
+</section>
+
 <!-- КАТАЛОГ -->
 
 <section class="page">
@@ -291,7 +316,7 @@
         </div>
       </article>
   </div>
-  <div class="pg-num">04</div>
+  <div class="pg-num">05</div>
 </section>
 <section class="page">
   <div class="pg-head"><b>Каталог изделий</b><span class="small">03 / КАТАЛОГ · стр. 2</span></div>
@@ -352,7 +377,7 @@
         </div>
       </article>
   </div>
-  <div class="pg-num">05</div>
+  <div class="pg-num">06</div>
 </section>
 <section class="page">
   <div class="pg-head"><b>Каталог изделий</b><span class="small">03 / КАТАЛОГ · стр. 3</span></div>
@@ -413,7 +438,7 @@
         </div>
       </article>
   </div>
-  <div class="pg-num">06</div>
+  <div class="pg-num">07</div>
 </section>
 <section class="page">
   <div class="pg-head"><b>Каталог изделий</b><span class="small">03 / КАТАЛОГ · стр. 4</span></div>
@@ -474,7 +499,7 @@
         </div>
       </article>
   </div>
-  <div class="pg-num">07</div>
+  <div class="pg-num">08</div>
 </section>
 <section class="page">
   <div class="pg-head"><b>Каталог изделий</b><span class="small">03 / КАТАЛОГ · стр. 5</span></div>
@@ -535,7 +560,7 @@
         </div>
       </article>
   </div>
-  <div class="pg-num">08</div>
+  <div class="pg-num">09</div>
 </section>
 <section class="page">
   <div class="pg-head"><b>Каталог изделий</b><span class="small">03 / КАТАЛОГ · стр. 6</span></div>
@@ -596,7 +621,7 @@
         </div>
       </article>
   </div>
-  <div class="pg-num">09</div>
+  <div class="pg-num">10</div>
 </section>
 <section class="page">
   <div class="pg-head"><b>Каталог изделий</b><span class="small">03 / КАТАЛОГ · стр. 7</span></div>
@@ -639,7 +664,7 @@
         </div>
       </article>
   </div>
-  <div class="pg-num">10</div>
+  <div class="pg-num">11</div>
 </section>
 
 <!-- ПРИМЕНЕНИЕ + ПОСТАВКА -->
@@ -665,7 +690,7 @@
     <div class="step"><b>06</b><h4>ПНР и обучение</h4><p>Монтаж, подключение, проверка РЭБ-тестером, инструктаж.</p></div>
     <div class="step"><b>07</b><h4>Гарантия и сервис</h4><p>12 месяцев, ремонт, поддержка и модернизация.</p></div>
   </div>
-  <div class="pg-num">11</div>
+  <div class="pg-num">12</div>
 </section>
 
 <!-- ДИСКЛЕЙМЕРЫ + КОНТАКТЫ -->
@@ -684,7 +709,7 @@
     <div class="contact-box"><span>Производитель</span><b>НПО «Киловатт» / «МегаВатт»</b><p style="margin:3mm 0 0;font-size:7.6pt">Липецк · сервис и техническая поддержка по паспорту изделия</p></div>
     <div class="contact-box contact-box--qr"><span>Позвонить с телефона</span><img src="assets/img/qr-phone.svg" alt="QR: телефон каталога" style="width:26mm;height:26mm;background:#fff;padding:1.5mm;"><p style="margin:2mm 0 0;font-size:7pt">Наведите камеру — откроется номер</p></div>
   </div>
-  <div class="pg-num">12</div>
+  <div class="pg-num">13</div>
 </section>
 
 </body>

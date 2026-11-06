@@ -49,6 +49,51 @@ def product_card(p, idx):
         </div>
       </article>"""
 
+def spec_find(p, pats):
+    for s in (p.get("specs") or []):
+        l = (s.get("label") or "").lower()
+        for pat in pats:
+            if pat in l:
+                return s.get("value")
+    return None
+
+
+def compare_page(flags, pageno):
+    rows = [
+        ("Диапазон частот", ["диапазон"]),
+        ("Мощность передатчиков", ["мощность передатчиков", "выходная мощность", "суммарная"]),
+        ("Дальность", ["дальность"]),
+        ("Питание", ["питание"]),
+        ("Вес", ["вес"]),
+        ("Гарантия", ["гарантия"]),
+    ]
+    head = "".join(
+        f'<th><span class="cm__cat">{esc(p.get("category",""))}</span><b>{esc(p.get("name",""))}</b></th>' for p in flags
+    )
+    body = ""
+    for label, pats in rows:
+        body += f'<tr><th class="cm__label">{esc(label)}</th>' + "".join(
+            f"<td>{esc(spec_find(p, pats) or '—')}</td>" for p in flags
+        ) + "</tr>"
+    body += '<tr class="cm__price"><th class="cm__label">Цена поставщика</th>' + "".join(
+        f"<td><b>{money(p.get('price_dima'))}</b></td>" for p in flags
+    ) + "</tr>"
+    photos = ""
+    for p in flags:
+        ph = (p.get("photos") or [])
+        img = f'<img src="{esc(ph[0])}" alt="">' if ph else '<div class="cm-noimg">фото уточняется</div>'
+        photos += f'<figure class="cm-photo">{img}<figcaption>{esc(p.get("name",""))}</figcaption></figure>'
+    return f"""
+<section class="page">
+  <div class="pg-head"><b>Флагманы в цифрах</b><span class="small">02.1 / СРАВНЕНИЕ</span></div>
+  <p style="margin:0 0 5mm;font-size:8.8pt;max-width:150mm">Три модели рядом — что выбрать под объект. Данные по паспортам изделий, цены — поставщика (ориентиры, подтверждаются в КП).</p>
+  <table class="cm"><thead><tr><th class="cm__label">Характеристика</th>{head}</tr></thead><tbody>{body}</tbody></table>
+  <div class="cm-photos">{photos}</div>
+  <p style="margin-top:6mm;font-size:7pt;color:var(--soft)">Дальность зависит от рельефа, помеховой обстановки и погоды; не является гарантией нейтрализации конкретного аппарата. «Ребус-4» — цена по запросу.</p>
+  <div class="pg-num">{pageno:02d}</div>
+</section>"""
+
+
 def clip_text(s, limit):
     s = (s or "").strip()
     if len(s) <= limit:
@@ -202,6 +247,21 @@ def build(theme, prods):
   .fl__price {{ margin-top:2.5mm; font-family:"Tektur",monospace; font-size:7.4pt; color:var(--soft); }}
   .fl__price b {{ font-size:11pt; color:var(--ink); font-weight:600; }}
 
+  /* сравнение */
+  .cm {{ width:100%; border-collapse:collapse; }}
+  .cm th, .cm td {{ text-align:left; padding:2.6mm 3mm; border-top:1px solid var(--line); vertical-align:top; }}
+  .cm thead th {{ border-top:0; border-bottom:1px solid var(--line); vertical-align:bottom; }}
+  .cm thead th b {{ display:block; font-family:"Oswald",sans-serif; font-weight:500; text-transform:uppercase; font-size:11pt; line-height:1.02; margin-top:1.5mm; }}
+  .cm__cat {{ font-family:"Tektur",monospace; font-size:5.8pt; letter-spacing:.12em; text-transform:uppercase; color:var(--soft); }}
+  .cm__label {{ width:34mm; font-family:"Oswald",sans-serif; font-weight:500; text-transform:uppercase; font-size:7pt; letter-spacing:.05em; color:var(--olive); background:{dark if False else 'transparent'}; }}
+  .cm td {{ font-family:"Tektur",monospace; font-size:7.2pt; }}
+  .cm__price td b {{ font-size:9.5pt; }}
+  .cm-photos {{ display:grid; grid-template-columns:repeat(3,1fr); gap:5mm; margin-top:9mm; }}
+  .cm-photo {{ margin:0; background:var(--paper2); padding:3.5mm 3mm 2.5mm; text-align:center; }}
+  .cm-photo img {{ height:40mm; max-width:100%; object-fit:contain; filter:drop-shadow(0 4mm 4mm rgba(0,0,0,{'0.45' if field else '0.12'})); }}
+  .cm-photo figcaption {{ font-family:"Tektur",monospace; font-size:6.2pt; letter-spacing:.08em; text-transform:uppercase; color:var(--soft); margin-top:2.4mm; }}
+  .cm-noimg {{ height:40mm; display:flex; align-items:center; justify-content:center; font-family:"Tektur",monospace; font-size:6pt; color:var(--soft); }}
+
   /* карточки каталога */
   .grid4 {{ display:grid; grid-template-columns:1fr 1fr; gap:6mm 7mm; }}
   .pc {{ display:flex; flex-direction:column; border-top:1px solid var(--line); padding-top:3mm; page-break-inside:avoid; }}
@@ -319,6 +379,8 @@ def build(theme, prods):
   <div class="pg-num">03</div>
 </section>
 
+{compare_page(flags, 4)}
+
 <!-- КАТАЛОГ -->
 {''.join(f'''
 <section class="page">
@@ -326,7 +388,7 @@ def build(theme, prods):
   <div class="grid4">
     {''.join(product_card(p, (n*8)+j+1) for j, p in enumerate(chunk))}
   </div>
-  <div class="pg-num">{n+4:02d}</div>
+  <div class="pg-num">{n+5:02d}</div>
 </section>''' for n, chunk in enumerate(pages))}
 
 <!-- ПРИМЕНЕНИЕ + ПОСТАВКА -->
@@ -352,7 +414,7 @@ def build(theme, prods):
     <div class="step"><b>06</b><h4>ПНР и обучение</h4><p>Монтаж, подключение, проверка РЭБ-тестером, инструктаж.</p></div>
     <div class="step"><b>07</b><h4>Гарантия и сервис</h4><p>12 месяцев, ремонт, поддержка и модернизация.</p></div>
   </div>
-  <div class="pg-num">{len(pages)+4:02d}</div>
+  <div class="pg-num">{len(pages)+5:02d}</div>
 </section>
 
 <!-- ДИСКЛЕЙМЕРЫ + КОНТАКТЫ -->
@@ -371,7 +433,7 @@ def build(theme, prods):
     <div class="contact-box"><span>Производитель</span><b>НПО «Киловатт» / «МегаВатт»</b><p style="margin:3mm 0 0;font-size:7.6pt">Липецк · сервис и техническая поддержка по паспорту изделия</p></div>
     <div class="contact-box contact-box--qr"><span>Позвонить с телефона</span><img src="assets/img/qr-phone.svg" alt="QR: телефон каталога" style="width:26mm;height:26mm;background:#fff;padding:1.5mm;"><p style="margin:2mm 0 0;font-size:7pt">Наведите камеру — откроется номер</p></div>
   </div>
-  <div class="pg-num">{len(pages)+5:02d}</div>
+  <div class="pg-num">{len(pages)+6:02d}</div>
 </section>
 
 </body>
