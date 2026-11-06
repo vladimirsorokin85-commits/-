@@ -1,0 +1,476 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>В ОКОПЕ × НПО «Киловатт» — каталог 2026 · обложка 03 «Паспорт»</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  /* ========================================================================
+     ОБЛОЖКА 03 — «ПАСПОРТ»
+     Механизм: каталог открывается не рекламой, а паспортом изделия —
+     документом, по которому закупают. Реальные сертификаты, реальные ТТХ,
+     штамп издания. Бумага/типографская краска + штамп.
+     ======================================================================== */
+
+  .cover {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto auto auto auto 1fr auto;
+    background: var(--bg);
+    color: var(--fg);
+    position: relative;
+    overflow: hidden;
+    padding: 0 var(--gutter) clamp(16px, 3vh, 32px);
+  }
+
+  /* --- служебная шапка документа --------------------------------------- */
+  .doc-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+    padding: clamp(12px, 1.8vh, 20px) 0 var(--sp-2);
+    border-bottom: 1px solid var(--line-strong);
+    font-family: var(--font-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.04em;
+    color: var(--fg-dim);
+  }
+
+  .doc-top .right {
+    text-align: right;
+  }
+
+  .doc-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .doc-brand img {
+    width: 66px;
+    height: auto;
+    filter: invert(1); /* белый wordmark -> типографская краска */
+  }
+
+  .doc-top b {
+    font-weight: 400;
+    color: var(--fg);
+  }
+
+  /* --- заголовок -------------------------------------------------------- */
+  .doc-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(260px, 26vw, 380px);
+    gap: clamp(20px, 4vw, 64px);
+    align-items: start;
+    padding-top: clamp(14px, 3.6vh, 40px);
+  }
+
+  .doc-eyebrow {
+    margin: 0 0 var(--sp-3);
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: var(--t-micro);
+    letter-spacing: var(--ls-accent);
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  .h1 {
+    margin: 0;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: clamp(42px, 6.9vw, 98px);
+    line-height: 0.94;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+  }
+
+  .h1 small {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 300;
+    font-size: 0.2em;
+    letter-spacing: 0.14em;
+    line-height: 1.5;
+    margin-top: 1.2em;
+    color: var(--fg-dim);
+    text-transform: uppercase;
+  }
+
+  .doc-kind {
+    font-family: var(--font-mono);
+    font-size: var(--t-sm);
+    line-height: 1.6;
+    color: var(--fg-dim);
+    margin: 10px 0 0;
+    max-width: 44ch;
+  }
+
+  .doc-kind b {
+    font-weight: 400;
+    color: var(--fg);
+  }
+
+  /* --- фото-вклейка ----------------------------------------------------- */
+  .plate {
+    margin: 0;
+    padding: 10px 10px 0;
+    background: var(--bg-2);
+    border: 1px solid var(--line-strong);
+    transform: rotate(-1.1deg);
+    box-shadow: none;
+  }
+
+  .plate img {
+    display: block;
+    width: 100%;
+    height: auto;
+    mix-blend-mode: multiply;
+    background: var(--bg-2);
+  }
+
+  .plate figcaption {
+    font-family: var(--font-mono);
+    font-size: var(--t-micro);
+    color: var(--fg-faint);
+    padding: 6px 2px 8px;
+    letter-spacing: 0.03em;
+  }
+
+  /* --- таблица ТТХ ------------------------------------------------------ */
+  .specs {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(20px, 4vw, 64px);
+    padding-top: clamp(10px, 2.2vh, 24px);
+    align-items: start;
+  }
+
+  .specs dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .spec-row {
+    display: grid;
+    grid-template-columns: minmax(120px, 0.42fr) minmax(0, 1fr);
+    gap: var(--sp-4);
+    padding: clamp(4px, 0.62vh, 7px) 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+  }
+
+  .spec-row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .spec-row dt {
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: var(--t-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  .spec-row dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: clamp(11px, 0.92vw, 13px);
+    line-height: 1.45;
+    color: var(--fg);
+  }
+
+  /* --- цифры-факты ------------------------------------------------------ */
+  .stamp-facts {
+    margin: clamp(12px, 2.4vh, 26px) 0 0;
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: clamp(12px, 1.1vw, 15px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    line-height: 1.7;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.9em;
+  }
+
+  .stamp-facts span {
+    white-space: nowrap;
+  }
+
+  .stamp-facts i {
+    font-style: normal;
+    color: var(--fg-faint);
+    margin-left: 0.9em;
+  }
+
+  /* --- штамп издания ---------------------------------------------------- */
+  .stamp {
+    position: absolute;
+    right: calc(var(--gutter) + 2px);
+    bottom: clamp(96px, 15vh, 160px);
+    z-index: 4;
+    width: clamp(150px, 13vw, 186px);
+    padding: 10px 12px 12px;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    text-align: center;
+    transform: rotate(-7.5deg);
+    opacity: 0.92;
+    line-height: 1.1;
+    pointer-events: none;
+    background: transparent;
+  }
+
+  .stamp .big {
+    display: block;
+    font-size: clamp(17px, 1.55vw, 22px);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+
+  .stamp .mid {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    margin: 5px 0 4px;
+    padding: 4px 0;
+    border-top: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .stamp .small {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.16em;
+    opacity: 0.85;
+  }
+
+  /* --- низ документа ---------------------------------------------------- */
+  .doc-foot {
+    align-self: end;
+    padding-top: clamp(10px, 2vh, 20px);
+    border-top: 1px solid var(--line-strong);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    align-items: flex-end;
+  }
+
+  .certs {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--t-micro);
+    line-height: 1.75;
+    letter-spacing: 0.02em;
+    color: var(--fg-dim);
+    max-width: 84ch;
+  }
+
+  .certs b {
+    font-weight: 400;
+    color: var(--fg);
+  }
+
+  .doc-foot .page {
+    font-family: var(--font-head);
+    font-size: var(--t-micro);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    white-space: nowrap;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* --- печатные метки --------------------------------------------------- */
+  .fold {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    border-left: 1px dashed rgba(34, 35, 30, 0.18);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ---------------------------------------------------------------------
+     АДАПТИВ
+     --------------------------------------------------------------------- */
+  @media (max-width: 980px) {
+    .doc-head {
+      grid-template-columns: 1fr;
+    }
+    .plate {
+      max-width: 480px;
+      order: 2;
+      transform: rotate(-1deg);
+    }
+    .stamp {
+      top: auto;
+      right: auto;
+      bottom: auto;
+      left: 0;
+      margin-top: var(--sp-5);
+      position: relative;
+      width: 168px;
+      transform: rotate(-6deg);
+    }
+    .specs {
+      grid-template-columns: 1fr;
+    }
+    .fold {
+      display: none;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .cover {
+      grid-template-rows: none;
+      align-content: start;
+      overflow: visible;
+    }
+    .docs-top {
+      flex-direction: column;
+    }
+    .h1 {
+      font-size: clamp(40px, 11.6vw, 66px);
+    }
+    .h1 small {
+      font-size: 0.26em;
+    }
+    .spec-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .stamp {
+      position: relative;
+      order: 3;
+    }
+    .doc-foot {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .doc-foot .page {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .doc-top .right {
+      text-align: left;
+    }
+    .plate {
+      padding: 8px 8px 0;
+    }
+  }
+</style>
+</head>
+<body class="theme-doc grain cover">
+
+  <div class="doc-top">
+    <span class="doc-brand">
+      <img src="refs/logo-voida-word.png" alt="В ОКОПЕ">
+      <span><b>ООО «НПО «Киловатт»</b> · г. Липецк</span>
+    </span>
+    <span class="right"><b>Каталог изделий · 2026</b> · «В ОКОПЕ»</span>
+  </div>
+
+  <section class="doc-head">
+    <div>
+      <p class="doc-eyebrow">Станции РЭБ «Капюшон» · НПО «Киловатт»</p>
+      <h1 class="h1">
+        Паспорт<br>изделия
+        <small>станция противодействия БПЛА<br>«Капюшон», модель К-12М</small>
+      </h1>
+      <p class="doc-kind">
+        Назначение: <b>защита объектов, автотранспорта, ББМ и личного состава</b>
+        от ударных БПЛА и развед-дронов типа FPV, Mavic/Autel.
+        Страница 01 — образец оформления; далее в каталоге паспорт и сертификаты на каждое изделие.
+      </p>
+    </div>
+
+    <figure class="plate">
+      <img src="refs/k12m-frame-14.png" alt="Внешний вид станции «Капюшон» К-12М: купол из армированного радиопрозрачного стеклопластика">
+      <figcaption>Рис. 1. Внешний вид изделия. К-12М, 700 × 257 мм.</figcaption>
+    </figure>
+
+    <div class="stamp" aria-hidden="true">
+      <span class="big">Каталог</span>
+      <span class="mid">2026</span>
+      <span class="small">В ОКОПЕ · ИЗДАНИЕ 01</span>
+    </div>
+  </section>
+
+  <section class="specs" aria-label="Технические характеристики по паспорту изделия">
+    <dl>
+      <div class="spec-row">
+        <dt>Исполнение</dt>
+        <dd>Металлическое основание с противоударным корпусом-куполом из армированного радиопрозрачного стеклопластика</dd>
+      </div>
+      <div class="spec-row">
+        <dt>Габариты</dt>
+        <dd>700 × 257 мм · упаковка 745 × 745 × 315 мм</dd>
+      </div>
+      <div class="spec-row">
+        <dt>Вес</dt>
+        <dd>нетто — 24 кг · брутто — 29 кг</dd>
+      </div>
+      <div class="spec-row">
+        <dt>Диапазон частот</dt>
+        <dd>300–1020 · 1080–1360 · 2100–2800 · 5100–5300 · 5680–5900 МГц</dd>
+      </div>
+      <div class="spec-row">
+        <dt>Дальность подавления</dt>
+        <dd>50–200 м при удалении оператора 2000–3000 м</dd>
+      </div>
+      <div class="spec-row">
+        <dt>Мощность передатчиков</dt>
+        <dd>суммарно до 240 Вт · потребление не более 600 Вт</dd>
+      </div>
+      <div class="spec-row">
+        <dt>Питание</dt>
+        <dd>бортсеть 12/24 В · 220 В через ПН 220/24 В · ИП-24/100</dd>
+      </div>
+      <div class="spec-row">
+        <dt>Температура</dt>
+        <dd>−20…+40 °C · время работы — неограниченно</dd>
+      </div>
+    </dl>
+
+    <p class="stamp-facts">
+      <span>5 диапазонов</span><i>/</i>
+      <span>300–5900 Мгц</span><i>/</i>
+      <span>50–200 м</span><i>/</i>
+      <span>до 240 вт</span>
+    </p>
+  </section>
+
+  <div class="fold" aria-hidden="true"></div>
+
+  <footer class="doc-foot">
+    <p class="certs">
+      <b>Сертификат соответствия</b> № РОСС RU.32001.04ИБФ1.ОСП28.81271 ·
+      <b>декларация о соответствии</b> ЕАЭС № RU Д-RU.PA07.B.24906/25 ·
+      <b>свидетельство</b> № 1086620 от 14.02.2025 ·
+      <b>патент</b> RU 145992 S от 06.02.2025.
+      Данные — из паспорта изделия К-12М, 2026.
+    </p>
+    <p class="page">01 / паспорт<br>В ОКОПЕ · 2026</p>
+  </footer>
+
+</body>
+</html>

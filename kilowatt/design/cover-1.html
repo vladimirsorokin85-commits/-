@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>В ОКОПЕ × НПО «Киловатт» — каталог 2026 · обложка 01 «Капюшон»</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  /* ========================================================================
+     ОБЛОЖКА 01 — «КАПЮШОН НАКРЫВАЕТ СВОЁ НАЗВАНИЕ»
+     Механизм: продукт физически натягивает капюшон на заголовок.
+     Олива/графит. Один акцент: кислотный лайм (сигнал, а не украшение).
+     ======================================================================== */
+
+  .cover {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--fg);
+    position: relative;
+  }
+
+  /* --- шапка: логотип слева, выпускающие данные справа ------------------ */
+  .top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--sp-5);
+    padding: clamp(16px, 2.4vw, 32px) var(--gutter) 0;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  .brand img {
+    width: clamp(120px, 11vw, 168px);
+    height: auto;
+    /* wordmark белый: на оливе читается, на светлом не используется */
+  }
+
+  .issuer {
+    display: flex;
+    gap: clamp(16px, 4vw, 64px);
+    padding-top: 4px;
+    text-align: right;
+  }
+
+  .issuer .label {
+    color: var(--fg-dim);
+    display: block;
+  }
+
+  .issuer .label b {
+    display: block;
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  /* --- сцена: название + купол ----------------------------------------- */
+  .stage {
+    position: relative;
+    padding: 0 var(--gutter);
+    min-height: 0;
+  }
+
+  .lead {
+    padding-top: clamp(20px, 5.2vh, 64px);
+    max-width: 470px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: var(--t-xs);
+    letter-spacing: var(--ls-accent);
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    margin: 0 0 var(--sp-4);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 34px;
+    height: 2px;
+    background: currentColor;
+    margin-right: 12px;
+    flex: 0 0 auto;
+  }
+
+  .sub {
+    margin: 0;
+    font-size: clamp(15px, 1.35vw, 19px);
+    line-height: 1.45;
+    color: var(--fg-dim);
+    max-width: 27em;
+  }
+
+  .sub strong {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  /* заголовок-плакат */
+  .h1-wrap {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: clamp(18px, 4vh, 48px);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .h1 {
+    margin: 0;
+    font-size: clamp(78px, 19vw, 300px);
+    font-weight: 800;
+    line-height: 0.78;
+    letter-spacing: -0.022em;
+    text-transform: uppercase;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+
+  .h1 .cut {
+    /* последние буквы разрешены куполу: они уходят под него */
+    color: var(--fg);
+  }
+
+  .edition {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 0 0 clamp(10px, 1.6vh, 18px);
+  }
+
+  .edition .num {
+    font-family: var(--font-tech);
+    font-size: var(--t-sm);
+    letter-spacing: 0.16em;
+    color: var(--accent);
+  }
+
+  .edition .line {
+    height: 1px;
+    background: var(--line-strong);
+    width: min(180px, 18vw);
+  }
+
+  /* купол: фото вырезано по контуру, стоит поверх типографики */
+  .dome {
+    position: absolute;
+    z-index: 3;
+    right: max(-10vw, -150px);
+    bottom: clamp(64px, 9.5vh, 132px);
+    width: clamp(520px, 61vw, 900px);
+    height: auto;
+    filter: none;
+    pointer-events: none;
+  }
+
+  .dome-shadow {
+    /* плоская «тень» капюшона на слове: плотная заливка, не градиент */
+    position: absolute;
+    z-index: 2;
+    right: max(-7vw, -110px);
+    bottom: clamp(-10px, 1vh, 24px);
+    width: clamp(560px, 66vw, 1010px);
+    height: auto;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  /* --- факты: только паспортные числа ---------------------------------- */
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: 1000px;
+    margin: 0 var(--gutter) clamp(20px, 4.2vh, 42px);
+    padding-top: var(--sp-4);
+    border-top: 1px solid var(--line);
+    position: relative;
+    z-index: 5;
+  }
+
+  .fact {
+    padding: 0 clamp(10px, 1.4vw, 22px);
+    border-left: 1px solid var(--line);
+  }
+
+  .fact:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .fact .val {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(21px, 2.4vw, 33px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .fact .val i {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .fact .cap {
+    display: block;
+    margin-top: 7px;
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: var(--t-micro);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    line-height: 1.35;
+  }
+
+  /* --- мелкая полиграфия: метка издания и приводка --------------------- */
+  .colophon {
+    position: absolute;
+    right: var(--gutter);
+    bottom: clamp(20px, 4.2vh, 42px);
+    z-index: 6;
+    text-align: right;
+    font-family: var(--font-tech);
+    font-size: var(--t-micro);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    line-height: 1.7;
+  }
+
+  .regmark {
+    position: absolute;
+    top: clamp(52px, 8vh, 84px);
+    right: var(--gutter);
+    width: 15px;
+    height: 15px;
+    z-index: 6;
+    opacity: 0.55;
+  }
+
+  .regmark::before,
+  .regmark::after {
+    content: "";
+    position: absolute;
+    background: var(--accent);
+  }
+
+  .regmark::before {
+    width: 15px;
+    height: 1px;
+    top: 7px;
+    left: 0;
+  }
+
+  .regmark::after {
+    width: 1px;
+    height: 15px;
+    left: 7px;
+    top: 0;
+  }
+
+  /* ---------------------------------------------------------------------
+     АДАПТИВ
+     --------------------------------------------------------------------- */
+  @media (max-width: 1100px) {
+    .h1 {
+      font-size: clamp(72px, 17.4vw, 200px);
+    }
+    .dome {
+      right: -6vw;
+      width: clamp(480px, 70vw, 800px);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .cover {
+      grid-template-rows: auto auto auto auto;
+      min-height: 100svh;
+      overflow: visible;
+    }
+
+    .issuer {
+      gap: var(--sp-4);
+    }
+
+    .lead {
+      padding-top: var(--sp-5);
+      max-width: 100%;
+    }
+
+    .h1-wrap {
+      position: relative;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      padding: var(--sp-5) var(--gutter) 0;
+    }
+
+    .h1 {
+      font-size: clamp(54px, 15.6vw, 108px);
+      line-height: 0.84;
+      white-space: normal;
+    }
+
+    .dome {
+      position: relative;
+      right: auto;
+      bottom: auto;
+      width: min(92vw, 560px);
+      margin: calc(-1 * clamp(6px, 2vw, 18px)) auto 0;
+      display: block;
+    }
+
+    .stage {
+      padding-bottom: 0;
+    }
+
+    .regmark {
+      display: none;
+    }
+
+    .facts {
+      margin: var(--sp-5) var(--gutter) var(--sp-6);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--sp-4);
+    }
+
+    .fact:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .fact:nth-child(1),
+    .fact:nth-child(2) {
+      padding-bottom: var(--sp-3);
+    }
+
+    .colophon {
+      position: relative;
+      right: auto;
+      bottom: auto;
+      margin: 0 var(--gutter) var(--sp-5);
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .h1 {
+      font-size: clamp(46px, 14.6vw, 74px);
+    }
+    .issuer .label:first-child {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body class="theme-field grain cover">
+
+  <header class="top">
+    <a class="brand" href="#" aria-label="В ОКОПЕ — магазин брони">
+      <img src="refs/logo-voida-white.png" alt="В ОКОПЕ">
+    </a>
+    <div class="issuer">
+      <span class="label"><b>НПО «Киловатт»</b>производитель</span>
+      <span class="label"><b>Липецк · 2026</b>каталог изделий</span>
+    </div>
+  </header>
+
+  <div class="regmark" aria-hidden="true"></div>
+
+  <main class="stage">
+    <div class="lead">
+      <p class="eyebrow">Станции РЭБ «Капюшон» · противодействие БПЛА</p>
+      <p class="sub">
+        Защита объектов, автотранспорта, ББМ и личного состава от ударных БПЛА
+        и развед-дронов типа <strong>FPV, Mavic/Autel</strong>. Каталог НПО «Киловатт» —
+        от купола на крыше до переносной станции за спиной.
+      </p>
+    </div>
+
+    <div class="h1-wrap">
+      <p class="edition">
+        <span class="line"></span>
+        <span class="num">КАТАЛОГ 2026</span>
+      </p>
+      <h1 class="h1 display">Капюшон</h1>
+    </div>
+
+    <img class="dome" src="refs/cut/k12m-frame-14-cut.png"
+         alt="Станция противодействия БПЛА «Капюшон» К-12М: купол из армированного радиопрозрачного стеклопластика">
+  </main>
+
+  <section class="facts" aria-label="Ключевые характеристики по паспорту К-12М">
+    <div class="fact">
+      <span class="val">300–5900 <i>МГц</i></span>
+      <span class="cap">пять диапазонов подавления</span>
+    </div>
+    <div class="fact">
+      <span class="val">50–200 <i>м</i></span>
+      <span class="cap">дальность подавления</span>
+    </div>
+    <div class="fact">
+      <span class="val">2000–3000 <i>м</i></span>
+      <span class="cap">зона при операторе в укрытии</span>
+    </div>
+    <div class="fact">
+      <span class="val">до 240 <i>Вт</i></span>
+      <span class="cap">суммарная мощность передатчиков</span>
+    </div>
+  </section>
+
+  <p class="colophon">ТТХ — по паспорту изделия К-12М<br>В ОКОПЕ · каталог 2026</p>
+
+</body>
+</html>

@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Станции подавления БПЛА — каталог · В ОКОПЕ</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="catalog.css">
+<style>
+  /* ========================================================================
+     СТРАНИЦА КАТЕГОРИИ — сетка изделий и фильтры-чипы.
+     Печатная сетка: линии вместо «карточек», никаких теней и скруглений.
+     ======================================================================== */
+
+  .cat-head {
+    padding-bottom: clamp(16px, 2.6vh, 28px);
+  }
+
+  .cat-tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+    padding: var(--sp-3) 0 var(--sp-4);
+  }
+
+  .cat-tools .label {
+    color: var(--fg-faint);
+  }
+
+  .goods .prod:not(.prod--featured) .prod-photo {
+    aspect-ratio: 16 / 11;
+  }
+
+  /* ---------------------------------------------------------------- */
+  @media (max-width: 720px) {
+    .cat-tools {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+    .goods .prod:not(.prod--featured) .prod-photo {
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>
+</head>
+<body class="catalog theme-quiet grain">
+
+  <header class="hdr">
+    <div class="hdr-in">
+      <a class="hdr-brand" href="#" aria-label="В ОКОПЕ — каталог">
+        <img src="refs/logo-voida-white.png" alt="В ОКОПЕ">
+      </a>
+      <nav class="hdr-nav" aria-label="Основная навигация">
+        <a href="#" aria-current="page">Каталог</a>
+        <a href="#">Подбор</a>
+        <a href="#">Производитель</a>
+        <a href="#">Доставка</a>
+        <a href="#">Контакты</a>
+      </nav>
+      <div class="hdr-right">
+        <a class="hdr-phone" href="tel:+74993256272">+7 (499) 325-62-72</a>
+        <a class="btn btn--accent btn--sm" href="#">Запросить КП</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="#">В ОКОПЕ</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Каталог</span>
+    </nav>
+
+    <header class="page-head cat-head">
+      <div>
+        <p class="kicker">Каталог 2026 · НПО «Киловатт»</p>
+        <h1 class="h1">Станции подавления БПЛА</h1>
+        <p class="h1-sub">от купола на крыше до переносной станции за спиной</p>
+        <p class="lead" style="margin-top:16px">
+          Стационарные комплексы для объектов и площадей, станции на автомобили
+          и бронетехнику, переносные рюкзачные изделия, обнаружители дронов
+          и аксессуары. На каждую позицию — паспорт изделия и сертификат соответствия.
+        </p>
+      </div>
+      <p class="page-meta">
+        <b>33 позиции</b> · 7 категорий<br>
+        паспорт и сертификат на каждое изделие<br>
+        обновлено: каталог 2026
+      </p>
+    </header>
+
+    <div class="filterbar" aria-label="Фильтры по категориям">
+      <ul class="chips">
+        <li><button class="chip" type="button" aria-pressed="true">Всё <span class="n">33</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false">На бронетехнику <span class="n">5</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false">На автомобили <span class="n">3</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false">Стационарные <span class="n">5</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false">Переносные <span class="n">6</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false">Аксессуары <span class="n">10</span></button></li>
+        <li><button class="chip" type="button" aria-pressed="false">Доп. модули <span class="n">4</span></button></li>
+      </ul>
+      <label class="sort">Сортировка
+        <select aria-label="Сортировка изделий">
+          <option>по назначению</option>
+          <option>по дальности</option>
+          <option>по мощности</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="cat-tools">
+      <span class="label">Показано 8 из 33 · «Капюшон» и «Штора», «Ребус», «Сигнал»</span>
+      <span class="label">цены — по запросу</span>
+    </div>
+
+    <div class="goods">
+
+      <article class="prod prod--featured">
+        <a class="prod-link" href="card.html">
+          <div class="prod-photo">
+            <img src="refs/cut/k12m-frame-14-cut.png"
+                 alt="Станция противодействия БПЛА «Капюшон» К-12М">
+          </div>
+          <div class="prod-body">
+            <span class="prod-cat">На технику · флагман</span>
+            <h3 class="prod-name">Капюшон<br>К-12М</h3>
+            <p class="prod-spec">300–5900 МГц · подавление 50–200 м<br>зона 2000–3000 м при операторе в укрытии · до 240 Вт</p>
+            <div class="prod-foot">
+              <span class="prod-price">цена по запросу</span>
+              <span class="prod-arw">→</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="prod">
+        <a class="prod-link" href="#">
+          <div class="prod-photo"><img src="refs/shtora-frame-17-2.png" alt="Станция РЭБ «Штора» К-12/700"></div>
+          <div class="prod-body">
+            <span class="prod-cat">Стационарные · «Штора»</span>
+            <h3 class="prod-name">Штора К-12/700</h3>
+            <p class="prod-spec">до 1000 м · до 600 Вт · 41 кг</p>
+            <div class="prod-foot">
+              <span class="prod-price">цена по запросу</span>
+              <span class="prod-arw">→</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="prod">
+        <a class="prod-link" href="#">
+          <div class="prod-photo"><img src="refs/rebus4-frame-19-1.png" alt="Комплекс РЭБ «Ребус-4»"></div>
+          <div class="prod-body">
+            <span class="prod-cat">Стационарные · «Ребус»</span>
+            <h3 class="prod-name">Ребус-4</h3>
+            <p class="prod-spec">разведка — до 5000 м · ударные — до 1000 м</p>
+            <div class="prod-foot">
+              <span class="prod-price">цена по запросу</span>
+              <span class="prod-arw">→</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="prod">
+        <a class="prod-link" href="#">
+          <div class="prod-photo"><img src="refs/shtora-m-frame-16-3.png" alt="Станция РЭБ «Штора-М» К-8/600"></div>
+          <div class="prod-body">
+            <span class="prod-cat">Стационарные · «Штора-М»</span>
+            <h3 class="prod-name">Штора-М К-8/600</h3>
+            <p class="prod-spec">500–2000 м · до 260 Вт · 4 часа от АКБ</p>
+            <div class="prod-foot">
+              <span class="prod-price">цена по запросу</span>
+              <span class="prod-arw">→</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="prod">
+        <a class="prod-link" href="#">
+          <div class="prod-photo"><img src="refs/tp-8-100.png" alt="Станция РЭБ «Капюшон» ТП 8-100"></div>
+          <div class="prod-body">
+            <span class="prod-cat">Переносные · «Капюшон»</span>
+            <h3 class="prod-name">Капюшон ТП 8-100</h3>
+            <p class="prod-spec">до 160 Вт · 10 кг · 60 минут</p>
+            <div class="prod-foot">
+              <span class="prod-price">цена по запросу</span>
+              <span class="prod-arw">→</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="prod">
+        <a class="prod-link" href="#">
+          <div class="prod-photo"><img src="refs/signal-frame-7-1.png" alt="Обнаружитель дронов «Сигнал-М2»"></div>
+          <div class="prod-body">
+            <span class="prod-cat">Стационарные · обнаружение</span>
+            <h3 class="prod-name">Сигнал-М2</h3>
+            <p class="prod-spec">300–10 000 МГц · обнаружение 1000–5000 м · 3 кг</p>
+            <div class="prod-foot">
+              <span class="prod-price">цена по запросу</span>
+              <span class="prod-arw">→</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="prod">
+        <a class="prod-link" href="#">
+          <div class="prod-photo"><img src="refs/tp-4-28a.png" alt="Станция РЭБ «Капюшон» ТП 4-28А в рюкзаке"></div>
+          <div class="prod-body">
+            <span class="prod-cat">Переносные · «Капюшон»</span>
+            <h3 class="prod-name">Капюшон ТП 4-28А</h3>
+            <p class="prod-spec">20 Вт · 3,2 кг · 5 часов · Cordura 1000</p>
+            <div class="prod-foot">
+              <span class="prod-price">цена по запросу</span>
+              <span class="prod-arw">→</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="prod">
+        <a class="prod-link" href="#">
+          <div class="prod-photo"><img src="refs/kronshtejn.jpg" alt="Кронштейн 500/600/700 для станций «Капюшон»"></div>
+          <div class="prod-body">
+            <span class="prod-cat">Аксессуары · крепёж</span>
+            <h3 class="prod-name">Кронштейн 500/600/700</h3>
+            <p class="prod-spec">для станций «Капюшон» · крепление на крышу</p>
+            <div class="prod-foot">
+              <span class="prod-price">цена по запросу</span>
+              <span class="prod-arw">→</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+    </div>
+
+    <div class="prod-more">
+      <p>Показано 8 из 33 позиций. В серии — Станции РЭБ на легковые и грузовые
+        автомобили, бронетехнику, переносные изделия, аксессуары и доп. модули
+        радиоподавления.</p>
+      <a class="btn btn--ghost" href="#">Показать ещё 25 <span class="arw">→</span></a>
+    </div>
+
+    <section class="offer" aria-labelledby="offer-title">
+      <div>
+        <h2 id="offer-title">Не знаете, что подойдёт объекту?</h2>
+        <p>Опишите объект, площадь и задачи — подберём станции, соберём комплект,
+          посчитаем стоимость и сроки поставки. Работаем с юридическими лицами.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn--accent" href="#">Получить подбор <span class="arw">→</span></a>
+        <a class="btn btn--ghost-light" href="card.html">Открыть карточку изделия</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ftr">
+    <div class="ftr-in">
+      <div class="ftr-brand">
+        <img src="refs/logo-voida-white.png" alt="В ОКОПЕ">
+        <p>Каталог изделий НПО «Киловатт»<br>2026 · «В ОКОПЕ» — магазин брони</p>
+      </div>
+      <div>
+        <h4>Каталог</h4>
+        <a href="category.html">Станции подавления БПЛА</a>
+        <a href="#">Стационарные комплексы</a>
+        <a href="#">Переносные станции</a>
+        <a href="#">Аксессуары</a>
+      </div>
+      <div>
+        <h4>Связь</h4>
+        <a href="tel:+74993256272">+7 (499) 325-62-72</a>
+        <a href="#">Запросить КП</a>
+        <a href="#">Подбор под объект</a>
+      </div>
+    </div>
+    <div class="ftr-base">
+      <div class="ftr-base-in">
+        <span>© 2026 «В ОКОПЕ» · каталог изделий</span>
+        <span>НПО «Киловатт» · г. Липецк · по паспортам изделий</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# медиа каталога не коммитим в main (фото/PDF/скриншоты)
+*.webp
+/jpg
+/photos/
+/pdf/
+/shots/
+/refs/
+*.png

@@ -1,0 +1,118 @@
+/* ============================================================
+   ВАРИАНТ 1 — «ТЁМНОЕ ПОЛЕ»
+   Олива/графит, кремовая типографика, кислотный лайм.
+   Всё тёмное, техника — герой. Печатная фактура сохраняется.
+   ============================================================ */
+
+body.theme-field {
+  color-scheme: dark;
+  --paper: #20261b;
+  --paper-hi: #272e21;
+  --paper-lo: #171c13;
+  --ink: #ede8d7;
+  --graphite: #d6d0be;
+  --olive: #a9b39b;
+  --olive-soft: #8b937f;
+  --accent: #c9f24b;
+  --oxide: #d05a2e;
+  --line: rgba(237, 232, 215, 0.15);
+  --line-hard: rgba(237, 232, 215, 0.36);
+  --paper-line: rgba(237, 232, 215, 0.13);
+}
+
+body.theme-field::after { opacity: 0.08; }
+
+body.theme-field .topbar {
+  background: color-mix(in srgb, var(--paper-lo) 92%, transparent);
+  border-bottom-color: var(--line);
+}
+body.theme-field .brand__mark { background: var(--accent); }
+body.theme-field .brand__emblem { filter: invert(1) brightness(0.15); }
+body.theme-field .brand__sub { color: var(--olive-soft); }
+body.theme-field .topnav a { color: var(--graphite); }
+body.theme-field .topnav a:hover { border-bottom-color: var(--accent); }
+body.theme-field .cart-btn { border-color: var(--line-hard); color: var(--graphite); }
+body.theme-field .cart-btn:hover { border-color: var(--accent); }
+body.theme-field .cart-btn b { background: var(--accent); color: #171c13; }
+body.theme-field .cart-btn b.is-empty { background: transparent; color: var(--accent); }
+
+body.theme-field .hero { background: var(--paper-lo); }
+body.theme-field .hero__bg {
+  background-image:
+    repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 96px);
+  opacity: 0.7;
+}
+body.theme-field .hero__kicker .mono { color: var(--accent); }
+body.theme-field .hero__lead { color: var(--graphite); }
+body.theme-field .hero__photo img { filter: drop-shadow(0 34px 38px rgba(0, 0, 0, 0.6)); }
+body.theme-field .hero__plate::before { border-color: var(--line-hard); }
+body.theme-field .hero__cross::before, body.theme-field .hero__cross::after { background: var(--accent); }
+body.theme-field .hero__stats { background: var(--line); border-color: var(--line); }
+body.theme-field .hero__stat { background: var(--paper-lo); }
+body.theme-field .hero__stat span { color: var(--olive-soft); }
+body.theme-field .hero__stat:nth-child(2n) b { color: var(--accent); }
+
+body.theme-field .section--dark { background: #14180f; }
+body.theme-field .section { background: var(--paper); }
+body.theme-field .about__text { background: var(--paper-hi); }
+body.theme-field .about__fact { background: var(--paper); }
+body.theme-field .facts { background: var(--line); border-color: var(--line); }
+body.theme-field .fact { background: var(--paper-hi); }
+body.theme-field .fact b { color: var(--accent); }
+
+body.theme-field .flag { background: #262d20; }
+body.theme-field .flag:hover { background: #2c3424; }
+
+body.theme-field .cat-toolbar { background: color-mix(in srgb, var(--paper-lo) 94%, transparent); }
+body.theme-field .chip { border-color: var(--line-hard); color: var(--graphite); }
+body.theme-field .chip b { color: var(--olive-soft); }
+body.theme-field .chip--btn:hover { border-color: var(--accent); }
+body.theme-field .chip--btn.is-active { background: var(--accent); color: #171c13; border-color: var(--accent); }
+body.theme-field .chip--btn.is-active b { color: #171c13; }
+body.theme-field .cat-toolbar .search input { color: var(--ink); }
+body.theme-field .cat-toolbar select { color: var(--graphite); border-color: var(--line-hard); background: transparent; }
+body.theme-field .cat-toolbar select option { background: var(--paper); color: var(--ink); }
+
+body.theme-field .grid { background: var(--line); border-color: var(--line); }
+body.theme-field .card { background: var(--paper); }
+body.theme-field .card:hover { background: var(--paper-hi); }
+body.theme-field .card__media { background: var(--paper-hi); }
+body.theme-field .card__short { color: var(--graphite); }
+body.theme-field .card__specs b { color: var(--ink); }
+body.theme-field .badge--avail { border-color: var(--line-hard); color: var(--olive); }
+body.theme-field .btn--mini { border-color: var(--line-hard); color: var(--graphite); }
+body.theme-field .btn--mini:hover { background: var(--accent); color: #171c13; }
+
+body.theme-field .app:hover { background: linear-gradient(90deg, transparent, rgba(201, 242, 75, 0.12) 45%, rgba(201, 242, 75, 0.12) 55%, transparent); }
+body.theme-field .app__desc { color: var(--graphite); }
+body.theme-field .app__num { color: var(--accent); }
+
+body.theme-field .steps { background: var(--line); border-color: var(--line); }
+body.theme-field .step { background: #14180f; }
+
+body.theme-field .docs { background: var(--line); border-color: var(--line); }
+body.theme-field .doc { background: var(--paper-hi); }
+body.theme-field .doc--warn { background: #0f120a; }
+body.theme-field .legal { background: #171c13; border-color: var(--line); }
+body.theme-field .legal p { color: var(--graphite); }
+body.theme-field .legal p b { color: var(--accent); }
+
+body.theme-field .order { background: var(--line); border-color: var(--line); }
+body.theme-field .order__form { background: var(--paper-hi); }
+body.theme-field .order__side { background: #14180f; }
+body.theme-field .field input, body.theme-field .field textarea, body.theme-field .field select { color: var(--ink); }
+body.theme-field .field label { color: var(--olive); }
+
+body.theme-field .footer { background: #0f120a; }
+
+body.theme-field .modal__box { background: var(--paper); }
+body.theme-field .modal__media { background: var(--paper-hi); }
+body.theme-field .modal__desc { color: var(--graphite); }
+body.theme-field .gallery__thumb { background: var(--paper); border-color: var(--line); }
+body.theme-field .cart { background: var(--paper-hi); }
+body.theme-field .cart__item b { color: var(--ink); }
+body.theme-field .overlay { background: rgba(10, 12, 7, 0.8); }
+
+/* избранное: в тёмной теме флагманский ярлык — лайм */
+body.theme-field .flag-mark { color: var(--accent); }

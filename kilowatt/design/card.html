@@ -1,0 +1,640 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Капюшон К-12М — станция противодействия БПЛА · В ОКОПЕ</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="catalog.css">
+<style>
+  /* ========================================================================
+     КАРТОЧКА ТОВАРА — «Капюшон» К-12М.
+     Интерьер каталога держим тише обложек: бумага, линии, цифры.
+     ======================================================================== */
+
+  .product {
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: clamp(24px, 4.4vw, 80px);
+    padding: clamp(20px, 3.2vh, 40px) 0 clamp(24px, 4vh, 48px);
+    align-items: start;
+  }
+
+  /* --- галерея --------------------------------------------------------- */
+  .gallery {
+    position: sticky;
+    top: calc(var(--header-h, 64px) + 20px);
+  }
+
+  .shot {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--photo-plate);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+  }
+
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: opacity 220ms var(--ease);
+  }
+
+  .shot-cap {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin: var(--sp-2) 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--t-micro);
+    line-height: 1.7;
+    color: var(--fg-faint);
+    letter-spacing: 0.02em;
+  }
+
+  .shot-cap b {
+    color: var(--fg-dim);
+    font-weight: 400;
+  }
+
+  .thumbs {
+    display: flex;
+    gap: 8px;
+    margin-top: var(--sp-3);
+  }
+
+  .thumb {
+    width: 88px;
+    height: 88px;
+    padding: 6px;
+    border: 1px solid var(--line);
+    background: var(--photo-plate);
+    cursor: pointer;
+    transition: border-color var(--dur) var(--ease);
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  .thumb[aria-pressed="true"] {
+    border-color: var(--accent);
+    border-bottom-width: 2px;
+  }
+
+  .thumb:hover {
+    border-color: var(--line-strong);
+  }
+
+  /* --- информация ------------------------------------------------------ */
+  .info {
+    max-width: 560px;
+  }
+
+  .info .h1 {
+    margin-top: var(--sp-2);
+  }
+
+  .info .desc {
+    margin: var(--sp-4) 0 0;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.6;
+    color: var(--fg-dim);
+    max-width: 46ch;
+  }
+
+  .info .desc b {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  /* окрас */
+  .swatches {
+    margin: var(--sp-5) 0 0;
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--line);
+  }
+
+  .swatches .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: var(--sp-2);
+  }
+
+  .sw {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    cursor: default;
+  }
+
+  .sw-note {
+    font-family: var(--font-head);
+    font-size: var(--t-micro);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    margin-left: 4px;
+  }
+
+  /* цена и заявка */
+  .buy {
+    margin-top: var(--sp-5);
+    padding: var(--sp-4);
+    background: var(--bg-2);
+    border-left: 2px solid var(--accent);
+    display: grid;
+    gap: var(--sp-3);
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+  }
+
+  .price-label {
+    font-family: var(--font-head);
+    font-size: var(--t-micro);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  .price-value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(26px, 2.4vw, 34px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .buy-note {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--fg-dim);
+  }
+
+  .buy .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* ТТХ */
+  .ttx-wrap {
+    margin-top: var(--sp-5);
+  }
+
+  .ttx-wrap .label {
+    display: block;
+    margin-bottom: var(--sp-2);
+  }
+
+  /* --- блоки ниже ------------------------------------------------------- */
+  .section {
+    padding: clamp(22px, 3.6vh, 44px) 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-bottom: clamp(16px, 2.4vh, 26px);
+    flex-wrap: wrap;
+  }
+
+  .section-head h2 {
+    margin: 0;
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: clamp(15px, 1.2vw, 18px);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+
+  .section-head .num {
+    font-family: var(--font-tech);
+    font-size: var(--t-micro);
+    letter-spacing: 0.16em;
+    color: var(--accent);
+  }
+
+  .cols3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(16px, 3vw, 48px);
+  }
+
+  .cols3 h3 {
+    margin: 0 0 var(--sp-2);
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: clamp(13px, 1vw, 15px);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+
+  .cols3 p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--fg-dim);
+  }
+
+  .cols3 .spec {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-faint);
+  }
+
+  /* комплектация и документы */
+  .kit {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(20px, 4vw, 64px);
+    padding: clamp(22px, 3.6vh, 44px) 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .kit-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+
+  .kit-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding: 7px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-dim);
+  }
+
+  .kit-list li b {
+    color: var(--fg);
+    font-weight: 400;
+    text-align: right;
+  }
+
+  .docs p {
+    margin: 0 0 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--fg-faint);
+  }
+
+  .docs p b {
+    color: var(--fg-dim);
+    font-weight: 400;
+  }
+
+  .docs .btn {
+    margin-top: var(--sp-2);
+  }
+
+  /* ---------------------------------------------------------------------
+     АДАПТИВ
+     --------------------------------------------------------------------- */
+  @media (max-width: 1100px) {
+    .product {
+      grid-template-columns: 1fr;
+    }
+    .gallery {
+      position: static;
+    }
+    .info {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .cols3 {
+      grid-template-columns: 1fr;
+      gap: var(--sp-4);
+    }
+    .kit {
+      grid-template-columns: 1fr;
+    }
+    .shot {
+      aspect-ratio: 5 / 4;
+    }
+    .thumb {
+      width: 72px;
+      height: 72px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .info .actions .btn {
+      width: 100%;
+    }
+    .shot {
+      aspect-ratio: 1 / 1;
+      padding: 2%;
+    }
+    .shot-cap {
+      flex-direction: column;
+      gap: 2px;
+    }
+  }
+</style>
+</head>
+<body class="catalog theme-quiet grain">
+
+  <header class="hdr">
+    <div class="hdr-in">
+      <a class="hdr-brand" href="#" aria-label="В ОКОПЕ — каталог">
+        <img src="refs/logo-voida-white.png" alt="В ОКОПЕ">
+      </a>
+      <nav class="hdr-nav" aria-label="Основная навигация">
+        <a href="#" aria-current="page">Каталог</a>
+        <a href="#">Подбор</a>
+        <a href="#">Производитель</a>
+        <a href="#">Доставка</a>
+        <a href="#">Контакты</a>
+      </nav>
+      <div class="hdr-right">
+        <a class="hdr-phone" href="tel:+74993256272">+7 (499) 325-62-72</a>
+        <a class="btn btn--accent btn--sm" href="#">Запросить КП</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="#">Каталог</a>
+      <span class="sep">/</span>
+      <a href="category.html">Станции на технику</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Капюшон К-12М</span>
+    </nav>
+
+    <div class="product">
+      <section class="gallery" aria-label="Фотографии изделия">
+        <div class="shot">
+          <img id="main-shot" src="refs/k12m-frame-14.png"
+               alt="Станция «Капюшон» К-12М: купол из армированного радиопрозрачного стеклопластика на металлическом основании">
+        </div>
+        <div class="thumbs">
+          <button class="thumb" type="button" aria-pressed="true"
+                  data-src="refs/k12m-frame-14.png"
+                  data-alt="Станция «Капюшон» К-12М, вид сверху: купол и основание">
+            <img src="refs/k12m-frame-14.png" alt="">
+          </button>
+          <button class="thumb" type="button" aria-pressed="false"
+                  data-src="refs/k12m-k-12-1.jpg"
+                  data-alt="Станция «Капюшон» К-12М, вид снизу: радиаторы охлаждения на металлическом основании">
+            <img src="refs/k12m-k-12-1.jpg" alt="">
+          </button>
+        </div>
+        <p class="shot-cap">
+          <span><b>К-12М</b> · купол из армированного радиопрозрачного стеклопластика</span>
+          <span>700 × 257 мм · нетто 24 кг</span>
+        </p>
+      </section>
+
+      <section class="info">
+        <p class="kicker">Станции на технику · «Капюшон»</p>
+        <h1 class="h1">Капюшон К-12М</h1>
+        <p class="h1-sub">станция противодействия БПЛА · 5 диапазонов</p>
+
+        <p class="desc">
+          Защита объектов, автотранспорта, ББМ и личного состава от ударных БПЛА
+          и развед-дронов типа FPV, Mavic/Autel. Купол накрывает сектор помехой —
+          <b>оператор остаётся в укрытии</b> на удалении 2–3 км.
+        </p>
+
+        <div class="swatches">
+          <span class="label">Окрас — 9 вариантов</span>
+          <div class="row" role="list" aria-label="Варианты окраса">
+            <span class="sw" role="listitem" title="Зелёный глянцевый" style="background:#4E5B39"></span>
+            <span class="sw" role="listitem" title="Хаки" style="background:#6C6B49"></span>
+            <span class="sw" role="listitem" title="Песочный матовый" style="background:#C4AE85"></span>
+            <span class="sw" role="listitem" title="Серый матовый" style="background:#71746F"></span>
+            <span class="sw" role="listitem" title="Чёрный глянец" style="background:#1B1C1A"></span>
+            <span class="sw" role="listitem" title="Белый глянец" style="background:#F2F2EE"></span>
+            <span class="sw-note">+3 окраса — под заказ</span>
+          </div>
+        </div>
+
+        <div class="buy">
+          <div class="price-row">
+            <span class="price-label">Цена</span>
+            <span class="price-value">по запросу</span>
+          </div>
+          <p class="buy-note">
+            Комплектация, окрас и сроки поставки — по запросу. Работаем с юридическими
+            лицами: счёт, договор, поставка по РФ.
+          </p>
+          <div class="actions">
+            <a class="btn btn--dark" href="#">Запросить КП <span class="arw">→</span></a>
+            <a class="btn btn--ghost" href="#">Паспорт и сертификаты</a>
+          </div>
+        </div>
+
+        <div class="ttx-wrap">
+          <span class="label">Технические характеристики</span>
+          <dl class="ttx">
+            <div class="ttx-row">
+              <dt>Диапазон частот</dt>
+              <dd>300–1020 · 1080–1360 · 2100–2800 · 5100–5300 · 5680–5900 МГц</dd>
+            </div>
+            <div class="ttx-row">
+              <dt>Дальность подавления</dt>
+              <dd>50–200 м при удалении оператора 2000–3000 м</dd>
+            </div>
+            <div class="ttx-row">
+              <dt>Мощность</dt>
+              <dd>суммарно до 240 Вт · потребление не более 600 Вт</dd>
+            </div>
+            <div class="ttx-row">
+              <dt>Питание</dt>
+              <dd>бортсеть 12/24 В · 220 В через ПН 220/24 В · ИП-24/100</dd>
+            </div>
+            <div class="ttx-row">
+              <dt>Габариты и вес</dt>
+              <dd>700 × 257 мм · нетто 24 кг · брутто 29 кг</dd>
+            </div>
+            <div class="ttx-row">
+              <dt>Температура</dt>
+              <dd>−20…+40 °C · время работы — неограниченно</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+    </div>
+
+    <section class="section" aria-labelledby="install-title">
+      <div class="section-head">
+        <h2 id="install-title">Установка, питание, безопасность</h2>
+        <span class="num">ПО ПАСПОРТУ ИЗДЕЛИЯ</span>
+      </div>
+      <div class="cols3">
+        <div>
+          <h3>Место установки</h3>
+          <p>Крыша кабины (в т.ч. КУНГ) или верхняя точка ББМ. Крепление — магнитные
+            пластины и металлические кронштейны с болтами; на корпусных элементах
+            боевой техники — сварка.</p>
+          <span class="spec">ребра радиаторов — по ходу движения</span>
+        </div>
+        <div>
+          <h3>Питание</h3>
+          <p>Бортовая сеть 12/24 В, сеть 220 В через преобразователь ПН 220/24 В,
+            автономно — от ИП-24/100. Потребляемая мощность — не более 600 Вт.</p>
+          <span class="spec">24 В — 33 А · 12 В — 50 А · 220 В — 2,7 А</span>
+        </div>
+        <div>
+          <h3>Безопасность</h3>
+          <p>При включённом изделии не рекомендуется находиться ближе 5 метров.
+            Вскрывать корпус запрещено: вмешательство снимает гарантийные
+            обязательства (12 месяцев с даты реализации).</p>
+          <span class="spec">НЕ ВСКРЫВАТЬ</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="kit" aria-label="Комплектация и документы">
+      <div>
+        <p class="kicker">Комплектация</p>
+        <ul class="kit-list">
+          <li><span>Станция К-12М с кабелем подключения</span><b>6 м</b></li>
+          <li><span>Преобразователь напряжения ПН 12/24 В</span><b>1 шт.</b></li>
+          <li><span>Паспорт изделия</span><b>1 экз.</b></li>
+        </ul>
+      </div>
+      <div class="docs">
+        <p class="kicker">Документы изделия</p>
+        <p><b>Сертификат соответствия</b> № РОСС RU.32001.04ИБФ1.ОСП28.81271</p>
+        <p><b>Декларация о соответствии</b> ЕАЭС № RU Д-RU.PA07.B.24906/25</p>
+        <p><b>Свидетельство</b> № 1086620 от 14.02.2025 · <b>патент</b> RU 145992 S</p>
+        <a class="btn btn--ghost btn--sm" href="#">Запросить паспорт (PDF)</a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="related-title">
+      <div class="section-head">
+        <h2 id="related-title">Ещё из этой серии</h2>
+        <a class="btn btn--ghost btn--sm" href="category.html">Все станции РЭБ <span class="arw">→</span></a>
+      </div>
+      <div class="goods">
+        <article class="prod">
+          <a class="prod-link" href="#">
+            <div class="prod-photo"><img src="refs/shtora-frame-17-2.png" alt="Станция РЭБ «Штора» К-12/700"></div>
+            <div class="prod-body">
+              <span class="prod-cat">Стационарные · «Штора»</span>
+              <h3 class="prod-name">Штора К-12/700</h3>
+              <p class="prod-spec">до 1000 м · до 600 Вт · 41 кг</p>
+              <div class="prod-foot">
+                <span class="prod-price">цена по запросу</span>
+                <span class="prod-arw">→</span>
+              </div>
+            </div>
+          </a>
+        </article>
+        <article class="prod">
+          <a class="prod-link" href="#">
+            <div class="prod-photo"><img src="refs/rebus4-frame-19-1.png" alt="Комплекс РЭБ «Ребус-4»"></div>
+            <div class="prod-body">
+              <span class="prod-cat">Стационарные · «Ребус»</span>
+              <h3 class="prod-name">Ребус-4</h3>
+              <p class="prod-spec">разведка до 5000 м · ударные до 1000 м</p>
+              <div class="prod-foot">
+                <span class="prod-price">цена по запросу</span>
+                <span class="prod-arw">→</span>
+              </div>
+            </div>
+          </a>
+        </article>
+        <article class="prod">
+          <a class="prod-link" href="#">
+            <div class="prod-photo"><img src="refs/tp-8-100.png" alt="Станция РЭБ «Капюшон» ТП 8-100"></div>
+            <div class="prod-body">
+              <span class="prod-cat">Переносные · «Капюшон»</span>
+              <h3 class="prod-name">Капюшон ТП 8-100</h3>
+              <p class="prod-spec">до 160 Вт · 10 кг · 60 минут</p>
+              <div class="prod-foot">
+                <span class="prod-price">цена по запросу</span>
+                <span class="prod-arw">→</span>
+              </div>
+            </div>
+          </a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ftr">
+    <div class="ftr-in">
+      <div class="ftr-brand">
+        <img src="refs/logo-voida-white.png" alt="В ОКОПЕ">
+        <p>Каталог изделий НПО «Киловатт»<br>2026 · «В ОКОПЕ» — магазин брони</p>
+      </div>
+      <div>
+        <h4>Каталог</h4>
+        <a href="category.html">Станции на технику</a>
+        <a href="#">Стационарные комплексы</a>
+        <a href="#">Переносные станции</a>
+        <a href="#">Аксессуары</a>
+      </div>
+      <div>
+        <h4>Связь</h4>
+        <a href="tel:+74993256272">+7 (499) 325-62-72</a>
+        <a href="#">Запросить КП</a>
+        <a href="#">Подбор под объект</a>
+      </div>
+    </div>
+    <div class="ftr-base">
+      <div class="ftr-base-in">
+        <span>© 2026 «В ОКОПЕ» · каталог изделий</span>
+        <span>НПО «Киловатт» · г. Липецк · по паспортам изделий</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var main = document.getElementById('main-shot');
+      var thumbs = Array.prototype.slice.call(document.querySelectorAll('.thumb'));
+      thumbs.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          thumbs.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+          main.style.opacity = '0';
+          setTimeout(function () {
+            main.src = btn.getAttribute('data-src');
+            main.alt = btn.getAttribute('data-alt') || '';
+            main.style.opacity = '1';
+          }, 160);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
