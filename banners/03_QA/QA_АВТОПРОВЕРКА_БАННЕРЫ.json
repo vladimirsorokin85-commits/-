@@ -1,0 +1,1294 @@
+{
+  "generated": "2026-11-06 21:55:51",
+  "version": "1.0",
+  "inputs": {
+    "data": "ok",
+    "html": "36 файлов",
+    "png": "84 PNG",
+    "claims": 127,
+    "banned": "BANNED.md: 77 запрещённых + 7 стоп-слов нейрослопа"
+  },
+  "summary": {
+    "blockers": 0,
+    "warnings": 20,
+    "infos": 1
+  },
+  "by_id": {
+    "B01": {
+      "id": "B01",
+      "model": "«Капюшон» К-8М",
+      "name_short": "К-8М",
+      "hook": "КУПОЛ НАД МАШИНОЙ",
+      "line": "8 каналов против дронов на машине: до 200 м, магниты и питание 12/24 В.",
+      "numbers": [
+        {
+          "value": "8",
+          "unit": "каналов",
+          "label": "каналов помех"
+        },
+        {
+          "value": "50–200",
+          "unit": "м",
+          "label": "дальность подавления"
+        },
+        {
+          "value": "160",
+          "unit": "Вт",
+          "label": "мощность передатчиков"
+        },
+        {
+          "value": "20",
+          "unit": "кг",
+          "label": "вес станции"
+        }
+      ],
+      "audience": "авто · транспорт",
+      "tone": "field",
+      "photo": "k8m.png",
+      "claims": [
+        "C016",
+        "C017",
+        "C127"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 3
+      }
+    },
+    "B02": {
+      "id": "B02",
+      "model": "«Капюшон» К-12М",
+      "name_short": "К-12М",
+      "hook": "ДВЕНАДЦАТЬ КАНАЛОВ НА КРЫШУ",
+      "line": "12 каналов для техники и объектов: до 240 Вт, борт 12/24 В или сеть 220 В.",
+      "numbers": [
+        {
+          "value": "12",
+          "unit": "каналов",
+          "label": "каналов подавления"
+        },
+        {
+          "value": "50–200",
+          "unit": "м",
+          "label": "дальность подавления"
+        },
+        {
+          "value": "240",
+          "unit": "Вт",
+          "label": "мощность передатчиков"
+        },
+        {
+          "value": "24",
+          "unit": "кг",
+          "label": "вес станции"
+        }
+      ],
+      "audience": "техника · объект",
+      "tone": "field",
+      "photo": "k12m.png",
+      "claims": [
+        "C019",
+        "C020",
+        "C127"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 3
+      }
+    },
+    "B03": {
+      "id": "B03",
+      "model": "«Капюшон» К-15М (и ВИП)",
+      "name_short": "К-15М",
+      "hook": "СТАРШИЙ КУПОЛ ЛИНЕЙКИ",
+      "line": "Старшая модель купола: до 300 Вт, 50–200 м, вес 24 кг. Есть ВИП-исполнение.",
+      "numbers": [
+        {
+          "value": "300",
+          "unit": "Вт",
+          "label": "мощность передатчиков"
+        },
+        {
+          "value": "50–200",
+          "unit": "м",
+          "label": "дальность подавления"
+        },
+        {
+          "value": "24",
+          "unit": "кг",
+          "label": "вес станции"
+        },
+        {
+          "value": "12/24",
+          "unit": "В",
+          "label": "питание"
+        }
+      ],
+      "audience": "техника · объект",
+      "tone": "field",
+      "photo": "k15m.png",
+      "claims": [
+        "C022",
+        "C127"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 2
+      }
+    },
+    "B04": {
+      "id": "B04",
+      "model": "«Капюшон» К-12М багажный бокс",
+      "name_short": "К-12 БОКС",
+      "hook": "КУПОЛ, КОТОРЫЙ НЕ ВИДНО",
+      "line": "Скрытая установка на транспорт: купол в корпусе багажного бокса, вес 24 кг.",
+      "numbers": [
+        {
+          "value": "12",
+          "unit": "каналов",
+          "label": "каналов подавления"
+        },
+        {
+          "value": "50–200",
+          "unit": "м",
+          "label": "дальность подавления"
+        },
+        {
+          "value": "240",
+          "unit": "Вт",
+          "label": "мощность передатчиков"
+        },
+        {
+          "value": "24",
+          "unit": "кг",
+          "label": "вес"
+        }
+      ],
+      "audience": "транспорт · скрытая установка",
+      "tone": "field",
+      "photo": "k12m-bag-box.png",
+      "claims": [
+        "C042",
+        "C019",
+        "C020"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 3
+      }
+    },
+    "B05": {
+      "id": "B05",
+      "model": "«Капюшон» ФПВ-8М",
+      "name_short": "ФПВ-8М",
+      "hook": "КУПОЛ ПРОТИВ FPV",
+      "line": "8 каналов против FPV: до 160 Вт, 50–200 м и 20 кг.",
+      "numbers": [
+        {
+          "value": "8",
+          "unit": "каналов",
+          "label": "каналов подавления"
+        },
+        {
+          "value": "50–200",
+          "unit": "м",
+          "label": "дальность подавления"
+        },
+        {
+          "value": "160",
+          "unit": "Вт",
+          "label": "мощность передатчиков"
+        },
+        {
+          "value": "20",
+          "unit": "кг",
+          "label": "вес станции"
+        }
+      ],
+      "audience": "транспорт · FPV",
+      "tone": "field",
+      "photo": "fpv-8m.png",
+      "claims": [
+        "C023",
+        "C127"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 2
+      }
+    },
+    "B06": {
+      "id": "B06",
+      "model": "«Капюшон» ФПВ-12",
+      "name_short": "ФПВ-12",
+      "hook": "ДВЕНАДЦАТЬ КАНАЛОВ FPV",
+      "line": "12 каналов против FPV и видеопередачи: до 240 Вт и до 200 м.",
+      "numbers": [
+        {
+          "value": "12",
+          "unit": "каналов",
+          "label": "каналов подавления"
+        },
+        {
+          "value": "50–200",
+          "unit": "м",
+          "label": "дальность подавления"
+        },
+        {
+          "value": "240",
+          "unit": "Вт",
+          "label": "мощность передатчиков"
+        },
+        {
+          "value": "24",
+          "unit": "кг",
+          "label": "вес станции"
+        }
+      ],
+      "audience": "транспорт · FPV",
+      "tone": "field",
+      "photo": "fpv-12.png",
+      "claims": [
+        "C024",
+        "C127"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 2
+      }
+    },
+    "B07": {
+      "id": "B07",
+      "model": "«Капюшон» ФПВ-7 мото",
+      "name_short": "ФПВ-7 МОТО",
+      "hook": "КУПОЛ ДЛЯ МОТОТЕХНИКИ",
+      "line": "Купол для мототехники: 10 кг, диаметр 400 мм, до 120 м.",
+      "numbers": [
+        {
+          "value": "10",
+          "unit": "кг",
+          "label": "вес станции"
+        },
+        {
+          "value": "400",
+          "unit": "мм",
+          "label": "диаметр купола"
+        },
+        {
+          "value": "50–120",
+          "unit": "м",
+          "label": "дальность подавления"
+        }
+      ],
+      "audience": "мото · мототехника",
+      "tone": "field",
+      "photo": "fpv-7-moto.png",
+      "claims": [
+        "C025",
+        "C127"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 3,
+        "numbers_exact": 3,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 2
+      }
+    },
+    "B08": {
+      "id": "B08",
+      "model": "«Штора» К-12/700",
+      "name_short": "ШТОРА",
+      "hook": "ЛУЧ ДО КИЛОМЕТРА",
+      "line": "Направленная станция на объект: до 1000 м, 12 генераторов, 41 кг.",
+      "numbers": [
+        {
+          "value": "1000",
+          "unit": "м",
+          "label": "дальность подавления"
+        },
+        {
+          "value": "12",
+          "unit": "генераторов",
+          "label": "генераторов помех"
+        },
+        {
+          "value": "90",
+          "unit": "мин",
+          "label": "непрерывная работа"
+        },
+        {
+          "value": "41",
+          "unit": "кг",
+          "label": "вес станции"
+        }
+      ],
+      "audience": "объект · периметр",
+      "tone": "quiet",
+      "photo": "shtora-k12.png",
+      "claims": [
+        "C027",
+        "C028"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 3,
+        "numbers_within": 1,
+        "numbers_unknown": 0,
+        "claims": 2
+      }
+    },
+    "B09": {
+      "id": "B09",
+      "model": "«Штора-М» К-8/600",
+      "name_short": "ШТОРА-М",
+      "hook": "НАПРАВЛЕННО НА СЕКТОР",
+      "line": "Направленная станция для сектора: 500–2000 м, 8 генераторов, до 260 Вт.",
+      "numbers": [
+        {
+          "value": "8",
+          "unit": "генераторов",
+          "label": "генераторов помех"
+        },
+        {
+          "value": "500–2000",
+          "unit": "м",
+          "label": "дальность"
+        },
+        {
+          "value": "260",
+          "unit": "Вт",
+          "label": "мощность передатчиков"
+        }
+      ],
+      "audience": "объект · сектор",
+      "tone": "quiet",
+      "photo": "shtora-m.png",
+      "claims": [
+        "C029"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 3,
+        "numbers_exact": 3,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 1
+      }
+    },
+    "B10": {
+      "id": "B10",
+      "model": "«Ребус-4»",
+      "name_short": "РЕБУС-4",
+      "hook": "КРУГОВОЙ КОНТУР 360°",
+      "line": "Круговой контур: 4 моноблока, до 2400 Вт, разведка до 5 км.",
+      "numbers": [
+        {
+          "value": "360",
+          "unit": "°",
+          "label": "круговое покрытие"
+        },
+        {
+          "value": "4",
+          "unit": "моноблока",
+          "label": "в комплексе"
+        },
+        {
+          "value": "2400",
+          "unit": "Вт",
+          "label": "мощность"
+        },
+        {
+          "value": "5",
+          "unit": "км",
+          "label": "разведка, до"
+        }
+      ],
+      "audience": "площадка · периметр",
+      "tone": "quiet",
+      "photo": "rebus-4.png",
+      "claims": [
+        "C030",
+        "C031"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 2
+      }
+    },
+    "B11": {
+      "id": "B11",
+      "model": "«Поле-31»",
+      "name_short": "ПОЛЕ-31",
+      "hook": "ПРОТИВ СПУТНИКОВОЙ НАВИГАЦИИ",
+      "line": "Подавление спутниковой навигации: не менее 2000 м, до 240 Вт.",
+      "numbers": [
+        {
+          "value": "2000",
+          "unit": "м",
+          "label": "дальность, не менее"
+        },
+        {
+          "value": "240",
+          "unit": "Вт",
+          "label": "мощность"
+        },
+        {
+          "value": "1162–1300",
+          "unit": "МГц",
+          "label": "диапазон"
+        },
+        {
+          "value": "1550–1630",
+          "unit": "МГц",
+          "label": "диапазон"
+        }
+      ],
+      "audience": "ТЭК · навигация",
+      "tone": "quiet",
+      "photo": "pole-31.png",
+      "claims": [
+        "C032"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 3,
+        "numbers_within": 1,
+        "numbers_unknown": 0,
+        "claims": 1
+      }
+    },
+    "B12": {
+      "id": "B12",
+      "model": "«Сигнал-М2»",
+      "name_short": "СИГНАЛ-М2",
+      "hook": "СНАЧАЛА ОБНАРУЖЬ",
+      "line": "Обнаружитель дронов: 300–10000 МГц, 1000–5000 м, сам включает станцию.",
+      "numbers": [
+        {
+          "value": "300–10000",
+          "unit": "МГц",
+          "label": "диапазон обнаружения"
+        },
+        {
+          "value": "1000–5000",
+          "unit": "м",
+          "label": "дальность обнаружения"
+        },
+        {
+          "value": "АВТО",
+          "unit": "",
+          "label": "запуск РЭБ"
+        }
+      ],
+      "audience": "объект · обнаружение",
+      "tone": "quiet",
+      "photo": "signal-m2.png",
+      "claims": [
+        "C033",
+        "C034"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 2,
+        "numbers_exact": 2,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 2
+      }
+    },
+    "B13": {
+      "id": "B13",
+      "model": "«Капюшон» ТП 4-28А/Б",
+      "name_short": "ТП 4-28",
+      "hook": "РЮКЗАК НА ПЛЕЧИ",
+      "line": "Носимый рюкзак на 5 часов: 28 А·ч, 3,2 кг, дальность 50–100 м.",
+      "numbers": [
+        {
+          "value": "5",
+          "unit": "ч",
+          "label": "автономная работа"
+        },
+        {
+          "value": "28",
+          "unit": "А·ч",
+          "label": "ёмкость АКБ"
+        },
+        {
+          "value": "20",
+          "unit": "Вт",
+          "label": "мощность"
+        },
+        {
+          "value": "3,2",
+          "unit": "кг",
+          "label": "вес"
+        }
+      ],
+      "audience": "группа · носимый",
+      "tone": "field",
+      "photo": "tp-4-28a.png",
+      "claims": [
+        "C035"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 1
+      }
+    },
+    "B14": {
+      "id": "B14",
+      "model": "«Капюшон» ТП 4-50А/Б",
+      "name_short": "ТП 4-50",
+      "hook": "ДО ДЕСЯТИ ЧАСОВ РАБОТЫ",
+      "line": "Большой рюкзак на 10 часов: 50 А·ч, 5,1 кг, дальность 50–100 м.",
+      "numbers": [
+        {
+          "value": "10",
+          "unit": "ч",
+          "label": "автономная работа"
+        },
+        {
+          "value": "50",
+          "unit": "А·ч",
+          "label": "ёмкость АКБ"
+        },
+        {
+          "value": "20",
+          "unit": "Вт",
+          "label": "мощность"
+        },
+        {
+          "value": "5,1",
+          "unit": "кг",
+          "label": "вес"
+        }
+      ],
+      "audience": "группа · носимый",
+      "tone": "field",
+      "photo": "tp-4-50a.png",
+      "claims": [
+        "C036"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 1
+      }
+    },
+    "B15": {
+      "id": "B15",
+      "model": "«Капюшон» ТП 7-100",
+      "name_short": "ТП 7-100",
+      "hook": "ДО ДВЕНАДЦАТИ ЧАСОВ",
+      "line": "До 12 часов автономно: 100 А·ч, 10,6 кг, 7 полос частот, 50–100 м.",
+      "numbers": [
+        {
+          "value": "12",
+          "unit": "ч",
+          "label": "автономная работа"
+        },
+        {
+          "value": "100",
+          "unit": "А·ч",
+          "label": "ёмкость АКБ"
+        },
+        {
+          "value": "7",
+          "unit": "полос",
+          "label": "полос частот"
+        },
+        {
+          "value": "10,6",
+          "unit": "кг",
+          "label": "вес"
+        }
+      ],
+      "audience": "группа · носимый",
+      "tone": "field",
+      "photo": "tp-7-100.png",
+      "claims": [
+        "C037"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 3,
+        "numbers_exact": 3,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 1
+      }
+    },
+    "B16": {
+      "id": "B16",
+      "model": "«Капюшон» ТП 8-100",
+      "name_short": "ТП 8-100",
+      "hook": "160 ВАТТ В РЮКЗАКЕ",
+      "line": "160 Вт в рюкзаке: 10 кг, 1,5 часа от АКБ, дальность 50–100 м.",
+      "numbers": [
+        {
+          "value": "160",
+          "unit": "Вт",
+          "label": "мощность"
+        },
+        {
+          "value": "1,5",
+          "unit": "ч",
+          "label": "работа от АКБ"
+        },
+        {
+          "value": "25",
+          "unit": "А·ч",
+          "label": "ёмкость АКБ"
+        },
+        {
+          "value": "10",
+          "unit": "кг",
+          "label": "вес"
+        }
+      ],
+      "audience": "группа · носимый",
+      "tone": "field",
+      "photo": "tp-8-100.png",
+      "claims": [
+        "C038"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 4,
+        "numbers_exact": 4,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 1
+      }
+    },
+    "B17": {
+      "id": "B17",
+      "model": "ИП-24/100",
+      "name_short": "ИП-24/100",
+      "hook": "ПИТАНИЕ ДЛЯ КУПОЛА",
+      "line": "Питание для купольных станций: 24 В, 105 А·ч, до 4 потребителей.",
+      "numbers": [
+        {
+          "value": "105",
+          "unit": "А·ч",
+          "label": "ёмкость АКБ"
+        },
+        {
+          "value": "150",
+          "unit": "А",
+          "label": "ток разряда"
+        },
+        {
+          "value": "4",
+          "unit": "потребителя",
+          "label": "одновременно"
+        },
+        {
+          "value": "25,6",
+          "unit": "кг",
+          "label": "вес"
+        }
+      ],
+      "audience": "питание · автономность",
+      "tone": "quiet",
+      "photo": "ip-24-100.png",
+      "claims": [
+        "C039"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 2,
+        "numbers_exact": 2,
+        "numbers_within": 0,
+        "numbers_unknown": 0,
+        "claims": 1
+      }
+    },
+    "B18": {
+      "id": "B18",
+      "model": "РЭБ-тестер Т-9",
+      "name_short": "Т-9",
+      "hook": "ПРОВЕРЬ СТАНЦИЮ",
+      "line": "Проверка работоспособности станций: 9 частот от 250 до 5800 МГц.",
+      "numbers": [
+        {
+          "value": "9",
+          "unit": "частот",
+          "label": "проверка станций"
+        },
+        {
+          "value": "250",
+          "unit": "МГц",
+          "label": "нижняя частота"
+        },
+        {
+          "value": "5800",
+          "unit": "МГц",
+          "label": "верхняя частота"
+        }
+      ],
+      "audience": "сервис · проверка",
+      "tone": "quiet",
+      "photo": "t-9.png",
+      "claims": [
+        "C040"
+      ],
+      "cta": "Цена по запросу · Доставка по РФ · Самовывоз в Москве · @vokope_ru · +7 (999) 136-71-42",
+      "_stats": {
+        "numbers_checked": 2,
+        "numbers_exact": 1,
+        "numbers_within": 1,
+        "numbers_unknown": 0,
+        "claims": 1
+      }
+    }
+  },
+  "data_stats": {
+    "B01": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 3
+    },
+    "B02": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 3
+    },
+    "B03": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 2
+    },
+    "B04": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 3
+    },
+    "B05": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 2
+    },
+    "B06": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 2
+    },
+    "B07": {
+      "numbers_checked": 3,
+      "numbers_exact": 3,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 2
+    },
+    "B08": {
+      "numbers_checked": 4,
+      "numbers_exact": 3,
+      "numbers_within": 1,
+      "numbers_unknown": 0,
+      "claims": 2
+    },
+    "B09": {
+      "numbers_checked": 3,
+      "numbers_exact": 3,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 1
+    },
+    "B10": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 2
+    },
+    "B11": {
+      "numbers_checked": 4,
+      "numbers_exact": 3,
+      "numbers_within": 1,
+      "numbers_unknown": 0,
+      "claims": 1
+    },
+    "B12": {
+      "numbers_checked": 2,
+      "numbers_exact": 2,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 2
+    },
+    "B13": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 1
+    },
+    "B14": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 1
+    },
+    "B15": {
+      "numbers_checked": 3,
+      "numbers_exact": 3,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 1
+    },
+    "B16": {
+      "numbers_checked": 4,
+      "numbers_exact": 4,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 1
+    },
+    "B17": {
+      "numbers_checked": 2,
+      "numbers_exact": 2,
+      "numbers_within": 0,
+      "numbers_unknown": 0,
+      "claims": 1
+    },
+    "B18": {
+      "numbers_checked": 2,
+      "numbers_exact": 1,
+      "numbers_within": 1,
+      "numbers_unknown": 0,
+      "claims": 1
+    }
+  },
+  "html_stats": {
+    "B01": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B02": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B03": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B04": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B05": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B06": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B07": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B08": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B09": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B10": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B11": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B12": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B13": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B14": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B15": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B16": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B17": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    },
+    "B18": {
+      "poster": "✅ 1",
+      "square": "✅ 1",
+      "cta": "✅",
+      "legal": "✅"
+    }
+  },
+  "png": {
+    "B01": [
+      "B01_kapyushon_k_8m_1080x1080.png",
+      "B01_kapyushon_k_8m_1080x1080@2x.png",
+      "B01_kapyushon_k_8m_1080x1350.png",
+      "B01_kapyushon_k_8m_1080x1350@2x.png",
+      "B01_kapyushon_k_8m_1080x1920.png",
+      "B01_kapyushon_k_8m_1080x1920@2x.png"
+    ],
+    "B02": [
+      "B02_kapyushon_k_12m_1080x1080.png",
+      "B02_kapyushon_k_12m_1080x1080@2x.png",
+      "B02_kapyushon_k_12m_1080x1350.png",
+      "B02_kapyushon_k_12m_1080x1350@2x.png",
+      "B02_kapyushon_k_12m_1080x1920.png",
+      "B02_kapyushon_k_12m_1080x1920@2x.png"
+    ],
+    "B03": [
+      "B03_kapyushon_k_15m_i_vip_1080x1080.png",
+      "B03_kapyushon_k_15m_i_vip_1080x1080@2x.png",
+      "B03_kapyushon_k_15m_i_vip_1080x1350.png",
+      "B03_kapyushon_k_15m_i_vip_1080x1350@2x.png"
+    ],
+    "B04": [
+      "B04_kapyushon_k_12m_bagazhnyj_boks_1080x1080.png",
+      "B04_kapyushon_k_12m_bagazhnyj_boks_1080x1080@2x.png",
+      "B04_kapyushon_k_12m_bagazhnyj_boks_1080x1350.png",
+      "B04_kapyushon_k_12m_bagazhnyj_boks_1080x1350@2x.png"
+    ],
+    "B05": [
+      "B05_kapyushon_fpv_8m_1080x1080.png",
+      "B05_kapyushon_fpv_8m_1080x1080@2x.png",
+      "B05_kapyushon_fpv_8m_1080x1350.png",
+      "B05_kapyushon_fpv_8m_1080x1350@2x.png"
+    ],
+    "B06": [
+      "B06_kapyushon_fpv_12_1080x1080.png",
+      "B06_kapyushon_fpv_12_1080x1080@2x.png",
+      "B06_kapyushon_fpv_12_1080x1350.png",
+      "B06_kapyushon_fpv_12_1080x1350@2x.png"
+    ],
+    "B07": [
+      "B07_kapyushon_fpv_7_moto_1080x1080.png",
+      "B07_kapyushon_fpv_7_moto_1080x1080@2x.png",
+      "B07_kapyushon_fpv_7_moto_1080x1350.png",
+      "B07_kapyushon_fpv_7_moto_1080x1350@2x.png",
+      "B07_kapyushon_fpv_7_moto_1080x1920.png",
+      "B07_kapyushon_fpv_7_moto_1080x1920@2x.png"
+    ],
+    "B08": [
+      "B08_shtora_k_12_700_1080x1080.png",
+      "B08_shtora_k_12_700_1080x1080@2x.png",
+      "B08_shtora_k_12_700_1080x1350.png",
+      "B08_shtora_k_12_700_1080x1350@2x.png",
+      "B08_shtora_k_12_700_1080x1920.png",
+      "B08_shtora_k_12_700_1080x1920@2x.png"
+    ],
+    "B09": [
+      "B09_shtora_m_k_8_600_1080x1080.png",
+      "B09_shtora_m_k_8_600_1080x1080@2x.png",
+      "B09_shtora_m_k_8_600_1080x1350.png",
+      "B09_shtora_m_k_8_600_1080x1350@2x.png"
+    ],
+    "B10": [
+      "B10_rebus_4_1080x1080.png",
+      "B10_rebus_4_1080x1080@2x.png",
+      "B10_rebus_4_1080x1350.png",
+      "B10_rebus_4_1080x1350@2x.png",
+      "B10_rebus_4_1080x1920.png",
+      "B10_rebus_4_1080x1920@2x.png"
+    ],
+    "B11": [
+      "B11_pole_31_1080x1080.png",
+      "B11_pole_31_1080x1080@2x.png",
+      "B11_pole_31_1080x1350.png",
+      "B11_pole_31_1080x1350@2x.png"
+    ],
+    "B12": [
+      "B12_signal_m2_1080x1080.png",
+      "B12_signal_m2_1080x1080@2x.png",
+      "B12_signal_m2_1080x1350.png",
+      "B12_signal_m2_1080x1350@2x.png",
+      "B12_signal_m2_1080x1920.png",
+      "B12_signal_m2_1080x1920@2x.png"
+    ],
+    "B13": [
+      "B13_kapyushon_tp_4_28a_b_1080x1080.png",
+      "B13_kapyushon_tp_4_28a_b_1080x1080@2x.png",
+      "B13_kapyushon_tp_4_28a_b_1080x1350.png",
+      "B13_kapyushon_tp_4_28a_b_1080x1350@2x.png"
+    ],
+    "B14": [
+      "B14_kapyushon_tp_4_50a_b_1080x1080.png",
+      "B14_kapyushon_tp_4_50a_b_1080x1080@2x.png",
+      "B14_kapyushon_tp_4_50a_b_1080x1350.png",
+      "B14_kapyushon_tp_4_50a_b_1080x1350@2x.png"
+    ],
+    "B15": [
+      "B15_kapyushon_tp_7_100_1080x1080.png",
+      "B15_kapyushon_tp_7_100_1080x1080@2x.png",
+      "B15_kapyushon_tp_7_100_1080x1350.png",
+      "B15_kapyushon_tp_7_100_1080x1350@2x.png"
+    ],
+    "B16": [
+      "B16_kapyushon_tp_8_100_1080x1080.png",
+      "B16_kapyushon_tp_8_100_1080x1080@2x.png",
+      "B16_kapyushon_tp_8_100_1080x1350.png",
+      "B16_kapyushon_tp_8_100_1080x1350@2x.png"
+    ],
+    "B17": [
+      "B17_ip_24_100_1080x1080.png",
+      "B17_ip_24_100_1080x1080@2x.png",
+      "B17_ip_24_100_1080x1350.png",
+      "B17_ip_24_100_1080x1350@2x.png"
+    ],
+    "B18": [
+      "B18_reb_tester_t_9_1080x1080.png",
+      "B18_reb_tester_t_9_1080x1080@2x.png",
+      "B18_reb_tester_t_9_1080x1350.png",
+      "B18_reb_tester_t_9_1080x1350@2x.png"
+    ]
+  },
+  "findings": [
+    {
+      "code": "И",
+      "banner": "B08",
+      "msg": "цифра 90 мин подтверждена полем numbers claim C028 (единица не распознана автоматически)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\00_КОПИРАЙТ\\banners_data.json",
+      "quote": "90 мин"
+    },
+    {
+      "code": "З",
+      "banner": "B11",
+      "msg": "цифра 1162–1300 МГц не привязана ни к одному claim из списка ['C032']",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\00_КОПИРАЙТ\\banners_data.json",
+      "quote": "1162–1300 МГц"
+    },
+    {
+      "code": "З",
+      "banner": "B18",
+      "msg": "цифра 250 МГц не привязана ни к одному claim из списка ['C040']",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\00_КОПИРАЙТ\\banners_data.json",
+      "quote": "250 МГц"
+    },
+    {
+      "code": "З",
+      "banner": "B01",
+      "msg": "цифра «8 каналов каналов помех» из данных не найдена в вёрстке (poster)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B01_kapyushon_k_8m_1080x1350.html",
+      "quote": "8 каналов каналов помех"
+    },
+    {
+      "code": "З",
+      "banner": "B01",
+      "msg": "цифра «8 каналов каналов помех» из данных не найдена в вёрстке (square)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B01_kapyushon_k_8m_1080x1080.html",
+      "quote": "8 каналов каналов помех"
+    },
+    {
+      "code": "З",
+      "banner": "B02",
+      "msg": "цифра «12 каналов каналов подавления» из данных не найдена в вёрстке (poster)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B02_kapyushon_k_12m_1080x1350.html",
+      "quote": "12 каналов каналов подавления"
+    },
+    {
+      "code": "З",
+      "banner": "B02",
+      "msg": "цифра «12 каналов каналов подавления» из данных не найдена в вёрстке (square)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B02_kapyushon_k_12m_1080x1080.html",
+      "quote": "12 каналов каналов подавления"
+    },
+    {
+      "code": "З",
+      "banner": "B04",
+      "msg": "цифра «12 каналов каналов подавления» из данных не найдена в вёрстке (poster)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B04_kapyushon_k_12m_bagazhnyj_boks_1080x1350.html",
+      "quote": "12 каналов каналов подавления"
+    },
+    {
+      "code": "З",
+      "banner": "B04",
+      "msg": "цифра «12 каналов каналов подавления» из данных не найдена в вёрстке (square)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B04_kapyushon_k_12m_bagazhnyj_boks_1080x1080.html",
+      "quote": "12 каналов каналов подавления"
+    },
+    {
+      "code": "З",
+      "banner": "B05",
+      "msg": "цифра «8 каналов каналов подавления» из данных не найдена в вёрстке (poster)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B05_kapyushon_fpv_8m_1080x1350.html",
+      "quote": "8 каналов каналов подавления"
+    },
+    {
+      "code": "З",
+      "banner": "B05",
+      "msg": "цифра «8 каналов каналов подавления» из данных не найдена в вёрстке (square)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B05_kapyushon_fpv_8m_1080x1080.html",
+      "quote": "8 каналов каналов подавления"
+    },
+    {
+      "code": "З",
+      "banner": "B06",
+      "msg": "цифра «12 каналов каналов подавления» из данных не найдена в вёрстке (poster)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B06_kapyushon_fpv_12_1080x1350.html",
+      "quote": "12 каналов каналов подавления"
+    },
+    {
+      "code": "З",
+      "banner": "B06",
+      "msg": "цифра «12 каналов каналов подавления» из данных не найдена в вёрстке (square)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B06_kapyushon_fpv_12_1080x1080.html",
+      "quote": "12 каналов каналов подавления"
+    },
+    {
+      "code": "З",
+      "banner": "B08",
+      "msg": "цифра «12 генераторов генераторов помех» из данных не найдена в вёрстке (poster)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B08_shtora_k_12_700_1080x1350.html",
+      "quote": "12 генераторов генераторов помех"
+    },
+    {
+      "code": "З",
+      "banner": "B08",
+      "msg": "цифра «12 генераторов генераторов помех» из данных не найдена в вёрстке (square)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B08_shtora_k_12_700_1080x1080.html",
+      "quote": "12 генераторов генераторов помех"
+    },
+    {
+      "code": "З",
+      "banner": "B09",
+      "msg": "цифра «8 генераторов генераторов помех» из данных не найдена в вёрстке (poster)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B09_shtora_m_k_8_600_1080x1350.html",
+      "quote": "8 генераторов генераторов помех"
+    },
+    {
+      "code": "З",
+      "banner": "B09",
+      "msg": "цифра «8 генераторов генераторов помех» из данных не найдена в вёрстке (square)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B09_shtora_m_k_8_600_1080x1080.html",
+      "quote": "8 генераторов генераторов помех"
+    },
+    {
+      "code": "З",
+      "banner": "B13",
+      "msg": "очень маленькое фото 197×403: ../_design/img/cut/tp-4-28a.png",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B13_kapyushon_tp_4_28a_b_1080x1350.html",
+      "quote": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\_design\\img\\cut\\tp-4-28a.png"
+    },
+    {
+      "code": "З",
+      "banner": "B15",
+      "msg": "цифра 50–100 м не привязана ни к одному claim из списка ['C037']",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B15_kapyushon_tp_7_100_1080x1350.html",
+      "quote": "50–100 м"
+    },
+    {
+      "code": "З",
+      "banner": "B15",
+      "msg": "цифра «7 полос полос частот» из данных не найдена в вёрстке (poster)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B15_kapyushon_tp_7_100_1080x1350.html",
+      "quote": "7 полос полос частот"
+    },
+    {
+      "code": "З",
+      "banner": "B15",
+      "msg": "цифра «7 полос полос частот» из данных не найдена в вёрстке (square)",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\banners\\html\\B15_kapyushon_tp_7_100_1080x1080.html",
+      "quote": "7 полос полос частот"
+    }
+  ]
+}
