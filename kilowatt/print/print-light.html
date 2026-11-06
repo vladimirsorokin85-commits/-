@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>В ОКОПЕ — каталог изделий НПО «Киловатт» · 2026 · печатная версия</title>
+<style>
+
+@page { size: A4; margin: 0; }
+@font-face { font-family:"Oswald"; src:url("../catalog/assets/fonts/Oswald-VF.ttf") format("truetype"); font-weight:200 700; font-display:swap; }
+@font-face { font-family:"Sofia"; src:url("../catalog/assets/fonts/SofiaSansExtraCondensed-VF.ttf") format("truetype"); font-weight:100 900; font-display:swap; }
+@font-face { font-family:"Tektur"; src:url("../catalog/assets/fonts/Tektur-VF.ttf") format("truetype"); font-weight:400 900; font-display:swap; }
+@font-face { font-family:"Unbounded"; src:url("../catalog/assets/fonts/Unbounded-VF.ttf") format("truetype"); font-weight:200 900; font-display:swap; }
+
+:root{
+  --paper:#f4f1ea; --paper-hi:#faf7f0; --paper-lo:#e9e2d1;
+  --ink:#1d1e1a; --graphite:#2a2b26; --muted:#63665a;
+  --accent:#c8451f; --accent-dim:rgba(200,69,31,.16);
+  --line:rgba(29,30,26,.18); --line-hard:rgba(29,30,26,.46);
+}
+*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+body{font-family:"Sofia",Arial,sans-serif;font-size:8.2pt;line-height:1.32;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+figure,dl,dd,dt{margin:0}
+p{margin:0 0 2.2mm}
+h1,h2,h3,h4{margin:0}
+.page{position:relative;width:210mm;height:297mm;page-break-after:always;overflow:hidden;background:var(--paper);padding:14mm 15mm 16mm}
+.page:last-child{page-break-after:auto}
+.pg-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:0.4pt solid var(--line-hard);padding-bottom:2.4mm;margin-bottom:4.6mm}
+.pg-head b{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:.08em;font-size:8pt}
+.pg-head span{font-family:"Tektur",monospace;font-size:5.6pt;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.pg-foot{position:absolute;left:15mm;right:15mm;bottom:7mm;display:flex;justify-content:space-between;align-items:baseline;border-top:0.4pt solid var(--line);padding-top:2mm;font-family:"Tektur",monospace;font-size:5.6pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sec-num{font-family:"Tektur",monospace;font-size:6pt;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.sec-title{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:500;text-transform:uppercase;line-height:1.0;font-size:28pt;letter-spacing:.005em}
+.lead-osw{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:500;text-transform:uppercase;font-size:11pt;line-height:1.14;margin:0 0 3mm}
+.tech{font-family:"Tektur",monospace;font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.tiny{font-size:6.4pt;line-height:1.42;color:var(--muted)}
+.hair{border-top:0.4pt solid var(--line)}
+.hair-hard{border-top:0.9pt solid var(--line-hard)}
+.stamp{display:inline-block;border:.5pt solid var(--accent);color:var(--accent);font-family:"Tektur",monospace;font-size:5.2pt;letter-spacing:.16em;padding:1.2mm 2mm;transform:rotate(-2deg);margin-top:2mm}
+
+/* ---------- ОБЛОЖКА ---------- */
+.page--cover{padding:15mm 16mm 13mm}
+.cover__top{display:flex;justify-content:space-between;align-items:flex-start}
+.cover__brand{display:flex;align-items:center;gap:3.2mm}
+.cover__mark{width:11mm;height:11mm;background:var(--ink);display:flex;align-items:center;justify-content:center;flex:none}
+.cover__mark img{height:8.4mm;width:auto}
+.cover__brand b{display:block;font-family:"Oswald","Arial Narrow",sans-serif;font-weight:600;font-size:11.5pt;letter-spacing:.04em;text-transform:uppercase;line-height:1}
+.cover__brand i{display:block;font-style:normal;font-family:"Tektur",monospace;font-size:5.6pt;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:1mm}
+.cover__meta{text-align:right;font-family:"Tektur",monospace;font-size:5.8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.8}
+.cover__kicker{display:flex;align-items:center;gap:3mm;margin-top:15mm;font-family:"Tektur",monospace;font-size:5.8pt;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.cover__kicker::before{content:"";width:22mm;height:0.7mm;background:var(--accent);flex:none}
+.cover__title{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:500;text-transform:uppercase;font-size:55pt;line-height:.9;letter-spacing:-.012em;margin-top:4mm}
+.cover__title span{display:block}
+.cover__title .out{color:transparent;-webkit-text-stroke:.9pt var(--ink);text-stroke:.9pt var(--ink)}
+.cover__title .mark{position:relative;z-index:0;white-space:nowrap;display:inline-block}
+.cover__title .mark::after{content:"";position:absolute;left:.015em;right:-.02em;bottom:.055em;height:.13em;background:var(--accent);z-index:-1;transform:skewX(-12deg)}
+.cover__lead{font-size:9.4pt;line-height:1.4;color:var(--graphite);max-width:96mm;margin-top:5.5mm}
+.cover__aside{position:absolute;right:16mm;top:61mm;width:58mm;border-top:0.4pt solid var(--line-hard);padding-top:2.4mm}
+.cover__aside div{display:flex;justify-content:space-between;align-items:baseline;border-bottom:0.4pt solid var(--line);padding:1.5mm 0}
+.cover__aside span{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:5.6pt;letter-spacing:.09em;color:var(--muted)}
+.cover__aside b{font-family:"Tektur",monospace;font-weight:500;font-size:9pt}
+.cover__zone{margin-top:2mm}
+.cover__zone .zone{width:170mm;height:auto;overflow:visible}
+.zone .z-ground,.zone .z-arc{fill:none;stroke:var(--ink);stroke-width:.45pt}
+.zone .z-tick{stroke:var(--ink);stroke-width:.4pt}
+.zone .z-label{font-family:"Tektur",monospace;font-size:6pt;letter-spacing:.09em;fill:var(--muted)}
+.zone .z-label--accent{fill:var(--accent);font-size:7.2pt;letter-spacing:.03em}
+.cover__zone .cap{font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-top:1mm}
+.cover__foot{position:absolute;left:16mm;right:16mm;bottom:13mm;border-top:0.5pt solid var(--line-hard);padding-top:5mm;display:flex;justify-content:space-between;align-items:flex-end;gap:8mm}
+.cover__stats{display:flex;gap:9mm}
+.cover__stat b{display:block;font-family:"Tektur",monospace;font-weight:600;font-size:13.5pt;letter-spacing:-.01em;line-height:1.05;white-space:nowrap}
+.cover__stat span{display:block;font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:5.7pt;letter-spacing:.11em;color:var(--muted);margin-top:1.4mm;line-height:1.25}
+.cover__note{font-family:"Tektur",monospace;font-size:5.6pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+
+/* ---------- 01 ПРОИЗВОДИТЕЛЬ ---------- */
+.about{display:grid;grid-template-columns:112mm 1fr;gap:10mm;align-items:start}
+.about__main .sec-title{font-size:25pt;line-height:1.0;margin:2mm 0 3.4mm}
+.about__main p{font-size:8pt;line-height:1.44;color:var(--graphite);max-width:104mm}
+.about__main p.lead-osw{font-size:10.5pt;color:var(--ink);max-width:96mm}
+.about__side{border-top:0.9pt solid var(--line-hard);padding-top:3mm}
+.facts3{display:flex;flex-direction:column}
+.fact3{display:flex;flex-direction:column;gap:.6mm;border-bottom:0.4pt solid var(--line);padding:2.8mm 0}
+.fact3 b{font-family:"Tektur",monospace;font-weight:500;font-size:19pt;line-height:1;letter-spacing:-.01em}
+.fact3 span{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:5.7pt;letter-spacing:.1em;color:var(--muted)}
+.about__docs{margin-top:5mm;border-top:0.9pt solid var(--line-hard);padding-top:2.6mm}
+.dl{display:flex;flex-direction:column}
+.dl div{display:grid;grid-template-columns:22mm 1fr;gap:2.5mm;border-bottom:0.4pt solid var(--line);padding:1.7mm 0}
+.dl b{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:6.1pt;letter-spacing:.06em;color:var(--muted)}
+.dl span{font-family:"Tektur",monospace;font-size:6pt;line-height:1.35;color:var(--graphite)}
+.orig{display:grid;grid-template-columns:56mm 1fr;gap:7mm;margin-top:5mm;background:var(--paper-lo);padding:5mm}
+.orig h3{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:11pt;line-height:1.05;margin:0;color:var(--accent)}
+.orig p{font-size:7pt;line-height:1.42;color:var(--graphite);margin:0}
+.orig--stack{display:block}
+.orig--stack h3{margin-bottom:2.4mm}
+.comp{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:5mm;border-top:0.9pt solid var(--line-hard)}
+.comp div{padding:3.2mm 4mm 3.2mm 0;border-left:0.4pt solid var(--line);display:flex;flex-direction:column;gap:1mm}
+.comp div:first-child{border-left:0;padding-left:0}
+.comp div:not(:first-child){padding-left:4mm}
+.comp i{font-style:normal;font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.12em;color:var(--accent)}
+.comp b{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:8pt;line-height:1.1}
+.comp span{font-size:6.5pt;line-height:1.38;color:var(--muted)}
+.lineup{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:5mm;border-top:0.9pt solid var(--line-hard)}
+.lineup div{padding:2.8mm 4mm 2.8mm 0;border-left:0.4pt solid var(--line);display:grid;grid-template-columns:12mm 1fr;gap:0 2mm;align-items:baseline}
+.lineup div:nth-child(3n+1){border-left:0;padding-left:0}
+.lineup b{font-family:"Tektur",monospace;font-weight:500;font-size:15pt;line-height:1;letter-spacing:-.01em}
+.lineup span{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:6.2pt;letter-spacing:.06em;line-height:1.2}
+.lineup i{grid-column:2;font-style:normal;font-size:6.1pt;line-height:1.32;color:var(--muted);margin-top:.6mm}
+
+/* ---------- 02 ФЛАГМАНЫ ---------- */
+.flag{display:grid;grid-template-columns:72mm 1fr;gap:8mm;border-top:0.9pt solid var(--line-hard);border-bottom:0.4pt solid var(--line);padding:5.4mm 0;page-break-inside:avoid}
+.flag__media{height:56mm;border:0.4pt solid var(--line);background:var(--paper-hi);display:flex;align-items:center;justify-content:center;padding:2.4mm;overflow:hidden}
+.flag__media img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.nophoto-text{font-family:"Tektur",monospace;font-size:4.8pt;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.35}
+.flag__kick{font-family:"Tektur",monospace;font-size:5.6pt;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
+.flag__name{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:500;text-transform:uppercase;font-size:19.5pt;line-height:.98;letter-spacing:-.005em;margin:1.4mm 0 2mm}
+.flag__desc{font-size:7.7pt;line-height:1.4;color:var(--graphite);max-width:96mm;margin:0 0 2.4mm}
+.flag__specs{width:100%;border-collapse:collapse}
+.flag__specs td{padding:1.3mm 0;border-top:0.4pt solid var(--line);vertical-align:top;font-size:6.4pt;line-height:1.35}
+.flag__specs td:first-child{width:30mm;font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:5.7pt;letter-spacing:.06em;color:var(--muted);padding-right:3mm}
+.flag__specs td:last-child{font-family:"Tektur",monospace;font-size:6.1pt;color:var(--graphite)}
+.flag__foot{display:flex;align-items:baseline;gap:4mm;margin-top:2.2mm}
+.flag__price{font-family:"Tektur",monospace;font-size:13pt;font-weight:600;letter-spacing:-.01em}
+.flag__status{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:5.8pt;letter-spacing:.09em;color:var(--muted)}
+.section-note{margin-top:3mm;font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:4mm}
+
+/* ---------- 02.1 СРАВНЕНИЕ ---------- */
+.cmp{width:100%;border-collapse:collapse;margin-top:3.4mm}
+.cmp th,.cmp td{text-align:left;vertical-align:top;border-top:0.4pt solid var(--line);padding:3.1mm 2.6mm}
+.cmp thead th{border-top:0.9pt solid var(--line-hard);padding:3.4mm 2.6mm 2.8mm}
+.cmp__lab{width:29mm;font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:6pt;letter-spacing:.06em;color:var(--muted)}
+.cmp__cat{display:block;font-family:"Tektur",monospace;font-size:5.2pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2mm}
+.cmp__photo{height:47mm;display:flex;align-items:flex-end;justify-content:flex-start;margin-bottom:1.6mm}
+.cmp__photo img{max-height:100%;max-width:100%;width:auto;object-fit:contain}
+.cmp__name{display:block;font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:11.5pt;line-height:1.02}
+.cmp td{font-family:"Tektur",monospace;font-size:6.4pt;line-height:1.42;color:var(--graphite)}
+.cmp tbody td:first-child{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:6pt;letter-spacing:.05em;color:var(--muted)}
+.cmp tfoot td{border-top:0.9pt solid var(--line-hard);border-bottom:0.9pt solid var(--line-hard);padding-top:3.2mm;padding-bottom:3.2mm}
+.cmp tfoot td:first-child{color:var(--accent);font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:6pt;letter-spacing:.06em}
+.cmp__price{font-family:"Tektur",monospace;font-size:14pt;font-weight:600;letter-spacing:-.01em;line-height:1.1;white-space:nowrap}
+.cmp__price small{display:block;font-family:"Oswald","Arial Narrow",sans-serif;font-size:5.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400;margin-top:1mm}
+.cmp-note{display:flex;justify-content:space-between;gap:5mm;margin-top:3mm;font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.cmp-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:5mm;border-top:0.9pt solid var(--line-hard);border-bottom:0.4pt solid var(--line)}
+.cmp-foot div{padding:3.2mm 4mm 3.2mm 0;border-left:0.4pt solid var(--line);display:flex;flex-direction:column;gap:1mm}
+.cmp-foot div:first-child{border-left:0;padding-left:0}
+.cmp-foot div:not(:first-child){padding-left:4mm}
+.cmp-foot i{font-style:normal;font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cmp-foot b{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:8pt;line-height:1.1}
+.cmp-foot span{font-size:6.4pt;line-height:1.38;color:var(--muted)}
+
+/* ---------- 03 КАТАЛОГ ---------- */
+.opener{display:grid;grid-template-columns:1.1fr .9fr;gap:8mm;align-items:end;margin-bottom:3.4mm}
+.opener .sec-title{font-size:27pt;line-height:.97;margin:0}
+.opener p{font-size:7.3pt;line-height:1.42;color:var(--graphite);margin:0;max-width:74mm}
+.opener .tech{font-size:5.8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:1.6mm}
+.catbar{display:flex;align-items:baseline;gap:2.6mm;border-top:0.9pt solid var(--ink);padding:2.2mm 0 1.8mm}
+.catbar__tick{width:3.2mm;height:1.1mm;background:var(--accent);flex:none}
+.catbar b{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:500;text-transform:uppercase;font-size:9pt;letter-spacing:.04em}
+.catbar span{margin-left:auto;font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.row{display:grid;grid-template-columns:7mm 19mm minmax(0,1fr) 58mm 28mm;gap:0 3mm;align-items:center;height:15.2mm;padding:1.2mm 0;border-top:0.4pt solid var(--line);overflow:hidden}
+.row__n{font-family:"Tektur",monospace;font-size:5.5pt;letter-spacing:.06em;color:var(--muted)}
+.row__thumb{width:19mm;height:12.2mm;display:flex;align-items:center;justify-content:center;border:0.4pt solid var(--line);background:var(--paper-hi);padding:1mm;overflow:hidden}
+.row__thumb img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.row__name{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:500;text-transform:uppercase;font-size:8.4pt;line-height:1.1;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.row__badge{font-family:"Tektur",monospace;font-size:4.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:.4pt solid var(--accent-dim);padding:.2mm 1mm;margin-left:1.2mm;vertical-align:middle;white-space:nowrap}
+.row__specs{display:flex;flex-direction:column;gap:.4mm;min-width:0;overflow:hidden}
+.row__sp{font-family:"Tektur",monospace;font-size:6pt;color:var(--graphite);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;gap:1.4mm;align-items:baseline}
+.row__sp i{font-style:normal;font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:5.1pt;letter-spacing:.05em;color:var(--muted);width:11mm;flex:none}
+.row__sp b{font-weight:400;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row__price{text-align:right;font-family:"Tektur",monospace;font-size:8.8pt;font-weight:600;letter-spacing:-.01em;line-height:1.05;white-space:nowrap}
+.row__price small{display:block;font-family:"Oswald","Arial Narrow",sans-serif;font-size:4.9pt;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400;margin-top:.8mm}
+.sum{margin-top:6mm;border-top:0.9pt solid var(--line-hard);padding-top:3mm;display:grid;grid-template-columns:1fr 74mm;gap:9mm;align-items:start}
+.sum h3{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:13pt;margin:0 0 2.6mm}
+.sumt{width:100%;border-collapse:collapse}
+.sumt th,.sumt td{text-align:left;border-bottom:0.4pt solid var(--line);padding:1.6mm 1.6mm;font-size:6.3pt}
+.sumt th{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:5.5pt;letter-spacing:.08em;color:var(--muted);font-weight:500;border-bottom:0.4pt solid var(--line-hard)}
+.sumt td{font-family:"Tektur",monospace;color:var(--graphite)}
+.sumt td:first-child{font-family:"Sofia",Arial,sans-serif;font-size:7.2pt;color:var(--ink)}
+.sumt tr.total td{border-bottom:0.9pt solid var(--line-hard);font-weight:600}
+.notes h4{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:8pt;margin:0 0 1.6mm}
+.notes p{font-size:6.4pt;line-height:1.42;color:var(--muted);margin:0 0 1.8mm}
+.notes p b{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:6pt;letter-spacing:.05em;color:var(--graphite);font-weight:500}
+
+/* ---------- 04/05 ПРИМЕНЕНИЕ И ПОСТАВКА ---------- */
+.block + .block{margin-top:7mm}
+.block__head{display:flex;align-items:baseline;gap:4mm;border-bottom:0.4pt solid var(--line-hard);padding-bottom:2.2mm;margin-bottom:2.6mm}
+.block__head .sec-title{font-size:20pt}
+.block__head .sec-num{flex:none}
+.block__head p{margin:0 0 0 auto;max-width:86mm;font-size:6.8pt;line-height:1.4;color:var(--muted);text-align:right}
+.app{display:grid;grid-template-columns:7mm 38mm minmax(0,1fr) 31mm;gap:0 4mm;align-items:baseline;border-top:0.4pt solid var(--line);padding:2.8mm 0}
+.app i{font-style:normal;font-family:"Tektur",monospace;font-size:5.2pt;color:var(--muted)}
+.app b{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:8.2pt;line-height:1.08}
+.app p{margin:0;font-size:7pt;line-height:1.4;color:var(--graphite)}
+.app span{font-family:"Tektur",monospace;font-size:5.2pt;line-height:1.4;color:var(--muted);text-align:right}
+.steps{position:relative;margin-top:4mm;padding-top:1mm}
+.steps__line{position:absolute;left:0;right:0;top:11.5mm;border-top:0.4pt solid var(--line-hard)}
+.steps__list{display:grid;grid-template-columns:repeat(7,1fr);gap:0 2mm;position:relative;margin:0;padding:0;list-style:none}
+.step{position:relative}
+.step__n{position:relative;display:inline-block;background:var(--paper);padding-right:1.6mm;font-family:"Tektur",monospace;font-size:5.8pt;color:var(--accent);margin-top:7.4mm;line-height:1}
+.step h4{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:7.6pt;line-height:1.1;margin:1.6mm 0 1mm;max-width:23mm}
+.step p{margin:0;font-size:6pt;line-height:1.38;color:var(--muted);max-width:23mm}
+.steps__foot{display:flex;justify-content:space-between;margin-top:3mm;font-family:"Tektur",monospace;font-size:5.2pt;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.kit{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:6mm;border-top:0.9pt solid var(--line-hard)}
+.kit div{padding:3mm 4mm 3mm 0;border-left:0.4pt solid var(--line);display:flex;flex-direction:column;gap:1mm}
+.kit div:first-child{border-left:0;padding-left:0}
+.kit div:not(:first-child){padding-left:4mm}
+.kit i{font-style:normal;font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.12em;color:var(--accent)}
+.kit b{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:7.6pt;line-height:1.1}
+.kit span{font-size:6.2pt;line-height:1.36;color:var(--muted)}
+
+/* ---------- 06 ДОКУМЕНТЫ ---------- */
+.docs2{display:grid;grid-template-columns:1fr 66mm;gap:9mm;align-items:start;margin-top:1mm}
+.doc2{border-top:0.9pt solid var(--line-hard)}
+.doc2 > div{display:grid;grid-template-columns:7mm 1fr;gap:2.6mm;border-bottom:0.4pt solid var(--line);padding:2.1mm 0}
+.doc2 i{font-style:normal;font-family:"Tektur",monospace;font-size:5.4pt;color:var(--muted)}
+.doc2 b{display:block;font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:7.4pt;line-height:1.1;margin-bottom:.7mm}
+.doc2 p{margin:0;font-size:6.6pt;line-height:1.4;color:var(--graphite)}
+.legal-block{margin-top:5.4mm;border-top:0.4pt solid var(--line-hard);padding-top:2.6mm}
+.legal-block h3{font-family:"Tektur",monospace;font-size:5.6pt;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin:0 0 2.2mm;font-weight:500}
+.legal-block__cols{columns:2;column-gap:8mm}
+.legal-block p{font-size:6.2pt;line-height:1.44;color:var(--graphite);margin:0 0 2mm;break-inside:avoid}
+.legal-block p b{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:5.6pt;letter-spacing:.05em;color:var(--ink);font-weight:500}
+.verify{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:5mm;border-top:0.9pt solid var(--line-hard);border-bottom:0.4pt solid var(--line)}
+.verify div{padding:3.2mm 4mm 3.2mm 0;border-left:0.4pt solid var(--line);display:flex;flex-direction:column;gap:1mm}
+.verify div:first-child{border-left:0;padding-left:0}
+.verify div:not(:first-child){padding-left:4mm}
+.verify i{font-style:normal;font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.12em;color:var(--accent)}
+.verify b{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:7.8pt;line-height:1.1}
+.verify span{font-size:6.3pt;line-height:1.38;color:var(--muted)}
+
+/* ---------- КОНТАКТЫ ---------- */
+.page--contacts{padding-bottom:0}
+.contact-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:0.4pt solid var(--line-hard);padding-bottom:2.4mm;margin-bottom:7mm}
+.contact-head b{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:.08em;font-size:8pt}
+.contact-head span{font-family:"Tektur",monospace;font-size:5.6pt;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.contact__title{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:500;text-transform:uppercase;font-size:40pt;line-height:.94;letter-spacing:-.01em;margin:0 0 3mm}
+.contact__title i{font-style:normal;color:var(--accent)}
+.contact__lead{font-size:8.8pt;line-height:1.42;color:var(--graphite);max-width:100mm;margin:0 0 6mm}
+.contact__grid{display:grid;grid-template-columns:104mm 1fr;gap:10mm;align-items:start}
+.contact__phone{font-family:"Tektur",monospace;font-size:24pt;font-weight:500;letter-spacing:-.01em;line-height:1.05;display:block;margin:0 0 1.4mm;color:var(--ink)}
+.contact__cap{font-family:"Tektur",monospace;font-size:5.6pt;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4mm}
+.contact__qr{display:flex;gap:5mm;align-items:center;border-top:0.4pt solid var(--line);padding-top:3.4mm}
+.contact__qr img{width:31mm;height:31mm;background:var(--paper-hi);padding:1.2mm;flex:none}
+.contact__qr span{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:6.2pt;letter-spacing:.08em;line-height:1.5;color:var(--muted)}
+.list__title{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:9pt;margin:0 0 2mm;border-bottom:0.9pt solid var(--line-hard);padding-bottom:1.6mm}
+.checklist{display:flex;flex-direction:column}
+.checklist div{display:grid;grid-template-columns:5.5mm 1fr;gap:2mm;border-bottom:0.4pt solid var(--line);padding:2mm 0;font-size:7.1pt;line-height:1.38;color:var(--graphite)}
+.checklist i{font-style:normal;font-family:"Tektur",monospace;font-size:5.4pt;color:var(--accent);padding-top:.3mm}
+.contact__note{font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3mm;line-height:1.7}
+.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:7mm;border-top:0.9pt solid var(--line-hard)}
+.howto div{padding:3.4mm 4mm 3.4mm 0;border-left:0.4pt solid var(--line);display:flex;flex-direction:column;gap:1mm}
+.howto div:first-child{border-left:0;padding-left:0}
+.howto div:not(:first-child){padding-left:4mm}
+.howto i{font-style:normal;font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.12em;color:var(--accent)}
+.howto b{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:8pt;line-height:1.1}
+.howto span{font-size:6.4pt;line-height:1.4;color:var(--muted)}
+.contact-band{position:absolute;left:0;right:0;bottom:0;height:58mm;background:var(--graphite);color:var(--paper);padding:8mm 16mm 9mm;display:flex;justify-content:space-between;align-items:center}
+.contact-band__left b{display:block;font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-weight:500;font-size:8pt;letter-spacing:.1em;color:rgba(233,226,209,.62);margin-bottom:2mm}
+.contact-band__phone{font-family:"Tektur",monospace;font-size:21pt;font-weight:500;letter-spacing:-.01em;color:var(--paper-hi);line-height:1}
+.contact-band__note{font-family:"Tektur",monospace;font-size:5.4pt;letter-spacing:.12em;text-transform:uppercase;color:rgba(233,226,209,.5);margin-top:2.4mm}
+.contact-band__right{display:flex;gap:5mm;align-items:center}
+.contact-band__right img{width:26mm;height:26mm;background:var(--paper-hi);padding:1.2mm}
+.contact-band__right span{font-family:"Oswald","Arial Narrow",sans-serif;text-transform:uppercase;font-size:6pt;letter-spacing:.08em;line-height:1.5;color:rgba(233,226,209,.62);max-width:32mm}
+.contact-band__pno{position:absolute;right:16mm;bottom:3.2mm;font-family:"Tektur",monospace;font-size:5.2pt;letter-spacing:.12em;text-transform:uppercase;color:rgba(233,226,209,.4)}
+
+</style>
+</head>
+<body>
+
+<section class="page page--cover">
+  <div class="cover__top">
+    <div class="cover__brand"><span class="cover__mark"><img src="../catalog/assets/img/brand/logo_w_emblem.png" alt=""></span><span><b>В ОКОПЕ</b><i>каталог · НПО «Киловатт»</i></span></div>
+    <div class="cover__meta">НПО «КИЛОВАТТ» · ЛИПЕЦК<br>КАТАЛОГ ИЗДЕЛИЙ · 2026<br>РЕД. 01 · НОЯБРЬ 2026</div>
+  </div>
+  <div class="cover__aside"><div><span>Изделий в линейке</span><b>43</b></div><div><span>Категорий</span><b>6</b></div><div><span>Позиций сайта</span><b>33</b></div><div><span>Архивных</span><b>10</b></div></div>
+  <div class="cover__kicker">СТАНЦИИ РАДИОЭЛЕКТРОННОЙ БОРЬБЫ</div>
+  <h1 class="cover__title"><span>Станции</span><span class="out">РЭБ</span><span class="mark">«Капюшон»</span></h1>
+  <p class="cover__lead">Купольные, переносные и стационарные комплексы защиты объектов от БПЛА. Официальная линейка производителя — в самостоятельном каталоге «В ОКОПЕ».</p>
+  <div class="cover__zone">
+      <svg class="zone" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid meet">
+        <defs><path id="zoneArc" d="M 100 420 A 300 300 0 0 1 700 420"/></defs>
+        <line class="z-ground" x1="20" y1="420" x2="780" y2="420"/>
+        <path class="z-arc" d="M 100 420 A 300 300 0 0 1 700 420"/>
+        <text class="z-label"><textPath href="#zoneArc" startOffset="31%">ЗОНА ПРОТИВОДЕЙСТВИЯ БПЛА</textPath></text>
+        <image href="_assets/hero.jpg" x="325" y="330" width="150" height="90" preserveAspectRatio="xMidYMax meet"/>
+        <line class="z-tick" x1="475" y1="420" x2="475" y2="404"/>
+        <line class="z-tick" x1="605" y1="420" x2="605" y2="404"/>
+        <line class="z-tick" x1="475" y1="410" x2="605" y2="410"/>
+        <text class="z-label z-label--accent" x="540" y="396" text-anchor="middle">50–200 М</text>
+        <line class="z-tick" x1="100" y1="420" x2="100" y2="462"/>
+        <line class="z-tick" x1="700" y1="420" x2="700" y2="462"/>
+        <line class="z-tick" x1="100" y1="454" x2="700" y2="454"/>
+        <text class="z-label z-label--accent" x="400" y="480" text-anchor="middle">2000–3000 М</text>
+        <text class="z-label" x="400" y="498" text-anchor="middle">ОПЕРАТОР В УКРЫТИИ</text>
+        <text class="z-label" x="24" y="444">— ЗЕМЛЯ</text>
+        <text class="z-label" x="400" y="322" text-anchor="middle">СТАНЦИЯ К-12М</text>
+      </svg>
+      <div class="cap">Схема по паспорту изделия · дальность зависит от рельефа, помеховой обстановки и погоды</div>
+  </div>
+  <div class="cover__foot">
+    <div class="cover__stats"><div class="cover__stat"><b>300–5900</b><span>МГц диапазон</span></div><div class="cover__stat"><b>до 2400</b><span>Вт мощность передатчиков</span></div><div class="cover__stat"><b>43</b><span>позиции в каталоге</span></div><div class="cover__stat"><b>12</b><span>месяцев гарантии</span></div></div>
+    <div class="cover__note">Цены поставщика — ориентир,<br>не публичная оферта<br>данные — ноябрь 2026</div>
+  </div>
+</section>
+
+<section class="page "><div class="pg-head"><b>01 / ПРОИЗВОДИТЕЛЬ И ДОКУМЕНТЫ</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+
+<div class="about">
+  <div class="about__main">
+    <div class="sec-num">01.1 / КТО ДЕЛАЕТ ЛИНЕЙКУ</div>
+    <h2 class="sec-title">Собственное<br>производство<br>полного цикла</h2>
+    <p class="lead-osw">НПО «Киловатт» — российский разработчик и производитель станций РЭБ для защиты объектов от БПЛА.</p>
+    <p>В линейке более 20 моделей: компактные купольные станции для транспорта, стационарные направленные комплексы для площадных объектов, переносные рюкзаки, автоматические обнаружители дронов и аксессуары.</p><p>«Капюшон» — зарегистрированный товарный знак производителя (свидетельство № 1086620 от 14.02.2025); на внешний вид станции получен патент RU 145992 S. На изделия оформлены сертификат соответствия № РОСС RU.32001.04ИБФ1.ОСП28.81271 и декларация о соответствии ЕАЭС № RU Д-RU.PA07.B.24906/25. Гарантия — 12 месяцев; сервис и техническую поддержку обеспечивают производитель и его представители.</p>
+    <p class="tiny">Сведения об изготовителе: для «Капюшон» К-12М в паспорте — ООО «НПО „КИЛОВАТТ“»; для «Ребус-4», «Штора» К-12/700, «Штора-М» К-8/600 — ООО «НПО „МЕГАВАТТ“» (Липецк).</p>
+  </div>
+  <aside class="about__side">
+    <div class="sec-num" style="margin-bottom:2mm">ФАКТЫ</div>
+    <div class="facts3"><div class="fact3"><b>20+</b><span>моделей в линейке</span></div><div class="fact3"><b>ГКРЧ</b><span>решения на серийные изделия</span></div><div class="fact3"><b>12 мес</b><span>гарантия по паспорту</span></div><div class="fact3"><b>Липецк</b><span>производство полного цикла</span></div></div>
+    <div class="about__docs">
+      <div class="sec-num" style="margin-bottom:2mm">ДОКУМЕНТЫ</div>
+      <div class="dl"><div><b>Товарный знак</b><span>«Капюшон» — свидетельство № 1086620 от 14.02.2025</span></div><div><b>Патент</b><span>RU 145992 S на внешний вид станции от 06.02.2025</span></div><div><b>Сертификат</b><span>соответствия № РОСС RU.32001.04ИБФ1.ОСП28.81271</span></div><div><b>Декларация</b><span>о соответствии ЕАЭС № RU Д-RU.PA07.B.24906/25</span></div><div><b>Гарантия</b><span>12 месяцев с даты реализации; паспорт с отметками заводских проверок</span></div><div><b>Изготовитель</b><span>по паспорту: К-12М — НПО «КИЛОВАТТ»; «Ребус-4», «Штора» — НПО «МЕГАВАТТ»</span></div></div>
+    </div>
+  </aside>
+</div>
+<div class="orig">
+  <h3>Оригинальность:<br>паспорт решает</h3>
+  <p>Паспорт изделия обязателен: в нём указаны изготовитель, характеристики, правила эксплуатации и отметки заводских проверок. На металлических шильдиках — модель и QR-код на производителя. Оригинальные изделия поставляются в полной комплектации: станция, кабели, пульт, источник питания, тренога или кронштейн, паспорт. Подделки под названиями «Капюшон», «Штора», «Ребус», «Рюкзак» на рынке встречаются — оригинальную продукцию рекомендуем приобретать у представителей производителя.</p>
+</div>
+<div class="comp"><div><i>01</i><b>Собственное КБ</b><span>Корпус, антенны и электроника — разработка и производство на одной площадке.</span></div><div><i>02</i><b>Заводские испытания</b><span>Каждое изделие проверяется на заводе; отметки проверок — в паспорте.</span></div><div><i>03</i><b>Сервис и поддержка</b><span>Гарантия 12 месяцев, ремонт и техническая поддержка производителя.</span></div></div>
+<div class="pg-foot"><span>Цены поставщика — ориентир, не публичная оферта</span><span>02 / 11</span></div></section>
+
+<section class="page "><div class="pg-head"><b>02 / ФЛАГМАНЫ</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+
+<h2 class="sec-title" style="font-size:24pt;margin:0 0 4mm">Три позиции, с которых начинают</h2>
+
+<article class="flag">
+  <figure class="flag__media"><img class="flag__img" src="_assets/products/stancziya-reb-kapyushon-k-12m-800.jpg" alt="Станция РЭБ Капюшон К-12М"></figure>
+  <div class="flag__body">
+    <div class="flag__kick">01 · ФЛАГМАН · Купольные станции</div>
+    <h3 class="flag__name">Станция РЭБ Капюшон К-12М</h3>
+    <p class="flag__desc">Купольная станция на крышу техники: 12 каналов подавления 300–5900 МГц, до 240 Вт, питание 12/24 В, 220 В или автономно.</p>
+    <table class="flag__specs"><tr><td>Диапазон частот</td><td>300–1020, 1080–1360, 2100–2800, 5100–5300, 5680–5900 МГц</td></tr><tr><td>Каналов подавления</td><td>12</td></tr><tr><td>Мощность передатчиков</td><td>до 240 Вт</td></tr><tr><td>Дальность подавления</td><td>50–200 м (оператор 2000–3000 м)</td></tr><tr><td>Питание</td><td>12/24 В, 220 В через ПН, автономно ИП-24/100</td></tr><tr><td>Вес</td><td>24 кг нетто / 29 кг брутто</td></tr></table>
+    <div class="flag__foot"><span class="flag__price">800 000 ₽</span><span class="flag__status">под заказ</span></div>
+  </div>
+</article>
+<article class="flag">
+  <figure class="flag__media"><img class="flag__img" src="_assets/products/kompleks-reb-rebus-4-800.jpg" alt="Комплекс РЭБ Ребус-4"></figure>
+  <div class="flag__body">
+    <div class="flag__kick">02 · ФЛАГМАН · Стационарные</div>
+    <h3 class="flag__name">Комплекс РЭБ Ребус-4</h3>
+    <p class="flag__desc">Стационарный комплекс круговой защиты площадных объектов: 4 моноблока, мощность передатчиков до 2400 Вт, питание 220/380 В.</p>
+    <table class="flag__specs"><tr><td>Диапазон частот</td><td>240–1020, 2100–2800, 3300–3500, 5100–5300, 5680–5900 МГц</td></tr><tr><td>Мощность передатчиков</td><td>до 2400 Вт (по паспорту)</td></tr><tr><td>Дальность подавления</td><td>разведка — до 5 км; ударные — до 1 км (по паспорту)</td></tr><tr><td>Питание</td><td>220/380 В через стационарный щит питания</td></tr><tr><td>Время работы</td><td>не ограничено (от сети)</td></tr><tr><td>Вес нетто</td><td>306,5 кг (комплект)</td></tr></table>
+    <div class="flag__foot"><span class="flag__price">по запросу</span><span class="flag__status">под заказ</span></div>
+  </div>
+</article>
+<article class="flag">
+  <figure class="flag__media"><img class="flag__img" src="_assets/products/stancziya-reb-shtora-k12-700-800.jpg" alt="Станция РЭБ Штора К-12/700"></figure>
+  <div class="flag__body">
+    <div class="flag__kick">03 · ФЛАГМАН · Стационарные</div>
+    <h3 class="flag__name">Станция РЭБ Штора К-12/700</h3>
+    <p class="flag__desc">Стационарная станция направленного действия: 12 генераторов помех, до 600 Вт, до 1000 м, питание 220 В или ИП-24/100.</p>
+    <table class="flag__specs"><tr><td>Диапазон частот</td><td>240–1020, 2100–2800, 3300–3500, 5100–5300, 5680–5900 МГц</td></tr><tr><td>Генераторов помех</td><td>12 (по 50–60 Вт)</td></tr><tr><td>Мощность передатчиков</td><td>до 600 Вт</td></tr><tr><td>Дальность подавления</td><td>до 1000 м от объекта защиты</td></tr><tr><td>Питание</td><td>ИП-24/100 или 220 В через преобразователь</td></tr><tr><td>Время непрерывной работы</td><td>не менее 90 минут</td></tr></table>
+    <div class="flag__foot"><span class="flag__price">1 900 000 ₽</span><span class="flag__status">под заказ</span></div>
+  </div>
+</article>
+<div class="section-note"><span>Купольная станция на технику · стационарный комплекс на площадь · направленная станция на объект</span><span>цены поставщика — ориентир, не публичная оферта</span></div>
+<div class="pg-foot"><span>Цены поставщика — ориентир, не публичная оферта</span><span>03 / 11</span></div></section>
+
+<section class="page "><div class="pg-head"><b>02.1 / СРАВНЕНИЕ</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+
+<h2 class="sec-title" style="font-size:24pt;margin:0 0 1.6mm">Флагманы в цифрах</h2>
+<p class="tiny" style="max-width:124mm;margin-bottom:1mm">Три модели рядом — что выбрать под объект. Данные приведены по паспортам изделий; цены — поставщика (ориентиры), подтверждаются в КП.</p>
+<table class="cmp">
+  <thead><tr><th class="cmp__lab">Характеристика<br>по паспорту</th><th><span class="cmp__cat">Купольные станции</span><div class="cmp__photo"><img class="cmp__img" src="_assets/products/stancziya-reb-kapyushon-k-12m-800.jpg" alt="Станция РЭБ Капюшон К-12М"></div><span class="cmp__name">Станция РЭБ Капюшон К-12М</span></th><th><span class="cmp__cat">Стационарные</span><div class="cmp__photo"><img class="cmp__img" src="_assets/products/kompleks-reb-rebus-4-800.jpg" alt="Комплекс РЭБ Ребус-4"></div><span class="cmp__name">Комплекс РЭБ Ребус-4</span></th><th><span class="cmp__cat">Стационарные</span><div class="cmp__photo"><img class="cmp__img" src="_assets/products/stancziya-reb-shtora-k12-700-800.jpg" alt="Станция РЭБ Штора К-12/700"></div><span class="cmp__name">Станция РЭБ Штора К-12/700</span></th></tr></thead>
+  <tbody><tr><td class="cmp__lab">Диапазон</td><td>300–1020, 1080–1360, 2100–2800, 5100–5300, 5680–5900 МГц</td><td>240–1020, 2100–2800, 3300–3500, 5100–5300, 5680–5900 МГц</td><td>240–1020, 2100–2800, 3300–3500, 5100–5300, 5680–5900 МГц</td></tr><tr><td class="cmp__lab">Мощность</td><td>до 240 Вт</td><td>до 2400 Вт</td><td>до 600 Вт</td></tr><tr><td class="cmp__lab">Дальность</td><td>50–200 м</td><td>разведка — до 5 км; ударные — до 1 км</td><td>до 1000 м от объекта защиты</td></tr><tr><td class="cmp__lab">Питание</td><td>12/24 В, 220 В через ПН, автономно ИП-24/100</td><td>220/380 В через стационарный щит питания</td><td>ИП-24/100 или 220 В через преобразователь</td></tr><tr><td class="cmp__lab">Вес</td><td>24 кг нетто / 29 кг брутто</td><td>306,5 кг</td><td>41 кг станция / 90 кг комплект</td></tr><tr><td class="cmp__lab">Гарантия</td><td>12 месяцев</td><td>12 месяцев</td><td>12 месяцев</td></tr></tbody>
+  <tfoot><tr><td class="cmp__lab">Цена поставщика</td><td><span class="cmp__price">800 000 ₽<small>под заказ</small></span></td><td><span class="cmp__price">по запросу<small>под заказ</small></span></td><td><span class="cmp__price">1 900 000 ₽<small>под заказ</small></span></td></tr></tfoot>
+</table>
+<div class="cmp-note"><span>данные — по паспортам изделий</span><span>дальность зависит от условий эксплуатации</span><span>цены поставщика — ориентир, не публичная оферта</span></div>
+<div class="cmp-foot"><div><i>01 · На технику</i><b>К-12М</b><span>Крепление на крышу кабины, КУНГа или верхнюю точку техники.</span></div><div><i>02 · На площадь</i><b>«Ребус-4»</b><span>Круговое прикрытие площадного объекта четырьмя моноблоками.</span></div><div><i>03 · На объект</i><b>«Штора» К-12/700</b><span>Направленное подавление на вероятном направлении подлёта.</span></div></div>
+<div class="pg-foot"><span>Цены поставщика — ориентир, не публичная оферта</span><span>04 / 11</span></div></section>
+
+<section class="page cat-page"><div class="pg-head"><b>03 / КАТАЛОГ — ВЕДОМОСТЬ</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+
+<div class="opener">
+  <h2 class="sec-title">Вся линейка<br>по номерам</h2>
+  <div>
+    <span class="tech">43 позиции · 6 категорий · ведомость</span>
+    <p>33 актуальные позиции сайта и 10 архивных. Ведомость по категориям: номер, изделие, ключевые ТТХ, цена поставщика. Позиции «вне сайта» — архивные, наличие уточняется. Цены поставщика — ориентир, не публичная оферта.</p>
+  </div>
+</div><div class="catbar"><span class="catbar__tick"></span><b>Купольные станции</b><span>14 позиций</span></div>
+<div class="row">
+  <span class="row__n">01</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-kapyushon-k-12m-400.jpg" alt="Станция РЭБ Капюшон К-12М"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон К-12М</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>300–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 240 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50–200 м</b></span></div>
+  <div class="row__price">800 000 ₽<small>под заказ</small></div>
+</div>
+<div class="row">
+  <span class="row__n">02</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-kapyushon-k-15-vip-dlya-legkovyh-avtomobilej-400.jpg" alt="Станция РЭБ Капюшон К-15М ВИП"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон К-15М ВИП</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>200–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 300 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">1 150 000 ₽<small>под заказ</small></div>
+</div>
+<div class="row">
+  <span class="row__n">03</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-kapyushon-k-15m-400.jpg" alt="Станция РЭБ Капюшон К-15М"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон К-15М</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>200–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 300 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">1 100 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">04</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-kapyushon-k-12-bagazhnyj-boks-400.jpg" alt="Станция РЭБ Капюшон К-12М багажный бокс"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон К-12М багажный бокс</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>300–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 240 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">850 000 ₽<small>под заказ</small></div>
+</div>
+<div class="row">
+  <span class="row__n">05</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-kapyushon-fpv-12-400.jpg" alt="Станция РЭБ Капюшон ФПВ-12"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ФПВ-12</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>300–2800 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 240 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">800 000 ₽<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">06</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-kapyushon-k-8m-400.jpg" alt="Станция РЭБ Капюшон К-8М"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон К-8М</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>400–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>160 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">550 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">07</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-kapyushon-fpv-8m-400.jpg" alt="Станция РЭБ Капюшон ФПВ-8М"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ФПВ-8М</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>300–2800 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 160 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">550 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">08</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-kapyushon-fpv-5-moto-dlya-mototehniki-400.jpg" alt="Станция РЭБ Капюшон ФПВ-7 мото"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ФПВ-7 мото</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>400–2800 МГц</b></span><span class="row__sp"><i>Мощность</i><b>от 55 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-120 м</b></span></div>
+  <div class="row__price">по запросу<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">09</span>
+  <figure class="row__thumb"><span class="nophoto-text">ФОТО<br>УТОЧНЯЕТСЯ</span></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ФПВ-7<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>300–2500 МГц</b></span></div>
+  <div class="row__price">500 000 ₽<small>вне сайта</small></div>
+</div>
+<div class="row">
+  <span class="row__n">10</span>
+  <figure class="row__thumb"><span class="nophoto-text">ФОТО<br>УТОЧНЯЕТСЯ</span></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ФПВ-6С<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>400–1020 МГц</b></span></div>
+  <div class="row__price">450 000 ₽<small>вне сайта</small></div>
+</div>
+<div class="row">
+  <span class="row__n">11</span>
+  <figure class="row__thumb"><span class="nophoto-text">ФОТО<br>УТОЧНЯЕТСЯ</span></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон К-6<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"></div>
+  <div class="row__price">по запросу<small>вне сайта</small></div>
+</div>
+<div class="row">
+  <span class="row__n">12</span>
+  <figure class="row__thumb"><span class="nophoto-text">ФОТО<br>УТОЧНЯЕТСЯ</span></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ФПВ-3<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"></div>
+  <div class="row__price">по запросу<small>вне сайта</small></div>
+</div>
+<div class="row">
+  <span class="row__n">13</span>
+  <figure class="row__thumb"><span class="nophoto-text">ФОТО<br>УТОЧНЯЕТСЯ</span></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ФПВ-4<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"></div>
+  <div class="row__price">по запросу<small>вне сайта</small></div>
+</div>
+<div class="row">
+  <span class="row__n">14</span>
+  <figure class="row__thumb"><span class="nophoto-text">ФОТО<br>УТОЧНЯЕТСЯ</span></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ФПВ-5М<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>400–2800 МГц</b></span></div>
+  <div class="row__price">по запросу<small>вне сайта</small></div>
+</div>
+<div class="pg-foot"><span>Цены поставщика — ориентир, не публичная оферта</span><span>05 / 11</span></div></section>
+
+<section class="page cat-page"><div class="pg-head"><b>03 / КАТАЛОГ — ВЕДОМОСТЬ</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+<div class="catbar"><span class="catbar__tick"></span><b>Стационарные</b><span>5 позиций</span></div>
+<div class="row">
+  <span class="row__n">15</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-shtora-k12-700-400.jpg" alt="Станция РЭБ Штора К-12/700"></figure>
+  <div><h3 class="row__name">Станция РЭБ Штора К-12/700</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>240–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 600 Вт</b></span><span class="row__sp"><i>Дальность</i><b>до 1000 м от объекта защиты</b></span></div>
+  <div class="row__price">1 900 000 ₽<small>под заказ</small></div>
+</div>
+<div class="row">
+  <span class="row__n">16</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/kompleks-reb-rebus-4-400.jpg" alt="Комплекс РЭБ Ребус-4"></figure>
+  <div><h3 class="row__name">Комплекс РЭБ Ребус-4</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>240–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 2400 Вт</b></span><span class="row__sp"><i>Дальность</i><b>разведка — до 5 км</b></span></div>
+  <div class="row__price">по запросу<small>под заказ</small></div>
+</div>
+<div class="row">
+  <span class="row__n">17</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-protivodejstviya-bpla-shtora-m-400.jpg" alt="Станция РЭБ Штора-М К-8/600"></figure>
+  <div><h3 class="row__name">Станция РЭБ Штора-М К-8/600</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>240–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 260 Вт</b></span><span class="row__sp"><i>Дальность</i><b>500–2000 м от объекта защиты</b></span></div>
+  <div class="row__price">950 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">18</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-pole-31-400.jpg" alt="Станция РЭБ Поле-31"></figure>
+  <div><h3 class="row__name">Станция РЭБ Поле-31</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>1162–1630 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 240 Вт</b></span><span class="row__sp"><i>Дальность</i><b>не менее 2000 м</b></span></div>
+  <div class="row__price">800 000 ₽<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">19</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/kronshtejn-k-izdeliyu-shtora-k-12-700-400.jpg" alt="Кронштейн к изделию Штора К-12/700"></figure>
+  <div><h3 class="row__name">Кронштейн к изделию Штора К-12/700</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Вес</i><b>6 кг</b></span><span class="row__sp"><i>Габариты</i><b>600×300×200 мм</b></span></div>
+  <div class="row__price">по запросу<small>уточняется</small></div>
+</div><div class="catbar"><span class="catbar__tick"></span><b>Переносные (рюкзаки)</b><span>7 позиций</span></div>
+<div class="row">
+  <span class="row__n">20</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-protivodejstviya-bpla-kapyushon-takticheskaya-perenosnaya-tp-8-100-400.jpg" alt="Станция РЭБ Капюшон ТП 8-100"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ТП 8-100</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>400–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 160 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-100 м</b></span></div>
+  <div class="row__price">420 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">21</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stancziya-reb-kapyushon-tp-7-100-400.jpg" alt="Станция РЭБ Капюшон ТП 7-100"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ТП 7-100</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>7–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>35-40 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-100 м</b></span></div>
+  <div class="row__price">336 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">22</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/ryukzak-tp-4-28a-400.jpg" alt="Станция РЭБ Капюшон ТП 4-28А"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ТП 4-28А</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>720–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>20 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-100 м</b></span></div>
+  <div class="row__price">168 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">23</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/ryukzak-4-28b-400.jpg" alt="Станция РЭБ Капюшон ТП 4-28Б"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ТП 4-28Б</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>400–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 20 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-100 м</b></span></div>
+  <div class="row__price">168 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">24</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/ryukzak-tp-4-50a-400.jpg" alt="Станция РЭБ Капюшон ТП 4-50А"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ТП 4-50А</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>720–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 20 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-100 м</b></span></div>
+  <div class="row__price">по запросу<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">25</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/ryukzak-tp-4-50b-400.jpg" alt="Станция РЭБ Капюшон ТП 4-50Б"></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ТП 4-50Б</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>400–5900 МГц</b></span><span class="row__sp"><i>Мощность</i><b>до 20 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-100 м</b></span></div>
+  <div class="row__price">по запросу<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">26</span>
+  <figure class="row__thumb"><span class="nophoto-text">ФОТО<br>УТОЧНЯЕТСЯ</span></figure>
+  <div><h3 class="row__name">Станция РЭБ Капюшон ТП 10-100<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"></div>
+  <div class="row__price">по запросу<small>вне сайта</small></div>
+</div><div class="catbar"><span class="catbar__tick"></span><b>Детекторы БПЛА</b><span>2 позиций</span></div>
+<div class="row">
+  <span class="row__n">27</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/avtomaticheskij-obnaruzhitel-fpv-dronov-signal-m2-400.jpg" alt="Обнаружитель дронов Сигнал-М2"></figure>
+  <div><h3 class="row__name">Обнаружитель дронов Сигнал-М2</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>300–10000 МГц</b></span><span class="row__sp"><i>Дальность</i><b>1000-5000 м</b></span><span class="row__sp"><i>Вес</i><b>3.5 кг</b></span></div>
+  <div class="row__price">190 000 ₽<small>под заказ</small></div>
+</div>
+<div class="row">
+  <span class="row__n">28</span>
+  <figure class="row__thumb"><span class="nophoto-text">ФОТО<br>УТОЧНЯЕТСЯ</span></figure>
+  <div><h3 class="row__name">Детектор дронов «СИГНАЛ» (ранняя модель)<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"></div>
+  <div class="row__price">120 000 ₽<small>вне сайта</small></div>
+</div>
+<div class="pg-foot"><span>Цены поставщика — ориентир, не публичная оферта</span><span>06 / 11</span></div></section>
+
+<section class="page cat-page"><div class="pg-head"><b>03 / КАТАЛОГ — ВЕДОМОСТЬ</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+<div class="catbar"><span class="catbar__tick"></span><b>Доп. модули</b><span>4 позиций</span></div>
+<div class="row">
+  <span class="row__n">29</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/modul-fpv-1-140-400.jpg" alt="Модуль для станции противодействия БПЛА «Капюшон», модель ФПВ-1/140"></figure>
+  <div><h3 class="row__name">Модуль для станции противодействия БПЛА «Капюшон», модель ФПВ-1/140</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>140–200 МГц</b></span><span class="row__sp"><i>Мощность</i><b>от 20 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">180 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">30</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/modul-fpv-1-200-400.jpg" alt="Модуль для станции противодействия БПЛА «Капюшон», модель ФПВ-1/200"></figure>
+  <div><h3 class="row__name">Модуль для станции противодействия БПЛА «Капюшон», модель ФПВ-1/200</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>200–300 МГц</b></span><span class="row__sp"><i>Мощность</i><b>от 20 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">180 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">31</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/modul-fpv-1-300-400.jpg" alt="Модуль для станции противодействия БПЛА «Капюшон», модель ФПВ-1/300"></figure>
+  <div><h3 class="row__name">Модуль для станции противодействия БПЛА «Капюшон», модель ФПВ-1/300</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>300–400 МГц</b></span><span class="row__sp"><i>Мощность</i><b>от 20 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">180 000 ₽<small>в наличии</small></div>
+</div>
+<div class="row">
+  <span class="row__n">32</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/modul-fpv-2128-400.jpg" alt="Модуль для станции противодействия БПЛА «Капюшон», модель ФПВ-2128"></figure>
+  <div><h3 class="row__name">Модуль для станции противодействия БПЛА «Капюшон», модель ФПВ-2128</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Диапазон</i><b>2100–2800 МГц</b></span><span class="row__sp"><i>Мощность</i><b>от 80 Вт</b></span><span class="row__sp"><i>Дальность</i><b>50-200 м</b></span></div>
+  <div class="row__price">по запросу<small>уточняется</small></div>
+</div><div class="catbar"><span class="catbar__tick"></span><b>Аксессуары</b><span>11 позиций</span></div>
+<div class="row">
+  <span class="row__n">33</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/istochnik-postoyannogo-napryazheniya-ip-24-100-400.jpg" alt="Источник питания ИП-24/100"></figure>
+  <div><h3 class="row__name">Источник питания ИП-24/100</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Габариты</i><b>420×350×210 мм</b></span><span class="row__sp"><i>Вес</i><b>25.6 кг</b></span><span class="row__sp"><i>АКБ</i><b>105 Ач / 24 В</b></span></div>
+  <div class="row__price">190 000 ₽<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">34</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/stojka-trenoga-400.jpg" alt="Стойка-тренога для установки станций РЭБ Капюшон"></figure>
+  <div><h3 class="row__name">Стойка-тренога для установки станций РЭБ Капюшон</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Вес</i><b>20 кг</b></span><span class="row__sp"><i>Высота</i><b>830 или 1200 мм</b></span></div>
+  <div class="row__price">80 000 ₽<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">35</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/preobrazovatel-12-24v-50a-30a-400.jpg" alt="Преобразователь 12-24В 50А/100А для станций РЭБ Капюшон"></figure>
+  <div><h3 class="row__name">Преобразователь 12-24В 50А/100А для станций РЭБ Капюшон</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Габариты</i><b>260×175×140 мм</b></span></div>
+  <div class="row__price">25 000 ₽<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">36</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/pribor-dlya-proverki-stanczij-reb-reb-tester-t-9-400.jpg" alt="Прибор для проверки станций РЭБ, РЭБ-Тестер Т-9"></figure>
+  <div><h3 class="row__name">Прибор для проверки станций РЭБ, РЭБ-Тестер Т-9</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Вес</i><b>0.5 кг</b></span></div>
+  <div class="row__price">7 000 ₽<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">37</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/blok-rele-24-v-400.jpg" alt="Блок-реле 24В для станций РЭБ Капюшон"></figure>
+  <div><h3 class="row__name">Блок-реле 24В для станций РЭБ Капюшон</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Габариты</i><b>115×90×60 мм</b></span><span class="row__sp"><i>Вес</i><b>3.4 кг</b></span></div>
+  <div class="row__price">по запросу<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">38</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/kronshtejn-500-600-i-700-400.jpg" alt="Кронштейн 500, 600 и 700 для установки станций РЭБ Капюшон"></figure>
+  <div><h3 class="row__name">Кронштейн 500, 600 и 700 для установки станций РЭБ Капюшон</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Под купол</i><b>500/600/700 мм</b></span></div>
+  <div class="row__price">по запросу<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">39</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/razvetvitel-24-v-400.jpg" alt="Разветвитель 24В"></figure>
+  <div><h3 class="row__name">Разветвитель 24В</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Габариты</i><b>150×10×5 мм</b></span><span class="row__sp"><i>Вес</i><b>1.2 кг</b></span></div>
+  <div class="row__price">по запросу<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">40</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/blok-pitaniya-220v-60-a-400.jpg" alt="Стационарный щит питания 220/24 В, 60 А для станции РЭБ Капюшон"></figure>
+  <div><h3 class="row__name">Стационарный щит питания 220/24 В, 60 А для станции РЭБ Капюшон</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Габариты</i><b>300×210×150 мм</b></span><span class="row__sp"><i>Вес</i><b>7.5 кг</b></span></div>
+  <div class="row__price">по запросу<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">41</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/blok-pitaniya-220-v-30-a-400.jpg" alt="Стационарный щит питания СЩ-220/24В 30А для станции РЭБ Капюшон"></figure>
+  <div><h3 class="row__name">Стационарный щит питания СЩ-220/24В 30А для станции РЭБ Капюшон</h3></div>
+  <div class="row__specs"><span class="row__sp"><i>Габариты</i><b>300×210×150 мм</b></span><span class="row__sp"><i>Вес</i><b>7.5 кг</b></span></div>
+  <div class="row__price">по запросу<small>уточняется</small></div>
+</div>
+<div class="row">
+  <span class="row__n">42</span>
+  <figure class="row__thumb"><img class="row__img" src="_assets/products/kommutator-24-v-400.jpg" alt="Коммутатор (кабель питания) 24В с пультом"></figure>
+  <div><h3 class="row__name">Коммутатор (кабель питания) 24В с пультом<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"></div>
+  <div class="row__price">20 000 ₽<small>вне сайта</small></div>
+</div>
+<div class="pg-foot"><span>Цены поставщика — ориентир, не публичная оферта</span><span>07 / 11</span></div></section>
+
+<section class="page cat-page"><div class="pg-head"><b>03 / КАТАЛОГ — ВЕДОМОСТЬ</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+<div class="catbar"><span class="catbar__tick"></span><b>Аксессуары · продолжение</b><span>1 позиция</span></div>
+<div class="row">
+  <span class="row__n">43</span>
+  <figure class="row__thumb"><span class="nophoto-text">ФОТО<br>УТОЧНЯЕТСЯ</span></figure>
+  <div><h3 class="row__name">Бур (стойка винтовая с «ромашкой»)<span class="row__badge">вне сайта</span></h3></div>
+  <div class="row__specs"></div>
+  <div class="row__price">45 000 ₽<small>вне сайта</small></div>
+</div>
+<div class="sum">
+  <div>
+    <h3>Итоги по категориям</h3>
+    <table class="sumt">
+      <thead><tr><th>Категория</th><th>Позиций</th><th>Вне сайта</th><th>Цена от</th></tr></thead>
+      <tbody><tr><td>Купольные станции</td><td>14</td><td>6</td><td>от 450 000 ₽</td></tr><tr><td>Стационарные</td><td>5</td><td>0</td><td>от 800 000 ₽</td></tr><tr><td>Переносные (рюкзаки)</td><td>7</td><td>1</td><td>от 168 000 ₽</td></tr><tr><td>Детекторы БПЛА</td><td>2</td><td>1</td><td>от 120 000 ₽</td></tr><tr><td>Доп. модули</td><td>4</td><td>0</td><td>от 180 000 ₽</td></tr><tr><td>Аксессуары</td><td>11</td><td>2</td><td>от 7 000 ₽</td></tr><tr class="total"><td>Всего</td><td>43</td><td>10</td><td>—</td></tr></tbody>
+    </table>
+  </div>
+  <div class="notes">
+    <h4>Примечания к ведомости</h4>
+    <p><b>Архив.</b> 10 позиций сняты с сайта производителя — в ведомости помечены «вне сайта»; наличие, комплектация и цена уточняются по запросу.</p>
+    <p><b>Цены.</b> 27 позиций с ценой поставщика, 16 — «по запросу». Цены указаны без наценки «В ОКОПЕ», не являются публичной офертой и подтверждаются в КП.</p>
+    <p><b>ТТХ.</b> Приведены по паспортам изделий. Дальность зависит от рельефа, помеховой обстановки и погоды; производитель вправе вносить изменения в конструкцию.</p>
+    <p><b>Ведомость.</b> Номер — сквозная позиция каталога; в строке — ключевые параметры и цена. Полные ТТХ, фотографии и описание — в паспорте изделия и в электронном каталоге.</p>
+  </div>
+</div>
+<div class="lineup"><div><b>14</b><span>Купольные станции</span><i>Купол на крышу кабины, КУНГа или верхнюю точку техники: 8–12 каналов, до 240 Вт.</i></div><div><b>5</b><span>Стационарные</span><i>Направленные и круговые комплексы для площадных объектов: до 2400 Вт, до 1000 м.</i></div><div><b>7</b><span>Переносные (рюкзаки)</span><i>Тактические станции в рюкзаке: 20–100 Вт, Li-ion и LiFePO4, автономность до 5 часов.</i></div><div><b>2</b><span>Детекторы БПЛА</span><i>Пассивное обнаружение на 300–10000 МГц, 1000–5000 м по прямой видимости.</i></div><div><b>4</b><span>Доп. модули</span><i>Однодиапазонные модули 140–200 МГц и другие полосы — расширяют диапазон станции.</i></div><div><b>11</b><span>Аксессуары</span><i>Питание, кронштейны, треноги, преобразователи, разветвители и РЭБ-тестер.</i></div></div>
+<div class="pg-foot"><span>Цены поставщика — ориентир, не публичная оферта</span><span>08 / 11</span></div></section>
+
+<section class="page "><div class="pg-head"><b>ПРИМЕНЕНИЕ И ПОСТАВКА</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+
+<div class="block">
+  <div class="block__head"><span class="sec-num">04 / ПРИМЕНЕНИЕ</span><h2 class="sec-title">Где это работает</h2></div>
+  <div class="apps" style="border-top:0"><div class="app"><i>01</i><b>Завод / промышленная площадка</b><p>«Ребус-4» для кругового прикрытия площадки и «Сигнал-М2» для раннего обнаружения; на периметр и подъезды — «Штора» К-12/700. Контур закрывает и разведку, и заход ударных дронов.</p><span>Ребус-4 · Сигнал-М2 · Штора К-12/700<br>купольные / стационарные</span></div><div class="app"><i>02</i><b>Склад / логистический хаб</b><p>Начать с обнаружения и поставить направленную «Штору» на вероятное направление подлёта. При расширении — купольные «Капюшон» К-8М/К-12М на технику и погрузчики.</p><span>Штора К-12/700 · Капюшон К-8М/К-12М<br>обнаружение / направленные</span></div><div class="app"><i>03</i><b>Охрана периметра</b><p>Задача — вовремя увидеть и точечно закрыть участок. Сначала обнаружение, затем направленные станции на углах периметра; связка «детектор + станция» работает по факту.</p><span>Сигнал-М2 · Штора К-12/700<br>детектор + станция</span></div><div class="app"><i>04</i><b>Инфраструктура: ТЭК, ЛЭП, трубопроводы</b><p>Протяжённые объекты защищают комбинацией: «Поле-31» против дронов по спутниковой навигации плюс «Ребус-4» для локальных площадок. Для мобильных бригад — станции на транспорт и рюкзаки ТП.</p><span>Поле-31 · Ребус-4 · рюкзаки ТП<br>площадные / мобильные</span></div><div class="app"><i>05</i><b>АЗС / топливная инфраструктура</b><p>Компактные решения для небольшой площадки: «Штора-М» К-8/600 или «Капюшон» К-8М. Важны быстрый монтаж и работа от штатного питания; при сети АЗС — типовое решение.</p><span>Штора-М К-8/600 · Капюшон К-8М<br>компактные</span></div><div class="app"><i>06</i><b>Аэропорт / приаэродромная территория</b><p>Технически задачи закрывают «Ребус-4» и «Штора» К-12/700, но применение на приаэродромных территориях регулируется отдельно. Такие проекты ведём только с уполномоченными подразделениями.</p><span>Ребус-4 · Штора К-12/700<br>по согласованию</span></div><div class="app"><i>07</i><b>Сельхозпредприятие</b><p>На поля и открытые площадки — «Штора» К-12/700, на тракторы и комбайны — купольные «Капюшон»; детектор помогает не держать станции включёнными впустую.</p><span>Штора К-12/700 · Капюшон К-8М · Сигнал-М2<br>площадные / купольные</span></div></div>
+</div>
+<div class="block">
+  <div class="block__head"><span class="sec-num">05 / ПОСТАВКА</span><h2 class="sec-title">Порядок сделки</h2></div>
+  <div class="steps">
+    <div class="steps__line"></div>
+    <ol class="steps__list"><li class="step"><span class="step__n">01</span><h4>Заявка</h4><p>Объект, площадь, задачи, транспорт, питание, сроки.</p></li><li class="step"><span class="step__n">02</span><h4>Подбор</h4><p>Состав контура: обнаружение → станции → питание → аксессуары → монтаж.</p></li><li class="step"><span class="step__n">03</span><h4>КП</h4><p>Конфигурация, цена, сроки и состав документов.</p></li><li class="step"><span class="step__n">04</span><h4>Договор</h4><p>Комплектация, сроки, условия поставки, гарантия, ПНР.</p></li><li class="step"><span class="step__n">05</span><h4>Поставка</h4><p>Отгрузка со склада или под заказ с понятным сроком.</p></li><li class="step"><span class="step__n">06</span><h4>ПНР и обучение</h4><p>Монтаж, подключение, проверка РЭБ-тестером, инструктаж.</p></li><li class="step"><span class="step__n">07</span><h4>Гарантия и сервис</h4><p>12 месяцев, гарантийный ремонт, поддержка и модернизация.</p></li></ol>
+  </div>
+  <div class="steps__foot"><span>Заявка → подбор → КП → договор → поставка → ПНР → сервис</span><span>сроки и состав — в КП</span></div>
+  <div class="kit"><div><i>01</i><b>Изделие</b><span>Станция или комплекс в заводской упаковке, шильдик с моделью и QR-кодом.</span></div><div><i>02</i><b>Управление</b><span>Пульт, кабели, коммутатор или разветвитель — по комплектации изделия.</span></div><div><i>03</i><b>Питание и монтаж</b><span>Источник питания, преобразователь, тренога или кронштейн.</span></div><div><i>04</i><b>Документы</b><span>Паспорт с отметками заводских проверок и документы по КП.</span></div></div>
+</div>
+<div class="pg-foot"><span>Цены поставщика — ориентир, не публичная оферта</span><span>09 / 11</span></div></section>
+
+<section class="page "><div class="pg-head"><b>06 / ДОКУМЕНТЫ И ПРАВОВОЙ СТАТУС</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+
+<h2 class="sec-title" style="font-size:24pt;margin:0 0 3mm">Статус и документы</h2>
+<div class="docs2">
+  <div class="doc2"><div><i>01</i><div><b>Товарный знак</b><p>«Капюшон» — свидетельство № 1086620 от 14.02.2025</p></div></div><div><i>02</i><div><b>Патент</b><p>RU 145992 S на внешний вид станции от 06.02.2025</p></div></div><div><i>03</i><div><b>Сертификат</b><p>соответствия № РОСС RU.32001.04ИБФ1.ОСП28.81271</p></div></div><div><i>04</i><div><b>Декларация</b><p>о соответствии ЕАЭС № RU Д-RU.PA07.B.24906/25</p></div></div><div><i>05</i><div><b>Гарантия</b><p>12 месяцев с даты реализации; паспорт с отметками заводских проверок</p></div></div><div><i>06</i><div><b>Изготовитель</b><p>по паспорту: К-12М — НПО «КИЛОВАТТ»; «Ребус-4», «Штора» — НПО «МЕГАВАТТ»</p></div></div></div>
+  <aside class="orig orig--stack">
+    <h3>Оригинальность</h3>
+    <p>Паспорт изделия обязателен: изготовитель, характеристики, правила эксплуатации и отметки заводских проверок. На шильдиках — модель и QR-код на производителя. Оригинал поставляется в полной комплектации: станция, кабели, пульт, питание, тренога или кронштейн, паспорт.</p>
+    <p style="margin-top:2.4mm">Подделки под названиями «Капюшон», «Штора», «Ребус», «Рюкзак» встречаются. Оригинальную продукцию рекомендуем приобретать у представителей производителя.</p>
+    <span class="stamp">ДОКУМЕНТЫ — В КП</span>
+  </aside>
+</div>
+<div class="legal-block">
+  <h3>Правовой статус оборудования — обязательная информация</h3>
+  <div class="legal-block__cols"><p><b>Правовой статус.</b> Оборудование является радиоэлектронным средством. Порядок приобретения, регистрации и применения определяется законодательством Российской Федерации, в том числе Федеральным законом от 07.07.2003 № 126-ФЗ «О связи», постановлениями Правительства РФ от 20.10.2021 № 1800 и от 10.10.2026 № 1331, решениями ГКРЧ. Возможность применения на конкретном объекте подтверждается заказчиком в установленном порядке до ввода оборудования в эксплуатацию. Поставщик не оказывает юридических услуг и не гарантирует получение заказчиком разрешений и регистрации; ответственность за соблюдение условий применения несёт владелец (эксплуатант) оборудования.</p><p><b>Технические характеристики.</b> Приведены по паспортам изделий. Значения дальности зависят от условий эксплуатации (рельеф, помеховая обстановка, погодные условия) и не являются гарантией нейтрализации конкретного беспилотного аппарата. Производитель вправе вносить изменения в конструкцию и характеристики.</p><p><b>Цены и наличие.</b> Информация актуальна на дату публикации и не является публичной офертой. Цены указаны по данным поставщика без наценки «В ОКОПЕ»; итоговая стоимость фиксируется в коммерческом предложении и договоре.</p><p><b>Эксплуатация.</b> Запрещается вскрывать корпус, самостоятельно ремонтировать и вмешиваться в конструкцию — это прекращает гарантийные обязательства. При включённом изделии не рекомендуется находиться ближе 5 м (К-12М) или ближе 15 м в створе направленности («Штора», «Ребус-4»); точные требования — в паспорте конкретного изделия.</p><p><b>Ограничение по применению.</b> Не допускается применение в местах, где это может создать угрозу безопасности полётов, связи, работе экстренных служб или жизни людей. Отдельные объекты (приаэродромные территории, объекты ТЭК, транспортная инфраструктура) имеют специальный правовой режим.</p></div>
+</div>
+<div class="verify"><div><i>01</i><b>Паспорт</b><span>Изготовитель, характеристики, правила эксплуатации и отметки заводских проверок.</span></div><div><i>02</i><b>Шильдик</b><span>Модель и QR-код на производителя на металлическом шильдике изделия.</span></div><div><i>03</i><b>Комплектация</b><span>Полный комплект и документы, перечисленные в КП и паспорте.</span></div></div>
+<div class="pg-foot"><span>Цены поставщика — ориентир, не публичная оферта</span><span>10 / 11</span></div></section>
+
+<section class="page page--contacts">
+
+<div class="contact-head"><b>КОНТАКТЫ · ЗАЯВКА</b><span>В ОКОПЕ · каталог изделий · 2026</span></div>
+<h2 class="contact__title">Собрать<br>контур<i>.</i></h2>
+<p class="contact__lead">Опишите объект — вернёмся с конфигурацией, составом документов, сроками и ценой. Правовой режим применения проверяем до сделки.</p>
+<div class="contact__grid">
+  <div>
+    <span class="contact__cap">Телефон · WhatsApp</span>
+    <span class="contact__phone">+7 (999) 136-71-42</span>
+    <span class="contact__cap" style="margin-top:3mm">Подбор и поставка — «В ОКОПЕ»; производитель — НПО «Киловатт», Липецк</span>
+    <div class="contact__qr"><img src="../catalog/assets/img/qr-phone.svg" alt="QR-код: телефон каталога"><span>Наведите камеру<br>телефона — позвонить</span></div>
+  </div>
+  <div>
+    <div class="list__title">Что прислать для расчёта</div>
+    <div class="checklist"><div><i>01</i><span>Объект, площадь, регион, режим работы</span></div><div><i>02</i><span>Задачи: обнаружение, подавление, прикрытие техники</span></div><div><i>03</i><span>Транспорт, питание, монтаж, ограничения по размещению</span></div><div><i>04</i><span>Требования к документам, срокам и форме поставки</span></div></div>
+    <div class="contact__note">Коммерческое предложение — в течение рабочего дня после получения вводных.<br>Цены — поставщика, без наценки «В ОКОПЕ»; не публичная оферта.</div>
+  </div>
+</div>
+<div class="howto"><div><i>01</i><b>Заявка</b><span>Телефон, WhatsApp или представитель «В ОКОПЕ»: объект, задачи, сроки.</span></div><div><i>02</i><b>Подбор и КП</b><span>Конфигурация контура, состав документов, сроки и цена — в КП.</span></div><div><i>03</i><b>Договор и поставка</b><span>Отгрузка, монтаж и обучение операторов — по согласованному плану.</span></div></div>
+<div class="contact-band">
+  <div class="contact-band__left">
+    <b>Связаться напрямую</b>
+    <span class="contact-band__phone">+7 (999) 136-71-42</span>
+    <div class="contact-band__note">«В ОКОПЕ» · подбор и поставка · каталог изделий НПО «Киловатт» · 2026</div>
+  </div>
+  <div class="contact-band__right"><img src="../catalog/assets/img/qr-phone.svg" alt="QR-код: телефон каталога"><span>Наведите камеру<br>телефона — позвонить</span></div>
+  <span class="contact-band__pno">стр. 11 / 11 · ноябрь 2026</span>
+</div>
+</section>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+ "built_by": "catalog/_tools/build_singlefile.py",
+ "source": "catalog/variant-2.html",
+ "output": "Каталог_Киловатт_2026_В_ОКОПЕ.html",
+ "size_bytes": 9697518,
+ "size_mb": 9.25,
+ "sha256": "e2b2d40f07a9b5969595b25e0af31340c027376e46a4af42c77335786bce1af5",
+ "params": {
+  "max_side": 900,
+  "quality": 75,
+  "hero_max": 1200
+ },
+ "sources_sha256": {
+  "catalog/variant-2.html": "df0b8c1605ff655315b4e44b8e5bcfbd71c84383b02f514b570b4b8dcf88b058",
+  "assets/css/light.css": "a3d2740c90cdbc5b3a27eca9baeb0529c37b37b37ef8c9a8fc0866196004b555",
+  "assets/js/app-light.js": "1d66dbf395fb2079319c4be50259eb9fc77b3cc14022e2b9ec8272120647bb0a"
+ },
+ "inline": {
+  "styles": [
+   "assets/css/catalog.css",
+   "assets/css/theme-quiet.css",
+   "assets/css/light.css",
+   "../redesign/motion/motion.css"
+  ],
+  "scripts": [
+   "assets/js/config.js",
+   "assets/js/data.js",
+   "assets/js/app-light.js",
+   "../redesign/motion/motion.js"
+  ],
+  "fonts": 5,
+  "images": 105,
+  "product_images": 100,
+  "hero_images": 1,
+  "png_images": 2,
+  "svg_images": 2,
+  "data_uri_total": 114
+ },
+ "bytes": {
+  "product_images": 5044288,
+  "hero_images": 185785,
+  "png_images": 40551,
+  "svg_images": 5685
+ },
+ "checks": {
+  "no_assets_ref": true,
+  "no_redesign_ref": true,
+  "no_stylesheet_link": true,
+  "no_script_src": true,
+  "no_variant_switch_element": true,
+  "no_pdf_links": true,
+  "no_variant2_href": true,
+  "pdf_footer_text": true
+ },
+ "removed": {
+  "variant_switch": 1
+ },
+ "pdf_footer_replaced": 1
+}
