@@ -22,7 +22,7 @@
   function priceHtml(p) {
     if (p.price_dima == null) return '<span class="price price--request">Цена по запросу</span>';
     var v = money(p.price_dima);
-    return '<span class="price"><span class="price__num">' + v + '</span> <span class="price__cur">₽</span></span>';
+    return '<span class="price"><span class="price__num">' + v + '</span>\u00A0<span class="price__cur">₽</span></span>';
   }
   function mainPhoto(p) {
     return (p.photos && p.photos.length) ? p.photos[0] : "assets/img/no-photo.svg";
@@ -148,7 +148,7 @@
     var box = $("[data-grid]");
     if (!box) return;
     var list = filtered();
-    $("[data-count]").textContent = list.length + " " + plural(list.length, ["позиция", "позиции", "позиций"]);
+    $("[data-count]").textContent = list.length + "\u00A0" + plural(list.length, ["позиция", "позиции", "позиций"]);
     if (!list.length) {
       box.innerHTML = '<div class="empty">Ничего не нашлось. Попробуйте другой запрос или категорию.</div>';
       return;
@@ -236,7 +236,7 @@
     if (cartProducts().length) {
       lines.push("", "Позиции:");
       cartProducts().forEach(function (p, i) {
-        lines.push((i + 1) + ". " + p.name + (p.price_dima != null ? " — от " + money(p.price_dima) + " ₽" : " — цена по запросу"));
+        lines.push((i + 1) + ". " + p.name + (p.price_dima != null ? " — от " + money(p.price_dima) + "\u00A0₽" : " — цена по запросу"));
       });
     }
     if (extra) {
@@ -254,7 +254,7 @@
     $("[data-cart-badge]").classList.toggle("is-empty", items.length === 0);
     list.innerHTML = items.length ? items.map(function (p) {
       return '<li class="cart__item"><img src="' + esc(mainPhoto(p)) + '" alt=""><div><b>' + esc(p.name) + "</b>" +
-        (p.price_dima != null ? "<span>" + money(p.price_dima) + " ₽</span>" : "<span>по запросу</span>") +
+        (p.price_dima != null ? "<span>" + money(p.price_dima) + "\u00A0₽</span>" : "<span>по запросу</span>") +
         '</div><button class="cart__del" data-del="' + esc(p.id) + '" aria-label="Убрать">×</button></li>';
     }).join("") : '<li class="cart__empty">Пока пусто. Добавьте позиции из каталога — заявка соберётся сама.</li>';
   }

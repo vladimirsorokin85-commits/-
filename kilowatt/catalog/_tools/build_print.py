@@ -448,6 +448,12 @@ def main():
     for theme, out in (("field", OUT_FIELD), ("quiet", OUT_QUIET)):
         doc = build(theme, prods)
         open(out, "w", encoding="utf-8").write(doc)
+        # корректорские правки типографики (общие тексты печати)
+        try:
+            import apply_copy_edits as tp
+            tp.apply_to_file(out, "print-quiet.html", verbose=False)
+        except Exception as e:  # noqa
+            print("[typography] пропущено:", e)
         print(theme, "->", out, len(doc), "байт")
 
 

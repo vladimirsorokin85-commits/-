@@ -289,6 +289,12 @@ def main():
     build_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out", "catalog_build.json")
     os.makedirs(os.path.dirname(build_path), exist_ok=True)
     json.dump(payload, open(build_path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    # корректорские правки типографики не должны теряться при пересборке
+    try:
+        import apply_copy_edits as tp
+        tp.apply_to_file(OUT_JS, "data.js")
+    except Exception as e:  # noqa
+        print("[typography] пропущено:", e)
     print("data.js:", OUT_JS)
     print("catalog_build.json:", build_path)
     print("stats:", stats)
