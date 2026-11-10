@@ -1,374 +1,257 @@
 #!/usr/bin/env python3
-"""Cinema Preview Studio for «ПОСТ-РОССИЯ» — Full Synced Music Video (1080p30 + Audio) & Assets."""
-from __future__ import annotations
-
+"""Live Preview, Photo Gallery & Audio Dropzone Server for HORDE / ПО ПОЛЯМ Studio."""
 import html
 import json
 import os
 import re
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parent
-PR_DIR = ROOT / "video_studio" / "post_rossiya"
-PR_OUT = PR_DIR / "output"
+HORDE_DIR = ROOT / "video_studio" / "horde_clip"
+FRAMES_DIR = HORDE_DIR / "frames"
+AUDIO_DIR = HORDE_DIR / "audio"
+OUTPUT_DIR = HORDE_DIR / "output"
 
-HQ_STREAM_CANDIDATES = (
-    Path("/tmp/post_rossiya/post_rossiya_hq_1080p.mp4"),
-    PR_OUT / "post_rossiya_master_1080p.mp4",
-)
-DOWNLOAD_CANDIDATES = (
-    PR_OUT / "post_rossiya_master_1080p.mp4",
-    Path("/tmp/post_rossiya/post_rossiya_hq_1080p.mp4"),
-)
-SILENT_CANDIDATES = (
-    Path("/tmp/post_rossiya/post_rossiya_silent_hq_1080p.mp4"),
-    PR_OUT / "post_rossiya_ready_1080p.mp4",
-)
-LEGACY_VIDEO = next(
-    (Path(c) for c in (ROOT / "smekalka_video.mp4", "/tmp/smk4/smekalka_video.mp4") if Path(c).exists()),
-    Path("/tmp/smk4/smekalka_video.mp4"),
-)
-REEL_CANDIDATES = (
-    Path(os.environ.get("REEL_PATH", str(ROOT / "video_studio" / "reels" / "output" / "reel.mp4"))),
-    Path("/tmp/reel/reel_final.mp4"),
-    Path("/tmp/reel/reel.mp4"),
-)
+SHOT_CAPTIONS = {
+    "01_po_polyam_nazgul_column.jpg": "01 · «По полям» — Багги назгулов и Короля-чародея с миниганом во главе бронеколонны в осенней распутице",
+    "02_orc_quad_nvg_recon_field.jpg": "02 · Разведгруппа Орды в GPNVG-18 готовит FPV-дрон на кромке туманного поля",
+    "03_witch_king_tablet_briefing.jpg": "03 · Полевой штаб на капоте шишиги: Король-чародей показывает штурмовикам Орды карту Белой Цитадели на защищённом планшете",
+    "04_fpv_swarm_over_white_citadel.jpg": "04 · Ударный БПЛА заходит над ярусами Белой Крепости людей и эльфов",
+    "05_elven_trench_panic_under_barrage.jpg": "05 · Окопы эльфов в серебряных доспехах и плитниках под плотным прилётом",
+    "06_orc_mlrs_salvo_across_fields.jpg": "06 · Залп тяжёлых огнемётных РСЗО Орды через раскисшее поле по башням твердыни",
+    "07_btr_breaching_ancient_marble_gates.jpg": "07 · Штурмовой танк с козырьком и орочьим тараном проламывает мраморные врата крепости",
+    "08_urban_citadel_arches_orc_advance.jpg": "08 · Бой в белых колоннадах: пулемётчик Орды работает с постамента рухнувшей статуи",
+    "09_captured_ramparts_trophies.jpg": "09 · Затишье на взятых бастионах: сваленные щиты Белого Древа и трофейные шлемы эльфов",
+    "10_horde_victory_atop_citadel.jpg": "10 · Победа Орды: знамя Железной Короны над покорённой Белой Цитаделью",
+}
 
 
-def pick_existing(paths) -> Path | None:
-    for p in paths:
-        if p and Path(p).exists():
-            return Path(p)
-    return None
+class StudioHandler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
 
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Filename")
+        self.end_headers()
 
-def load_synced_timeline() -> list[dict]:
-    p = PR_OUT / "synced_timeline_100.json"
-    if p.exists():
-        return json.loads(p.read_text(encoding="utf-8")).get("shots", [])
-    p2 = PR_OUT / "prompts_100.json"
-    if p2.exists():
-        return json.loads(p2.read_text(encoding="utf-8")).get("shots", [])
-    return []
+    def do_POST(self):
+        if self.path.startswith("/upload_audio"):
+            length = int(self.headers.get("Content-Length", "0"))
+            raw_name = unquote(self.headers.get("X-Filename", "track.mp3"))
+            safe_name = re.sub(r"[^\w.\- ()а-яА-ЯёЁ]", "_", os.path.basename(raw_name)) or "track.mp3"
+            AUDIO_DIR.mkdir(parents=True, exist_ok=True)
+            data = self.rfile.read(length)
+            dst = AUDIO_DIR / safe_name
+            dst.write_bytes(data)
+            # Also keep canonical symlink/copy track.mp3
+            (AUDIO_DIR / "latest_track.mp3").write_bytes(data)
+            payload = json.dumps({
+                "ok": True,
+                "filename": safe_name,
+                "size_mb": round(len(data) / 1e6, 2),
+                "saved_to": str(dst.relative_to(ROOT)),
+            }).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+            return
+        self.send_error(404)
 
+    def do_GET(self):
+        path = unquote(self.path.split("?", 1)[0])
+        if path in ("/", "/index.html"):
+            self.serve_index()
+            return
+        if path.startswith("/frames/"):
+            fname = os.path.basename(path)
+            fpath = FRAMES_DIR / fname
+            if fpath.is_file():
+                self.serve_binary(fpath, "image/jpeg")
+                return
+        if path == "/download/horde_po_polyam_batch1_10_photos.zip":
+            zpath = OUTPUT_DIR / "horde_po_polyam_batch1_10_photos.zip"
+            if zpath.is_file():
+                self.serve_binary(zpath, "application/zip", attachment=zpath.name)
+                return
+        super().do_GET()
 
-def render_page() -> str:
-    shots = load_synced_timeline()
-    dl_vid = pick_existing(DOWNLOAD_CANDIDATES)
-    dl_mb = dl_vid.stat().st_size / 1e6 if dl_vid else 0.0
-    zip_f = PR_OUT / "post_rossiya_all_images_by_timecode.zip"
-    zip_mb = zip_f.stat().st_size / 1e6 if zip_f.exists() else 0.0
-    silent_vid = pick_existing(SILENT_CANDIDATES)
+    def serve_binary(self, fpath: Path, ctype: str, attachment: str | None = None):
+        data = fpath.read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(data)))
+        if attachment:
+            self.send_header("Content-Disposition", f'attachment; filename="{attachment}"')
+        self.end_headers()
+        self.wfile.write(data)
 
-    cards = []
-    for idx, s in enumerate(shots, 1):
-        seq = s.get("seq", idx)
-        code = s.get("display_code", f"{s['num']:03d}")
-        rel_media = s["file"].replace("video_studio/post_rossiya/", "")
-        m0, s0 = int(s["t0"] // 60), s["t0"] % 60
-        cards.append(
-            f'<div class="card" onclick="seekTo({s["t0"]})">'
-            f'<img src="/media/{rel_media}" loading="lazy">'
-            f'<div class="cap"><b>План {seq:03d} ({html.escape(code)})</b> · {m0}:{s0:05.2f}<br>'
-            f'<span style="color:#8cb4c9">{html.escape(s["cue"])}</span><br>{html.escape(s["desc_ru"])}</div>'
-            f'</div>'
+    def serve_index(self):
+        frames = sorted(FRAMES_DIR.glob("*.jpg"))
+        audio_files = [p.name for p in sorted(AUDIO_DIR.glob("*")) if p.is_file() and p.name != "latest_track.mp3"]
+        audio_status = (
+            f"✅ Загружен в студию: {', '.join(html.escape(a) for a in audio_files)}"
+            if audio_files
+            else "⏳ Ожидаем MP3-файл «АЗБУКА - ПО ПОЛЯМ (Prod. by scaryele).mp3» для пословной синхронизации и сборки клипа"
         )
+        cards_html = []
+        for f in frames:
+            cap = html.escape(SHOT_CAPTIONS.get(f.name, f.name))
+            cards_html.append(f"""
+            <div class="card">
+              <a href="/frames/{html.escape(f.name)}" target="_blank">
+                <img src="/frames/{html.escape(f.name)}" loading="lazy" alt="{cap}">
+              </a>
+              <div class="meta">
+                <span>{cap}</span>
+                <a class="dl-mini" href="/frames/{html.escape(f.name)}" download="{html.escape(f.name)}">⬇ JPG</a>
+              </div>
+            </div>
+            """)
 
-    shots_json = json.dumps([
-        {
-            "seq": s.get("seq", i + 1),
-            "code": s.get("display_code", f"{s['num']:03d}"),
-            "t0": s["t0"],
-            "t1": s["t1"],
-            "act": s["act"],
-            "cue": s["cue"],
-            "desc": s["desc_ru"],
-            "color": s["color_state"],
-            "move": s["move"],
-        }
-        for i, s in enumerate(shots)
-    ], ensure_ascii=False)
-
-    silent_btn = (
-        '<a class="btn" href="/post_rossiya_silent.mp4" download="ПОСТ-РОССИЯ_немая_видеодорожка_1080p.mp4">'
-        '🔇 Скачать немую видеодорожку (без звука)</a>'
-        if silent_vid else ""
-    )
-
-    return f"""<!doctype html>
+        page = f"""<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ПОСТ-РОССИЯ — Готовый клип со звуком (1080p)</title>
+<title>ОРДА · ПО ПОЛЯМ — Студия кадров и клипа</title>
 <style>
-:root {{
-  --bg: #0b0d0e;
-  --panel: #131719;
-  --border: #232a2e;
-  --text: #e3e7ea;
-  --muted: #8b969e;
-  --accent: #b84a46;
-  --cold: #7a98ad;
-}}
-* {{ box-sizing: border-box; }}
-body {{
-  margin: 0; background: var(--bg); color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.45;
-}}
-.wrap {{ max-width: 1260px; margin: 0 auto; padding: 24px 20px 64px; }}
-h1 {{ margin: 0 0 4px; font-size: 28px; letter-spacing: 0.06em; font-weight: 700; }}
-.sub {{ color: var(--muted); font-size: 14px; margin-bottom: 18px; }}
-.bar-box {{
-  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
-  padding: 14px 16px; margin-bottom: 18px;
-}}
-.bar-top {{ display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13.5px; margin-bottom: 8px; }}
-.bar-track {{ height: 8px; background: #1c2226; border-radius: 99px; overflow: hidden; }}
-.bar-fill {{ height: 100%; width: 100%; background: linear-gradient(90deg, #4b7f64, #78b894); }}
-.tabs {{ display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }}
-button.tab, a.btn, label.btn {{
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 9px 14px; border-radius: 8px; font-size: 13.5px; font-weight: 500;
-  background: var(--panel); color: var(--text); border: 1px solid var(--border);
-  cursor: pointer; text-decoration: none; transition: border-color .15s, background .15s;
-}}
-button.tab.active, a.btn.primary {{ background: #232d33; border-color: var(--cold); }}
-button.tab:hover, a.btn:hover, label.btn:hover {{ border-color: #546672; }}
-video {{
-  width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 10px;
-  border: 1px solid var(--border); display: block;
-}}
-.monitor {{
-  margin-top: 10px; padding: 13px 16px; border-radius: 10px;
-  background: var(--panel); border: 1px solid var(--border);
-  display: grid; grid-template-columns: 96px 1fr auto; gap: 14px; align-items: center;
-}}
-.tc {{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 21px; font-weight: 700; color: #fff; }}
-.cue-act {{ font-size: 11.5px; letter-spacing: 0.08em; color: var(--cold); text-transform: uppercase; }}
-.cue-desc {{ font-size: 15px; font-weight: 600; margin: 2px 0; }}
-.cue-lyric {{ font-size: 13px; color: #c7d5de; font-style: italic; }}
-.badge {{ font-size: 12px; padding: 4px 9px; border-radius: 6px; white-space: nowrap; background: rgba(76,145,105,.18); color: #8cd9ab; border: 1px solid rgba(76,145,105,.4); }}
-.actions {{ display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 16px 0 28px; }}
-h2 {{ font-size: 18px; margin: 28px 0 12px; border-bottom: 1px solid var(--border); padding-bottom: 7px; }}
-.grid4 {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 12px; }}
-.card {{
-  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
-  overflow: hidden; cursor: pointer; transition: transform .12s, border-color .12s;
-}}
-.card:hover {{ transform: translateY(-2px); border-color: var(--cold); }}
-.card img {{ width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }}
-.card .cap {{ padding: 8px 10px; font-size: 12px; color: var(--muted); }}
-.card .cap b {{ color: var(--text); }}
-.specimen {{ width: 100%; border-radius: 10px; border: 1px solid var(--border); display: block; }}
+  :root {{
+    --bg: #111310;
+    --panel: #1a1d18;
+    --border: #2e3429;
+    --text: #e6e4dc;
+    --muted: #9aa08e;
+    --accent: #8ea865;
+    --accent2: #c59b48;
+  }}
+  * {{ box-sizing: border-box; }}
+  body {{
+    margin: 0; padding: 24px;
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }}
+  .wrap {{ max-width: 1360px; margin: 0 auto; }}
+  header {{
+    display: flex; flex-wrap: wrap; gap: 16px;
+    align-items: center; justify-content: space-between;
+    padding-bottom: 18px; border-bottom: 1px solid var(--border);
+  }}
+  h1 {{ margin: 0; font-size: 24px; letter-spacing: 0.03em; text-transform: uppercase; }}
+  .sub {{ color: var(--muted); font-size: 14px; margin-top: 4px; }}
+  .btn {{
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #10130d; font-weight: 700;
+    padding: 11px 18px; border-radius: 6px; text-decoration: none;
+    border: none; cursor: pointer; font-size: 14px;
+  }}
+  .btn.secondary {{ background: #282d23; color: var(--text); border: 1px solid var(--border); }}
+  .dropzone {{
+    margin: 20px 0 26px; padding: 20px;
+    background: var(--panel); border: 2px dashed var(--accent);
+    border-radius: 10px; display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: space-between; gap: 16px;
+  }}
+  .status {{ font-size: 14px; color: var(--accent2); margin-top: 6px; }}
+  .grid {{
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
+    gap: 18px;
+  }}
+  @media (max-width: 680px) {{ .grid {{ grid-template-columns: 1fr; }} }}
+  .card {{
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }}
+  .card img {{ width: 100%; display: block; aspect-ratio: 1376/768; object-fit: cover; }}
+  .meta {{
+    padding: 11px 14px; display: flex; justify-content: space-between;
+    align-items: center; gap: 12px; font-size: 13px; color: var(--text);
+  }}
+  .dl-mini {{
+    color: var(--accent); text-decoration: none; font-weight: 600;
+    white-space: nowrap; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;
+  }}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>«ПОСТ-РОССИЯ»</h1>
-  <div class="sub">Готовый клип с оригинальной песней · Хронометраж: 02:37.56 · Темп синхронизации: 85.66 BPM · 1920×1080 @ 30 fps</div>
-
-  <div class="bar-box">
-    <div class="bar-top">
-      <div><b>Готовность проекта: 100%</b> (104/104 кадров · 100 монтажных планов синхронизированы по тактам и строкам песни)</div>
-      <div style="color:#8cd9ab"><b>Аудиодорожка вшита:</b> Пост-Россия.mp3 (48 кГц AAC 256 кбит/с)</div>
-    </div>
-    <div class="bar-track"><div class="bar-fill"></div></div>
-  </div>
-
-  <video id="vid" src="/post_rossiya_master.mp4" controls preload="metadata" poster="/media/refs/ref_04_color.jpg"></video>
-
-  <div class="monitor">
-    <div class="tc" id="tcBox">0:00.0</div>
+  <header>
     <div>
-      <div class="cue-act" id="cueAct">ПРОЛОГ · ХОЛОДНЫЙ РАССВЕТ · dirty_modern</div>
-      <div class="cue-desc" id="cueDesc">План 001 (001) — Смартфон в темноте на старом кухонном столе</div>
-      <div class="cue-lyric" id="cueLyric">0:00–0:02.8 · Вступление из темноты</div>
+      <h1>ОРДА · «ПО ПОЛЯМ» (Dark-Fantasy × 35mm War Reportage)</h1>
+      <div class="sub">Первая партия: 10 широкоформатных кадров (1376×768, 35mm Portra 800 / Superia эстетика по правилам Anti-Slop Design Director v2.0)</div>
     </div>
-    <div class="badge" id="cueBadge">🎵 Синхрон с песней · 85.66 BPM</div>
+    <div>
+      <a class="btn" href="/download/horde_po_polyam_batch1_10_photos.zip">📦 Скачать все 10 фото (ZIP · 2.45 МБ)</a>
+    </div>
+  </header>
+
+  <div class="dropzone" id="dropzone">
+    <div>
+      <div style="font-weight:700;font-size:16px;">🎵 Загрузка трека для пословного разбора и сборки клипа</div>
+      <div class="status" id="uploadStatus">{audio_status}</div>
+    </div>
+    <div>
+      <input type="file" id="audioInput" accept=".mp3,.wav,.m4a,.ogg,audio/*" style="display:none">
+      <button class="btn" onclick="document.getElementById('audioInput').click()">⬆ Загрузить трек (.mp3) в студию</button>
+    </div>
   </div>
 
-  <div class="actions">
-    <a class="btn primary" style="background:#1f4d36;border-color:#3a8f63" href="/download/post_rossiya_reel_chorus.mp4" download="VES_Post_Rossiya_REEL_CHORUS_1080x1920.mp4">📱 Скачать Рилс с припевом 9:16 (MP4 1080×1920, 17.7 МБ)</a>
-    <a class="btn primary" href="/reel_frames.zip" download="VES_Post_Rossiya_REEL_10_vertical_frames.zip">📦 10 вертикальных кадров Рилса (ZIP)</a>
-    <a class="btn primary" href="/post_rossiya_download.mp4" download="ПОСТ-РОССИЯ_клип_со_звуком_1080p.mp4">🎬 Полный клип 16:9 со звуком ({dl_mb:.1f} МБ)</a>
-    <a class="btn" href="/covers.zip" download="VES_Post_Rossiya_10_covers.zip">🖼 10 обложек 16:9 (ZIP)</a>
-    <a class="btn" href="/post_rossiya_images.zip" download="ПОСТ-РОССИЯ_все_104_кадра_по_папкам_с_таймкодами.zip">📦 Все 104 кадра клипа ({zip_mb:.1f} МБ)</a>
-  </div>
-
-  <h2>📱 Отдельный вертикальный Рилс / Shorts 9:16 — Только Припев (0:45.6, 1080×1920, 10 новых кадров)</h2>
-  <div style="display:flex;justify-content:center;margin:14px 0 24px">
-    <video src="/reel_chorus.mp4" controls preload="metadata" poster="/media/reel_chorus/frames/reel_05.jpg" style="max-width:360px;aspect-ratio:9/16"></video>
-  </div>
-
-  <h2>0. Десять вариантов обложки «VES - Пост-Россия» (без людей, кликните для скачивания оригинала)</h2>
-  <div class="grid4">
-    <a class="card" href="/media/covers/cover_01_sea_horizon.jpg" download><img src="/media/covers/cover_01_sea_horizon.jpg"><div class="cap"><b>01 · Холодное море и рассвет</b></div></a>
-    <a class="card" href="/media/covers/cover_02_panel_window.jpg" download><img src="/media/covers/cover_02_panel_window.jpg"><div class="cap"><b>02 · Панельный дом и одно окно</b></div></a>
-    <a class="card" href="/media/covers/cover_03_red_flowers_rain.jpg" download><img src="/media/covers/cover_03_red_flowers_rain.jpg"><div class="cap"><b>03 · Гвоздики в дождевой луже</b></div></a>
-    <a class="card" href="/media/covers/cover_04_field_mist_crows.jpg" download><img src="/media/covers/cover_04_field_mist_crows.jpg"><div class="cap"><b>04 · Осеннее поле и вороны</b></div></a>
-    <a class="card" href="/media/covers/cover_05_rusty_swing.jpg" download><img src="/media/covers/cover_05_rusty_swing.jpg"><div class="cap"><b>05 · Пустые ржавые качели</b></div></a>
-    <a class="card" href="/media/covers/cover_06_elektrichka_dawn.jpg" download><img src="/media/covers/cover_06_elektrichka_dawn.jpg"><div class="cap"><b>06 · Пустой вагон электрички</b></div></a>
-    <a class="card" href="/media/covers/cover_07_crows_wires_chimneys.jpg" download><img src="/media/covers/cover_07_crows_wires_chimneys.jpg"><div class="cap"><b>07 · Птицы на проводах и трубы</b></div></a>
-    <a class="card" href="/media/covers/cover_08_night_kitchen_phone.jpg" download><img src="/media/covers/cover_08_night_kitchen_phone.jpg"><div class="cap"><b>08 · Ночная кухня и экран телефона</b></div></a>
-    <a class="card" href="/media/covers/cover_09_bus_stop_highway.jpg" download><img src="/media/covers/cover_09_bus_stop_highway.jpg"><div class="cap"><b>09 · Остановка у туманной трассы</b></div></a>
-    <a class="card" href="/media/covers/cover_10_black_water_mirror.jpg" download><img src="/media/covers/cover_10_black_water_mirror.jpg"><div class="cap"><b>10 · Треснувшее зеркало и чёрная вода</b></div></a>
-  </div>
-
-  <h2>1. Четыре визуальных эталона (единая вселенная фильма)</h2>
-  <div class="grid4">
-    <div class="card"><img src="/media/refs/ref_01_hero.jpg"><div class="cap"><b>Эталон 1 · Главный герой</b><br>Мужчина 35 лет, тёмная куртка, серый свитер</div></div>
-    <div class="card"><img src="/media/refs/ref_02_city.jpg"><div class="cap"><b>Эталон 2 · Главная локация</b><br>Постсоветский город поздней осенью, панельки, гаражи</div></div>
-    <div class="card"><img src="/media/refs/ref_03_choir.jpg"><div class="cap"><b>Эталон 3 · Народный хор</b><br>30 женщин разного возраста в обычных пальто и платках</div></div>
-    <div class="card"><img src="/media/refs/ref_04_color.jpg"><div class="cap"><b>Эталон 4 · Цветовой камертон</b><br>Искусственный цветок в решётке ливнёвки на рассвете</div></div>
-  </div>
-
-  <h2>2. Цветовая драматургия (киноплёночные .cube LUT из репозитория)</h2>
-  <img class="specimen" src="/specimen_grades.jpg" alt="4 цветовых состояния клипа">
-
-  <h2>3. Полная монтажная лента под песню (100 планов, 0:00.00 – 2:37.56) — кликните для перехода</h2>
-  <div class="grid4">
-    {''.join(cards)}
+  <div class="grid">
+    {''.join(cards_html)}
   </div>
 </div>
 
 <script>
-const SHOTS = {shots_json};
-const vid = document.getElementById('vid');
-const tcBox = document.getElementById('tcBox');
-const cueAct = document.getElementById('cueAct');
-const cueDesc = document.getElementById('cueDesc');
-const cueLyric = document.getElementById('cueLyric');
-
-function fmtTime(t) {{
-  const m = Math.floor(t / 60);
-  const s = (t % 60).toFixed(1).padStart(4, '0');
-  return `${{m}}:${{s}}`;
-}}
-
-function updateCue() {{
-  const t = vid.currentTime || 0;
-  tcBox.textContent = fmtTime(t);
-  let cur = SHOTS[SHOTS.length - 1];
-  for (const s of SHOTS) {{
-    if (t >= s.t0 && t < s.t1) {{ cur = s; break; }}
+const input = document.getElementById('audioInput');
+const statusEl = document.getElementById('uploadStatus');
+async function uploadFile(file) {{
+  if (!file) return;
+  statusEl.textContent = '⏳ Загружаем ' + file.name + ' ...';
+  try {{
+    const res = await fetch('/upload_audio', {{
+      method: 'POST',
+      headers: {{ 'X-Filename': encodeURIComponent(file.name) }},
+      body: file
+    }});
+    const data = await res.json();
+    if (data.ok) {{
+      statusEl.textContent = '✅ Трек загружен в студию: ' + data.filename + ' (' + data.size_mb + ' МБ)! Напишите в чат «готово», и я сразу запускаю сборку клипа.';
+    }} else {{
+      statusEl.textContent = '❌ Ошибка загрузки';
+    }}
+  }} catch (e) {{
+    statusEl.textContent = '❌ Ошибка: ' + e;
   }}
-  if (!cur) return;
-  cueAct.textContent = `${{cur.act}} · цвет: ${{cur.color}} · камера: ${{cur.move}}`;
-  cueDesc.textContent = `План ${{String(cur.seq).padStart(3, '0')}} (${{cur.code}}) — ${{cur.desc}}`;
-  cueLyric.textContent = cur.cue;
 }}
-
-vid.addEventListener('timeupdate', updateCue);
-vid.addEventListener('seeked', updateCue);
-
-function seekTo(sec) {{
-  vid.currentTime = sec;
-  vid.play().catch(()=>{{}});
-}}
+input.addEventListener('change', e => uploadFile(e.target.files[0]));
+const dz = document.getElementById('dropzone');
+dz.addEventListener('dragover', e => {{ e.preventDefault(); dz.style.borderColor = '#c59b48'; }});
+dz.addEventListener('dragleave', () => {{ dz.style.borderColor = '#8ea865'; }});
+dz.addEventListener('drop', e => {{
+  e.preventDefault();
+  dz.style.borderColor = '#8ea865';
+  if (e.dataTransfer.files.length) uploadFile(e.dataTransfer.files[0]);
+}});
 </script>
 </body>
 </html>"""
-
-
-class Handler(BaseHTTPRequestHandler):
-    def log_message(self, *args):
-        pass
-
-    def _serve_file(self, path: Path | None, ctype: str, download_name: str | None = None):
-        if path is None or not path.is_file():
-            self.send_error(404)
-            return
-        size = path.stat().st_size
-        rng = self.headers.get("Range")
-        start, end = 0, size - 1
-        if rng and not download_name and (m := re.match(r"bytes=(\d*)-(\d*)", rng)):
-            if m.group(1):
-                start = int(m.group(1))
-                if m.group(2):
-                    end = min(int(m.group(2)), size - 1)
-            elif m.group(2):
-                start = max(0, size - int(m.group(2)))
-            if start > end or start >= size:
-                self.send_error(416)
-                return
-            self.send_response(206)
-            self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
-        else:
-            self.send_response(200)
-        self.send_header("Content-Type", ctype)
-        if download_name:
-            self.send_header("Content-Disposition", f'attachment; filename="{download_name}"')
-        self.send_header("Accept-Ranges", "bytes")
-        self.send_header("Content-Length", str(end - start + 1))
+        payload = page.encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(payload)))
         self.end_headers()
-        with open(path, "rb") as f:
-            f.seek(start)
-            left = end - start + 1
-            try:
-                while left > 0:
-                    chunk = f.read(min(1 << 20, left))
-                    if not chunk:
-                        break
-                    self.wfile.write(chunk)
-                    left -= len(chunk)
-            except (BrokenPipeError, ConnectionResetError):
-                pass
-
-    def do_GET(self):
-        p = unquote(self.path.split("?", 1)[0])
-        if p in ("/", "/index.html"):
-            body = render_page().encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "text/html; charset=utf-8")
-            self.send_header("Content-Length", str(len(body)))
-            self.end_headers()
-            self.wfile.write(body)
-        elif p == "/reel_chorus.mp4":
-            self._serve_file(PR_OUT / "post_rossiya_reel_chorus_1080x1920.mp4", "video/mp4")
-        elif p == "/download/post_rossiya_reel_chorus.mp4":
-            self._serve_file(PR_OUT / "post_rossiya_reel_chorus_1080x1920.mp4", "application/octet-stream", "VES_Post_Rossiya_REEL_CHORUS_1080x1920.mp4")
-        elif p == "/reel_frames.zip":
-            self._serve_file(PR_OUT / "post_rossiya_reel_10_vertical_frames.zip", "application/octet-stream", "VES_Post_Rossiya_REEL_10_vertical_frames.zip")
-        elif p == "/covers.zip":
-            self._serve_file(PR_OUT / "VES_Post_Rossiya_10_covers.zip", "application/octet-stream", "VES_Post_Rossiya_10_covers.zip")
-        elif p == "/post_rossiya_images.zip":
-            self._serve_file(PR_OUT / "post_rossiya_all_images_by_timecode.zip", "application/octet-stream", "POST_ROSSIYA_104_frames_timecoded.zip")
-        elif p == "/post_rossiya_master.mp4":
-            self._serve_file(pick_existing(HQ_STREAM_CANDIDATES), "video/mp4")
-        elif p in ("/post_rossiya_download.mp4", "/download/post_rossiya_1080p.mp4"):
-            self._serve_file(pick_existing(DOWNLOAD_CANDIDATES), "application/octet-stream", "POST_ROSSIYA_1080p_with_song.mp4")
-        elif p in ("/post_rossiya_hq_download.mp4", "/download/post_rossiya_hq_1080p.mp4"):
-            self._serve_file(pick_existing(HQ_STREAM_CANDIDATES), "application/octet-stream", "POST_ROSSIYA_MASTER_HQ_1080p.mp4")
-        elif p in ("/post_rossiya_silent.mp4", "/download/post_rossiya_silent_1080p.mp4"):
-            self._serve_file(pick_existing(SILENT_CANDIDATES), "application/octet-stream", "POST_ROSSIYA_silent_1080p.mp4")
-        elif p == "/synced_timecodes.md":
-            self._serve_file(PR_OUT / "ТАЙМКОДЫ_ПОД_ПЕСНЮ.md", "text/markdown; charset=utf-8")
-        elif p == "/specimen_grades.jpg":
-            self._serve_file(PR_OUT / "specimen_post_rossiya_grades.jpg", "image/jpeg")
-        elif p == "/prompts_100.json":
-            self._serve_file(PR_OUT / "synced_timeline_100.json", "application/json; charset=utf-8")
-        elif p == "/STORYBOARD_PROMPTS.md":
-            self._serve_file(PR_DIR / "STORYBOARD_PROMPTS.md", "text/markdown; charset=utf-8")
-        elif p.startswith("/media/"):
-            rel = p[len("/media/"):]
-            cand = (PR_DIR / rel).resolve()
-            if str(cand).startswith(str(PR_DIR.resolve())) and cand.suffix.lower() in (".jpg", ".jpeg", ".png"):
-                self._serve_file(cand, "image/jpeg")
-            else:
-                self.send_error(404)
-        elif p == "/video.mp4":
-            self._serve_file(LEGACY_VIDEO, "video/mp4")
-        elif p == "/reel.mp4":
-            self._serve_file(pick_existing(REEL_CANDIDATES), "video/mp4")
-        else:
-            self.send_error(404)
+        self.wfile.write(payload)
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
-    print(f"serving «ПОСТ-РОССИЯ» studio on 0.0.0.0:{port}", flush=True)
-    ThreadingHTTPServer(("0.0.0.0", port), Handler).serve_forever()
+    os.chdir(ROOT)
+    srv = HTTPServer(("0.0.0.0", 8000), StudioHandler)
+    print("Serving Horde Studio on http://0.0.0.0:8000", flush=True)
+    srv.serve_forever()
