@@ -155,26 +155,29 @@ class AnamorphicVFX:
         self.srad = self.rng.uniform(1.1, 3.0, self.ns)
 
     def render(self, base_u8: np.ndarray, f_idx: int, zoom: float, px: float, py: float,
-               shake: float, weather_i: float, smoke_i: float, fire_i: float,
+               impact_jolt: float, weather_i: float, smoke_i: float, fire_i: float,
                flash: float = 0.0, fpv_glitch: float = 0.0, fade_mul: float = 1.0) -> np.ndarray:
-        """weather_i > 0: cold rain/sleet; weather_i < 0: winter snow; fpv_glitch > 0: analog RF scanline tear."""
+        """Steadicam / Technocrane fluid cinema camera: ZERO continuous shake or wobble."""
         dt = 1.0 / FPS
         W, H, HW, HH = self.w, self.h, self.hw, self.hh
-        sx = math.sin(f_idx * 1.9) * shake + math.cos(f_idx * 3.7) * (shake * 0.6)
-        sy = math.cos(f_idx * 2.3) * shake + math.sin(f_idx * 4.3) * (shake * 0.5)
         cw, ch = W / zoom, H / zoom
-        x0 = float(np.clip(W * 0.5 + px + sx - cw * 0.5, 0, max(0.0, W - cw)))
-        y0 = float(np.clip(H * 0.5 + py + sy - ch * 0.5, 0, max(0.0, H - ch)))
+        max_dx = max(0.0, (W - cw) * 0.45)
+        max_dy = max(0.0, (H - ch) * 0.45)
+        safe_px = float(np.clip(px, -max_dx, max_dx))
+        safe_py = float(np.clip(py, -max_dy, max_dy))
+        # Optional single-impulse 3-frame vertical thud on artillery cut only (<= 2px, zero oscillation)
+        jy = impact_jolt
+        x0 = float(np.clip(W * 0.5 + safe_px - cw * 0.5, 0.0, max(0.0, W - cw)))
+        y0 = float(np.clip(H * 0.5 + safe_py + jy - ch * 0.5, 0.0, max(0.0, H - ch)))
 
         M = np.array([[zoom, 0.0, -x0 * zoom], [0.0, zoom, -y0 * zoom]], dtype=np.float32)
         cropped = cv2.warpAffine(base_u8, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT_101)
 
         if fpv_glitch > 0.01:
-            # Authentic analog FPV horizontal RF tear & subtle RGB chroma shift
-            gy = int((f_idx * 37) % (H - 28))
-            shift = int(math.sin(f_idx * 1.7) * 14 * fpv_glitch)
-            cropped[gy:gy + 10] = np.roll(cropped[gy:gy + 10], shift, axis=1)
-            cropped[..., 0] = np.roll(cropped[..., 0], int(2 * fpv_glitch), axis=1)
+            # Subtle authentic analog FPV single scanline tear (no full-screen shift)
+            gy = int((f_idx * 29) % (H - 16))
+            shift = int(math.sin(f_idx * 1.1) * 8 * fpv_glitch)
+            cropped[gy:gy + 6] = np.roll(cropped[gy:gy + 6], shift, axis=1)
 
         add_h = np.zeros((HH, HW, 3), dtype=np.float32)
         att_h = np.ones((HH, HW, 3), dtype=np.float32)
@@ -266,23 +269,20 @@ def render_synced_video(shots: list[tuple], mp3_path: Path, audio_start: float, 
         t = f / FPS
         while s_idx + 1 < len(shots) and t >= shots[s_idx + 1][1]:
             s_idx += 1
-        _, st0, st1, z0, z1, px0, px1, py0, py1, shk, wth, smk, fir, hfl, fpv, _, _ = shots[s_idx]
+        _, st0, st1, z0, z1, px0, px1, py0, py1, _shk, wth, smk, fir, hfl, fpv, _, _ = shots[s_idx]
         dur = max(1e-4, st1 - st0)
         u = float(np.clip((t - st0) / dur, 0.0, 1.0))
 
-        ue = 1.0 - (1.0 - u) ** 1.55
-        zoom = z0 + (z1 - z0) * ue
-        px = px0 + (px1 - px0) * ue
-        py = py0 + (py1 - py0) * ue
+        # Silk-smooth Steadicam / Technocrane cosine dolly (ZERO shake, ZERO beat-zoom pumping!)
+        ue = 0.5 - 0.5 * math.cos(math.pi * u)
+        z_start = max(1.03, z0) if z1 >= z0 else z0
+        dz = float(np.clip((z1 - z0) * 0.55, -0.05, 0.05))
+        zoom = z_start + dz * ue
+        px = (px0 + (px1 - px0) * ue) * 0.40
+        py = (py0 + (py1 - py0) * ue) * 0.40
 
-        # Exact 160.0 BPM micro-pulse synced to the real song's kick drum!
-        song_t = audio_start + t
-        in_heavy_section = (12.04 <= song_t < 60.05) or (72.05 <= song_t < 96.05) or (120.05 <= song_t < 144.05)
-        beat_phase = ((song_t - DOWNBEAT) % BEAT) / BEAT
-        beat_zoom = 1.0 + (0.010 if in_heavy_section else 0.003) * math.exp(-beat_phase * 7.5)
-
-        flash = (1.0 - u / 0.16) * 0.78 if (hfl and u < 0.16) else 0.0
-        cur_shk = shk * (1.85 * math.exp(-u * 3.5) + 0.50) if hfl else shk
+        # Subtle warm optical exposure flash on artillery cuts only (no frame wobble!)
+        flash = (1.0 - u / 0.14) * 0.65 if (hfl and u < 0.14) else 0.0
 
         # Smooth cinema fade-in (first 0.9s) and fade-out (last 1.8s)
         fade = 1.0
@@ -292,8 +292,8 @@ def render_synced_video(shots: list[tuple], mp3_path: Path, audio_start: float, 
             fade = max(0.0, (total_dur - t) / 1.8)
 
         rgb = vfx.render(
-            imgs[s_idx], f, zoom * beat_zoom, px, py, cur_shk,
-            wth, smk, fir, flash=flash, fpv_glitch=fpv, fade_mul=fade,
+            imgs[s_idx], f, zoom, px, py, 0.0,
+            wth, smk, fir, flash=flash, fpv_glitch=fpv * 0.5, fade_mul=fade,
         )
         proc.stdin.write(rgb.tobytes())
         if (f + 1) % 750 == 0 or (f + 1) == total_frames:
@@ -429,18 +429,20 @@ def main():
     # 3. ZIP PACKAGES: 12 ANAMORPHIC CINEMA FRAMES + ALL 58 TIMECODED FRAMES
     # =========================================================================
     cin_zip = OUT_DIR / "azbuka_po_polyam_12_cinema_frames.zip"
-    with zipfile.ZipFile(cin_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        for p in sorted(CIN_DIR.iterdir()):
-            if p.is_file() and p.suffix.lower() in (".jpg", ".png"):
-                zf.write(p, arcname=p.name)
+    if not cin_zip.is_file():
+        with zipfile.ZipFile(cin_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+            for p in sorted(CIN_DIR.iterdir()):
+                if p.is_file() and p.suffix.lower() in (".jpg", ".png"):
+                    zf.write(p, arcname=p.name)
 
     all58_zip = OUT_DIR / "azbuka_po_polyam_58_timecoded_frames.zip"
-    with zipfile.ZipFile(all58_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        for idx, s in enumerate(shots, start=1):
-            mm = int(s[1]) // 60
-            ss = int(s[1]) % 60
-            arc = f"{idx:02d}_{mm:02d}m{ss:02d}s_{s[0].name}"
-            zf.write(s[0], arcname=arc)
+    if not all58_zip.is_file():
+        with zipfile.ZipFile(all58_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+            for idx, s in enumerate(shots, start=1):
+                mm = int(s[1]) // 60
+                ss = int(s[1]) % 60
+                arc = f"{idx:02d}_{mm:02d}m{ss:02d}s_{s[0].name}"
+                zf.write(s[0], arcname=arc)
 
     print(f"\nALL RENDERED WITH REAL TRACK in {time.time() - t0_all:.1f}s!")
     print(f"  MASTER 16:9 MP4: {full_mp4} ({full_mp4.stat().st_size / 1e6:.2f} MB)")
