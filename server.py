@@ -84,6 +84,13 @@ class StudioHandler(SimpleHTTPRequestHandler):
             return
         self.send_error(404)
 
+    def do_HEAD(self):
+        self._head_only = True
+        try:
+            self.do_GET()
+        finally:
+            self._head_only = False
+
     def do_GET(self):
         path = unquote(self.path.split("?", 1)[0])
         if path in ("/", "/index.html"):
@@ -127,16 +134,17 @@ class StudioHandler(SimpleHTTPRequestHandler):
             if attachment:
                 self.send_header("Content-Disposition", f'attachment; filename="{attachment}"')
             self.end_headers()
-            self.wfile.write(chunk)
+            if not getattr(self, "_head_only", False):
+                self.wfile.write(chunk)
             return
-        data = fpath.read_bytes()
         self.send_response(200)
         self.send_header("Content-Type", ctype)
-        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Content-Length", str(size))
         if attachment:
             self.send_header("Content-Disposition", f'attachment; filename="{attachment}"')
         self.end_headers()
-        self.wfile.write(data)
+        if not getattr(self, "_head_only", False):
+            self.wfile.write(fpath.read_bytes())
 
     @staticmethod
     def build_cards(folder: Path, prefix: str, captions: dict[str, str]) -> str:
@@ -252,7 +260,8 @@ input.addEventListener('change', async e => {{
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(payload)))
         self.end_headers()
-        self.wfile.write(payload)
+        if not getattr(self, "_head_only", False):
+            self.wfile.write(payload)
 
 
 if __name__ == "__main__":
