@@ -228,7 +228,7 @@ class StudioHandler(SimpleHTTPRequestHandler):
       <div class="sub">Саурон · Саруман · Балрог + «Искандер» · Шелоб с оптоволокном · Луртц · Готмог + «Торнадо-Г» · Уста Саурона · «Гронд» · Полевая кухня Тролля и Око-РЛС в Новой Изенгардовке!</div>
     </div>
     <div class="btns">
-      <a class="btn fire" href="/download/mordor_svo_full_2m28s_1080p.mp4">🎬 Полный фильм 02:28 1080p (35 МБ)</a>
+      <a class="btn fire" href="/download/mordor_svo_full_2m28s_1080p.mp4">🎬 Полный фильм 02:28 1080p (25.6 МБ)</a>
       <a class="btn fire" href="/download/mordor_svo_reel_9x16.mp4">📱 Вертикальный Reel 9:16 (9.4 МБ)</a>
       <a class="btn" href="/download/mordor_svo_master_36_frames.zip">📦 ВСЕ 36 кадров (ZIP · 9.7 МБ)</a>
       <a class="btn" href="/download/mordor_svo_part3_10_frames.zip">📦 Часть 3 — 10 новых кадров (2.5 МБ)</a>
