@@ -1,0 +1,13 @@
+{
+  "master_video": "video_studio/post_rossiya/output/post_rossiya_master_1080p.mp4",
+  "master_size_mb": 53.6,
+  "hq_size_mb": 168.15,
+  "duration_sec": 157.56,
+  "bpm": 85.66,
+  "total_clips": 100,
+  "with_audio": true,
+  "main_generated": 88,
+  "main_total": 88,
+  "broll_generated": 12,
+  "broll_total": 12
+}
