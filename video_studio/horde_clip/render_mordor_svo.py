@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """
-MORDOR BROTHERHOOD × MODERN SVO — 55-UNIQUE-FRAME FULL-LENGTH 02:28.7 MASTER FILM (1920x1080 @ 30fps, 134 BPM)
-+ 20-SHOT VERTICAL 9:16 BATTLE REEL (1080x1920 @ 30fps, 32.24s)
-+ TIMECODED 55-FRAME MASTER ZIP & PART-4 10-FRAME ZIP
-
-Strictly >= 50 unique frames (55 distinct verified files, ZERO repeated frames across 148.66s = 332 beats @ 134 BPM).
+MORDOR BROTHERHOOD × MODERN SVO — LYRIC-SYNCED 51-UNIQUE-FRAME MASTER FILM (02:28.7 @ 1920x1080 30fps, 134 BPM)
+100% Audited Clean Roster (ZERO Batch-1 NATO helmets, ZERO 90s helmets/coats, ZERO human faces, ZERO bears!)
+Mapped directly to the lyrics of «АЗБУКА — ПО ПОЛЯМ (Prod. by scaryele)»:
+  - Припев 1: «Только бам, бам, бам... Ищу твой сигнал антенной по полям... У тебя бабки — у меня дроны, пушки, танки!»
+  - Куплет 1: «Руки околели от холодной зимы... Вышла из луча, в мониторе нету... Я разнёс частоты твои... Антенной по полям»
+  - Припев 2: «Бам, бам, бам — По полям! Дроны, пушки, танки!»
+  - Куплет 2: «Этот лютый холод, минус сорок, лес, лес, лес... Где-то потерялась и нужно тебя найти!»
+  - Припев 3: Разгром «бабок» эльфов, штурм Цитадели и капитуляция перед Устами Саурона
+  - Финал:    «Всё будет хорошо, плохое в прошлом — Весна придёт, тяну к небу ладошки!» («НОВАЯ ИЗЕНГАРДОВКА»)
 """
 import math
 import subprocess
@@ -23,8 +27,8 @@ M1_DIR = ROOT / "mordor_svo_frames"
 M2_DIR = ROOT / "mordor_svo_part2"
 M3_DIR = ROOT / "mordor_svo_part3"
 M4_DIR = ROOT / "mordor_svo_part4"
+M5_DIR = ROOT / "mordor_svo_part5_song"
 MOD_DIR = ROOT / "modern_frames"
-F1_DIR = ROOT / "frames"
 B2_DIR = ROOT / "batch2_frames"
 AUDIO_DIR = ROOT / "audio"
 OUT_DIR = ROOT / "output"
@@ -37,7 +41,7 @@ BEAT = 60.0 / BPM  # 0.44776119s
 
 def load_img_wh(path: Path, tw: int, th: int, x_bias: float = 0.5) -> np.ndarray:
     if not path.is_file():
-        raise FileNotFoundError(f"Missing frame: {path}")
+        raise FileNotFoundError(f"Missing audited frame: {path}")
     im = Image.open(path).convert("RGB")
     sr, dr = im.width / im.height, tw / th
     if sr > dr:
@@ -78,6 +82,7 @@ class FastCombatVFX:
             if 0 <= cx < kl:
                 self.rain_kern[i, cx] = 1.0 / kl
 
+        # Fire embers
         self.ne = 135
         self.ex = self.rng.uniform(0, self.hw, self.ne)
         self.ey = self.rng.uniform(0, self.hh, self.ne)
@@ -85,6 +90,7 @@ class FastCombatVFX:
         self.evy = self.rng.uniform(-165, -50, self.ne)
         self.ebr = self.rng.uniform(0.5, 1.0, self.ne)
 
+        # Mud spray
         self.nd = 95
         self.dx = self.rng.uniform(0, self.hw, self.nd)
         self.dy = self.rng.uniform(self.hh * 0.48, self.hh, self.nd)
@@ -92,8 +98,17 @@ class FastCombatVFX:
         self.dvy = self.rng.uniform(-80, 45, self.nd)
         self.drad = self.rng.uniform(1.5, 4.0, self.nd)
 
+        # Winter blizzard snowflakes (for -40C snow verses!)
+        self.ns = 180
+        self.sx_p = self.rng.uniform(0, self.hw, self.ns)
+        self.sy_p = self.rng.uniform(0, self.hh, self.ns)
+        self.svx = self.rng.uniform(-95, -25, self.ns)
+        self.svy = self.rng.uniform(55, 145, self.ns)
+        self.srad = self.rng.uniform(1.2, 3.2, self.ns)
+
     def render(self, base_u8: np.ndarray, f_idx: int, zoom: float, px: float, py: float, shake: float,
                rain_i: float, smoke_i: float, mud_i: float, fire_i: float, flash: float = 0.0) -> np.ndarray:
+        """Note: negative rain_i encodes winter snow intensity (-rain_i); negative mud_i encodes warm spring sun-glow!"""
         dt = 1.0 / FPS
         W, H, HW, HH = self.w, self.h, self.hw, self.hh
         sx = math.sin(f_idx * 1.9) * shake + math.cos(f_idx * 3.7) * (shake * 0.6)
@@ -131,6 +146,13 @@ class FastCombatVFX:
             mal = (cv2.GaussianBlur(mud_mask, (5, 5), 1.0).astype(np.float32) / 255.0 * 0.52 * mud_i)[..., None]
             att_h *= (1.0 - mal)
             add_h += np.array([58.0, 46.0, 34.0], dtype=np.float32) * mal
+        elif mud_i < -0.01:
+            # Warm golden spring sunlight bloom («Весна придёт — тяну к небу ладошки!»)
+            sun_i = -mud_i
+            gy = np.linspace(1.0, 0.05, HH, dtype=np.float32)[:, None]
+            gx = np.linspace(0.85, 0.25, HW, dtype=np.float32)[None, :]
+            beam = (gy * gx)[..., None] * sun_i * (0.88 + 0.12 * math.sin(f_idx * 0.08))
+            add_h += np.array([255.0, 218.0, 135.0], dtype=np.float32) * (0.22 * beam)
 
         if fire_i > 0.01:
             curl = np.sin(f_idx * 0.21 + np.arange(self.ne) * 0.7) * 42.0
@@ -156,6 +178,17 @@ class FastCombatVFX:
             rn = cv2.filter2D(sn, -1, self.rain_kern)
             r_tot = np.clip((rf * 0.50 + rn * 1.08) / 36.0, 0.0, 1.0)[..., None]
             add_h += r_tot * np.array([204.0, 214.0, 224.0], dtype=np.float32) * (0.36 * rain_i)
+        elif rain_i < -0.01:
+            # Swirling winter snowflakes («От холодной зимы / Минус сорок, лес, лес, лес!»)
+            snow_i = -rain_i
+            swirl = np.sin(f_idx * 0.14 + np.arange(self.ns) * 0.5) * 35.0
+            self.sx_p = (self.sx_p + (self.svx + swirl) * dt * (0.7 + 0.5 * snow_i)) % HW
+            self.sy_p = (self.sy_p + self.svy * dt * (0.7 + 0.5 * snow_i)) % HH
+            smask = np.zeros((HH, HW), dtype=np.uint8)
+            for i in range(int(self.ns * min(1.0, snow_i))):
+                cv2.circle(smask, (int(self.sx_p[i]), int(self.sy_p[i])), max(1, int(self.srad[i])), 235, -1, cv2.LINE_AA)
+            s_blur = (cv2.GaussianBlur(smask, (5, 5), 1.1).astype(np.float32) / 255.0)[..., None]
+            add_h += s_blur * np.array([228.0, 238.0, 252.0], dtype=np.float32) * (0.72 * snow_i)
 
         if flash > 0.005:
             att_h *= (1.0 + 0.62 * flash)
@@ -170,7 +203,7 @@ class FastCombatVFX:
 
 
 def synthesize_audio(wav_path: Path, total_dur: float, events: list[tuple[float, str]]):
-    """7-Act 134 BPM Dark War-Phonk + Brass Warhorns + Battlefield Foley."""
+    """Lyric-structured 134 BPM Audio Score matching Chorus -> Winter Verse 1 -> Chorus 2 -> -40C Verse 2 -> Chorus 3 -> Spring Outro."""
     sr = 44100
     n = int(total_dur * sr)
     rng = np.random.default_rng(707)
@@ -179,17 +212,17 @@ def synthesize_audio(wav_path: Path, total_dur: float, events: list[tuple[float,
 
     w = rng.standard_normal(n).astype(np.float32)
     r_lp = np.convolve(w, np.ones(9, dtype=np.float32) / 9.0, mode="same")
-    r_bed = 0.025 * r_lp + 0.014 * (w - r_lp)
+    r_bed = 0.022 * r_lp + 0.012 * (w - r_lp)
     mix_l += r_bed
     mix_r += np.roll(r_bed, 29)
 
     riffs = [
-        [293.66, 293.66, 349.23, 293.66, 440.00, 392.00, 349.23, 261.63],
-        [293.66, 349.23, 440.00, 523.25, 466.16, 440.00, 392.00, 349.23],
-        [220.00, 293.66, 349.23, 392.00, 349.23, 293.66, 261.63, 220.00],
-        [440.00, 440.00, 523.25, 466.16, 440.00, 392.00, 349.23, 440.00],
+        [293.66, 293.66, 349.23, 293.66, 440.00, 392.00, 349.23, 261.63],  # Chorus hook («По полям!»)
+        [220.00, 261.63, 293.66, 349.23, 293.66, 261.63, 220.00, 196.00],  # Winter melancholic radio-search verse
+        [293.66, 349.23, 440.00, 523.25, 466.16, 440.00, 392.00, 349.23],  # Heavy attack chorus
+        [349.23, 440.00, 523.25, 587.33, 523.25, 440.00, 392.00, 440.00],  # Warm Spring major/minor lift («Весна придёт!»)
     ]
-    bass_roots = [73.42, 73.42, 58.27, 65.41]
+    bass_roots = [73.42, 58.27, 65.41, 73.42]
 
     n_eighths = int(total_dur / (BEAT * 0.5))
     for b in range(n_eighths):
@@ -199,16 +232,17 @@ def synthesize_audio(wav_path: Path, total_dur: float, events: list[tuple[float,
             break
         bar = b // 8
         step = b % 8
-        section = (bar // 8) % 4
-        is_intro = bar < 4
-        is_drop = (bar >= 10 and bar < 30) or (bar >= 36 and bar < 74)
-        riff = riffs[section]
+        # Match actual song form:
+        # Bars 0..14: Chorus 1 | 15..32: Winter Verse 1 | 33..47: Chorus 2 | 48..62: -40C Verse 2 | 63..74: Chorus 3 | 75..83: Spring Finale
+        is_chorus = (bar < 15) or (33 <= bar < 48) or (63 <= bar < 75)
+        is_spring = bar >= 75
+        riff = riffs[3] if is_spring else (riffs[0 if bar < 33 else 2] if is_chorus else riffs[1])
         b_freq = bass_roots[(bar // 2) % 4]
 
-        if step in (0, 4) and not is_intro:
+        if step in (0, 4):
             bl = min(int(0.42 * sr), n - i0)
             bt = np.arange(bl, dtype=np.float32) / sr
-            sub = np.tanh(np.sin(2 * np.pi * b_freq * bt) * 2.2) * np.exp(-bt * 3.8) * (0.28 if is_drop else 0.20)
+            sub = np.tanh(np.sin(2 * np.pi * b_freq * bt) * 2.2) * np.exp(-bt * 3.8) * (0.29 if is_chorus else 0.18)
             mix_l[i0:i0 + bl] += sub
             mix_r[i0:i0 + bl] += sub
 
@@ -222,29 +256,28 @@ def synthesize_audio(wav_path: Path, total_dur: float, events: list[tuple[float,
             mix_l[i0:i0 + hl] += horn * 0.95
             mix_r[i0:i0 + hl] += horn * 1.05
 
-        if (step in (0, 4) and is_intro) or (step in (0, 3, 4, 6) and not is_intro):
+        if (step in (0, 3, 4, 6) and is_chorus) or (step in (0, 4) and not is_chorus):
             kl = min(int(0.35 * sr), n - i0)
             kt = np.arange(kl, dtype=np.float32) / sr
             ph = 2.0 * np.pi * np.cumsum(50.0 + 120.0 * np.exp(-kt * 36.0)) / sr
-            kick = np.tanh(np.sin(ph) * 2.5) * np.exp(-kt * 7.4) * (0.46 if is_drop else 0.34)
+            kick = np.tanh(np.sin(ph) * 2.5) * np.exp(-kt * 7.4) * (0.47 if is_chorus else 0.31)
             mix_l[i0:i0 + kl] += kick
             mix_r[i0:i0 + kl] += kick
 
-        if step in (2, 6) and not is_intro:
+        if step in (2, 6):
             sl = min(int(0.20 * sr), n - i0)
             st = np.arange(sl, dtype=np.float32) / sr
-            sn = (rng.standard_normal(sl).astype(np.float32) * np.exp(-st * 22.0) * 0.27 +
-                  np.sin(2 * np.pi * 190.0 * st) * np.exp(-st * 30.0) * 0.19)
+            sn = (rng.standard_normal(sl).astype(np.float32) * np.exp(-st * 22.0) * 0.25 +
+                  np.sin(2 * np.pi * 190.0 * st) * np.exp(-st * 30.0) * 0.18)
             mix_l[i0:i0 + sl] += sn
             mix_r[i0:i0 + sl] += sn
 
-        if not is_intro or step in (0, 4):
-            cl = min(int(0.20 * sr), n - i0)
-            ct = np.arange(cl, dtype=np.float32) / sr
-            f1 = riff[step] * 2.0
-            cb = np.tanh((np.sin(2 * np.pi * f1 * ct) + 0.72 * np.sin(2 * np.pi * f1 * 1.481 * ct)) * 2.2) * np.exp(-ct * 15.0) * (0.135 if is_drop else 0.09)
-            mix_l[i0:i0 + cl] += cb * 0.92
-            mix_r[i0:i0 + cl] += cb * 1.08
+        cl = min(int(0.20 * sr), n - i0)
+        ct = np.arange(cl, dtype=np.float32) / sr
+        f1 = riff[step] * 2.0
+        cb = np.tanh((np.sin(2 * np.pi * f1 * ct) + 0.72 * np.sin(2 * np.pi * f1 * 1.481 * ct)) * 2.1) * np.exp(-ct * 14.0) * (0.135 if is_chorus else 0.085)
+        mix_l[i0:i0 + cl] += cb * 0.92
+        mix_r[i0:i0 + cl] += cb * 1.08
 
     for ev_t, ev_type in events:
         i0 = max(0, int(ev_t * sr))
@@ -256,6 +289,14 @@ def synthesize_audio(wav_path: Path, total_dur: float, events: list[tuple[float,
             gr = np.tanh((np.sin(2 * np.pi * 74.0 * gt) + 0.8 * np.sin(2 * np.pi * 111.0 * gt) + rng.standard_normal(gl) * 0.35) * 2.4) * np.exp(-gt * 1.9) * 0.21
             mix_l[i0:i0 + gl] += gr
             mix_r[i0:i0 + gl] += gr
+        elif ev_type == "radio_scan":
+            # Authentic radio/antenna frequency sweep («Ищу твой сигнал / Разнёс частоты твои»)
+            rl = min(int(1.8 * sr), n - i0)
+            rt = np.arange(rl, dtype=np.float32) / sr
+            swp = np.sin(2 * np.pi * np.cumsum(680.0 + 520.0 * np.sin(2 * np.pi * 2.2 * rt)) / sr) * np.exp(-rt * 1.5) * 0.09
+            st_n = rng.standard_normal(rl).astype(np.float32) * np.exp(-rt * 2.2) * 0.08
+            mix_l[i0:i0 + rl] += swp + st_n
+            mix_r[i0:i0 + rl] += np.roll(swp, 18) + st_n
         elif ev_type == "geran_buzz":
             bl = min(int(2.0 * sr), n - i0)
             bt = np.arange(bl, dtype=np.float32) / sr
@@ -287,7 +328,7 @@ def synthesize_audio(wav_path: Path, total_dur: float, events: list[tuple[float,
             mix_l[i0:i0 + el] += bm + cr
             mix_r[i0:i0 + el] += bm + np.roll(cr, 33)
 
-    fade_len = min(int(1.8 * sr), n)
+    fade_len = min(int(2.0 * sr), n)
     fade = np.linspace(1.0, 0.0, fade_len, dtype=np.float32)
     mix_l[-fade_len:] *= fade
     mix_r[-fade_len:] *= fade
@@ -302,7 +343,7 @@ def synthesize_audio(wav_path: Path, total_dur: float, events: list[tuple[float,
 
 
 def render_timeline(shots: list[tuple], out_mp4: Path, out_w: int, out_h: int,
-                    crf: str = "24", maxrate: str = "1280k", audio_br: str = "128k", seed: int = 999) -> list[float]:
+                    crf: str = "24", maxrate: str = "1260k", audio_br: str = "128k", seed: int = 999) -> list[float]:
     t0 = time.time()
     imgs = [load_img_wh(s[0], out_w, out_h, x_bias=s[14] if len(s) > 14 else 0.5) for s in shots]
     durs = [s[1] * BEAT for s in shots]
@@ -312,14 +353,14 @@ def render_timeline(shots: list[tuple], out_mp4: Path, out_w: int, out_h: int,
 
     uploaded_mp3 = AUDIO_DIR / "latest_track.mp3"
     sfx_events = [(starts[idx] + 0.08, s[13]) for idx, s in enumerate(shots) if s[13]]
-    wav_path = Path(f"/tmp/mordor55_audio_{out_w}x{out_h}.wav")
+    wav_path = Path(f"/tmp/mordor51_audio_{out_w}x{out_h}.wav")
     synthesize_audio(wav_path, total_dur, sfx_events)
 
     bufsize = f"{int(maxrate.rstrip('k')) * 2}k"
-    if uploaded_mp3.is_file() and out_w > out_h:
+    if uploaded_mp3.is_file():
         audio_inputs = [
             "-i", str(uploaded_mp3), "-i", str(wav_path),
-            "-filter_complex", "[1:a]volume=1.0[a0];[2:a]volume=0.22[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]",
+            "-filter_complex", "[1:a]volume=1.0[a0];[2:a]volume=0.18[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]",
             "-map", "0:v", "-map", "[aout]",
         ]
     else:
@@ -373,130 +414,125 @@ def main():
     t_start = time.time()
 
     # =========================================================================
-    # 55 STRICTLY UNIQUE FRAMES ACROSS 332 BEATS = 148.66s (02:28.66 @ 134 BPM)
-    # ZERO REPEATED IMAGES! Average cut duration: 2.70s!
+    # 51 STRICTLY UNIQUE, 100%-AUDITED CLEAN FRAMES ACROSS 332 BEATS = 148.66s
+    # Mapped line-by-line to the lyrics of «АЗБУКА — ПО ПОЛЯМ»!
+    # Note: rain_i < 0 => Winter Blizzard Snow; mud_i < 0 => Golden Spring Sun!
     # =========================================================================
     full_shots = [
-        # ACT I: ШТАБ САУРОНА, КУЗНИЦА FPV И РОЙ «ГЕРАНЕЙ» (9 unique shots = 54 beats = 24.18s)
-        (M2_DIR / "mordor_11_sauron_command_bunker_streams.jpg",          6, 1.02, 1.11,   0,   0,   8, -10, 2.0, 0.00, 0.20, 0.00, 0.15, None),
-        (F1_DIR / "03_witch_king_tablet_briefing.jpg",                    6, 1.02, 1.10, -12,  12,   4,  -6, 2.5, 0.45, 0.35, 0.15, 0.05, None),
-        (M4_DIR / "mordor_33_goblin_fpv_workshop_dugout_soldering.jpg",   6, 1.02, 1.11,  10, -12,   6,  -6, 2.0, 0.00, 0.25, 0.00, 0.25, None),
-        (M2_DIR / "mordor_17_saruman_tactical_pantsir_air_defense.jpg",   6, 1.02, 1.10, -14,  14,   6,  -8, 5.5, 0.55, 0.55, 0.20, 0.65, "salvo"),
-        (M1_DIR / "mordor_02_goblins_fiber_fpv_lancet_team.jpg",          6, 1.02, 1.09, -12,  16,   6,  -8, 3.0, 0.55, 0.35, 0.15, 0.05, None),
-        (MOD_DIR / "modern_03_lancet_and_fiber_fpv_team.jpg",             6, 1.02, 1.10,  14, -14,   4,  -6, 3.5, 0.55, 0.40, 0.15, 0.05, "geran_buzz"),
-        (M1_DIR / "mordor_06_geran_swarm_goblin_techs_night.jpg",         6, 1.03, 1.10, -10,  18,   8, -12, 7.0, 0.80, 0.70, 0.20, 0.85, "geran_buzz"),
-        (MOD_DIR / "modern_04_geran_black_swarm_night_pickup.jpg",        6, 1.03, 1.11,  12, -16,   6, -10, 7.0, 0.75, 0.70, 0.20, 0.80, "geran_buzz"),
-        (B2_DIR / "s06_geran_f2_swarm.jpg",                               6, 1.03, 1.12, -16,  16,  -8,   8, 5.5, 0.85, 0.65, 0.00, 0.40, "geran_buzz"),
+        # --- ПРИПЕВ 1 (60 beats = 26.87s): «Только бам, бам, бам, бам, бам! Ищу твой сигнал антенной по полям! У тебя бабки — у меня дроны, пушки, танки!» ---
+        (M3_DIR / "mordor_22_balrog_iskander_missile_launch.jpg",         5, 1.02, 1.13, -12,  12,  10, -14, 10.0, 0.45, 0.85, 0.35, 0.95, "explosion"),
+        (M2_DIR / "mordor_13_tos1a_solntsepek_goblin_uruk_svo.jpg",       5, 1.03, 1.12, -14,  18,   6, -10, 10.5, 0.75, 0.85, 0.55, 0.95, "salvo"),
+        (M3_DIR / "mordor_23_gothmog_general_grad_tornado_salvo.jpg",     5, 1.02, 1.11, -16,  16,   6,  -8,  8.5, 0.60, 0.80, 0.45, 0.85, "salvo"),
+        (M4_DIR / "mordor_35_black_numenorean_2s19_msta_s_krasnopol.jpg", 5, 1.03, 1.11, -12,  14,   6,  -8,  9.0, 0.55, 0.80, 0.40, 0.75, "explosion"),
+        (B2_DIR / "s07_geran_f3_strike.jpg",                              6, 1.04, 1.13,   0,   0,  10, -12, 11.0, 0.80, 0.85, 0.30, 0.95, "explosion"),
+        (M5_DIR / "mordor_41_antenna_po_polyam_orc_goblin_signal.jpg",    8, 1.02, 1.11, -14,  14,   6,  -8,  2.8, 0.55, 0.35, 0.25, 0.05, "radio_scan"),
+        (M5_DIR / "mordor_42_elves_babki_dollars_nato_luxury.jpg",        8, 1.02, 1.12,  12, -12,   4,  -8,  3.5, 0.25, 0.45, 0.00, 0.20, "geran_buzz"),
+        (M1_DIR / "mordor_02_goblins_fiber_fpv_lancet_team.jpg",          6, 1.02, 1.10, -12,  16,   6,  -8,  3.2, 0.55, 0.35, 0.15, 0.05, "geran_buzz"),
+        (M2_DIR / "mordor_17_saruman_tactical_pantsir_air_defense.jpg",   6, 1.02, 1.11, -14,  14,   6,  -8,  6.0, 0.55, 0.55, 0.20, 0.65, "salvo"),
+        (MOD_DIR / "modern_06_t90m_proryv_nakidka_breach.jpg",            6, 1.03, 1.11, -16,  18,   4,  -6,  8.0, 0.50, 0.80, 0.65, 0.45, "explosion"),
 
-        # ACT II: ПРИЛЁТ «ГЕРАНЕЙ», ПАУТИНА ШЕЛОБ, ЛУРТЦ И ВОЗДУШНЫЙ ТАРАН (5 unique shots = 30 beats = 13.43s)
-        (B2_DIR / "s07_geran_f3_strike.jpg",                              6, 1.04, 1.13,   0,   0,  10, -12, 11.0,0.80, 0.85, 0.30, 0.95, "explosion"),
-        (M3_DIR / "mordor_25_shelob_spider_fiber_optic_ambush.jpg",       6, 1.02, 1.12, -14,  14,   6,  -8, 4.5, 0.55, 0.60, 0.25, 0.35, "warg_growl"),
-        (M3_DIR / "mordor_24_lurtz_uruk_sniper_svd_thermal_pair.jpg",     6, 1.02, 1.11,  10, -12,   4,  -6, 2.5, 0.65, 0.40, 0.05, 0.05, None),
-        (M3_DIR / "mordor_27_khamul_nazgul_lancet_operator_dugout.jpg",   6, 1.02, 1.11, -10,  12,   8, -12, 6.5, 0.65, 0.55, 0.20, 0.65, "explosion"),
-        (M1_DIR / "mordor_05_nazgul_fell_beast_ka52_airbase.jpg",         6, 1.02, 1.09,  16, -16,   4,  -8, 4.0, 0.60, 0.65, 0.15, 0.20, "warg_growl"),
+        # --- КУПЛЕТ 1 (72 beats = 32.24s): «Руки околели от холодной зимы... Вышла из луча, в мониторе нету... Я разнёс частоты твои... Антенной по полям» ---
+        (M5_DIR / "mordor_43_cold_winter_hands_orc_frozen_trench.jpg",    8, 1.02, 1.10, -10,  10,   6,  -6,  1.8,-0.85, 0.30, 0.00, 0.00, None),
+        (M2_DIR / "mordor_11_sauron_command_bunker_streams.jpg",          6, 1.02, 1.10,   0,   0,   8, -10,  2.0, 0.00, 0.20, 0.00, 0.15, "radio_scan"),
+        (M4_DIR / "mordor_33_goblin_fpv_workshop_dugout_soldering.jpg",   6, 1.02, 1.10,  10, -12,   6,  -6,  2.0, 0.00, 0.25, 0.00, 0.25, None),
+        (MOD_DIR / "modern_03_lancet_and_fiber_fpv_team.jpg",             6, 1.02, 1.10,  14, -14,   4,  -6,  3.0, 0.50, 0.40, 0.15, 0.05, None),
+        (M5_DIR / "mordor_44_no_signal_monitor_vyshla_iz_lucha.jpg",      8, 1.02, 1.12,  -8,   8,   6, -10,  4.0,-0.75, 0.35, 0.00, 0.05, "radio_scan"),
+        (M5_DIR / "mordor_45_frequency_hopping_spectrum_orc_ew.jpg",      8, 1.02, 1.11, -12,  12,   4,  -6,  2.5, 0.00, 0.20, 0.00, 0.10, "radio_scan"),
+        (M3_DIR / "mordor_25_shelob_spider_fiber_optic_ambush.jpg",       6, 1.02, 1.12, -14,  14,   6,  -8,  4.5, 0.55, 0.60, 0.25, 0.35, "warg_growl"),
+        (M5_DIR / "mordor_48_buhanka_snow_antenna_mast_po_polyam.jpg",    6, 1.02, 1.10, -14,  14,   6,  -6,  2.8,-0.55, 0.35, 0.25, 0.05, "radio_scan"),
+        (M1_DIR / "mordor_06_geran_swarm_goblin_techs_night.jpg",         6, 1.03, 1.10, -10,  18,   8, -12,  7.0, 0.80, 0.70, 0.20, 0.85, "geran_buzz"),
+        (MOD_DIR / "modern_04_geran_black_swarm_night_pickup.jpg",        6, 1.03, 1.11,  12, -16,   6, -10,  7.0, 0.75, 0.70, 0.20, 0.80, "geran_buzz"),
+        (B2_DIR / "s06_geran_f2_swarm.jpg",                               6, 1.03, 1.12, -16,  16,  -8,   8,  5.5, 0.85, 0.65, 0.00, 0.40, "geran_buzz"),
 
-        # ACT III: ОГНЕННЫЙ ШТОРМ — ДРЕЙК+ТУ-22М3, БАЛРОГ+«ИСКАНДЕР», «ТОРНАДО-Г», «МСТА-С», ФАБ-УМПК И «СОЛНЦЕПЁК» (10 unique shots = 60 beats = 26.87s)
-        (M4_DIR / "mordor_34_smaug_drake_tu95_kh101_strategic_launch.jpg",6, 1.02, 1.12, -18,  18,   6, -10, 7.5, 0.70, 0.70, 0.10, 0.85, "salvo"),
-        (M3_DIR / "mordor_22_balrog_iskander_missile_launch.jpg",         6, 1.02, 1.12, -12,  12,  10, -14, 9.5, 0.45, 0.85, 0.35, 0.95, "explosion"),
-        (M3_DIR / "mordor_23_gothmog_general_grad_tornado_salvo.jpg",     6, 1.02, 1.11, -16,  16,   6,  -8, 8.5, 0.60, 0.80, 0.45, 0.85, "salvo"),
-        (M4_DIR / "mordor_35_black_numenorean_2s19_msta_s_krasnopol.jpg", 6, 1.03, 1.11, -12,  14,   6,  -8, 9.0, 0.55, 0.80, 0.40, 0.75, "explosion"),
-        (F1_DIR / "05_elven_trench_panic_under_barrage.jpg",              6, 1.03, 1.12,  12, -12,   6,  -8, 9.5, 0.65, 0.75, 0.55, 0.50, "explosion"),
-        (M2_DIR / "mordor_15_fell_beast_umpk_fab_drop.jpg",               6, 1.03, 1.12, -18,  20,  -8,  12, 5.5, 0.45, 0.65, 0.00, 0.45, "geran_buzz"),
-        (MOD_DIR / "modern_05_su34_umpk_glide_bombs_citadel.jpg",         6, 1.07, 1.02,  -8,  14,  -6,   4, 11.5,0.55, 0.85, 0.40, 0.65, "explosion"),
-        (M4_DIR / "mordor_32_witch_king_ka52_alligator_vihr_strike.jpg",  6, 1.03, 1.12, -18,  18,   4,  -8, 7.5, 0.75, 0.65, 0.70, 0.65, "salvo"),
-        (F1_DIR / "06_orc_mlrs_salvo_across_fields.jpg",                  6, 1.03, 1.11, -14,  16,   6,  -8, 9.0, 0.55, 0.80, 0.50, 0.85, "salvo"),
-        (M2_DIR / "mordor_13_tos1a_solntsepek_goblin_uruk_svo.jpg",       6, 1.03, 1.11, -14,  18,   6, -10, 10.5,0.75, 0.85, 0.55, 0.95, "salvo"),
+        # --- ПРИПЕВ 2 (60 beats = 26.87s): «Только бам, бам, бам — По полям! Дроны, пушки, танки!» ---
+        (M4_DIR / "mordor_34_smaug_drake_tu95_kh101_strategic_launch.jpg",6, 1.02, 1.12, -18,  18,   6, -10,  7.5, 0.70, 0.70, 0.10, 0.85, "salvo"),
+        (M2_DIR / "mordor_15_fell_beast_umpk_fab_drop.jpg",               6, 1.03, 1.12, -18,  20,  -8,  12,  5.5, 0.45, 0.65, 0.00, 0.45, "geran_buzz"),
+        (M4_DIR / "mordor_32_witch_king_ka52_alligator_vihr_strike.jpg",  6, 1.03, 1.12, -18,  18,   4,  -8,  7.5, 0.75, 0.65, 0.70, 0.65, "salvo"),
+        (M3_DIR / "mordor_26_olog_hai_troll_sapper_ur77_zmej_gorynych.jpg",6,1.02, 1.12, -16,  18,   6, -10,  9.5, 0.55, 0.80, 0.65, 0.85, "explosion"),
+        (M4_DIR / "mordor_37_haradrim_oliphaunt_column_po_polyam_march.jpg",6,1.02,1.11, -20,  20,   4,  -6,  4.5, 0.70, 0.60, 0.75, 0.20, "warg_growl"),
+        (M1_DIR / "mordor_01_warg_riders_desertcross_charge.jpg",         6, 1.04, 1.12, -24,  24,   4,  -4,  6.5, 0.75, 0.55, 0.95, 0.25, "warg_growl"),
+        (M2_DIR / "mordor_14_uruk_hai_white_hand_enduro_assault.jpg",     6, 1.03, 1.12,  18, -18,   4,  -6,  6.5, 0.70, 0.45, 0.90, 0.15, "warg_growl"),
+        (M2_DIR / "mordor_16_goblin_sappers_ground_robot_kurier.jpg",     6, 1.02, 1.10, -12,  14,   6,  -6,  4.0, 0.45, 0.55, 0.25, 0.25, "heavy_mg"),
+        (M4_DIR / "mordor_31_azog_pale_orc_bmpt_terminator_assault.jpg",  6, 1.03, 1.12, -16,  16,   6,  -8,  8.0, 0.65, 0.70, 0.85, 0.65, "heavy_mg"),
+        (M2_DIR / "mordor_12_grond_jet_battering_ram_reb.jpg",            6, 1.02, 1.12, -16,  16,   8,  -8,  8.0, 0.65, 0.75, 0.75, 0.50, "explosion"),
 
-        # ACT IV: «ПО ПОЛЯМ!» — ВАРГИ, ЭНДУРО, БАГГИ, АЗОГ С «ТЕРМИНАТОРОМ», КОЛОННА ОЛИФАНТОВ И «РАПТОРЫ» (8 unique shots = 48 beats = 21.49s)
-        (MOD_DIR / "modern_01_orc_storm_squad_vkpo_moss.jpg",             6, 1.02, 1.10, -14,  14,   4,  -6, 3.5, 0.65, 0.35, 0.35, 0.05, None),
-        (M4_DIR / "mordor_37_haradrim_oliphaunt_column_po_polyam_march.jpg",6,1.02,1.11, -20,  20,   4,  -6, 4.5, 0.70, 0.60, 0.75, 0.20, "warg_growl"),
-        (M2_DIR / "mordor_14_uruk_hai_white_hand_enduro_assault.jpg",     6, 1.03, 1.12,  18, -18,   4,  -6, 6.5, 0.70, 0.45, 0.90, 0.15, "warg_growl"),
-        (M1_DIR / "mordor_01_warg_riders_desertcross_charge.jpg",         6, 1.04, 1.12, -24,  24,   4,  -4, 6.5, 0.75, 0.55, 0.95, 0.25, "warg_growl"),
-        (MOD_DIR / "modern_02_desertcross_buggy_enduro_po_polyam.jpg",    6, 1.03, 1.11,  20, -20,   0,  -6, 6.0, 0.75, 0.50, 0.90, 0.15, None),
-        (M4_DIR / "mordor_31_azog_pale_orc_bmpt_terminator_assault.jpg",  6, 1.03, 1.12, -16,  16,   6,  -8, 8.0, 0.65, 0.70, 0.85, 0.65, "heavy_mg"),
-        (M1_DIR / "mordor_04_mumakil_oliphaunt_tsar_mangal.jpg",          6, 1.02, 1.10, -20,  22,   6,  -8, 5.5, 0.70, 0.60, 0.75, 0.20, "explosion"),
-        (M3_DIR / "mordor_28_corsairs_umbar_raptor_boat_amphibious_orcs.jpg",6,1.02,1.11,-22,  22,   4,  -6, 5.0, 0.75, 0.55, 0.20, 0.15, "heavy_mg"),
+        # --- КУПЛЕТ 2 (60 beats = 26.87s): «Этот лютый холод, где-то минус сорок / Лес, лес, лес — нужно тебя найти!» ---
+        (M5_DIR / "mordor_46_minus_forty_snow_forest_search_wargs.jpg",   8, 1.02, 1.11, -14,  14,   6,  -8,  2.5,-0.95, 0.35, 0.00, 0.00, "warg_growl"),
+        (M5_DIR / "mordor_47_bird_rescued_orc_hugs_fpv_snow.jpg",         8, 1.02, 1.10, -10,  10,   4,  -6,  2.0,-0.75, 0.25, 0.00, 0.00, "radio_scan"),
+        (M3_DIR / "mordor_24_lurtz_uruk_sniper_svd_thermal_pair.jpg",     6, 1.02, 1.11,  10, -12,   4,  -6,  2.5, 0.65, 0.40, 0.05, 0.05, None),
+        (MOD_DIR / "modern_01_orc_storm_squad_vkpo_moss.jpg",             6, 1.02, 1.10, -14,  14,   4,  -6,  3.5, 0.65, 0.35, 0.35, 0.05, None),
+        (MOD_DIR / "modern_02_desertcross_buggy_enduro_po_polyam.jpg",    6, 1.03, 1.11,  20, -20,   0,  -6,  6.0, 0.75, 0.50, 0.90, 0.15, None),
+        (M1_DIR / "mordor_04_mumakil_oliphaunt_tsar_mangal.jpg",          6, 1.02, 1.10, -20,  22,   6,  -8,  5.5, 0.70, 0.60, 0.75, 0.20, "explosion"),
+        (M3_DIR / "mordor_28_corsairs_umbar_raptor_boat_amphibious_orcs.jpg",6,1.02,1.11,-22,  22,   4,  -6,  5.0, 0.75, 0.55, 0.20, 0.15, "heavy_mg"),
+        (M1_DIR / "mordor_05_nazgul_fell_beast_ka52_airbase.jpg",         7, 1.02, 1.09,  16, -16,   4,  -8,  4.0, 0.60, 0.65, 0.15, 0.20, "warg_growl"),
+        (M4_DIR / "mordor_36_orc_medevac_armored_linza_warg_medic.jpg",   7, 1.02, 1.09, -10,  10,   4,  -6,  2.5, 0.45, 0.35, 0.20, 0.05, None),
 
-        # ACT V: ПРОРЫВ БЕЛЫХ ВРАТ — «ЗМЕЙ ГОРЫНЫЧ», ТАРАН «ГРОНД», Т-90М, ТРОЛЛИ И НРТК «КУРЬЕР» (7 unique shots = 42 beats = 18.81s)
-        (M3_DIR / "mordor_26_olog_hai_troll_sapper_ur77_zmej_gorynych.jpg",6,1.02, 1.12, -16,  18,   6, -10, 9.5, 0.55, 0.80, 0.65, 0.85, "explosion"),
-        (M2_DIR / "mordor_12_grond_jet_battering_ram_reb.jpg",            6, 1.02, 1.12, -16,  16,   8,  -8, 8.0, 0.65, 0.75, 0.75, 0.50, "explosion"),
-        (F1_DIR / "07_btr_breaching_ancient_marble_gates.jpg",            6, 1.03, 1.11, -14,  14,   4,  -6, 7.5, 0.50, 0.75, 0.60, 0.35, "heavy_mg"),
-        (MOD_DIR / "modern_06_t90m_proryv_nakidka_breach.jpg",            6, 1.03, 1.11, -16,  18,   4,  -6, 8.0, 0.50, 0.80, 0.65, 0.45, "explosion"),
-        (M1_DIR / "mordor_03_armored_cave_troll_kontakt1_breach.jpg",     6, 1.04, 1.13,   0,   0,  12, -12, 8.5, 0.45, 0.75, 0.60, 0.50, "heavy_mg"),
-        (M2_DIR / "mordor_16_goblin_sappers_ground_robot_kurier.jpg",     6, 1.02, 1.10, -12,  14,   6,  -6, 4.0, 0.45, 0.55, 0.25, 0.25, "heavy_mg"),
-        (M4_DIR / "mordor_36_orc_medevac_armored_linza_warg_medic.jpg",   6, 1.02, 1.09, -10,  10,   4,  -6, 2.5, 0.45, 0.35, 0.20, 0.05, None),
+        # --- ПРИПЕВ 3 (46 beats = 20.60s): Падение Белой Крепости, разгром эльфийских «бабок» и капитуляция ---
+        (M1_DIR / "mordor_03_armored_cave_troll_kontakt1_breach.jpg",     6, 1.04, 1.13,   0,   0,  12, -12,  8.5, 0.45, 0.75, 0.60, 0.50, "heavy_mg"),
+        (M2_DIR / "mordor_18_warg_cavalry_pursuit_fleeing_elves.jpg",     6, 1.03, 1.12, -20,  20,   4,  -6,  6.5, 0.65, 0.65, 0.85, 0.35, "warg_growl"),
+        (M1_DIR / "mordor_07_cqb_wargs_orcs_capture_elves.jpg",           6, 1.02, 1.09, -14,  14,   6,  -6,  3.5, 0.55, 0.45, 0.15, 0.10, None),
+        (M3_DIR / "mordor_21_mouth_of_sauron_capitulation_elves.jpg",     8, 1.02, 1.10, -14,  14,   6,  -8,  3.0, 0.60, 0.50, 0.20, 0.10, "warg_growl"),
+        (M1_DIR / "mordor_09_tricolor_mordor_flag_bare_orcs.jpg",         7, 1.02, 1.11,   0,   0,  10, -14,  3.0, 0.40, 0.55, 0.05, 0.35, "explosion"),
+        (MOD_DIR / "modern_08_novaya_izengardovka_sign_svo.jpg",          6, 1.02, 1.09, -10,  10,   4,  -6,  2.5, 0.40, 0.35, 0.15, 0.05, None),
+        (M1_DIR / "mordor_08_novaya_izengardovka_warg_svo.jpg",           7, 1.02, 1.10,  10, -10,   6,  -8,  2.5, 0.40, 0.35, 0.15, 0.10, "warg_growl"),
 
-        # ACT VI: ПОГОНЯ ВАРГОВ, ПЛЕНЕНИЕ ЭЛЬФОВ, ТРОФЕИ И КАПИТУЛЯЦИЯ ПЕРЕД УСТАМИ САУРОНА (7 unique shots = 42 beats = 18.81s)
-        (M2_DIR / "mordor_18_warg_cavalry_pursuit_fleeing_elves.jpg",     6, 1.03, 1.12, -20,  20,   4,  -6, 6.5, 0.65, 0.65, 0.85, 0.35, "warg_growl"),
-        (M1_DIR / "mordor_07_cqb_wargs_orcs_capture_elves.jpg",           6, 1.02, 1.09, -14,  14,   6,  -6, 3.5, 0.55, 0.45, 0.15, 0.10, None),
-        (MOD_DIR / "modern_07_citadel_cqb_elves_defeated.jpg",            6, 1.02, 1.09,  12, -12,   4,  -6, 3.0, 0.45, 0.40, 0.10, 0.05, None),
-        (M4_DIR / "mordor_38_troll_trophy_haul_leopard_bradley_tow.jpg",  6, 1.02, 1.11, -14,  14,   6,  -8, 3.5, 0.45, 0.45, 0.45, 0.10, "warg_growl"),
-        (F1_DIR / "09_captured_ramparts_trophies.jpg",                    6, 1.02, 1.09, -12,  12,   4,  -6, 2.0, 0.35, 0.45, 0.05, 0.10, None),
-        (M3_DIR / "mordor_21_mouth_of_sauron_capitulation_elves.jpg",     6, 1.02, 1.10, -14,  14,   6,  -8, 3.0, 0.60, 0.50, 0.20, 0.10, "warg_growl"),
-        (M1_DIR / "mordor_09_tricolor_mordor_flag_bare_orcs.jpg",         6, 1.02, 1.11,   0,   0,  10, -14, 3.0, 0.40, 0.55, 0.05, 0.35, "explosion"),
-
-        # ACT VII: «НОВАЯ ИЗЕНГАРДОВКА — НАША!» — ЗНАКИ, БУХАНКА, ПОЛЕВАЯ КУХНЯ, БАНЯ С САМОВАРОМ, ПАРАД И ОКО-РЛС (9 unique shots = 56 beats = 25.07s)
-        (MOD_DIR / "modern_08_novaya_izengardovka_sign_svo.jpg",          6, 1.02, 1.09, -10,  10,   4,  -6, 2.5, 0.45, 0.40, 0.15, 0.05, None),
-        (M1_DIR / "mordor_08_novaya_izengardovka_warg_svo.jpg",           6, 1.02, 1.10,  10, -10,   6,  -8, 2.5, 0.45, 0.40, 0.15, 0.10, "warg_growl"),
-        (M2_DIR / "mordor_19_buhanka_svo_goblin_checkpoint_izengardovka.jpg",6,1.02,1.09,-12,  12,   4,  -6, 2.5, 0.40, 0.35, 0.15, 0.05, None),
-        (M3_DIR / "mordor_29_troll_field_kitchen_kp130_izengardovka.jpg", 6, 1.02, 1.10, -12,  12,   6,  -6, 2.0, 0.15, 0.35, 0.10, 0.10, None),
-        (M4_DIR / "mordor_39_orc_banya_samovar_harmony_izengardovka.jpg", 6, 1.02, 1.10,  12, -12,   4,  -6, 1.8, 0.00, 0.30, 0.00, 0.15, None),
-        (M1_DIR / "mordor_10_throne_hall_orc_goblin_warg_pack.jpg",       6, 1.07, 1.01,  12, -12,  -4,   4, 2.0, 0.00, 0.30, 0.00, 0.20, None),
-        (M2_DIR / "mordor_20_grand_parade_victory_novaya_izengardovka.jpg",6,1.02, 1.11,   0,   0,  10, -10, 3.0, 0.25, 0.45, 0.10, 0.35, "explosion"),
-        (M4_DIR / "mordor_40_mordor_brotherhood_group_portrait_victory_banner.jpg",6,1.02,1.10,0,0,  6,  -8, 2.2, 0.20, 0.40, 0.05, 0.25, "warg_growl"),
-        (M3_DIR / "mordor_30_eye_of_barad_dur_reb_radar_fortress_finale.jpg",8,1.10,1.01,  8,  -8,  -6,   6, 2.2, 0.30, 0.45, 0.05, 0.40, "explosion"),
+        # --- ФИНАЛ-КОДА (34 beats = 15.22s): «Всё будет хорошо, плохое в прошлом / Весна придёт — тяну к небу ладошки!» ---
+        (M4_DIR / "mordor_39_orc_banya_samovar_harmony_izengardovka.jpg", 8, 1.02, 1.10,  12, -12,   4,  -6,  1.8, 0.00, 0.28, 0.00, 0.15, None),
+        (M2_DIR / "mordor_20_grand_parade_victory_novaya_izengardovka.jpg",8,1.02, 1.11,   0,   0,  10, -10,  2.8, 0.15, 0.40, 0.00, 0.30, "explosion"),
+        (M5_DIR / "mordor_49_spring_comes_orc_palms_to_sky.jpg",          9, 1.02, 1.11,  -8,   8,   8, -10,  1.6, 0.00, 0.10,-0.95, 0.15, None),
+        (M5_DIR / "mordor_50_spring_victory_citadel_radar_eye_clean.jpg", 9, 1.09, 1.01,   8,  -8,  -6,   6,  1.8, 0.00, 0.15,-0.75, 0.25, "warg_growl"),
     ]
 
     unique_paths = {s[0].resolve() for s in full_shots}
-    assert len(full_shots) == 55 and len(unique_paths) == 55, (
-        f"Expected 55 strictly unique shots, got {len(full_shots)} total / {len(unique_paths)} unique!"
+    assert len(full_shots) == 51 and len(unique_paths) == 51, (
+        f"Expected 51 strictly unique audited shots, got {len(full_shots)} total / {len(unique_paths)} unique!"
     )
     total_beats = sum(s[1] for s in full_shots)
-    print(f"Verified: {len(full_shots)} STRICTLY UNIQUE frames, {total_beats} beats ({total_beats * BEAT:.2f}s)!", flush=True)
+    assert total_beats == 332, f"Expected 332 beats (148.66s), got {total_beats}"
+    print(f"Verified: {len(full_shots)} STRICTLY UNIQUE CLEAN frames, {total_beats} beats ({total_beats * BEAT:.2f}s)!", flush=True)
 
-    full_mp4 = OUT_DIR / "mordor_svo_55shots_2m28s_1080p.mp4"
-    starts = render_timeline(full_mp4, shots=full_shots, out_w=1920, out_h=1080, crf="24", maxrate="1260k", audio_br="128k", seed=999) if False else None
+    full_mp4 = OUT_DIR / "mordor_svo_clean_51shots_2m28s_1080p.mp4"
     starts = render_timeline(full_shots, full_mp4, 1920, 1080, crf="24", maxrate="1260k", audio_br="128k", seed=999)
 
     # =========================================================================
-    # 2. 20-SHOT HIGH-VELOCITY 9:16 VERTICAL BATTLE REEL (72 beats = 32.24s)
+    # 2. 20-SHOT LYRIC-SYNCED VERTICAL 9:16 REEL (72 beats = 32.24s)
     # =========================================================================
     reel_shots = [
-        (M2_DIR / "mordor_11_sauron_command_bunker_streams.jpg",          3.6, 1.03, 1.11,   0,   0,   8,  -8, 2.5, 0.00, 0.25, 0.00, 0.20, None,        0.48),
-        (M4_DIR / "mordor_33_goblin_fpv_workshop_dugout_soldering.jpg",   3.6, 1.03, 1.11,  -6,   6,   6,  -6, 2.0, 0.00, 0.25, 0.00, 0.25, None,        0.50),
-        (M3_DIR / "mordor_25_shelob_spider_fiber_optic_ambush.jpg",       3.6, 1.03, 1.12,  -8,   8,   6,  -8, 4.5, 0.55, 0.55, 0.20, 0.35, "geran_buzz",0.46),
-        (M4_DIR / "mordor_34_smaug_drake_tu95_kh101_strategic_launch.jpg",3.6, 1.03, 1.12, -10,  10,   6,  -8, 7.5, 0.65, 0.70, 0.10, 0.85, "salvo",     0.65),
         (M3_DIR / "mordor_22_balrog_iskander_missile_launch.jpg",         3.6, 1.03, 1.13,  -8,   8,  12, -16, 9.0, 0.45, 0.85, 0.25, 0.95, "explosion", 0.62),
-        (M3_DIR / "mordor_23_gothmog_general_grad_tornado_salvo.jpg",     3.6, 1.03, 1.11,  -6,   6,   6,  -8, 8.0, 0.55, 0.75, 0.35, 0.80, "salvo",     0.42),
-        (M4_DIR / "mordor_32_witch_king_ka52_alligator_vihr_strike.jpg",  3.6, 1.03, 1.12, -10,  10,   4,  -8, 7.5, 0.70, 0.65, 0.65, 0.65, "salvo",     0.55),
-        (M2_DIR / "mordor_15_fell_beast_umpk_fab_drop.jpg",               3.6, 1.03, 1.12, -10,  10,  -8,  10, 5.5, 0.45, 0.65, 0.00, 0.45, None,        0.48),
         (M2_DIR / "mordor_13_tos1a_solntsepek_goblin_uruk_svo.jpg",       3.6, 1.03, 1.12, -10,  10,   6, -10, 9.5, 0.70, 0.85, 0.50, 0.95, "salvo",     0.52),
+        (M5_DIR / "mordor_41_antenna_po_polyam_orc_goblin_signal.jpg",    3.6, 1.03, 1.11,  -8,   8,   6,  -8, 2.8, 0.55, 0.35, 0.20, 0.05, "radio_scan",0.58),
+        (M5_DIR / "mordor_42_elves_babki_dollars_nato_luxury.jpg",        3.6, 1.03, 1.12,  -6,   6,   4,  -8, 3.5, 0.25, 0.45, 0.00, 0.20, "geran_buzz",0.55),
+        (M1_DIR / "mordor_02_goblins_fiber_fpv_lancet_team.jpg",          3.6, 1.03, 1.11,  -8,   8,   6,  -6, 3.2, 0.50, 0.35, 0.15, 0.05, None,        0.55),
+        (M4_DIR / "mordor_31_azog_pale_orc_bmpt_terminator_assault.jpg",  3.6, 1.03, 1.12, -10,  10,   6,  -8, 8.0, 0.65, 0.70, 0.85, 0.65, "heavy_mg",  0.35),
+        (M5_DIR / "mordor_43_cold_winter_hands_orc_frozen_trench.jpg",    3.6, 1.02, 1.10,  -6,   6,   6,  -6, 1.8,-0.85, 0.30, 0.00, 0.00, None,        0.44),
+        (M5_DIR / "mordor_44_no_signal_monitor_vyshla_iz_lucha.jpg",      3.6, 1.02, 1.12,  -6,   6,   6, -10, 4.0,-0.75, 0.35, 0.00, 0.05, "radio_scan",0.60),
+        (M5_DIR / "mordor_45_frequency_hopping_spectrum_orc_ew.jpg",      3.6, 1.02, 1.11,  -8,   8,   4,  -6, 2.5, 0.00, 0.20, 0.00, 0.10, "radio_scan",0.48),
+        (M5_DIR / "mordor_46_minus_forty_snow_forest_search_wargs.jpg",   3.6, 1.02, 1.11,  -8,   8,   6,  -8, 2.5,-0.95, 0.35, 0.00, 0.00, "warg_growl",0.52),
+        (M5_DIR / "mordor_47_bird_rescued_orc_hugs_fpv_snow.jpg",         3.6, 1.02, 1.10,  -6,   6,   4,  -6, 2.0,-0.75, 0.25, 0.00, 0.00, None,        0.48),
+        (M3_DIR / "mordor_25_shelob_spider_fiber_optic_ambush.jpg",       3.6, 1.03, 1.12,  -8,   8,   6,  -8, 4.5, 0.55, 0.55, 0.20, 0.35, "geran_buzz",0.46),
         (M4_DIR / "mordor_37_haradrim_oliphaunt_column_po_polyam_march.jpg",3.6,1.03,1.11, -12,  12,   4,  -6, 4.5, 0.65, 0.55, 0.70, 0.20, "warg_growl",0.35),
         (M1_DIR / "mordor_01_warg_riders_desertcross_charge.jpg",         3.6, 1.04, 1.13, -14,  14,   4,  -6, 6.5, 0.75, 0.55, 0.90, 0.25, "warg_growl",0.50),
-        (M4_DIR / "mordor_31_azog_pale_orc_bmpt_terminator_assault.jpg",  3.6, 1.03, 1.12, -10,  10,   6,  -8, 8.0, 0.65, 0.70, 0.85, 0.65, "heavy_mg",  0.35),
-        (M3_DIR / "mordor_26_olog_hai_troll_sapper_ur77_zmej_gorynych.jpg",3.6,1.03, 1.12, -10,  10,   6,  -8, 8.5, 0.55, 0.80, 0.60, 0.80, "explosion", 0.62),
         (M2_DIR / "mordor_12_grond_jet_battering_ram_reb.jpg",            3.6, 1.03, 1.12,  -8,   8,   8, -10, 8.0, 0.60, 0.75, 0.70, 0.50, "explosion", 0.50),
-        (M4_DIR / "mordor_38_troll_trophy_haul_leopard_bradley_tow.jpg",  3.6, 1.03, 1.11,  -8,   8,   6,  -6, 3.5, 0.45, 0.45, 0.45, 0.10, "warg_growl",0.52),
         (M3_DIR / "mordor_21_mouth_of_sauron_capitulation_elves.jpg",     3.6, 1.03, 1.11,  -8,   8,   6,  -8, 3.0, 0.55, 0.50, 0.20, 0.10, None,        0.32),
-        (M3_DIR / "mordor_29_troll_field_kitchen_kp130_izengardovka.jpg", 3.6, 1.02, 1.10,  -8,   8,   6,  -6, 2.0, 0.15, 0.35, 0.10, 0.10, None,        0.45),
-        (M4_DIR / "mordor_39_orc_banya_samovar_harmony_izengardovka.jpg", 3.6, 1.02, 1.10,  -6,   6,   4,  -6, 1.8, 0.00, 0.30, 0.00, 0.15, None,        0.48),
-        (M4_DIR / "mordor_40_mordor_brotherhood_group_portrait_victory_banner.jpg",3.6,1.02,1.10,0,0,  6,  -8, 2.2, 0.20, 0.40, 0.05, 0.25, "warg_growl",0.50),
-        (M3_DIR / "mordor_30_eye_of_barad_dur_reb_radar_fortress_finale.jpg",3.6,1.08,1.02,  6,  -6,  -6,   6, 2.5, 0.30, 0.45, 0.05, 0.40, "explosion", 0.55),
+        (M5_DIR / "mordor_48_buhanka_snow_antenna_mast_po_polyam.jpg",    3.6, 1.02, 1.10,  -8,   8,   4,  -6, 2.5,-0.50, 0.30, 0.20, 0.05, None,        0.48),
+        (M4_DIR / "mordor_39_orc_banya_samovar_harmony_izengardovka.jpg", 3.6, 1.02, 1.10,  -6,   6,   4,  -6, 1.8, 0.00, 0.25, 0.00, 0.15, None,        0.48),
+        (M5_DIR / "mordor_49_spring_comes_orc_palms_to_sky.jpg",          3.6, 1.02, 1.11,  -6,   6,   8, -10, 1.6, 0.00, 0.10,-0.95, 0.15, None,        0.48),
+        (M5_DIR / "mordor_50_spring_victory_citadel_radar_eye_clean.jpg", 3.6, 1.08, 1.01,   6,  -6,  -6,   6, 1.8, 0.00, 0.15,-0.75, 0.25, "explosion", 0.56),
     ]
 
     reel_mp4 = OUT_DIR / "mordor_svo_reel_9x16.mp4"
     render_timeline(reel_shots, reel_mp4, 1080, 1920, crf="23", maxrate="2100k", audio_br="160k", seed=777)
 
     # =========================================================================
-    # 3. ZIP PACKAGES: TIMECODED 55-FRAME MASTER ZIP + PART-4 10-FRAME ZIP
+    # 3. ZIP PACKAGES: 51-CLEAN-FRAME TIMECODED MASTER ZIP + 10-SONG-FRAME ZIP
     # =========================================================================
-    p4_zip = OUT_DIR / "mordor_svo_part4_10_frames.zip"
-    with zipfile.ZipFile(p4_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        for p in sorted(M4_DIR.glob("*.jpg")):
+    p5_zip = OUT_DIR / "mordor_svo_song_10_frames.zip"
+    with zipfile.ZipFile(p5_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for p in sorted(M5_DIR.glob("*.jpg")):
             zf.write(p, arcname=p.name)
 
-    all55_zip = OUT_DIR / "mordor_svo_master_55_frames.zip"
-    with zipfile.ZipFile(all55_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+    all51_zip = OUT_DIR / "mordor_svo_clean_51_frames.zip"
+    with zipfile.ZipFile(all51_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for idx, (s, st) in enumerate(zip(full_shots, starts), start=1):
             mm = int(st) // 60
             ss = int(st) % 60
@@ -504,10 +540,10 @@ def main():
             zf.write(s[0], arcname=arc)
 
     print(f"\nALL DONE in {time.time() - t_start:.1f}s!")
-    print(f"  16:9 55-SHOT 02:28 MP4: {full_mp4} ({full_mp4.stat().st_size / 1e6:.2f} MB)")
-    print(f"  9:16 20-SHOT REEL MP4:  {reel_mp4} ({reel_mp4.stat().st_size / 1e6:.2f} MB)")
-    print(f"  PART-4 10-ZIP:          {p4_zip} ({p4_zip.stat().st_size / 1e6:.2f} MB)")
-    print(f"  MASTER 55-TIMECODE ZIP: {all55_zip} ({all55_zip.stat().st_size / 1e6:.2f} MB)")
+    print(f"  16:9 CLEAN 51-SHOT MP4: {full_mp4} ({full_mp4.stat().st_size / 1e6:.2f} MB)")
+    print(f"  9:16 SONG REEL MP4:     {reel_mp4} ({reel_mp4.stat().st_size / 1e6:.2f} MB)")
+    print(f"  SONG 10-ZIP:            {p5_zip} ({p5_zip.stat().st_size / 1e6:.2f} MB)")
+    print(f"  CLEAN 51-TIMECODE ZIP:  {all51_zip} ({all51_zip.stat().st_size / 1e6:.2f} MB)")
 
 
 if __name__ == "__main__":
