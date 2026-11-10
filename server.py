@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Live Preview, Full Campaign Video Player, Gallery & Audio Dropzone for HORDE Studio."""
+"""Live Preview, Video Player, Gallery & Audio Dropzone for MORDOR × MODERN SVO Studio."""
 import html
 import json
 import os
@@ -10,31 +10,28 @@ from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parent
 HORDE_DIR = ROOT / "video_studio" / "horde_clip"
-B3_DIR = HORDE_DIR / "batch3_frames"
-B2_DIR = HORDE_DIR / "batch2_frames"
-B1_DIR = HORDE_DIR / "frames"
+MORDOR_DIR = HORDE_DIR / "mordor_svo_frames"
+MODERN_DIR = HORDE_DIR / "modern_frames"
 AUDIO_DIR = HORDE_DIR / "audio"
 OUTPUT_DIR = HORDE_DIR / "output"
 
 CAPTIONS = {
-    "s10_solntsepek_f1_aim.jpg": "Солнцепёк [Кадр 1/3] · ТОС-1А в «Контакт-1» с бревном и шипами наводится у берёз; орки в ватниках и шлемофонах рядом с тушёнкой и подстаканником",
-    "s11_solntsepek_f2_salvo1.jpg": "Солнцепёк [Кадр 2/3] · Сход первых термобарических ракет в снопе пламени и искр!",
-    "s12_solntsepek_f3_salvo_full.jpg": "Солнцепёк [Кадр 3/3] · Полный пакет уходит в ливень — огненные шары накрывают стены Белой Цитадели",
-    "s13_ural_f1_enter.jpg": "Мотоцикл «Урал» [Кадр 1/3] · Оливковый «Урал» с коляской, красным ковром, назгулом, ушанкой и балалайкой врывается в мраморную галерею дворца",
-    "s14_ural_f2_drift.jpg": "Мотоцикл «Урал» [Кадр 2/3] · Дрифт по мокрой брусчатке в веере брызг и искр!",
-    "s15_ural_f3_flyby.jpg": "Мотоцикл «Урал» [Кадр 3/3] · Пролёт в двух метрах от объектива с комьями грязи на линзе!",
-    "s17_victory_f1_banner.jpg": "Победа [Кадр 1/3] · Т-90 «Царь-Мангал» на парадной мраморной лестнице эльфов над грудой щитов + Ка-52 и чёрное знамя Мордора",
-    "s18_victory_f2_samovar_feast.jpg": "Застолье Орды [Кадр 2/3] · Ковёр, самовар с сапогом, банка огурцов, чёрный хлеб, тушёнка, подстаканник у Короля-чародея, гармонь, балалайка и медведь",
-    "s19_victory_f3_toast_anim.jpg": "Застолье Орды [Кадр 3/3] · Анимация тоста: Король-чародей поднимает подстаканник, гармонь рвёт меха, сапог взлетает на пару, медведь ревёт!",
-    "s01_buhanka_f1.jpg": "Буханка [Кадр 1/4] · УАЗ «Буханка» с мангалом и шипами заходит в грязевую воронку под «Геранями»",
-    "s02_buhanka_f2.jpg": "Буханка [Кадр 2/4] · Удар в чернозёмную лужу, Король-чародей с АК на синей изоленте, орк в тельняшке за ПКМ",
-    "s03_buhanka_f3.jpg": "Буханка [Кадр 3/4] · Выход из ямы в упор + трассеры с крыши",
-    "s04_buhanka_f4.jpg": "Буханка [Кадр 4/4] · Пролёт мимо камеры в грязи и выхлопе",
-    "s05_geran_f1_launch.jpg": "Герани [Кадр 1/3] · Старт «Герани» с «Урала» у берёз рядом с кипящим самоваром",
-    "s06_geran_f2_swarm.jpg": "Герани [Кадр 2/3] · Рой из 7 «Гераней» пикирует на Белую Цитадель",
-    "s07_geran_f3_strike.jpg": "Герани [Кадр 3/3] · Огненный гриб и ударная волна сносят шпиль и западный радар",
-    "s08_tank_f1_charge.jpg": "Царь-Мангал [Кадр 1/2] · Т-90 с боевым медведем в латах Мордора и Ка-52",
-    "s09_tank_f2_blast.jpg": "Царь-Мангал [Кадр 2/2] · Залп 125-мм в упор и прыжок бронированного медведя",
+    "mordor_01_warg_riders_desertcross_charge.jpg": "01 · Кавалерия Наездников на Варгах в кевларе «Мох» с триколором + багги Desertcross Назгула рвут «по полям» на Минас-Тирит",
+    "mordor_02_goblins_fiber_fpv_lancet_team.jpg": "02 · Гоблины Мории и Король-чародей в ВКПО 3.0 «Мох» запускают Х-крылый «Ланцет» и оптоволоконный FPV",
+    "mordor_03_armored_cave_troll_kontakt1_breach.jpg": "03 · 4-метровый Боевой Тролль Мордора в гигантском плитнике с триколором и «мангалом» на голове + Т-90М «Прорыв» проламывают Белые Врата",
+    "mordor_04_mumakil_oliphaunt_tsar_mangal.jpg": "04 · Боевой Олифант (Мумакил) в тепловой «Накидке» и огромном сварном «Царь-Мангале» с РЭБ, ПТУР и триколором идёт с варгами по полю",
+    "mordor_05_nazgul_fell_beast_ka52_airbase.jpg": "05 · Крылатая тварь Назгула в тактической сбруе «Мох» с триколором, урук-хаи и пара Ка-52М «Аллигатор»",
+    "mordor_06_geran_swarm_goblin_techs_night.jpg": "06 · Вечерний залп чёрных «Гераней-2» с пикапов с купольным РЭБ: орки, гоблин с планшетом и боевой пёс-варг",
+    "mordor_07_cqb_wargs_orcs_capture_elves.jpg": "07 · Зачистка Минас-Тирита: урук-хаи, гоблин и боевые псы-варги на поводках берут в плен эльфов в мультикаме",
+    "mordor_08_novaya_izengardovka_warg_svo.jpg": "08 · Знак «НОВАЯ ИЗЕНГАРДОВКА»: боевой варг в жилете «Мох», Король-чародей в плитнике, клыкастые орки и гоблин с шуруповёртом на плече!",
+    "mordor_09_tricolor_mordor_flag_bare_orcs.jpg": "09 · Победа над Минас-Тиритом: клыкастые урук-хаи, гоблин и Король-чародей (без балаклав!) поднимают Триколор РФ и знамя Ока Мордора под пролёт виверны и Ка-52М",
+    "mordor_10_throne_hall_orc_goblin_warg_pack.jpg": "10 · Привал всей мордорской братии в Тронном Зале: назгулы, орки с АК-12, гоблины с FPV и верные боевые псы-варги",
+    "modern_01_orc_storm_squad_vkpo_moss.jpg": "11 · Штурмовая четвёрка орков в ВКПО 3.0 «Мох», плитниках с напашниками, АК-12 с банками и рюкзаком РЭБ",
+    "modern_02_desertcross_buggy_enduro_po_polyam.jpg": "12 · Штурмовой багги Desertcross с РЭБ и кроссовые эндуро-мотоциклы орков летят через распутицу",
+    "modern_03_lancet_and_fiber_fpv_team.jpg": "13 · Расчёт «Ланцета» и оптоволоконного FPV-дрона с Королём-чародеем над долиной",
+    "modern_04_geran_black_swarm_night_pickup.jpg": "14 · Пуск матово-чёрных «Гераней-2» с пикапов в сумерках",
+    "modern_05_su34_umpk_glide_bombs_citadel.jpg": "15 · Су-34 сбрасывает ФАБы с УМПК по бастионам Белой Крепости под корректировку орков-разведчиков",
+    "modern_06_t90m_proryv_nakidka_breach.jpg": "16 · Т-90М «Прорыв» со штурмовиками орков давит натовский броневик в проломе ворот",
 }
 
 
@@ -76,23 +73,23 @@ class StudioHandler(SimpleHTTPRequestHandler):
             self.serve_index()
             return
         routes = {
-            "/video/full.mp4": (OUTPUT_DIR / "horde_full_campaign_18frames_vfx_1080p.mp4", "video/mp4", None),
-            "/download/horde_full_campaign_18frames_vfx_1080p.mp4": (OUTPUT_DIR / "horde_full_campaign_18frames_vfx_1080p.mp4", "video/mp4", "horde_full_campaign_18frames_vfx_1080p.mp4"),
-            "/download/horde_all_28_photos_pack.zip": (OUTPUT_DIR / "horde_all_28_photos_pack.zip", "application/zip", "horde_all_28_photos_pack.zip"),
-            "/download/horde_batch3_9_frames.zip": (OUTPUT_DIR / "horde_batch3_9_frames.zip", "application/zip", "horde_batch3_9_frames.zip"),
+            "/video/mordor_svo.mp4": (OUTPUT_DIR / "mordor_svo_victory_1080p.mp4", "video/mp4", None),
+            "/download/mordor_svo_victory_1080p.mp4": (OUTPUT_DIR / "mordor_svo_victory_1080p.mp4", "video/mp4", "mordor_svo_victory_1080p.mp4"),
+            "/download/mordor_svo_complete_16_frames.zip": (OUTPUT_DIR / "mordor_svo_complete_16_frames.zip", "application/zip", "mordor_svo_complete_16_frames.zip"),
+            "/download/mordor_svo_10_new_frames.zip": (OUTPUT_DIR / "mordor_svo_10_new_frames.zip", "application/zip", "mordor_svo_10_new_frames.zip"),
         }
         if path in routes:
             fpath, ctype, att = routes[path]
             if fpath.is_file():
                 self.serve_range_file(fpath, ctype, attachment=att)
                 return
-        if path.startswith("/b3/"):
-            fpath = B3_DIR / os.path.basename(path)
+        if path.startswith("/msvo/"):
+            fpath = MORDOR_DIR / os.path.basename(path)
             if fpath.is_file():
                 self.serve_range_file(fpath, "image/jpeg")
                 return
-        if path.startswith("/b2/"):
-            fpath = B2_DIR / os.path.basename(path)
+        if path.startswith("/mod/"):
+            fpath = MODERN_DIR / os.path.basename(path)
             if fpath.is_file():
                 self.serve_range_file(fpath, "image/jpeg")
                 return
@@ -132,33 +129,34 @@ class StudioHandler(SimpleHTTPRequestHandler):
         audio_status = (
             f"✅ Трек в студии: {', '.join(html.escape(a) for a in audio_files)}"
             if audio_files
-            else "⏳ При желании закиньте сюда MP3 «АЗБУКА - ПО ПОЛЯМ», чтобы наложить оригинальный вокал прямо поверх нашего видеоряда!"
+            else "⏳ Скиньте сюда MP3 «АЗБУКА - ПО ПОЛЯМ», чтобы свести полный клип прямо на вокал!"
         )
-        cards_b3 = []
-        for f in sorted(B3_DIR.glob("*.jpg")):
+        cards_m = []
+        for f in sorted(MORDOR_DIR.glob("*.jpg")):
             cap = html.escape(CAPTIONS.get(f.name, f.name))
-            cards_b3.append(f"""
+            cards_m.append(f"""
             <div class="card">
-              <a href="/b3/{html.escape(f.name)}" target="_blank"><img src="/b3/{html.escape(f.name)}" loading="lazy" alt="{cap}"></a>
-              <div class="meta"><span>{cap}</span><a class="dl-mini" href="/b3/{html.escape(f.name)}" download="{html.escape(f.name)}">⬇ JPG</a></div>
+              <a href="/msvo/{html.escape(f.name)}" target="_blank"><img src="/msvo/{html.escape(f.name)}" loading="lazy" alt="{cap}"></a>
+              <div class="meta"><span>{cap}</span><a class="dl-mini" href="/msvo/{html.escape(f.name)}" download="{html.escape(f.name)}">⬇ JPG</a></div>
             </div>""")
-        cards_b2 = []
-        for f in sorted(B2_DIR.glob("*.jpg")):
-            cap = html.escape(CAPTIONS.get(f.name, f.name))
-            cards_b2.append(f"""
-            <div class="card">
-              <a href="/b2/{html.escape(f.name)}" target="_blank"><img src="/b2/{html.escape(f.name)}" loading="lazy" alt="{cap}"></a>
-              <div class="meta"><span>{cap}</span><a class="dl-mini" href="/b2/{html.escape(f.name)}" download="{html.escape(f.name)}">⬇ JPG</a></div>
-            </div>""")
+        cards_o = []
+        for f in sorted(MODERN_DIR.glob("*.jpg")):
+            if f.name in CAPTIONS:
+                cap = html.escape(CAPTIONS[f.name])
+                cards_o.append(f"""
+                <div class="card">
+                  <a href="/mod/{html.escape(f.name)}" target="_blank"><img src="/mod/{html.escape(f.name)}" loading="lazy" alt="{cap}"></a>
+                  <div class="meta"><span>{cap}</span><a class="dl-mini" href="/mod/{html.escape(f.name)}" download="{html.escape(f.name)}">⬇ JPG</a></div>
+                </div>""")
 
         page = f"""<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ОРДА · ПОЛНЫЙ ПРОГОН КАМПАНИИ (18 кадров · 6 сцен · 1080p VFX)</title>
+<title>МОРДОР СВО · НОВАЯ ИЗЕНГАРДОВКА (Варги, Гоблины, Орки, Тролль, Олифант, Виверна)</title>
 <style>
-  :root {{ --bg:#10120f; --panel:#191d16; --border:#2f3729; --text:#ece9e0; --muted:#9da491; --accent:#95b557; --fire:#e07c38; }}
+  :root {{ --bg:#0e100d; --panel:#171b14; --border:#2d3627; --text:#eceae2; --muted:#9aa38e; --accent:#8fb352; --fire:#df7832; }}
   * {{ box-sizing:border-box; }}
   body {{ margin:0; padding:22px; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,sans-serif; }}
   .wrap {{ max-width:1380px; margin:0 auto; }}
@@ -171,7 +169,7 @@ class StudioHandler(SimpleHTTPRequestHandler):
   .btn.fire {{ background:var(--fire); color:#140b04; }}
   .hero {{ margin:20px 0; background:var(--panel); border:1px solid var(--border); border-radius:10px; overflow:hidden; }}
   video {{ width:100%; display:block; max-height:74vh; background:#000; }}
-  .hero-bar {{ padding:12px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; font-size:13px; color:var(--muted); }}
+  .hero-bar {{ padding:12px 16px; font-size:13px; color:var(--muted); }}
   .dropzone {{ margin:18px 0 24px; padding:18px; background:var(--panel); border:2px dashed var(--accent); border-radius:10px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px; }}
   .grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(560px,1fr)); gap:16px; }}
   @media (max-width:680px) {{ .grid {{ grid-template-columns:1fr; }} }}
@@ -185,21 +183,19 @@ class StudioHandler(SimpleHTTPRequestHandler):
 <div class="wrap">
   <header>
     <div>
-      <h1>🔥 ОРДА · ПОЛНЫЙ БОЕВОЙ ФИЛЬМ (32.2 сек · 18 связанных стоп-моушен кадров · 1080p VFX)</h1>
-      <div class="sub">Буханка → Герани → ТОС «Солнцепёк» → Т-90 «Царь-Мангал» + Медведь → Урал с ковром → Самовар, огурцы, гармонь и балалайка!</div>
+      <h1>🔥 МОРДОР × СВО · «НОВАЯ ИЗЕНГАРДОВКА» (1080p @ 30fps · 37.6 сек)</h1>
+      <div class="sub">ВКПО 3.0 «Мох» · Плитники с напашниками · Наездники на Варгах · Гоблины с оптоволокном и «Ланцетом» · Боевой Тролль · Олифант в «Царь-Мангале» · Виверна и Ка-52М</div>
     </div>
     <div class="btns">
-      <a class="btn fire" href="/download/horde_full_campaign_18frames_vfx_1080p.mp4">🎬 Скачать полный фильм MP4 (16.5 МБ)</a>
-      <a class="btn" href="/download/horde_all_28_photos_pack.zip">📦 Скачать ВСЕ 28 фото (ZIP · 7.5 МБ)</a>
-      <a class="btn" href="/download/horde_batch3_9_frames.zip">📦 Новые 9 фото Партии №3 (2.6 МБ)</a>
+      <a class="btn fire" href="/download/mordor_svo_victory_1080p.mp4">🎬 Скачать видео 1080p MP4 (19.1 МБ)</a>
+      <a class="btn" href="/download/mordor_svo_complete_16_frames.zip">📦 Скачать ВСЕ 16 кадров (ZIP · 4.3 МБ)</a>
+      <a class="btn" href="/download/mordor_svo_10_new_frames.zip">📦 Новые 10 кадров с Варгами/Троллем (2.6 МБ)</a>
     </div>
   </header>
 
   <div class="hero">
-    <video controls autoplay loop playsinline src="/video/full.mp4"></video>
-    <div class="hero-bar">
-      <span>▶ Включите звук: 134 BPM фонк + «мопед» Герани + залп пакета «Солнцепёка» + оппозит «Урала» + в финале народный фонк с гармонью, балалайкой и рёвом медведя!</span>
-    </div>
+    <video controls autoplay loop playsinline src="/video/mordor_svo.mp4"></video>
+    <div class="hero-bar">▶ Включите звук: 134 BPM боевой фонк + рык варгов + «Герани» + прилёт УМПК + пулемёт Боевого Тролля + Триколор и Око Мордора над Новой Изенгардовкой!</div>
   </div>
 
   <div class="dropzone">
@@ -209,15 +205,15 @@ class StudioHandler(SimpleHTTPRequestHandler):
     </div>
     <div>
       <input type="file" id="audioInput" accept=".mp3,.wav,.m4a,.ogg,audio/*" style="display:none">
-      <button class="btn" onclick="document.getElementById('audioInput').click()">⬆ Загрузить MP3 в студию</button>
+      <button class="btn" onclick="document.getElementById('audioInput').click()">⬆ Закинуть MP3 в студию</button>
     </div>
   </div>
 
-  <h2>🆕 Партия №3 — Солнцепёк, Мотоцикл «Урал» с ковром и Победное Застолье с Самоваром (9 кадров)</h2>
-  <div class="grid">{''.join(cards_b3)}</div>
+  <h2>🐺 Вся Мордорская Братия в обвесе СВО (Варги, Гоблины, Тролль, Олифант, Виверна, Назгулы — 10 кадров)</h2>
+  <div class="grid">{''.join(cards_m)}</div>
 
-  <h2>⚡ Партия №2 — Буханка, Рой «Гераней» и Т-90 «Царь-Мангал» с Медведем (9 кадров)</h2>
-  <div class="grid">{''.join(cards_b2)}</div>
+  <h2>⚡ Штурмовые группы Орков, Су-34 УМПК, Багги и Т-90М «Прорыв» (6 кадров)</h2>
+  <div class="grid">{''.join(cards_o)}</div>
 </div>
 <script>
 const input = document.getElementById('audioInput');
@@ -244,5 +240,5 @@ input.addEventListener('change', async e => {{
 if __name__ == "__main__":
     os.chdir(ROOT)
     srv = HTTPServer(("0.0.0.0", 8000), StudioHandler)
-    print("Serving Horde Full Campaign Studio on http://0.0.0.0:8000", flush=True)
+    print("Serving Mordor SVO Studio on http://0.0.0.0:8000", flush=True)
     srv.serve_forever()
