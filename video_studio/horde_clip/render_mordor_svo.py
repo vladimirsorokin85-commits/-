@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 """
-MORDOR BROTHERHOOD × MODERN SVO CAMPAIGN — 1920x1080 @ 30fps VFX Video Renderer
-100% Modern Russian VKPO 3.0 'Moss' tactical kit + 100% Authentic Mordor Roster:
-  Orcs, Uruk-hai, Moria Goblins, Ringwraiths/Witch-king, Warg Hounds & Warg-Riders,
-  Armored Cave Troll (Olog-hai) in Kontakt-1 & Mangal, War Oliphaunt (Mumakil) in Tsar-Mangal,
-  Winged Nazgul Fell Beast + Ka-52M Alligators, Lancet, Fiber-Optic FPV, Geran-2, Su-34 UMPK,
-  T-90M Proryv, Road Sign 'НОВАЯ ИЗЕНГАРДОВКА', and Tricolor + Eye of Mordor Victory!
+MORDOR BROTHERHOOD × MODERN SVO — FULL 24-SHOT CAMPAIGN MOVIE (01:04.5 @ 1920x1080 30fps, 134 BPM)
+5-Act Dramatic Structure from Sauron's Command Bunker & Grond/Troll Siege to the Novaya Izengardovka Victory Parade!
 """
 import math
 import subprocess
@@ -20,8 +16,9 @@ from PIL import Image
 from scipy.ndimage import gaussian_filter
 
 ROOT = Path(__file__).resolve().parent
-MORDOR_DIR = ROOT / "mordor_svo_frames"
-MODERN_DIR = ROOT / "modern_frames"
+M1_DIR = ROOT / "mordor_svo_frames"
+M2_DIR = ROOT / "mordor_svo_part2"
+MOD_DIR = ROOT / "modern_frames"
 OUT_DIR = ROOT / "output"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -154,22 +151,21 @@ class FastCombatVFX:
         return np.clip(out, 0, 255).astype(np.uint8)
 
 
-def synthesize_mordor_svo_audio(wav_path: Path, total_dur: float, events: list[tuple[float, str]]):
+def synthesize_audio(wav_path: Path, total_dur: float, events: list[tuple[float, str]]):
     sr = 44100
     n = int(total_dur * sr)
-    rng = np.random.default_rng(309)
+    rng = np.random.default_rng(404)
     mix_l = np.zeros(n, dtype=np.float32)
     mix_r = np.zeros(n, dtype=np.float32)
 
-    # Subtle wind & rain atmosphere
     w = rng.standard_normal(n).astype(np.float32)
     r_lp = np.convolve(w, np.ones(9, dtype=np.float32) / 9.0, mode="same")
-    r_bed = 0.032 * r_lp + 0.018 * (w - r_lp)
+    r_bed = 0.030 * r_lp + 0.016 * (w - r_lp)
     mix_l += r_bed
     mix_r += np.roll(r_bed, 29)
 
-    # 134 BPM Aggressive Dark War-Phonk Beat ("По полям" 134 BPM cadence)
-    riff = [293.66, 293.66, 349.23, 293.66, 440.00, 392.00, 349.23, 261.63]
+    riff_a = [293.66, 293.66, 349.23, 293.66, 440.00, 392.00, 349.23, 261.63]
+    riff_b = [293.66, 349.23, 440.00, 523.25, 466.16, 440.00, 392.00, 349.23]
     n_eighths = int(total_dur / (BEAT * 0.5))
     for b in range(n_eighths):
         t0 = b * (BEAT * 0.5)
@@ -177,6 +173,9 @@ def synthesize_mordor_svo_audio(wav_path: Path, total_dur: float, events: list[t
         if i0 >= n:
             break
         step = b % 8
+        bar_group = (b // 32) % 2
+        riff = riff_a if bar_group == 0 else riff_b
+
         if step in (0, 3, 4, 6):
             kl = min(int(0.36 * sr), n - i0)
             kt = np.arange(kl, dtype=np.float32) / sr
@@ -190,7 +189,6 @@ def synthesize_mordor_svo_audio(wav_path: Path, total_dur: float, events: list[t
             sn = rng.standard_normal(sl).astype(np.float32) * np.exp(-st * 22.0) * 0.28 + np.sin(2 * np.pi * 190.0 * st) * np.exp(-st * 30.0) * 0.20
             mix_l[i0:i0 + sl] += sn
             mix_r[i0:i0 + sl] += sn
-        # Distorted War-Horn / Phonk Lead
         cl = min(int(0.20 * sr), n - i0)
         ct = np.arange(cl, dtype=np.float32) / sr
         f1 = riff[step] * 2.0
@@ -215,6 +213,16 @@ def synthesize_mordor_svo_audio(wav_path: Path, total_dur: float, events: list[t
             bz = (np.sin(ph) + 0.6 * np.sin(2 * ph) + 0.4 * np.sin(3 * ph)) * 0.13
             mix_l[i0:i0 + bl] += bz * 1.1
             mix_r[i0:i0 + bl] += bz * 0.9
+        elif ev_type == "salvo":
+            for r_i in range(4):
+                ri0 = i0 + int(r_i * 0.25 * sr)
+                if ri0 >= n:
+                    break
+                rl = min(int(1.1 * sr), n - ri0)
+                rt = np.arange(rl, dtype=np.float32) / sr
+                wh = np.tanh(rng.standard_normal(rl).astype(np.float32) * 2.1) * np.exp(-rt * 2.5) * 0.35
+                mix_l[ri0:ri0 + rl] += wh
+                mix_r[ri0:ri0 + rl] += np.roll(wh, 30)
         elif ev_type == "heavy_mg":
             ml = min(int(1.1 * sr), n - i0)
             mt = np.arange(ml, dtype=np.float32) / sr
@@ -240,49 +248,62 @@ def synthesize_mordor_svo_audio(wav_path: Path, total_dur: float, events: list[t
 
 def main():
     t0 = time.time()
-    # 14 Pure-Mordor × Modern SVO Storyboard Sequence (6 beats = 2.686s per shot -> 84 beats = 37.61s @ 30fps!)
     shots = [
-        # (path, zoom0, zoom1, px0, px1, py0, py1, shake, rain, smoke, mud, fire, sfx)
-        (MODERN_DIR / "modern_01_orc_storm_squad_vkpo_moss.jpg",       1.02, 1.10, -14,  14,   4,  -6, 3.5, 0.65, 0.35, 0.35, 0.05, None),
-        (MORDOR_DIR / "mordor_01_warg_riders_desertcross_charge.jpg",  1.04, 1.12, -24,  24,   4,  -4, 6.5, 0.75, 0.55, 0.95, 0.25, "warg_growl"),
-        (MODERN_DIR / "modern_02_desertcross_buggy_enduro_po_polyam.jpg", 1.03, 1.11, 20, -20,  0,  -6, 6.0, 0.75, 0.50, 0.90, 0.15, None),
-        (MORDOR_DIR / "mordor_02_goblins_fiber_fpv_lancet_team.jpg",   1.02, 1.09, -12,  16,   6,  -8, 3.0, 0.55, 0.35, 0.15, 0.05, None),
-        (MORDOR_DIR / "mordor_06_geran_swarm_goblin_techs_night.jpg",  1.03, 1.10, -10,  18,   8, -12, 7.5, 0.80, 0.70, 0.20, 0.85, "geran_buzz"),
-        (MORDOR_DIR / "mordor_05_nazgul_fell_beast_ka52_airbase.jpg",  1.02, 1.09,  16, -16,   4,  -8, 4.0, 0.60, 0.65, 0.15, 0.20, "warg_growl"),
-        (MODERN_DIR / "modern_05_su34_umpk_glide_bombs_citadel.jpg",   1.06, 1.02,  -8,  14,  -6,   4, 12.0,0.55, 0.85, 0.40, 0.65, "explosion"),
-        (MORDOR_DIR / "mordor_04_mumakil_oliphaunt_tsar_mangal.jpg",   1.02, 1.10, -20,  22,   6,  -8, 5.5, 0.70, 0.60, 0.75, 0.20, None),
-        (MODERN_DIR / "modern_06_t90m_proryv_nakidka_breach.jpg",      1.03, 1.11, -16,  18,   4,  -6, 7.0, 0.50, 0.80, 0.65, 0.45, "explosion"),
-        (MORDOR_DIR / "mordor_03_armored_cave_troll_kontakt1_breach.jpg", 1.04, 1.13, 0,  0,  12, -12, 8.5, 0.45, 0.75, 0.60, 0.50, "heavy_mg"),
-        (MORDOR_DIR / "mordor_07_cqb_wargs_orcs_capture_elves.jpg",    1.02, 1.09, -14,  14,   6,  -6, 3.5, 0.55, 0.45, 0.15, 0.10, "warg_growl"),
-        (MORDOR_DIR / "mordor_08_novaya_izengardovka_warg_svo.jpg",    1.02, 1.10, -10,  10,   6,  -8, 2.5, 0.50, 0.45, 0.20, 0.10, None),
-        (MORDOR_DIR / "mordor_09_tricolor_mordor_flag_bare_orcs.jpg",  1.02, 1.11,   0,   0,  10, -14, 3.0, 0.45, 0.55, 0.05, 0.35, "explosion"),
-        (MORDOR_DIR / "mordor_10_throne_hall_orc_goblin_warg_pack.jpg",1.08, 1.01,  12, -12,  -4,   4, 2.0, 0.00, 0.30, 0.00, 0.20, "warg_growl"),
+        # ACT I: SAURON KSP, SARUMAN EW/PANTSIR & DRONE OPS (1..5)
+        (M2_DIR / "mordor_11_sauron_command_bunker_streams.jpg",          1.02, 1.11,   0,   0,   8, -10, 2.0, 0.00, 0.20, 0.00, 0.15, None),
+        (M2_DIR / "mordor_17_saruman_tactical_pantsir_air_defense.jpg",   1.02, 1.10, -14,  14,   6,  -8, 5.5, 0.55, 0.55, 0.20, 0.65, "salvo"),
+        (M1_DIR / "mordor_02_goblins_fiber_fpv_lancet_team.jpg",          1.02, 1.09, -12,  16,   6,  -8, 3.0, 0.55, 0.35, 0.15, 0.05, None),
+        (M1_DIR / "mordor_06_geran_swarm_goblin_techs_night.jpg",         1.03, 1.10, -10,  18,   8, -12, 7.5, 0.80, 0.70, 0.20, 0.85, "geran_buzz"),
+        (M1_DIR / "mordor_05_nazgul_fell_beast_ka52_airbase.jpg",         1.02, 1.09,  16, -16,   4,  -8, 4.0, 0.60, 0.65, 0.15, 0.20, "warg_growl"),
+
+        # ACT II: FELL BEAST + SU-34 UMPK GLIDE BOMBS & SOLNTSEPEK (6..8)
+        (M2_DIR / "mordor_15_fell_beast_umpk_fab_drop.jpg",               1.03, 1.12, -18,  20,  -8,  12, 5.5, 0.45, 0.65, 0.00, 0.45, "geran_buzz"),
+        (MOD_DIR / "modern_05_su34_umpk_glide_bombs_citadel.jpg",         1.07, 1.02,  -8,  14,  -6,   4, 13.0,0.55, 0.85, 0.40, 0.65, "explosion"),
+        (M2_DIR / "mordor_13_tos1a_solntsepek_goblin_uruk_svo.jpg",       1.03, 1.11, -14,  18,   6, -10, 11.0,0.75, 0.85, 0.55, 0.95, "salvo"),
+
+        # ACT III: 'PO POLYAM' — URUK ENDUROS, WARG CAVALRY, BUGGIES & OLIPHAUNT (9..13)
+        (MOD_DIR / "modern_01_orc_storm_squad_vkpo_moss.jpg",             1.02, 1.10, -14,  14,   4,  -6, 3.5, 0.65, 0.35, 0.35, 0.05, None),
+        (M2_DIR / "mordor_14_uruk_hai_white_hand_enduro_assault.jpg",     1.03, 1.12,  18, -18,   4,  -6, 6.5, 0.70, 0.45, 0.90, 0.15, "warg_growl"),
+        (M1_DIR / "mordor_01_warg_riders_desertcross_charge.jpg",         1.04, 1.12, -24,  24,   4,  -4, 6.5, 0.75, 0.55, 0.95, 0.25, "warg_growl"),
+        (MOD_DIR / "modern_02_desertcross_buggy_enduro_po_polyam.jpg",    1.03, 1.11,  20, -20,   0,  -6, 6.0, 0.75, 0.50, 0.90, 0.15, None),
+        (M1_DIR / "mordor_04_mumakil_oliphaunt_tsar_mangal.jpg",          1.02, 1.10, -20,  22,   6,  -8, 5.5, 0.70, 0.60, 0.75, 0.20, "explosion"),
+
+        # ACT IV: GROND, T-90M, CAVE TROLL, GOBLIN UGV & WARG PURSUIT (14..19)
+        (M2_DIR / "mordor_12_grond_jet_battering_ram_reb.jpg",            1.02, 1.11, -16,  16,   8,  -8, 7.0, 0.65, 0.75, 0.75, 0.30, "warg_growl"),
+        (MOD_DIR / "modern_06_t90m_proryv_nakidka_breach.jpg",            1.03, 1.11, -16,  18,   4,  -6, 8.0, 0.50, 0.80, 0.65, 0.45, "explosion"),
+        (M1_DIR / "mordor_03_armored_cave_troll_kontakt1_breach.jpg",     1.04, 1.13,   0,   0,  12, -12, 8.5, 0.45, 0.75, 0.60, 0.50, "heavy_mg"),
+        (M2_DIR / "mordor_16_goblin_sappers_ground_robot_kurier.jpg",     1.02, 1.10, -12,  14,   6,  -6, 4.0, 0.45, 0.55, 0.25, 0.25, "heavy_mg"),
+        (M2_DIR / "mordor_18_warg_cavalry_pursuit_fleeing_elves.jpg",     1.03, 1.12, -20,  20,   4,  -6, 6.5, 0.65, 0.65, 0.85, 0.35, "warg_growl"),
+        (M1_DIR / "mordor_07_cqb_wargs_orcs_capture_elves.jpg",           1.02, 1.09, -14,  14,   6,  -6, 3.5, 0.55, 0.45, 0.15, 0.10, None),
+
+        # ACT V: NOVAYA IZENGARDOVKA, TRICOLOR & VICTORY PARADE (20..24)
+        (M1_DIR / "mordor_08_novaya_izengardovka_warg_svo.jpg",           1.02, 1.10, -10,  10,   6,  -8, 2.5, 0.50, 0.45, 0.20, 0.10, None),
+        (M2_DIR / "mordor_19_buhanka_svo_goblin_checkpoint_izengardovka.jpg", 1.02, 1.09, 14,-14,  4,  -6, 2.5, 0.50, 0.35, 0.20, 0.05, None),
+        (M1_DIR / "mordor_09_tricolor_mordor_flag_bare_orcs.jpg",         1.02, 1.11,   0,   0,  10, -14, 3.0, 0.40, 0.55, 0.05, 0.35, "explosion"),
+        (M2_DIR / "mordor_20_grand_parade_victory_novaya_izengardovka.jpg", 1.02, 1.11,  0,   0,  10, -10, 3.0, 0.30, 0.45, 0.10, 0.35, "warg_growl"),
+        (M1_DIR / "mordor_10_throne_hall_orc_goblin_warg_pack.jpg",       1.08, 1.01,  12, -12,  -4,   4, 2.0, 0.00, 0.30, 0.00, 0.20, None),
     ]
     imgs = [load_img(s[0]) for s in shots]
-    shot_dur = 6 * BEAT  # 2.6866s per shot
-    total_dur = len(shots) * shot_dur  # 37.61s (1128 frames)
+    shot_dur = 6 * BEAT  # 2.6866s per shot -> 24 * 2.6866 = 64.48s!
+    total_dur = len(shots) * shot_dur
     total_frames = int(round(total_dur * FPS))
 
-    sfx_events = []
-    for idx, s in enumerate(shots):
-        if s[12]:
-            sfx_events.append((idx * shot_dur + 0.08, s[12]))
+    sfx_events = [(idx * shot_dur + 0.08, s[12]) for idx, s in enumerate(shots) if s[12]]
+    wav_path = Path("/tmp/mordor_svo_24.wav")
+    synthesize_audio(wav_path, total_dur, sfx_events)
 
-    wav_path = Path("/tmp/mordor_svo_audio.wav")
-    synthesize_mordor_svo_audio(wav_path, total_dur, sfx_events)
-
-    out_mp4 = OUT_DIR / "mordor_svo_victory_1080p.mp4"
+    out_mp4 = OUT_DIR / "mordor_svo_full_24shots_1080p.mp4"
     cmd = [
         "/usr/local/bin/ffmpeg", "-y",
         "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
         "-i", str(wav_path),
-        "-c:v", "libx264", "-preset", "medium", "-crf", "21",
-        "-maxrate", "3800k", "-bufsize", "7600k", "-pix_fmt", "yuv420p",
+        "-c:v", "libx264", "-preset", "medium", "-crf", "22",
+        "-maxrate", "2900k", "-bufsize", "5800k", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart",
         "-shortest", str(out_mp4),
     ]
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-    vfx = FastCombatVFX(seed=777)
+    vfx = FastCombatVFX(seed=999)
 
     for f in range(total_frames):
         t = f / FPS
@@ -290,7 +311,6 @@ def main():
         u = (t - idx * shot_dur) / shot_dur
         _, z0, z1, px0, px1, py0, py1, shk, rn, sm, md, fr, sfx = shots[idx]
 
-        # Smooth ease-out camera + beat punch on 134 BPM quarter notes
         ue = 1.0 - (1.0 - u) ** 1.6
         zoom = z0 + (z1 - z0) * ue
         px = px0 + (px1 - px0) * ue
@@ -298,12 +318,12 @@ def main():
 
         beat_phase = (t % BEAT) / BEAT
         beat_zoom = 1.0 + 0.008 * math.exp(-beat_phase * 7.0)
-        flash = (1.0 - u / 0.14) * 0.75 if (sfx in ("explosion", "heavy_mg") and u < 0.14) else 0.0
-        cur_shk = shk * (1.8 * math.exp(-u * 3.0) + 0.55) if sfx == "explosion" else shk
+        flash = (1.0 - u / 0.14) * 0.75 if (sfx in ("explosion", "salvo", "heavy_mg") and u < 0.14) else 0.0
+        cur_shk = shk * (1.8 * math.exp(-u * 3.0) + 0.55) if sfx in ("explosion", "salvo") else shk
 
         rgb = vfx.render(imgs[idx], f, zoom * beat_zoom, px, py, cur_shk, rn, sm, md, fr, flash=flash)
         proc.stdin.write(rgb.tobytes())
-        if (f + 1) % 280 == 0 or (f + 1) == total_frames:
+        if (f + 1) % 360 == 0 or (f + 1) == total_frames:
             print(f"  Rendered {f + 1}/{total_frames} frames ({time.time() - t0:.1f}s)...", flush=True)
 
     proc.stdin.close()
@@ -312,14 +332,14 @@ def main():
     if rc != 0:
         raise RuntimeError(f"FFmpeg failed ({rc}):\n{stderr_out[-1200:]}")
 
-    # Pack clean Pure-Mordor SVO ZIPs (excluding modern_09 masked humans & modern_10 bear!)
-    m10_zip = OUT_DIR / "mordor_svo_10_new_frames.zip"
-    with zipfile.ZipFile(m10_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        for p in sorted(MORDOR_DIR.glob("*.jpg")):
+    # Pack Part-2 10-frame ZIP & Complete 26-frame Master Mordor-SVO ZIP
+    p2_zip = OUT_DIR / "mordor_svo_part2_10_frames.zip"
+    with zipfile.ZipFile(p2_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for p in sorted(M2_DIR.glob("*.jpg")):
             zf.write(p, arcname=p.name)
 
-    m16_zip = OUT_DIR / "mordor_svo_complete_16_frames.zip"
-    pure_modern = [
+    all26_zip = OUT_DIR / "mordor_svo_master_26_frames.zip"
+    pure_mod = [
         "modern_01_orc_storm_squad_vkpo_moss.jpg",
         "modern_02_desertcross_buggy_enduro_po_polyam.jpg",
         "modern_03_lancet_and_fiber_fpv_team.jpg",
@@ -327,18 +347,20 @@ def main():
         "modern_05_su34_umpk_glide_bombs_citadel.jpg",
         "modern_06_t90m_proryv_nakidka_breach.jpg",
     ]
-    with zipfile.ZipFile(m16_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        for p in sorted(MORDOR_DIR.glob("*.jpg")):
-            zf.write(p, arcname=f"01_mordor_brotherhood/{p.name}")
-        for name in pure_modern:
-            p = MODERN_DIR / name
+    with zipfile.ZipFile(all26_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for p in sorted(M1_DIR.glob("*.jpg")):
+            zf.write(p, arcname=f"part1_mordor_svo/{p.name}")
+        for p in sorted(M2_DIR.glob("*.jpg")):
+            zf.write(p, arcname=f"part2_sauron_grond_parade/{p.name}")
+        for name in pure_mod:
+            p = MOD_DIR / name
             if p.is_file():
-                zf.write(p, arcname=f"02_orc_storm_units/{name}")
+                zf.write(p, arcname=f"part0_storm_units/{name}")
 
     print(f"DONE in {time.time() - t0:.1f}s!")
-    print(f"  VIDEO:  {out_mp4} ({out_mp4.stat().st_size / 1e6:.2f} MB)")
-    print(f"  10-ZIP: {m10_zip} ({m10_zip.stat().st_size / 1e6:.2f} MB)")
-    print(f"  16-ZIP: {m16_zip} ({m16_zip.stat().st_size / 1e6:.2f} MB)")
+    print(f"  FULL 24-SHOT MP4: {out_mp4} ({out_mp4.stat().st_size / 1e6:.2f} MB)")
+    print(f"  PART-2 10-ZIP:    {p2_zip} ({p2_zip.stat().st_size / 1e6:.2f} MB)")
+    print(f"  MASTER 26-ZIP:    {all26_zip} ({all26_zip.stat().st_size / 1e6:.2f} MB)")
 
 
 if __name__ == "__main__":
