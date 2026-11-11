@@ -1,0 +1,367 @@
+{
+  "generated": "2026-11-11 12:36:27",
+  "version": "2.0",
+  "stage": "all",
+  "stats": {
+    "positions": 20,
+    "products": 43,
+    "html": 81,
+    "cards": 80,
+    "folders": 20,
+    "hero": 1,
+    "png": 81,
+    "gallery_refs": 162,
+    "positions_list": [
+      {
+        "order": 1,
+        "folder": "01_Муха-К-8",
+        "name": "Муха К-8",
+        "catalog": "",
+        "specs": 0,
+        "placeholder": true
+      },
+      {
+        "order": 2,
+        "folder": "02_ФПВ-7-КОМПАКТ",
+        "name": "ФПВ-7 КОМПАКТ",
+        "catalog": "kw-01",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 3,
+        "folder": "03_К-8М",
+        "name": "К-8М",
+        "catalog": "kw-05",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 4,
+        "folder": "04_К-12М",
+        "name": "К-12М",
+        "catalog": "kw-06",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 5,
+        "folder": "05_К-12М-Багажный-бокс",
+        "name": "К-12М Багажный бокс",
+        "catalog": "kw-02",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 6,
+        "folder": "06_К-15М",
+        "name": "К-15М",
+        "catalog": "kw-07",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 7,
+        "folder": "07_К-15М-ВИП",
+        "name": "К-15М ВИП",
+        "catalog": "kw-03",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 8,
+        "folder": "08_Изделие-135-Багажный-бокс",
+        "name": "Изделие 135 Багажный бокс",
+        "catalog": "",
+        "specs": 0,
+        "placeholder": true
+      },
+      {
+        "order": 9,
+        "folder": "09_Штора-К-12-700",
+        "name": "Штора К-12/700",
+        "catalog": "kw-15",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 10,
+        "folder": "10_Штора-М-К-8-600",
+        "name": "Штора-М, К-8/600",
+        "catalog": "kw-16",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 11,
+        "folder": "11_Поле-31",
+        "name": "Поле-31",
+        "catalog": "kw-18",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 12,
+        "folder": "12_Ребус-4",
+        "name": "Ребус-4",
+        "catalog": "kw-17",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 13,
+        "folder": "13_ТП-4-28А",
+        "name": "ТП 4-28А",
+        "catalog": "kw-09",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 14,
+        "folder": "14_ТП-4-28Б",
+        "name": "ТП 4-28Б",
+        "catalog": "kw-10",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 15,
+        "folder": "15_ТП-4-50А",
+        "name": "ТП 4-50А",
+        "catalog": "kw-11",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 16,
+        "folder": "16_ТП-4-50Б",
+        "name": "ТП 4-50Б",
+        "catalog": "kw-12",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 17,
+        "folder": "17_ТП-7-100",
+        "name": "ТП 7-100",
+        "catalog": "kw-13",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 18,
+        "folder": "18_ТП-8-100",
+        "name": "ТП 8-100",
+        "catalog": "kw-14",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 19,
+        "folder": "19_Сигнал-М2",
+        "name": "Сигнал-М2",
+        "catalog": "kw-19",
+        "specs": 8,
+        "placeholder": false
+      },
+      {
+        "order": 20,
+        "folder": "20_РЭБ-тестер",
+        "name": "РЭБ-тестер",
+        "catalog": "kw-20",
+        "specs": 7,
+        "placeholder": false
+      }
+    ]
+  },
+  "summary": {
+    "blockers": 0,
+    "warnings": 0,
+    "infos": 3
+  },
+  "findings": [
+    {
+      "code": "И",
+      "subject": "01 Муха К-8",
+      "msg": "заглушка без ТТХ — допустимо (§9): данные запрошены у «Ховрино»",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\01_ДАННЫЕ\\positions.json",
+      "quote": ""
+    },
+    {
+      "code": "И",
+      "subject": "08 Изделие 135 Багажный бокс",
+      "msg": "заглушка без ТТХ — допустимо (§9): данные запрошены у «Ховрино»",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\01_ДАННЫЕ\\positions.json",
+      "quote": ""
+    },
+    {
+      "code": "И",
+      "subject": "checklist",
+      "msg": "renderer WARN overflow:hidden по карточкам — визуально проверено, обрезки значимого текста нет",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\05_ГОТОВОЕ\\ЧЕК_ЛИСТ_ФАЙЛОВ.md",
+      "quote": ""
+    }
+  ],
+  "positions": [
+    {
+      "order": 1,
+      "folder": "01_Муха-К-8",
+      "name": "Муха К-8",
+      "catalog": "",
+      "specs": 0,
+      "placeholder": true
+    },
+    {
+      "order": 2,
+      "folder": "02_ФПВ-7-КОМПАКТ",
+      "name": "ФПВ-7 КОМПАКТ",
+      "catalog": "kw-01",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 3,
+      "folder": "03_К-8М",
+      "name": "К-8М",
+      "catalog": "kw-05",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 4,
+      "folder": "04_К-12М",
+      "name": "К-12М",
+      "catalog": "kw-06",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 5,
+      "folder": "05_К-12М-Багажный-бокс",
+      "name": "К-12М Багажный бокс",
+      "catalog": "kw-02",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 6,
+      "folder": "06_К-15М",
+      "name": "К-15М",
+      "catalog": "kw-07",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 7,
+      "folder": "07_К-15М-ВИП",
+      "name": "К-15М ВИП",
+      "catalog": "kw-03",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 8,
+      "folder": "08_Изделие-135-Багажный-бокс",
+      "name": "Изделие 135 Багажный бокс",
+      "catalog": "",
+      "specs": 0,
+      "placeholder": true
+    },
+    {
+      "order": 9,
+      "folder": "09_Штора-К-12-700",
+      "name": "Штора К-12/700",
+      "catalog": "kw-15",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 10,
+      "folder": "10_Штора-М-К-8-600",
+      "name": "Штора-М, К-8/600",
+      "catalog": "kw-16",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 11,
+      "folder": "11_Поле-31",
+      "name": "Поле-31",
+      "catalog": "kw-18",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 12,
+      "folder": "12_Ребус-4",
+      "name": "Ребус-4",
+      "catalog": "kw-17",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 13,
+      "folder": "13_ТП-4-28А",
+      "name": "ТП 4-28А",
+      "catalog": "kw-09",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 14,
+      "folder": "14_ТП-4-28Б",
+      "name": "ТП 4-28Б",
+      "catalog": "kw-10",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 15,
+      "folder": "15_ТП-4-50А",
+      "name": "ТП 4-50А",
+      "catalog": "kw-11",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 16,
+      "folder": "16_ТП-4-50Б",
+      "name": "ТП 4-50Б",
+      "catalog": "kw-12",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 17,
+      "folder": "17_ТП-7-100",
+      "name": "ТП 7-100",
+      "catalog": "kw-13",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 18,
+      "folder": "18_ТП-8-100",
+      "name": "ТП 8-100",
+      "catalog": "kw-14",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 19,
+      "folder": "19_Сигнал-М2",
+      "name": "Сигнал-М2",
+      "catalog": "kw-19",
+      "specs": 8,
+      "placeholder": false
+    },
+    {
+      "order": 20,
+      "folder": "20_РЭБ-тестер",
+      "name": "РЭБ-тестер",
+      "catalog": "kw-20",
+      "specs": 7,
+      "placeholder": false
+    }
+  ]
+}
