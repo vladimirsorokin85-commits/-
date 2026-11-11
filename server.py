@@ -80,6 +80,9 @@ class StudioHandler(SimpleHTTPRequestHandler):
             "/download/medal_za_vzyatie_novoy_izengardovki.jpg": (
                 OUTPUT_DIR / "medal_za_vzyatie_novoy_izengardovki.jpg", "image/jpeg", "medal_za_vzyatie_novoy_izengardovki.jpg"
             ),
+            "/download/SOCIAL_MEDIA_PACK_NOVAYA_IZENGARDOVKA.md": (
+                OUTPUT_DIR / "SOCIAL_MEDIA_PACK_NOVAYA_IZENGARDOVKA.md", "text/markdown; charset=utf-8", "SOCIAL_MEDIA_PACK_NOVAYA_IZENGARDOVKA.md"
+            ),
             "/medal.jpg": (
                 OUTPUT_DIR / "medal_za_vzyatie_novoy_izengardovki.jpg", "image/jpeg", None
             ),
