@@ -77,6 +77,12 @@ class StudioHandler(SimpleHTTPRequestHandler):
             "/download/azbuka_po_polyam_58_timecoded_frames.zip": (
                 OUTPUT_DIR / "azbuka_po_polyam_58_timecoded_frames.zip", "application/zip", "azbuka_po_polyam_58_timecoded_frames.zip"
             ),
+            "/download/medal_za_vzyatie_novoy_izengardovki.jpg": (
+                OUTPUT_DIR / "medal_za_vzyatie_novoy_izengardovki.jpg", "image/jpeg", "medal_za_vzyatie_novoy_izengardovki.jpg"
+            ),
+            "/medal.jpg": (
+                OUTPUT_DIR / "medal_za_vzyatie_novoy_izengardovki.jpg", "image/jpeg", None
+            ),
         }
         if path in routes:
             fpath, ctype, att = routes[path]
@@ -186,8 +192,9 @@ class StudioHandler(SimpleHTTPRequestHandler):
       <div class="sub">Сведено миллисекунда в миллисекунду с загруженным треком (02:28.52 · сетка 160.0 BPM, дропы на 0:12.04 / 1:12.05 / 2:00.05, яма на 1:00.05) · Единый киногрейдинг ARRI Alexa Mini LF (холодный сланец + тёплый вольфрам) · 0 людей, 0 старых касок, 0 повторов</div>
     </div>
     <div class="btns">
-      <a class="btn" href="/download/azbuka_po_polyam_mordor_svo_master_1080p.mp4">⬇ Мастер-Клип 16:9 со звуком (24.6 МБ)</a>
-      <a class="btn" href="/download/azbuka_po_polyam_reel_9x16.mp4">⬇ Вертикальный Reel 9:16 с припевом (8.1 МБ)</a>
+      <a class="btn" href="/download/medal_za_vzyatie_novoy_izengardovki.jpg">🏅 Медаль «ЗА ВЗЯТИЕ НОВОЙ ИЗЕНГАРДОВКИ» (JPG)</a>
+      <a class="btn" href="/download/azbuka_po_polyam_mordor_svo_master_1080p.mp4">⬇ Плавный Мастер-Клип 16:9 (20.9 МБ)</a>
+      <a class="btn" href="/download/azbuka_po_polyam_reel_9x16.mp4">⬇ Плавный Reel 9:16 (7.4 МБ)</a>
       <a class="btn ice" href="/download/azbuka_po_polyam_12_cinema_frames.zip">📦 12 кинокадров ARRI Anamorphic (9.1 МБ)</a>
       <a class="btn ice" href="/download/azbuka_po_polyam_58_timecoded_frames.zip">📦 Все 58 кадров по таймкодам (21.4 МБ)</a>
     </div>
