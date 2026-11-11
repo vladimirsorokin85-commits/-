@@ -43,17 +43,18 @@ function Invoke-Step([string]$Name, [scriptblock]$Body) {
 }
 
 if (-not $SkipRender) {
-    Invoke-Step "1/3 Рендер карточек" {
+    Invoke-Step "1/4 Рендер карточек" {
         $pyArgs = @((Join-Path $RenderDir "render_cards.py"), "--all", "--batch-size", $BatchSize, "--prune")
         if ($OnlyNew) { $pyArgs += "--only-new" }
         if ($TwoX) { $pyArgs += "--2x" }
         & $Python @pyArgs
         if ($LASTEXITCODE -eq 2) { throw "рендер не смог запуститься" }
     }
-} else { Write-Host "1/3 Рендер: пропущен (-SkipRender)" }
+} else { Write-Host "1/4 Рендер: пропущен (-SkipRender)" }
 
-Invoke-Step "2/3 Галерея" { & $Python (Join-Path $RenderDir "gallery.py") }
-Invoke-Step "3/3 Чек-лист" { & $Python (Join-Path $RenderDir "check_files.py") }
+Invoke-Step "2/4 Копии для QA читаемости (540/390)" { & $Python (Join-Path $RenderDir "make_readability.py") }
+Invoke-Step "3/4 Галерея" { & $Python (Join-Path $RenderDir "gallery.py") }
+Invoke-Step "4/4 Чек-лист" { & $Python (Join-Path $RenderDir "check_files.py") }
 
 Write-Host ""
 if ($Fail -gt 0) {

@@ -80,4 +80,10 @@ superceny\05_ГОТОВОЕ\
 3. PNG/галерея/чек-лист: `_render\run_all.ps1`.
 4. Шрифты и картинки: `02_ДИЗАЙН\fonts`, `02_ДИЗАЙН\img` (18 вырезок + альты).
 
-_Обновлено: 11.11.2026, 12:37._
+## GitHub
+
+[PR #14](https://github.com/vladimirsorokin85-commits/-/pull/14) · ветка `creative/superceny-2026-11` ·
+репозиторий «В ОКОПЕ» (221 файл: данные, дизайн, HTML, 81 PNG, gallery, QA; без цен/секретов).
+После merge — тег `delivery_superceny_2026_11`.
+
+_Обновлено: 11.11.2026, 12:45._

@@ -2828,3 +2828,316 @@ body {
   text-overflow: clip;
   font-size: 15px;
 }
+
+/* ==========================================================================
+   РЕДИЗАЙН v2 (по замечанию заказчика: «мелко, убого»).
+   Основная зона — не мельче 16px, крупные плитки, больше воздуха.
+   Новые классы card--02v2 / card--03v2 / card--04v2, старые не затронуты.
+   ========================================================================== */
+
+/* -------------------------- CARD 02 v2: плитки 2×2 + список ------------ */
+
+.card--02v2 .c2-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 14px;
+  gap: 14px;
+}
+
+.card--02v2 .c2-head { flex: 0 0 auto; }
+.card--02v2 .c2-head .c-name { font-size: 96px; }
+.card--02v2 .c2-head .c-name--xl { font-size: 110px; }
+.card--02v2 .c2-head .c-name--l { font-size: 96px; }
+.card--02v2 .c2-head .c-name--m { font-size: 84px; }
+.card--02v2 .c2-head .c-name--s { font-size: 72px; }
+
+.c2-tiles {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.c2-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 138px;
+  padding: 14px 16px 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--on-paper-ink);
+}
+
+.c2-tile__k {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.25;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-paper-dim);
+}
+
+.c2-tile__v {
+  margin-top: 6px;
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--on-paper-ink);
+}
+.c2-tile__v--38 { font-size: 38px; }
+.c2-tile__v--34 { font-size: 34px; }
+.c2-tile__v--30 { font-size: 30px; }
+.c2-tile__v--26 { font-size: 26px; }
+
+.c2-tile__sub {
+  margin-top: 5px;
+  font-family: var(--font-head);
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--on-paper-dim);
+}
+
+.card--02v2 .c2-mid {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  column-gap: 24px;
+  row-gap: 0;
+}
+
+.card--02v2 .c2-left {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.c2-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 26px;
+  align-content: start;
+}
+
+.c2-row {
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+}
+.c2-row:nth-child(1),
+.c2-row:nth-child(2) { border-top: 1px solid var(--line-strong); }
+.c2-row__k {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.c2-row__v {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.28;
+  color: var(--fg);
+}
+
+.c2-extras { margin-top: auto; padding-top: 14px; }
+.c2-extra {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+.c2-extra__k {
+  font-family: var(--font-head);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.c2-extra__v { font-size: 17px; line-height: 1.3; color: var(--fg); }
+
+.card--02v2 .c2-photo {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 240px;
+}
+.card--02v2 .c2-photo .c-plate { flex: 1 1 auto; min-height: 0; }
+.card--02v2 .c2-photo .c-plate img { object-fit: contain; }
+
+/* заглушка без ТТХ (новые позиции) */
+.c2-empty {
+  flex: 1 1 auto;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 26px 28px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+.c2-empty b {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 62px;
+  line-height: 0.98;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.c2-empty span { margin-top: 12px; font-size: 18px; line-height: 1.4; color: var(--fg-dim); }
+
+/* -------------------------- CARD 03 v2: крупнее ------------------------ */
+.card--03v2 .c-list__t { font-size: 21px; line-height: 1.28; }
+.card--03v2 .c-list__item { padding: 13px 0; }
+.card--03v2 .c-facts__i {
+  font-size: 25px;
+  padding: 13px 10px;
+  white-space: nowrap;
+}
+.card--03v2 .c-slogan { font-size: 34px; }
+
+/* -------------------------- CARD 04 v2: крупнее ------------------------ */
+.card--04v2 .c-adv__t { font-size: 19px; line-height: 1.3; }
+.card--04v2 .c-adv__t b { font-size: 20px; }
+.card--04v2 .c-adv__item { padding: 14px 0; }
+.card--04v2 .c-kit { font-size: 17px; line-height: 1.4; }
+.card--04v2 .c-pricezone { padding: 22px 24px; }
+.card--04v2 .c-pricezone__label { font-size: 13px; }
+.card--04v2 .c-pricezone__value { font-size: 44px; }
+.card--04v2 .c-pricezone__meta { font-size: 13px; }
+
+/* card 02v2 — финальная компоновка: top (заголовок слева + фото справа),
+   плитки 2×2, низ: список ТТХ слева + изготовитель/наличие/комплект справа. */
+
+.card--02v2 .c2-body { gap: 12px; }
+
+.card--02v2 .c2-top {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  column-gap: 24px;
+  align-items: start;
+}
+
+.card--02v2 .c2-top .c2-photo {
+  margin: 0;
+  height: 336px;
+  min-height: 0;
+}
+.card--02v2 .c2-top .c2-photo .c-plate { flex: 1 1 auto; min-height: 0; }
+
+.c2-tiles { gap: 10px; }
+.c2-tile { min-height: 162px; }
+
+.card--02v2 .c2-bottom {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.32fr) minmax(0, 0.68fr);
+  column-gap: 26px;
+}
+
+.card--02v2 .c2-bottom .c2-extras { margin-top: 0; padding-top: 0; }
+.card--02v2 .c2-bottom .c2-list { align-content: start; }
+.card--02v2 .c2-bottom .c2-row { padding: 10px 0; }
+
+/* card 02v2: чуть крупнее фото и плитки, чтобы низ не пустовал */
+.card--02v2 .c2-top .c2-photo { height: 370px; }
+.c2-tile { min-height: 172px; }
+.c2-tile__k { font-size: 14px; }
+.card--02v2 .c2-row { padding: 11px 0; }
+.c2-row__v { font-size: 20px; }
+.c2-extra { padding: 9px 0; }
+.c2-extra__v { font-size: 18px; }
+
+/* вариант B: фото широкой полосой сверху */
+.c2-photo--wide { margin: 0; height: 300px; width: 100%; }
+.c2-photo--wide .c-plate { flex: 1 1 auto; min-height: 0; }
+
+/* ==========================================================================
+   CARD 02 v2 — «A2» по замечаниям: крупнее, меньше плотности, заполненный низ.
+   ========================================================================== */
+
+.card--02v2 .c2-top { grid-template-columns: minmax(0, 1fr) 440px; }
+.card--02v2 .c2-top .c2-photo { height: 380px; }
+
+.c2-tile { min-height: 184px; padding: 16px 18px 14px; }
+.c2-tile__k { font-size: 15px; }
+.c2-tile__v { font-size: 64px; }
+.c2-tile__v--56 { font-size: 56px; }
+.c2-tile__v--48 { font-size: 48px; }
+.c2-tile__v--44 { font-size: 44px; }
+.c2-tile__sub { font-size: 15px; }
+
+.card--02v2 .c2-row { padding: 12px 0; }
+.c2-row__k { font-size: 15px; }
+.c2-row__v { font-size: 25px; line-height: 1.2; }
+.c2-row__sub { display: block; margin-top: 3px; font-size: 14px; line-height: 1.32; color: var(--fg-dim); }
+
+.c2-extra { padding: 10px 0; }
+.c2-extra__k { font-size: 15px; }
+.c2-extra__v { font-size: 19px; }
+
+.c2-strip {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  column-gap: 26px;
+  margin-top: 2px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+.c2-strip__k {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.c2-strip__v { display: block; margin-top: 4px; font-size: 18px; line-height: 1.32; color: var(--fg); }
+.c2-strip__cell + .c2-strip__cell { border-left: 1px solid var(--line); padding-left: 26px; }
+
+/* A2: баланс высот — фото 360, плитки 172, низ без наложения на полосу */
+.card--02v2 .c2-top .c2-photo { height: 360px; }
+.c2-tile { min-height: 172px; }
+.card--02v2 .c2-bottom { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+.card--02v2 .c2-row { padding: 10px 0; }
+.c2-row__sub { font-size: 14px; }
+.card--02v2 .c2-list { align-content: start; }
+
+/* A2 финал: высоты сходятся без обрезки (фото/плитки чуть ниже, полоса компактнее) */
+.card--02v2 .c2-top .c2-photo { height: 340px; }
+.c2-tile { min-height: 166px; }
+.c2-strip { padding: 8px 0; }
+.c2-extra { padding: 8px 0; }
+.card--02v2 .c2-bottom { overflow: visible; }
+
+/* финальные кегли по замечанию: card-03/04 крупнее */
+.card--03v2 .c-list__t { font-size: 22px; }
+.card--03v2 .c-facts__i { font-size: 27px; }
+.card--04v2 .c-adv__t { font-size: 20px; }
+.card--04v2 .c-adv__t b { font-size: 21px; }
+.card--04v2 .c-pricezone__value { font-size: 46px; }
+
+/* плитки с длинными/текстовыми ТТХ — 28–34 px, чтобы не раздувать плитку */
+.c2-tile__v--34 { font-size: 34px; }
+.c2-tile__v--28 { font-size: 28px; line-height: 1.1; }
+
+/* card-03: длинные значения в полосе ТТХ — чуть меньше кегль, без выхода за ячейку */
+.card--03v2 .c-facts__i--s { font-size: 22px; letter-spacing: -0.01em; padding-left: 8px; padding-right: 8px; }

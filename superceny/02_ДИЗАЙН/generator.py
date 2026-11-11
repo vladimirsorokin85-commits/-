@@ -279,43 +279,208 @@ def specs_block(p):
     return '    <div class="c-specs">\n' + specs_rows(p) + '\n    </div>'
 
 
-def specs_rows(p):
-    return "\n".join(
-        '        <div class="c-specs__row"><span class="c-specs__k">%s</span>'
-        '<span class="c-specs__v">%s</span></div>' % (esc(s["label"]), esc(s["value"]))
-        for s in p["specs"])
+TILE_PRIORITY = ("диапазон", "частот", "мощност", "дальност", "канал",
+                 "вес", "масса", "размер", "габарит", "время", "питани",
+                 "назначени", "температур", "гаранти")
+
+
+def spec_rank(s):
+    label = str(s.get("label") or "").lower()
+    for i, key in enumerate(TILE_PRIORITY):
+        if key in label:
+            return i
+    return 99
+
+
+def pick_tiles(specs, n=4):
+    order = sorted(range(len(specs)), key=lambda i: (spec_rank(specs[i]), i))
+    idx = set(order[:n])
+    tiles = [specs[i] for i in sorted(idx)]
+    rest = [s for i, s in enumerate(specs) if i not in idx][:3]
+    return tiles, rest
+
+
+def tile_size_class(text):
+    n = len(text)
+    if n <= 6:
+        return ""
+    if n <= 10:
+        return " c2-tile__v--56"
+    if n <= 18:
+        return " c2-tile__v--48"
+    if n <= 28:
+        return " c2-tile__v--44"
+    if n <= 40:
+        return " c2-tile__v--34"
+    return " c2-tile__v--28"
+
+
+def plural_freq(n):
+    if n % 10 == 1 and n % 100 != 11:
+        return "частота"
+    if 2 <= n % 10 <= 4 and not (12 <= n % 100 <= 14):
+        return "частоты"
+    return "частот"
+
+
+def compact_tile(spec):
+    """-> (значение, подпись-подсказка или '', css-класс кегля).
+    Крупное осмысленное значение из паспортной строки; полная строка — в подсказке.
+    """
+    label = str(spec.get("label") or "").lower()
+    value = str(spec.get("value") or "").strip()
+    sub = ""
+
+    def done(main, extra=""):
+        return main, extra or "", tile_size_class(main)
+
+    # --- вес: нетто (или брутто), иначе первое «число кг»
+    if "вес" in label or "масса" in label:
+        m_net = re.search(r"[Нн]етто\s*(\d+(?:[.,]\d+)?\s*кг)", value)
+        m_br = re.search(r"[Бб]рутто\s*(\d+(?:[.,]\d+)?\s*кг)", value)
+        m_any = re.search(r"(\d+(?:[.,]\d+)?\s*кг)", value)
+        if m_net:
+            return done(re.sub(r"\s+", " ", m_net.group(1)), ("брутто " + m_br.group(1)) if m_br else "")
+        if m_br:
+            return done(re.sub(r"\s+", " ", m_br.group(1)))
+        if m_any:
+            main = re.sub(r"\s+", " ", m_any.group(1))
+            return done(main, value if main != value else "")
+
+    # --- диапазон частот: общий размах крупно, полный перечень подсказкой
+    if "диапазон" in label and "частот" in label:
+        nums = re.findall(r"\d+", value)
+        if len(nums) >= 2:
+            unit = "МГц" if "МГц" in value else ""
+            main = "%s–%s %s" % (nums[0], nums[-1], unit)
+            sep = " · " if ";" in value else ", "
+            parts = [p.strip() for p in re.split(r"[;,]", value) if p.strip()]
+            sub = sep.join(p.replace(" МГц", "") for p in parts) + (" МГц" if unit else "")
+            return done(main, sub)
+
+    # --- перечень частот: количество (правильный падеж) + диапазон подсказкой
+    if "частот" in label:
+        nums = re.findall(r"\d+", value)
+        if len(nums) >= 4:
+            unit = "МГц" if "МГц" in value else ""
+            main = "%d %s" % (len(nums), plural_freq(len(nums)))
+            return done(main, "%s…%s %s" % (nums[0], nums[-1], unit))
+
+    # --- дальность: диапазон или «до/не менее N м»
+    if "дальност" in label:
+        m = re.search(r"(\d+(?:[.,]\d+)?\s*[-–]\s*\d+(?:[.,]\d+)?\s*м)", value)
+        if m:
+            main = re.sub(r"\s+", " ", m.group(1))
+            par = re.search(r"\(([^)]*)\)", value)
+            return done(main, re.sub(r"^при\s+удалении\s+", "", par.group(1)).strip() if par else (value if main != value else ""))
+        unit_re = re.compile(r"((?:до|не менее|не более)\s+\d+(?:[.,]\d+)?\s*(?:м|км))", re.I)
+        mu = unit_re.search(value)
+        if mu:
+            main = re.sub(r"\s+", " ", mu.group(1))
+            return done(main, value if main != value else "")
+
+    # --- прочие длинные значения: короткий токен с единицей, полное — подсказкой
+    if len(value) > 28:
+        unit_re = re.compile(r"(\d+(?:[.,]\d+)?(?:\s*[-–х×x]\s*\d+(?:[.,]\d+)?)*\s*(?:МГц|ГГц|кг|г|мм|см|м|ч|мин|В|Вт|кВт|А·ч|А|%|°C|°С))", re.I)
+        mu = unit_re.search(value)
+        if mu:
+            main = re.sub(r"\s+", " ", mu.group(1))
+            return done(main, value if main != value else "")
+    return done(value)
+
+
+def photo_v2(p, klass="c2-photo"):
+    if p["photo"]:
+        return ("<figure class=\"%s\"><div class=\"c-plate\"><img src=\"%s\" alt=\"%s\"></div>"
+                "<figcaption class=\"c-cap\">%s</figcaption></figure>"
+                % (klass, p["photo"], esc(p["name_full"]), esc(p["name_full"])))
+    note = ("НОВАЯ ПОЗИЦИЯ · ПОД ЗАКАЗ" if p.get("new_pos")
+            else "АРХИВ · ПОД ЗАКАЗ" if p["archive"] else "ЗАПРОСИТЕ У МЕНЕДЖЕРА")
+    return ("<figure class=\"%s\"><div class=\"c-plate c-plate--empty\">"
+            "<div class=\"c-plate__stub\"><b>ФОТО УТОЧНЯЕТСЯ</b>%s</div></div>"
+            "<figcaption class=\"c-cap\">%s</figcaption></figure>"
+            % (klass, note, esc(p["name_full"])))
+
+
+def extras_html(p):
+    return """      <div class="c2-extra"><span class="c2-extra__k">Изготовитель</span><span class="c2-extra__v">%s</span></div>
+      <div class="c2-extra"><span class="c2-extra__k">Наличие</span><span class="c2-extra__v">%s</span></div>
+      <div class="c2-extra"><span class="c2-extra__k">Комплект</span><span class="c2-extra__v">по запросу; подбор — в КП</span></div>
+      <div class="c2-extra"><span class="c2-extra__k">Поставка</span><span class="c2-extra__v">Доставка по РФ · самовывоз в Москве</span></div>""" % (
+        esc(p["manufacturer"]), esc(p["availability"] or "уточняется"))
 
 
 def card02(p):
-    main = """<main class="banner banner--poster card card--02 theme-quiet grain">
+    if p["specs"]:
+        tiles, rest = pick_tiles(p["specs"], 4)
+        tiles_html = "\n".join(
+            '      <div class="c2-tile"><span class="c2-tile__k">%s</span>'
+            '<span class="c2-tile__v%s">%s</span>%s</div>'
+            % (esc(s["label"]), cls, esc(val), ('<span class="c2-tile__sub">%s</span>' % esc(sub)) if sub else "")
+            for s in tiles for val, sub, cls in [compact_tile(s)])
+        def row_html(s):
+            value = str(s["value"]).strip()
+            short = value
+            sub = ""
+            if len(value) > 26:
+                if ";" in value:
+                    short = value.split(";")[0].strip()
+                elif "," in value and value.find(",") < 30:
+                    short = value.split(",")[0].strip()
+                else:
+                    cut = value[:24].rsplit(" ", 1)[0].rstrip(" ,;.")
+                    short = cut + "…"
+                sub = '<span class="c2-row__sub">%s</span>' % esc(value)
+            return ('        <div class="c2-row"><span class="c2-row__k">%s</span>'
+                    '<span class="c2-row__v">%s</span>%s</div>'
+                    % (esc(s["label"]), esc(short), sub))
+        rest_html = "\n".join(row_html(s) for s in rest)
+        top_right = photo_v2(p)
+        bottom = """    <div class="c2-bottom">
+      <div class="c2-list">
 %s
-  <div class="c-body">
-    <div class="c-head">
-      <span class="c-badge">Характеристики</span>
-      <p class="c-hook">%s</p>
-      <p class="c-cat">%s</p>
-      <h1 class="c-name %s">%s</h1>
+      </div>
+      <div class="c2-extras">
+%s
+      </div>
+    </div>""" % (rest_html, extras_html(p))
+        tiles_block = "    <div class=\"c2-tiles\">\n%s\n    </div>" % tiles_html
+    else:
+        top_right = photo_v2(p)
+        tiles_block = ''
+        bottom = """    <div class="c2-bottom">
+      <div class="c2-empty"><b>Характеристики по запросу</b><span>Позиция прайса — данные уточняются у поставщика; запросите КП.</span></div>
+      <div class="c2-extras">
+%s
+      </div>
+    </div>""" % extras_html(p)
+
+    tasks_line = " · ".join(p["tasks"])
+    strip = """    <div class="c2-strip">
+      <div class="c2-strip__cell"><span class="c2-strip__k">В комплекте</span><span class="c2-strip__v">по запросу; подбор под задачу — в КП</span></div>
+      <div class="c2-strip__cell"><span class="c2-strip__k">Применение</span><span class="c2-strip__v">%s</span></div>
+    </div>""" % esc(tasks_line)
+    main = """<main class="banner banner--poster card card--02v2 theme-quiet grain">
+%s
+  <div class="c2-body">
+    <div class="c2-top">
+      <div class="c2-head">
+        <span class="c-badge">Характеристики</span>
+        <p class="c-hook">%s</p>
+        <p class="c-cat">%s</p>
+        <h1 class="c-name %s">%s</h1>
+      </div>
+      %s
     </div>
 %s
-    %s
-    <div class="c-extra">
-      <div class="c-extra__item"><span class="c-extra__k">Изготовитель</span><span class="c-extra__v">%s</span></div>
-      <div class="c-extra__item"><span class="c-extra__k">Комплект</span><span class="c-extra__v">по запросу; подбор — в КП</span></div>
-      <div class="c-extra__item"><span class="c-extra__k">Наличие</span><span class="c-extra__v">%s</span></div>
-      <div class="c-extra__item"><span class="c-extra__k">Условия</span><span class="c-extra__v">по паспорту изделия</span></div>
-    </div>
-    <p class="c-note"><b>По паспорту изделия.</b> Применение — РЭС, по законодательству РФ.</p>
+%s
+%s
   </div>
 %s
 </main>""" % (header(p, "ХАРАКТЕРИСТИКИ", "02/04"), esc(p["hook"]), esc(p["category"]),
-              p["name_cls"], esc(p["name"]), plate(p, 350), specs_block(p),
-              esc(p["manufacturer"]), esc(p["availability"] or "уточняется"), footer())
+              p["name_cls"], esc(p["name"]), top_right, tiles_block, bottom, strip, footer())
     return page(p["name_full"] + " · ХАРАКТЕРИСТИКИ · «В ОКОПЕ»", "quiet", main)
 
-
-# --------------------------------------------------------------------------
-# CARD 03 · ПРИМЕНЕНИЕ (только короткие tasks)
-# --------------------------------------------------------------------------
 
 def card03(p):
     tasks = "\n".join('      <li class="c-list__item"><span class="c-list__n">%02d</span>'
@@ -323,9 +488,12 @@ def card03(p):
                       for i, t in enumerate(p["tasks"], 1))
     facts = ""
     if p["key_facts"]:
+        def fact_span(v):
+            cls = " c-facts__i--s" if len(v) > 14 else ""
+            return '      <span class="c-facts__i%s">%s</span>' % (cls, esc(v))
         facts = '    <div class="c-facts">\n%s\n    </div>' % "\n".join(
-            '      <span class="c-facts__i">%s</span>' % esc(v) for v in p["key_facts"])
-    main = """<main class="banner banner--poster card card--03 theme-field grain">
+            fact_span(v) for v in p["key_facts"])
+    main = """<main class="banner banner--poster card card--03 card--03v2 theme-field grain">
 %s
   <div class="c-body">
     <div class="c-head">
@@ -359,7 +527,7 @@ def advantages(p):
 
 
 def card04(p):
-    main = """<main class="banner banner--poster card card--04 theme-quiet grain">
+    main = """<main class="banner banner--poster card card--04 card--04v2 theme-quiet grain">
 %s
   <div class="c-body">
     <span class="c-badge c-badge--big">СУПЕРЦЕНА</span>

@@ -1,0 +1,3686 @@
+{
+  "generated": "2026-11-11 13:19:29",
+  "version": "1.0",
+  "criteria": {
+    "min_main_px": 16.0,
+    "min_value_px": 16.0
+  },
+  "files": [
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 12px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 38px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 12px «20 позиций ВЕСЬ ПРАЙС»; 12px «4 карточки НА КАЖДУЮ МОДЕЛЬ»; 12px «Прайс по запросу КП В ТЕЧЕНИЕ ДНЯ»"
+      ],
+      "min_main": 12,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 13,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 38,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\00_СУПЕРЦЕНЫ.html",
+      "rel": "00_СУПЕРЦЕНЫ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 15px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 15px «ФОТО УТОЧНЯЕТСЯ НОВАЯ ПОЗИЦИЯ · ПОД ЗАКА»"
+      ],
+      "min_main": 15,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\01_Муха-К-8\\01_СУПЕРЦЕНА.html",
+      "rel": "01_Муха-К-8\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 15px)",
+          false
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (0 шт., max 19px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 267px)",
+          false
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 15px «ФОТО УТОЧНЯЕТСЯ НОВАЯ ПОЗИЦИЯ · ПОД ЗАКА»",
+        "цель значений 20–26px не достигнута (в диапазоне 0 из 6, min 18px)",
+        "уточняющие подписи-детали 15px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 15,
+      "min_value": 18,
+      "max_value": 19,
+      "min_detail": 15,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 13,
+      "value_target_hits": 0,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 267,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\01_Муха-К-8\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "01_Муха-К-8\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 15px)",
+          false
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 15px «ФОТО УТОЧНЯЕТСЯ НОВАЯ ПОЗИЦИЯ · ПОД ЗАКА»"
+      ],
+      "min_main": 15,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 22,
+      "main_count": 9,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\01_Муха-К-8\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "01_Муха-К-8\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 15px)",
+          false
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 15px «ФОТО УТОЧНЯЕТСЯ НОВАЯ ПОЗИЦИЯ · ПОД ЗАКА»",
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Прайс по запросу отметка в паспорте изде»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 15,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\01_Муха-К-8\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "01_Муха-К-8\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\02_ФПВ-7-КОМПАКТ\\01_СУПЕРЦЕНА.html",
+      "rel": "02_ФПВ-7-КОМПАКТ\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\02_ФПВ-7-КОМПАКТ\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "02_ФПВ-7-КОМПАКТ\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\02_ФПВ-7-КОМПАКТ\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "02_ФПВ-7-КОМПАКТ\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\02_ФПВ-7-КОМПАКТ\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "02_ФПВ-7-КОМПАКТ\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\03_К-8М\\01_СУПЕРЦЕНА.html",
+      "rel": "03_К-8М\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\03_К-8М\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "03_К-8М\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\03_К-8М\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "03_К-8М\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\03_К-8М\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "03_К-8М\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\04_К-12М\\01_СУПЕРЦЕНА.html",
+      "rel": "04_К-12М\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\04_К-12М\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "04_К-12М\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\04_К-12М\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "04_К-12М\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\04_К-12М\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "04_К-12М\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\05_К-12М-Багажный-бокс\\01_СУПЕРЦЕНА.html",
+      "rel": "05_К-12М-Багажный-бокс\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\05_К-12М-Багажный-бокс\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "05_К-12М-Багажный-бокс\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\05_К-12М-Багажный-бокс\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "05_К-12М-Багажный-бокс\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\05_К-12М-Багажный-бокс\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "05_К-12М-Багажный-бокс\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\06_К-15М\\01_СУПЕРЦЕНА.html",
+      "rel": "06_К-15М\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\06_К-15М\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "06_К-15М\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\06_К-15М\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "06_К-15М\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\06_К-15М\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "06_К-15М\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\07_К-15М-ВИП\\01_СУПЕРЦЕНА.html",
+      "rel": "07_К-15М-ВИП\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\07_К-15М-ВИП\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "07_К-15М-ВИП\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\07_К-15М-ВИП\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "07_К-15М-ВИП\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\07_К-15М-ВИП\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "07_К-15М-ВИП\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 15px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 15px «ФОТО УТОЧНЯЕТСЯ НОВАЯ ПОЗИЦИЯ · ПОД ЗАКА»"
+      ],
+      "min_main": 15,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\08_Изделие-135-Багажный-бокс\\01_СУПЕРЦЕНА.html",
+      "rel": "08_Изделие-135-Багажный-бокс\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 15px)",
+          false
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (0 шт., max 19px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 267px)",
+          false
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 15px «ФОТО УТОЧНЯЕТСЯ НОВАЯ ПОЗИЦИЯ · ПОД ЗАКА»",
+        "цель значений 20–26px не достигнута (в диапазоне 0 из 6, min 18px)",
+        "уточняющие подписи-детали 15px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 15,
+      "min_value": 18,
+      "max_value": 19,
+      "min_detail": 15,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 13,
+      "value_target_hits": 0,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 267,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\08_Изделие-135-Багажный-бокс\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "08_Изделие-135-Багажный-бокс\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 15px)",
+          false
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 15px «ФОТО УТОЧНЯЕТСЯ НОВАЯ ПОЗИЦИЯ · ПОД ЗАКА»"
+      ],
+      "min_main": 15,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 22,
+      "main_count": 9,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\08_Изделие-135-Багажный-бокс\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "08_Изделие-135-Багажный-бокс\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 15px)",
+          false
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 15px «ФОТО УТОЧНЯЕТСЯ НОВАЯ ПОЗИЦИЯ · ПОД ЗАКА»",
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Прайс по запросу отметка в паспорте изде»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 15,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\08_Изделие-135-Багажный-бокс\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "08_Изделие-135-Багажный-бокс\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\09_Штора-К-12-700\\01_СУПЕРЦЕНА.html",
+      "rel": "09_Штора-К-12-700\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 111px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 111,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\09_Штора-К-12-700\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "09_Штора-К-12-700\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\09_Штора-К-12-700\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "09_Штора-К-12-700\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\09_Штора-К-12-700\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "09_Штора-К-12-700\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\10_Штора-М-К-8-600\\01_СУПЕРЦЕНА.html",
+      "rel": "10_Штора-М-К-8-600\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\10_Штора-М-К-8-600\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "10_Штора-М-К-8-600\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\10_Штора-М-К-8-600\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "10_Штора-М-К-8-600\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\10_Штора-М-К-8-600\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "10_Штора-М-К-8-600\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\11_Поле-31\\01_СУПЕРЦЕНА.html",
+      "rel": "11_Поле-31\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\11_Поле-31\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "11_Поле-31\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\11_Поле-31\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "11_Поле-31\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\11_Поле-31\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "11_Поле-31\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\12_Ребус-4\\01_СУПЕРЦЕНА.html",
+      "rel": "12_Ребус-4\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 56px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 95px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 56,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 95,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\12_Ребус-4\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "12_Ребус-4\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\12_Ребус-4\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "12_Ребус-4\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\12_Ребус-4\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "12_Ребус-4\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\13_ТП-4-28А\\01_СУПЕРЦЕНА.html",
+      "rel": "13_ТП-4-28А\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 15px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 15,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\13_ТП-4-28А\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "13_ТП-4-28А\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\13_ТП-4-28А\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "13_ТП-4-28А\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\13_ТП-4-28А\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "13_ТП-4-28А\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\14_ТП-4-28Б\\01_СУПЕРЦЕНА.html",
+      "rel": "14_ТП-4-28Б\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 15px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 15,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\14_ТП-4-28Б\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "14_ТП-4-28Б\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\14_ТП-4-28Б\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "14_ТП-4-28Б\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\14_ТП-4-28Б\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "14_ТП-4-28Б\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\15_ТП-4-50А\\01_СУПЕРЦЕНА.html",
+      "rel": "15_ТП-4-50А\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 15px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 15,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\15_ТП-4-50А\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "15_ТП-4-50А\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\15_ТП-4-50А\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "15_ТП-4-50А\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\15_ТП-4-50А\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "15_ТП-4-50А\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\16_ТП-4-50Б\\01_СУПЕРЦЕНА.html",
+      "rel": "16_ТП-4-50Б\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\16_ТП-4-50Б\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "16_ТП-4-50Б\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\16_ТП-4-50Б\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "16_ТП-4-50Б\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\16_ТП-4-50Б\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "16_ТП-4-50Б\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\17_ТП-7-100\\01_СУПЕРЦЕНА.html",
+      "rel": "17_ТП-7-100\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 56px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 95px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 15px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 56,
+      "min_detail": 15,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 95,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\17_ТП-7-100\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "17_ТП-7-100\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\17_ТП-7-100\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "17_ТП-7-100\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\17_ТП-7-100\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "17_ТП-7-100\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\18_ТП-8-100\\01_СУПЕРЦЕНА.html",
+      "rel": "18_ТП-8-100\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 89px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 89,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\18_ТП-8-100\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "18_ТП-8-100\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\18_ТП-8-100\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "18_ТП-8-100\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\18_ТП-8-100\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "18_ТП-8-100\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\19_Сигнал-М2\\01_СУПЕРЦЕНА.html",
+      "rel": "19_Сигнал-М2\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 111px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 111,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\19_Сигнал-М2\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "19_Сигнал-М2\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\19_Сигнал-М2\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "19_Сигнал-М2\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\19_Сигнал-М2\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "19_Сигнал-М2\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 19px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 19,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 6,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\20_РЭБ-тестер\\01_СУПЕРЦЕНА.html",
+      "rel": "20_РЭБ-тестер\\01_СУПЕРЦЕНА.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 94px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "уточняющие подписи-детали 14px (<16px) — вторичный текст, на 390 не читается"
+      ],
+      "min_main": 18,
+      "min_value": 18,
+      "max_value": 64,
+      "min_detail": 14,
+      "content_min": 25,
+      "content_max": 25,
+      "main_count": 16,
+      "value_target_hits": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 94,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\20_РЭБ-тестер\\02_ХАРАКТЕРИСТИКИ.html",
+      "rel": "20_РЭБ-тестер\\02_ХАРАКТЕРИСТИКИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 22px, max 27px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 125px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 22,
+      "content_max": 27,
+      "main_count": 11,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 125,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\20_РЭБ-тестер\\03_ПРИМЕНЕНИЕ.html",
+      "rel": "20_РЭБ-тестер\\03_ПРИМЕНЕНИЕ.html"
+    },
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 20px, max 46px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 142px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий контент 03/04: 20px «СУПЕРЦЕНА спецпредложение на позицию»; 20px «Гарантия 12 месяцев отметка в паспорте и»; 20px «Доставка по РФ отправка по всей стране»; 20px «Самовывоз в Москве забрать со склада»"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 20,
+      "content_max": 46,
+      "main_count": 14,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 142,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\20_РЭБ-тестер\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html",
+      "rel": "20_РЭБ-тестер\\04_СУПЕР-ПРЕДЛОЖЕНИЕ.html"
+    }
+  ]
+}
