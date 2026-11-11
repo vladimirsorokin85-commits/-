@@ -177,6 +177,23 @@ def main() -> int:
         md.append("- _нет_")
     md.append("")
 
+    # контакт-листы карусели (4 слайда подряд)
+    md.append("## Контакт-листы карусели (4 слайда подряд)\n")
+    carr = sorted(L.CARR_DIR.glob("*.png")) if L.CARR_DIR.is_dir() else []
+    need = len(folders)
+    if len(carr) >= need and need > 0:
+        total_c = sum(p.stat().st_size for p in carr)
+        md.append(f"- `04_ПРОВЕРКА/карусели/` — {len(carr)}/{need} листов, {L.human_size(total_c)}")
+        for p in carr:
+            d = L.png_dims(p) or (0, 0)
+            md.append(f"  - `{p.name}` — {d[0]}×{d[1]}, {L.human_size(p.stat().st_size)}")
+        data["carousels"] = {"count": len(carr), "bytes": total_c}
+    else:
+        st = "WARN" if a.partial else "FAIL"
+        add(st, f"контакт-листы карусели: {len(carr)}/{need}")
+        md.append(f"- _нет листов: {len(carr)}/{need}_")
+    md.append("")
+
     # детектор из отчёта рендера
     md.append("## Детектор наложений/переполнений\n")
     rr_path = L.QA_DIR / "render_report.json"

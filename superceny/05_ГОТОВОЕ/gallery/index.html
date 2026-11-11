@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>СУПЕРЦЕНЫ НА НПО «КИЛОВАТТ» — галерея карточек</title>
+<title>СУПЕРЦЕНЫ — карусели по 4 слайда · В ОКОПЕ × НПО «Киловатт»</title>
 <style>
   :root { --bg:#14150F; --panel:#1C2317; --line:#333A2B; --paper:#EDE8D7; --lime:#C9F24B; --muted:#9A9F8C; }
   * { box-sizing:border-box; }
@@ -14,32 +14,43 @@
   h1 { margin:0; font-size:clamp(24px, 3vw, 36px); letter-spacing:.04em; text-transform:uppercase; }
   h1 span { color:var(--lime); }
   .subline { margin-top:8px; color:var(--muted); font-size:14px; }
-  .hero { margin:26px 0 10px; max-width:760px; }
+  .hero { margin:26px 0 10px; max-width:740px; }
   .hero img { display:block; width:100%; height:auto; border:1px solid var(--line); background:#F4F1EA; }
   .hero-cap { margin-top:8px; color:var(--muted); font-size:13px; }
   .hero-cap b { color:var(--lime); }
-  .pos { margin-top:34px; }
-  .pos h2 { margin:0 0 12px; font-size:17px; line-height:1.3; letter-spacing:.02em; }
+  .pos { margin-top:40px; }
+  .pos h2 { margin:0 0 12px; font-size:18px; line-height:1.3; letter-spacing:.02em; }
   .pos h2 .dir { display:block; margin-top:3px; color:var(--muted); font-size:12px; font-weight:400; letter-spacing:.06em; }
   .pos h2 .sub { display:block; margin-top:2px; color:var(--muted); font-size:12px; font-weight:400; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:18px; }
-  .card { margin:0; background:var(--panel); border:1px solid var(--line); }
-  .card a { display:block; background:#F4F1EA; }
-  .card img { display:block; width:100%; height:auto; }
-  .card figcaption { padding:9px 11px 11px; font-size:13px; line-height:1.35; }
-  .card figcaption b { color:var(--lime); margin-right:3px; }
-  .card .meta { display:block; margin-top:3px; color:var(--muted); font-size:11px; }
-  .card:hover { border-color:#4C563C; }
-  footer { margin-top:44px; padding-top:14px; border-top:1px solid var(--line); color:#7C816F; font-size:12px; line-height:1.6; }
+  .carousel { position:relative; }
+  .track { display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory;
+            scrollbar-width:thin; padding-bottom:6px; scroll-behavior:smooth; }
+  .slide { flex:0 0 calc((100% - 48px) / 4); scroll-snap-align:start; position:relative;
+            background:var(--panel); border:1px solid var(--line); text-decoration:none; color:inherit; }
+  .slide img { display:block; width:100%; height:auto; background:#F4F1EA; }
+  .slide .cap { display:block; padding:8px 10px 10px; font-size:12px; line-height:1.3; }
+  .slide .cap b { color:var(--lime); margin-right:3px; }
+  .slide:hover { border-color:#4C563C; }
+  .nav { position:absolute; top:42%; z-index:2; width:38px; height:64px; border:1px solid var(--line);
+          background:rgba(20,21,15,.86); color:var(--lime); font-size:26px; line-height:1;
+          cursor:pointer; padding:0; }
+  .nav:hover { background:#242B1D; }
+  .nav.prev { left:-14px; }
+  .nav.next { right:-14px; }
+  .strip { margin-top:8px; color:var(--muted); font-size:12px; letter-spacing:.04em; }
+  @media (max-width:1100px) { .slide { flex-basis: calc((100% - 16px) / 2); } }
+  @media (max-width:640px) { .slide { flex-basis:86%; } }
+  footer { margin-top:46px; padding-top:14px; border-top:1px solid var(--line); color:#7C816F; font-size:12px; line-height:1.6; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>СУПЕРЦЕНЫ <span>·</span> галерея карточек</h1>
-    <div class="subline">НПО «Киловатт» × магазин «В ОКОПЕ» · 20 позиций × 4 карточки + общая ·
-      готово карточек: 80/80, позиций с полным набором: 20/20 · ноябрь 2026</div>
-    <div class="subline">Клик по карточке — открыть PNG 1080×1350 в новом окне. Галерея работает локально, без интернета.</div>
+    <h1>СУПЕРЦЕНЫ <span>·</span> карусели</h1>
+    <div class="subline">НПО «Киловатт» × магазин «В ОКОПЕ» · 20 позиций × 4 слайда в ряд ·
+      готово слайдов: 80/80, полных серий: 20/20 · ноябрь 2026</div>
+    <div class="subline">Слайды идут подряд как история: 01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA.
+      Стрелки листают серию; клик по слайду — PNG 1080×1350 в новом окне. Галерея работает локально.</div>
   </header>
   <section class="hero">
       <a href="../00_СУПЕРЦЕНЫ.png" target="_blank" rel="noopener">
@@ -49,590 +60,543 @@
     </section>
 <section class="pos">
       <h2>Муха К-8 <span class="dir">01_Муха-К-8</span><span class="sub">РЭБ-станция «Муха К-8»</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../01_Муха-К-8/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../01_Муха-К-8/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 163 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../01_Муха-К-8/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../01_Муха-К-8/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 247 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../01_Муха-К-8/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../01_Муха-К-8/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 157 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../01_Муха-К-8/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../01_Муха-К-8/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 246 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../01_Муха-К-8/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../01_Муха-К-8/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 65 КБ</span>
+        </a>
+        <a class="slide" href="../01_Муха-К-8/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../01_Муха-К-8/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 69 КБ</span>
+        </a>
+        <a class="slide" href="../01_Муха-К-8/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../01_Муха-К-8/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 70 КБ</span>
+        </a>
+        <a class="slide" href="../01_Муха-К-8/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../01_Муха-К-8/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 71 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>ФПВ-7 КОМПАКТ <span class="dir">02_ФПВ-7-КОМПАКТ</span><span class="sub">Станция РЭБ Капюшон ФПВ-7 мото</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../02_ФПВ-7-КОМПАКТ/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../02_ФПВ-7-КОМПАКТ/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 418 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../02_ФПВ-7-КОМПАКТ/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../02_ФПВ-7-КОМПАКТ/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 355 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../02_ФПВ-7-КОМПАКТ/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../02_ФПВ-7-КОМПАКТ/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 384 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../02_ФПВ-7-КОМПАКТ/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../02_ФПВ-7-КОМПАКТ/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 390 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../02_ФПВ-7-КОМПАКТ/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../02_ФПВ-7-КОМПАКТ/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 231 КБ</span>
+        </a>
+        <a class="slide" href="../02_ФПВ-7-КОМПАКТ/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../02_ФПВ-7-КОМПАКТ/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 237 КБ</span>
+        </a>
+        <a class="slide" href="../02_ФПВ-7-КОМПАКТ/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../02_ФПВ-7-КОМПАКТ/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 224 КБ</span>
+        </a>
+        <a class="slide" href="../02_ФПВ-7-КОМПАКТ/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../02_ФПВ-7-КОМПАКТ/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 127 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>К-8М <span class="dir">03_К-8М</span><span class="sub">Станция РЭБ Капюшон К-8М</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../03_К-8М/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../03_К-8М/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 451 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../03_К-8М/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../03_К-8М/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 374 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../03_К-8М/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../03_К-8М/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 453 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../03_К-8М/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../03_К-8М/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 471 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../03_К-8М/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../03_К-8М/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 279 КБ</span>
+        </a>
+        <a class="slide" href="../03_К-8М/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../03_К-8М/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 249 КБ</span>
+        </a>
+        <a class="slide" href="../03_К-8М/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../03_К-8М/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 252 КБ</span>
+        </a>
+        <a class="slide" href="../03_К-8М/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../03_К-8М/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 134 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>К-12М <span class="dir">04_К-12М</span><span class="sub">Станция РЭБ Капюшон К-12М</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../04_К-12М/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../04_К-12М/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 414 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../04_К-12М/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../04_К-12М/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 365 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../04_К-12М/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../04_К-12М/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 411 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../04_К-12М/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../04_К-12М/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 437 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../04_К-12М/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../04_К-12М/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 235 КБ</span>
+        </a>
+        <a class="slide" href="../04_К-12М/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../04_К-12М/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 247 КБ</span>
+        </a>
+        <a class="slide" href="../04_К-12М/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../04_К-12М/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 230 КБ</span>
+        </a>
+        <a class="slide" href="../04_К-12М/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../04_К-12М/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 124 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>К-12М Багажный бокс <span class="dir">05_К-12М-Багажный-бокс</span><span class="sub">Станция РЭБ Капюшон К-12М багажный бокс</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../05_К-12М-Багажный-бокс/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../05_К-12М-Багажный-бокс/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 316 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../05_К-12М-Багажный-бокс/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../05_К-12М-Багажный-бокс/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 347 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../05_К-12М-Багажный-бокс/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../05_К-12М-Багажный-бокс/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 314 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../05_К-12М-Багажный-бокс/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../05_К-12М-Багажный-бокс/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 401 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../05_К-12М-Багажный-бокс/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../05_К-12М-Багажный-бокс/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 198 КБ</span>
+        </a>
+        <a class="slide" href="../05_К-12М-Багажный-бокс/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../05_К-12М-Багажный-бокс/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 175 КБ</span>
+        </a>
+        <a class="slide" href="../05_К-12М-Багажный-бокс/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../05_К-12М-Багажный-бокс/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 183 КБ</span>
+        </a>
+        <a class="slide" href="../05_К-12М-Багажный-бокс/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../05_К-12М-Багажный-бокс/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 105 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>К-15М <span class="dir">06_К-15М</span><span class="sub">Станция РЭБ Капюшон К-15М</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../06_К-15М/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../06_К-15М/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 380 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../06_К-15М/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../06_К-15М/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 353 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../06_К-15М/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../06_К-15М/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 380 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../06_К-15М/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../06_К-15М/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 408 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../06_К-15М/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../06_К-15М/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 222 КБ</span>
+        </a>
+        <a class="slide" href="../06_К-15М/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../06_К-15М/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 192 КБ</span>
+        </a>
+        <a class="slide" href="../06_К-15М/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../06_К-15М/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 206 КБ</span>
+        </a>
+        <a class="slide" href="../06_К-15М/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../06_К-15М/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 120 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>К-15М ВИП <span class="dir">07_К-15М-ВИП</span><span class="sub">Станция РЭБ Капюшон К-15М ВИП</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../07_К-15М-ВИП/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../07_К-15М-ВИП/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 535 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../07_К-15М-ВИП/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../07_К-15М-ВИП/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 396 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../07_К-15М-ВИП/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../07_К-15М-ВИП/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 506 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../07_К-15М-ВИП/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../07_К-15М-ВИП/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 447 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../07_К-15М-ВИП/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../07_К-15М-ВИП/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 426 КБ</span>
+        </a>
+        <a class="slide" href="../07_К-15М-ВИП/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../07_К-15М-ВИП/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 303 КБ</span>
+        </a>
+        <a class="slide" href="../07_К-15М-ВИП/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../07_К-15М-ВИП/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 365 КБ</span>
+        </a>
+        <a class="slide" href="../07_К-15М-ВИП/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../07_К-15М-ВИП/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 208 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>Изделие 135 Багажный бокс <span class="dir">08_Изделие-135-Багажный-бокс</span><span class="sub">Изделие 135 — багажный бокс</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../08_Изделие-135-Багажный-бокс/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../08_Изделие-135-Багажный-бокс/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 179 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../08_Изделие-135-Багажный-бокс/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../08_Изделие-135-Багажный-бокс/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 259 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../08_Изделие-135-Багажный-бокс/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../08_Изделие-135-Багажный-бокс/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 171 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../08_Изделие-135-Багажный-бокс/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../08_Изделие-135-Багажный-бокс/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 257 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../08_Изделие-135-Багажный-бокс/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../08_Изделие-135-Багажный-бокс/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 63 КБ</span>
+        </a>
+        <a class="slide" href="../08_Изделие-135-Багажный-бокс/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../08_Изделие-135-Багажный-бокс/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 72 КБ</span>
+        </a>
+        <a class="slide" href="../08_Изделие-135-Багажный-бокс/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../08_Изделие-135-Багажный-бокс/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 73 КБ</span>
+        </a>
+        <a class="slide" href="../08_Изделие-135-Багажный-бокс/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../08_Изделие-135-Багажный-бокс/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 71 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>Штора К-12/700 <span class="dir">09_Штора-К-12-700</span><span class="sub">Станция РЭБ Штора К-12/700</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../09_Штора-К-12-700/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../09_Штора-К-12-700/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 319 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../09_Штора-К-12-700/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../09_Штора-К-12-700/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 332 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../09_Штора-К-12-700/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../09_Штора-К-12-700/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 292 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../09_Штора-К-12-700/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../09_Штора-К-12-700/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 330 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../09_Штора-К-12-700/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../09_Штора-К-12-700/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 184 КБ</span>
+        </a>
+        <a class="slide" href="../09_Штора-К-12-700/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../09_Штора-К-12-700/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 164 КБ</span>
+        </a>
+        <a class="slide" href="../09_Штора-К-12-700/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../09_Штора-К-12-700/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 189 КБ</span>
+        </a>
+        <a class="slide" href="../09_Штора-К-12-700/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../09_Штора-К-12-700/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 119 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>Штора-М, К-8/600 <span class="dir">10_Штора-М-К-8-600</span><span class="sub">Станция РЭБ Штора-М К-8/600</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../10_Штора-М-К-8-600/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../10_Штора-М-К-8-600/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 298 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../10_Штора-М-К-8-600/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../10_Штора-М-К-8-600/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 337 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../10_Штора-М-К-8-600/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../10_Штора-М-К-8-600/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 272 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../10_Штора-М-К-8-600/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../10_Штора-М-К-8-600/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 316 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../10_Штора-М-К-8-600/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../10_Штора-М-К-8-600/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 168 КБ</span>
+        </a>
+        <a class="slide" href="../10_Штора-М-К-8-600/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../10_Штора-М-К-8-600/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 183 КБ</span>
+        </a>
+        <a class="slide" href="../10_Штора-М-К-8-600/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../10_Штора-М-К-8-600/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 200 КБ</span>
+        </a>
+        <a class="slide" href="../10_Штора-М-К-8-600/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../10_Штора-М-К-8-600/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 137 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>Поле-31 <span class="dir">11_Поле-31</span><span class="sub">Станция РЭБ Поле-31</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../11_Поле-31/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../11_Поле-31/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 261 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../11_Поле-31/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../11_Поле-31/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 306 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../11_Поле-31/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../11_Поле-31/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 254 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../11_Поле-31/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../11_Поле-31/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 298 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../11_Поле-31/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../11_Поле-31/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 164 КБ</span>
+        </a>
+        <a class="slide" href="../11_Поле-31/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../11_Поле-31/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 262 КБ</span>
+        </a>
+        <a class="slide" href="../11_Поле-31/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../11_Поле-31/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 218 КБ</span>
+        </a>
+        <a class="slide" href="../11_Поле-31/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../11_Поле-31/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 134 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>Ребус-4 <span class="dir">12_Ребус-4</span><span class="sub">Комплекс РЭБ Ребус-4</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../12_Ребус-4/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../12_Ребус-4/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 345 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../12_Ребус-4/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../12_Ребус-4/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 362 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../12_Ребус-4/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../12_Ребус-4/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 332 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../12_Ребус-4/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../12_Ребус-4/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 353 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../12_Ребус-4/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../12_Ребус-4/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 235 КБ</span>
+        </a>
+        <a class="slide" href="../12_Ребус-4/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../12_Ребус-4/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 227 КБ</span>
+        </a>
+        <a class="slide" href="../12_Ребус-4/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../12_Ребус-4/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 256 КБ</span>
+        </a>
+        <a class="slide" href="../12_Ребус-4/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../12_Ребус-4/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 140 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>ТП 4-28А <span class="dir">13_ТП-4-28А</span><span class="sub">Станция РЭБ Капюшон ТП 4-28А</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../13_ТП-4-28А/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../13_ТП-4-28А/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 398 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../13_ТП-4-28А/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../13_ТП-4-28А/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 333 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../13_ТП-4-28А/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../13_ТП-4-28А/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 364 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../13_ТП-4-28А/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../13_ТП-4-28А/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 374 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../13_ТП-4-28А/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../13_ТП-4-28А/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 271 КБ</span>
+        </a>
+        <a class="slide" href="../13_ТП-4-28А/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../13_ТП-4-28А/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 268 КБ</span>
+        </a>
+        <a class="slide" href="../13_ТП-4-28А/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../13_ТП-4-28А/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 282 КБ</span>
+        </a>
+        <a class="slide" href="../13_ТП-4-28А/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../13_ТП-4-28А/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 342 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>ТП 4-28Б <span class="dir">14_ТП-4-28Б</span><span class="sub">Станция РЭБ Капюшон ТП 4-28Б</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../14_ТП-4-28Б/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../14_ТП-4-28Б/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 371 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../14_ТП-4-28Б/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../14_ТП-4-28Б/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 323 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../14_ТП-4-28Б/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../14_ТП-4-28Б/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 340 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../14_ТП-4-28Б/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../14_ТП-4-28Б/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 354 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../14_ТП-4-28Б/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../14_ТП-4-28Б/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 253 КБ</span>
+        </a>
+        <a class="slide" href="../14_ТП-4-28Б/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../14_ТП-4-28Б/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 388 КБ</span>
+        </a>
+        <a class="slide" href="../14_ТП-4-28Б/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../14_ТП-4-28Б/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 312 КБ</span>
+        </a>
+        <a class="slide" href="../14_ТП-4-28Б/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../14_ТП-4-28Б/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 299 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>ТП 4-50А <span class="dir">15_ТП-4-50А</span><span class="sub">Станция РЭБ Капюшон ТП 4-50А</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../15_ТП-4-50А/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../15_ТП-4-50А/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 411 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../15_ТП-4-50А/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../15_ТП-4-50А/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 330 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../15_ТП-4-50А/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../15_ТП-4-50А/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 372 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../15_ТП-4-50А/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../15_ТП-4-50А/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 360 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../15_ТП-4-50А/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../15_ТП-4-50А/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 280 КБ</span>
+        </a>
+        <a class="slide" href="../15_ТП-4-50А/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../15_ТП-4-50А/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 326 КБ</span>
+        </a>
+        <a class="slide" href="../15_ТП-4-50А/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../15_ТП-4-50А/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 295 КБ</span>
+        </a>
+        <a class="slide" href="../15_ТП-4-50А/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../15_ТП-4-50А/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 521 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>ТП 4-50Б <span class="dir">16_ТП-4-50Б</span><span class="sub">Станция РЭБ Капюшон ТП 4-50Б</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../16_ТП-4-50Б/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../16_ТП-4-50Б/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 323 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../16_ТП-4-50Б/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../16_ТП-4-50Б/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 318 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../16_ТП-4-50Б/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../16_ТП-4-50Б/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 301 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../16_ТП-4-50Б/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../16_ТП-4-50Б/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 316 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../16_ТП-4-50Б/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../16_ТП-4-50Б/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 211 КБ</span>
+        </a>
+        <a class="slide" href="../16_ТП-4-50Б/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../16_ТП-4-50Б/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 236 КБ</span>
+        </a>
+        <a class="slide" href="../16_ТП-4-50Б/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../16_ТП-4-50Б/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 236 КБ</span>
+        </a>
+        <a class="slide" href="../16_ТП-4-50Б/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../16_ТП-4-50Б/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 339 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>ТП 7-100 <span class="dir">17_ТП-7-100</span><span class="sub">Станция РЭБ Капюшон ТП 7-100</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../17_ТП-7-100/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../17_ТП-7-100/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 310 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../17_ТП-7-100/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../17_ТП-7-100/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 321 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../17_ТП-7-100/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../17_ТП-7-100/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 288 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../17_ТП-7-100/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../17_ТП-7-100/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 325 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../17_ТП-7-100/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../17_ТП-7-100/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 201 КБ</span>
+        </a>
+        <a class="slide" href="../17_ТП-7-100/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../17_ТП-7-100/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 266 КБ</span>
+        </a>
+        <a class="slide" href="../17_ТП-7-100/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../17_ТП-7-100/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 256 КБ</span>
+        </a>
+        <a class="slide" href="../17_ТП-7-100/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../17_ТП-7-100/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 271 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>ТП 8-100 <span class="dir">18_ТП-8-100</span><span class="sub">Станция РЭБ Капюшон ТП 8-100</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../18_ТП-8-100/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../18_ТП-8-100/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 383 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../18_ТП-8-100/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../18_ТП-8-100/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 335 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../18_ТП-8-100/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../18_ТП-8-100/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 351 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../18_ТП-8-100/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../18_ТП-8-100/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 366 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../18_ТП-8-100/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../18_ТП-8-100/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 262 КБ</span>
+        </a>
+        <a class="slide" href="../18_ТП-8-100/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../18_ТП-8-100/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 321 КБ</span>
+        </a>
+        <a class="slide" href="../18_ТП-8-100/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../18_ТП-8-100/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 297 КБ</span>
+        </a>
+        <a class="slide" href="../18_ТП-8-100/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../18_ТП-8-100/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 271 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>Сигнал-М2 <span class="dir">19_Сигнал-М2</span><span class="sub">Обнаружитель дронов Сигнал-М2</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../19_Сигнал-М2/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../19_Сигнал-М2/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 397 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../19_Сигнал-М2/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../19_Сигнал-М2/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 350 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../19_Сигнал-М2/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../19_Сигнал-М2/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 363 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../19_Сигнал-М2/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../19_Сигнал-М2/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 378 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../19_Сигнал-М2/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../19_Сигнал-М2/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 247 КБ</span>
+        </a>
+        <a class="slide" href="../19_Сигнал-М2/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../19_Сигнал-М2/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 309 КБ</span>
+        </a>
+        <a class="slide" href="../19_Сигнал-М2/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../19_Сигнал-М2/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 269 КБ</span>
+        </a>
+        <a class="slide" href="../19_Сигнал-М2/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../19_Сигнал-М2/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 142 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
 <section class="pos">
       <h2>РЭБ-тестер <span class="dir">20_РЭБ-тестер</span><span class="sub">Прибор для проверки станций РЭБ, РЭБ-Тестер Т-9</span></h2>
-      <div class="grid">
-        <figure class="card">
-          <a href="../20_РЭБ-тестер/01_СУПЕРЦЕНА.png" target="_blank" rel="noopener">
-            <img src="../20_РЭБ-тестер/01_СУПЕРЦЕНА.png" alt="01 · Суперцена" loading="lazy">
-          </a>
-          <figcaption><b>01</b> Суперцена<span class="meta">1080×1350 · 505 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../20_РЭБ-тестер/02_ХАРАКТЕРИСТИКИ.png" target="_blank" rel="noopener">
-            <img src="../20_РЭБ-тестер/02_ХАРАКТЕРИСТИКИ.png" alt="02 · Характеристики" loading="lazy">
-          </a>
-          <figcaption><b>02</b> Характеристики<span class="meta">1080×1350 · 360 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../20_РЭБ-тестер/03_ПРИМЕНЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../20_РЭБ-тестер/03_ПРИМЕНЕНИЕ.png" alt="03 · Применение / кому" loading="lazy">
-          </a>
-          <figcaption><b>03</b> Применение / кому<span class="meta">1080×1350 · 474 КБ</span></figcaption>
-        </figure>
-        <figure class="card">
-          <a href="../20_РЭБ-тестер/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" target="_blank" rel="noopener">
-            <img src="../20_РЭБ-тестер/04_СУПЕР-ПРЕДЛОЖЕНИЕ.png" alt="04 · Супер-предложение" loading="lazy">
-          </a>
-          <figcaption><b>04</b> Супер-предложение<span class="meta">1080×1350 · 427 КБ</span></figcaption>
-        </figure>
+      <div class="carousel">
+        <button class="nav prev" aria-label="Предыдущий слайд">‹</button>
+        <div class="track">
+        <a class="slide" href="../20_РЭБ-тестер/01_ЛИСТАЙ.png" target="_blank" rel="noopener">
+          <img src="../20_РЭБ-тестер/01_ЛИСТАЙ.png" alt="01 · Крючок" loading="lazy">
+          <span class="cap"><b>01/04</b> Крючок · 1080×1350 · 396 КБ</span>
+        </a>
+        <a class="slide" href="../20_РЭБ-тестер/02_ЦИФРЫ.png" target="_blank" rel="noopener">
+          <img src="../20_РЭБ-тестер/02_ЦИФРЫ.png" alt="02 · Цифры" loading="lazy">
+          <span class="cap"><b>02/04</b> Цифры · 1080×1350 · 456 КБ</span>
+        </a>
+        <a class="slide" href="../20_РЭБ-тестер/03_СЦЕНАРИИ.png" target="_blank" rel="noopener">
+          <img src="../20_РЭБ-тестер/03_СЦЕНАРИИ.png" alt="03 · Сценарии" loading="lazy">
+          <span class="cap"><b>03/04</b> Сценарии · 1080×1350 · 403 КБ</span>
+        </a>
+        <a class="slide" href="../20_РЭБ-тестер/04_CTA.png" target="_blank" rel="noopener">
+          <img src="../20_РЭБ-тестер/04_CTA.png" alt="04 · Финал / CTA" loading="lazy">
+          <span class="cap"><b>04/04</b> Финал / CTA · 1080×1350 · 240 КБ</span>
+        </a>
+        </div>
+        <button class="nav next" aria-label="Следующий слайд">›</button>
       </div>
+      <div class="strip">01 ЛИСТАЙ → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 CTA</div>
     </section>
   <footer>
-    СУПЕРЦЕНЫ · каждая позиция — 4 карточки: 01 СУПЕРЦЕНА · 02 ХАРАКТЕРИСТИКИ · 03 ПРИМЕНЕНИЕ · 04 СУПЕР-ПРЕДЛОЖЕНИЕ.<br>
+    Карусель: каждый слайд продолжает предыдущий и обрывается крючком — «что внутри» → «кому» → «цена».<br>
     Цены не публикуются числами: «Прайс по запросу». CTA: Telegram @vokope_ru · +7 (999) 136-71-42 ·
     Доставка по РФ · Самовывоз в Москве.<br>
-    Собрано: 11.11.2026 13:13 · renderer (DSH), пакет «СУПЕРЦЕНЫ».
+    Собрано: 11.11.2026 13:49 · renderer (DSH), пакет «СУПЕРЦЕНЫ» (карусель v4).
   </footer>
 </div>
+<script>
+(function () {
+  document.querySelectorAll('.carousel').forEach(function (c) {
+    var track = c.querySelector('.track');
+    c.querySelectorAll('.nav').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var step = track.clientWidth * (btn.classList.contains('next') ? 0.55 : -0.55);
+        track.scrollBy({ left: step, behavior: 'smooth' });
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>

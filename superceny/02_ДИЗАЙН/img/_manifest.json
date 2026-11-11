@@ -4,229 +4,606 @@
   "label": "Муха К-8",
   "catalog_id": null,
   "img": null,
-  "alt": null
+  "alt": null,
+  "zoom": null,
+  "detail": null
  },
  {
   "price_no": 2,
   "label": "ФПВ-7 КОМПАКТ",
   "catalog_id": "kw-01",
-  "img": "img/kw-01_main.png",
+  "img": {
+   "file": "img/kw-01_main.png",
+   "size": [
+    1800,
+    1459
+   ],
+   "bytes": 722588
+  },
   "alt": null,
-  "size": [
-   1800,
-   1459
-  ],
-  "bytes": 722588
+  "zoom": {
+   "file": "img/kw-01_zoom.png",
+   "size": [
+    1800,
+    1458
+   ],
+   "bytes": 149690
+  },
+  "detail": {
+   "file": "img/kw-01_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 557820
+  }
  },
  {
   "price_no": 3,
   "label": "К-8М",
   "catalog_id": "kw-05",
-  "img": "img/kw-05_main.png",
-  "alt": "img/kw-05_alt.png",
-  "size": [
-   1800,
-   1095
-  ],
-  "bytes": 807026
+  "img": {
+   "file": "img/kw-05_main.png",
+   "size": [
+    1800,
+    1095
+   ],
+   "bytes": 807026
+  },
+  "alt": {
+   "file": "img/kw-05_alt.png",
+   "size": [
+    1800,
+    1083
+   ],
+   "bytes": 727045
+  },
+  "zoom": {
+   "file": "img/kw-05_zoom.png",
+   "size": [
+    1800,
+    1095
+   ],
+   "bytes": 293805
+  },
+  "detail": {
+   "file": "img/kw-05_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 585494
+  }
  },
  {
   "price_no": 4,
   "label": "К-12М",
   "catalog_id": "kw-06",
-  "img": "img/kw-06_main.png",
-  "alt": "img/kw-06_alt.png",
-  "size": [
-   1800,
-   1128
-  ],
-  "bytes": 745182
+  "img": {
+   "file": "img/kw-06_main.png",
+   "size": [
+    1800,
+    1128
+   ],
+   "bytes": 745182
+  },
+  "alt": {
+   "file": "img/kw-06_alt.png",
+   "size": [
+    1800,
+    1138
+   ],
+   "bytes": 785221
+  },
+  "zoom": {
+   "file": "img/kw-06_zoom.png",
+   "size": [
+    1800,
+    1127
+   ],
+   "bytes": 179813
+  },
+  "detail": {
+   "file": "img/kw-06_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 602225
+  }
  },
  {
   "price_no": 5,
   "label": "К-12М Багажный бокс",
   "catalog_id": "kw-02",
-  "img": "img/kw-02_main.png",
-  "alt": "img/kw-02_alt.png",
-  "size": [
-   1800,
-   775
-  ],
-  "bytes": 543153
+  "img": {
+   "file": "img/kw-02_main.png",
+   "size": [
+    1800,
+    775
+   ],
+   "bytes": 543153
+  },
+  "alt": {
+   "file": "img/kw-02_alt.png",
+   "size": [
+    1800,
+    1175
+   ],
+   "bytes": 1419505
+  },
+  "zoom": {
+   "file": "img/kw-02_zoom.png",
+   "size": [
+    1800,
+    775
+   ],
+   "bytes": 387124
+  },
+  "detail": {
+   "file": "img/kw-02_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 402243
+  }
  },
  {
   "price_no": 6,
   "label": "К-15М",
   "catalog_id": "kw-07",
-  "img": "img/kw-07_main.png",
-  "alt": "img/kw-07_alt.png",
-  "size": [
-   1800,
-   1149
-  ],
-  "bytes": 614057
+  "img": {
+   "file": "img/kw-07_main.png",
+   "size": [
+    1800,
+    1149
+   ],
+   "bytes": 614057
+  },
+  "alt": {
+   "file": "img/kw-07_alt.png",
+   "size": [
+    1800,
+    1056
+   ],
+   "bytes": 674717
+  },
+  "zoom": {
+   "file": "img/kw-07_zoom.png",
+   "size": [
+    1800,
+    1148
+   ],
+   "bytes": 197196
+  },
+  "detail": {
+   "file": "img/kw-07_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 470243
+  }
  },
  {
   "price_no": 7,
   "label": "К-15М ВИП",
   "catalog_id": "kw-03",
-  "img": "img/kw-03_main.png",
-  "alt": "img/kw-03_alt.png",
-  "size": [
-   1800,
-   1732
-  ],
-  "bytes": 2204456
+  "img": {
+   "file": "img/kw-03_main.png",
+   "size": [
+    1800,
+    1732
+   ],
+   "bytes": 2204456
+  },
+  "alt": {
+   "file": "img/kw-03_alt.png",
+   "size": [
+    1800,
+    1049
+   ],
+   "bytes": 500140
+  },
+  "zoom": {
+   "file": "img/kw-03_zoom.png",
+   "size": [
+    1800,
+    1732
+   ],
+   "bytes": 1902037
+  },
+  "detail": {
+   "file": "img/kw-03_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 968190
+  }
  },
  {
   "price_no": 8,
   "label": "Изделие 135 Багажный бокс",
   "catalog_id": null,
   "img": null,
-  "alt": null
+  "alt": null,
+  "zoom": null,
+  "detail": null
  },
  {
   "price_no": 9,
   "label": "Штора К-12/700",
   "catalog_id": "kw-15",
-  "img": "img/kw-15_main.png",
+  "img": {
+   "file": "img/kw-15_main.png",
+   "size": [
+    1800,
+    1755
+   ],
+   "bytes": 792166
+  },
   "alt": null,
-  "size": [
-   1800,
-   1755
-  ],
-  "bytes": 792166
+  "zoom": {
+   "file": "img/kw-15_zoom.png",
+   "size": [
+    1800,
+    1755
+   ],
+   "bytes": 568951
+  },
+  "detail": {
+   "file": "img/kw-15_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 319163
+  }
  },
  {
   "price_no": 10,
   "label": "Штора-М, К-8/600",
   "catalog_id": "kw-16",
-  "img": "img/kw-16_main.png",
+  "img": {
+   "file": "img/kw-16_main.png",
+   "size": [
+    1600,
+    2037
+   ],
+   "bytes": 880373
+  },
   "alt": null,
-  "size": [
-   1600,
-   2037
-  ],
-  "bytes": 880373
+  "zoom": {
+   "file": "img/kw-16_zoom.png",
+   "size": [
+    1600,
+    2037
+   ],
+   "bytes": 581925
+  },
+  "detail": {
+   "file": "img/kw-16_detail.png",
+   "size": [
+    1100,
+    1100
+   ],
+   "bytes": 432798
+  }
  },
  {
   "price_no": 11,
   "label": "Поле-31",
   "catalog_id": "kw-18",
-  "img": "img/kw-18_main.png",
-  "alt": "img/kw-18_alt.png",
-  "size": [
-   1600,
-   2020
-  ],
-  "bytes": 993045
+  "img": {
+   "file": "img/kw-18_main.png",
+   "size": [
+    1600,
+    2020
+   ],
+   "bytes": 993045
+  },
+  "alt": {
+   "file": "img/kw-18_alt.png",
+   "size": [
+    1800,
+    1280
+   ],
+   "bytes": 785960
+  },
+  "zoom": {
+   "file": "img/kw-18_zoom.png",
+   "size": [
+    1600,
+    2020
+   ],
+   "bytes": 1207309
+  },
+  "detail": {
+   "file": "img/kw-18_detail.png",
+   "size": [
+    1100,
+    1100
+   ],
+   "bytes": 656194
+  }
  },
  {
   "price_no": 12,
   "label": "Ребус-4",
   "catalog_id": "kw-17",
-  "img": "img/kw-17_main.png",
+  "img": {
+   "file": "img/kw-17_main.png",
+   "size": [
+    1800,
+    1712
+   ],
+   "bytes": 1046867
+  },
   "alt": null,
-  "size": [
-   1800,
-   1712
-  ],
-  "bytes": 1046867
+  "zoom": {
+   "file": "img/kw-17_zoom.png",
+   "size": [
+    1800,
+    1712
+   ],
+   "bytes": 1107560
+  },
+  "detail": {
+   "file": "img/kw-17_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 696745
+  }
  },
  {
   "price_no": 13,
   "label": "ТП 4-28А",
   "catalog_id": "kw-09",
-  "img": "img/kw-09_main.png",
+  "img": {
+   "file": "img/kw-09_main.png",
+   "size": [
+    1600,
+    3099
+   ],
+   "bytes": 2497977
+  },
   "alt": null,
-  "size": [
-   1600,
-   3099
-  ],
-  "bytes": 2497977
+  "zoom": {
+   "file": "img/kw-09_zoom.png",
+   "size": [
+    1600,
+    3098
+   ],
+   "bytes": 2223228
+  },
+  "detail": {
+   "file": "img/kw-09_detail.png",
+   "size": [
+    1100,
+    1100
+   ],
+   "bytes": 608254
+  }
  },
  {
   "price_no": 14,
   "label": "ТП 4-28Б",
   "catalog_id": "kw-10",
-  "img": "img/kw-10_main.png",
+  "img": {
+   "file": "img/kw-10_main.png",
+   "size": [
+    1600,
+    2922
+   ],
+   "bytes": 2756716
+  },
   "alt": null,
-  "size": [
-   1600,
-   2922
-  ],
-  "bytes": 2756716
+  "zoom": {
+   "file": "img/kw-10_zoom.png",
+   "size": [
+    1600,
+    2922
+   ],
+   "bytes": 3506476
+  },
+  "detail": {
+   "file": "img/kw-10_detail.png",
+   "size": [
+    1100,
+    1100
+   ],
+   "bytes": 1031262
+  }
  },
  {
   "price_no": 15,
   "label": "ТП 4-50А",
   "catalog_id": "kw-11",
-  "img": "img/kw-11_main.png",
+  "img": {
+   "file": "img/kw-11_main.png",
+   "size": [
+    1600,
+    4056
+   ],
+   "bytes": 4307239
+  },
   "alt": null,
-  "size": [
-   1600,
-   4056
-  ],
-  "bytes": 4307239
+  "zoom": {
+   "file": "img/kw-11_zoom.png",
+   "size": [
+    1600,
+    4055
+   ],
+   "bytes": 3671210
+  },
+  "detail": {
+   "file": "img/kw-11_detail.png",
+   "size": [
+    1100,
+    1100
+   ],
+   "bytes": 828662
+  }
  },
  {
   "price_no": 16,
   "label": "ТП 4-50Б",
   "catalog_id": "kw-12",
-  "img": "img/kw-12_main.png",
+  "img": {
+   "file": "img/kw-12_main.png",
+   "size": [
+    1600,
+    3781
+   ],
+   "bytes": 2505127
+  },
   "alt": null,
-  "size": [
-   1600,
-   3781
-  ],
-  "bytes": 2505127
+  "zoom": {
+   "file": "img/kw-12_zoom.png",
+   "size": [
+    1600,
+    3780
+   ],
+   "bytes": 2145403
+  },
+  "detail": {
+   "file": "img/kw-12_detail.png",
+   "size": [
+    1100,
+    1100
+   ],
+   "bytes": 576750
+  }
  },
  {
   "price_no": 17,
   "label": "ТП 7-100",
   "catalog_id": "kw-13",
-  "img": "img/kw-13_main.png",
+  "img": {
+   "file": "img/kw-13_main.png",
+   "size": [
+    1600,
+    3299
+   ],
+   "bytes": 1954197
+  },
   "alt": null,
-  "size": [
-   1600,
-   3299
-  ],
-  "bytes": 1954197
+  "zoom": {
+   "file": "img/kw-13_zoom.png",
+   "size": [
+    1600,
+    3298
+   ],
+   "bytes": 1717196
+  },
+  "detail": {
+   "file": "img/kw-13_detail.png",
+   "size": [
+    1100,
+    1100
+   ],
+   "bytes": 591668
+  }
  },
  {
   "price_no": 18,
   "label": "ТП 8-100",
   "catalog_id": "kw-14",
-  "img": "img/kw-14_main.png",
-  "alt": "img/kw-14_alt.png",
-  "size": [
-   1600,
-   2618
-  ],
-  "bytes": 2200712
+  "img": {
+   "file": "img/kw-14_main.png",
+   "size": [
+    1600,
+    2618
+   ],
+   "bytes": 2200712
+  },
+  "alt": {
+   "file": "img/kw-14_alt.png",
+   "size": [
+    1800,
+    740
+   ],
+   "bytes": 1007694
+  },
+  "zoom": {
+   "file": "img/kw-14_zoom.png",
+   "size": [
+    1600,
+    2617
+   ],
+   "bytes": 1932350
+  },
+  "detail": {
+   "file": "img/kw-14_detail.png",
+   "size": [
+    1100,
+    1100
+   ],
+   "bytes": 751405
+  }
  },
  {
   "price_no": 19,
   "label": "Сигнал-М2",
   "catalog_id": "kw-19",
-  "img": "img/kw-19_main.png",
+  "img": {
+   "file": "img/kw-19_main.png",
+   "size": [
+    1800,
+    1646
+   ],
+   "bytes": 1005922
+  },
   "alt": null,
-  "size": [
-   1800,
-   1646
-  ],
-  "bytes": 1005922
+  "zoom": {
+   "file": "img/kw-19_zoom.png",
+   "size": [
+    1800,
+    1645
+   ],
+   "bytes": 838463
+  },
+  "detail": {
+   "file": "img/kw-19_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 770519
+  }
  },
  {
   "price_no": 20,
   "label": "РЭБ-тестер",
   "catalog_id": "kw-20",
-  "img": "img/kw-20_main.png",
+  "img": {
+   "file": "img/kw-20_main.png",
+   "size": [
+    1800,
+    2132
+   ],
+   "bytes": 2946019
+  },
   "alt": null,
-  "size": [
-   1800,
-   2132
-  ],
-  "bytes": 2946019
+  "zoom": {
+   "file": "img/kw-20_zoom.png",
+   "size": [
+    1800,
+    2132
+   ],
+   "bytes": 3673034
+  },
+  "detail": {
+   "file": "img/kw-20_detail.png",
+   "size": [
+    1200,
+    1200
+   ],
+   "bytes": 1675219
+  }
  }
 ]

@@ -617,21 +617,27 @@ def check_png() -> tuple[list[Finding], dict]:
             continue
         if norm(d.name) != norm(exp["folder"]):
             findings.append(Finding("З", f"{exp['order']:02d}", f"папка сдачи «{d.name}» ≠ эталону §9 «{exp['folder']}»", str(d)))
-        for card in CARDS:
-            f = d / f"{card}.png"
-            if not f.is_file():
+        # карточки: v3 «01_СУПЕРЦЕНА…», v4 карусель «01_ЛИСТАЙ…» — определяем по префиксу номера
+        got_cards: dict[str, Path] = {}
+        for f in d.glob("*.png"):
+            mm = re.match(r"(0[1-4])_", f.stem)
+            if mm:
+                got_cards[mm.group(1)] = f
+        for idx in ("01", "02", "03", "04"):
+            f = got_cards.get(idx)
+            if not f:
                 if not partial:
-                    findings.append(Finding("Б3", f"{exp['order']:02d}", f"нет {card}.png", str(d)))
+                    findings.append(Finding("Б3", f"{exp['order']:02d}", f"нет PNG слайда {idx}_*.png", str(d)))
                 continue
             try:
                 im = Image.open(f)
                 if im.size != CARD_SIZE:
-                    findings.append(Finding("Б3", f"{exp['order']:02d}", f"{card}: размер {im.size} ≠ {CARD_SIZE}", str(f)))
+                    findings.append(Finding("Б3", f"{exp['order']:02d}", f"{f.name}: размер {im.size} ≠ {CARD_SIZE}", str(f)))
                 if im.mode not in ("RGB", "RGBA"):
-                    findings.append(Finding("З", f"{exp['order']:02d}", f"{card}: режим {im.mode}", str(f)))
+                    findings.append(Finding("З", f"{exp['order']:02d}", f"{f.name}: режим {im.mode}", str(f)))
             except Exception as exc:
-                findings.append(Finding("Б3", f"{exp['order']:02d}", f"{card} не читается: {exc}", str(f)))
-        extra = [x.name for x in d.glob("*.png") if x.stem not in CARDS]
+                findings.append(Finding("Б3", f"{exp['order']:02d}", f"{f.name} не читается: {exc}", str(f)))
+        extra = [x.name for x in d.glob("*.png") if not re.match(r"0[1-4]_", x.stem)]
         if extra:
             findings.append(Finding("З", f"{exp['order']:02d}", f"лишние PNG: {extra[:4]}", str(d)))
     for order, d in sorted(by_order.items()):

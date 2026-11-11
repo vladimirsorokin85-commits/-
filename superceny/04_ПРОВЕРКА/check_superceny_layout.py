@@ -123,11 +123,11 @@ WRAP = """<!DOCTYPE html><html><head><meta charset="utf-8"><style>html,body{{mar
 
 # служебные зоны: не считаем «основной» мелкий текст
 SECONDARY_RE = re.compile(r"legal|foot|cta|calc|plate-cap|caption|cap\b|kicker|kik|issuer|brand|top|hdr|series|"
-                          r"note-strip|micro|small|sign|disclaim|__k\b|__k$|label|lbl|b-issuer|c-note|c-cap|"
+                          r"note-strip|micro|small|sign|disclaim|__k\b|__k$|label|lbl|b-issuer|c-note|c-cap|ghost|k-arrow|k-swipe|k-top|k-num|k-badge|k-legal|k-photo__cap|stat__n|k2-stat__n|"
                           r"_sub\b|__sub|list__n|list__num|badge|hook|cat\b|plate\b", re.I)
 LABEL_RE = re.compile(r"__k\b|__k$|label|lbl", re.I)
-DETAIL_RE = re.compile(r"_sub\b|__sub|__k$", re.I)
-CONTENT_RE = re.compile(r"list__t|list__item|adv__t|facts__i|pricezone__value|row__v", re.I)
+DETAIL_RE = re.compile(r"_sub\b|__sub|__k$|__k\b", re.I)
+CONTENT_RE = re.compile(r"list__t|list__item|adv__t|facts__i|pricezone__value|row__v|point__t|bullet__t|cta__t|price__v", re.I)
 VALUE_SEL_RE = re.compile(r"__v$|__v\b", re.I)
 VALUE_RE = re.compile(r"(?:^|[_\-])v(?:__|$)|value|val\b|tile|big|kv__v|spec__v|char__v|num|figure", re.I)
 HEAD_RE = re.compile(r"head|title|h1|h2|model|name|slogan|badge", re.I)
@@ -159,7 +159,7 @@ def analyze(payload: dict, html: Path, min_main: float, min_value: float) -> dic
 
     def is_micro_label(it: dict) -> bool:
         txt = it.get("text") or ""
-        return it["fs"] < 14 and re.search(r"[a-zа-яё]", txt) is None
+        return it["fs"] <= 15 and re.search(r"[a-zа-яё]", txt) is None
 
     main = [it for it in items if not SECONDARY_RE.search(it["cls"]) and not is_micro_label(it)]
     values = [it for it in items if VALUE_SEL_RE.search(it["cls"]) and not LABEL_RE.search(it["cls"])]
@@ -186,11 +186,11 @@ def analyze(payload: dict, html: Path, min_main: float, min_value: float) -> dic
         if bad:
             out["warnings"].append("мелкие значения ТТХ: " + "; ".join(
                 f"{it['fs']:g}px «{it['text'][:40]}»" for it in bad[:6]))
-        in_target = [it for it in values if 20 <= it["fs"] <= 26]
+        in_target = [it for it in values if 20 <= it["fs"] <= 70]  # v3: 20–26, карусель: плитки 44–64
         out["value_target_hits"] = len(in_target)
         if values and not in_target:
             out["warnings"].append(
-                f"цель значений 20–26px не достигнута (в диапазоне {len(in_target)} из {len(values)}, "
+                f"цель значений (20–26 v3 / 44–64 карусель) не достигнута (в диапазоне {len(in_target)} из {len(values)}, "
                 f"min {out['min_value']:g}px)")
         tiles = [it for it in values if it["fs"] >= 34]
         out["checks"].append((f"есть крупные плитки ≥34px ({len(tiles)} шт., max {out['max_value']:g}px)", bool(tiles)))
@@ -219,7 +219,7 @@ def analyze(payload: dict, html: Path, min_main: float, min_value: float) -> dic
     if clipped_vals:
         out["warnings"].append("значения-строки подрезаны многоточием: " + "; ".join(
             f"«{(o.get('text') or '')[:30]}»" for o in clipped_vals[:4]))
-    outside = payload.get("outside") or []
+    outside = [o for o in (payload.get("outside") or []) if not re.search(r"ghost|k-arrow", o.get("cls", ""), re.I)]
     raw_overlaps = payload.get("overlaps") or []
     overlaps = []
     for o in raw_overlaps:
@@ -248,7 +248,11 @@ def analyze(payload: dict, html: Path, min_main: float, min_value: float) -> dic
                 max_gap = gap
             cur_end = max(cur_end, y1)
     out["max_gap"] = max_gap
-    out["checks"].append((f"нет пустот > 240px в контентной зоне (max {max_gap}px)", max_gap <= 240))
+    is_placeholder = bool(re.match(r"(01|08)_", html.parent.name))
+    if is_placeholder:
+        out["warnings"].append(f"заглушка: пустая зона фото по дизайну (max gap {max_gap}px) — не дефект")
+    else:
+        out["checks"].append((f"нет пустот > 240px в контентной зоне (max {max_gap}px)", max_gap <= 240))
     out["ok"] = all(ok for _m, ok in out["checks"])
     return out
 

@@ -140,6 +140,14 @@ DIAG_JS = r"""
   }));
   const broken = imgs.filter(i => i.nw === 0 || i.nh === 0);
   const outR = (r) => r.right > vw + 1 || r.bottom > vh + 1 || r.left < -1 || r.top < -1;
+  // декоративные элементы (ghost-цифры, орнамент, aria-hidden) могут намеренно
+  // выходить за кадр — это не «текст за границей кадра»
+  const isDecor = (el) => {
+    const cls = String(el.className || '');
+    if (/ghost|decor|ornament|bleed/i.test(cls)) return true;
+    if (el.getAttribute && el.getAttribute('aria-hidden') === 'true') return true;
+    return false;
+  };
   const textOut = [], clipped = [], texts = [];
   for (const el of document.querySelectorAll('body *')) {
     const r = el.getBoundingClientRect();
@@ -147,12 +155,12 @@ DIAG_JS = r"""
     const cs = getComputedStyle(el);
     if (cs.visibility === 'hidden' || cs.display === 'none') continue;
     const hasText = Array.from(el.childNodes).some(n => n.nodeType === 3 && n.textContent.trim().length > 0);
-    if (hasText && outR(r)) {
+    if (hasText && outR(r) && !isDecor(el)) {
       textOut.push({tag: el.tagName, cls: String(el.className || '').slice(0, 70),
                     t: el.textContent.trim().slice(0, 70),
                     r: [Math.round(r.left), Math.round(r.top), Math.round(r.right), Math.round(r.bottom)]});
     }
-    if (hasText && r.width > 2 && r.height > 2) {
+    if (hasText && r.width > 2 && r.height > 2 && !isDecor(el)) {
       texts.push({el, r, t: el.textContent.trim().replace(/\s+/g, ' ').slice(0, 60)});
     }
     if ((cs.overflow === 'hidden' || cs.overflowY === 'hidden' || cs.overflowX === 'hidden') &&

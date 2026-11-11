@@ -19,6 +19,8 @@ DATA_DIR = ROOT / "01_ДАННЫЕ"
 DESIGN_DIR = ROOT / "02_ДИЗАЙН"
 OUT_DIR = ROOT / "05_ГОТОВОЕ"
 GALLERY_DIR = OUT_DIR / "gallery"
+CHECK_DIR = ROOT / "04_ПРОВЕРКА"
+CARR_DIR = CHECK_DIR / "карусели"
 QA_DIR = (ROOT / "_render" / "_qa") if _env_root else (RENDER_DIR / "_qa")
 POSITIONS_JSON = DATA_DIR / "positions.json"
 
@@ -32,20 +34,20 @@ EXPECT_POSITIONS = 20
 EXPECT_CARDS = EXPECT_POSITIONS * 4      # 80
 EXPECT_PNG = EXPECT_CARDS + 1            # + hero 00_СУПЕРЦЕНЫ.png = 81
 
-# карточка: префикс имени HTML -> каноническое имя PNG (бриф §4)
+# карточка: префикс имени HTML -> каноническое имя PNG (бриф §10, карусель)
 CARD_NAMES = {
     "00": "00_СУПЕРЦЕНЫ",
-    "01": "01_СУПЕРЦЕНА",
-    "02": "02_ХАРАКТЕРИСТИКИ",
-    "03": "03_ПРИМЕНЕНИЕ",
-    "04": "04_СУПЕР-ПРЕДЛОЖЕНИЕ",
+    "01": "01_ЛИСТАЙ",
+    "02": "02_ЦИФРЫ",
+    "03": "03_СЦЕНАРИИ",
+    "04": "04_CTA",
 }
 CARD_TITLES = {
     "00": "Общая карточка «СУПЕРЦЕНЫ»",
-    "01": "Суперцена",
-    "02": "Характеристики",
-    "03": "Применение / кому",
-    "04": "Супер-предложение",
+    "01": "Крючок",
+    "02": "Цифры",
+    "03": "Сценарии",
+    "04": "Финал / CTA",
 }
 HERO_ID = "00"
 
@@ -57,7 +59,7 @@ def card_of(stem: str) -> str | None:
 
 
 def canon_stem(stem: str) -> str:
-    """Любое имя карточки -> каноническое (00_СУПЕРЦЕНЫ … 04_СУПЕР-ПРЕДЛОЖЕНИЕ)."""
+    """Любое имя карточки -> каноническое (00_СУПЕРЦЕНЫ … 04_CTA)."""
     c = card_of(stem)
     return CARD_NAMES[c] if c else stem
 
