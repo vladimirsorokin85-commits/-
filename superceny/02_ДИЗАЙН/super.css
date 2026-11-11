@@ -2820,3 +2820,11 @@ body {
 .c-specs--empty b { font-size: 40px; }
 .c-specs--empty span { margin-top: 8px; max-width: 60ch; }
 .card--02 .c-specs--empty { margin: 12px 0 0; }
+
+/* контр-фикс: в полосе ТТХ (card 03) значения не рвутся по пробелам — дроби/диапазоны одной строкой */
+.card--03 .c-facts__i {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  font-size: 15px;
+}

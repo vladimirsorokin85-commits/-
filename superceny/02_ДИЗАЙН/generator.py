@@ -86,12 +86,30 @@ def clean_specs(specs, limit=8):
 
 
 def derive_key_facts(specs, limit=4):
-    """Короткие значения из паспорта для полосы ключевых ТТХ."""
+    """Короткие значения из паспорта для полосы ключевых ТТХ (без разрыва дробей)."""
     picks = []
+    unit_re = re.compile(
+        r"(\d+(?:[.,]\d+)?(?:\s*[/–-]\s*\d+(?:[.,]\d+)?)?\s*"
+        r"(?:МГц|ГГц|кГц|кг|г|мм|см|м|ч|мин|В|Вт|кВт|А·ч|А|%))", re.I)
     for s in (specs or []):
-        for tok in re.split(r"[;,]", str(s.get("value") or "")):
-            tok = tok.strip(" .")
-            if 4 <= len(tok) <= 20 and any(ch.isdigit() for ch in tok) and tok not in picks:
+        value = str(s.get("value") or "")
+        for tok in value.split(";"):
+            tok = re.sub(r"\s+", " ", tok.strip(" ."))
+            if not tok or not any(ch.isdigit() for ch in tok):
+                continue
+            # вес: «Брутто 0,5 кг, нетто 0,2 кг» -> «0,5 кг» (дробь не рвём)
+            m_net = re.search(r"[Нн]етто\s*(\d+(?:[.,]\d+)?\s*кг)", tok)
+            m_br = re.search(r"[Бб]рутто\s*(\d+(?:[.,]\d+)?\s*кг)", tok)
+            if m_net:
+                tok = re.sub(r"\s+", " ", m_net.group(1));  # для рекламы — нетто
+            elif m_br:
+                tok = re.sub(r"\s+", " ", m_br.group(1))
+            elif len(tok) > 20:
+                m2 = unit_re.search(tok)
+                if not m2:
+                    continue
+                tok = re.sub(r"\s+", " ", m2.group(1))
+            if 2 <= len(tok) <= 24 and tok not in picks:
                 picks.append(tok)
             if len(picks) >= limit:
                 return picks
