@@ -15,6 +15,7 @@ PART3_DIR = HORDE_DIR / "mordor_svo_part3"
 PART2_DIR = HORDE_DIR / "mordor_svo_part2"
 MORDOR_DIR = HORDE_DIR / "mordor_svo_frames"
 MODERN_DIR = HORDE_DIR / "modern_frames"
+SHORTS_DIR = HORDE_DIR / "shorts_9x16"
 OUTPUT_DIR = HORDE_DIR / "output"
 
 CAPTIONS_CINEMA = [
@@ -64,7 +65,14 @@ class StudioHandler(SimpleHTTPRequestHandler):
             return
         routes = {
             "/video/master.mp4": (OUTPUT_DIR / "azbuka_po_polyam_mordor_svo_master_1080p.mp4", "video/mp4", None),
-            "/video/reel.mp4": (OUTPUT_DIR / "azbuka_po_polyam_reel_9x16.mp4", "video/mp4", None),
+            "/video/reel.mp4": (OUTPUT_DIR / "azbuka_po_polyam_shorts_native_9x16_1080p.mp4", "video/mp4", None),
+            "/video/shorts_native.mp4": (OUTPUT_DIR / "azbuka_po_polyam_shorts_native_9x16_1080p.mp4", "video/mp4", None),
+            "/download/azbuka_po_polyam_shorts_native_9x16_1080p.mp4": (
+                OUTPUT_DIR / "azbuka_po_polyam_shorts_native_9x16_1080p.mp4", "video/mp4", "azbuka_po_polyam_shorts_native_9x16_1080p.mp4"
+            ),
+            "/download/azbuka_po_polyam_shorts_9x16_frames.zip": (
+                OUTPUT_DIR / "azbuka_po_polyam_shorts_9x16_frames.zip", "application/zip", "azbuka_po_polyam_shorts_9x16_frames.zip"
+            ),
             "/download/azbuka_po_polyam_mordor_svo_master_1080p.mp4": (
                 OUTPUT_DIR / "azbuka_po_polyam_mordor_svo_master_1080p.mp4", "video/mp4", "azbuka_po_polyam_mordor_svo_master_1080p.mp4"
             ),
@@ -195,22 +203,22 @@ class StudioHandler(SimpleHTTPRequestHandler):
       <div class="sub">Сведено миллисекунда в миллисекунду с загруженным треком (02:28.52 · сетка 160.0 BPM, дропы на 0:12.04 / 1:12.05 / 2:00.05, яма на 1:00.05) · Единый киногрейдинг ARRI Alexa Mini LF (холодный сланец + тёплый вольфрам) · 0 людей, 0 старых касок, 0 повторов</div>
     </div>
     <div class="btns">
-      <a class="btn" href="/download/medal_za_vzyatie_novoy_izengardovki.jpg">🏅 Медаль «ЗА ВЗЯТИЕ НОВОЙ ИЗЕНГАРДОВКИ» (JPG)</a>
+      <a class="btn" href="/download/azbuka_po_polyam_shorts_native_9x16_1080p.mp4">🔥 НОВЫЙ SHORTS 9:16 БЕЗ ОБРЕЗКИ (15.7 МБ)</a>
+      <a class="btn ice" href="/download/azbuka_po_polyam_shorts_9x16_frames.zip">📦 10 нативных вертикальных кадров 9:16 (2.2 МБ)</a>
       <a class="btn" href="/download/azbuka_po_polyam_mordor_svo_master_1080p.mp4">⬇ Плавный Мастер-Клип 16:9 (20.9 МБ)</a>
-      <a class="btn" href="/download/azbuka_po_polyam_reel_9x16.mp4">⬇ Плавный Reel 9:16 (7.4 МБ)</a>
-      <a class="btn ice" href="/download/azbuka_po_polyam_12_cinema_frames.zip">📦 12 кинокадров ARRI Anamorphic (9.1 МБ)</a>
-      <a class="btn ice" href="/download/azbuka_po_polyam_58_timecoded_frames.zip">📦 Все 58 кадров по таймкодам (21.4 МБ)</a>
+      <a class="btn" href="/download/medal_za_vzyatie_novoy_izengardovki.jpg">🏅 Медаль «ЗА ВЗЯТИЕ НОВОЙ ИЗЕНГАРДОВКИ» (JPG)</a>
+      <a class="btn ice" href="/download/azbuka_po_polyam_58_timecoded_frames.zip">📦 Все 58 кадров 16:9 (21.4 МБ)</a>
     </div>
   </header>
 
   <div class="players">
     <div class="hero">
       <video controls autoplay playsinline src="/video/master.mp4"></video>
-      <div class="hero-bar">🔊 ВКЛЮЧИТЕ ЗВУК: Оригинальный трек «АЗБУКА — ПО ПОЛЯМ (Prod. by scaryele)» · 58 строго уникальных сцен · 1920×1080 30fps</div>
+      <div class="hero-bar">🔊 ПОЛНЫЙ МАСТЕР 16:9: «АЗБУКА — ПО ПОЛЯМ (Prod. by scaryele)» · 58 строго уникальных сцен · 1920×1080 30fps</div>
     </div>
     <div class="hero">
-      <video controls loop playsinline src="/video/reel.mp4"></video>
-      <div class="hero-bar">📱 REEL / SHORTS 9:16 (00:09–00:36 песни · 1080×1920 · реальный вокал припева)</div>
+      <video controls loop playsinline src="/video/shorts_native.mp4"></video>
+      <div class="hero-bar">📱 НОВЫЙ ПОЛНОЦЕННЫЙ SHORTS 9:16 (1080×1920 · 100% нативные вертикальные кадры без кропа 16:9 · припев 01:11–01:36)</div>
     </div>
   </div>
 
