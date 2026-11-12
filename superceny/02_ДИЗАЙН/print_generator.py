@@ -23,6 +23,11 @@ SUPER = os.path.dirname(HERE)
 HTML_DIR = os.path.join(SUPER, "03_HTML")
 POSITIONS = os.path.join(SUPER, "01_ДАННЫЕ", "positions.json")
 PRINT_IMG = os.path.join(HERE, "img", "print")
+DRAFT_PRICES = {}
+try:
+    DRAFT_PRICES = json.load(open(os.path.join(HERE, "_prices_draft.json"), encoding="utf-8"))
+except Exception:
+    DRAFT_PRICES = {}
 
 SLIDES = ["01_ЛИСТАЙ.html", "02_ЦИФРЫ.html", "03_СЦЕНАРИИ.html", "04_CTA.html"]
 LEGAL = ("Характеристики — по паспорту изделия. Не является публичной офертой. "
@@ -52,6 +57,14 @@ def load():
                 car[k] = v
         p["car"] = car
         pid = p["id"]
+        p["price_value"] = item.get("price_value")
+        p["price_display"] = item.get("price_display")
+        p["has_price"] = item.get("has_price")
+        p["price_note"] = item.get("price_note") or "розница, ноябрь 2026"
+        if p["price_value"] in (None, "") and DRAFT_PRICES.get(pid) is not None:
+            p["price_value"] = DRAFT_PRICES[pid]
+            p["price_display"] = "{:,}".format(int(DRAFT_PRICES[pid])).replace(",", " ") + " ₽"
+            p["has_price"] = True
         main = os.path.join(HERE, "img", pid + "_main.png")
         duo = os.path.join(PRINT_IMG, pid + "_duo.png")
         duo_zoom = os.path.join(PRINT_IMG, pid + "_duo_zoom.png")
@@ -116,13 +129,75 @@ def thread(perf_h=22):
   <i class="thread"></i>""" % perf_h
 
 
-def tag_frag(p, side="right"):
-    claim = get(p, "s1_claim", "СУПЕРЦЕНА")
+def tag_frag(p, mode="price"):
+    if mode == "plain":
+        return """  <div class="tag tag--frag tag-frag" aria-hidden="true">
+    <span class="tag__k">СУПЕРЦЕНА</span>
+    <span class="tag__v" style="font-size:38px;line-height:0.95">ЦЕНА<br>НА 4-Й</span>
+    <span class="tag__note">смотри финал →</span>
+  </div>"""
+    if mode == "med":
+        if p.get("has_price") and p.get("price_display"):
+            num = price_num(p)
+            fs = min(price_font(price_display(p)), 54)
+            inner = ('<span class="tag__v" style="font-size:%dpx;line-height:0.95">%s <i class="rub">руб.</i></span>'
+                     '<span class="tag__note">оторви купон на 4-й</span>' % (fs, esc(num)))
+        else:
+            inner = ('<span class="tag__v" style="font-size:34px;line-height:1.02">ПРАЙС<br>ПО ЗАПРОСУ</span>'
+                     '<span class="tag__note">цена — на 4-й</span>')
+        return """  <div class="tag tag--frag tag-frag" aria-hidden="true">
+    <span class="tag__k">СУПЕРЦЕНА</span>
+    %s
+  </div>""" % inner
     return """  <div class="tag tag--frag tag-frag" aria-hidden="true">
-    <span class="tag__k">%s</span>
-    <span class="tag__v">СУПЕР<br>ЦЕНА</span>
-    <span class="tag__note">цену сорвали — спрашивай</span>
-  </div>""" % esc(claim[:26])
+    %s
+  </div>""" % price_tag_html(p)
+
+
+def price_font_frag(text):
+    n = len(text)
+    if n <= 7:
+        return 70
+    if n <= 9:
+        return 56
+    if n <= 12:
+        return 44
+    return 36
+
+
+def price_tag_html(p, note_prefix="розница"):
+    if not (p.get("has_price") and p.get("price_display")):
+        return ('<span class="tag__k">СУПЕРЦЕНА · НПО «КИЛОВАТТ»</span>'
+                '<span class="tag__v" style="font-size:34px;line-height:1.02">ПРАЙС<br>ПО ЗАПРОСУ</span>'
+                '<span class="tag__note">прайс по запросу</span>')
+    num = price_num(p)
+    fs = price_font_frag(price_display(p))
+    return ('<span class="tag__k">СУПЕРЦЕНА · НПО «КИЛОВАТТ»</span>'
+            '<span class="tag__v" style="font-size:%dpx;line-height:0.92">%s <i class="rub">руб.</i></span>'
+            % (fs, esc(num)))
+
+
+def price_display(p):
+    if p.get("has_price") and p.get("price_display"):
+        return str(p["price_display"]).replace("\u00a0", " ").replace("\u202f", " ").strip()
+    return "ПРАЙС ПО ЗАПРОСУ"
+
+
+def price_num(p):
+    if p.get("has_price") and p.get("price_display"):
+        return price_display(p).replace("₽", "").replace("руб.", "").strip()
+    return None
+
+
+def price_font(text):
+    n = len(text or "")
+    if n <= 7:
+        return 96
+    if n <= 9:
+        return 84
+    if n <= 12:
+        return 64
+    return 52
 
 
 def stamp(text="СУПЕРЦЕНА"):
@@ -133,9 +208,11 @@ def page_num(idx):
     return """  <div class="pnum"><span class="stencil">0%d</span><em>/</em>04</div>""" % idx
 
 
-def foot():
-    return """  <div class="foot"><span>%s</span><span>%s</span><span>Прайс по запросу · доставка по РФ · самовывоз в Москве</span></div>
-  <div class="legal">%s</div>""" % (TG, TEL, LEGAL)
+def foot(has_price=False):
+    line = ("Розничные цены · доставка по РФ · самовывоз в Москве" if has_price
+            else "Прайс по запросу · доставка по РФ · самовывоз в Москве")
+    return """  <div class="foot"><span>%s</span><span>%s</span><span>%s</span></div>
+  <div class="legal">%s</div>""" % (TG, TEL, line, LEGAL)
 
 
 def nav_hint(text, arrow=True):
@@ -175,7 +252,7 @@ def html_page(p, idx, title, body, extra_class=""):
 </html>
 """ % {"title": esc(title), "num": idx, "asset": ASSET, "idx": idx, "cls": extra_class,
        "head": page_head(ASSET), "reg": reg_marks(), "thread": thread(18 + idx * 20),
-       "body": body, "pnum": page_num(idx), "foot": foot()}
+       "body": body, "pnum": page_num(idx), "foot": foot(bool(p.get("has_price")))}
 
 
 # --------------------------------------------------------------------------
@@ -200,7 +277,7 @@ def page01(p):
   %s
   %s
   %s""" % (esc(kicker), ncls, (300 if len(name) <= 6 else 250 if len(name) <= 8 else 200 if len(name) <= 10 else 160 if len(name) <= 13 else 132),
-              esc(name), esc(claim), esc(sub), esc(p["name_full"].upper()), photo_zoom(p), tag_frag(p), stamp("СУПЕРЦЕНА"),
+              esc(name), esc(claim), esc(sub), esc(p["name_full"].upper()), photo_zoom(p), tag_frag(p, "price"), stamp("СУПЕРЦЕНА"),
               nav_hint("ЛИСТАЙ"), "")
     return html_page(p, 1, p["name"], body)
 
@@ -242,7 +319,7 @@ def page02(p):
   %s
   %s
   %s
-  %s""" % (esc(lead), "\n".join(rows), photo_zoom(p), tag_frag(p, "left"),
+  %s""" % (esc(lead), "\n".join(rows), photo_zoom(p), tag_frag(p, "plain"),
            nav_hint("КОМУ?"), stamp("СУПЕРЦЕНА"))
     return html_page(p, 2, p["name"] + " · цифры", body)
 
@@ -271,7 +348,7 @@ def page03(p):
   %s
   %s
   %s
-  %s""" % (esc(title), "\n".join(words), tail_html, photo(p), tag_frag(p, "right"),
+  %s""" % (esc(title), "\n".join(words), tail_html, photo(p), tag_frag(p, "med"),
            nav_hint("ЦЕНА"), stamp("СУПЕРЦЕНА"))
     return html_page(p, 3, p["name"] + " · сценарии", body)
 
@@ -282,13 +359,26 @@ def page03(p):
 
 def page04(p):
     offer = get(p, "s4_offer", "СУПЕРЦЕНА")
-    price = get(p, "s4_price", "Прайс по запросу")
+    tag_k = offer + (" · розница, ноябрь 2026" if p.get("has_price") else " · прайс по запросу")
+    has_price = bool(p.get("has_price") and p.get("price_display"))
+    if has_price:
+        price = ('<span class="price-big" style="font-size:%dpx">%s <i class="rub">руб.</i></span>'
+                 % (price_font(price_num(p)) + 8 + 6, esc(price_num(p))))
+    else:
+        price = '<span class="price-big" style="font-size:62px">ПРАЙС ПО ЗАПРОСУ</span>' 
     bullets = get(p, "s4_bullets") or p["benefits"]
     bullets_line = " · ".join(str(b) for b in bullets[:4])
-    cta = get(p, "s4_cta", "Напиши — пришлём цену")
+    if p.get("has_price"):
+        cta = "Напиши в Telegram — забронируем и пришлём КП"
+        coupon_note = "цена розница — @vokope_ru"
+        contact_note = "цена и бронь в ответ"
+    else:
+        cta = get(p, "s4_cta", "Напиши — пришлём цену")
+        coupon_note = "прайс по запросу — @vokope_ru"
+        contact_note = "прайс по запросу в ответ"
     body = """  <p class="kick end-kick">Конец серии · 04/04</p>
   <div class="tag tag--full" aria-hidden="true">
-    <span class="tag__k">%s · отрывной купон</span>
+    <span class="tag__k">%s</span>
     <span class="tag__v">%s</span>
     <span class="tag__note">%s</span>
     <span class="tag__note" style="margin-top:14px">%s</span>
@@ -298,15 +388,15 @@ def page04(p):
   <div class="tag tag--coupon" aria-hidden="true">
     <span class="tag__k">отрывной купон</span>
     <span class="tag__v">ОТОРВИ<br>И НАПИШИ</span>
-    <span class="tag__note">прайс по запросу — @vokope_ru</span>
+    <span class="tag__note">%s</span>
     <i class="tag__perf"></i>
     <i class="tag__hole"></i>
   </div>
   %s
   %s
-  <div class="contact">Telegram: <b>@vokope_ru</b><small>+7 (999) 136-71-42 · прайс по запросу в ответ</small></div>
-  %s""" % (esc(offer), esc(price), esc(bullets_line), esc(cta),
-           photo(p), stamp("ПИШИ"), nav_hint("ПИШИ"))
+  <div class="contact">Telegram: <b>@vokope_ru</b><small>+7 (999) 136-71-42 · %s</small></div>
+  %s""" % (esc(tag_k), price, esc(bullets_line), esc(cta), esc(coupon_note),
+           photo(p), stamp("ПИШИ"), esc(contact_note), nav_hint("ПИШИ"))
     return html_page(p, 4, p["name"] + " · прайс", body)
 
 
@@ -326,14 +416,29 @@ def hero(positions):
         imgs.append('<img class="hero-prod" src="%s" alt="%s" style="left:%dpx;top:%dpx;width:%dpx;transform:rotate(%ddeg)">'
                     % (src, esc(p["name_full"]), x, y, w, rot))
     collage = "\n  ".join(imgs)
+    nums = []
+    for p in positions:
+        try:
+            if p.get("has_price") and p.get("price_value"):
+                nums.append(int(p["price_value"]))
+        except Exception:
+            pass
+    if nums:
+        hero_price = "ОТ {:,}".format(min(nums)).replace(",", " ") + ' <i class="rub">руб.</i>'
+        hero_note = "20 позиций · розница, ноябрь 2026"
+        hero_foot = "Розничные цены · доставка по РФ · самовывоз в Москве"
+    else:
+        hero_price = "ПРАЙС<br>ПО ЗАПРОСУ"
+        hero_note = "20 позиций · цены в карточках"
+        hero_foot = "Прайс по запросу · доставка по РФ · самовывоз в Москве"
     body = """  <p class="kick hero-kick">Магазин «В ОКОПЕ» · спецпрайс 11.2026</p>
   <h1 class="hero-title">СУПЕР<span>ЦЕНЫ</span></h1>
   <p class="hero-sub">на всю линейку НПО «Киловатт» · 20 позиций прайса · 4 страницы на модель</p>
   <h2 class="hero-sub2">цену сорвали — спрашивай</h2>
   <div class="hero-tag tag" aria-hidden="true">
     <span class="tag__k">спецпрайс-листовка · 20 позиций</span>
-    <span class="tag__v" style="font-size:64px">ПРАЙС<br>ПО ЗАПРОСУ</span>
-    <span class="tag__note">Пиши в Telegram — пришлём прайс и наличие</span>
+    <span class="tag__v" style="font-size:64px">%s</span>
+    <span class="tag__note">%s</span>
     <i class="tag__perf"></i>
     <i class="tag__hole"></i>
   </div>
@@ -342,7 +447,7 @@ def hero(positions):
   <div class="contact" style="bottom:170px">Telegram: <b>@vokope_ru</b><small>+7 (999) 136-71-42 · прайс по запросу</small></div>
   <div class="nav-hint" style="right:66px;bottom:170px"><span>СМОТРИ</span>
     <svg width="72" height="30" viewBox="0 0 72 30" fill="none"><path d="M2 22 C22 6, 44 4, 66 13" stroke="#E23B2E" stroke-width="4" stroke-linecap="round"/><path d="M56 4 L68 13 L54 20" stroke="#E23B2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-  </div>""" % collage
+  </div>""" % (hero_price, hero_note, collage)
     return """<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -362,12 +467,12 @@ def hero(positions):
   <i class="thread"></i>
   %(body)s
   <div class="safe-zone"></div>
-  <div class="foot"><span>@vokope_ru</span><span>+7 (999) 136-71-42</span><span>Прайс по запросу · доставка по РФ · самовывоз в Москве</span></div>
+  <div class="foot"><span>@vokope_ru</span><span>+7 (999) 136-71-42</span><span>%(footline)s</span></div>
   <div class="legal">%(legal)s</div>
 </main>
 </body>
 </html>
-""" % {"asset": hasset, "body": body, "legal": LEGAL}
+""" % {"asset": hasset, "body": body, "legal": LEGAL, "footline": hero_foot}
 
 
 BUILDERS = [page01, page02, page03, page04]

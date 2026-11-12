@@ -71,8 +71,36 @@ SWIPE_RE = re.compile(r"лист|свайп|→|›|➜|👉|дальше", re.I
 HOOK_RE = re.compile(r"кому|цена|пиши|конец|дальше|спрашивай", re.I)
 CTA_RE = re.compile(r"напиш|звон|telegram|телеграм|@vokope|прайс|цен", re.I)
 PRICE_CANON = "Прайс по запросу"
+PRICE_MAP: dict[str, int | None] = {}
+SKIP_PRICE_MAP = False
+
+
+def load_price_map() -> dict[str, int | None]:
+    """Ожидаемые цены из QA-эталона (_tmp/prices_expected.json); {} если нет."""
+    f = QA.parent / "04_ПРОВЕРКА" / "_tmp" / "prices_expected.json" if False else Path(__file__).resolve().parent / "_tmp" / "prices_expected.json"
+    if not f.is_file():
+        return {}
+    try:
+        d = json.loads(cs.read_text(f))
+    except Exception:
+        return {}
+    m: dict[str, int | None] = {}
+    for folder, w in (d.get("positions") or {}).items():
+        m[folder[:2]] = w.get("retail")
+    for folder in (d.get("unpriced") or {}):
+        m[folder[:2]] = None
+    return m
+
+
+def expected_price(order: int) -> tuple[bool, int | None]:
+    """(известна ли цена вообще, значение)."""
+    key = f"{order:02d}"
+    if key in PRICE_MAP:
+        return True, PRICE_MAP[key]
+    return False, None
 PRICE_RE = re.compile(r"прайс\s+по\s+запросу", re.I)
-MONEY_RE = re.compile(r"\d[\d\s.,]*\s*(?:₽|руб\b\.?)", re.I)
+MONEY_RE = re.compile(r"(?<![\d.,])(\d{1,3}(?:[ \u00a0\u202f\u2009\u200a]\d{3})+|\d{3,})\s*(?:₽|руб\.?|р\.)", re.I)
+cs.MONEY_RE = MONEY_RE
 DUP_MIN_LEN = 18
 # общие строки, которые повторяются на всех слайдах намеренно — не считать дублем
 SHARED_LINE_RES = [re.compile(r"прайс\s+по\s+запросу", re.I), re.compile(r"@vokope_ru", re.I),
@@ -212,16 +240,33 @@ def check_data(positions_raw: list[dict], products: list[dict], canon: str) -> t
                 else:
                     all_texts.append(str(item))
         blob = " ".join(all_texts)
-        if not PRICE_RE.search(str(it.get("s4_price", ""))):
-            findings.append(cs.Finding("Б4", sid, f"s4_price ≠ «{PRICE_CANON}»: «{it.get('s4_price')}»", str(POSITIONS)))
-        mmoney = MONEY_RE.search(blob)
-        if mmoney:
-            findings.append(cs.Finding("Б5", sid, f"конкретная цена в текстах карусели: {mmoney.group(0)}", str(POSITIONS), "••• ₽"))
+        known, exp_price = expected_price(order)
+        s4p = str(it.get("s4_price") or "")
+        if known and exp_price is not None:
+            # v6: цена обязана совпасть с прайсом
+            digits = re.sub(r"[^\d]", "", s4p)
+            if digits != str(exp_price):
+                findings.append(cs.Finding("Б1", sid, f"s4_price «{s4p}» ≠ прайс {exp_price} ₽", str(POSITIONS)))
+        elif not PRICE_RE.search(s4p):
+            findings.append(cs.Finding("Б4", sid, f"s4_price ≠ «{PRICE_CANON}»: «{s4p}»", str(POSITIONS)))
+        for mm in MONEY_RE.finditer(blob):
+            digits = re.sub(r"[^\d]", "", mm.group(0))
+            if known and exp_price is not None and digits == str(exp_price):
+                continue
+            if not known:
+                findings.append(cs.Finding("Б5", sid, f"конкретная цена в текстах карусели: {mm.group(0)}", str(POSITIONS), "••• ₽"))
+            elif exp_price is None:
+                findings.append(cs.Finding("Б4", sid, f"цена {mm.group(0)} у позиции без цены в прайсе", str(POSITIONS)))
+            else:
+                findings.append(cs.Finding("Б1", sid, f"цена {mm.group(0)} не совпадает с прайсом ({exp_price} ₽)", str(POSITIONS)))
         findings.extend(cs.check_banned(blob, sid, str(POSITIONS), soft=False))
         # цифры stats/claim: только каталог/канон
         prod = by_id.get(str(it.get("catalog_id") or exp["catalog"] or ""))
         corpus = (cs.product_corpus(prod) if prod else "") + "§" + canon
         allowed = cs.ALLOWED_EXTRA_NUMBERS | {"01", "02", "03", "04", f"{order:02d}"}
+        _known_p, _exp_p = expected_price(order)
+        if _known_p and _exp_p:
+            allowed |= set(re.findall(r"\d+", f"{int(_exp_p):,}".replace(",", " ")))
         for nm in (exp["name"], str(it.get("name") or "")):
             for tok in cs.numeric_tokens(nm):
                 allowed.add(cs.norm_compact(tok))
@@ -304,6 +349,9 @@ def check_html(positions_raw: list[dict], products: list[dict], canon: str) -> t
         prod = by_id.get(str(it.get("catalog_id") or exp["catalog"] or ""))
         corpus = (cs.product_corpus(prod) if prod else "") + "§" + canon
         allowed = cs.ALLOWED_EXTRA_NUMBERS | {"01", "02", "03", "04", f"{order:02d}"}
+        _known_p, _exp_p = expected_price(order)
+        if _known_p and _exp_p:
+            allowed |= set(re.findall(r"\d+", f"{int(_exp_p):,}".replace(",", " ")))
         for nm in (exp["name"], str(it.get("name") or "")):
             for tok in cs.numeric_tokens(nm):
                 allowed.add(cs.norm_compact(tok))
@@ -333,8 +381,14 @@ def check_html(positions_raw: list[dict], products: list[dict], canon: str) -> t
             if not re.search(r"progress|dots|dot\b|bar\b|шкал", src, re.I) and not re.search(r"[●○◦•]{2,}", text):
                 findings.append(cs.Finding("И", subject, "не найден прогресс-элемент (проверить визуально)", str(path)))
             # цена: обязательна на финальном слайде; на 01–03 — если упомянута, то только канонично
-            if idx == "04" and not PRICE_RE.search(text):
-                findings.append(cs.Finding("Б4", subject, f"нет «{PRICE_CANON}» в финальном слайде", str(path)))
+            known, exp_price = expected_price(order)
+            if idx == "04":
+                if known and exp_price is not None:
+                    digits = [re.sub(r"[^\d]", "", m.group(0)) for m in cs.MONEY_RE.finditer(text)]
+                    if str(exp_price) not in digits:
+                        findings.append(cs.Finding("Б1", subject, f"на финале нет/неверная цена (ожидается {exp_price} ₽)", str(path)))
+                elif not PRICE_RE.search(text):
+                    findings.append(cs.Finding("Б4", subject, f"нет «{PRICE_CANON}» в финальном слайде", str(path)))
             if idx != "04" and re.search(r"(?:цена|стоимость)\s+по\s+запросу|спеццен", cs.norm(text)) and not PRICE_RE.search(text):
                 findings.append(cs.Finding("З", subject, "неканоничная ценовая формулировка на слайде сюжета", str(path)))
             if idx != "04":
@@ -345,9 +399,17 @@ def check_html(positions_raw: list[dict], products: list[dict], canon: str) -> t
                     findings.append(cs.Finding("Б4", subject, "в финальном слайде нет CTA @vokope_ru/телефона", str(path)))
                 if not CTA_RE.search(text):
                     findings.append(cs.Finding("З", subject, "в финальном слайде нет призыва «напиши/звони»", str(path)))
-            if cs.MONEY_RE.search(text):
-                mm2 = cs.MONEY_RE.search(text)
-                findings.append(cs.Finding("Б5", subject, f"конкретная цена в слайде: {mm2.group(0)}", str(path), "••• ₽"))
+            for mm2 in cs.MONEY_RE.finditer(text):
+                known2, exp2 = expected_price(order)
+                digits2 = re.sub(r"[^\d]", "", mm2.group(0))
+                if known2 and exp2 is not None and digits2 == str(exp2):
+                    continue
+                if not known2:
+                    findings.append(cs.Finding("Б5", subject, f"конкретная цена в слайде: {mm2.group(0)}", str(path), "••• ₽"))
+                elif exp2 is None:
+                    findings.append(cs.Finding("Б4", subject, f"цена {mm2.group(0)} у позиции без цены", str(path)))
+                else:
+                    findings.append(cs.Finding("Б1", subject, f"цена {mm2.group(0)} не совпадает с прайсом ({exp2} ₽)", str(path)))
             if sum(1 for r in cs.LEGAL_MARKERS if r.search(text)) < 2:
                 findings.append(cs.Finding("Б4", subject, "юрстрока неполная", str(path)))
             # banned + цифры
@@ -373,8 +435,8 @@ def check_html(positions_raw: list[dict], products: list[dict], canon: str) -> t
             findings.append(cs.Finding("Б3", "hero", "в hero нет «СУПЕРЦЕНЫ»", str(path)))
         if not cs.TG_RE.search(text) or not cs.PHONE_RE.search(text):
             findings.append(cs.Finding("Б4", "hero", "в hero нет CTA", str(path)))
-        if not PRICE_RE.search(text):
-            findings.append(cs.Finding("Б4", "hero", f"в hero нет «{PRICE_CANON}»", str(path)))
+        if not PRICE_RE.search(text) and not MONEY_RE.search(text):
+            findings.append(cs.Finding("Б4", "hero", f"в hero нет «{PRICE_CANON}»/цены", str(path)))
     return findings, {"html": n_html, "folders": len(cards), "hero": len(hero)}
 
 
@@ -455,8 +517,9 @@ def run(stage: str = "all", write: bool = True) -> dict:
     if err:
         findings.append(cs.Finding("И", "positions", err + " — промежуточный прогон", str(POSITIONS)))
         raw = []
-    global BANNED_HARD
+    global BANNED_HARD, PRICE_MAP
     BANNED_HARD = cs.load_banned_hard()
+    PRICE_MAP = {} if globals().get("SKIP_PRICE_MAP") else load_price_map()
     cs.BANNED_HARD = BANNED_HARD
     if raw and stage in ("all", "data"):
         df, dstats = check_data(raw, products, canon)
@@ -605,6 +668,8 @@ def selftest() -> int:
         (ready / "gallery").mkdir()
         (ready / "gallery" / "index.html").write_text("<html>" + " ".join([f"../01_К-8М/{n}.png" for n in ("01_ЛИСТАЙ", "02_ЦИФРЫ", "03_СЦЕНАРИИ", "04_CTA")]) + "../00_СУПЕРЦЕНЫ.png</html>", encoding="utf-8")
         (ready / "ЧЕК_ЛИСТ_ФАЙЛОВ.md").write_text("Итог: OK · FAIL: 0 · WARN: 0", encoding="utf-8")
+        globals()["SKIP_PRICE_MAP"] = True
+        globals()["PRICE_MAP"] = {}
         res = run(write=False)
         checks = [
             ("good: нет блокеров", res["summary"]["blockers"] == 0,

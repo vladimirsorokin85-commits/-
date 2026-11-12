@@ -42,22 +42,23 @@ function Invoke-Step([string]$Name, [scriptblock]$Body) {
     }
 }
 
-Invoke-Step "1/6 Проверка ассетов (img/print, прозрачность duotone)" { & $Python (Join-Path $RenderDir "check_assets.py") }
+Invoke-Step "1/7 Проверка ассетов (img/print, прозрачность duotone)" { & $Python (Join-Path $RenderDir "check_assets.py") }
+Invoke-Step "2/7 Проверка цен в HTML (positions.json)" { & $Python (Join-Path $RenderDir "check_prices.py"); if ($LASTEXITCODE -eq 2) { Write-Host "цены: проверка пропущена (нет price_display)" } }
 
 if (-not $SkipRender) {
-    Invoke-Step "2/6 Рендер карточек" {
+    Invoke-Step "3/7 Рендер карточек" {
         $pyArgs = @((Join-Path $RenderDir "render_cards.py"), "--all", "--batch-size", $BatchSize, "--prune")
         if ($OnlyNew) { $pyArgs += "--only-new" }
         if ($TwoX) { $pyArgs += "--2x" }
         & $Python @pyArgs
         if ($LASTEXITCODE -eq 2) { throw "рендер не смог запуститься" }
     }
-} else { Write-Host "2/6 Рендер: пропущен (-SkipRender)" }
+} else { Write-Host "3/7 Рендер: пропущен (-SkipRender)" }
 
-Invoke-Step "3/6 Контакт-листы карусели (4 слайда подряд)" { & $Python (Join-Path $RenderDir "make_carousels.py") }
-Invoke-Step "4/6 Копии для QA читаемости (540/390)" { & $Python (Join-Path $RenderDir "make_readability.py") }
-Invoke-Step "5/6 Галерея-карусель (печатный стиль)" { & $Python (Join-Path $RenderDir "gallery.py") }
-Invoke-Step "6/6 Чек-лист" { & $Python (Join-Path $RenderDir "check_files.py") }
+Invoke-Step "4/7 Контакт-листы карусели (4 слайда подряд)" { & $Python (Join-Path $RenderDir "make_carousels.py") }
+Invoke-Step "5/7 Копии для QA читаемости (540/390)" { & $Python (Join-Path $RenderDir "make_readability.py") }
+Invoke-Step "6/7 Галерея-карусель (печатный стиль)" { & $Python (Join-Path $RenderDir "gallery.py") }
+Invoke-Step "7/7 Чек-лист" { & $Python (Join-Path $RenderDir "check_files.py") }
 
 Write-Host ""
 if ($Fail -gt 0) {

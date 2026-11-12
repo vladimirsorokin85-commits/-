@@ -934,3 +934,54 @@ body {
 .pg--hero .hero-sub { top: 372px; }
 .pg--hero .hero-sub2 { top: 448px; }
 .pg--hero .hero-tag { top: 520px; }
+
+/* ===== ЦЕНЫ В ПЕЧАТНОЙ КАРУСЕЛИ ===== */
+.rub {
+  font-style: normal;
+  font-size: 0.55em;
+  vertical-align: 0.52em;
+  letter-spacing: 0;
+  color: var(--red);
+}
+.tag--frag { width: 360px; }
+.tag--frag .tag__v .rub { color: var(--ink); }
+.price-big {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: var(--red);
+  text-transform: none;
+}
+.tag--full .tag__v { display: block; }
+.tag--full .price-big { color: var(--red); }
+.pg--04 .tag--full .tag__v { line-height: 0.9; }
+.pg--03 .tag-frag .tag__v { line-height: 0.92; }
+
+/* цена не переносится на 2 строки (renderer FAIL-guard) */
+.tag__v, .price-big { white-space: nowrap; }
+.tag--full .tag__v { white-space: nowrap; }
+
+/* «руб.» — печатный знак без зависимости от глифа ₽ */
+.rub {
+  font-family: var(--font-head);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.34em;
+  vertical-align: 0.42em;
+  letter-spacing: 0.04em;
+  color: inherit;
+  opacity: 0.9;
+}
+
+/* «руб.» печатным знаком, без зависимости от глифа ₽ */
+.rub {
+  font-family: var(--font-head);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.34em;
+  vertical-align: 0.42em;
+  letter-spacing: 0.04em;
+  color: inherit;
+  opacity: 0.9;
+}

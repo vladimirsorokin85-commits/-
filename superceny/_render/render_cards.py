@@ -152,13 +152,28 @@ DIAG_JS = r"""
     } catch (e) { }
     return false;
   };
-  const textOut = [], clipped = [], texts = [];
+  const textOut = [], clipped = [], texts = [], priceWrap = [];
+  const PRICE_RE = /\d[\d\s\u00a0]*(₽|руб\.?)/i;
   for (const el of document.querySelectorAll('body *')) {
     const r = el.getBoundingClientRect();
     if (r.width < 1 || r.height < 1) continue;
     const cs = getComputedStyle(el);
     if (cs.visibility === 'hidden' || cs.display === 'none') continue;
     const hasText = Array.from(el.childNodes).some(n => n.nodeType === 3 && n.textContent.trim().length > 0);
+    // цена — информационный текст: не должна переноситься на 2+ строки
+    if (!isDecor(el) && r.width > 2 && (el.textContent || '').trim().length <= 40 &&
+        PRICE_RE.test((el.textContent || '').trim())) {
+      try {
+        const rg = document.createRange();
+        rg.selectNodeContents(el);
+        const tops = new Set(Array.from(rg.getClientRects()).map(q => Math.round(q.top)));
+        if (tops.size > 1) {
+          priceWrap.push({tag: el.tagName, cls: String(el.className || '').slice(0, 70),
+                          t: el.textContent.trim().replace(/\s+/g, ' ').slice(0, 40), lines: tops.size,
+                          r: [Math.round(r.left), Math.round(r.top), Math.round(r.right), Math.round(r.bottom)]});
+        }
+      } catch (e) { }
+    }
     if (hasText && outR(r) && !isDecor(el)) {
       textOut.push({tag: el.tagName, cls: String(el.className || '').slice(0, 70),
                     t: el.textContent.trim().slice(0, 70),
@@ -197,6 +212,7 @@ DIAG_JS = r"""
     fontsError: fonts.filter(f => f.status === 'error').map(f => f.family),
     imgCount: imgs.length, broken: broken.slice(0, 10),
     textOut: textOut.slice(0, 10), textOutCount: textOut.length,
+    priceWrap: priceWrap.slice(0, 10), priceWrapCount: priceWrap.length,
     clipped: clipped.slice(0, 10), clippedCount: clipped.length,
     overlaps: overlaps.slice(0, 10), overlapCount: overlaps.length,
   };
@@ -424,6 +440,10 @@ def main() -> int:
                                 f"переполнение документа: {diag.get('sw')}×{diag.get('sh')} при кадре {L.CARD_W}×{L.CARD_H}")
                         if diag.get("textOutCount"):
                             info["fail"].append(f"текст за границей кадра: {diag['textOutCount']} эл.")
+                        if diag.get("priceWrapCount"):
+                            lines = ", ".join(f"{p.get('t')} ({p.get('lines')} стр.)"
+                                              for p in (diag.get("priceWrap") or [])[:3])
+                            info["fail"].append(f"цена переносится на 2+ строки: {diag['priceWrapCount']} эл. — {lines}")
                         if diag.get("clippedCount"):
                             info["warn"].append(f"overflow:hidden с обрезанным содержимым: {diag['clippedCount']} эл.")
                         if diag.get("overlapCount"):
@@ -477,10 +497,11 @@ def main() -> int:
     ov = sum(int((r["diagnostics"] or {}).get("overlapCount") or 0) for r in results)
     to = sum(int((r["diagnostics"] or {}).get("textOutCount") or 0) for r in results)
     cl = sum(int((r["diagnostics"] or {}).get("clippedCount") or 0) for r in results)
+    pw = sum(int((r["diagnostics"] or {}).get("priceWrapCount") or 0) for r in results)
     print("-" * 110)
     print(f"Итого: {len(results)} файл(ов) | OK: {ok} | WARN: {warn} | FAIL: {fail} | "
           f"{L.human_size(total_bytes)} за {time.time() - started:.1f} с")
-    print(f"Детектор: наложений {ov}, текста за кадром {to}, overflow:hidden {cl}")
+    print(f"Детектор: наложений {ov}, текста за кадром {to}, переносов цены {pw}, overflow:hidden {cl}")
 
     pruned = []
     if args.prune and not args.out and (args.all or not args.files):
@@ -514,8 +535,8 @@ def main() -> int:
 
     report = {"generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"), "engine": args.engine,
               "out_dir": str(L.OUT_DIR), "ok": ok, "warn": warn, "fail": fail,
-              "total_bytes": total_bytes, "overlaps": ov, "text_out": to, "clipped": cl,
-              "pruned": [str(p) for p in pruned], "results": results}
+              "total_bytes": total_bytes, "overlaps": ov, "text_out": to, "price_wrap": pw,
+              "clipped": cl, "pruned": [str(p) for p in pruned], "results": results}
     json_path = Path(args.json) if args.json else (L.QA_DIR / "render_report.json")
     json_path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

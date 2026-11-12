@@ -54,6 +54,22 @@ sys.modules["cc_v5"] = cc
 _spec2.loader.exec_module(cc)
 
 EXPECTED_POS = 20
+
+
+def load_price_map() -> dict:
+    f = QA / "_tmp" / "prices_expected.json"
+    if not f.is_file():
+        return {}
+    try:
+        d = json.loads(f.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    m = {}
+    for folder, w in (d.get("positions") or {}).items():
+        m[folder[:2]] = w.get("retail")
+    for folder in (d.get("unpriced") or {}):
+        m[folder[:2]] = None
+    return m
 PAPER = (0xF1, 0xE8, 0xD6)
 INK = (0x17, 0x15, 0x0F)
 RED = (0xE2, 0x3B, 0x2E)
@@ -220,7 +236,13 @@ def check_html(positions_raw: list[dict]) -> tuple[list, dict]:
                 findings.append(cs.Finding("З", f"{order:02d} {idx}", "нет обрывка ценника/«СУПЕРЦЕНА» (идея серии)", str(slides[idx])))
         t4 = txt.get("04", "")
         if t4:
-            if not re.search(r"прайс\s+по\s+запросу", t4, re.I):
+            pmap = load_price_map()
+            known = f"{order:02d}" in pmap
+            exp = pmap.get(f"{order:02d}")
+            if known and exp is not None:
+                if str(exp) not in re.sub(r"[^\d]", "", t4):
+                    findings.append(cs.Finding("Б1", f"{order:02d} 04", f"на финале нет цены {exp} ₽", str(slides.get("04"))))
+            elif not re.search(r"прайс\s+по\s+запросу", t4, re.I):
                 findings.append(cs.Finding("Б4", f"{order:02d} 04", "на финале нет «ПРАЙС ПО ЗАПРОСУ»", str(slides.get("04"))))
             if not re.search(r"перфорац|отрыв|купон|coupon|tear", t4, re.I):
                 findings.append(cs.Finding("З", f"{order:02d} 04", "на финале нет перфорации/отрывного купона (идея)", str(slides.get("04"))))
