@@ -3,40 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Обнаружитель дронов Сигнал-М2 · 02 · «В ОКОПЕ»</title>
+<title>Сигнал-М2 · цифры · 02/04 · «В ОКОПЕ»</title>
 <link rel="stylesheet" href="../../02_ДИЗАЙН/tokens.css">
-<link rel="stylesheet" href="../../02_ДИЗАЙН/carousel.css">
+<link rel="stylesheet" href="../../02_ДИЗАЙН/print.css">
+<style>
+  .perf-edge { position:absolute; right:22px; top:0; width:0; border-left:2px dashed rgba(23,21,15,.45); z-index:42; }
+</style>
 </head>
-<body class="theme-field">
-<main class="slide slide--02 theme-field">
-  <header class="k-top">
-    <img class="k-top__logo" src="../../02_ДИЗАЙН/img/brand/logo_w_word.png" alt="В ОКОПЕ — магазин брони">
-    <div class="k-top__series">Суперцены · НПО «Киловатт»</div>
-    <div class="k-top__num"><span class="k-num__i">02</span>/04</div>
-  </header>
-  <div class="k2-head">
-    <p class="k2-lead">Внутри — четыре цифры.</p>
-    <h1 class="k2-title">Сигнал-М2</h1>
+<body class="theme-quiet">
+<main class="pg pg--02 ">
+  <svg class="filters" width="0" height="0" aria-hidden="true" focusable="false">
+    <filter id="duo" color-interpolation-filters="sRGB">
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="0.84" intercept="0.13"/>
+        <feFuncG type="linear" slope="0.21" intercept="0.10"/>
+        <feFuncB type="linear" slope="0.18" intercept="0.08"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
+  <i class="reg reg--tl"></i><i class="reg reg--tr"></i>
+  <i class="reg reg--bl"></i><i class="reg reg--br"></i>
+  <i class="reg-dot" style="left:300px;top:26px"></i>
+  <i class="reg-dot" style="right:260px;top:26px"></i>
+  <i class="perf-edge" style="height:58%"></i>
+  <i class="thread"></i>
+  <div class="lead"><p class="kick">Внутри —</p>
+    <span class="lead-sub">Внутри — четыре цифры.</span></div>
+  <div class="stats">
+  <div class="stat-print">
+    <span class="num stencil" style="font-size:72px">300–10000 МГц</span>
+    <span class="meta"><b>диапазон</b><span>обнаружение</span></span>
   </div>
-  <div class="k2-main">
-    <div class="k2-grid">
-      <div class="k2-stat"><span class="k2-stat__v k2-stat__v--xs">300–10000 МГц</span><span class="k2-stat__k">диапазон</span><span class="k2-stat__n">обнаружение</span></div>
-      <div class="k2-stat"><span class="k2-stat__v k2-stat__v--s">1000–5000 м</span><span class="k2-stat__k">дальность</span><span class="k2-stat__n">прямая видимость</span></div>
-      <div class="k2-stat"><span class="k2-stat__v">3,0 кг</span><span class="k2-stat__k">вес</span><span class="k2-stat__n">нетто</span></div>
-      <div class="k2-stat"><span class="k2-stat__v k2-stat__v--l">18–28 В</span><span class="k2-stat__k">питание</span><span class="k2-stat__n">внешнее</span></div>
-    </div>
-    <div class="k2-detail"><img src="../../02_ДИЗАЙН/img/kw-19_detail.png" alt="Обнаружитель дронов Сигнал-М2"><span class="k2-detail__cap">Обнаружитель дронов Сигнал-М2</span></div>
+  <div class="stat-print">
+    <span class="num stencil" style="font-size:92px">1000–5000 м</span>
+    <span class="meta"><b>дальность</b><span>прямая видимость</span></span>
   </div>
-  <p class="k2-tail">И это ещё не всё. Кому? →</p>
-  <p class="k2-note">Обнаружение 300–10000 МГц, 1000–5000 м, автозапуск РЭБ.</p>
-  <div class="k-ghost k2-ghost">02</div>
-  <div class="k-bottom">
-    <div class="k-dots"><span class=""></span><span class="is-on"></span><span class=""></span><span class=""></span></div>
-    <div class="k-swipe">ЛИСТАЙ ДАЛЬШЕ</div>
-    <div class="k-arrow"><span>ЛИСТАЙ</span><span class="k-arrow__g">→</span></div>
+  <div class="stat-print">
+    <span class="num stencil" style="font-size:148px">3,0 кг</span>
+    <span class="meta"><b>вес</b><span>нетто</span></span>
   </div>
-  <div class="k-progress"><i style="width:50%"></i></div>
-  <div class="k-legal">Характеристики — по паспорту изделия. Не является публичной офертой. РЭС: порядок применения — по законодательству РФ.</div>
+  <div class="stat-print">
+    <span class="num stencil" style="font-size:118px">18–28 В</span>
+    <span class="meta"><b>питание</b><span>внешнее</span></span>
+  </div>
+  </div>
+  <img class="duo-print" src="../../02_ДИЗАЙН/img/print/kw-19_duo.png" alt="Обнаружитель дронов Сигнал-М2" style="">
+    <div class="tag tag--frag tag-frag" aria-hidden="true">
+    <span class="tag__k">300–10000 МГц. До 5 км.</span>
+    <span class="tag__v">СУПЕР<br>ЦЕНА</span>
+    <span class="tag__note">цену сорвали — спрашивай</span>
+  </div>
+    <div class="nav-hint"><span>КОМУ?</span><svg width="72" height="30" viewBox="0 0 72 30" fill="none"><path d="M2 22 C22 6, 44 4, 66 13" stroke="#E23B2E" stroke-width="4" stroke-linecap="round"/><path d="M56 4 L68 13 L54 20" stroke="#E23B2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+    <div class="stamp" aria-hidden="true"><span>СУПЕРЦЕНА</span><b>НПО «КИЛОВАТТ»</b></div>
+  <div class="safe-zone"></div>
+  <div class="pnum"><span class="stencil">02</span><em>/</em>04</div>
+  <div class="foot"><span>@vokope_ru</span><span>+7 (999) 136-71-42</span><span>Прайс по запросу · доставка по РФ · самовывоз в Москве</span></div>
+  <div class="legal">Характеристики — по паспорту изделия. Не является публичной офертой. РЭС: порядок применения — по законодательству РФ.</div>
 </main>
 </body>
 </html>

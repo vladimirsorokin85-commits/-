@@ -140,12 +140,16 @@ DIAG_JS = r"""
   }));
   const broken = imgs.filter(i => i.nw === 0 || i.nh === 0);
   const outR = (r) => r.right > vw + 1 || r.bottom > vh + 1 || r.left < -1 || r.top < -1;
-  // декоративные элементы (ghost-цифры, орнамент, aria-hidden) могут намеренно
-  // выходить за кадр — это не «текст за границей кадра»
+  // декоративные элементы (ghost-цифры, гигантский обрезанный заголовок/обложка, штампы,
+  // ценники-стикеры, aria-hidden) могут намеренно выходить за кадр / накладываться —
+  // это не «текст за границей кадра» и не «наложение» с точки зрения приёмки
   const isDecor = (el) => {
     const cls = String(el.className || '');
-    if (/ghost|decor|ornament|bleed/i.test(cls)) return true;
+    if (/ghost|decor|ornament|bleed|giant|stamp|sticker|hero-title/i.test(cls)) return true;
     if (el.getAttribute && el.getAttribute('aria-hidden') === 'true') return true;
+    try {
+      if (el.closest && el.closest('.t-giant, .hero-title, .cover-title, [data-bleed], [aria-hidden="true"]')) return true;
+    } catch (e) { }
     return false;
   };
   const textOut = [], clipped = [], texts = [];

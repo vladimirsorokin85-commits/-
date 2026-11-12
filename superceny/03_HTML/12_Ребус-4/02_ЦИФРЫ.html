@@ -3,40 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Комплекс РЭБ Ребус-4 · 02 · «В ОКОПЕ»</title>
+<title>Ребус-4 · цифры · 02/04 · «В ОКОПЕ»</title>
 <link rel="stylesheet" href="../../02_ДИЗАЙН/tokens.css">
-<link rel="stylesheet" href="../../02_ДИЗАЙН/carousel.css">
+<link rel="stylesheet" href="../../02_ДИЗАЙН/print.css">
+<style>
+  .perf-edge { position:absolute; right:22px; top:0; width:0; border-left:2px dashed rgba(23,21,15,.45); z-index:42; }
+</style>
 </head>
-<body class="theme-field">
-<main class="slide slide--02 theme-field">
-  <header class="k-top">
-    <img class="k-top__logo" src="../../02_ДИЗАЙН/img/brand/logo_w_word.png" alt="В ОКОПЕ — магазин брони">
-    <div class="k-top__series">Суперцены · НПО «Киловатт»</div>
-    <div class="k-top__num"><span class="k-num__i">02</span>/04</div>
-  </header>
-  <div class="k2-head">
-    <p class="k2-lead">Внутри — четыре цифры.</p>
-    <h1 class="k2-title">Ребус-4</h1>
+<body class="theme-quiet">
+<main class="pg pg--02 ">
+  <svg class="filters" width="0" height="0" aria-hidden="true" focusable="false">
+    <filter id="duo" color-interpolation-filters="sRGB">
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="0.84" intercept="0.13"/>
+        <feFuncG type="linear" slope="0.21" intercept="0.10"/>
+        <feFuncB type="linear" slope="0.18" intercept="0.08"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
+  <i class="reg reg--tl"></i><i class="reg reg--tr"></i>
+  <i class="reg reg--bl"></i><i class="reg reg--br"></i>
+  <i class="reg-dot" style="left:300px;top:26px"></i>
+  <i class="reg-dot" style="right:260px;top:26px"></i>
+  <i class="perf-edge" style="height:58%"></i>
+  <i class="thread"></i>
+  <div class="lead"><p class="kick">Внутри —</p>
+    <span class="lead-sub">Внутри — четыре цифры.</span></div>
+  <div class="stats">
+  <div class="stat-print">
+    <span class="num stencil" style="font-size:176px">360°</span>
+    <span class="meta"><b>покрытие</b><span>круговое</span></span>
   </div>
-  <div class="k2-main">
-    <div class="k2-grid">
-      <div class="k2-stat"><span class="k2-stat__v">360°</span><span class="k2-stat__k">покрытие</span><span class="k2-stat__n">круговое</span></div>
-      <div class="k2-stat"><span class="k2-stat__v">4</span><span class="k2-stat__k">моноблока</span><span class="k2-stat__n">в комплексе</span></div>
-      <div class="k2-stat"><span class="k2-stat__v k2-stat__v--l">2400 Вт</span><span class="k2-stat__k">мощность</span><span class="k2-stat__n">до</span></div>
-      <div class="k2-stat"><span class="k2-stat__v">5000 м</span><span class="k2-stat__k">разведка</span><span class="k2-stat__n">до</span></div>
-    </div>
-    <div class="k2-detail"><img src="../../02_ДИЗАЙН/img/kw-17_detail.png" alt="Комплекс РЭБ Ребус-4"><span class="k2-detail__cap">Комплекс РЭБ Ребус-4</span></div>
+  <div class="stat-print">
+    <span class="num stencil" style="font-size:176px">4</span><span class="num-plain">4</span>
+    <span class="meta"><b>моноблока</b><span>в комплексе</span></span>
   </div>
-  <p class="k2-tail">И это ещё не всё. Кому? →</p>
-  <p class="k2-note">4 моноблока, до 2400 Вт, разведка до 5000 м — площадной объект.</p>
-  <div class="k-ghost k2-ghost">02</div>
-  <div class="k-bottom">
-    <div class="k-dots"><span class=""></span><span class="is-on"></span><span class=""></span><span class=""></span></div>
-    <div class="k-swipe">ЛИСТАЙ ДАЛЬШЕ</div>
-    <div class="k-arrow"><span>ЛИСТАЙ</span><span class="k-arrow__g">→</span></div>
+  <div class="stat-print">
+    <span class="num stencil" style="font-size:118px">2400 Вт</span>
+    <span class="meta"><b>мощность</b><span>до</span></span>
   </div>
-  <div class="k-progress"><i style="width:50%"></i></div>
-  <div class="k-legal">Характеристики — по паспорту изделия. Не является публичной офертой. РЭС: порядок применения — по законодательству РФ.</div>
+  <div class="stat-print">
+    <span class="num stencil" style="font-size:148px">5000 м</span>
+    <span class="meta"><b>разведка</b><span>до</span></span>
+  </div>
+  </div>
+  <img class="duo-print" src="../../02_ДИЗАЙН/img/print/kw-17_duo.png" alt="Комплекс РЭБ Ребус-4" style="">
+    <div class="tag tag--frag tag-frag" aria-hidden="true">
+    <span class="tag__k">360°. До 2400 Вт.</span>
+    <span class="tag__v">СУПЕР<br>ЦЕНА</span>
+    <span class="tag__note">цену сорвали — спрашивай</span>
+  </div>
+    <div class="nav-hint"><span>КОМУ?</span><svg width="72" height="30" viewBox="0 0 72 30" fill="none"><path d="M2 22 C22 6, 44 4, 66 13" stroke="#E23B2E" stroke-width="4" stroke-linecap="round"/><path d="M56 4 L68 13 L54 20" stroke="#E23B2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+    <div class="stamp" aria-hidden="true"><span>СУПЕРЦЕНА</span><b>НПО «КИЛОВАТТ»</b></div>
+  <div class="safe-zone"></div>
+  <div class="pnum"><span class="stencil">02</span><em>/</em>04</div>
+  <div class="foot"><span>@vokope_ru</span><span>+7 (999) 136-71-42</span><span>Прайс по запросу · доставка по РФ · самовывоз в Москве</span></div>
+  <div class="legal">Характеристики — по паспорту изделия. Не является публичной офертой. РЭС: порядок применения — по законодательству РФ.</div>
 </main>
 </body>
 </html>

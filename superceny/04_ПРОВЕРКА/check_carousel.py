@@ -68,6 +68,7 @@ TEXT_FIELDS = [
 ]
 LIST_FIELDS = [("s2_stats", 4, 4), ("s3_points", 4, 4), ("s4_bullets", 4, 4)]
 SWIPE_RE = re.compile(r"лист|свайп|→|›|➜|👉|дальше", re.I)
+HOOK_RE = re.compile(r"кому|цена|пиши|конец|дальше|спрашивай", re.I)
 CTA_RE = re.compile(r"напиш|звон|telegram|телеграм|@vokope|прайс|цен", re.I)
 PRICE_CANON = "Прайс по запросу"
 PRICE_RE = re.compile(r"прайс\s+по\s+запросу", re.I)
@@ -323,7 +324,7 @@ def check_html(positions_raw: list[dict], products: list[dict], canon: str) -> t
             text = cs.card_text(path)
             slide_texts[idx] = text
             # разные композиции: класс slide--01…04
-            cls_mark = re.search(rf"slide--{idx}\b", src) or re.search(rf"slide--{idx}\b", text)
+            cls_mark = re.search(rf"(?:slide|pg)--{idx}\b", src) or re.search(rf"(?:slide|pg)--{idx}\b", text)
             if not cls_mark:
                 findings.append(cs.Finding("З", subject, f"нет класса slide--{idx} (одинаковые раскладки?)", str(path)))
             # номер слайда + прогресс
@@ -337,8 +338,8 @@ def check_html(positions_raw: list[dict], products: list[dict], canon: str) -> t
             if idx != "04" and re.search(r"(?:цена|стоимость)\s+по\s+запросу|спеццен", cs.norm(text)) and not PRICE_RE.search(text):
                 findings.append(cs.Finding("З", subject, "неканоничная ценовая формулировка на слайде сюжета", str(path)))
             if idx != "04":
-                if not SWIPE_RE.search(text):
-                    findings.append(cs.Finding("З", subject, "нет призыва/стрелки листнуть дальше", str(path)))
+                if not (SWIPE_RE.search(text) or HOOK_RE.search(text)):
+                    findings.append(cs.Finding("З", subject, "нет крючка/стрелки к следующей странице", str(path)))
             else:
                 if not cs.TG_RE.search(text) or not cs.PHONE_RE.search(text):
                     findings.append(cs.Finding("Б4", subject, "в финальном слайде нет CTA @vokope_ru/телефона", str(path)))

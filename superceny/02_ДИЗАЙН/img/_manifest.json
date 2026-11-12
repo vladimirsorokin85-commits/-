@@ -36,6 +36,24 @@
     1200
    ],
    "bytes": 557820
+  },
+  "duo": {
+   "file": "print/kw-01_duo.png",
+   "size": [
+    1800,
+    1459
+   ],
+   "bytes": 581097,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-01_duo_zoom.png",
+   "size": [
+    1800,
+    1458
+   ],
+   "bytes": 738437,
+   "mode": "P"
   }
  },
  {
@@ -73,6 +91,24 @@
     1200
    ],
    "bytes": 585494
+  },
+  "duo": {
+   "file": "print/kw-05_duo.png",
+   "size": [
+    1800,
+    1095
+   ],
+   "bytes": 513945,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-05_duo_zoom.png",
+   "size": [
+    1800,
+    1095
+   ],
+   "bytes": 518315,
+   "mode": "P"
   }
  },
  {
@@ -110,6 +146,24 @@
     1200
    ],
    "bytes": 602225
+  },
+  "duo": {
+   "file": "print/kw-06_duo.png",
+   "size": [
+    1800,
+    1128
+   ],
+   "bytes": 430390,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-06_duo_zoom.png",
+   "size": [
+    1800,
+    1127
+   ],
+   "bytes": 306338,
+   "mode": "P"
   }
  },
  {
@@ -147,6 +201,24 @@
     1200
    ],
    "bytes": 402243
+  },
+  "duo": {
+   "file": "print/kw-02_duo.png",
+   "size": [
+    1800,
+    775
+   ],
+   "bytes": 130151,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-02_duo_zoom.png",
+   "size": [
+    1800,
+    775
+   ],
+   "bytes": 146193,
+   "mode": "P"
   }
  },
  {
@@ -184,6 +256,24 @@
     1200
    ],
    "bytes": 470243
+  },
+  "duo": {
+   "file": "print/kw-07_duo.png",
+   "size": [
+    1800,
+    1149
+   ],
+   "bytes": 491681,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-07_duo_zoom.png",
+   "size": [
+    1800,
+    1148
+   ],
+   "bytes": 205591,
+   "mode": "P"
   }
  },
  {
@@ -221,6 +311,24 @@
     1200
    ],
    "bytes": 968190
+  },
+  "duo": {
+   "file": "print/kw-03_duo.png",
+   "size": [
+    1800,
+    1732
+   ],
+   "bytes": 681085,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-03_duo_zoom.png",
+   "size": [
+    1800,
+    1732
+   ],
+   "bytes": 913973,
+   "mode": "P"
   }
  },
  {
@@ -260,6 +368,24 @@
     1200
    ],
    "bytes": 319163
+  },
+  "duo": {
+   "file": "print/kw-15_duo.png",
+   "size": [
+    1800,
+    1755
+   ],
+   "bytes": 343567,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-15_duo_zoom.png",
+   "size": [
+    1800,
+    1755
+   ],
+   "bytes": 571953,
+   "mode": "P"
   }
  },
  {
@@ -290,6 +416,24 @@
     1100
    ],
    "bytes": 432798
+  },
+  "duo": {
+   "file": "print/kw-16_duo.png",
+   "size": [
+    1600,
+    2037
+   ],
+   "bytes": 347309,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-16_duo_zoom.png",
+   "size": [
+    1600,
+    2037
+   ],
+   "bytes": 579256,
+   "mode": "P"
   }
  },
  {
@@ -327,6 +471,24 @@
     1100
    ],
    "bytes": 656194
+  },
+  "duo": {
+   "file": "print/kw-18_duo.png",
+   "size": [
+    1600,
+    2020
+   ],
+   "bytes": 241670,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-18_duo_zoom.png",
+   "size": [
+    1600,
+    2020
+   ],
+   "bytes": 348548,
+   "mode": "P"
   }
  },
  {
@@ -357,6 +519,24 @@
     1200
    ],
    "bytes": 696745
+  },
+  "duo": {
+   "file": "print/kw-17_duo.png",
+   "size": [
+    1800,
+    1712
+   ],
+   "bytes": 398427,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-17_duo_zoom.png",
+   "size": [
+    1800,
+    1712
+   ],
+   "bytes": 734775,
+   "mode": "P"
   }
  },
  {
@@ -387,6 +567,24 @@
     1100
    ],
    "bytes": 608254
+  },
+  "duo": {
+   "file": "print/kw-09_duo.png",
+   "size": [
+    1600,
+    3099
+   ],
+   "bytes": 1244051,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-09_duo_zoom.png",
+   "size": [
+    1600,
+    3098
+   ],
+   "bytes": 1511422,
+   "mode": "P"
   }
  },
  {
@@ -417,6 +615,24 @@
     1100
    ],
    "bytes": 1031262
+  },
+  "duo": {
+   "file": "print/kw-10_duo.png",
+   "size": [
+    1600,
+    2922
+   ],
+   "bytes": 912559,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-10_duo_zoom.png",
+   "size": [
+    1600,
+    2922
+   ],
+   "bytes": 1386337,
+   "mode": "P"
   }
  },
  {
@@ -447,6 +663,24 @@
     1100
    ],
    "bytes": 828662
+  },
+  "duo": {
+   "file": "print/kw-11_duo.png",
+   "size": [
+    1600,
+    4056
+   ],
+   "bytes": 1859127,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-11_duo_zoom.png",
+   "size": [
+    1600,
+    4055
+   ],
+   "bytes": 2026981,
+   "mode": "P"
   }
  },
  {
@@ -477,6 +711,24 @@
     1100
    ],
    "bytes": 576750
+  },
+  "duo": {
+   "file": "print/kw-12_duo.png",
+   "size": [
+    1600,
+    3781
+   ],
+   "bytes": 1354263,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-12_duo_zoom.png",
+   "size": [
+    1600,
+    3780
+   ],
+   "bytes": 1825758,
+   "mode": "P"
   }
  },
  {
@@ -507,6 +759,24 @@
     1100
    ],
    "bytes": 591668
+  },
+  "duo": {
+   "file": "print/kw-13_duo.png",
+   "size": [
+    1600,
+    3299
+   ],
+   "bytes": 910349,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-13_duo_zoom.png",
+   "size": [
+    1600,
+    3298
+   ],
+   "bytes": 1166867,
+   "mode": "P"
   }
  },
  {
@@ -544,6 +814,24 @@
     1100
    ],
    "bytes": 751405
+  },
+  "duo": {
+   "file": "print/kw-14_duo.png",
+   "size": [
+    1600,
+    2618
+   ],
+   "bytes": 1022073,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-14_duo_zoom.png",
+   "size": [
+    1600,
+    2617
+   ],
+   "bytes": 1479254,
+   "mode": "P"
   }
  },
  {
@@ -574,6 +862,24 @@
     1200
    ],
    "bytes": 770519
+  },
+  "duo": {
+   "file": "print/kw-19_duo.png",
+   "size": [
+    1800,
+    1646
+   ],
+   "bytes": 536325,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-19_duo_zoom.png",
+   "size": [
+    1800,
+    1645
+   ],
+   "bytes": 863867,
+   "mode": "P"
   }
  },
  {
@@ -604,6 +910,24 @@
     1200
    ],
    "bytes": 1675219
+  },
+  "duo": {
+   "file": "print/kw-20_duo.png",
+   "size": [
+    1800,
+    2132
+   ],
+   "bytes": 752860,
+   "mode": "P"
+  },
+  "duo_zoom": {
+   "file": "print/kw-20_duo_zoom.png",
+   "size": [
+    1800,
+    2132
+   ],
+   "bytes": 979685,
+   "mode": "P"
   }
  }
 ]

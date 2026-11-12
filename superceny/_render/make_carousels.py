@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import time
 from pathlib import Path
 
@@ -22,12 +23,13 @@ GAP = 16
 HEAD_H = 96
 LABEL_H = 46
 FOOT_H = 26
-BG = (233, 229, 218)
-CARD = (255, 255, 255)
-INK = (29, 30, 26)
-MUTED = (90, 90, 79)
-ACCENT = (200, 69, 31)
-LINE = (201, 196, 180)
+# палитра печатного плаката v5: бумага / чёрная тушь / сигнальный красный
+BG = (241, 232, 214)
+CARD = (251, 247, 238)
+INK = (23, 21, 15)
+MUTED = (110, 101, 86)
+ACCENT = (226, 59, 46)
+LINE = (198, 186, 164)
 SLIDES = ["01", "02", "03", "04"]
 
 
@@ -95,12 +97,19 @@ def main() -> int:
         sheet = Image.new("RGB", (a.width, sheet_h), BG)
         d = ImageDraw.Draw(sheet)
 
-        # шапка
-        d.text((PAD, PAD + 6), f"{folder.split('_')[0]} · {name}", font=f_head, fill=INK)
-        right = f"КАРУСЕЛЬ · 4 слайда подряд · {len(folders)} позиций"
+        # шапка: номер-стенсиль красным + имя, справа подпись, «нитка» красным пунктиром
+        num = folder.split("_")[0]
+        d.text((PAD, PAD + 6), num, font=f_head, fill=ACCENT)
+        nw = d.textlength(num, font=f_head)
+        d.text((PAD + nw + 14, PAD + 6), f"· {name}", font=f_head, fill=INK)
+        right = f"КАРУСЕЛЬ v5 · 4 слайда подряд · {len(folders)} позиций"
         rw = d.textlength(right, font=f_small)
         d.text((a.width - PAD - rw, PAD + 18), right, font=f_small, fill=MUTED)
-        d.line((PAD, PAD + HEAD_H - 18, a.width - PAD, PAD + HEAD_H - 18), fill=LINE, width=2)
+        yline = PAD + HEAD_H - 18
+        x = PAD
+        while x < a.width - PAD:
+            d.line((x, yline, min(x + 10, a.width - PAD), yline), fill=ACCENT, width=2)
+            x += 18
 
         # 4 слайда в ряд
         y = PAD + HEAD_H
@@ -127,13 +136,32 @@ def main() -> int:
                 ay = y + slide_h // 2 - 14
                 d.text((ax, ay), "›", font=f_arrow, fill=ACCENT)
 
-        # футер
-        foot = (f"Контактный лист карусели · superceny · {time.strftime('%d.%m.%Y')} · "
-                f"слайды 1080×1350, лист {a.width}×{sheet_h}")
-        d.text((PAD, sheet_h - PAD - FOOT_H + 6), foot, font=f_small, fill=MUTED)
+        # перфорация + футер
+        py = sheet_h - PAD - FOOT_H - 12
+        for x in range(PAD, a.width - PAD, 22):
+            d.ellipse((x, py, x + 6, py + 6), fill=None, outline=LINE, width=1)
+        foot = (f"Контактный лист карусели v5 «СОРВАННЫЙ ЦЕННИК» · superceny · "
+                f"{time.strftime('%d.%m.%Y')} · слайды 1080×1350, лист {a.width}×{sheet_h}")
+        d.text((PAD, sheet_h - PAD - FOOT_H + 8), foot, font=f_small, fill=MUTED)
 
         out = out_dir / f"{folder}.png"
-        sheet.save(out, "PNG", optimize=True)
+        tmp = out_dir / (folder + ".png.tmp")
+        last_err = None
+        for attempt in range(6):
+            try:
+                sheet.save(tmp, "PNG", optimize=True)
+                os.replace(tmp, out)
+                last_err = None
+                break
+            except OSError as e:
+                last_err = e
+                time.sleep(0.5)
+        if last_err is not None:
+            try:
+                tmp.unlink()
+            except OSError:
+                pass
+            raise SystemExit(f"не удалось сохранить {out.name}: {last_err}")
         total_bytes += out.stat().st_size
         done.append(out)
         print(f"  {out.name:<42} {a.width}×{sheet_h}  {L.human_size(out.stat().st_size)}")
