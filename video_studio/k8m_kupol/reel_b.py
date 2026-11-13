@@ -89,9 +89,11 @@ def s_outro(cv, d, t, l):
     cv.alpha_composite(Image.new("RGBA", (W, H), ac((13, 17, 11), 255)))
     K.rings(cv, 540, 560, 300, c01((l - .05) / 3.0), LIME, 3)
     grid(d, 8)
+    if l > .03:
+        kicker(d, "МАГАЗИН «В ОКОПЕ»", 148, c01((l - .03) / .22), LIME, 27)
     if l > .10:
         p = c01((l - .10) / .28)
-        slam(cv, "КОРОТКО", TEK, 26, 540, 214, ac(DIM, 245), p, "ma")
+        slam(cv, "КОРОТКО", TEK, 24, 540, 206, ac(DIM, 245), p, "ma")
         tiles = [("8", "КАНАЛОВ"), ("160", "ВТ"), ("200", "М ДО")]
         bw = 300
         for i, (v, s) in enumerate(tiles):

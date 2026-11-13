@@ -1,5 +1,5 @@
 {
- "total": 52.66,
+ "total": 52.2,
  "music": "fvi-Favorite.ogg",
  "offset": 24.4,
  "scenes": {
@@ -31,7 +31,7 @@
    "scene": "outro",
    "file": "/home/user/-/video_studio/k8m_kupol/vo/p_b4.mp3",
    "start": 38.89,
-   "dur": 12.62
+   "dur": 12.16
   }
  ]
 }

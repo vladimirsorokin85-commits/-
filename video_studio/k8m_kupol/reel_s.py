@@ -59,9 +59,11 @@ def s_outro(cv, d, t, l):
     cv.alpha_composite(Image.new("RGBA", (W, H), ac((13, 17, 11), 255)))
     K.rings(cv, 540, 470, 260, c01((l - .02) / 1.6), LIME, 3)
     grid(d, 7)
+    if l > .03:
+        kicker(d, "МАГАЗИН «В ОКОПЕ»", 168, c01((l - .03) / .20), LIME, 26)
     if l > .06:
         p = c01((l - .06) / .22)
-        slam(cv, "«КАПЮШОН» К-8М", COND, 84, 540, 236, ac(TXT, 255), p, "ma", maxw=940)
+        slam(cv, "«КАПЮШОН» К-8М", COND, 84, 540, 218, ac(TXT, 255), p, "ma", maxw=940)
     if l > .26:
         p = c01((l - .26) / .24)
         plate(cv, [96, 880, 984, 1024], BG1, int(242 * p), LIME, int(200 * p), 3, LIME)

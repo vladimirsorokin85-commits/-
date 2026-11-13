@@ -112,12 +112,14 @@ def s_outro(cv, d, t, l):
     cv.alpha_composite(Image.new("RGBA", (W, H), ac((13, 17, 11), 255)))
     dome(cv, 540, 560, 340, c01((l - .05) / 2.4), LIME)
     grid(d, 7)
+    if l > .04:
+        kicker(d, "МАГАЗИН «В ОКОПЕ»", 150, c01((l - .04) / .24), LIME, 27)
     if l > .10:
         p = c01((l - .10) / .28)
-        slam(cv, "«КАПЮШОН» К-8М", COND, 76, 540, 226, ac(TXT, 255), p, "ma", maxw=940)
+        slam(cv, "«КАПЮШОН» К-8М", COND, 76, 540, 210, ac(TXT, 255), p, "ma", maxw=940)
     if l > .38:
         p = c01((l - .38) / .28)
-        plate(cv, [86, 966, 994, 1150], BG1, int(240 * p), LIME, int(180 * p), 3, LIME)
+        plate(cv, [86, 962, 994, 1146], BG1, int(240 * p), LIME, int(180 * p), 3, LIME)
         slam(cv, "ЦЕНА ПО ЗАПРОСУ", COND, 70, 540, 986, ac(LIME, 255), p, "ma", maxw=860)
         slam(cv, "В НАЛИЧИИ · ГАРАНТИЯ 12 МЕСЯЦЕВ", TEK, 23, 540, 1094,
              ac(TXT, 240), p, "ma", maxw=830)
