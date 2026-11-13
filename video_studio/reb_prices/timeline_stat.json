@@ -1,0 +1,24 @@
+{
+ "total": 36.31,
+ "music": "fvi-Chronos.ogg",
+ "offset": 9.0,
+ "scenes": {
+  "hook": 0.45,
+  "table": 18.18,
+  "outro": 30.81
+ },
+ "vo": [
+  {
+   "scene": "hook",
+   "file": "/home/user/-/video_studio/reb_prices/vo/p_st1.mp3",
+   "start": 0.45,
+   "dur": 17.37
+  },
+  {
+   "scene": "table",
+   "file": "/home/user/-/video_studio/reb_prices/vo/p_st2.mp3",
+   "start": 18.18,
+   "dur": 12.43
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "total": 20.43,
+ "music": "fvi-Favorite.ogg",
+ "offset": 112.0,
+ "scenes": {
+  "hook": 0.45,
+  "outro": 14.93
+ },
+ "vo": [
+  {
+   "scene": "hook",
+   "file": "/home/user/-/video_studio/reb_prices/vo/p_mo1.mp3",
+   "start": 0.45,
+   "dur": 14.28
+  }
+ ]
+}

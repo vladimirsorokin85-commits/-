@@ -1,0 +1,24 @@
+{
+ "total": 31.66,
+ "music": "fvi-Favorite.ogg",
+ "offset": 22.0,
+ "scenes": {
+  "hook": 0.45,
+  "table": 11.78,
+  "outro": 26.16
+ },
+ "vo": [
+  {
+   "scene": "hook",
+   "file": "/home/user/-/video_studio/reb_prices/vo/p_au1.mp3",
+   "start": 0.45,
+   "dur": 10.97
+  },
+  {
+   "scene": "table",
+   "file": "/home/user/-/video_studio/reb_prices/vo/p_au2.mp3",
+   "start": 11.78,
+   "dur": 14.18
+  }
+ ]
+}
