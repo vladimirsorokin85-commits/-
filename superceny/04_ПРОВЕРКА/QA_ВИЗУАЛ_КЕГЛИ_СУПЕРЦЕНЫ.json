@@ -1,0 +1,3576 @@
+{
+  "generated": "2026-11-11 13:58:35",
+  "version": "1.0",
+  "criteria": {
+    "min_main_px": 16.0,
+    "min_value_px": 16.0
+  },
+  "files": [
+    {
+      "ok": false,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 12px)",
+          false
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 38px)",
+          true
+        ]
+      ],
+      "warnings": [
+        "мелкий текст основной зоны: 12px «20 позиций ВЕСЬ ПРАЙС»; 12px «4 карточки НА КАЖДУЮ МОДЕЛЬ»; 12px «Прайс по запросу КП В ТЕЧЕНИЕ ДНЯ»"
+      ],
+      "min_main": 12,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 13,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 38,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\00_СУПЕРЦЕНЫ.html",
+      "rel": "00_СУПЕРЦЕНЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ]
+      ],
+      "warnings": [
+        "заглушка: пустая зона фото по дизайну (max gap 397px) — не дефект"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 5,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 397,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\01_Муха-К-8\\01_ЛИСТАЙ.html",
+      "rel": "01_Муха-К-8\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 36px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 36px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ]
+      ],
+      "warnings": [
+        "заглушка: пустая зона фото по дизайну (max gap 340px) — не дефект"
+      ],
+      "min_main": 16,
+      "min_value": 36,
+      "max_value": 36,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 340,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\01_Муха-К-8\\02_ЦИФРЫ.html",
+      "rel": "01_Муха-К-8\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ]
+      ],
+      "warnings": [
+        "заглушка: пустая зона фото по дизайну (max gap 529px) — не дефект"
+      ],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 529,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\01_Муха-К-8\\03_СЦЕНАРИИ.html",
+      "rel": "01_Муха-К-8\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ]
+      ],
+      "warnings": [
+        "заглушка: пустая зона фото по дизайну (max gap 75px) — не дефект"
+      ],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 75,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\01_Муха-К-8\\04_CTA.html",
+      "rel": "01_Муха-К-8\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 173px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 173,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\02_ФПВ-7-КОМПАКТ\\01_ЛИСТАЙ.html",
+      "rel": "02_ФПВ-7-КОМПАКТ\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 44px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 44,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\02_ФПВ-7-КОМПАКТ\\02_ЦИФРЫ.html",
+      "rel": "02_ФПВ-7-КОМПАКТ\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\02_ФПВ-7-КОМПАКТ\\03_СЦЕНАРИИ.html",
+      "rel": "02_ФПВ-7-КОМПАКТ\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\02_ФПВ-7-КОМПАКТ\\04_CTA.html",
+      "rel": "02_ФПВ-7-КОМПАКТ\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 160px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 160,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\03_К-8М\\01_ЛИСТАЙ.html",
+      "rel": "03_К-8М\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 44px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 44,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\03_К-8М\\02_ЦИФРЫ.html",
+      "rel": "03_К-8М\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 45px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 45,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\03_К-8М\\03_СЦЕНАРИИ.html",
+      "rel": "03_К-8М\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\03_К-8М\\04_CTA.html",
+      "rel": "03_К-8М\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 160px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 160,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\04_К-12М\\01_ЛИСТАЙ.html",
+      "rel": "04_К-12М\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 44px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 44,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\04_К-12М\\02_ЦИФРЫ.html",
+      "rel": "04_К-12М\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\04_К-12М\\03_СЦЕНАРИИ.html",
+      "rel": "04_К-12М\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\04_К-12М\\04_CTA.html",
+      "rel": "04_К-12М\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 173px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 173,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\05_К-12М-Багажный-бокс\\01_ЛИСТАЙ.html",
+      "rel": "05_К-12М-Багажный-бокс\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 44px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 44,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\05_К-12М-Багажный-бокс\\02_ЦИФРЫ.html",
+      "rel": "05_К-12М-Багажный-бокс\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\05_К-12М-Багажный-бокс\\03_СЦЕНАРИИ.html",
+      "rel": "05_К-12М-Багажный-бокс\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\05_К-12М-Багажный-бокс\\04_CTA.html",
+      "rel": "05_К-12М-Багажный-бокс\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 160px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 160,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\06_К-15М\\01_ЛИСТАЙ.html",
+      "rel": "06_К-15М\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 30px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (3 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 30,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\06_К-15М\\02_ЦИФРЫ.html",
+      "rel": "06_К-15М\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\06_К-15М\\03_СЦЕНАРИИ.html",
+      "rel": "06_К-15М\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\06_К-15М\\04_CTA.html",
+      "rel": "06_К-15М\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 149px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 149,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\07_К-15М-ВИП\\01_ЛИСТАЙ.html",
+      "rel": "07_К-15М-ВИП\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 36px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 36,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\07_К-15М-ВИП\\02_ЦИФРЫ.html",
+      "rel": "07_К-15М-ВИП\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\07_К-15М-ВИП\\03_СЦЕНАРИИ.html",
+      "rel": "07_К-15М-ВИП\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\07_К-15М-ВИП\\04_CTA.html",
+      "rel": "07_К-15М-ВИП\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 17px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ]
+      ],
+      "warnings": [
+        "заглушка: пустая зона фото по дизайну (max gap 421px) — не дефект"
+      ],
+      "min_main": 17,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 5,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 421,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\08_Изделие-135-Багажный-бокс\\01_ЛИСТАЙ.html",
+      "rel": "08_Изделие-135-Багажный-бокс\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 36px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 36px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ]
+      ],
+      "warnings": [
+        "заглушка: пустая зона фото по дизайну (max gap 340px) — не дефект"
+      ],
+      "min_main": 16,
+      "min_value": 36,
+      "max_value": 36,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 340,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\08_Изделие-135-Багажный-бокс\\02_ЦИФРЫ.html",
+      "rel": "08_Изделие-135-Багажный-бокс\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ]
+      ],
+      "warnings": [
+        "заглушка: пустая зона фото по дизайну (max gap 501px) — не дефект"
+      ],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 12,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 501,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\08_Изделие-135-Багажный-бокс\\03_СЦЕНАРИИ.html",
+      "rel": "08_Изделие-135-Багажный-бокс\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ]
+      ],
+      "warnings": [
+        "заглушка: пустая зона фото по дизайну (max gap 75px) — не дефект"
+      ],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 75,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\08_Изделие-135-Багажный-бокс\\04_CTA.html",
+      "rel": "08_Изделие-135-Багажный-бокс\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 160px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 160,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\09_Штора-К-12-700\\01_ЛИСТАЙ.html",
+      "rel": "09_Штора-К-12-700\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 64px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 64,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\09_Штора-К-12-700\\02_ЦИФРЫ.html",
+      "rel": "09_Штора-К-12-700\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\09_Штора-К-12-700\\03_СЦЕНАРИИ.html",
+      "rel": "09_Штора-К-12-700\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\09_Штора-К-12-700\\04_CTA.html",
+      "rel": "09_Штора-К-12-700\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 160px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 160,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\10_Штора-М-К-8-600\\01_ЛИСТАЙ.html",
+      "rel": "10_Штора-М-К-8-600\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 36px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 36,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\10_Штора-М-К-8-600\\02_ЦИФРЫ.html",
+      "rel": "10_Штора-М-К-8-600\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\10_Штора-М-К-8-600\\03_СЦЕНАРИИ.html",
+      "rel": "10_Штора-М-К-8-600\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\10_Штора-М-К-8-600\\04_CTA.html",
+      "rel": "10_Штора-М-К-8-600\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 160px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 160,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\11_Поле-31\\01_ЛИСТАЙ.html",
+      "rel": "11_Поле-31\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 44px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 44,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\11_Поле-31\\02_ЦИФРЫ.html",
+      "rel": "11_Поле-31\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\11_Поле-31\\03_СЦЕНАРИИ.html",
+      "rel": "11_Поле-31\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\11_Поле-31\\04_CTA.html",
+      "rel": "11_Поле-31\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 149px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 149,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\12_Ребус-4\\01_ЛИСТАЙ.html",
+      "rel": "12_Ребус-4\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 52px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 52,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\12_Ребус-4\\02_ЦИФРЫ.html",
+      "rel": "12_Ребус-4\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\12_Ребус-4\\03_СЦЕНАРИИ.html",
+      "rel": "12_Ребус-4\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\12_Ребус-4\\04_CTA.html",
+      "rel": "12_Ребус-4\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 149px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 149,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\13_ТП-4-28А\\01_ЛИСТАЙ.html",
+      "rel": "13_ТП-4-28А\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 64px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 64,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\13_ТП-4-28А\\02_ЦИФРЫ.html",
+      "rel": "13_ТП-4-28А\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\13_ТП-4-28А\\03_СЦЕНАРИИ.html",
+      "rel": "13_ТП-4-28А\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\13_ТП-4-28А\\04_CTA.html",
+      "rel": "13_ТП-4-28А\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 160px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 160,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\14_ТП-4-28Б\\01_ЛИСТАЙ.html",
+      "rel": "14_ТП-4-28Б\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 36px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 36,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\14_ТП-4-28Б\\02_ЦИФРЫ.html",
+      "rel": "14_ТП-4-28Б\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\14_ТП-4-28Б\\03_СЦЕНАРИИ.html",
+      "rel": "14_ТП-4-28Б\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\14_ТП-4-28Б\\04_CTA.html",
+      "rel": "14_ТП-4-28Б\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 178px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 178,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\15_ТП-4-50А\\01_ЛИСТАЙ.html",
+      "rel": "15_ТП-4-50А\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 64px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 64,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\15_ТП-4-50А\\02_ЦИФРЫ.html",
+      "rel": "15_ТП-4-50А\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\15_ТП-4-50А\\03_СЦЕНАРИИ.html",
+      "rel": "15_ТП-4-50А\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\15_ТП-4-50А\\04_CTA.html",
+      "rel": "15_ТП-4-50А\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 160px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 160,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\16_ТП-4-50Б\\01_ЛИСТАЙ.html",
+      "rel": "16_ТП-4-50Б\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 36px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 36,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\16_ТП-4-50Б\\02_ЦИФРЫ.html",
+      "rel": "16_ТП-4-50Б\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\16_ТП-4-50Б\\03_СЦЕНАРИИ.html",
+      "rel": "16_ТП-4-50Б\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\16_ТП-4-50Б\\04_CTA.html",
+      "rel": "16_ТП-4-50Б\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 149px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 149,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\17_ТП-7-100\\01_ЛИСТАЙ.html",
+      "rel": "17_ТП-7-100\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 52px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 52,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\17_ТП-7-100\\02_ЦИФРЫ.html",
+      "rel": "17_ТП-7-100\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\17_ТП-7-100\\03_СЦЕНАРИИ.html",
+      "rel": "17_ТП-7-100\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\17_ТП-7-100\\04_CTA.html",
+      "rel": "17_ТП-7-100\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 149px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 149,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\18_ТП-8-100\\01_ЛИСТАЙ.html",
+      "rel": "18_ТП-8-100\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 64px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 64,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\18_ТП-8-100\\02_ЦИФРЫ.html",
+      "rel": "18_ТП-8-100\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\18_ТП-8-100\\03_СЦЕНАРИИ.html",
+      "rel": "18_ТП-8-100\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\18_ТП-8-100\\04_CTA.html",
+      "rel": "18_ТП-8-100\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 160px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 160,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\19_Сигнал-М2\\01_ЛИСТАЙ.html",
+      "rel": "19_Сигнал-М2\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 30px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (3 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 30,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\19_Сигнал-М2\\02_ЦИФРЫ.html",
+      "rel": "19_Сигнал-М2\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\19_Сигнал-М2\\03_СЦЕНАРИИ.html",
+      "rel": "19_Сигнал-М2\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\19_Сигнал-М2\\04_CTA.html",
+      "rel": "19_Сигнал-М2\\04_CTA.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 22px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 184px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 22,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 3,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 184,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\20_РЭБ-тестер\\01_ЛИСТАЙ.html",
+      "rel": "20_РЭБ-тестер\\01_ЛИСТАЙ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 16px)",
+          true
+        ],
+        [
+          "значения ТТХ ≥ 16px (min 44px)",
+          true
+        ],
+        [
+          "есть крупные плитки ≥34px (4 шт., max 64px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 24px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 16,
+      "min_value": 44,
+      "max_value": 64,
+      "min_detail": 16,
+      "content_min": null,
+      "content_max": null,
+      "main_count": 8,
+      "value_target_hits": 4,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 24,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\20_РЭБ-тестер\\02_ЦИФРЫ.html",
+      "rel": "20_РЭБ-тестер\\02_ЦИФРЫ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 20px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 40px, max 40px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 45px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 20,
+      "min_value": null,
+      "max_value": null,
+      "min_detail": null,
+      "content_min": 40,
+      "content_max": 40,
+      "main_count": 16,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 45,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\20_РЭБ-тестер\\03_СЦЕНАРИИ.html",
+      "rel": "20_РЭБ-тестер\\03_СЦЕНАРИИ.html"
+    },
+    {
+      "ok": true,
+      "checks": [
+        [
+          "основная зона ≥ 16px (min 18px)",
+          true
+        ],
+        [
+          "контент 03/04 ≥ 22px (min 30px, max 78px)",
+          true
+        ],
+        [
+          "нет обрезки текста (0)",
+          true
+        ],
+        [
+          "нет выхода за холст (0)",
+          true
+        ],
+        [
+          "нет наложений текста (0)",
+          true
+        ],
+        [
+          "нет пустот > 240px в контентной зоне (max 56px)",
+          true
+        ]
+      ],
+      "warnings": [],
+      "min_main": 18,
+      "min_value": 78,
+      "max_value": 78,
+      "min_detail": 15,
+      "content_min": 30,
+      "content_max": 78,
+      "main_count": 7,
+      "clipped_values": [],
+      "overflow": [],
+      "outside": [],
+      "overlaps": [],
+      "max_gap": 56,
+      "file": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\03_HTML\\20_РЭБ-тестер\\04_CTA.html",
+      "rel": "20_РЭБ-тестер\\04_CTA.html"
+    }
+  ]
+}

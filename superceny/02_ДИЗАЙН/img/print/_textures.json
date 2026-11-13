@@ -1,0 +1,32 @@
+{
+ "paper_grain": {
+  "file": "print/paper_grain.png",
+  "size": [
+   1600,
+   1600
+  ],
+  "bytes": 1228832,
+  "mode": "RGB",
+  "note": "бесшовная бумажная текстура #F1E8D6 + зерно/волокна; тайлится 2x2 без швов"
+ },
+ "ink_noise": {
+  "file": "print/ink_noise.png",
+  "size": [
+   1600,
+   1600
+  ],
+  "bytes": 154344,
+  "mode": "RGBA",
+  "note": "пятна/брызги/царапины/непропечатки чёрной и красной краской, RGBA, лёгкий оверлей (density ~3.7%)"
+ },
+ "halftone_swatch": {
+  "file": "print/halftone_swatch.png",
+  "size": [
+   1600,
+   1600
+  ],
+  "bytes": 1200240,
+  "mode": "RGB",
+  "note": "образец полутона для QA: чёрная краска 15°, красная 75°, дуотон; сетка 12px = ~50 lpi"
+ }
+}

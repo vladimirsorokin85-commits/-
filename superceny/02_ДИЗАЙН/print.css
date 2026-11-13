@@ -1,0 +1,987 @@
+/* ==========================================================================
+   «СОРВАННЫЙ ЦЕННИК» — ПЕЧАТНАЯ СПЕЦПРАЙС-ЛИСТОВКА v5
+   paper #F1E8D6 · ink #17150F · red #E23B2E
+   4 страницы: обложка · оттиски цифр · сценарии · отрывной ценник
+   ========================================================================== */
+
+:root {
+  --paper: #f1e8d6;
+  --paper-hi: #f8f0e0;
+  --ink: #17150f;
+  --ink-soft: #3a352b;
+  --red: #e23b2e;
+  --red-deep: #b62a20;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: #d9cfb8;
+  font-family: var(--font-head);
+  color: var(--ink);
+}
+
+/* ------------------------------- страница -------------------------------- */
+
+.pg {
+  position: relative;
+  width: 1080px;
+  height: 1350px;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 54px 58px 54px;
+}
+
+/* бумажное зерно поверх всего листа */
+.pg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.30;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='300' height='300' filter='url(%23n)' opacity='0.55'/></svg>");
+}
+
+/* лёгкая «непропечатка» — редкие пятна краски */
+.pg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 91;
+  pointer-events: none;
+  opacity: 0.10;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='0.012 0.05' numOctaves='1' seed='7'/><feColorMatrix type='matrix' values='0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.9 0'/></filter><rect width='420' height='420' filter='url(%23m)'/></svg>");
+  mix-blend-mode: multiply;
+}
+
+/* -------------------------- типографика листовки ------------------------- */
+
+.kick {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.kick::before {
+  content: "";
+  width: 34px;
+  height: 3px;
+  background: var(--red);
+}
+
+.t-giant {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 330px;
+  line-height: 0.76;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
+  text-shadow: -7px 3px 0 rgba(226, 59, 46, 0.75);
+}
+
+.t-big {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 128px;
+  line-height: 0.84;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-shadow: 5px 0 0 rgba(226, 59, 46, 0.55);
+}
+
+.t-mid {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.sub {
+  margin: 0;
+  max-width: 520px;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.red { color: var(--red); }
+.ink { color: var(--ink); }
+
+.small-caps {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* --------------------------- фото: duotone-вырезка ----------------------- */
+
+.duo {
+  position: absolute;
+  z-index: 12;
+  display: block;
+  mix-blend-mode: multiply;
+  filter: url(#duo);
+  pointer-events: none;
+}
+
+.duo-wrap { position: absolute; z-index: 12; }
+
+/* мягкая мисрегистрация красной краски у фото */
+.duo-wrap::after { content: none; }
+
+/* ------------------------------- ценник --------------------------------- */
+
+.tag {
+  position: absolute;
+  z-index: 26;
+  background: var(--paper-hi);
+  color: var(--ink);
+  clip-path: polygon(0 6%, 8% 3%, 17% 5%, 26% 2%, 34% 5%, 43% 3%, 52% 6%,
+                     61% 2%, 70% 5%, 79% 3%, 88% 6%, 96% 3%, 100% 8%,
+                     100% 92%, 93% 96%, 85% 93%, 76% 97%, 67% 94%, 58% 97%,
+                     49% 94%, 40% 97%, 31% 94%, 22% 97%, 13% 94%, 5% 97%, 0 92%);
+}
+
+.tag__hole {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+}
+
+.tag__perf {
+  position: absolute;
+  border-left: 3px dashed var(--ink);
+  opacity: 0.85;
+}
+
+.tag__k {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.tag__v {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 54px;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.tag__note {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+}
+
+/* обрывок ценника */
+.tag--frag {
+  transform: rotate(-11deg);
+  width: 330px;
+  padding: 22px 24px 24px;
+}
+.tag--frag .tag__v { font-size: 44px; color: var(--red); }
+
+/* целый ценник на финале */
+.tag--full {
+  width: 660px;
+  min-height: 620px;
+  padding: 46px 44px 40px;
+  transform: rotate(-3deg);
+}
+.tag--full .tag__v {
+  font-size: 96px;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+}
+.tag--full .tag__note { font-size: 17px; margin-top: 18px; max-width: 460px; line-height: 1.4; }
+
+/* штамп */
+.stamp {
+  position: absolute;
+  z-index: 30;
+  width: 176px;
+  height: 176px;
+  border: 4px solid var(--red);
+  border-radius: 50%;
+  color: var(--red);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.05;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(-13deg);
+  opacity: 0.92;
+}
+.stamp span { display: block; }
+.stamp b { display: block; font-size: 13px; letter-spacing: 0.18em; margin-top: 4px; }
+
+/* --------------------------- служебная печать ---------------------------- */
+
+.reg {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  z-index: 40;
+  opacity: 0.75;
+}
+.reg::before, .reg::after {
+  content: "";
+  position: absolute;
+  background: var(--ink);
+}
+.reg::before { left: 50%; top: 0; width: 1px; height: 100%; transform: translateX(-50%); }
+.reg::after { top: 50%; left: 0; height: 1px; width: 100%; transform: translateY(-50%); }
+.reg--tl { left: 22px; top: 22px; }
+.reg--tr { right: 22px; top: 22px; }
+.reg--bl { left: 22px; bottom: 22px; }
+.reg--br { right: 22px; bottom: 22px; }
+
+.reg-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  z-index: 40;
+  opacity: 0.6;
+}
+
+/* красная нитка через все страницы — одна и та же геометрия */
+.thread {
+  position: absolute;
+  left: -80px;
+  top: 828px;
+  width: 1320px;
+  height: 3px;
+  background: var(--red);
+  transform: rotate(-16deg);
+  transform-origin: 0 50%;
+  z-index: 20;
+  opacity: 0.9;
+}
+.thread::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: -4px;
+  width: 14px;
+  height: 11px;
+  background: var(--red);
+  clip-path: polygon(0 40%, 45% 0, 100% 35%, 70% 100%, 30% 80%);
+}
+
+/* стенсильные цифры / страничный номер */
+.stencil { position: relative; display: inline-block; color: var(--ink); }
+.stencil::before, .stencil::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  width: 108%;
+  background: var(--paper);
+  z-index: 2;
+}
+.stencil::before { top: 26%; height: 9%; transform: rotate(-1.2deg); }
+.stencil::after { top: 62%; height: 7%; transform: rotate(0.8deg); }
+
+.pnum {
+  position: absolute;
+  right: 58px;
+  bottom: 44px;
+  z-index: 44;
+  font-family: var(--font-tech);
+  font-weight: 700;
+  font-size: 34px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+.pnum em { font-style: normal; color: var(--red); }
+.pnum small { font-size: 15px; letter-spacing: 0.12em; color: var(--ink-soft); }
+
+.nav-hint {
+  position: absolute;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--red);
+  transform: rotate(-4deg);
+}
+.nav-hint svg { display: block; }
+
+/* нижняя строка: контакты/юрстрока — без плашек */
+.foot {
+  position: absolute;
+  left: 58px;
+  right: 58px;
+  bottom: 96px;
+  z-index: 34;
+  border-top: 2px solid var(--ink);
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.legal {
+  position: absolute;
+  left: 58px;
+  right: 58px;
+  bottom: 46px;
+  z-index: 34;
+  font-family: var(--font-head);
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   01 · ОБЛОЖКА
+   ========================================================================== */
+
+.pg--01 .cover-kick { position: absolute; left: 58px; top: 58px; z-index: 42; }
+.pg--01 .cover-title {
+  position: absolute;
+  left: -26px;
+  top: 148px;
+  z-index: 10;
+  max-width: 1400px;
+}
+.pg--01 .cover-title .t-giant { font-size: 300px; }
+.pg--01 .cover-claim {
+  position: absolute;
+  left: 58px;
+  top: 470px;
+  z-index: 22;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 56px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--red);
+  transform: rotate(-2.5deg);
+  max-width: 560px;
+}
+.pg--01 .cover-sub { position: absolute; left: 60px; top: 610px; z-index: 22; max-width: 460px; }
+.pg--01 .duo { right: -150px; bottom: 96px; width: 900px; transform: rotate(4.5deg); }
+.pg--01 .tag-frag { right: 44px; top: 104px; }
+.pg--01 .stamp { left: 58px; bottom: 250px; }
+.pg--01 .nav-hint { right: 66px; bottom: 214px; }
+
+/* ==========================================================================
+   02 · ОТТИСКИ ЦИФР
+   ========================================================================== */
+
+.pg--02 .lead { position: absolute; left: 58px; top: 58px; z-index: 42; }
+.pg--02 .lead-sub {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 30px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--red);
+  transform: rotate(-1.5deg);
+}
+.pg--02 .stats { position: absolute; left: 0; top: 230px; right: 0; z-index: 16; }
+.stat-print {
+  position: absolute;
+  left: 62px;
+  display: flex;
+  align-items: flex-end;
+  gap: 22px;
+}
+.stat-print:nth-child(1) { top: 0; transform: rotate(-3deg); }
+.stat-print:nth-child(2) { top: 214px; left: 210px; transform: rotate(2.2deg); }
+.stat-print:nth-child(3) { top: 428px; left: 44px; transform: rotate(-1.2deg); }
+.stat-print:nth-child(4) { top: 642px; left: 250px; transform: rotate(3deg); }
+
+.stat-print .num {
+  font-family: var(--font-tech);
+  font-weight: 700;
+  font-size: 172px;
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.stat-print .meta { padding-bottom: 18px; max-width: 320px; }
+.stat-print .meta b {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.stat-print .meta span {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+.pg--02 .duo { right: -190px; top: 300px; width: 520px; transform: rotate(-7deg); }
+.pg--02 .tag-frag { left: 300px; bottom: 150px; transform: rotate(6deg); width: 300px; }
+.pg--02 .nav-hint { left: 62px; bottom: 300px; }
+.pg--02 .stamp { right: 46px; bottom: 118px; width: 150px; height: 150px; font-size: 17px; }
+.pg--02 .stamp b { font-size: 11px; }
+
+/* ==========================================================================
+   03 · СЦЕНАРИИ
+   ========================================================================== */
+
+.pg--03 .head { position: absolute; left: 58px; top: 56px; z-index: 42; }
+.pg--03 .head .t-big { margin-top: 12px; font-size: 118px; }
+.pg--03 .words { position: absolute; left: 52px; top: 300px; z-index: 24; }
+.word {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+.word:nth-child(1) { transform: rotate(-1.5deg); }
+.word:nth-child(2) { transform: rotate(1.2deg); margin-left: 74px; }
+.word:nth-child(3) { transform: rotate(-0.8deg); margin-left: 24px; }
+.word:nth-child(4) { transform: rotate(2deg); margin-left: 110px; }
+.word .n {
+  font-family: var(--font-tech);
+  font-weight: 700;
+  font-size: 30px;
+  color: var(--red);
+}
+.word .w {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-shadow: 3px 0 0 rgba(226, 59, 46, 0.35);
+}
+.pg--03 .duo { left: -170px; bottom: -80px; width: 760px; transform: rotate(-5deg); }
+.pg--03 .tag-frag { right: 44px; top: 176px; width: 360px; transform: rotate(9deg); }
+.pg--03 .tag-frag .tag__v { font-size: 40px; }
+.pg--03 .tail {
+  position: absolute;
+  left: 58px;
+  bottom: 236px;
+  z-index: 33;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--ink);
+  transform: rotate(-2deg);
+}
+.pg--03 .tail em { font-style: normal; color: var(--red); }
+.pg--03 .nav-hint { right: 66px; bottom: 178px; }
+.pg--03 .stamp { right: 60px; bottom: 300px; width: 148px; height: 148px; font-size: 16px; }
+.pg--03 .stamp b { font-size: 11px; }
+
+/* ==========================================================================
+   04 · ФИНАЛ: ЦЕЛЫЙ ЦЕННИК, ОТРЫВНОЙ КУПОН
+   ========================================================================== */
+
+.pg--04 .tag--full { right: 32px; top: 150px; }
+.pg--04 .tag--full .tag__v { color: var(--red); }
+.pg--04 .tag--full .tag__k { color: var(--ink); }
+.pg--04 .tag--full .tag__note { color: var(--ink-soft); }
+.pg--04 .tag__perf { right: 120px; top: 24px; bottom: 24px; }
+.pg--04 .tag__hole { right: 24px; top: 24px; }
+.pg--04 .tag-coupon {
+  position: absolute;
+  right: 32px;
+  top: 150px;
+  width: 660px;
+  z-index: 27;
+  text-align: right;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transform: rotate(-90deg) translateX(-560px);
+  transform-origin: right top;
+}
+.pg--04 .duo { left: -150px; bottom: 150px; width: 560px; transform: rotate(6deg); opacity: 0.95; }
+.pg--04 .end-kick { position: absolute; left: 58px; top: 58px; z-index: 42; }
+.pg--04 .stamp { left: 66px; bottom: 330px; }
+.pg--04 .contact {
+  position: absolute;
+  left: 58px;
+  bottom: 176px;
+  z-index: 34;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--ink);
+  transform: rotate(-1.2deg);
+}
+.pg--04 .contact em { font-style: normal; color: var(--red); }
+.pg--04 .contact small {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--ink-soft);
+}
+.pg--04 .nav-hint { right: 66px; bottom: 96px; }
+
+/* ===== выравнивание композиций после первого оттиска ===== */
+
+/* 02: фото-деталь ниже и правее, чтобы не наезжать на подписи */
+.pg--02 .duo { right: -260px; top: 430px; width: 470px; transform: rotate(-6deg); }
+.pg--02 .tag-frag { left: 240px; bottom: 132px; }
+.pg--02 .stats { top: 216px; }
+
+/* 03: товар уходит вправо-вниз, левая колонка и низ свободны */
+.pg--03 .duo { left: auto; right: -230px; bottom: -140px; width: 760px; transform: rotate(5deg); }
+.pg--03 .stamp { right: auto; left: 62px; bottom: 330px; }
+.pg--03 .nav-hint { right: 66px; bottom: 176px; }
+.pg--03 .tail { bottom: 240px; }
+.pg--03 .tag-frag { right: 40px; top: 190px; }
+
+/* 04: целый ценник компактнее и правее, товар — у нижнего края */
+.pg--04 .tag--full { right: 46px; top: 128px; width: 610px; min-height: 560px; padding: 40px 40px 34px; }
+.pg--04 .tag--full .tag__v { font-size: 88px; }
+.pg--04 .tag--full .tag__perf { right: 108px; top: 20px; bottom: 20px; }
+.pg--04 .tag--full .tag__hole { right: 22px; top: 22px; }
+.pg--04 .duo { left: -200px; bottom: -120px; width: 520px; transform: rotate(7deg); }
+.pg--04 .contact { bottom: 318px; font-size: 38px; }
+.pg--04 .stamp { left: 66px; bottom: 470px; }
+.pg--04 .nav-hint { right: 66px; bottom: 92px; }
+
+/* стенсильные перекладины чуть тоньше, чтобы цифры читались */
+.stencil::before { height: 7%; }
+.stencil::after { height: 5%; }
+
+/* перфорация-край: аккуратная, не мешает полю */
+.perf-edge { border-left-width: 2px !important; border-left-color: rgba(23,21,15,.35) !important; }
+
+/* 03: товар не залезает на футер и стрелку */
+.pg--03 .duo { right: -240px; bottom: -320px; width: 720px; }
+.pg--03 .nav-hint { right: 70px; bottom: 300px; }
+
+/* 04: товар — только угол, контакты на бумаге */
+.pg--04 .duo { left: -280px; bottom: -260px; width: 460px; }
+.pg--04 .contact { bottom: 300px; }
+.pg--04 .tag--full { width: 600px; right: 52px; top: 122px; }
+.pg--04 .tag--full .tag__v { font-size: 82px; }
+
+/* обложка: товар не накрывает имя модели; размеры по пропорциям фото */
+.pg--01 .duo {
+  right: -140px;
+  bottom: 78px;
+  width: auto;
+  max-width: 900px;
+  max-height: 800px;
+}
+.pg--01 .cover-claim { top: 500px; }
+
+/* 04: «ПИШИ» выше футера */
+.pg--04 .nav-hint { right: 66px; bottom: 246px; }
+
+/* обложка: фото не заходит на футер (уважаем нижнее поле) */
+.pg--01 .duo { bottom: 154px; max-height: 700px; }
+.pg--01 .cover-claim { top: 486px; }
+
+/* QA-фикс: товар на 03/04 не заходит под футер и не теряется за холстом */
+.pg--03 .duo {
+  left: auto;
+  right: -200px;
+  bottom: 168px;
+  width: auto;
+  max-width: 760px;
+  max-height: 640px;
+  transform: rotate(5deg);
+}
+.pg--04 .duo {
+  left: -240px;
+  bottom: 176px;
+  width: auto;
+  max-width: 470px;
+  max-height: 440px;
+  transform: rotate(6deg);
+}
+
+/* ===== v5.1: safe-zone футера, плотность 03/04, светлее фотография ===== */
+
+/* святое поле снизу: декор не заходит под футер */
+.safe-zone {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 150px;
+  background: var(--paper);
+  z-index: 55;
+  pointer-events: none;
+}
+.foot, .legal, .pnum { z-index: 60; }
+
+/* фото светлее, краска звонче */
+.duo { filter: url(#duo) contrast(1.04); }
+
+/* обложка: полное имя модели мелкой строкой */
+.cover-fullname {
+  position: absolute;
+  left: 60px;
+  top: 690px;
+  z-index: 22;
+  margin: 0;
+  max-width: 700px;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* 03: сценарии крупнее, товар справа внахлёст, стрелка/ценник в воздухе */
+.pg--03 .words { top: 286px; }
+.pg--03 .word { margin-bottom: 26px; }
+.pg--03 .word .w { font-size: 72px; }
+.pg--03 .duo {
+  right: -170px;
+  bottom: 178px;
+  max-width: 800px;
+  max-height: 660px;
+}
+.pg--03 .tail { bottom: 224px; font-size: 46px; }
+.pg--03 .nav-hint { right: 70px; bottom: 250px; }
+.pg--03 .tag-frag { right: 38px; top: 168px; width: 380px; }
+.pg--03 .stamp { left: 60px; bottom: 360px; }
+
+/* 04: обрывок-купон в нижней левой четверти */
+.tag--coupon {
+  left: 56px;
+  bottom: 168px;
+  width: 470px;
+  min-height: 210px;
+  padding: 24px 26px 22px;
+  transform: rotate(4deg);
+}
+.tag--coupon .tag__v { font-size: 34px; color: var(--red); line-height: 0.94; }
+.tag--coupon .tag__note { font-size: 14px; margin-top: 10px; }
+.tag--coupon .tag__perf { right: 74px; top: 14px; bottom: 14px; }
+.tag--coupon .tag__hole { right: 16px; top: 16px; width: 16px; height: 16px; border-width: 2px; }
+
+/* 04: ценник и контакт выше, товар — угол */
+.pg--04 .tag--full { top: 108px; }
+.pg--04 .contact { bottom: 344px; }
+.pg--04 .stamp { left: 470px; bottom: 190px; width: 150px; height: 150px; font-size: 16px; }
+.pg--04 .stamp b { font-size: 10px; }
+.pg--04 .duo { left: -220px; bottom: 210px; max-height: 400px; max-width: 440px; }
+.pg--04 .nav-hint { right: 66px; bottom: 250px; }
+
+/* 01: фото не закрывает полное имя */
+.pg--01 .duo { bottom: 160px; max-height: 680px; }
+.pg--01 .cover-claim { top: 470px; }
+
+/* 03: ручная стрелка «ЦЕНА» — на бумагу, не на вырезку */
+.pg--03 .nav-hint { right: auto; left: 62px; bottom: 318px; }
+.pg--03 .stamp { left: 60px; bottom: 396px; }
+
+/* 04 финальная раскладка: купон снизу слева, контакт над ним, товар-деталь в центре */
+.pg--04 .tag--coupon {
+  left: 56px;
+  bottom: 166px;
+  width: 430px;
+  min-height: 186px;
+  padding: 22px 24px 20px;
+  transform: rotate(4deg);
+}
+.pg--04 .tag--coupon .tag__v { font-size: 30px; }
+.pg--04 .tag--coupon .tag__note { font-size: 13px; margin-top: 8px; }
+.pg--04 .tag--coupon .tag__perf { right: 66px; top: 12px; bottom: 12px; }
+.pg--04 .contact { bottom: 452px; font-size: 36px; }
+.pg--04 .stamp { left: 62px; bottom: 640px; width: 160px; height: 160px; font-size: 17px; }
+.pg--04 .stamp b { font-size: 10px; }
+.pg--04 .duo { left: 520px; bottom: 214px; max-width: 340px; max-height: 300px; transform: rotate(-4deg); }
+.pg--04 .nav-hint { right: 66px; bottom: 250px; }
+.pg--04 .tag--full { top: 104px; }
+
+/* настоящие печатные текстуры designer-b */
+.pg::before {
+  background-image: url("img/print/paper_grain.png");
+  background-size: 820px 820px;
+  opacity: 0.55;
+}
+.pg::after {
+  background-image: url("img/print/ink_noise.png");
+  background-size: 900px 900px;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+}
+.duo-print {
+  position: absolute;
+  z-index: 12;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  display: block;
+}
+
+/* крупный кадр на обложке и 02 — не заходит на футер */
+.pg--01 .duo-print { right: -140px; bottom: 160px; width: auto; max-width: 900px; max-height: 680px; }
+.pg--02 .duo-print { right: -260px; top: 430px; width: 470px; transform: rotate(-6deg); }
+.pg--03 .duo-print { right: -200px; bottom: 168px; width: auto; max-width: 760px; max-height: 640px; transform: rotate(5deg); }
+.pg--04 .duo-print { left: 520px; bottom: 214px; max-width: 340px; max-height: 300px; transform: rotate(-4deg); }
+
+/* 02: штамп не уходит под safe-zone */
+.pg--02 .stamp { bottom: 190px; }
+
+/* финал: стрелка на бумагу, деталь крупнее, текстура спокойнее */
+.pg--01 .nav-hint { right: 66px; top: 476px; bottom: auto; }
+.pg--02 .duo-print { right: -300px; top: 372px; width: 530px; }
+.pg::after { opacity: 0.10; }
+.pg::before { opacity: 0.48; }
+
+/* ===== контакты и hero в печатном стиле ===== */
+
+.pg--04 .contact {
+  text-transform: none;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 34px;
+  letter-spacing: 0.01em;
+}
+.pg--04 .contact b {
+  font-family: var(--font-tech);
+  font-weight: 600;
+  color: var(--red);
+  letter-spacing: 0.02em;
+}
+.pg--04 .contact small {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+/* HERO 00_СУПЕРЦЕНЫ */
+.pg--hero .hero-kick { position: absolute; left: 58px; top: 56px; z-index: 40; }
+.pg--hero .hero-title {
+  position: absolute;
+  left: -22px;
+  top: 116px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 300px;
+  line-height: 0.76;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
+  text-shadow: -7px 3px 0 rgba(226, 59, 46, 0.75);
+  z-index: 10;
+}
+.pg--hero .hero-title span { color: var(--red); text-shadow: 6px 0 0 rgba(23,21,15,.25); }
+.pg--hero .hero-sub {
+  position: absolute;
+  left: 60px;
+  top: 420px;
+  z-index: 20;
+  margin: 0;
+  max-width: 760px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.pg--hero .hero-sub2 {
+  position: absolute;
+  left: 60px;
+  top: 470px;
+  z-index: 20;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 54px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--red);
+  transform: rotate(-2deg);
+}
+.pg--hero .hero-prod {
+  position: absolute;
+  z-index: 12;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.pg--hero .hero-tag {
+  right: 40px;
+  top: 520px;
+  width: 420px;
+  min-height: 330px;
+  padding: 30px 28px 26px;
+  transform: rotate(-4deg);
+}
+.pg--hero .hero-tag .tag__v { font-size: 64px; color: var(--red); line-height: 0.88; }
+.pg--hero .hero-tag .tag__note { font-size: 14px; margin-top: 10px; line-height: 1.4; }
+.pg--hero .hero-tag .tag__perf { right: 86px; top: 16px; bottom: 16px; }
+.pg--hero .hero-tag .tag__hole { right: 18px; top: 18px; }
+
+/* HERO: контакт внизу на бумаге, товары ниже/мельче, подзаголовки не сталкиваются */
+.pg--hero .contact {
+  position: absolute;
+  left: 58px;
+  bottom: 168px;
+  z-index: 34;
+  text-transform: none;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 32px;
+}
+.pg--hero .contact b { font-family: var(--font-tech); color: var(--red); }
+.pg--hero .contact small {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 17px;
+  color: var(--ink-soft);
+}
+.pg--hero .hero-sub { top: 396px; font-size: 24px; max-width: 700px; }
+.pg--hero .hero-sub2 { top: 476px; font-size: 50px; }
+.pg--hero .hero-tag { top: 540px; right: 34px; width: 400px; min-height: 310px; }
+.pg--hero .hero-prod { opacity: 0.98; }
+
+/* ===== финальные штрихи ===== */
+/* нитка всегда ПОД текстом (но над бумагой/фото ниже текста) */
+.thread { z-index: 8; }
+
+/* стенсильные перекладины тоньше — цифры читаются */
+.stencil::before { height: 5%; }
+.stencil::after { height: 3.5%; }
+
+/* явная мелкая цифра рядом с крупной стенсильной */
+.num-plain {
+  align-self: flex-start;
+  margin: 6px 0 0 10px;
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--red);
+}
+
+/* hero: «СУПЕРЦЕНЫ» целиком в кадре */
+.pg--hero .hero-title { font-size: 232px; left: -6px; top: 132px; }
+.pg--hero .hero-sub { top: 372px; }
+.pg--hero .hero-sub2 { top: 448px; }
+.pg--hero .hero-tag { top: 520px; }
+
+/* ===== ЦЕНЫ В ПЕЧАТНОЙ КАРУСЕЛИ ===== */
+.rub {
+  font-style: normal;
+  font-size: 0.55em;
+  vertical-align: 0.52em;
+  letter-spacing: 0;
+  color: var(--red);
+}
+.tag--frag { width: 360px; }
+.tag--frag .tag__v .rub { color: var(--ink); }
+.price-big {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: var(--red);
+  text-transform: none;
+}
+.tag--full .tag__v { display: block; }
+.tag--full .price-big { color: var(--red); }
+.pg--04 .tag--full .tag__v { line-height: 0.9; }
+.pg--03 .tag-frag .tag__v { line-height: 0.92; }
+
+/* цена не переносится на 2 строки (renderer FAIL-guard) */
+.tag__v, .price-big { white-space: nowrap; }
+.tag--full .tag__v { white-space: nowrap; }
+
+/* «руб.» — печатный знак без зависимости от глифа ₽ */
+.rub {
+  font-family: var(--font-head);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.34em;
+  vertical-align: 0.42em;
+  letter-spacing: 0.04em;
+  color: inherit;
+  opacity: 0.9;
+}
+
+/* «руб.» печатным знаком, без зависимости от глифа ₽ */
+.rub {
+  font-family: var(--font-head);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.34em;
+  vertical-align: 0.42em;
+  letter-spacing: 0.04em;
+  color: inherit;
+  opacity: 0.9;
+}

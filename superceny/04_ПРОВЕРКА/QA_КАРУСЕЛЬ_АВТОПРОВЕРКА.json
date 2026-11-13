@@ -1,0 +1,31 @@
+{
+  "generated": "2026-11-12 12:00:19",
+  "version": "1.0",
+  "stage": "all",
+  "stats": {
+    "positions": 20,
+    "placeholder": 2,
+    "html": 81,
+    "folders": 20,
+    "hero": 1,
+    "png": 81,
+    "gallery_refs": 162,
+    "strips": 20,
+    "readability_390": 81,
+    "readability_540": 81
+  },
+  "summary": {
+    "blockers": 0,
+    "warnings": 0,
+    "infos": 1
+  },
+  "findings": [
+    {
+      "code": "И",
+      "subject": "checklist",
+      "msg": "renderer WARN overflow:hidden по карточкам — визуально проверено, обрезки значимого текста нет",
+      "path": "D:\\Проекты Дипсик\\В ОКОПЕ\\superceny\\05_ГОТОВОЕ\\ЧЕК_ЛИСТ_ФАЙЛОВ.md",
+      "quote": ""
+    }
+  ]
+}

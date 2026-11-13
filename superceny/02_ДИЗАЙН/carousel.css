@@ -1,0 +1,950 @@
+/* ==========================================================================
+   КАРУСЕЛЬ «СУПЕРЦЕНЫ НА НПО „КИЛОВАТТ“» — 4 слайда как один сюжет
+   01 КРЮЧОК → 02 ЦИФРЫ → 03 СЦЕНАРИИ → 04 ФИНАЛ/CTA
+   Новый слой поверх tokens.css. Композиции — самостоятельные, не один шаблон.
+   ========================================================================== */
+
+/* ------------------------------- общий каркас --------------------------- */
+
+.slide {
+  position: relative;
+  width: 1080px;
+  height: 1350px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  padding: 52px 56px 44px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+}
+
+.slide .k-top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  z-index: 5;
+}
+
+.k-top__logo { height: 34px; width: auto; display: block; }
+.theme-quiet .k-top__logo { filter: none; }
+
+.k-top__series {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.k-top__num {
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  color: var(--fg);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.k-num__i { color: var(--accent); }
+
+/* нижняя полоса карусели: точки, подсказка, стрелка */
+.slide .k-bottom {
+  position: absolute;
+  left: 56px;
+  right: 56px;
+  bottom: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  z-index: 6;
+}
+
+.k-dots { display: flex; gap: 8px; align-items: center; }
+.k-dots span {
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  display: block;
+}
+.k-dots span.is-on { background: var(--accent); }
+.theme-quiet .k-dots span { border-color: var(--accent); }
+
+.k-swipe {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.k-arrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.k-arrow__g {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+/* прогресс-полоса на всю ширину (у слайдов 01–03) */
+.k-progress {
+  position: absolute;
+  left: 56px;
+  right: 56px;
+  bottom: 34px;
+  height: 3px;
+  background: var(--line);
+  z-index: 6;
+}
+.k-progress i { display: block; height: 100%; background: var(--accent); }
+
+/* ghost-цифра слайда */
+.k-ghost {
+  position: absolute;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--line-strong);
+  pointer-events: none;
+  letter-spacing: -0.03em;
+}
+
+.k-legal {
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--fg-dim);
+  max-width: 700px;
+}
+
+/* ==========================================================================
+   SLIDE 01 · КРЮЧОК — фото крупно (bleed), огромное название, ударная цифра
+   ========================================================================== */
+
+.slide--01 { padding-bottom: 96px; }
+
+.slide--01 .k1-head { position: relative; z-index: 4; flex: 0 0 auto; }
+
+.k1-kicker {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.k1-kicker::before {
+  content: "";
+  width: 32px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.k1-badge {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 9px 16px 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.k1-title {
+  margin: 14px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 168px;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--fg);
+  max-width: 860px;
+}
+.k1-title--l { font-size: 138px; }
+.k1-title--m { font-size: 112px; }
+.k1-title--s { font-size: 92px; }
+
+.k1-claim {
+  margin: 18px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 62px;
+  line-height: 0.96;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--accent);
+  max-width: 620px;
+}
+.k1-claim--l { font-size: 50px; }
+.k1-claim--m { font-size: 40px; }
+
+.k1-sub {
+  margin: 16px 0 0;
+  max-width: 560px;
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--fg-dim);
+}
+.k1-sub b { color: var(--fg); font-weight: 600; }
+
+.k1-photo {
+  position: absolute;
+  right: -130px;
+  bottom: 118px;
+  width: 880px;
+  height: 640px;
+  z-index: 2;
+  background: var(--surface);
+}
+.k1-photo img {
+  position: absolute;
+  left: 28px;
+  top: 28px;
+  width: calc(100% - 56px);
+  height: calc(100% - 56px);
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.k1-photo__cap {
+  position: absolute;
+  left: 28px;
+  bottom: -26px;
+  font-family: var(--font-tech);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.k1-ghost { right: 34px; top: 118px; font-size: 300px; }
+.slide--01 .k-ghost { -webkit-text-stroke-color: rgba(201, 242, 75, 0.16); }
+
+.k1-swipe-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 96px;
+  height: 2px;
+  background: var(--line);
+}
+.k1-swipe-strip::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 34%;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* ==========================================================================
+   SLIDE 02 · ЦИФРЫ — асимметричная сетка, фото-деталь/зум
+   ========================================================================== */
+
+.slide--02 .k2-head { position: relative; z-index: 4; flex: 0 0 auto; }
+
+.k2-lead {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.k2-title {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 92px;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--fg);
+  max-width: 640px;
+}
+.k2-title--m { font-size: 76px; }
+.k2-title--s { font-size: 62px; }
+
+.k2-grid {
+  position: relative;
+  z-index: 4;
+  flex: 0 0 auto;
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 236px;
+  gap: 14px;
+  width: 640px;
+}
+
+.k2-stat {
+  padding: 16px 18px 14px;
+  border-top: 2px solid var(--accent);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.k2-stat:nth-child(2) { transform: translateY(26px); }
+.k2-stat:nth-child(4) { transform: translateY(26px); }
+
+.k2-stat__v {
+  display: block;
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 74px;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+.k2-stat__v--l { font-size: 58px; }
+.k2-stat__v--m { font-size: 46px; }
+.k2-stat__k {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.k2-stat__n {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--fg-dim);
+}
+
+.k2-zoom {
+  position: absolute;
+  right: -40px;
+  top: 120px;
+  width: 400px;
+  height: 1020px;
+  overflow: hidden;
+  z-index: 2;
+  background: var(--surface);
+}
+.k2-zoom img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 190%;
+  height: auto;
+  transform: translate(-48%, -50%);
+}
+
+.k2-tail {
+  margin: 24px 0 0;
+  z-index: 4;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1.08;
+  text-transform: uppercase;
+  color: var(--accent);
+  max-width: 600px;
+}
+.k2-note {
+  margin: 14px 0 0;
+  max-width: 600px;
+  font-size: 19px;
+  line-height: 1.35;
+  color: var(--fg-dim);
+}
+
+.k2-ghost { right: 30px; top: 120px; font-size: 300px; }
+.slide--02 .k-ghost { -webkit-text-stroke-color: rgba(201, 242, 75, 0.14); }
+
+/* ==========================================================================
+   SLIDE 03 · СЦЕНАРИИ — светлый слайд, крупные строки с номерами
+   ========================================================================== */
+
+.slide--03 { background: var(--bg); color: var(--fg); }
+
+.slide--03 .k3-head { position: relative; z-index: 4; flex: 0 0 auto; }
+
+.k3-eyebrow {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.k3-title {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 128px;
+  line-height: 0.84;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.k3-title--m { font-size: 104px; }
+.k3-title--s { font-size: 86px; }
+
+.k3-points {
+  position: relative;
+  z-index: 4;
+  flex: 0 0 auto;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  width: 760px;
+}
+
+.k3-point {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 18px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+.k3-point:last-child { border-bottom: 1px solid var(--line); }
+
+.k3-point__n {
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 32px;
+  color: var(--accent);
+}
+.k3-point__t {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.k3-photo {
+  position: absolute;
+  right: -60px;
+  bottom: 200px;
+  width: 480px;
+  height: 420px;
+  z-index: 2;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.k3-photo img {
+  position: absolute;
+  left: 22px;
+  top: 22px;
+  width: calc(100% - 44px);
+  height: calc(100% - 44px);
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.k3-photo__cap {
+  position: absolute;
+  left: 22px;
+  bottom: 8px;
+  font-family: var(--font-tech);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.k3-tail {
+  position: absolute;
+  left: 56px;
+  bottom: 118px;
+  z-index: 4;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.k3-tail em { font-style: normal; color: var(--accent); }
+
+.k3-ghost { right: -20px; top: 96px; font-size: 330px; }
+.slide--03 .k-ghost { -webkit-text-stroke-color: rgba(29, 30, 26, 0.12); }
+
+/* ==========================================================================
+   SLIDE 04 · ФИНАЛ/CTA — акцентный оффер, большой CTA, мини-фото
+   ========================================================================== */
+
+.slide--04 .k4-head { position: relative; z-index: 4; flex: 0 0 auto; }
+
+.k4-badge {
+  display: inline-block;
+  padding: 10px 18px 9px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.k4-title {
+  margin: 16px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 96px;
+  line-height: 0.84;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: var(--fg);
+  max-width: 700px;
+}
+.k4-title--m { font-size: 78px; }
+.k4-title--s { font-size: 62px; }
+
+.k4-price {
+  position: relative;
+  z-index: 4;
+  margin-top: 22px;
+  padding: 22px 26px 20px;
+  background: var(--surface);
+  color: var(--on-paper-ink);
+  width: 720px;
+}
+.k4-price__k {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-paper-dim);
+}
+.k4-price__v {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 86px;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--on-paper-ink);
+}
+.k4-price__n {
+  display: block;
+  margin-top: 8px;
+  font-size: 18px;
+  color: var(--on-paper-dim);
+}
+
+.k4-bullets {
+  position: relative;
+  z-index: 4;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 30px;
+  width: 720px;
+}
+.k4-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--fg);
+}
+.k4-bullet::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  margin-top: 8px;
+  background: var(--accent);
+}
+
+.k4-cta {
+  position: relative;
+  z-index: 4;
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 24px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  width: 720px;
+}
+.k4-cta__t {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.k4-cta__s {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-tech);
+  font-size: 24px;
+  line-height: 1.1;
+}
+.k4-cta__arrow {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 56px;
+  line-height: 1;
+}
+
+.k4-photo {
+  position: absolute;
+  right: -80px;
+  bottom: 170px;
+  width: 470px;
+  height: 470px;
+  z-index: 2;
+  background: var(--surface);
+}
+.k4-photo img {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  width: calc(100% - 48px);
+  height: calc(100% - 48px);
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.k4-end {
+  position: absolute;
+  left: 56px;
+  bottom: 118px;
+  z-index: 4;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.slide--04 .k-swipe { display: none; }
+.k4-ghost { right: 30px; top: 110px; font-size: 300px; }
+.slide--04 .k-ghost { -webkit-text-stroke-color: rgba(201, 242, 75, 0.18); }
+
+/* юрстрока карусели — самый низ слайда */
+.slide .k-legal {
+  position: absolute;
+  left: 56px;
+  right: 56px;
+  bottom: 12px;
+  z-index: 6;
+  font-size: 10px;
+  line-height: 1.3;
+  color: var(--fg-dim);
+}
+.slide { padding-bottom: 120px; }
+.k3-note {
+  margin: 20px 0 0;
+  max-width: 640px;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--fg-dim);
+}
+/* ===== финальные правки компоновки карусели ===== */
+
+/* slide 02: сетка заполняет левую часть, деталь справа на всю высоту */
+.slide--02 .k2-grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 24px 0 104px;
+  grid-auto-rows: minmax(0, 1fr);
+  width: 620px;
+}
+.slide--02 .k2-tail {
+  position: absolute;
+  left: 56px;
+  bottom: 118px;
+  font-size: 40px;
+  max-width: 600px;
+}
+.slide--02 .k2-note {
+  position: absolute;
+  left: 56px;
+  bottom: 176px;
+  margin: 0;
+  max-width: 560px;
+  font-size: 17px;
+}
+.slide--02 .k2-zoom {
+  right: -40px;
+  top: 0;
+  width: 430px;
+  height: 1350px;
+}
+.slide--02 .k2-zoom img { width: 240%; }
+
+/* slide 03: полоса ключевых ТТХ */
+.k3-facts {
+  position: relative;
+  z-index: 4;
+  margin: 22px 0 0;
+  display: flex;
+  align-items: stretch;
+  width: 760px;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+.k3-fact {
+  flex: 1 1 0;
+  padding: 12px 10px;
+  font-family: var(--font-tech);
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--fg);
+}
+.k3-fact + .k3-fact { border-left: 1px solid var(--line); }
+
+/* slide 04: преимущества одной колонкой, крупнее */
+.slide--04 .k4-bullets { grid-template-columns: 1fr; row-gap: 0; }
+.slide--04 .k4-bullet { font-size: 26px; padding: 13px 0; }
+.slide--04 .k4-price__v { font-size: 96px; }
+.slide--04 .k4-photo { height: 520px; bottom: 150px; }
+
+/* фикс: деталь справа не наезжает на шапку */
+.slide--02 .k2-zoom { top: 116px; height: 1120px; }
+
+/* слайд 03: фото-деталь слева внизу + полоса ТТХ без переносов */
+.k3-detail {
+  position: absolute;
+  left: 56px;
+  bottom: 196px;
+  width: 300px;
+  height: 300px;
+  z-index: 2;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.k3-detail img {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  width: calc(100% - 36px);
+  height: calc(100% - 36px);
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.k3-fact { font-size: 20px; white-space: nowrap; padding: 12px 8px; }
+
+/* ===== финальная переверстка слайдов 02 и 04 ===== */
+
+/* 02: заголовок → 4 плитки 2×2 (значение сверху) → крючок; деталь справа без обрезки */
+.k2-main {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  column-gap: 24px;
+  height: 610px;
+  margin-top: 22px;
+}
+.k2-grid {
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 14px;
+  width: auto;
+  margin: 0;
+}
+.k2-stat {
+  padding: 18px 20px 16px;
+  justify-content: flex-start;
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 2px solid var(--accent);
+}
+.k2-stat__v { font-size: 64px; line-height: 1; }
+.k2-stat__v--l { font-size: 52px; }
+.k2-stat__v--m { font-size: 42px; }
+.k2-stat__k { margin-top: 14px; font-size: 15px; }
+.k2-stat__n { font-size: 15px; }
+.k2-detail {
+  position: relative;
+  background: var(--surface);
+  overflow: hidden;
+}
+.k2-detail img {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  object-fit: contain;
+}
+.k2-detail__cap {
+  position: absolute;
+  left: 20px;
+  bottom: 8px;
+  font-family: var(--font-tech);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.slide--02 .k2-tail {
+  position: static;
+  margin: 24px 0 0;
+  font-size: 42px;
+  max-width: 640px;
+}
+.slide--02 .k2-note {
+  position: static;
+  margin: 12px 0 0;
+  font-size: 18px;
+  max-width: 640px;
+}
+
+/* 04: фото заполняет правую колонку, контент крупнее, CTA прижат к низу */
+.slide--04 .k4-price,
+.slide--04 .k4-bullets,
+.slide--04 .k4-cta { width: 600px; }
+.slide--04 .k4-price { padding: 24px 26px; }
+.slide--04 .k4-price__v { font-size: 78px; }
+.slide--04 .k4-bullet { font-size: 24px; padding: 12px 0; }
+.slide--04 .k4-cta { margin-top: auto; }
+.slide--04 .k4-end { position: static; margin-top: 18px; }
+.slide--04 .k4-photo {
+  right: -30px;
+  top: 120px;
+  bottom: 140px;
+  height: auto;
+  width: 400px;
+}
+.slide--04 .k4-photo img { left: 22px; top: 22px; width: calc(100% - 44px); height: calc(100% - 44px); }
+
+/* значения плиток: короткие крупно, длинные — без переносов */
+.k2-stat__v { font-size: 64px; }
+.k2-stat__v--l { font-size: 50px; }
+.k2-stat__v--m { font-size: 42px; }
+
+/* ===== финал слайда 02 и низа слайда 03 ===== */
+
+.slide--02 .k2-main { height: 790px; }
+.slide--02 .k2-grid { height: 100%; }
+.slide--02 .k2-stat { padding: 22px 22px 18px; }
+.slide--02 .k2-stat__v { font-size: 66px; }
+.slide--02 .k2-stat__k { margin-top: 16px; font-size: 16px; }
+.slide--02 .k2-stat__n { font-size: 15px; }
+.slide--02 .k2-detail { height: 100%; }
+.slide--02 .k2-detail img {
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.slide--02 .k2-detail__cap { left: 16px; bottom: 10px; color: var(--on-paper-dim); }
+.slide--02 .k2-tail { margin: 24px 0 0; font-size: 46px; max-width: 640px; }
+.slide--02 .k2-note { margin: 8px 0 0; font-size: 17px; }
+.slide--02 .k2-ghost {
+  left: auto; right: -6px; top: auto; bottom: 96px;
+  font-size: 230px;
+  z-index: 6;
+  -webkit-text-stroke: 2px rgba(201, 242, 75, 0.8);
+}
+
+/* slide 03: деталь и фото плотнее закрывают низ */
+.slide--03 .k3-detail { width: 340px; height: 340px; bottom: 200px; }
+.slide--03 .k3-photo { height: 470px; bottom: 150px; width: 500px; }
+
+/* значения плиток: гарантированно в одну строку */
+.k2-stat__v { font-size: 66px; white-space: nowrap; }
+.k2-stat__v--l { font-size: 52px; }
+.k2-stat__v--m { font-size: 44px; }
+.k2-stat__v--s { font-size: 38px; }
+
+/* значения плиток: подгонка по длине, без переполнения */
+.k2-stat__v { font-size: 64px; white-space: nowrap; }
+.k2-stat__v--l { font-size: 52px; }
+.k2-stat__v--m { font-size: 44px; }
+.k2-stat__v--s { font-size: 36px; }
+.k2-stat__v--xs { font-size: 30px; white-space: normal; }
+
+/* Итоговая подгонка кеглей плиток: специфичнее базового правила, порядок не важен */
+.k2-stat .k2-stat__v { font-size: 64px; white-space: nowrap; }
+.k2-stat .k2-stat__v--l { font-size: 52px; }
+.k2-stat .k2-stat__v--m { font-size: 44px; }
+.k2-stat .k2-stat__v--s { font-size: 36px; }
+.k2-stat .k2-stat__v--xs { font-size: 30px; white-space: normal; }
+
+/* заглушка на слайде 01: плашка строго в кадре, по центру фото-зоны */
+.k1-photo--stub {
+  right: 56px;
+  bottom: 200px;
+  width: 880px;
+  height: 500px;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+}
+.k1-photo__stub {
+  text-align: center;
+  padding: 0 24px;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-paper-dim);
+  line-height: 1.7;
+}
+.k1-photo__stub b {
+  display: block;
+  font-size: 30px;
+  letter-spacing: 0.12em;
+  color: var(--on-paper-ink);
+  margin-bottom: 6px;
+}
