@@ -1,0 +1,37 @@
+{
+ "total": 52.66,
+ "music": "fvi-Favorite.ogg",
+ "offset": 24.4,
+ "scenes": {
+  "hook": 0.5,
+  "use": 14.72,
+  "kit": 25.49,
+  "outro": 38.54
+ },
+ "vo": [
+  {
+   "scene": "hook",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_b1.mp3",
+   "start": 0.5,
+   "dur": 13.82
+  },
+  {
+   "scene": "use",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_b2.mp3",
+   "start": 14.72,
+   "dur": 10.37
+  },
+  {
+   "scene": "kit",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_b3.mp3",
+   "start": 25.49,
+   "dur": 13.0
+  },
+  {
+   "scene": "outro",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_b4.mp3",
+   "start": 38.89,
+   "dur": 12.62
+  }
+ ]
+}

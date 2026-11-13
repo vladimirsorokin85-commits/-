@@ -1,0 +1,37 @@
+{
+ "total": 52.87,
+ "music": "fvi-BeatOne.ogg",
+ "offset": 62.6,
+ "scenes": {
+  "hook": 0.55,
+  "specs": 12.49,
+  "mount": 25.89,
+  "outro": 39.07
+ },
+ "vo": [
+  {
+   "scene": "hook",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_a1.mp3",
+   "start": 0.55,
+   "dur": 11.54
+  },
+  {
+   "scene": "specs",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_a2.mp3",
+   "start": 12.49,
+   "dur": 13.0
+  },
+  {
+   "scene": "mount",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_a3.mp3",
+   "start": 25.89,
+   "dur": 13.13
+  },
+  {
+   "scene": "outro",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_a4.mp3",
+   "start": 39.42,
+   "dur": 12.3
+  }
+ ]
+}

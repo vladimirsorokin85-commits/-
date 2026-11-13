@@ -1,0 +1,24 @@
+{
+ "total": 23.55,
+ "music": "fvi-BeatOne.ogg",
+ "offset": 8.0,
+ "scenes": {
+  "hook": 0.45,
+  "specs": 11.44,
+  "outro": 18.8
+ },
+ "vo": [
+  {
+   "scene": "hook",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_s1.mp3",
+   "start": 0.45,
+   "dur": 10.65
+  },
+  {
+   "scene": "specs",
+   "file": "/home/user/-/video_studio/k8m_kupol/vo/p_s2.mp3",
+   "start": 11.44,
+   "dur": 7.16
+  }
+ ]
+}
