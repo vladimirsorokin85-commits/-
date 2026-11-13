@@ -1,0 +1,30 @@
+{
+ "total": 25.78,
+ "music": "fvi-BeatOne.ogg",
+ "offset": 118.0,
+ "scenes": {
+  "hook": 0.1,
+  "table": 6.17,
+  "outro": 16.38
+ },
+ "vo": [
+  {
+   "scene": "hook",
+   "file": "/home/user/-/video_studio/reb_prices2/vo/p_po1.mp3",
+   "start": 0.4,
+   "dur": 5.73
+  },
+  {
+   "scene": "table",
+   "file": "/home/user/-/video_studio/reb_prices2/vo/p_po2.mp3",
+   "start": 6.47,
+   "dur": 9.92
+  },
+  {
+   "scene": "outro",
+   "file": "/home/user/-/video_studio/reb_prices2/vo/p_po3.mp3",
+   "start": 16.73,
+   "dur": 5.97
+  }
+ ]
+}
