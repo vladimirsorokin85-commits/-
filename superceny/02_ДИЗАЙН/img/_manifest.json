@@ -281,12 +281,13 @@
   "label": "К-15М ВИП",
   "catalog_id": "kw-03",
   "img": {
-   "file": "img/kw-03_main.png",
+   "file": "kw-03_main.png",
    "size": [
     1800,
-    1732
+    1049
    ],
-   "bytes": 2204456
+   "bytes": 497978,
+   "mode": "RGBA"
   },
   "alt": {
    "file": "img/kw-03_alt.png",
@@ -297,39 +298,42 @@
    "bytes": 500140
   },
   "zoom": {
-   "file": "img/kw-03_zoom.png",
+   "file": "kw-03_zoom.png",
    "size": [
     1800,
-    1732
+    1050
    ],
-   "bytes": 1902037
+   "bytes": 217683,
+   "mode": "RGBA"
   },
   "detail": {
-   "file": "img/kw-03_detail.png",
+   "file": "kw-03_detail.png",
    "size": [
     1200,
     1200
    ],
-   "bytes": 968190
+   "bytes": 107293,
+   "mode": "RGBA"
   },
   "duo": {
    "file": "print/kw-03_duo.png",
    "size": [
     1800,
-    1732
+    1049
    ],
-   "bytes": 681085,
+   "bytes": 217815,
    "mode": "P"
   },
   "duo_zoom": {
    "file": "print/kw-03_duo_zoom.png",
    "size": [
     1800,
-    1732
+    1050
    ],
-   "bytes": 913973,
+   "bytes": 166195,
    "mode": "P"
-  }
+  },
+  "v2_view": "01.jpg (v2: лицо)"
  },
  {
   "price_no": 8,
@@ -544,221 +548,240 @@
   "label": "ТП 4-28А",
   "catalog_id": "kw-09",
   "img": {
-   "file": "img/kw-09_main.png",
+   "file": "kw-09_main.png",
    "size": [
     1600,
-    3099
+    3056
    ],
-   "bytes": 2497977
+   "bytes": 1842572,
+   "mode": "RGBA"
   },
   "alt": null,
   "zoom": {
-   "file": "img/kw-09_zoom.png",
+   "file": "kw-09_zoom.png",
    "size": [
     1600,
-    3098
+    3048
    ],
-   "bytes": 2223228
+   "bytes": 1291678,
+   "mode": "RGBA"
   },
   "detail": {
-   "file": "img/kw-09_detail.png",
+   "file": "kw-09_detail.png",
    "size": [
     1100,
     1100
    ],
-   "bytes": 608254
+   "bytes": 427317,
+   "mode": "RGBA"
   },
   "duo": {
    "file": "print/kw-09_duo.png",
    "size": [
     1600,
-    3099
+    3056
    ],
-   "bytes": 1244051,
+   "bytes": 1081185,
    "mode": "P"
   },
   "duo_zoom": {
    "file": "print/kw-09_duo_zoom.png",
    "size": [
     1600,
-    3098
+    3048
    ],
-   "bytes": 1511422,
+   "bytes": 1428396,
    "mode": "P"
-  }
+  },
+  "v2_view": "03.jpg (v2: лицо)"
  },
  {
   "price_no": 14,
   "label": "ТП 4-28Б",
   "catalog_id": "kw-10",
   "img": {
-   "file": "img/kw-10_main.png",
+   "file": "kw-10_main.png",
    "size": [
     1600,
-    2922
+    3352
    ],
-   "bytes": 2756716
+   "bytes": 2105629,
+   "mode": "RGBA"
   },
   "alt": null,
   "zoom": {
-   "file": "img/kw-10_zoom.png",
+   "file": "kw-10_zoom.png",
    "size": [
     1600,
-    2922
+    3365
    ],
-   "bytes": 3506476
+   "bytes": 1814415,
+   "mode": "RGBA"
   },
   "detail": {
-   "file": "img/kw-10_detail.png",
+   "file": "kw-10_detail.png",
    "size": [
     1100,
     1100
    ],
-   "bytes": 1031262
+   "bytes": 462735,
+   "mode": "RGBA"
   },
   "duo": {
    "file": "print/kw-10_duo.png",
    "size": [
     1600,
-    2922
+    3352
    ],
-   "bytes": 912559,
+   "bytes": 655724,
    "mode": "P"
   },
   "duo_zoom": {
    "file": "print/kw-10_duo_zoom.png",
    "size": [
     1600,
-    2922
+    3365
    ],
-   "bytes": 1386337,
+   "bytes": 1439947,
    "mode": "P"
-  }
+  },
+  "v2_view": "01.jpg (v2: лицо)"
  },
  {
   "price_no": 15,
   "label": "ТП 4-50А",
   "catalog_id": "kw-11",
   "img": {
-   "file": "img/kw-11_main.png",
+   "file": "kw-11_main.png",
    "size": [
     1600,
-    4056
+    3787
    ],
-   "bytes": 4307239
+   "bytes": 2112410,
+   "mode": "RGBA"
   },
   "alt": null,
   "zoom": {
-   "file": "img/kw-11_zoom.png",
+   "file": "kw-11_zoom.png",
    "size": [
     1600,
-    4055
+    3784
    ],
-   "bytes": 3671210
+   "bytes": 1572070,
+   "mode": "RGBA"
   },
   "detail": {
-   "file": "img/kw-11_detail.png",
+   "file": "kw-11_detail.png",
    "size": [
     1100,
     1100
    ],
-   "bytes": 828662
+   "bytes": 466001,
+   "mode": "RGBA"
   },
   "duo": {
    "file": "print/kw-11_duo.png",
    "size": [
     1600,
-    4056
+    3787
    ],
-   "bytes": 1859127,
+   "bytes": 870717,
    "mode": "P"
   },
   "duo_zoom": {
    "file": "print/kw-11_duo_zoom.png",
    "size": [
     1600,
-    4055
+    3784
    ],
-   "bytes": 2026981,
+   "bytes": 1161165,
    "mode": "P"
-  }
+  },
+  "v2_view": "01.jpg (v2: лицо)"
  },
  {
   "price_no": 16,
   "label": "ТП 4-50Б",
   "catalog_id": "kw-12",
   "img": {
-   "file": "img/kw-12_main.png",
+   "file": "kw-12_main.png",
    "size": [
     1600,
-    3781
+    4116
    ],
-   "bytes": 2505127
+   "bytes": 2087572,
+   "mode": "RGBA"
   },
   "alt": null,
   "zoom": {
-   "file": "img/kw-12_zoom.png",
+   "file": "kw-12_zoom.png",
    "size": [
     1600,
-    3780
+    4118
    ],
-   "bytes": 2145403
+   "bytes": 1839347,
+   "mode": "RGBA"
   },
   "detail": {
-   "file": "img/kw-12_detail.png",
+   "file": "kw-12_detail.png",
    "size": [
     1100,
     1100
    ],
-   "bytes": 576750
+   "bytes": 523733,
+   "mode": "RGBA"
   },
   "duo": {
    "file": "print/kw-12_duo.png",
    "size": [
     1600,
-    3781
+    4116
    ],
-   "bytes": 1354263,
+   "bytes": 1051910,
    "mode": "P"
   },
   "duo_zoom": {
    "file": "print/kw-12_duo_zoom.png",
    "size": [
     1600,
-    3780
+    4118
    ],
-   "bytes": 1825758,
+   "bytes": 1329026,
    "mode": "P"
-  }
+  },
+  "v2_view": "01.jpg (v2: лицо)"
  },
  {
   "price_no": 17,
   "label": "ТП 7-100",
   "catalog_id": "kw-13",
   "img": {
-   "file": "img/kw-13_main.png",
+   "file": "kw-13_main.png",
    "size": [
     1600,
     3299
    ],
-   "bytes": 1954197
+   "bytes": 1952815,
+   "mode": "RGBA"
   },
   "alt": null,
   "zoom": {
-   "file": "img/kw-13_zoom.png",
+   "file": "kw-13_zoom.png",
    "size": [
     1600,
-    3298
+    3299
    ],
-   "bytes": 1717196
+   "bytes": 1832820,
+   "mode": "RGBA"
   },
   "detail": {
-   "file": "img/kw-13_detail.png",
+   "file": "kw-13_detail.png",
    "size": [
     1100,
     1100
    ],
-   "bytes": 591668
+   "bytes": 482750,
+   "mode": "RGBA"
   },
   "duo": {
    "file": "print/kw-13_duo.png",
@@ -766,30 +789,32 @@
     1600,
     3299
    ],
-   "bytes": 910349,
+   "bytes": 888558,
    "mode": "P"
   },
   "duo_zoom": {
    "file": "print/kw-13_duo_zoom.png",
    "size": [
     1600,
-    3298
+    3299
    ],
-   "bytes": 1166867,
+   "bytes": 1163488,
    "mode": "P"
-  }
+  },
+  "v2_view": "01.jpg (v2: лицо)"
  },
  {
   "price_no": 18,
   "label": "ТП 8-100",
   "catalog_id": "kw-14",
   "img": {
-   "file": "img/kw-14_main.png",
+   "file": "kw-14_main.png",
    "size": [
     1600,
     2618
    ],
-   "bytes": 2200712
+   "bytes": 2188058,
+   "mode": "RGBA"
   },
   "alt": {
    "file": "img/kw-14_alt.png",
@@ -800,20 +825,22 @@
    "bytes": 1007694
   },
   "zoom": {
-   "file": "img/kw-14_zoom.png",
+   "file": "kw-14_zoom.png",
    "size": [
     1600,
-    2617
+    2618
    ],
-   "bytes": 1932350
+   "bytes": 1953937,
+   "mode": "RGBA"
   },
   "detail": {
-   "file": "img/kw-14_detail.png",
+   "file": "kw-14_detail.png",
    "size": [
     1100,
     1100
    ],
-   "bytes": 751405
+   "bytes": 703273,
+   "mode": "RGBA"
   },
   "duo": {
    "file": "print/kw-14_duo.png",
@@ -821,18 +848,19 @@
     1600,
     2618
    ],
-   "bytes": 1022073,
+   "bytes": 1021084,
    "mode": "P"
   },
   "duo_zoom": {
    "file": "print/kw-14_duo_zoom.png",
    "size": [
     1600,
-    2617
+    2618
    ],
-   "bytes": 1479254,
+   "bytes": 1475900,
    "mode": "P"
-  }
+  },
+  "v2_view": "01.jpg (v2: лицо)"
  },
  {
   "price_no": 19,
