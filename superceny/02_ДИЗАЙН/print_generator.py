@@ -425,18 +425,18 @@ def hero(positions):
             pass
     if nums:
         hero_price = "ОТ {:,}".format(min(nums)).replace(",", " ") + ' <i class="rub">руб.</i>'
-        hero_note = "20 позиций · розница, ноябрь 2026"
+        hero_note = "24 позиции · розница 12.11.2026"
         hero_foot = "Розничные цены · доставка по РФ · самовывоз в Москве"
     else:
         hero_price = "ПРАЙС<br>ПО ЗАПРОСУ"
-        hero_note = "20 позиций · цены в карточках"
+        hero_note = "24 позиции · цены в карточках"
         hero_foot = "Прайс по запросу · доставка по РФ · самовывоз в Москве"
     body = """  <p class="kick hero-kick">Магазин «В ОКОПЕ» · спецпрайс 11.2026</p>
   <h1 class="hero-title">СУПЕР<span>ЦЕНЫ</span></h1>
-  <p class="hero-sub">на всю линейку НПО «Киловатт» · 20 позиций прайса · 4 страницы на модель</p>
+  <p class="hero-sub">на всю линейку НПО «Киловатт» · 24 позиции прайса · 4 страницы на модель</p>
   <h2 class="hero-sub2">цену сорвали — спрашивай</h2>
   <div class="hero-tag tag" aria-hidden="true">
-    <span class="tag__k">спецпрайс-листовка · 20 позиций</span>
+    <span class="tag__k">спецпрайс-листовка · 24 позиции</span>
     <span class="tag__v" style="font-size:64px">%s</span>
     <span class="tag__note">%s</span>
     <i class="tag__perf"></i>
@@ -444,7 +444,7 @@ def hero(positions):
   </div>
   %s
   <div class="stamp" style="left:64px;bottom:250px"><span>СУПЕРЦЕНА</span><b>НПО «КИЛОВАТТ»</b></div>
-  <div class="contact" style="bottom:170px">Telegram: <b>@vokope_ru</b><small>+7 (999) 136-71-42 · прайс по запросу</small></div>
+  <div class="contact" style="bottom:170px">Telegram: <b>@vokope_ru</b><small>+7 (999) 136-71-42 · цены из прайса 12.11.2026</small></div>
   <div class="nav-hint" style="right:66px;bottom:170px"><span>СМОТРИ</span>
     <svg width="72" height="30" viewBox="0 0 72 30" fill="none"><path d="M2 22 C22 6, 44 4, 66 13" stroke="#E23B2E" stroke-width="4" stroke-linecap="round"/><path d="M56 4 L68 13 L54 20" stroke="#E23B2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
   </div>""" % (hero_price, hero_note, collage)
