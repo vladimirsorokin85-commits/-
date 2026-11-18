@@ -1,23 +1,26 @@
 import { spawnSync } from 'node:child_process';
 import { rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { ALERT_AT, BPM, CAT_AT, CHAPTERS, DURATION, SLUG } from './story.mjs';
+import { BEEP_AT, BPM, CAT_AT, CHAPTERS, DURATION, SLUG, WORK_CUTS } from './story.mjs';
 
 const SR = 48000;
-const musicFile = fileURLToPath(new URL('../music_downloaded/isaiah658-final-hour.ogg', import.meta.url));
+const musicFile = fileURLToPath(new URL('../../StockTune-Storm Riders Unleashed_1794986419.mp3', import.meta.url));
 const checkMusic = fileURLToPath(new URL('../toolkit/music_check.py', import.meta.url));
 const asset = (path) => fileURLToPath(new URL(path, import.meta.url));
-// Intro point just before a drum transient in the recorded 170 BPM track.
-const MUSIC_START = '75.900';
+// Owner-selected instrumental. The 30 s excerpt starts on the measured drum grid.
+const MUSIC_START = '55.154';
+const signalTime = CHAPTERS[1].start + BEEP_AT;
+const signalDipStart = (signalTime - .07).toFixed(3);
+const signalDipEnd = (signalTime + .19).toFixed(3);
 const CUES = [
-  [2.13, 'whoosh_short', .39],
-  [CHAPTERS[1].start + .07, 'swipe_paper', .49],
-  [CHAPTERS[1].start + ALERT_AT, 'pop_bubble', .62],
-  [CHAPTERS[2].start + .07, 'swipe_paper', .43],
-  [CHAPTERS[2].start + 3.56, 'cut_tick', .32],
-  [CHAPTERS[3].start + .07, 'swipe_paper', .43],
+  [2.13, 'whoosh_short', .35],
+  [CHAPTERS[1].start + .06, 'swipe_paper', .45],
+  [signalTime, 'countdown_beeps', .91, .19],
+  [CHAPTERS[2].start + .06, 'swipe_paper', .41],
+  ...WORK_CUTS.slice(1).map((time, i) => [CHAPTERS[2].start + time, 'cut_tick', i % 2 ? .21 : .29]),
+  [CHAPTERS[3].start + .06, 'swipe_paper', .43],
   [CHAPTERS[3].start + CAT_AT, 'pop_bubble', .46],
-  [CHAPTERS[4].start + .07, 'swipe_paper', .45],
+  [CHAPTERS[4].start + .06, 'swipe_paper', .45],
   [CHAPTERS[4].start + .86, 'text_reveal_soft', .38],
 ];
 
@@ -53,22 +56,25 @@ export function buildMaster(ffmpeg, outputDir) {
       return `[${i + 1}:a]${format},${voiceChain},atempo=${voice.tempo},atrim=duration=${room.toFixed(3)},` +
         `${place(start + voice.offset)}[v${i}]`;
     }),
-    ...CUES.map(([t, , gain], i) =>
-      `[${i + 1 + CHAPTERS.length}:a]${format},volume=${gain},${place(t)}[f${i}]`),
+    ...CUES.map(([t, , gain, length], i) => {
+      const slice = length ? `atrim=duration=${length},afade=t=out:st=${(length - .035).toFixed(3)}:d=0.035,` : '';
+      return `[${i + 1 + CHAPTERS.length}:a]${format},${slice}volume=${gain},${place(t)}[f${i}]`;
+    }),
     sum('v', CHAPTERS.length, 'voices'),
     sum('f', CUES.length, 'effects'),
     '[voices]aformat=sample_fmts=fltp:channel_layouts=stereo,asplit=2[vo][key]',
-    `[0:a]${format},atrim=duration=${DURATION},equalizer=f=2200:t=o:w=1.7:g=-2.3,volume=1.12,` +
+    `[0:a]${format},atrim=duration=${DURATION},equalizer=f=2200:t=o:w=1.7:g=-2.6,volume=1.08,` +
       `alimiter=limit=.87:level=0,afade=t=in:st=0:d=0.045,afade=t=out:st=${DURATION - .47}:d=0.47,` +
       'aformat=sample_fmts=fltp:channel_layouts=stereo[music]',
-    '[music][key]sidechaincompress=threshold=.043:ratio=8:attack=8:release=203:knee=2.3[ducked]',
+    '[music][key]sidechaincompress=threshold=.043:ratio=8:attack=8:release=203:knee=2.3,' +
+      `volume='if(between(t,${signalDipStart},${signalDipEnd}),1-0.66*pow(sin(PI*(t-${signalDipStart})/0.26),2),1)':eval=frame[ducked]`,
     `[ducked][vo][effects]amix=inputs=3:duration=first,volume=3,alimiter=limit=.92:level=0,atrim=duration=${DURATION}[mix]`,
   ].join(';');
   try {
     // Trim and level a recorded excerpt, then verify the actual bed entering the mix.
     ff(ffmpeg, [
       '-loglevel', 'warning', '-ss', MUSIC_START, '-i', musicFile, '-t', String(DURATION),
-      '-af', 'volume=6.2dB,alimiter=limit=.86:level=0:attack=3:release=85',
+      '-map', '0:a:0', '-af', 'equalizer=f=78:t=o:w=2.4:g=1.8,volume=1.4dB,alimiter=limit=.91:level=0',
       '-ar', String(SR), '-c:a', 'pcm_f32le', bed,
     ]);
     const verified = spawnSync(process.env.PYTHON || 'python3', [checkMusic, '--tempo-hint', String(BPM), bed], {

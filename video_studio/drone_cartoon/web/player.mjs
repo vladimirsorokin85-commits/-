@@ -60,7 +60,8 @@ const buttons = CHAPTERS.map(({ start, label, heading, narration }, index) => {
   });
   const line = document.createElement('p');
   const intro = document.createElement('strong');
-  intro.textContent = `${formatTime(start)} · ${heading.join(' ')}`;
+  const title = heading.join(' ');
+  intro.textContent = `${formatTime(start)} · ${title === narration ? label : title}`;
   line.append(intro, document.createElement('br'), document.createTextNode(narration));
   transcript.append(line);
   return button;

@@ -26,7 +26,7 @@ async function render({ draft }) {
   const temp = new URL(`.${basename}.${process.pid}.mp4`, output);
   await mkdir(output, { recursive: true });
   const ffmpeg = ffmpegPath();
-  console.log('Сведение: диктор, драм-н-бейс и эффекты');
+  console.log('Сведение: диктор, музыка и монтажные эффекты');
   const audio = buildMaster(ffmpeg, output);
   const encoder = spawn(ffmpeg, [
     '-hide_banner', '-loglevel', 'warning', '-y',

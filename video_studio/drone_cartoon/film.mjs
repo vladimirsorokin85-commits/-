@@ -1,7 +1,7 @@
 import { createCanvas, GlobalFonts, Path2D } from '@napi-rs/canvas';
 import { fileURLToPath } from 'node:url';
 import QRCode from 'qrcode';
-import { ALERT_AT, BEAT, CAT_AT, CHAPTERS, CONTACTS, DURATION, WIPE, chapterAt } from './story.mjs';
+import { BEEP_AT, BEAT, CAT_AT, CHAPTERS, CONTACTS, DURATION, WIPE, WORK_CUTS, chapterAt } from './story.mjs';
 
 // Logical coordinates; the renderer scales this composition uniformly for HD or draft.
 export const WIDTH = 540;
@@ -240,125 +240,43 @@ function outside(ctx, t) {
   caption(ctx, 0, t, '#203a41', C.cream, C.amber);
 }
 
-const WINDOW = 'M65 526 V364 Q66 279 153 274 H269 Q344 278 352 363 V526 Z';
-function attendant(ctx, t) {
-  const lift = smooth((t - ALERT_AT - .13) / .65);
-  const blink = Math.max(0, 1 - Math.abs(t - .82) / .11, 1 - Math.abs(t - 5.4) / .12);
-  const notice = ease((t - ALERT_AT) / .43);
-  ctx.save(); ctx.translate(187, 523 + 1.8 * Math.sin(t * 1.8)); ctx.scale(.95, .95);
-  shape(ctx, 'M-103 74 C-130 88 -137 154 -125 237 H134 C136 163 120 105 93 93 L31 68 H-50 Z', '#cc7662', C.ink, 4);
-  shape(ctx, 'M-122 235 V180 Q-115 129 -100 111 M-59 127 L-50 231 M85 109 Q99 161 94 231', null, '#a85f54', 3);
-  shape(ctx, 'M-48 72 L27 69 L43 95 Q7 143 -40 105 L-60 91 Z', '#f3d8b0', C.ink, 3);
-  shape(ctx, 'M-24 25 L27 36 L24 84 Q11 105 -22 84 Z', '#d88d73', C.ink, 3);
-  ctx.save(); ctx.rotate(-.06 + .18 * notice);
-  shape(ctx, 'M-76 35 C-114 -4 -96 -78 -52 -96 C-28 -115 31 -111 65 -82 Q101 -54 82 -3 Q83 35 56 62 L-57 61 Q-75 52 -76 35 Z', '#30373d', C.ink, 3);
-  oval(ctx, -65, 5, 15, 19, '#e09b80', C.ink, 3);
-  oval(ctx, 65, 9, 14, 19, '#e09b80', C.ink, 3);
-  shape(ctx, 'M-66 -38 Q-45 -81 6 -77 Q67 -74 69 -25 L65 17 Q61 42 37 56 Q12 74 -16 65 Q-50 58 -62 32 Q-71 12 -66 -38 Z', '#f0ad8b', C.ink, 3);
-  shape(ctx, 'M-66 -22 C-91 -54 -68 -91 -30 -99 Q25 -121 62 -88 Q84 -74 81 -38 Q75 -43 62 -39 Q42 -38 28 -56 Q7 -32 -31 -34 Q-46 -28 -66 -22 Z', '#313a40', C.ink, 3);
-  shape(ctx, 'M-63 -66 Q-45 -89 -18 -91 M-39 -62 Q-4 -69 13 -87 M48 -81 Q65 -74 68 -59', null, '#61716d', 3);
-  shape(ctx, 'M-77 -2 Q-73 -18 -63 -9 M70 -3 Q65 -10 61 1', null, '#a85f54', 2);
-  oval(ctx, -65, 20, 3.5, 3.5, C.amber);
-  for (const x of [-29, 28]) {
-    ctx.save(); ctx.translate(x, -12 - notice * 3);
-    shape(ctx, 'M-13 -12 Q-4 -19 9 -15', null, C.ink, 3);
-    if (blink > .72) {
-      shape(ctx, 'M-11 1 Q0 -2 10 1', null, C.ink, 2.5);
-    } else {
-      const height = (6 + notice * 3) * (1 - .75 * blink);
-      oval(ctx, 0, 0, 10.6, height, C.cream, C.ink, 1.6);
-      oval(ctx, -2 + 5.1 * notice, -.8 + 2.3 * lift, 3.25, height * .68, C.ink);
-    }
+function soundSignal(ctx, t) {
+  rect(ctx, 0, 0, W, H, '#493e49');
+  shape(ctx, 'M-20 362 L555 274 V687 L-20 766Z', '#6d545a');
+  shape(ctx, 'M-14 521 L560 401 V466 L-14 586Z', '#89655f');
+  hatch(ctx, 55, 296, 81, 5, '#b0867b', 3);
+  hatch(ctx, 409, 664, 63, 5, '#b0867b', -3);
+  const since = Math.max(0, t - BEEP_AT);
+  const pulse = ease((t - BEEP_AT) / .16) * (1 - ease((t - BEEP_AT - .15) / .65));
+  const reveal = bounce((t - BEEP_AT) / .44);
+  ctx.save(); ctx.translate(264, 514); ctx.rotate(-.055 + .025 * pulse);
+  ctx.scale(1 + .033 * pulse, 1 + .033 * pulse);
+  rounded(ctx, -211 + 8, -159 + 12, 422, 337, 9, '#322c39');
+  rounded(ctx, -211, -159, 422, 337, 9, '#e1b494', '#493447', 4);
+  rounded(ctx, -200, -147, 400, 314, 4, '#f2ce98', '#a26f66', 2.4);
+  shape(ctx, 'M-200 94 L200 70 V165 H-200Z', '#dbac83');
+  hatch(ctx, -187, 115, 117, 4, '#b1846a', 3);
+  oval(ctx, -43, 0, 103, 100, '#d59582', '#a4776a', 2.4);
+  oval(ctx, -43, 0, 91, 88, '#edbf94');
+  // An editorial sound icon, not a depiction of a device or its controls.
+  shape(ctx, 'M-100 -23 H-69 L-33 -54 Q-24 -61 -24 -49 V51 Q-24 64 -34 55 L-69 25 H-100Z', '#29484a', '#304448', 4);
+  shape(ctx, 'M-19 -26 Q14 0 -19 26 M-5 -43 Q46 0 -5 43', null, '#d67463', 5.7 + 2 * pulse);
+  rounded(ctx, -137, 128, 274, 25, 4, '#815956');
+  text(ctx, 'КОРОТКИЙ СИГНАЛ', 0, 146, 13, C.cream, { align: 'center', tracking: 2.2 });
+  ctx.restore();
+  if (reveal > .015) {
+    ctx.save(); ctx.translate(371 + 79 * (1 - reveal), 438 - 31 * (1 - reveal));
+    ctx.rotate(.07); ctx.scale(reveal, reveal);
+    shape(ctx, 'M-41 -56 L56 -64 L104 -30 L94 45 L23 68 L-11 62 L-85 90 L-63 48 L-97 20 L-81 -33Z', '#472e3a');
+    shape(ctx, 'M-45 -61 L52 -69 L99 -35 L88 40 L19 63 L-16 58 L-84 85 L-64 43 L-104 14 L-85 -38Z', '#eb9075', '#5b3948', 3.5);
+    text(ctx, 'БИП!', -3, 22, 51, '#fff1d2', { align: 'center' });
     ctx.restore();
   }
-  shape(ctx, 'M1 -10 Q-4 3 -6 10 Q0 15 7 10', null, '#ac6a59', 2.5);
-  oval(ctx, -36, 18, 12, 5, '#df8b77'); oval(ctx, 39, 18, 10, 5, '#df8b77');
-  if (notice > .28 && lift < .68) {
-    oval(ctx, 1, 36, 5.2, 4.8, '#783c3c');
-  } else {
-    shape(ctx, 'M-7 36 Q2 39 12 35', null, '#8d514b', 2.5);
-  }
-  ctx.restore();
-
-  const hx = mix(104, 100, lift);
-  const hy = mix(188, 112, lift);
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  ctx.beginPath(); ctx.moveTo(102, 134); ctx.quadraticCurveTo(134, 187, hx + 7, hy + 19);
-  ctx.lineWidth = 45; ctx.strokeStyle = C.ink; ctx.stroke();
-  ctx.lineWidth = 38; ctx.strokeStyle = '#dc896f'; ctx.stroke();
-  ctx.save(); ctx.translate(hx, hy); ctx.rotate(.15 - .33 * lift);
-  rounded(ctx, -11, -34, 27, 48, 6, '#273941', '#162c32', 2.5);
-  rounded(ctx, -7, -30, 19, 34, 3, lift > .1 ? '#efce8e' : '#73968d');
-  rect(ctx, -4, -27, 11, 2, lift > .1 ? '#fff1c4' : '#b8c8b2');
-  shape(ctx, 'M-12 16 Q-20 5 -14 -5 Q-9 -12 -6 -1 L-3 4 L11 3 Q21 7 14 18 L7 24 L-7 22 Z', '#f0ad8b', C.ink, 2.5);
-  ctx.restore();
-  ctx.restore();
-}
-
-function alertCard(ctx, t) {
-  const pop = bounce((t - ALERT_AT) / .58);
-  if (pop <= .005) return;
-  ctx.save(); ctx.translate(373 + (1 - pop) * 97, 454 - (1 - pop) * 33);
-  ctx.rotate(-.065 + (1 - pop) * .12); ctx.scale(pop, pop);
-  rounded(ctx, -126 + 9, -65 + 10, 252, 130, 14, '#213f3d');
-  rounded(ctx, -126 + 5, -65 + 5, 252, 130, 14, '#da967b');
-  rounded(ctx, -126, -65, 252, 130, 14, '#f6e6bd', '#264c45', 3.2);
-  ctx.save(); ctx.beginPath(); ctx.roundRect(-124, -63, 248, 126, 12); ctx.clip();
-  rect(ctx, -124, -63, 248, 32, '#e4c18a');
-  rect(ctx, -124, -32, 248, 2, '#ba9b73');
-  ctx.restore();
-  oval(ctx, -104, -47, 4.2, 4.2, '#b76756');
-  text(ctx, 'УВЕДОМЛЕНИЕ', -91, -42, 13, '#5c5246', { tracking: 1.5 });
-  text(ctx, 'Обнаружен', -106, 5, 29, '#294c47');
-  text(ctx, 'дрон', -106, 44, 37, '#294c47');
-  ctx.save(); ctx.translate(82, 23);
-  oval(ctx, 0, 0, 28, 28, '#cfd7aa');
-  shape(ctx, 'M-13 9 Q-8 6 -8 1 V-4 Q-8 -12 0 -12 Q8 -12 8 -4 V1 Q8 6 13 9 Z M-4 13 Q0 18 4 13', null, '#47726a', 2.6);
-  ctx.restore();
-  ctx.restore();
-}
-
-function inside(ctx, t) {
-  rect(ctx, 0, 0, W, H, '#345451');
-  shape(ctx, 'M0 263 L540 280 V734 L0 709Z', '#668075');
-  shape(ctx, 'M0 384 L540 248 V381 L0 517Z', '#738f7f');
-  shape(ctx, WINDOW, '#3c5a56', '#3d615d', 17);
-  ctx.save(); ctx.clip(svg(WINDOW));
-  rect(ctx, 65, 275, 287, 251, '#597c7a');
-  oval(ctx, 114, 375, 52, 52, '#dbb77f');
-  shape(ctx, 'M59 459 Q118 411 190 458 Q255 494 352 430 V529 H59 Z', '#829c88');
-  factory(ctx, 112, 380, .58, 'b');
-  poly(ctx, [131, 274, 66, 439, 66, 462, 164, 274], '#fff0d432');
-  ctx.restore();
-  shape(ctx, WINDOW, null, '#e4cb9d', 6);
-  rect(ctx, 207, 277, 6, 248, '#e4cb9d');
-  rounded(ctx, 52, 520, 315, 15, 4, '#d8bf91', C.ink, 3);
-  shape(ctx, 'M0 570 L540 559 V718 H0 Z', '#55766c');
-  rect(ctx, 0, 565, W, 5, '#83a08a');
-  hatch(ctx, 410, 315, 69, 5, '#93ab94', -2);
-  // Warm personal details keep this a staffed civilian site.
-  shape(ctx, 'M452 673 Q448 621 430 607 M453 647 Q468 617 482 606 M452 645 Q452 612 455 591', null, '#284f46', 4);
-  shape(ctx, 'M446 629 Q424 639 413 601 Q439 602 446 629 Z M458 639 Q477 589 494 599 Q490 627 458 639 Z M453 623 Q434 595 456 585 Q474 604 453 623 Z', '#b2c19b', C.ink, 2.5);
-  poly(ctx, [432, 655, 472, 655, 467, 698, 437, 698], '#cf9376', C.ink, 3);
-  attendant(ctx, t);
-  const ping = (t - ALERT_AT) / .68;
-  if (ping > 0 && ping < 1) {
-    ctx.save(); ctx.globalAlpha *= .55 * (1 - ping);
-    oval(ctx, 288, 617, 16 + 28 * ping, 17 + 28 * ping, null, '#fff1c0', 2.5);
-    ctx.restore();
-  }
-  poly(ctx, [-12, 687, 503, 668, 550, 709, 550, 762, -12, 761], '#b19d7c', C.ink, 4);
-  poly(ctx, [-15, 726, 552, 711, 552, 770, -15, 772], '#7e826b', C.ink, 4);
-  poly(ctx, [303, 689, 407, 681, 442, 700, 335, 713], '#587c70', C.ink, 2);
-  poly(ctx, [309, 687, 403, 680, 432, 696, 334, 707], '#f9dfb7', C.ink, 2);
-  poly(ctx, [356, 685, 381, 701], null, '#908169', 1.5);
-  rounded(ctx, 72, 672, 23, 14, 6, null, '#3a5253', 4);
-  rounded(ctx, 51, 657, 35, 37, 6, '#8eab96', C.ink, 2.5);
-  oval(ctx, 68.5, 658, 16, 4.8, '#554443', '#233f42', 2);
-  alertCard(ctx, t);
-  title(ctx, 1, C.cream, '#f4d287', [87, 82]);
-  caption(ctx, 1, t, '#314d49', C.cream, '#f4d287');
+  const rays = .45 + .55 * pulse;
+  star(ctx, 439, 336, 17 * rays, '#ffe6a2');
+  star(ctx, 98, 675, 13 * (1 - .2 * ease(since)), '#f5b28c');
+  title(ctx, 1, C.cream, '#f4bb8e', [87, 82]);
+  caption(ctx, 1, t, '#493e49', C.cream, '#f4bb8e');
 }
 
 function paperBox(ctx, x, y, s, tint = '#edc88b') {
@@ -397,7 +315,7 @@ function packer(ctx, x, y, s, t, jacket) {
   ctx.restore();
 }
 
-function workshop(ctx, t) {
+function workWide(ctx, t) {
   rect(ctx, 0, 0, W, H, '#34544f');
   shape(ctx, 'M0 257 L540 275 V762 L0 744 Z', '#7d9c8b', '#2c514d', 3);
   poly(ctx, [0, 369, 540, 345, 540, 363, 0, 387], '#597e71');
@@ -424,8 +342,118 @@ function workshop(ctx, t) {
     oval(ctx, x, y, 8, 8, '#88a292', C.ink, 1.8);
     poly(ctx, [x - 4 * Math.cos(t * 3), y - 4 * Math.sin(t * 3), x + 4 * Math.cos(t * 3), y + 4 * Math.sin(t * 3)], null, '#536e65', 1.2);
   }
+}
+
+function packingClose(ctx, t, angle) {
+  rect(ctx, 0, 264, W, 510, '#6c8c80');
+  poly(ctx, [-20, 463, 555, 277, 555, 370, -20, 558], '#9fb69f');
+  poly(ctx, [-20, 638, 560, 506, 560, 750, -20, 792], '#55766d');
+  hatch(ctx, 415, 577, 77, 6, '#9ab29a', 1.1);
+  ctx.save(); ctx.translate(272, 518); ctx.rotate(angle);
+  oval(ctx, 5, 143, 196, 39, '#45665f');
+  paperBox(ctx, -145, -115, 3.25);
+  const travel = smooth(t / (3.4 * BEAT));
+  ctx.translate(-157 + 308 * travel, -25 + 22 * travel);
+  shape(ctx, 'M-160 -19 Q-64 -58 -33 -36 L-2 -12 Q18 8 -7 33 L-27 47 Q-74 43 -120 30 L-162 29Z', '#a85f55', C.ink, 5);
+  shape(ctx, 'M-46 -29 Q-20 -53 14 -38 L48 -23 Q63 -7 42 7 L21 10 L24 26 Q17 44 -9 33 L-30 18Z', '#f0d3a0', C.ink, 4);
+  oval(ctx, 37, -13, 31, 30, '#a8b99d', C.ink, 4);
+  oval(ctx, 37, -13, 13, 13, '#5a746a', C.ink, 2.5);
+  ctx.restore();
+  star(ctx, 427, 408, 15 * ease(t / .35), '#fae2ad');
+}
+
+function beltClose(ctx, t, tint) {
+  rect(ctx, 0, 264, W, 500, tint);
+  poly(ctx, [-15, 533, 548, 359, 551, 457, -19, 640], '#a1b69c');
+  poly(ctx, [-22, 611, 547, 511, 555, 620, -20, 743], '#486d64', C.ink, 4.5);
+  poly(ctx, [-18, 615, 548, 513, 548, 542, -19, 655], '#91a38f', C.ink, 4);
+  for (let i = 0; i < 9; i++) {
+    const x = 13 + i * 68;
+    const y = 670 - .19 * x;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(t * 4 + i * .46);
+    oval(ctx, 0, 0, 24, 24, '#7d9b89', '#274e48', 3.6);
+    oval(ctx, 0, 0, 8.5, 8.5, '#496d63');
+    poly(ctx, [-13, 0, -8, 0, 8, 0, 13, 0], null, '#b3c0a2', 3);
+    ctx.restore();
+  }
+  for (const [i, tint] of [[-1, '#d8ac88'], [0, '#ebbf90'], [1, '#ecc892']]) {
+    const x = i * 211 + 66 + 97 * t;
+    paperBox(ctx, x, 454 - .18 * x, 2.15, tint);
+  }
+  hatch(ctx, 55, 342, 74, 4, '#90a999', 2);
+}
+
+function boxesInStore(ctx, t) {
+  rect(ctx, 0, 264, W, 502, '#597e73');
+  shape(ctx, 'M0 345 L540 294 V729 L0 771Z', '#7f9c89');
+  for (let i = 0; i < 3; i++) {
+    const x = 50 + i * 159;
+    rounded(ctx, x, 321, 126, 125, 3, '#c5c9a2', '#5c7d71', 4);
+    poly(ctx, [x + 8, 407, x + 117, 339, x + 117, 356, x + 8, 424], '#e4d9ab');
+  }
+  const drift = 12 * smooth(t / (4 * BEAT));
+  ctx.save(); ctx.translate(-drift, 0);
+  poly(ctx, [-20, 630, 559, 569, 561, 714, -20, 774], '#597c70');
+  oval(ctx, 242, 683, 224, 31, '#41675f');
+  paperBox(ctx, 68, 548, 1.58, '#c99f81');
+  paperBox(ctx, 184, 519, 1.62, '#edcb94');
+  paperBox(ctx, 326, 555, 1.4, '#d6ae89');
+  paperBox(ctx, 92, 458, 1.38, '#e3b88b');
+  paperBox(ctx, 232, 435, 1.35, '#ebc990');
+  paperBox(ctx, 340, 484, 1.23, '#ecc68b');
+  ctx.restore();
+  hatch(ctx, 408, 664, 81, 6, '#93ab95', -3);
+}
+
+function paperCheck(ctx, t) {
+  rect(ctx, 0, 263, W, 508, '#7c9a88');
+  shape(ctx, 'M-14 405 L552 293 V376 L-14 521Z', '#a4b99f');
+  hatch(ctx, 63, 507, 89, 8, '#b1bea0', 2);
+  paperBox(ctx, 306, 456, 2.02, '#dcb78b');
+  const lay = ease(t / .45);
+  ctx.save(); ctx.translate(226, 510 + 21 * (1 - lay)); ctx.rotate(mix(-.15, -.055, lay));
+  rounded(ctx, -127 + 7, -158 + 11, 253, 326, 8, '#4c6c61');
+  rounded(ctx, -127, -158, 253, 326, 8, '#f3ddb0', '#365b55', 3.8);
+  rounded(ctx, -43, -173, 86, 26, 7, '#c19472', '#596e60', 3);
+  const marks = [3, 4, 6];
+  for (let row = 0; row < marks.length; row++) {
+    const y = -103 + row * 81;
+    rounded(ctx, -91, y - 8, 41, 42, 4, '#e1cf9e', '#6d897a', 3.2);
+    const reveal = ease((t + .09 - row * BEAT * .65) / .23);
+    poly(ctx, [-83, y + 12, -75, y + 21, -56, y + 1], null, `rgba(81,112,95,${reveal})`, 4.3);
+    for (let i = 0; i < 2; i++) rect(ctx, -30, y + 4 + 15 * i, 97 + marks[row] * 4 - 23 * i, 3, '#a69270');
+  }
+  ctx.restore();
+}
+
+const workShots = [
+  ['ЦЕХ', (ctx, t) => workWide(ctx, t)],
+  ['ЛЕНТА', (ctx, t) => beltClose(ctx, t, '#729181')],
+  ['УПАКОВКА', (ctx, t) => packingClose(ctx, t, -.1)],
+  ['ПРОВЕРКА', paperCheck],
+  ['СКЛАД', boxesInStore],
+  ['УПАКОВКА', (ctx, t) => packingClose(ctx, t + .18, .1)],
+  ['ЛЕНТА', (ctx, t) => beltClose(ctx, t + .42, '#8aa18a')],
+  ['СМЕНА ИДЁТ', (ctx, t) => workWide(ctx, t + 3.16)],
+];
+
+function workshop(ctx, t) {
+  rect(ctx, 0, 0, W, H, '#30534e');
+  const index = WORK_CUTS.findLastIndex((cut) => t >= cut);
+  const local = t - WORK_CUTS[index];
+  const [label, draw] = workShots[index];
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 258, W, 486); ctx.clip();
+  const impact = (1 - ease(local / .24)) * .032;
+  ctx.translate(270, 516); ctx.scale(1 + impact, 1 + impact); ctx.translate(-270, -516);
+  draw(ctx, local);
+  ctx.restore();
+  rounded(ctx, 48, 276, 171, 30, 3, '#32574e');
+  text(ctx, label, 61, 295.5, 12, '#f5db9f', { tracking: 2 });
   title(ctx, 2, C.cream, '#f4d393', [81, 91]);
   caption(ctx, 2, t, '#34544f', C.cream, '#f4d393');
+  for (let n = 0; n < WORK_CUTS.length; n++) {
+    rect(ctx, 49 + n * 24, 872, 15, 3, n === index ? '#f9d590' : '#8da493');
+  }
 }
 
 function officeCat(ctx, t) {
@@ -523,15 +551,15 @@ function endCard(ctx, t) {
   ctx.restore();
   star(ctx, 437, 317, 23 * ease((t - .7) / .7), C.amber);
   star(ctx, 98, 570, 16 * ease((t - 1) / .7), C.coral);
-  title(ctx, 4, C.cream, C.amber, [86, 85]);
+  title(ctx, 4, C.cream, C.amber, [47, 56]);
   const tag = ease((t - .78) / .46);
   ctx.save(); ctx.globalAlpha *= tag;
-  text(ctx, 'АВТОМАТИЧЕСКОЕ ОПОВЕЩЕНИЕ', 270, 592, 15, C.cream, { align: 'center', tracking: 1.8 });
+  text(ctx, 'ДЕТЕКТОРЫ ДРОНОВ', 270, 592, 15, C.cream, { align: 'center', tracking: 1.8 });
   CONTACTS.forEach((_, index) => socialCode(ctx, index, 115 + 155 * index, 639));
   ctx.restore();
 }
 
-const scenes = [outside, inside, workshop, officeCat, endCard];
+const scenes = [outside, soundSignal, workshop, officeCat, endCard];
 
 function paperTile() {
   const tile = createCanvas(173, 157);

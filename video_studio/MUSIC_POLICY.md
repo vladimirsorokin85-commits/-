@@ -15,7 +15,7 @@
 `fvi-Fireworks.ogg`, `fvi-Goodnightmare.ogg`, `fvi-3amWestEnd.ogg`, `warfork_arpent.ogg`,
 [`isaiah658-final-hour.ogg`](music_downloaded/FINAL-HOUR-CREDITS.md).
 
-Путь к музыке обязан содержать `/music_downloaded/`, иначе сборка падает с ошибкой.
+Путь к каталожным мастерам — `/music_downloaded/`. Единственное исключение для нового монтажа «В своём ритме» — конкретный [MP3, выбранный и загруженный владельцем](../StockTune-Storm%20Riders%20Unleashed_1794986419.mp3). [StockTune](https://stocktune.com/free-music/storm-riders-unleashed-59750-53368) помечает его как Public Domain / AI Generated. В монтаже используется этот готовый файл, без генерации или дублирования. Для остальных сборок список выше не меняется.
 
 ## 3. МУЗЫКА — ТОЛЬКО ДРАЙВОВАЯ (правило канала)
 «В Окопе» — это военная среда, а не магазин на диване. Фон должен **толкать вперёд**:
