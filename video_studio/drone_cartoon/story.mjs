@@ -1,56 +1,68 @@
-export const TITLE = 'Знать вовремя';
-export const SLUG = 'znat-vovremya';
+export const TITLE = 'В своём ритме';
+export const SLUG = 'v-svoem-ritme';
+export const FILE = 'v_okope_v_svoem_ritme.mp4';
 export const FPS = 30;
 export const FRAME_COUNT = 900;
 export const DURATION = FRAME_COUNT / FPS;
+export const BPM = 170;
+export const BEAT = 60 / BPM;
 export const WIPE = 0.46;
-export const ALERT_AT = 76 / FPS;
+export const ALERT_AT = 36 / FPS;
+export const CAT_AT = 91 / FPS;
+
+const onBeat = (n) => Math.round(n * BEAT * FPS) / FPS;
+
+export const CONTACTS = [
+  { label: 'Telegram', handle: '@vokope_ru', href: 'https://t.me/vokope_ru' },
+  { label: 'ВКонтакте', handle: '@vokope_rus', href: 'https://vk.com/vokope_rus' },
+  { label: 'Авито', handle: '«В Окопе»', href: 'https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241' },
+];
 
 export const CHAPTERS = [
   {
     start: 0,
-    label: 'Обычный день на заводе',
-    kicker: 'ПРОИЗВОДСТВО / РАБОЧИЙ ДЕНЬ',
-    heading: ['Дрон над', 'заводом.'],
+    label: 'Дрон на подлёте',
+    kicker: 'ПРОМЗОНА / РАБОЧИЙ ДЕНЬ',
+    heading: ['Дрон на', 'подлёте.'],
     body: ['В небе появляется', 'неизвестный дрон.'],
-    narration: 'Обычный день на заводе. В небе появляется неизвестный дрон.',
-    voice: { file: '01-zavod.mp3', offset: .38, tempo: 1.06 },
+    narration: 'Обычный день на заводе. На подлёте — неизвестный дрон.',
+    voice: { file: '01-podlet.mp3', offset: .45, tempo: 1.03 },
   },
   {
-    start: 5,
-    label: 'Время важно',
-    kicker: 'КОГДА ВАЖНА КАЖДАЯ МИНУТА',
-    heading: ['Время', 'важно.'],
-    body: ['Ответственному за безопасность', 'важно узнать об этом как можно раньше.'],
-    narration: 'Ответственному за безопасность важно узнать об этом как можно раньше.',
-    voice: { file: '02-vremya.mp3', offset: .48, tempo: 1.10 },
-  },
-  {
-    start: 10,
-    label: 'Уведомление о дроне',
-    kicker: 'АВТОМАТИЧЕСКОЕ ОПОВЕЩЕНИЕ',
+    start: onBeat(16),
+    label: 'Автоматическое оповещение',
+    kicker: 'НА ПОДЛЁТЕ / АВТОМАТИЧЕСКИ',
     heading: ['Дрон', 'замечен.'],
-    body: ['Когда детектор замечает дрон,', 'ответственный за безопасность', 'получает уведомление.'],
-    narration: 'Когда детектор замечает дрон, он отправляет уведомление ответственному за безопасность. Теперь можно оценить ситуацию.',
-    voice: { file: '03-detektor.mp3', offset: .5, tempo: 1.10 },
+    body: ['Детектор автоматически уведомляет', 'ответственного за безопасность.'],
+    narration: 'Детектор замечает дрон на подлёте. Уведомление автоматически приходит ответственному за безопасность.',
+    voice: { file: '02-signal.mp3', offset: .48, tempo: 1.05 },
   },
   {
-    start: 18,
-    label: 'Офис, склад и производство',
-    kicker: 'ТРИ РАБОЧИЕ ПЛОЩАДКИ',
-    heading: ['Офис, склад,', 'производство.'],
-    body: ['Где бы ни работала команда,', 'важно вовремя узнать о дроне.'],
-    narration: 'Офис, склад или производство. Где бы ни работала команда, важно вовремя узнать о дроне.',
-    voice: { file: '04-obekty.mp3', offset: .47, tempo: 1.05 },
+    start: onBeat(36),
+    label: 'Цех в своём ритме',
+    kicker: 'ЦЕХ / РАБОЧИЙ РИТМ',
+    heading: ['Работа', 'идёт.'],
+    body: ['В цехе день идёт', 'своим чередом.'],
+    narration: 'А в цехе день идёт своим чередом.',
+    voice: { file: '03-ritm.mp3', offset: .55, tempo: 1.02 },
   },
   {
-    start: 25,
-    label: 'Магазин «В Окопе»',
-    kicker: 'В ОКОПЕ / ФИНАЛ',
-    heading: ['Важно знать', 'вовремя.'],
-    body: ['Магазин «В Окопе». Автоматические детекторы дронов.'],
-    narration: 'Важно знать вовремя. Автоматические детекторы дронов. Магазин «В Окопе».',
-    voice: { file: '04-final.mp3', offset: .42, tempo: 1.12 },
+    start: onBeat(56),
+    label: 'Кто не заметил?',
+    kicker: 'ПОСЛЕСЛОВИЕ / ЗА КАДРОМ',
+    heading: ['Кот не', 'заметил.'],
+    body: ['У него обед по расписанию.'],
+    narration: 'Кто ничего не заметил? Кот. У него обед по расписанию.',
+    voice: { file: '04-kot.mp3', offset: .5, tempo: 1 },
+  },
+  {
+    start: onBeat(72),
+    label: 'Магазин «В Окопе» и контакты',
+    kicker: 'В ОКОПЕ / КОНТАКТЫ',
+    heading: ['Знать', 'вовремя.'],
+    body: ['Магазин «В Окопе». Автоматическое оповещение о дронах.'],
+    narration: 'Магазин «В Окопе». Автоматическое оповещение о дронах.',
+    voice: { file: '05-kontakty.mp3', offset: .48, tempo: 1.03 },
   },
 ];
 

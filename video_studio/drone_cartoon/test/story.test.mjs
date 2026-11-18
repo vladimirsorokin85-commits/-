@@ -2,12 +2,15 @@ import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createFilm, HEIGHT, WIDTH } from '../film.mjs';
-import { ALERT_AT, CHAPTERS, DURATION, FPS, FRAME_COUNT, WIPE, chapterAt } from '../story.mjs';
+import { ALERT_AT, BEAT, CAT_AT, CHAPTERS, CONTACTS, DURATION, FPS, FRAME_COUNT, WIPE, chapterAt } from '../story.mjs';
 
 const hash = (data) => createHash('sha256').update(data).digest('hex');
 
 test('five scenes cover 30 seconds and start on whole frames', () => {
-  assert.deepEqual(CHAPTERS.map(({ start }) => start), [0, 5, 10, 18, 25]);
+  assert.equal(CHAPTERS.length, 5);
+  for (const [i, beat] of [0, 16, 36, 56, 72].entries()) {
+    assert.ok(Math.abs(CHAPTERS[i].start - beat * BEAT) <= .5 / FPS + 1e-9);
+  }
   assert.equal(DURATION, 30);
   assert.equal(DURATION * FPS, FRAME_COUNT);
   for (const [i, { start }] of CHAPTERS.entries()) {
@@ -37,5 +40,7 @@ test('code-drawn frames are opaque, deterministic, and distinct across scenes', 
   assert.equal(frameHash(2.7), frames[0]);
   assert.notEqual(frameHash(3.25), frames[0]);
   assert.notEqual(frameHash(CHAPTERS[1].start + WIPE / 2), frames[1]);
-  assert.notEqual(frameHash(CHAPTERS[2].start + ALERT_AT - .2), frameHash(CHAPTERS[2].start + ALERT_AT + .5));
+  assert.notEqual(frameHash(CHAPTERS[1].start + ALERT_AT - .2), frameHash(CHAPTERS[1].start + ALERT_AT + .5));
+  assert.notEqual(frameHash(CHAPTERS[3].start + CAT_AT - .2), frameHash(CHAPTERS[3].start + CAT_AT + .5));
+  assert.deepEqual(CONTACTS.map(({ href }) => new URL(href).hostname), ['t.me', 'vk.com', 'www.avito.ru']);
 });

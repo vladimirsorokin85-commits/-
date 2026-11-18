@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "render": "node render.mjs",
     "preview": "node preview.mjs",
     "test": "node --test"
   },
   "dependencies": {
-    "@napi-rs/canvas": "0.1.100"
+    "@napi-rs/canvas": "0.1.100",
+    "qrcode": "1.5.4"
   },
   "optionalDependencies": {
     "@ffmpeg-installer/ffmpeg": "1.1.0"

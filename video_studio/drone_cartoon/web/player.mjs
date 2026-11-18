@@ -1,4 +1,4 @@
-import { CHAPTERS, DURATION, FPS, WIPE, chapterAt } from './story.mjs';
+import { CHAPTERS, CONTACTS, DURATION, FPS, WIPE, chapterAt } from './story.mjs';
 
 const video = document.querySelector('#film');
 const watch = document.querySelector('#watch');
@@ -6,6 +6,15 @@ const watchLabel = document.querySelector('#watch-label');
 const status = document.querySelector('#status');
 const chapters = document.querySelector('#chapters');
 const transcript = document.querySelector('#transcript');
+const contacts = document.querySelector('#contacts');
+for (const { href, label } of CONTACTS) {
+  const link = document.createElement('a');
+  link.href = href;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = label;
+  contacts.append(link);
+}
 const formatTime = (seconds) => {
   const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
   const ss = String(Math.floor(seconds % 60)).padStart(2, '0');

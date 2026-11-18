@@ -10,3 +10,5 @@ status: done
 Готово: исходники мультфильма в [`video_studio/drone_cartoon/`](../../video_studio/drone_cartoon/README.md), [финальный MP4](../../video_studio/drone_cartoon/v_okope_dron_nad_obektom.mp4) открыт в Arena и добавлен в PR #16 для скачивания. Исходники позволяют повторить рендер. Заставка подписана «Магазин „В Окопе“».
 
 В том же PR добавлена [версия «Знать вовремя»](../../video_studio/drone_cartoon/v_okope_znat_vovremya.mp4): 30 секунд, автоматическое оповещение, русская озвучка и драм-н-бейс. Предыдущий MP4 не удалён.
+
+Обновление: [«В своём ритме»](../../video_studio/drone_cartoon/v_okope_v_svoem_ritme.mp4), 30 секунд. Иллюстрация автоматического оповещения, сцены цеха и кота, записанный DnB 170 BPM, финальные QR-коды Telegram, ВКонтакте и Авито. В плеере открывается этот монтаж.

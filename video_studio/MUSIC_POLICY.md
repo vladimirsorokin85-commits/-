@@ -12,7 +12,8 @@
 ## 2. Разрешено
 Только реальные скачанные мастера из `video_studio/music_downloaded/`:
 `fvi-BeatOne.ogg`, `fvi-Arpent.ogg`, `fvi-Chronos.ogg`, `fvi-Favorite.ogg`,
-`fvi-Fireworks.ogg`, `fvi-Goodnightmare.ogg`, `fvi-3amWestEnd.ogg`, `warfork_arpent.ogg`.
+`fvi-Fireworks.ogg`, `fvi-Goodnightmare.ogg`, `fvi-3amWestEnd.ogg`, `warfork_arpent.ogg`,
+[`isaiah658-final-hour.ogg`](music_downloaded/FINAL-HOUR-CREDITS.md).
 
 Путь к музыке обязан содержать `/music_downloaded/`, иначе сборка падает с ошибкой.
 

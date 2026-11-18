@@ -23,7 +23,8 @@ test('preview serves its assets on a proxy host and handles HEAD', async (t) => 
   assert.equal(html.status, 200);
   const page = await html.text();
   assert.match(page, /МАГАЗИН «В ОКОПЕ»/);
-  assert.match(page, /Знать вовремя/);
+  assert.match(page, /В своём ритме/);
+  assert.match(page, /id="contacts"/);
   assert.match(page, /<source src="\.\/film\.mp4"/);
   const script = await fetch(`${url}/player.mjs`, { method: 'HEAD' });
   assert.equal(script.status, 200);

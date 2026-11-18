@@ -3,7 +3,7 @@ import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
-import { SLUG } from './story.mjs';
+import { FILE, SLUG } from './story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
@@ -17,7 +17,8 @@ const routes = new Map([
   ['/fonts/Roboto-Black.woff', ['../fonts/Roboto-Black.woff', 'font/woff']],
   ['/output/cover.jpg', ['output/cover.jpg', 'image/jpeg']],
   [`/output/${SLUG}.jpg`, [`output/${SLUG}.jpg`, 'image/jpeg']],
-  ['/film.mp4', [`output/${SLUG}.mp4`, 'video/mp4', 'v_okope_znat_vovremya.mp4']],
+  ['/output/znat-vovremya.mp4', ['output/znat-vovremya.mp4', 'video/mp4', 'v_okope_znat_vovremya.mp4']],
+  ['/film.mp4', [`output/${SLUG}.mp4`, 'video/mp4', FILE]],
   ['/output/dron-nad-obektom.mp4', ['output/dron-nad-obektom.mp4', 'video/mp4', 'v_okope_dron_nad_obektom.mp4']],
 ]);
 
