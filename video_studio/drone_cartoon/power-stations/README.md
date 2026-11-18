@@ -2,8 +2,6 @@
 
 **[Готовый мультфильм](../v_okope_elektrostancii_v_nalichii.mp4)** · 60 секунд · 1080 × 1920, 30 кадров/с. [Обложка](./assets/cover.jpg) · [все модели списком](./catalogue.txt). Плеер: `/power-stations/`.
 
-> Сохранённая версия сведена на Final Hour. Перед публикацией нужен новый звук на MP3 владельца по [действующему правилу](../../MUSIC_POLICY.md).
-
 22 позиции из перечня владельца от 18 ноября 2026 года: **21 станция и 1 дополнительный аккумулятор DJI**. В кадре сохранены отметки EU / CN и V.2. Все цены удалены. Корпуса условные, это рисованный каталог, а не фотографии или точные изображения разъёмов. Наличие — по списку магазина, не по сайтам производителей.
 
 | Начало | Карточка |
@@ -20,6 +18,6 @@
 
 Ватты на карточках BLUETTI и PECRON — **мощность**, а 1 024 Вт·ч на карточке DELTA 3 — **ёмкость**. Сверка: BLUETTI [1](https://www.bluettipower.eu/en-es/collections/bluetti-premium-series); PECRON [1](https://www.pecron.com/collections/f-series?shpxid=c2a98df5-850f-4486-911e-d248d2f7aeb4), [2](https://www.pecron.com/collections/outdoor-recreation-protable-power-station); EcoFlow [1](https://us.ecoflow.com/products/delta-3-portable-power-station). Официальное название дополнительной батареи: DJI Power Expansion Battery 2000 [1](https://www.dji.com/nl/power-expansion-battery-2000/faq). Не заявлены пики, время работы или совместимость комплектаций.
 
-Русская озвучка; [текст записи](./vo_text.txt). Музыка: isaiah658 — **Final Hour** ([CC0, источник](../../music_downloaded/FINAL-HOUR-CREDITS.md)), фрагмент с 1:00,018, 170 BPM. [Монтажные эффекты](../../toolkit/sfx/LICENSE.txt); финальный логотип из вложения владельца, уже используемый в студии.
+Русская озвучка; [текст записи](./vo_text.txt). Музыка — **Storm Riders Unleashed** из [исходного MP3 владельца](../../../StockTune-Storm%20Riders%20Unleashed_1794986419.mp3), фрагмент с 0:55,154. Темп записи подогнан к существующей сетке 170 BPM без изменения высоты звука. Реплики, [монтажные эффекты](../../toolkit/sfx/LICENSE.txt) и все 1800 видеокадров со склейками сохранены. [Первый монтаж с Final Hour](https://github.com/vladimirsorokin85-commits/-/blob/864bb3a33d2d3bd5830eea3f34988210c852fb66/video_studio/drone_cartoon/power-stations/README.md) остался в истории.
 
 Из `video_studio/drone_cartoon`: `npm run render:power` (или `npm run render:power -- --draft`), затем `npm run preview`. Полный рендер в `output/power-stations.mp4`; плеер может использовать доставочный MP4. [Требования к сборке](../README.md#собрать-заново).
