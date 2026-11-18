@@ -72,11 +72,12 @@ const editions = {
   '--bulat': { prefix: './bulat/', posterAt: 2.9 },
   '--tak710': { prefix: './tak710/', posterAt: 2.7 },
   '--site-safety': { prefix: './site-safety/', posterAt: 1.7 },
+  '--strizh': { prefix: './strizh/', posterAt: 4.1 },
 };
 const args = process.argv.slice(2);
 const selected = args.filter((flag) => Object.hasOwn(editions, flag));
 if (selected.length > 1 || args.some((arg) => arg !== '--draft' && !Object.hasOwn(editions, arg))) {
-  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 / render:site-safety [-- --draft]');
+  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 / render:site-safety / render:strizh [-- --draft]');
   process.exitCode = 2;
 } else {
   try {

@@ -6,13 +6,15 @@
 
 ## Видео и контакты
 
-- **«Дрон над объектом: памятка»** — [минутный MP4](./v_okope_bezopasnost_na_obekte.mp4), [материалы и описание](./site-safety/README.md). Рисованные сцены, фото и видеовставки. Плеер `/bezopasnost-na-obekte/`.
+- **«Стриж» — визуальный обзор** — [минутный MP4](./v_okope_strizh_obzor.mp4) из трёх фото с рисованными перебивками, [описание и сборка](./strizh/README.md). Плеер `/strizh/`.
 - **«XMETIX TAK710» — новый монтаж под DnB** — [MP4](./v_okope_xmetix_tak710.mp4), [описание](./tak710/README.md) и [тексты для Shorts и ВК](./tak710/publish.txt). Отдельный плеер `/tak710/`.
 - **«Булат v4 · дрон-детектор»** — [MP4](./v_okope_bulat_v4_detektor.mp4) и [описание](./bulat/README.md). Плеер `/bulat/`.
 - **Сценарий №2 «Game Over для дрона»** — [MP4](./v_okope_game_over.mp4) и [описание](./game/README.md). Отдельный плеер `/game-over/`.
 - **[Готовый MP4 — новый монтаж](./v_okope_v_svoem_ritme_montazh.mp4)** — 30 секунд, 1080 × 1920, 30 кадров/с.
 - Ранние версии: [«В своём ритме»](./v_okope_v_svoem_ritme.mp4), [«Знать вовремя»](./v_okope_znat_vovremya.mp4) и [«Дрон над объектом»](./v_okope_dron_nad_obektom.mp4).
 - [Telegram](https://t.me/vokope_ru) · [ВКонтакте](https://vk.com/vokope_rus) · [Авито](https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241). Ссылки доступны под плеером и в виде QR-кодов на финальной заставке.
+
+Архив: [«Дрон над объектом: памятка»](./site-safety/README.md) — отдельный ранний ролик, не обзор «Стрижа».
 
 ## Собрать заново
 

@@ -5,6 +5,7 @@ import test from 'node:test';
 import { makeServer, parseRange } from '../preview.mjs';
 import { FILE as TAK_FILE } from '../tak710/story.mjs';
 import { FILE as SAFETY_FILE, SLUG as SAFETY_SLUG } from '../site-safety/story.mjs';
+import { FILE as STRIZH_FILE, SLUG as STRIZH_SLUG } from '../strizh/story.mjs';
 
 test('media ranges respect inclusive ends, file size and invalid inputs', () => {
   assert.deepEqual(parseRange('bytes=20-39', 120), { start: 20, end: 39 });
@@ -142,6 +143,45 @@ test('safety player has its own cover, chapter data and downloadable byte ranges
     const expected = Buffer.alloc(32);
     assert.equal((await master.read(expected, 0, 32, 4096)).bytesRead, 32);
     assert.deepEqual(Buffer.from(await partial.arrayBuffer()), expected);
+  } finally {
+    await master.close();
+  }
+});
+
+test('the Strizh page serves an independent overview, poster, chapters and exact download', async (t) => {
+  const server = makeServer();
+  t.after(() => new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve())));
+  server.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const root = `http://127.0.0.1:${server.address().port}`;
+  const url = `${root}/${STRIZH_SLUG}`;
+  const headers = { Host: '8000-example.e2b.app' };
+  const redirect = await fetch(url, { redirect: 'manual', headers });
+  assert.equal(redirect.status, 308);
+  assert.equal(redirect.headers.get('location'), `/${STRIZH_SLUG}/`);
+  const page = await fetch(`${url}/`, { headers });
+  assert.equal(page.status, 200);
+  const html = await page.text();
+  assert.ok(html.includes(`download="${STRIZH_FILE}"`));
+  assert.match(html, /«Стриж»<span>Внешний вид/);
+  assert.doesNotMatch(html, /памятка|склад/i);
+  assert.match(await (await fetch(`${url}/story.mjs`)).text(), /В три четверти/);
+  const poster = await fetch(`${url}/cover.jpg`, { method: 'HEAD' });
+  assert.equal(poster.status, 200);
+  assert.equal(poster.headers.get('content-type'), 'image/jpeg');
+  assert.match(await (await fetch(`${url}/description.txt`)).text(), /00:44 — три ракурса рядом/);
+  assert.equal((await fetch(`${root}/${SAFETY_SLUG}/`)).status, 200);
+  const home = await (await fetch(root)).text();
+  assert.ok(home.includes(`href="./${STRIZH_SLUG}/"`));
+  assert.ok(!home.includes(`href="./${SAFETY_SLUG}/"`));
+  const media = await fetch(`${url}/film.mp4`, { headers: { ...headers, Range: 'bytes=4096-4127' } });
+  assert.equal(media.status, 206);
+  assert.equal(media.headers.get('content-type'), 'video/mp4');
+  const master = await open(new URL(`../${STRIZH_FILE}`, import.meta.url), 'r');
+  try {
+    const expected = Buffer.alloc(32);
+    assert.equal((await master.read(expected, 0, 32, 4096)).bytesRead, 32);
+    assert.deepEqual(Buffer.from(await media.arrayBuffer()), expected);
   } finally {
     await master.close();
   }
