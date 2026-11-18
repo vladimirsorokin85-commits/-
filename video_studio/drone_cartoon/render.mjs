@@ -18,13 +18,13 @@ async function render({ draft, prefix, posterAt }) {
   const [{ createFilm, WIDTH, HEIGHT }, { DURATION, FPS, FRAME_COUNT, SLUG }, { buildMaster }] =
     await Promise.all(['film.mjs', 'story.mjs', 'mix.mjs'].map((module) => import(prefix + module)));
   const scale = draft ? 1 : 2;
-  const film = createFilm(scale);
   const output = new URL('./output/', import.meta.url);
   const basename = `${SLUG}${draft ? '-draft' : ''}`;
   const destination = new URL(`${basename}.mp4`, output);
   const temp = new URL(`.${basename}.${process.pid}.mp4`, output);
   await mkdir(output, { recursive: true });
   const ffmpeg = ffmpegPath();
+  const film = createFilm(scale, { ffmpeg });
   console.log('Сведение: диктор, музыка и монтажные эффекты');
   const audio = buildMaster(ffmpeg, output);
   const encoder = spawn(ffmpeg, [
@@ -71,11 +71,12 @@ const editions = {
   '--game-over': { prefix: './game/', posterAt: 11.3 },
   '--bulat': { prefix: './bulat/', posterAt: 2.9 },
   '--tak710': { prefix: './tak710/', posterAt: 2.7 },
+  '--site-safety': { prefix: './site-safety/', posterAt: 1.7 },
 };
 const args = process.argv.slice(2);
 const selected = args.filter((flag) => Object.hasOwn(editions, flag));
 if (selected.length > 1 || args.some((arg) => arg !== '--draft' && !Object.hasOwn(editions, arg))) {
-  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 [-- --draft]');
+  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 / render:site-safety [-- --draft]');
   process.exitCode = 2;
 } else {
   try {

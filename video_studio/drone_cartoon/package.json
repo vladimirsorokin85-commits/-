@@ -11,6 +11,7 @@
     "render:game": "node render.mjs --game-over",
     "render:bulat": "node render.mjs --bulat",
     "render:tak710": "node render.mjs --tak710",
+    "render:site-safety": "node render.mjs --site-safety",
     "preview": "node preview.mjs",
     "test": "node --test"
   },

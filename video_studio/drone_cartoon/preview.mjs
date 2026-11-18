@@ -7,6 +7,7 @@ import { FILE, SLUG } from './story.mjs';
 import { FILE as GAME_FILE, SLUG as GAME_SLUG } from './game/story.mjs';
 import { FILE as BULAT_FILE, SLUG as BULAT_SLUG } from './bulat/story.mjs';
 import { FILE as TAK_FILE, SLUG as TAK_SLUG } from './tak710/story.mjs';
+import { FILE as SAFETY_FILE, SLUG as SAFETY_SLUG } from './site-safety/story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
@@ -30,6 +31,7 @@ const editions = new Map([
   ['/game-over', { page: 'game', file: GAME_FILE, slug: GAME_SLUG }],
   ['/bulat', { page: 'bulat', file: BULAT_FILE, slug: BULAT_SLUG }],
   ['/tak710', { page: 'tak710', file: TAK_FILE, slug: TAK_SLUG, fallbackCover: 'tak710/assets/cover.jpg' }],
+  [`/${SAFETY_SLUG}`, { page: 'site-safety', file: SAFETY_FILE, slug: SAFETY_SLUG, fallbackCover: 'site-safety/assets/cover.jpg' }],
 ]);
 for (const [route, { page, file, slug, fallbackCover }] of editions) {
   routes.set(`${route}/`, [`web/${page}.html`, HTML]);
@@ -40,6 +42,7 @@ for (const [route, { page, file, slug, fallbackCover }] of editions) {
 }
 routes.set('/game-over/game.css', ['web/game.css', 'text/css; charset=utf-8']);
 routes.set('/tak710/publish.txt', ['tak710/publish.txt', 'text/plain; charset=utf-8']);
+routes.set(`/${SAFETY_SLUG}/publish.txt`, ['site-safety/publish.txt', 'text/plain; charset=utf-8']);
 
 export function parseRange(value, size) {
   const match = /^bytes=(\d*)-(\d*)$/.exec(value);

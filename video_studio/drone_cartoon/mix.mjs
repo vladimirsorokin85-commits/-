@@ -27,9 +27,9 @@ const CUES = [
 ];
 
 const format = `aresample=${SR},aformat=channel_layouts=stereo,asetpts=PTS-STARTPTS`;
-function place(seconds) {
+function place(seconds, duration) {
   const ms = Math.round(seconds * 1000);
-  return `adelay=${ms}|${ms},apad=whole_len=${DURATION * SR}`;
+  return `adelay=${ms}|${ms},apad=whole_len=${duration * SR}`;
 }
 // Equal-length layers let this work on older FFmpeg without amix's normalize option.
 function sum(prefix, count, out) {
@@ -47,7 +47,7 @@ function ff(ffmpeg, args, capture = false) {
 }
 
 export function buildMaster(ffmpeg, outputDir, {
-  chapters = CHAPTERS, cues = CUES, slug = SLUG, signalAt = signalTime,
+  chapters = CHAPTERS, cues = CUES, slug = SLUG, signalAt = signalTime, duration = DURATION,
   music = STORM_RIDERS, musicStart = music.start, musicStartsInFullAt, peakTarget = -1.8,
 } = {}) {
   const dipStart = (signalAt - .07).toFixed(3);
@@ -63,28 +63,28 @@ export function buildMaster(ffmpeg, outputDir, {
     'acompressor=threshold=.1:ratio=2.55:attack=6:release=95:makeup=2,alimiter=limit=.84:level=0';
   const graph = [
     ...chapters.map(({ start, voice }, i) => {
-      const room = (chapters[i + 1]?.start ?? DURATION) - start - voice.offset - .035;
+      const room = (chapters[i + 1]?.start ?? duration) - start - voice.offset - .035;
       const radio = voice.radio ? 'highpass=f=300,lowpass=f=3250,equalizer=f=1180:t=q:w=1.3:g=2.9,' : '';
       return `[${i + 1}:a]${format},${radio}${voiceChain},atempo=${voice.tempo},atrim=duration=${room.toFixed(3)},` +
-        `${place(start + voice.offset)}[v${i}]`;
+        `${place(start + voice.offset, duration)}[v${i}]`;
     }),
     ...cues.map(([t, , gain, length], i) => {
       const slice = length ? `atrim=duration=${length},afade=t=out:st=${(length - .035).toFixed(3)}:d=0.035,` : '';
-      return `[${i + 1 + chapters.length}:a]${format},${slice}volume=${gain},${place(t)}[f${i}]`;
+      return `[${i + 1 + chapters.length}:a]${format},${slice}volume=${gain},${place(t, duration)}[f${i}]`;
     }),
     sum('v', chapters.length, 'voices'),
     sum('f', cues.length, 'effects'),
     '[voices]aformat=sample_fmts=fltp:channel_layouts=stereo,asplit=2[vo][key]',
-    `[0:a]${format},atrim=duration=${DURATION},equalizer=f=2200:t=o:w=1.7:g=-2.6,volume=1.08,${lift}` +
-      `alimiter=limit=.87:level=0,afade=t=in:st=0:d=0.045,afade=t=out:st=${DURATION - .47}:d=0.47,` +
+    `[0:a]${format},atrim=duration=${duration},equalizer=f=2200:t=o:w=1.7:g=-2.6,volume=1.08,${lift}` +
+      `alimiter=limit=.87:level=0,afade=t=in:st=0:d=0.045,afade=t=out:st=${duration - .47}:d=0.47,` +
       'aformat=sample_fmts=fltp:channel_layouts=stereo[music]',
     `[music][key]sidechaincompress=threshold=.043:ratio=8:attack=8:release=203:knee=2.3${dip}[ducked]`,
-    `[ducked][vo][effects]amix=inputs=3:duration=first,volume=3,alimiter=limit=.92:level=0,atrim=duration=${DURATION}[mix]`,
+    `[ducked][vo][effects]amix=inputs=3:duration=first,volume=3,alimiter=limit=.92:level=0,atrim=duration=${duration}[mix]`,
   ].join(';');
   try {
     // Trim and level a recorded excerpt, then verify the actual bed entering the mix.
     ff(ffmpeg, [
-      '-loglevel', 'warning', '-ss', musicStart, '-i', music.file, '-t', String(DURATION),
+      '-loglevel', 'warning', '-ss', musicStart, '-i', music.file, '-t', String(duration),
       '-map', '0:a:0', '-af', music.bedFilter, '-ar', String(SR), '-c:a', 'pcm_f32le', bed,
     ]);
     const verified = spawnSync(process.env.PYTHON || 'python3', [checkMusic, '--tempo-hint', String(music.bpm), bed], {

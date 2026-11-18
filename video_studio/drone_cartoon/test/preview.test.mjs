@@ -4,6 +4,7 @@ import { open } from 'node:fs/promises';
 import test from 'node:test';
 import { makeServer, parseRange } from '../preview.mjs';
 import { FILE as TAK_FILE } from '../tak710/story.mjs';
+import { FILE as SAFETY_FILE, SLUG as SAFETY_SLUG } from '../site-safety/story.mjs';
 
 test('media ranges respect inclusive ends, file size and invalid inputs', () => {
   assert.deepEqual(parseRange('bytes=20-39', 120), { start: 20, end: 39 });
@@ -111,5 +112,37 @@ test('TAK710 serves a separate player, poster, publication copy and exact MP4 ra
     assert.deepEqual(Buffer.from(await range.arrayBuffer()), expected);
   } finally {
     await file.close();
+  }
+});
+
+test('safety player has its own cover, chapter data and downloadable byte ranges', async (t) => {
+  const server = makeServer();
+  t.after(() => new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve())));
+  server.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const root = `http://127.0.0.1:${server.address().port}`;
+  const url = `${root}/${SAFETY_SLUG}`;
+  const host = { Host: '8000-example.e2b.app' };
+  const redirect = await fetch(url, { redirect: 'manual', headers: host });
+  assert.equal(redirect.status, 308);
+  assert.equal(redirect.headers.get('location'), `/${SAFETY_SLUG}/`);
+  const response = await fetch(`${url}/`, { headers: host });
+  assert.equal(response.status, 200);
+  const page = await response.text();
+  assert.ok(page.includes(`download="${SAFETY_FILE}"`));
+  assert.match(page, /иллюстративная съёмка Tiger Lily \/ Pexels/);
+  assert.match(await (await fetch(`${url}/story.mjs`)).text(), /Держите дистанцию/);
+  assert.match(await (await fetch(`${url}/publish.txt`)).text(), /00:19 — кому сообщить/);
+  assert.equal((await fetch(`${url}/cover.jpg`, { method: 'HEAD' })).headers.get('content-type'), 'image/jpeg');
+  const partial = await fetch(`${url}/film.mp4`, { headers: { ...host, Range: 'bytes=4096-4127' } });
+  assert.equal(partial.status, 206);
+  assert.match(partial.headers.get('content-range'), /^bytes 4096-4127\/\d+$/);
+  const master = await open(new URL(`../${SAFETY_FILE}`, import.meta.url), 'r');
+  try {
+    const expected = Buffer.alloc(32);
+    assert.equal((await master.read(expected, 0, 32, 4096)).bytesRead, 32);
+    assert.deepEqual(Buffer.from(await partial.arrayBuffer()), expected);
+  } finally {
+    await master.close();
   }
 });

@@ -6,6 +6,7 @@
 
 ## Видео и контакты
 
+- **«Дрон над объектом: памятка»** — [минутный MP4](./v_okope_bezopasnost_na_obekte.mp4), [материалы и описание](./site-safety/README.md). Рисованные сцены, фото и видеовставки. Плеер `/bezopasnost-na-obekte/`.
 - **«XMETIX TAK710» — новый монтаж под DnB** — [MP4](./v_okope_xmetix_tak710.mp4), [описание](./tak710/README.md) и [тексты для Shorts и ВК](./tak710/publish.txt). Отдельный плеер `/tak710/`.
 - **«Булат v4 · дрон-детектор»** — [MP4](./v_okope_bulat_v4_detektor.mp4) и [описание](./bulat/README.md). Плеер `/bulat/`.
 - **Сценарий №2 «Game Over для дрона»** — [MP4](./v_okope_game_over.mp4) и [описание](./game/README.md). Отдельный плеер `/game-over/`.
