@@ -5,18 +5,13 @@ import { resolve } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { FILE, SLUG } from './story.mjs';
 import { FILE as GAME_FILE, SLUG as GAME_SLUG } from './game/story.mjs';
+import { FILE as BULAT_FILE, SLUG as BULAT_SLUG } from './bulat/story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
 const routes = new Map([
   ['/', ['web/index.html', HTML]],
   ['/index.html', ['web/index.html', HTML]],
-  ['/game-over/', ['web/game.html', HTML]],
-  ['/game-over/game.css', ['web/game.css', 'text/css; charset=utf-8']],
-  ['/game-over/player.mjs', ['web/player.mjs', JS]],
-  ['/game-over/story.mjs', ['game/story.mjs', JS]],
-  ['/game-over/cover.jpg', [`output/${GAME_SLUG}.jpg`, 'image/jpeg']],
-  ['/game-over/film.mp4', [`output/${GAME_SLUG}.mp4`, 'video/mp4', GAME_FILE]],
   ['/style.css', ['web/style.css', 'text/css; charset=utf-8']],
   ['/player.mjs', ['web/player.mjs', JS]],
   ['/story.mjs', ['story.mjs', JS]],
@@ -29,6 +24,19 @@ const routes = new Map([
   ['/film.mp4', [`output/${SLUG}.mp4`, 'video/mp4', FILE]],
   ['/output/dron-nad-obektom.mp4', ['output/dron-nad-obektom.mp4', 'video/mp4', 'v_okope_dron_nad_obektom.mp4']],
 ]);
+
+const editions = new Map([
+  ['/game-over', { page: 'game', file: GAME_FILE, slug: GAME_SLUG }],
+  ['/bulat', { page: 'bulat', file: BULAT_FILE, slug: BULAT_SLUG }],
+]);
+for (const [route, { page, file, slug }] of editions) {
+  routes.set(`${route}/`, [`web/${page}.html`, HTML]);
+  routes.set(`${route}/player.mjs`, ['web/player.mjs', JS]);
+  routes.set(`${route}/story.mjs`, [`${page}/story.mjs`, JS]);
+  routes.set(`${route}/cover.jpg`, [`output/${slug}.jpg`, 'image/jpeg']);
+  routes.set(`${route}/film.mp4`, [`output/${slug}.mp4`, 'video/mp4', file]);
+}
+routes.set('/game-over/game.css', ['web/game.css', 'text/css; charset=utf-8']);
 
 export function parseRange(value, size) {
   const match = /^bytes=(\d*)-(\d*)$/.exec(value);
@@ -45,8 +53,8 @@ export function makeServer() {
       return;
     }
     const path = req.url?.split('?')[0];
-    if (path === '/game-over') {
-      res.writeHead(308, { Location: '/game-over/' }).end();
+    if (editions.has(path)) {
+      res.writeHead(308, { Location: `${path}/` }).end();
       return;
     }
     const route = routes.get(path);

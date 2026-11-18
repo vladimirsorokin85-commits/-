@@ -14,8 +14,7 @@ function ffmpegPath() {
   }
 }
 
-async function render({ draft, gameOver }) {
-  const prefix = gameOver ? './game/' : './';
+async function render({ draft, prefix, posterAt }) {
   const [{ createFilm, WIDTH, HEIGHT }, { DURATION, FPS, FRAME_COUNT, SLUG }, { buildMaster }] =
     await Promise.all(['film.mjs', 'story.mjs', 'mix.mjs'].map((module) => import(prefix + module)));
   const scale = draft ? 1 : 2;
@@ -55,7 +54,7 @@ async function render({ draft, gameOver }) {
     const { code, signal, error } = await exited;
     if (error) throw error;
     if (code !== 0) throw new Error(`FFmpeg завершился: ${signal || code}`);
-    if (!draft) await writeFile(new URL(`${SLUG}.jpg`, output), film.draw(gameOver ? 11.3 : 3.2).toBuffer('image/jpeg', 91));
+    if (!draft) await writeFile(new URL(`${SLUG}.jpg`, output), film.draw(posterAt).toBuffer('image/jpeg', 91));
     await rename(temp, destination);
     console.log(`Готово: ${fileURLToPath(destination)}`);
   } catch (error) {
@@ -68,13 +67,19 @@ async function render({ draft, gameOver }) {
   }
 }
 
+const editions = {
+  '--game-over': { prefix: './game/', posterAt: 11.3 },
+  '--bulat': { prefix: './bulat/', posterAt: 2.9 },
+};
 const args = process.argv.slice(2);
-if (args.some((arg) => !['--draft', '--game-over'].includes(arg))) {
-  console.error('Использование: npm run render [-- --draft] / npm run render:game [-- --draft]');
+const selected = args.filter((flag) => Object.hasOwn(editions, flag));
+if (selected.length > 1 || args.some((arg) => arg !== '--draft' && !Object.hasOwn(editions, arg))) {
+  console.error('Использование: npm run render / render:game / render:bulat [-- --draft]');
   process.exitCode = 2;
 } else {
   try {
-    await render({ draft: args.includes('--draft'), gameOver: args.includes('--game-over') });
+    const edition = editions[selected[0]] ?? { prefix: './', posterAt: 3.2 };
+    await render({ draft: args.includes('--draft'), ...edition });
   } catch (error) {
     console.error(error.message);
     process.exitCode = 1;

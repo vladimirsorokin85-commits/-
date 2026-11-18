@@ -16,3 +16,5 @@ re: T-0004
 [Финальный монтаж «В своём ритме»](../../../video_studio/drone_cartoon/v_okope_v_svoem_ritme_montazh.mp4): без прежней песни с вокалом; трек из загруженного MP3, новый диктор, местный звуковой сигнал и три проверенных QR-кода. Слоган: Не будь мишенью. Будь «В окопе»!
 
 [«Game Over для дрона», сценарий №2](../../../video_studio/drone_cartoon/v_okope_game_over.mp4) — аркадный POV, две роли, местный сигнал и фирменная заставка. Версии доступны отдельно в [PR #16](https://github.com/vladimirsorokin85-commits/-/pull/16).
+
+[«Булат v4 · дрон-детектор»](../../../video_studio/drone_cartoon/v_okope_bulat_v4_detektor.mp4) — рисованное объяснение для гражданских объектов с музыкой владельца и фирменной белой эмблемой. Отдельный MP4 в [PR #16](https://github.com/vladimirsorokin85-commits/-/pull/16).

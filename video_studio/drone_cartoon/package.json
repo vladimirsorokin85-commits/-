@@ -9,6 +9,7 @@
   "scripts": {
     "render": "node render.mjs",
     "render:game": "node render.mjs --game-over",
+    "render:bulat": "node render.mjs --bulat",
     "preview": "node preview.mjs",
     "test": "node --test"
   },

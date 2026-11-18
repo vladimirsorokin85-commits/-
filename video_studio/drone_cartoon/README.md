@@ -6,6 +6,7 @@
 
 ## Видео и контакты
 
+- **«Булат v4 · дрон-детектор»** — [MP4](./v_okope_bulat_v4_detektor.mp4) и [описание](./bulat/README.md). Плеер `/bulat/`.
 - **Сценарий №2 «Game Over для дрона»** — [MP4](./v_okope_game_over.mp4) и [описание](./game/README.md). Отдельный плеер `/game-over/`.
 - **[Готовый MP4 — новый монтаж](./v_okope_v_svoem_ritme_montazh.mp4)** — 30 секунд, 1080 × 1920, 30 кадров/с.
 - Ранние версии: [«В своём ритме»](./v_okope_v_svoem_ritme.mp4), [«Знать вовремя»](./v_okope_znat_vovremya.mp4) и [«Дрон над объектом»](./v_okope_dron_nad_obektom.mp4).

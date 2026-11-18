@@ -51,3 +51,21 @@ test('game cut has its own relative player, story and media routes', async (t) =
   assert.equal((await fetch(`${root}/game-over/game.css`, { method: 'HEAD' })).status, 200);
   assert.equal((await fetch(`${root}/game-over/web/game.html`)).status, 404);
 });
+
+test('Bulat player is separate from both previously delivered cuts', async (t) => {
+  const server = makeServer();
+  t.after(() => new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve())));
+  server.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const root = `http://127.0.0.1:${server.address().port}`;
+  const redirect = await fetch(`${root}/bulat`, { redirect: 'manual' });
+  assert.equal(redirect.status, 308);
+  assert.equal(redirect.headers.get('location'), '/bulat/');
+  const page = await fetch(`${root}/bulat/`, { headers: { Host: '8000-example.e2b.app' } });
+  assert.equal(page.status, 200);
+  assert.match(await page.text(), /download="v_okope_bulat_v4_detektor\.mp4"/);
+  assert.match(await (await fetch(`${root}/bulat/story.mjs`)).text(), /Зачем гражданским/);
+  assert.equal((await fetch(`${root}/bulat/player.mjs`, { method: 'HEAD' })).status, 200);
+  assert.equal((await fetch(`${root}/game-over/`)).status, 200);
+  assert.equal((await fetch(`${root}/`)).status, 200);
+});
