@@ -4,7 +4,6 @@ export const P = {
 };
 export const clamp = (x) => Math.max(0, Math.min(1, x));
 export const ease = (x) => 1 - (1 - clamp(x)) ** 3;
-export const lerp = (a, b, x) => a + (b - a) * x;
 export function fill(ctx, color, x, y, w, h) { ctx.fillStyle = color; ctx.fillRect(x, y, w, h); }
 export function path(ctx, points, color, stroke, width = 2) {
   ctx.beginPath(); ctx.moveTo(...points[0]);
@@ -36,38 +35,54 @@ export function type(ctx, value, x, y, size, color, { medium = false, align = 'l
 }
 export function line(ctx, x, y, w, color = P.rule, thickness = 1) { fill(ctx, color, x, y, w, thickness); }
 
-// A stylized front silhouette, not a product drawing or an operating interface.
+// Illustrative front view based on the supplied photo; these are drawing coordinates.
+function aerial(ctx, x, top, width, grip, accent) {
+  const body = ctx.createLinearGradient(x - width / 2, 0, x + width / 2, 0);
+  body.addColorStop(0, '#19272a');
+  body.addColorStop(.30, '#515e5e');
+  body.addColorStop(.55, '#39494a');
+  body.addColorStop(1, '#182628');
+  rounded(ctx, body, x - width / 2, top, width, -108 - top, 6, '#182628', 2);
+  rounded(ctx, '#222d30', x - width / 2, top - 1, width, 35, 6, '#101e22', 2);
+  rounded(ctx, '#768282', x - width * .28, top + 5, width * .14, 24, 2);
+  rounded(ctx, '#324144', x - width / 2 - 2, grip, width + 4, -107 - grip, 4, '#222f32', 1.5);
+  for (let y = grip + 9; y < -124; y += 8) line(ctx, x - width / 2 + 1, y, width - 2, '#56646566');
+  if (accent) ellipse(ctx, '#96cfc5', x, grip + 56, 9.1, 9.1, '#253b40', 1.3);
+  else {
+    rounded(ctx, '#647471', x - 11, -128, 22, 21, 3, '#1b2a2b');
+    for (let y = -123; y <= -111; y += 4) line(ctx, x - 8, y, 16, '#a1a298');
+  }
+}
 export function device(ctx, x, y, scale, roll, energy = 0) {
   ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale); ctx.rotate(roll);
-  const trim = '#173437';
-  for (const [ax, ay, h, tilt] of [[-58, -148, 77, -.05], [57, -158, 87, .055]]) {
-    ctx.save(); ctx.translate(ax, ay); ctx.rotate(tilt);
-    rounded(ctx, '#243d40', -10, -h + 34, 20, h, 7, trim, 1.5);
-    rounded(ctx, '#476061', -6.5, -h + 38, 4, h - 16, 2.3);
-    rounded(ctx, '#273a3c', -12, 25, 24, 15, 3.2, trim, 1.2);
-    ctx.restore();
+  aerial(ctx, -34, -357, 24, -247, false);
+  aerial(ctx, 29, -523, 25, -236, true);
+  rounded(ctx, '#102f2d42', -53, -103 + 8, 122, 216, 17);
+  rounded(ctx, '#1c292b', -61, -111, 123, 221, 17, '#162628', 2.5);
+  const face = ctx.createLinearGradient(-58, -104, 54, 118);
+  face.addColorStop(0, '#4d5e5e'); face.addColorStop(.44, '#2d4041'); face.addColorStop(1, '#283434');
+  rounded(ctx, face, -57, -109, 111, 214, 13, '#1a2a2b', 2);
+  for (const ax of [-61, 58]) {
+    for (let i = 0; i < 11; i++) rounded(ctx, '#4e6260', ax - 1.7, -85 + 13 * i, 4, 7, 1.1);
   }
-  rounded(ctx, '#15424155', -93 + 12, -129 + 12, 186, 251, 19);
-  rounded(ctx, '#1e3335', -92, -129, 188, 246, 20, '#0e2d2d', 3);
-  const gradient = ctx.createLinearGradient(-87, -110, 95, 128);
-  gradient.addColorStop(0, '#4e6564'); gradient.addColorStop(.55, '#344d4d'); gradient.addColorStop(1, '#1a3a3b');
-  rounded(ctx, gradient, -94, -129, 178, 230, 17, trim, 3.5);
-  rounded(ctx, null, -85, -119, 159, 210, 11, '#67827d', 1.3);
-  for (const [xx, yy] of [[-73, -107], [63, -107], [-73, 80], [63, 80]]) {
-    ellipse(ctx, '#223d3e', xx, yy, 3.8, 3.8, '#7b9690');
+  rounded(ctx, '#1d3031', -43, -99, 85, 86, 6, '#617774');
+  rounded(ctx, '#9bcfc7', -36, -95, 70, 10, 2);
+  type(ctx, 'БУЛАТ v4', -2, -87, 7.2, '#28514c', { align: 'center', tracking: .6 });
+  rounded(ctx, '#0e2628', -37, -82, 71, 66, 4, '#506966');
+  rounded(ctx, energy ? '#9d9c6c' : '#849671', -33, -78, 63, 58, 2);
+  // Intentional placeholder marks rather than the device's real screen or key legends.
+  line(ctx, -26, -68, 28, '#536b57', 2);
+  line(ctx, -26, -57, 42, '#3d5e4e', 3.6);
+  for (let i = 0; i < 4; i++) rounded(ctx, null, -26 + 12 * i, -44, 8, 5, .8, '#577358', .9);
+  line(ctx, -26, -30, 33, '#668064', 1.2);
+  rounded(ctx, '#243738', -43, -7, 85, 100, 9, '#627372');
+  for (let row = 0; row < 5; row++) {
+    for (let col = 0; col < 3; col++) {
+      const kx = -35 + col * 25, ky = 1 + row * 17.8;
+      rounded(ctx, row === 0 ? '#b9c0b5' : '#8e9f97', kx, ky, 21, 14, 3, '#133030', 1.35);
+      line(ctx, kx + 4, ky + 2.4, 12, '#d7dccc', 1.1);
+    }
   }
-  type(ctx, 'БУЛАТ', -70, -81, 19, '#e0e8d1', { tracking: 1.7 });
-  type(ctx, 'v4', 58, -81, 15, '#a9c7b2', { align: 'right' });
-  rounded(ctx, '#152f30', -70, -71, 129, 81, 8, '#708c83');
-  rounded(ctx, energy ? '#eac782' : '#a2c6ad', -64, -64, 117, 65, 4);
-  const glow = energy ? '#ba9867' : '#729d84';
-  for (let i = 0; i < 4; i++) line(ctx, -60, -53 + 12 * i, 109, `${glow}5c`);
-  ellipse(ctx, '#305548', -49, -43, 4.3, 4.3);
-  line(ctx, -39, -44, 38 + 15 * energy, '#446b56', 4);
-  line(ctx, -52, -20, 40, '#719a78', 3);
-  line(ctx, -5, -20, 14, '#719a78', 3);
-  ellipse(ctx, '#1e3b3b', -5, 53, 25, 25, '#708a7c', 1.5);
-  ellipse(ctx, '#65807a', -5, 50, 13, 12);
   ctx.restore();
 }
 

@@ -18,3 +18,5 @@ re: T-0004
 [«Game Over для дрона», сценарий №2](../../../video_studio/drone_cartoon/v_okope_game_over.mp4) — аркадный POV, две роли, местный сигнал и фирменная заставка. Версии доступны отдельно в [PR #16](https://github.com/vladimirsorokin85-commits/-/pull/16).
 
 [«Булат v4 · дрон-детектор»](../../../video_studio/drone_cartoon/v_okope_bulat_v4_detektor.mp4) — рисованное объяснение для гражданских объектов с музыкой владельца и фирменной белой эмблемой. Отдельный MP4 в [PR #16](https://github.com/vladimirsorokin85-commits/-/pull/16).
+
+[Текущая версия «Булат v4»](../../../video_studio/drone_cartoon/v_okope_bulat_v4_detektor.mp4) использует рисунок по присланному фото и крупный план корпуса. Звук сохранён.

@@ -2,7 +2,7 @@ import { createCanvas, GlobalFonts, loadImage } from '@napi-rs/canvas';
 import { fileURLToPath } from 'node:url';
 import QRCode from 'qrcode';
 import { BEEP_AT, CHAPTERS, CONTACTS, DURATION, SITES, SLOGAN, chapterAt } from './story.mjs';
-import { P, device, ease, ellipse, fill, lerp, line, path, rounded, siteArt, type } from './art.mjs';
+import { P, device, ease, ellipse, fill, line, path, rounded, siteArt, type } from './art.mjs';
 
 export const WIDTH = 540;
 export const HEIGHT = 960;
@@ -68,21 +68,39 @@ function medallion(ctx, x, y, rx, ry, color, outline) {
   ellipse(ctx, null, x, y, rx + 8, ry + 7, outline, 1);
   ellipse(ctx, null, x, y, rx + 24, ry + 19, outline, 1.25);
 }
+function productPlate(ctx, local, reverse = false) {
+  glass(ctx, 37, 251, 466, 482);
+  const amount = ease(local / .57);
+  const cx = reverse ? 378 : 163;
+  const detailX = reverse ? 55 : 280;
+  const roll = (reverse ? .031 : -.035) + .017 * Math.sin(local * 1.45);
+  medallion(ctx, cx, 509, 81, 167, '#c7dabe', '#7fb1a1');
+  type(ctx, 'ВИД ЦЕЛИКОМ', reverse ? 324 : 109, 269, 11, P.deep, { tracking: 1.45 });
+  hatch(ctx, cx - 94, 519, 16, 6, '#75a493');
+  ellipse(ctx, '#2a615748', cx + 3, 685, 64, 12);
+  device(ctx, cx, 614 + 4.2 * Math.sin(local * 1.27) + 13 * (1 - amount), .638, roll, reverse ? .5 : 0);
+  const insetY = 320 + 10 * (1 - amount);
+  const insetW = 201, insetH = 357;
+  rounded(ctx, '#486b6244', detailX + 5, insetY + 6, insetW, insetH, 9);
+  rounded(ctx, '#dbe5c7', detailX, insetY, insetW, insetH, 9, '#72998a');
+  type(ctx, 'КОРПУС', detailX + 15, insetY + 23, 11, P.deep, { tracking: 1.3 });
+  type(ctx, 'КРУПНЫЙ ПЛАН', detailX + insetW - 12, insetY + 23, 9.5, '#4c796c', { align: 'right', tracking: 1.1 });
+  ctx.save();
+  ctx.beginPath(); ctx.rect(detailX + 8, insetY + 36, insetW - 16, insetH - 45); ctx.clip();
+  fill(ctx, '#b3cbb2', detailX + 8, insetY + 36, insetW - 16, insetH - 45);
+  hatch(ctx, detailX + 20, insetY + 62, 147, 4, '#93ae99');
+  device(ctx, detailX + 99, insetY + 208 + 2.6 * Math.sin(local * 1.4), 1.18, roll * .49, reverse ? .5 : 0);
+  ctx.restore();
+  star(ctx, reverse ? 462 : 239, 317, 12 * amount, '#ffdfa6');
+  stamp(ctx, 'РИСУНОК ПО ФОТО', 54, 695, 164, '#365f57', P.cream);
+}
 function hero(ctx, t) {
   base(ctx, 1, 'БУЛАТ V4 / УСТРОЙСТВО');
   type(ctx, 'Булат', 34, 157, 106, P.dark);
   rounded(ctx, P.deep, 350, 99, 121, 61, 8);
   type(ctx, 'v4', 409, 141, 40, P.cream, { align: 'center' });
   type(ctx, 'Детектор дронов', 38, 217, 43, P.teal);
-  glass(ctx, 37, 251, 466, 482);
-  const f = ease(t / .70);
-  medallion(ctx, 270, 502, 156, 151, '#ccddbf', '#87b6a5');
-  hatch(ctx, 59, 607, 87, 8, '#86b19b'); hatch(ctx, 401, 347, 73, 7, '#75aa9b');
-  ellipse(ctx, '#2a61574a', 276, 676, 134, 22);
-  device(ctx, 271, 523 + 8 * Math.sin(t * 1.18) + 41 * (1 - f), 1.26, -.092 + .045 * Math.sin(t * 1.03));
-  star(ctx, 426, 383, 24 * f, '#fee0a2');
-  star(ctx, 106, 586, 14 * f, '#639d8f');
-  stamp(ctx, 'СХЕМАТИЧНОЕ ИЗОБРАЖЕНИЕ', 54, 686, 231, '#365f57', P.cream);
+  productPlate(ctx, t);
   copy(ctx, 'НАЗНАЧЕНИЕ', ['Переносной прибор', 'для обнаружения дронов.']);
   footer(ctx, t, 'ОБНАРУЖЕНИЕ / ВВЕДЕНИЕ');
 }
@@ -170,14 +188,7 @@ function recap(ctx, t) {
   const local = t - CHAPTERS[3].start;
   base(ctx, 4, 'БУЛАТ V4 / ГЛАВНОЕ', '#d6e3ca');
   headline(ctx, 'Заметить', 'вовремя.', P.dark, P.teal, 74, 80);
-  glass(ctx, 37, 251, 466, 482);
-  medallion(ctx, 271, 491, 143, 135, '#d3deb8', '#87ae94');
-  const p = ease(local / .45);
-  const roll = lerp(.12, -.065, p) + .019 * Math.sin(local * 2);
-  ellipse(ctx, '#2f625247', 278, 664, 135, 20);
-  device(ctx, 270, 520 + (1 - p) * 32, 1.14, roll, .5);
-  star(ctx, 410, 368, 19 * p, '#ffe3a1');
-  stamp(ctx, 'ДЕТЕКТОР ДРОНОВ', 55, 684, 174, '#345f58', P.cream);
+  productPlate(ctx, local, true);
   copy(ctx, 'КРАТКО', ['Замечает и предупреждает.', 'Не предназначен для подавления.']);
   footer(ctx, t, 'БУЛАТ V4 / ОБНАРУЖЕНИЕ И СИГНАЛ');
 }
