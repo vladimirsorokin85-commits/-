@@ -13,6 +13,7 @@
     "render:tak710": "node render.mjs --tak710",
     "render:site-safety": "node render.mjs --site-safety",
     "render:strizh": "node render.mjs --strizh",
+    "render:power": "node render.mjs --power",
     "preview": "node preview.mjs",
     "test": "node --test"
   },

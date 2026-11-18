@@ -6,6 +6,7 @@
 
 ## Видео и контакты
 
+- **«Электростанции в наличии»** — [минутный MP4](./v_okope_elektrostancii_v_nalichii.mp4), [22 позиции без цен](./power-stations/catalogue.txt) и [раскадровка](./power-stations/README.md). Плеер `/power-stations/`.
 - **«Стриж» — визуальный обзор** — [минутный MP4](./v_okope_strizh_obzor.mp4) из трёх фото с рисованными перебивками, [описание и сборка](./strizh/README.md). Плеер `/strizh/`.
 - **«XMETIX TAK710» — новый монтаж под DnB** — [MP4](./v_okope_xmetix_tak710.mp4), [описание](./tak710/README.md) и [тексты для Shorts и ВК](./tak710/publish.txt). Отдельный плеер `/tak710/`.
 - **«Булат v4 · дрон-детектор»** — [MP4](./v_okope_bulat_v4_detektor.mp4) и [описание](./bulat/README.md). Плеер `/bulat/`.
