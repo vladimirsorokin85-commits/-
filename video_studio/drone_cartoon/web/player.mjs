@@ -41,7 +41,7 @@ watch.addEventListener('click', () => {
   bringPlayerIntoView();
   play();
 });
-const buttons = CHAPTERS.map(({ start, label, heading, narration }, index) => {
+const buttons = CHAPTERS.map(({ start, label, heading, narration, speaker }, index) => {
   const item = document.createElement('li');
   const button = document.createElement('button');
   button.type = 'button';
@@ -61,7 +61,7 @@ const buttons = CHAPTERS.map(({ start, label, heading, narration }, index) => {
   const line = document.createElement('p');
   const intro = document.createElement('strong');
   const title = heading.join(' ');
-  intro.textContent = `${formatTime(start)} · ${title === narration ? label : title}`;
+  intro.textContent = `${formatTime(start)} · ${title === narration ? label : title}${speaker ? ` · ${speaker}` : ''}`;
   line.append(intro, document.createElement('br'), document.createTextNode(narration));
   transcript.append(line);
   return button;

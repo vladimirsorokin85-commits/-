@@ -64,6 +64,7 @@ h1 span { display: block; color: #456b60; }
 .contact-links { display: flex; flex-wrap: wrap; gap: 7px 17px; margin-top: 14px; }
 .contact-links a { color: var(--washed-ink); font-size: .84rem; text-underline-offset: .22em; }
 .contact-links a:hover { color: var(--ink); }
+.series-link { display: inline-block; margin-top: 13px; font-size: .84rem; font-weight: 900; text-underline-offset: .18em; }
 .action {
   min-height: 47px;
   display: inline-flex;

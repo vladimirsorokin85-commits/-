@@ -4,12 +4,19 @@ import { stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { FILE, SLUG } from './story.mjs';
+import { FILE as GAME_FILE, SLUG as GAME_SLUG } from './game/story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
 const routes = new Map([
   ['/', ['web/index.html', HTML]],
   ['/index.html', ['web/index.html', HTML]],
+  ['/game-over/', ['web/game.html', HTML]],
+  ['/game-over/game.css', ['web/game.css', 'text/css; charset=utf-8']],
+  ['/game-over/player.mjs', ['web/player.mjs', JS]],
+  ['/game-over/story.mjs', ['game/story.mjs', JS]],
+  ['/game-over/cover.jpg', [`output/${GAME_SLUG}.jpg`, 'image/jpeg']],
+  ['/game-over/film.mp4', [`output/${GAME_SLUG}.mp4`, 'video/mp4', GAME_FILE]],
   ['/style.css', ['web/style.css', 'text/css; charset=utf-8']],
   ['/player.mjs', ['web/player.mjs', JS]],
   ['/story.mjs', ['story.mjs', JS]],
@@ -37,7 +44,12 @@ export function makeServer() {
       res.writeHead(405, { Allow: 'GET, HEAD' }).end();
       return;
     }
-    const route = routes.get(req.url?.split('?')[0]);
+    const path = req.url?.split('?')[0];
+    if (path === '/game-over') {
+      res.writeHead(308, { Location: '/game-over/' }).end();
+      return;
+    }
+    const route = routes.get(path);
     if (!route) { res.writeHead(404).end(); return; }
     const [relativePath, type, fallback] = route;
     let file = fileURLToPath(new URL(relativePath, import.meta.url));

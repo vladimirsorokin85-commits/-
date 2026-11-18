@@ -6,6 +6,7 @@
 
 ## Видео и контакты
 
+- **Сценарий №2 «Game Over для дрона»** — [MP4](./v_okope_game_over.mp4) и [описание](./game/README.md). Отдельный плеер `/game-over/`.
 - **[Готовый MP4 — новый монтаж](./v_okope_v_svoem_ritme_montazh.mp4)** — 30 секунд, 1080 × 1920, 30 кадров/с.
 - Ранние версии: [«В своём ритме»](./v_okope_v_svoem_ritme.mp4), [«Знать вовремя»](./v_okope_znat_vovremya.mp4) и [«Дрон над объектом»](./v_okope_dron_nad_obektom.mp4).
 - [Telegram](https://t.me/vokope_ru) · [ВКонтакте](https://vk.com/vokope_rus) · [Авито](https://www.avito.ru/brands/5d48ea870de5a9f3ca08a6024efbe241). Ссылки доступны под плеером и в виде QR-кодов на финальной заставке.

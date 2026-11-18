@@ -10,8 +10,6 @@ const asset = (path) => fileURLToPath(new URL(path, import.meta.url));
 // Owner-selected instrumental. The 30 s excerpt starts on the measured drum grid.
 const MUSIC_START = '55.154';
 const signalTime = CHAPTERS[1].start + BEEP_AT;
-const signalDipStart = (signalTime - .07).toFixed(3);
-const signalDipEnd = (signalTime + .19).toFixed(3);
 const CUES = [
   [2.13, 'whoosh_short', .35],
   [CHAPTERS[1].start + .06, 'swipe_paper', .45],
@@ -44,26 +42,34 @@ function ff(ffmpeg, args, capture = false) {
   return result.stderr;
 }
 
-export function buildMaster(ffmpeg, outputDir) {
+export function buildMaster(ffmpeg, outputDir, {
+  chapters = CHAPTERS, cues = CUES, slug = SLUG, signalAt = signalTime,
+  musicStart = MUSIC_START, musicStartsInFullAt, peakTarget = -1.8,
+} = {}) {
+  const signalDipStart = (signalAt - .07).toFixed(3);
+  const signalDipEnd = (signalAt + .19).toFixed(3);
+  const lift = musicStartsInFullAt == null ? '' :
+    `volume='if(isnan(t),0.61,0.61+0.39*clip((t-${(musicStartsInFullAt - .26).toFixed(3)})/0.26,0,1))':eval=frame,`;
   const stem = fileURLToPath(new URL(`.mix-${process.pid}.wav`, outputDir));
   const bed = fileURLToPath(new URL(`.bed-${process.pid}.wav`, outputDir));
-  const master = fileURLToPath(new URL(`master-${SLUG}.wav`, outputDir));
+  const master = fileURLToPath(new URL(`master-${slug}.wav`, outputDir));
   const voiceChain = 'highpass=f=78,equalizer=f=250:t=q:w=1:g=-2,equalizer=f=3300:t=q:w=1:g=2.2,' +
     'acompressor=threshold=.1:ratio=2.55:attack=6:release=95:makeup=2,alimiter=limit=.84:level=0';
   const graph = [
-    ...CHAPTERS.map(({ start, voice }, i) => {
-      const room = (CHAPTERS[i + 1]?.start ?? DURATION) - start - voice.offset - .035;
-      return `[${i + 1}:a]${format},${voiceChain},atempo=${voice.tempo},atrim=duration=${room.toFixed(3)},` +
+    ...chapters.map(({ start, voice }, i) => {
+      const room = (chapters[i + 1]?.start ?? DURATION) - start - voice.offset - .035;
+      const radio = voice.radio ? 'highpass=f=300,lowpass=f=3250,equalizer=f=1180:t=q:w=1.3:g=2.9,' : '';
+      return `[${i + 1}:a]${format},${radio}${voiceChain},atempo=${voice.tempo},atrim=duration=${room.toFixed(3)},` +
         `${place(start + voice.offset)}[v${i}]`;
     }),
-    ...CUES.map(([t, , gain, length], i) => {
+    ...cues.map(([t, , gain, length], i) => {
       const slice = length ? `atrim=duration=${length},afade=t=out:st=${(length - .035).toFixed(3)}:d=0.035,` : '';
-      return `[${i + 1 + CHAPTERS.length}:a]${format},${slice}volume=${gain},${place(t)}[f${i}]`;
+      return `[${i + 1 + chapters.length}:a]${format},${slice}volume=${gain},${place(t)}[f${i}]`;
     }),
-    sum('v', CHAPTERS.length, 'voices'),
-    sum('f', CUES.length, 'effects'),
+    sum('v', chapters.length, 'voices'),
+    sum('f', cues.length, 'effects'),
     '[voices]aformat=sample_fmts=fltp:channel_layouts=stereo,asplit=2[vo][key]',
-    `[0:a]${format},atrim=duration=${DURATION},equalizer=f=2200:t=o:w=1.7:g=-2.6,volume=1.08,` +
+    `[0:a]${format},atrim=duration=${DURATION},equalizer=f=2200:t=o:w=1.7:g=-2.6,volume=1.08,${lift}` +
       `alimiter=limit=.87:level=0,afade=t=in:st=0:d=0.045,afade=t=out:st=${DURATION - .47}:d=0.47,` +
       'aformat=sample_fmts=fltp:channel_layouts=stereo[music]',
     '[music][key]sidechaincompress=threshold=.043:ratio=8:attack=8:release=203:knee=2.3,' +
@@ -73,7 +79,7 @@ export function buildMaster(ffmpeg, outputDir) {
   try {
     // Trim and level a recorded excerpt, then verify the actual bed entering the mix.
     ff(ffmpeg, [
-      '-loglevel', 'warning', '-ss', MUSIC_START, '-i', musicFile, '-t', String(DURATION),
+      '-loglevel', 'warning', '-ss', musicStart, '-i', musicFile, '-t', String(DURATION),
       '-map', '0:a:0', '-af', 'equalizer=f=78:t=o:w=2.4:g=1.8,volume=1.4dB,alimiter=limit=.91:level=0',
       '-ar', String(SR), '-c:a', 'pcm_f32le', bed,
     ]);
@@ -85,11 +91,11 @@ export function buildMaster(ffmpeg, outputDir) {
     }
     ff(ffmpeg, [
       '-loglevel', 'warning', '-i', bed,
-      ...CHAPTERS.flatMap(({ voice }) => ['-i', asset(`./vo/${voice.file}`)]),
-      ...CUES.flatMap(([, name]) => ['-i', asset(`../toolkit/sfx/${name}.mp3`)]),
+      ...chapters.flatMap(({ voice }) => ['-i', asset(`./vo/${voice.file}`)]),
+      ...cues.flatMap(([, name]) => ['-i', asset(`../toolkit/sfx/${name}.mp3`)]),
       '-filter_complex', graph, '-map', '[mix]', '-ar', String(SR), '-c:a', 'pcm_f32le', stem,
     ]);
-    const target = 'loudnorm=I=-14:TP=-1.8:LRA=7';
+    const target = `loudnorm=I=-14:TP=${peakTarget}:LRA=7`;
     const report = ff(ffmpeg, ['-i', stem, '-af', `${target}:print_format=json`, '-f', 'null', '-'], true);
     const measurement = JSON.parse(report.match(/\{[^{}]*"input_i"[^{}]*\}/s)?.[0] ?? '{}');
     const names = { measured_I: 'input_i', measured_TP: 'input_tp', measured_LRA: 'input_lra',

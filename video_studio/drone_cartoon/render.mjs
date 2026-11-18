@@ -2,9 +2,6 @@ import { spawn, spawnSync } from 'node:child_process';
 import { mkdir, rename, rm, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
-import { createFilm, WIDTH, HEIGHT } from './film.mjs';
-import { DURATION, FPS, FRAME_COUNT, SLUG } from './story.mjs';
-import { buildMaster } from './mix.mjs';
 
 const require = createRequire(import.meta.url);
 function ffmpegPath() {
@@ -17,7 +14,10 @@ function ffmpegPath() {
   }
 }
 
-async function render({ draft }) {
+async function render({ draft, gameOver }) {
+  const prefix = gameOver ? './game/' : './';
+  const [{ createFilm, WIDTH, HEIGHT }, { DURATION, FPS, FRAME_COUNT, SLUG }, { buildMaster }] =
+    await Promise.all(['film.mjs', 'story.mjs', 'mix.mjs'].map((module) => import(prefix + module)));
   const scale = draft ? 1 : 2;
   const film = createFilm(scale);
   const output = new URL('./output/', import.meta.url);
@@ -55,7 +55,7 @@ async function render({ draft }) {
     const { code, signal, error } = await exited;
     if (error) throw error;
     if (code !== 0) throw new Error(`FFmpeg завершился: ${signal || code}`);
-    if (!draft) await writeFile(new URL(`${SLUG}.jpg`, output), film.draw(3.2).toBuffer('image/jpeg', 91));
+    if (!draft) await writeFile(new URL(`${SLUG}.jpg`, output), film.draw(gameOver ? 11.3 : 3.2).toBuffer('image/jpeg', 91));
     await rename(temp, destination);
     console.log(`Готово: ${fileURLToPath(destination)}`);
   } catch (error) {
@@ -69,12 +69,12 @@ async function render({ draft }) {
 }
 
 const args = process.argv.slice(2);
-if (args.some((arg) => arg !== '--draft')) {
-  console.error('Использование: npm run render [-- --draft]');
+if (args.some((arg) => !['--draft', '--game-over'].includes(arg))) {
+  console.error('Использование: npm run render [-- --draft] / npm run render:game [-- --draft]');
   process.exitCode = 2;
 } else {
   try {
-    await render({ draft: args.includes('--draft') });
+    await render({ draft: args.includes('--draft'), gameOver: args.includes('--game-over') });
   } catch (error) {
     console.error(error.message);
     process.exitCode = 1;

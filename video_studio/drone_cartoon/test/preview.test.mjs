@@ -32,3 +32,22 @@ test('preview serves its assets on a proxy host and handles HEAD', async (t) => 
   assert.equal(await script.text(), '');
   assert.equal((await fetch(`${url}/package.json`)).status, 404);
 });
+
+test('game cut has its own relative player, story and media routes', async (t) => {
+  const server = makeServer();
+  t.after(() => new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve())));
+  server.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const root = `http://127.0.0.1:${server.address().port}`;
+  const res = await fetch(`${root}/game-over`, { redirect: 'manual' });
+  assert.equal(res.status, 308);
+  assert.equal(res.headers.get('location'), '/game-over/');
+  const game = await fetch(`${root}/game-over/`, { headers: { Host: '8000-example.e2b.app' } });
+  assert.equal(game.status, 200);
+  assert.match(await game.text(), /download="v_okope_game_over\.mp4"/);
+  const story = await fetch(`${root}/game-over/story.mjs`);
+  assert.match(await story.text(), /Game Over для дрона/);
+  assert.equal((await fetch(`${root}/game-over/player.mjs`, { method: 'HEAD' })).status, 200);
+  assert.equal((await fetch(`${root}/game-over/game.css`, { method: 'HEAD' })).status, 200);
+  assert.equal((await fetch(`${root}/game-over/web/game.html`)).status, 404);
+});
