@@ -6,13 +6,13 @@ import { BEEP_AT, BPM, CAT_AT, CHAPTERS, DURATION, SLUG, WORK_CUTS } from './sto
 const SR = 48000;
 const asset = (path) => fileURLToPath(new URL(path, import.meta.url));
 const checkMusic = asset('../toolkit/music_check.py');
-// Owner-selected exception for the original, Game Over and Bulat cuts only.
-const STORM_RIDERS = {
+// The owner-uploaded MP3; permitted editions are listed in MUSIC_POLICY.md.
+export const STORM_RIDERS = Object.freeze({
   file: asset('../../StockTune-Storm Riders Unleashed_1794986419.mp3'),
   start: '55.154',
   bpm: BPM,
   bedFilter: 'equalizer=f=78:t=o:w=2.4:g=1.8,volume=1.4dB,alimiter=limit=.91:level=0',
-};
+});
 const signalTime = CHAPTERS[1].start + BEEP_AT;
 const CUES = [
   [2.13, 'whoosh_short', .35],
@@ -50,8 +50,10 @@ export function buildMaster(ffmpeg, outputDir, {
   chapters = CHAPTERS, cues = CUES, slug = SLUG, signalAt = signalTime,
   music = STORM_RIDERS, musicStart = music.start, musicStartsInFullAt, peakTarget = -1.8,
 } = {}) {
-  const signalDipStart = (signalAt - .07).toFixed(3);
-  const signalDipEnd = (signalAt + .19).toFixed(3);
+  const dipStart = (signalAt - .07).toFixed(3);
+  const dipEnd = (signalAt + .19).toFixed(3);
+  const dip = signalAt == null ? '' :
+    `,volume='if(between(t,${dipStart},${dipEnd}),1-0.66*pow(sin(PI*(t-${dipStart})/0.26),2),1)':eval=frame`;
   const lift = musicStartsInFullAt == null ? '' :
     `volume='if(isnan(t),0.61,0.61+0.39*clip((t-${(musicStartsInFullAt - .26).toFixed(3)})/0.26,0,1))':eval=frame,`;
   const stem = fileURLToPath(new URL(`.mix-${process.pid}.wav`, outputDir));
@@ -76,8 +78,7 @@ export function buildMaster(ffmpeg, outputDir, {
     `[0:a]${format},atrim=duration=${DURATION},equalizer=f=2200:t=o:w=1.7:g=-2.6,volume=1.08,${lift}` +
       `alimiter=limit=.87:level=0,afade=t=in:st=0:d=0.045,afade=t=out:st=${DURATION - .47}:d=0.47,` +
       'aformat=sample_fmts=fltp:channel_layouts=stereo[music]',
-    '[music][key]sidechaincompress=threshold=.043:ratio=8:attack=8:release=203:knee=2.3,' +
-      `volume='if(between(t,${signalDipStart},${signalDipEnd}),1-0.66*pow(sin(PI*(t-${signalDipStart})/0.26),2),1)':eval=frame[ducked]`,
+    `[music][key]sidechaincompress=threshold=.043:ratio=8:attack=8:release=203:knee=2.3${dip}[ducked]`,
     `[ducked][vo][effects]amix=inputs=3:duration=first,volume=3,alimiter=limit=.92:level=0,atrim=duration=${DURATION}[mix]`,
   ].join(';');
   try {

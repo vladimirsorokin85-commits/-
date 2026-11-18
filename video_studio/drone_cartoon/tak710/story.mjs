@@ -1,42 +1,48 @@
-import { CONTACTS, DURATION, FPS, FRAME_COUNT } from '../story.mjs';
-export { CONTACTS, DURATION, FPS, FRAME_COUNT };
+import { BEAT, BPM, CONTACTS, DURATION, FPS, FRAME_COUNT } from '../story.mjs';
+export { BPM, CONTACTS, DURATION, FPS, FRAME_COUNT };
 
 export const TITLE = 'XMETIX TAK710 · автоматический жгут';
 export const SLUG = 'xmetix-tak710';
 export const FILE = 'v_okope_xmetix_tak710.mp4';
-// Grid of the downloaded Final Hour excerpt. Cuts round to a whole frame.
-export const BPM = 170;
-export const WIPE = .21;
-const BEAT = 60 / BPM;
+export const WIPE = .14;
 const beat = (n) => Math.round(n * BEAT * FPS) / FPS;
-export const DESIGN_CUT = beat(26);
-export const KIT_CUT = beat(46);
+export const HERO_CUTS = [0, beat(4), beat(9)];
+export const DETAIL_CUTS = [beat(15), beat(22), beat(27)];
+export const AUTO_CUTS = [beat(30), beat(35), beat(40), beat(46)];
+export const EXAMPLES = [
+  { start: beat(52), label: 'В цехе', context: 'ПРОИЗВОДСТВО' },
+  { start: beat(56), label: 'В дороге', context: 'АВТОМОБИЛЬ' },
+  { start: beat(59), label: 'В походе', context: 'МАРШРУТ' },
+];
+export const RECAP = beat(65);
+export const OUTRO = beat(72);
+export const CUTS = [...HERO_CUTS, ...DETAIL_CUTS, ...AUTO_CUTS, ...EXAMPLES.map(({ start }) => start), RECAP, OUTRO];
 
 export const CHAPTERS = [
   {
-    start: 0, label: 'Что такое XMETIX TAK710', heading: ['Автоматический жгут'],
-    narration: 'Иксметикс Так семьсот десять. Автоматический кровоостанавливающий жгут.',
-    voice: { file: 'tak-01-intro.mp3', offset: .22, tempo: 1.015 },
+    start: 0, label: 'XMETIX TAK710', heading: ['Автоматический жгут'],
+    narration: 'Иксметикс Так семьсот десять. Автоматический жгут.',
+    voice: { file: 'tak-01-intro.mp3', offset: .07, tempo: 1.20 },
   },
   {
-    start: beat(20), label: 'Ремень, экран и автоматика', heading: ['Ремень и экран'],
-    narration: 'На корпусе — экран. Натяжение ремня регулируется автоматически.',
-    voice: { file: 'tak-02-design.mp3', offset: .20, tempo: 1 },
+    start: DETAIL_CUTS[0], label: 'Кнопка, чека и ремень', heading: ['Устройство крупным планом'],
+    narration: 'Одна кнопка на корпусе. Сбоку — защитная чека.',
+    voice: { file: 'tak-02-design.mp3', offset: .13, tempo: 1.03 },
   },
   {
-    start: beat(37), label: 'Назначение жгута', heading: ['Первая помощь'],
-    narration: 'Жгут — средство первой помощи при опасном кровотечении из руки или ноги.',
-    voice: { file: 'tak-03-purpose.mp3', offset: .22, tempo: 1 },
+    start: AUTO_CUTS[0], label: 'Автоматическое натяжение', heading: ['Как устроен жгут'],
+    narration: 'Натяжение ремня регулирует автоматика. Жгут предназначен для опасного кровотечения из руки или ноги.',
+    voice: { file: 'tak-03-auto.mp3', offset: .15, tempo: 1.16 },
   },
   {
-    start: beat(56), label: 'Экстренная помощь: 112', heading: ['Вызов помощи'],
-    narration: 'Звоните сто двенадцать. Следуйте указаниям диспетчера.',
-    voice: { file: 'tak-04-help.mp3', offset: .25, tempo: 1.04 },
+    start: EXAMPLES[0].start, label: 'Цех, дорога и поход', heading: ['Где может понадобиться первая помощь'],
+    narration: 'В цехе. В дороге. В походе. Там, где важна первая помощь.',
+    voice: { file: 'tak-04-context.mp3', offset: .12, tempo: 1.02 },
   },
   {
-    start: beat(70), label: 'Магазин и контакты', heading: ['Магазин «В Окопе»'],
+    start: OUTRO, label: 'Магазин и контакты', heading: ['Магазин «В Окопе»'],
     narration: 'Магазин «В окопе». Изучите инструкцию заранее.',
-    voice: { file: 'tak-05-final.mp3', offset: .43, tempo: 1 },
+    voice: { file: 'tak-05-final.mp3', offset: .37, tempo: 1 },
   },
 ];
 

@@ -45,7 +45,7 @@ function webbing(ctx) {
 // Exterior illustration, based on the front product photo. No operating sequence or screen values.
 export function product(ctx, x, y, scale, angle, glow = 0) {
   ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale); ctx.rotate(angle);
-  webbing(ctx);
+  ctx.save(); ctx.scale(.89, 1); webbing(ctx); ctx.restore();
   rounded(ctx, '#151f2173', -82, -154, 181, 309, 40);
   rounded(ctx, '#263031', -89, -159, 183, 307, 42, '#151f21', 3.4);
   const rubber = ctx.createLinearGradient(-91, -135, 105, 147);
@@ -73,15 +73,18 @@ export function product(ctx, x, y, scale, angle, glow = 0) {
   ellipse(ctx, '#2e3739', -7, 64, 29, 29, '#192426', 2.2);
   ellipse(ctx, null, -7, 64, 23.5, 23.5, '#4e5b57', 1);
   for (const e of [-4, 4]) path(ctx, [[-14 + e, 54], [-3 + e, 64], [-14 + e, 74]], null, '#f4c86d', 2.8);
-  rounded(ctx, '#9f584e', 78, 51, 17, 48, 3.2, '#4c3737');
-  rounded(ctx, '#d57d65', 90, 49, 7, 57, 2);
+  // Red safety part remains in place on every shot, as in the front photo.
+  rounded(ctx, '#361e27', 80, 54, 17, 44, 3.2);
+  rounded(ctx, '#ad484b', 84, 55, 16, 37, 3, '#6d373b');
+  rounded(ctx, '#df7270', 98, 39, 4.5, 85, 1.9);
+  line(ctx, 87, 59, 9, '#d66669', 1.2);
   ctx.restore();
 }
 function plus(ctx, x, y, r, color) {
   rounded(ctx, color, x - r / 4, y - r, r / 2, r * 2, 2);
   rounded(ctx, color, x - r, y - r / 4, r * 2, r / 2, 2);
 }
-function medKit(ctx, x, y, scale, shade = '#b06f58') {
+export function medKit(ctx, x, y, scale, shade = '#b06f58') {
   ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
   ellipse(ctx, '#36514968', 4, 60, 97, 17);
   rounded(ctx, '#4b6153', -39, -79, 76, 31, 8, '#273d3b', 3.3);
@@ -91,45 +94,5 @@ function medKit(ctx, x, y, scale, shade = '#b06f58') {
   rounded(ctx, null, -79, -49, 151, 85, 12, '#e6c39c', 1.35);
   plus(ctx, -3, -6, 21, '#efe3c5');
   line(ctx, -67, -36, 35, '#a2705e', 2.5);
-  ctx.restore();
-}
-function cabinet(ctx, t) {
-  fill(ctx, '#acc5b2', 0, 0, 460, 420);
-  path(ctx, [[0, 25], [460, 0], [460, 389], [0, 420]], '#a8bdab');
-  path(ctx, [[0, 65], [460, 12], [460, 108], [0, 153]], '#bed0b8');
-  path(ctx, [[0, 340], [460, 318], [460, 420], [0, 420]], '#7d9a8b');
-  for (let i = 0; i < 10; i++) line(ctx, 35 + i * 43, 354 + i % 3 * 14, 21, '#a0b49a');
-  rounded(ctx, '#597c73', 83, 111, 286, 227, 6, '#416154', 3.5);
-  rounded(ctx, '#d7dfc3', 99, 120, 249, 198, 4, '#5f8574', 2.7);
-  rounded(ctx, '#b1c4ab', 111, 130, 226, 176, 4, '#8ca78f', 2);
-  rounded(ctx, '#345d50', 144, 145, 162, 24, 4);
-  text(ctx, 'ПЕРВАЯ ПОМОЩЬ', 225, 161, 12, C.cream, { align: 'center', track: 1.3 });
-  medKit(ctx, 225, 248 + Math.sin(t * .88) * 2.0, .80);
-  rounded(ctx, '#7e9987', 341, 129, 8, 178, 3);
-}
-function road(ctx, t) {
-  fill(ctx, '#aac4b3', 0, 0, 460, 420);
-  ellipse(ctx, '#f4cc8b', 369, 87, 37, 37);
-  path(ctx, [[0, 214], [93, 147], [177, 184], [271, 141], [460, 209], [460, 420], [0, 420]], '#83a990');
-  path(ctx, [[0, 280], [460, 250], [460, 420], [0, 420]], '#7ea18d');
-  path(ctx, [[0, 345], [460, 308], [460, 381], [0, 420]], '#4d716b');
-  for (let i = 0; i < 12; i++) path(ctx, [[i * 46, 390 - i * 4], [i * 46 + 19, 388 - i * 4]], null, '#c7c5a1', 2);
-  ellipse(ctx, '#3959506c', 221, 318, 155, 18);
-  path(ctx, [[73, 279], [81, 200], [249, 185], [287, 189], [329, 238], [358, 252],
-    [366, 296], [336, 312], [83, 309]], '#d2cda5', '#3a645b', 3.6);
-  path(ctx, [[249, 195], [283, 197], [317, 235], [245, 235]], '#6a9589', '#43685d', 2.7);
-  path(ctx, [[87, 248], [234, 244], [234, 296], [88, 296]], '#98b4a0', '#668f80', 2.5);
-  line(ctx, 102, 253, 120, '#b3c6a7', 2);
-  for (const wx of [124, 308]) {
-    ellipse(ctx, '#294442', wx, 307, 24, 26);
-    ellipse(ctx, '#859c8a', wx, 308, 11, 12);
-  }
-  medKit(ctx, 220 + 3 * Math.sin(t * .8), 323, .58);
-}
-export function setArt(ctx, index, t, x, y, w, h) {
-  const k = Math.max(w / 460, h / 420) * (1 + .036 * Math.min(t / 2, 1));
-  ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
-  ctx.translate(x + (w - 460 * k) / 2, y + (h - 420 * k) / 2); ctx.scale(k, k);
-  (index ? road : cabinet)(ctx, t);
   ctx.restore();
 }

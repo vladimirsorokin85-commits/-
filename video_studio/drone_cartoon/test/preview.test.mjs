@@ -87,7 +87,9 @@ test('TAK710 serves a separate player, poster, publication copy and exact MP4 ra
   const html = await page.text();
   assert.ok(html.includes(`download="${TAK_FILE}"`));
   assert.match(html, /Это обзор, а не инструкция/);
-  assert.match(await (await fetch(`${url}story.mjs`)).text(), /Экстренная помощь: 112/);
+  const story = await (await fetch(`${url}story.mjs`)).text();
+  assert.match(story, /Цех, дорога и поход/);
+  assert.doesNotMatch(story, /112|диспетчер/iu);
   assert.equal((await fetch(`${url}player.mjs`, { method: 'HEAD' })).status, 200);
   const poster = await fetch(`${url}cover.jpg`, { method: 'HEAD' });
   assert.equal(poster.status, 200);
@@ -97,14 +99,14 @@ test('TAK710 serves a separate player, poster, publication copy and exact MP4 ra
   assert.match(await copy.text(), /YOUTUBE SHORTS[\s\S]*ВК КЛИПЫ/);
   assert.match(await (await fetch(root)).text(), /href="\.\/tak710\/"/);
   const mp4 = `${url}film.mp4`;
-  const range = await fetch(mp4, { headers: { Range: 'bytes=0-31' } });
+  const range = await fetch(mp4, { headers: { Range: 'bytes=45120-45151' } });
   assert.equal(range.status, 206);
-  assert.match(range.headers.get('content-range'), /^bytes 0-31\/\d+$/);
+  assert.match(range.headers.get('content-range'), /^bytes 45120-45151\/\d+$/);
   assert.equal(range.headers.get('content-type'), 'video/mp4');
   const file = await open(new URL(`../${TAK_FILE}`, import.meta.url), 'r');
   try {
     const expected = Buffer.alloc(32);
-    const { bytesRead } = await file.read(expected, 0, 32, 0);
+    const { bytesRead } = await file.read(expected, 0, 32, 45120);
     assert.equal(bytesRead, 32);
     assert.deepEqual(Buffer.from(await range.arrayBuffer()), expected);
   } finally {
