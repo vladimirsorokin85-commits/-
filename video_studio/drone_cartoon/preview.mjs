@@ -3,6 +3,7 @@ import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
+import { SLUG } from './story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
@@ -15,7 +16,9 @@ const routes = new Map([
   ['/fonts/Roboto-Regular.woff', ['../fonts/Roboto-Regular.woff', 'font/woff']],
   ['/fonts/Roboto-Black.woff', ['../fonts/Roboto-Black.woff', 'font/woff']],
   ['/output/cover.jpg', ['output/cover.jpg', 'image/jpeg']],
-  ['/output/dron-nad-obektom.mp4', ['output/dron-nad-obektom.mp4', 'video/mp4']],
+  [`/output/${SLUG}.jpg`, [`output/${SLUG}.jpg`, 'image/jpeg']],
+  ['/film.mp4', [`output/${SLUG}.mp4`, 'video/mp4', 'v_okope_znat_vovremya.mp4']],
+  ['/output/dron-nad-obektom.mp4', ['output/dron-nad-obektom.mp4', 'video/mp4', 'v_okope_dron_nad_obektom.mp4']],
 ]);
 
 export function parseRange(value, size) {
@@ -34,11 +37,17 @@ export function makeServer() {
     }
     const route = routes.get(req.url?.split('?')[0]);
     if (!route) { res.writeHead(404).end(); return; }
-    const [relativePath, type] = route;
-    const file = fileURLToPath(new URL(relativePath, import.meta.url));
+    const [relativePath, type, fallback] = route;
+    let file = fileURLToPath(new URL(relativePath, import.meta.url));
     let size;
     try {
-      const info = await stat(file);
+      let info;
+      try { info = await stat(file); }
+      catch (error) {
+        if (!fallback || error.code !== 'ENOENT') throw error;
+        file = fileURLToPath(new URL(fallback, import.meta.url));
+        info = await stat(file);
+      }
       if (!info.isFile()) { res.writeHead(404).end(); return; }
       size = info.size;
     } catch (error) {

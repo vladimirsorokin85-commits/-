@@ -2,19 +2,21 @@ import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createFilm, HEIGHT, WIDTH } from '../film.mjs';
-import { CHAPTERS, DURATION, FPS, WIPE, chapterAt } from '../story.mjs';
+import { ALERT_AT, CHAPTERS, DURATION, FPS, FRAME_COUNT, WIPE, chapterAt } from '../story.mjs';
 
 const hash = (data) => createHash('sha256').update(data).digest('hex');
 
-test('four scenes cover the timeline and start on whole frames', () => {
-  assert.equal(CHAPTERS.length, 4);
-  assert.equal(CHAPTERS[0].start, 0);
-  assert.equal(DURATION * FPS, 720);
+test('five scenes cover 30 seconds and start on whole frames', () => {
+  assert.deepEqual(CHAPTERS.map(({ start }) => start), [0, 5, 10, 18, 25]);
+  assert.equal(DURATION, 30);
+  assert.equal(DURATION * FPS, FRAME_COUNT);
   for (const [i, { start }] of CHAPTERS.entries()) {
     assert.ok(Math.abs(start * FPS - Math.round(start * FPS)) < 1e-9);
     assert.equal(chapterAt(start), i);
     assert.equal(chapterAt(start + WIPE + .02), i);
-    assert.ok((CHAPTERS[i + 1]?.start ?? DURATION) - start > WIPE);
+    const length = (CHAPTERS[i + 1]?.start ?? DURATION) - start;
+    assert.ok(length > WIPE);
+    assert.ok(CHAPTERS[i].narration.length > 0 && CHAPTERS[i].voice.offset < length);
   }
 });
 
@@ -35,4 +37,5 @@ test('code-drawn frames are opaque, deterministic, and distinct across scenes', 
   assert.equal(frameHash(2.7), frames[0]);
   assert.notEqual(frameHash(3.25), frames[0]);
   assert.notEqual(frameHash(CHAPTERS[1].start + WIPE / 2), frames[1]);
+  assert.notEqual(frameHash(CHAPTERS[2].start + ALERT_AT - .2), frameHash(CHAPTERS[2].start + ALERT_AT + .5));
 });

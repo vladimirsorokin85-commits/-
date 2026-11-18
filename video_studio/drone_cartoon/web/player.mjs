@@ -32,7 +32,7 @@ watch.addEventListener('click', () => {
   bringPlayerIntoView();
   play();
 });
-const buttons = CHAPTERS.map(({ start, label, heading, body }, index) => {
+const buttons = CHAPTERS.map(({ start, label, heading, narration }, index) => {
   const item = document.createElement('li');
   const button = document.createElement('button');
   button.type = 'button';
@@ -52,7 +52,7 @@ const buttons = CHAPTERS.map(({ start, label, heading, body }, index) => {
   const line = document.createElement('p');
   const intro = document.createElement('strong');
   intro.textContent = `${formatTime(start)} · ${heading.join(' ')}`;
-  line.append(intro, document.createElement('br'), document.createTextNode(body.join(' ')));
+  line.append(intro, document.createElement('br'), document.createTextNode(narration));
   transcript.append(line);
   return button;
 });

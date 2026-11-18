@@ -21,7 +21,10 @@ test('preview serves its assets on a proxy host and handles HEAD', async (t) => 
   const url = `http://127.0.0.1:${server.address().port}`;
   const html = await fetch(url, { headers: { Host: '8000-example.e2b.app' } });
   assert.equal(html.status, 200);
-  assert.match(await html.text(), /МАГАЗИН «В ОКОПЕ»/);
+  const page = await html.text();
+  assert.match(page, /МАГАЗИН «В ОКОПЕ»/);
+  assert.match(page, /Знать вовремя/);
+  assert.match(page, /<source src="\.\/film\.mp4"/);
   const script = await fetch(`${url}/player.mjs`, { method: 'HEAD' });
   assert.equal(script.status, 200);
   assert.match(script.headers.get('content-type'), /javascript/);

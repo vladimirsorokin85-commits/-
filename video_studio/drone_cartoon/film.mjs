@@ -1,6 +1,6 @@
 import { createCanvas, GlobalFonts, Path2D } from '@napi-rs/canvas';
 import { fileURLToPath } from 'node:url';
-import { CHAPTERS, DURATION, WIPE, chapterAt } from './story.mjs';
+import { ALERT_AT, CHAPTERS, DURATION, WIPE, chapterAt } from './story.mjs';
 
 // Logical coordinates; the renderer scales this composition uniformly for HD or draft.
 export const WIDTH = 540;
@@ -10,7 +10,7 @@ const H = HEIGHT;
 const TAU = 2 * Math.PI;
 const C = {
   ink: '#203438', dark: '#172d33', cream: '#fff1d6', amber: '#f3c77c',
-  coral: '#eb9072', moss: '#a8c1a7', rim: '#94b2a7',
+  coral: '#eb9072',
 };
 
 let fontsReady = false;
@@ -101,7 +101,7 @@ function title(ctx, index, titleColor, accent, sizes) {
   const chapter = CHAPTERS[index];
   rect(ctx, 48, 56, 16, 3, accent);
   text(ctx, chapter.kicker, 74, 61, 12, accent, { tracking: 2 });
-  text(ctx, `0${index + 1} / 04`, 479, 61, 12, titleColor, { medium: true, align: 'right' });
+  text(ctx, `0${index + 1} / 0${CHAPTERS.length}`, 479, 61, 12, titleColor, { medium: true, align: 'right' });
   chapter.heading.forEach((line, i) => {
     text(ctx, line, 45, 147 + i * 76, sizes[i], i === chapter.heading.length - 1 ? accent : titleColor);
   });
@@ -121,44 +121,48 @@ function caption(ctx, index, t, bg, color, accent, y = 775) {
   rect(ctx, 420, 910, 58, 1, accent);
 }
 
-const ROOF = 'M-13 72 L126 33 L427 43 L286 83 Z';
-function building(ctx, x, y, size) {
+const FACTORY_COLORS = {
+  a: { wall: '#aa9081', side: '#876f6c', roof: '#7b6566', cap: '#deb097', chimney: '#8a6b69' },
+  b: { wall: '#a8b9a3', side: '#68877d', roof: '#527573', cap: '#c8c8a2', chimney: '#668982' },
+};
+function factory(ctx, x, y, size, side, lights = 1) {
+  const c = FACTORY_COLORS[side];
   ctx.save(); ctx.translate(x, y); ctx.scale(size, size);
-  oval(ctx, 211, 231, 225, 18, '#263c3e');
-  poly(ctx, [0, 79, 278, 90, 278, 228, 0, 217], '#a2b7a6', C.ink, 3);
-  poly(ctx, [278, 90, 417, 52, 417, 182, 278, 228], '#648681', C.ink, 3);
-  poly(ctx, [1, 199, 276, 210, 276, 227, 1, 216], '#587673');
-  poly(ctx, [279, 210, 416, 169, 416, 181, 279, 226], '#4c6a69');
-  shape(ctx, ROOF, '#719790', C.ink, 3);
-  poly(ctx, [-13, 72, 286, 83, 286, 100, -13, 89], '#456c6a', C.ink, 3);
-  poly(ctx, [286, 83, 427, 43, 427, 60, 286, 100], '#3d5c60', C.ink, 3);
-  poly(ctx, [-3, 73, 282, 83, 410, 48], null, '#b1bda0', 2);
-  // The entrance and its warm light are the visual motif shared between shots.
-  ctx.save(); ctx.translate(101, 105); ctx.rotate(.034);
-  rounded(ctx, 0, 0, 96, 27, 3, C.ink);
-  text(ctx, 'МАЯК', 48, 20, 17, C.cream, { align: 'center', tracking: 2 });
+  oval(ctx, 131, 228, 150, 16, '#263c3e');
+  for (const [sx, sy, sw] of (side === 'a' ? [[29, 2, 24], [67, 22, 21]] : [])) {
+    poly(ctx, [sx, sy, sx + sw, sy, sx + sw + 5, 114, sx - 4, 114], c.chimney, C.ink, 2.8);
+    poly(ctx, [sx + sw - 7, sy + 3, sx + sw, sy + 3, sx + sw + 5, 114, sx + sw - 3, 114], c.roof);
+    rounded(ctx, sx - 3, sy - 4, sw + 6, 12, 2, c.cap, C.ink, 2.7);
+  }
+  poly(ctx, [0, 97, 211, 94, 211, 223, 0, 216], c.wall, C.ink, 3);
+  poly(ctx, [211, 94, 270, 71, 270, 199, 211, 223], c.side, C.ink, 3);
+  poly(ctx, [211, 205, 269, 182, 269, 198, 211, 222], c.roof);
+  poly(ctx, [0, 201, 211, 207, 211, 222, 0, 216], c.side);
+  shape(ctx, side === 'a' ? 'M-6 98 V70 L49 48 V71 L100 47 V70 L152 45 V68 L208 42 V65 L225 63 V96 Z' : 'M-6 98 V68 L225 63 V96 Z', c.roof, C.ink, 3.4);
+  poly(ctx, [225, 63, 277, 43, 277, 73, 225, 96], c.side, C.ink, 3);
+  poly(ctx, [-5, 81, 223, 79, 275, 60], null, c.cap, 2);
+  poly(ctx, [-5, 99, 224, 96], null, C.ink, 3);
+  rounded(ctx, 15, 108, 93, 24, 2, C.ink);
+  text(ctx, side === 'a' ? 'ЗАВОД' : 'СКЛАД', 61.5, 125, 15, C.cream, { align: 'center', tracking: 1.7 });
+  for (const [wx, ww] of [[16, 39], [66, 39], [116, 38]]) {
+    poly(ctx, [wx, 146, wx + ww, 147, wx + ww, 192, wx, 191], '#53605e', C.ink, 2.6);
+    ctx.save(); ctx.globalAlpha *= lights;
+    poly(ctx, [wx + 1, 147, wx + ww - 1, 148, wx + ww - 1, 191, wx + 1, 190], '#eac27e');
+    poly(ctx, [wx + 4, 149, wx + ww - 4, 151, wx + 4, 174], '#fde4a1');
+    ctx.restore();
+    poly(ctx, [wx, 175, wx + ww, 176], null, '#5c6159', 2);
+    poly(ctx, [wx + ww * .49, 147, wx + ww * .49, 191], null, '#5c6159', 2);
+  }
+  poly(ctx, [164, 137, 201, 136, 201, 221, 164, 220], C.ink, C.ink, 3);
+  poly(ctx, [169, 143, 196, 142, 196, 218, 169, 216], c.side);
+  for (let i = 0; i < 5; i++) poly(ctx, [170, 153 + i * 12, 195, 152 + i * 12], null, c.roof, 1.8);
+  poly(ctx, [226, 124, 257, 111, 257, 152, 226, 165], '#465859', C.ink, 2.6);
+  ctx.save(); ctx.globalAlpha *= lights;
+  poly(ctx, [228, 126, 255, 114, 255, 150, 228, 163], '#efd095');
   ctx.restore();
-  poly(ctx, [105, 145, 195, 150, 195, 225, 105, 220], '#3a5355', C.ink, 3);
-  poly(ctx, [118, 154, 180, 157, 180, 224, 118, 220], '#ecb176', C.ink, 3);
-  poly(ctx, [149, 157, 149, 222], null, '#56605b', 2);
-  poly(ctx, [122, 166, 145, 168, 122, 191], '#f8ce8c');
-  poly(ctx, [153, 167, 175, 168, 153, 193], '#f9ce8c');
-  poly(ctx, [139, 194, 139, 205], null, C.ink, 2);
-  poly(ctx, [157, 195, 157, 206], null, C.ink, 2);
-  poly(ctx, [98, 220, 196, 225, 202, 232, 87, 227], '#d5bb8d', C.ink);
-  for (const [wx, wy, ww] of [[16, 119, 32], [55, 121, 35], [210, 125, 50]]) {
-    poly(ctx, [wx, wy, wx + ww, wy + 2, wx + ww, wy + 50, wx, wy + 48], C.amber, C.ink, 3);
-    poly(ctx, [wx + 4, wy + 4, wx + ww - 5, wy + 6, wx + 4, wy + 29], '#fbe0a0');
-    poly(ctx, [wx + ww / 2, wy + 2, wx + ww / 2, wy + 47], null, '#566360', 2);
-    poly(ctx, [wx + 1, wy + 31, wx + ww - 1, wy + 32], null, '#566360', 2);
-  }
-  for (const [wx, wy] of [[293, 119], [339, 106], [382, 94]]) {
-    poly(ctx, [wx, wy, wx + 25, wy - 8, wx + 25, wy + 37, wx, wy + 44], '#e4ac6f', C.ink, 3);
-    poly(ctx, [wx + 4, wy + 5, wx + 21, wy - 2, wx + 4, wy + 25], '#f9d290');
-    poly(ctx, [wx + 1, wy + 25, wx + 24, wy + 19], null, '#5a655c', 2);
-  }
-  hatch(ctx, 31, 184, 51, 2, '#7d9d91', 0);
-  hatch(ctx, 225, 191, 37, 2, '#7d9d91', 0);
+  poly(ctx, [227, 145, 256, 133], null, '#65685f', 1.8);
+  hatch(ctx, 119, 115, 67, 2, c.side);
+  hatch(ctx, 34, 210, 76, 1, c.roof);
   ctx.restore();
 }
 
@@ -189,64 +193,105 @@ function pine(ctx, x, y, s, color, tilt) {
 }
 
 function outside(ctx, t) {
-  const sky = ctx.createLinearGradient(0, 215, 0, 633);
-  sky.addColorStop(0, '#294650'); sky.addColorStop(.51, '#557577'); sky.addColorStop(1, '#b3a078');
+  const sky = ctx.createLinearGradient(0, 228, 0, 683);
+  sky.addColorStop(0, '#29454d'); sky.addColorStop(.58, '#607d79'); sky.addColorStop(1, '#b6a27c');
   rect(ctx, 0, 0, W, H, sky);
   ctx.save();
-  ctx.translate(270, 506); ctx.scale(1 + .035 * smooth(t / 5), 1 + .035 * smooth(t / 5)); ctx.translate(-270, -506);
-  const mx = 392 - t * 1.4;
-  oval(ctx, mx + 7, 354, 81, 81, '#bb8568');
-  oval(ctx, mx, 348, 81, 81, '#eac081');
-  hatch(ctx, mx - 63, 370, 121, 5, '#c99068', 3);
-  poly(ctx, [mx - 72, 385, mx + 67, 385], null, '#c9926c', 2);
-  shape(ctx, 'M-20 364 C47 358 61 326 114 334 C149 341 147 348 194 348 Q216 350 238 358 C157 367 58 376 -20 369 Z', '#98a99b7c');
-  shape(ctx, 'M276 402 Q343 392 381 401 Q425 413 515 389 L551 397 V416 Q447 421 385 414 Q330 409 276 412Z', '#f3ca8e7b');
-  star(ctx, 197, 281, 7, '#e9cd9a');
-  star(ctx, 489, 269, 6, '#e9cd9a');
-  shape(ctx, 'M-20 503 Q68 433 149 431 Q225 429 284 487 Q340 510 417 455 Q482 427 562 439 V668 H-20 Z', '#789189');
-  shape(ctx, 'M-20 497 Q86 475 162 516 Q217 554 326 518 Q460 470 559 512 V731 H-20 Z', '#537270');
-  hatch(ctx, 28, 473, 82, 5, '#9ab1a2', 4);
-  hatch(ctx, 405, 475, 71, 4, '#9ab1a2', -3);
-  for (let i = 0; i < 11; i++) {
-    const x = 6 + i * 51;
-    const h = 18 + (i * 17) % 40;
-    rect(ctx, x, 572 - h, 26 + (i * 11) % 16, h + 20, '#456363');
-    for (let j = 0; j < 2; j++) rect(ctx, x + 7 + 11 * j, 581 - h, 5, 7, '#d2be8e');
+  ctx.translate(270, 521);
+  const push = 1 + .025 * smooth(t / 5);
+  ctx.scale(push, push); ctx.translate(-270, -521);
+  const mx = 390 - t * 1.6;
+  oval(ctx, mx + 6, 375, 90, 89, '#ae7a65');
+  oval(ctx, mx, 367, 90, 89, '#ecc383');
+  hatch(ctx, mx - 60, 384, 121, 6, '#c6936a', 2.2);
+  poly(ctx, [mx - 81, 399, mx + 73, 399], null, '#cd9e73', 1.8);
+  shape(ctx, 'M-20 385 C44 376 68 357 117 363 Q141 368 183 368 Q222 366 261 379 Q169 398 -20 390 Z', '#a4b6a57c');
+  shape(ctx, 'M235 438 Q322 413 372 421 Q427 434 540 414 V434 Q426 445 362 435 Q309 427 235 440Z', '#f0c89279');
+  star(ctx, 143, 308, 7, '#e9cd9a');
+  star(ctx, 485, 269, 9, '#e9cd9a');
+  shape(ctx, 'M-14 516 Q72 448 157 452 Q218 455 272 491 Q324 520 405 466 Q477 430 558 460 V684 H-14 Z', '#85988a');
+  shape(ctx, 'M-17 532 Q71 500 136 528 Q197 558 287 535 Q455 489 561 525 V708 H-17 Z', '#5b7772');
+  for (let i = 0; i < 12; i++) {
+    const x = 6 + i * 48;
+    const h = 15 + i * 23 % 49;
+    rect(ctx, x, 589 - h, 25 + i * 5 % 16, h + 13, '#4d6969');
+    rect(ctx, x + 8, 597 - h, 5, 6, '#d2be8e');
   }
-  shape(ctx, 'M-20 622 Q165 574 322 600 Q470 623 559 582 V772 H-20 Z', '#496764');
-  shape(ctx, 'M-15 743 Q45 687 133 674 L230 677 Q183 701 172 747 Z', '#8d9280');
-  poly(ctx, [4, 754, 82, 715, 157, 689], null, '#d2bf92', 2);
-  building(ctx, 63, 466, .99);
-  pine(ctx, 35, 680, 1.04, '#2d494a', .08);
-  pine(ctx, 498, 676, 1.56, '#2e4a49', -.06);
-  pine(ctx, 469, 701, .92, '#345654', -.14);
-  pine(ctx, 0, 738, 1.03, '#253f42', -.17);
-  ctx.save(); ctx.translate(440, 675);
-  shape(ctx, 'M0 18 L1 -88 Q0 -111 24 -110 L37 -110', null, '#293f43', 4);
-  rounded(ctx, 25, -113, 26, 8, 4, C.amber, '#293f43', 2);
+  hatch(ctx, 28, 494, 81, 4, '#a3b7a3', 3);
+  hatch(ctx, 425, 488, 70, 3, '#9eb2a1', -2);
+  shape(ctx, 'M-20 623 Q114 596 276 616 Q419 621 557 585 V780 H-20Z', '#43605f');
+  shape(ctx, 'M-20 733 Q98 703 179 708 Q310 713 559 681 V727 Q348 758 178 743 Q71 735 -20 755Z', '#7b8a78');
+  poly(ctx, [-6, 742, 177, 724, 357, 727, 540, 704], null, '#c6b18c', 1.8);
+  factory(ctx, 38, 486, .82, 'a');
+  factory(ctx, 280, 493, .82, 'b');
+  pine(ctx, 12, 703, .82, '#2a4849', .08);
+  pine(ctx, 518, 711, 1.07, '#2d4a4a', -.1);
+  pine(ctx, 508, 740, .66, '#315451', .02);
+  const approach = ease((t - .2) / 2.2);
+  // The drone stays above the scene, with no flight path or strike shown.
+  drone(ctx, mix(643, 326, approach) + 13 * Math.sin(t * 1.08), 354 + 5 * Math.sin(t * 2.4), .83 + .16 * approach, t, -.08 + .035 * Math.sin(t * 1.8));
+  const clouds = smooth((t - 1.24) / 2.1);
+  ctx.save(); ctx.globalAlpha *= clouds * .26;
+  rect(ctx, -20, -30, 580, 850, '#454552');
   ctx.restore();
-  shape(ctx, 'M-20 725 Q65 702 123 730 Q192 751 241 728 Q333 694 396 724 Q468 750 560 712 V774 H-20 Z', '#304c4d');
-  const approach = ease((t - .06) / 2.55);
-  const dx = mix(651, 323, approach) + 12 * Math.sin(t * 1.2);
-  const dy = mix(313, 375, approach) + 6 * Math.sin(t * 2.55);
-  drone(ctx, dx, dy, .85 + .26 * approach, t, -.16 * (1 - approach) + .05 * Math.sin(t * 2));
   ctx.restore();
-  title(ctx, 0, C.cream, C.amber, [72, 79]);
+  title(ctx, 0, C.cream, C.amber, [76, 80]);
   caption(ctx, 0, t, '#203a41', C.cream, C.amber);
+}
+
+function waiting(ctx, t) {
+  rect(ctx, 0, 0, W, H, '#443d48');
+  shape(ctx, 'M0 415 L540 264 V665 L0 802Z', '#665054');
+  shape(ctx, 'M31 350 L467 321 L504 665 L67 700Z', '#332f3a');
+  shape(ctx, 'M25 336 L461 307 L498 651 L61 687Z', '#a07872', '#362f3a', 3);
+  hatch(ctx, 50, 282, 106, 4, '#b58b80', 2);
+  hatch(ctx, 419, 687, 54, 4, '#b58b80', -2);
+  const snap = 1 + .026 * (1 - smooth((t - .5) / .32));
+  ctx.save(); ctx.translate(217, 493); ctx.scale(snap, snap); ctx.rotate(-.065);
+  oval(ctx, 7, 13, 131, 126, '#4c4249');
+  oval(ctx, 0, 0, 130, 126, '#c68f80', '#403743', 3.5);
+  oval(ctx, 0, 0, 114, 111, '#f3dbb5', '#a47268', 2.8);
+  oval(ctx, 0, 0, 103, 100, null, '#d8b69a', 1.5);
+  for (let i = 0; i < 12; i++) {
+    const a = i * TAU / 12;
+    const r = i % 3 ? 86 : 79;
+    poly(ctx, [Math.cos(a) * r, Math.sin(a) * r, Math.cos(a) * 94, Math.sin(a) * 94], null, '#9b766b', i % 3 ? 2.5 : 4);
+  }
+  poly(ctx, [-5, 6, -39, -32], null, '#624e4f', 7);
+  const step = Math.floor(t / .74) + smooth((t % .74) / .22);
+  ctx.save(); ctx.rotate(.78 + step * .2);
+  poly(ctx, [0, 16, 0, -78], null, '#ae5f54', 3.4);
+  ctx.restore();
+  oval(ctx, 0, 0, 8, 8, '#624e4f');
+  ctx.restore();
+  const phone = bounce((t - 1.14) / .62);
+  ctx.save(); ctx.translate(373 + (1 - phone) * 122, 562 + 35 * (1 - phone)); ctx.rotate(.11);
+  rounded(ctx, -64 + 6, -92 + 8, 128, 184, 15, '#423640');
+  rounded(ctx, -64, -92, 128, 184, 15, '#443c47', '#302b36', 3.2);
+  rounded(ctx, -56, -80, 112, 157, 9, '#6e686d');
+  rounded(ctx, -14, -72, 28, 4, 2, '#8d8280');
+  oval(ctx, 0, -7, 25, 25, '#8e7d79');
+  text(ctx, '…', 0, 3, 28, '#f5dfb9', { align: 'center' });
+  rect(ctx, -25, 35, 50, 2, '#a18c84');
+  rect(ctx, -18, 43, 36, 2, '#a18c84');
+  ctx.restore();
+  star(ctx, 443, 372, 13 * ease((t - .5) / .7), '#edaa91');
+  star(ctx, 88, 617, 8, '#f0bc96');
+  title(ctx, 1, C.cream, '#f4ab91', [87, 91]);
+  caption(ctx, 1, t, '#413943', C.cream, '#f4ab91');
 }
 
 const WINDOW = 'M65 526 V364 Q66 279 153 274 H269 Q344 278 352 363 V526 Z';
 function attendant(ctx, t) {
-  const lift = smooth((t - 1) / 1.28);
-  const talk = smooth((t - 2.35) / .3) * (1 - smooth((t - 4.75) / .5));
-  const blink = Math.max(0, 1 - Math.abs(t - .78) / .11, 1 - Math.abs(t - 4.08) / .12);
-  const notice = ease((t - .34) / .68);
-  ctx.save(); ctx.translate(304, 509 + 2 * Math.sin(t * 2.1));
+  const lift = smooth((t - ALERT_AT - .13) / .65);
+  const blink = Math.max(0, 1 - Math.abs(t - .82) / .11, 1 - Math.abs(t - 5.4) / .12);
+  const notice = ease((t - ALERT_AT) / .43);
+  ctx.save(); ctx.translate(187, 523 + 1.8 * Math.sin(t * 1.8)); ctx.scale(.95, .95);
   shape(ctx, 'M-103 74 C-130 88 -137 154 -125 237 H134 C136 163 120 105 93 93 L31 68 H-50 Z', '#cc7662', C.ink, 4);
   shape(ctx, 'M-122 235 V180 Q-115 129 -100 111 M-59 127 L-50 231 M85 109 Q99 161 94 231', null, '#a85f54', 3);
   shape(ctx, 'M-48 72 L27 69 L43 95 Q7 143 -40 105 L-60 91 Z', '#f3d8b0', C.ink, 3);
   shape(ctx, 'M-24 25 L27 36 L24 84 Q11 105 -22 84 Z', '#d88d73', C.ink, 3);
-  ctx.save(); ctx.rotate(-.13 * notice + .15 * lift);
+  ctx.save(); ctx.rotate(-.06 + .18 * notice);
   shape(ctx, 'M-76 35 C-114 -4 -96 -78 -52 -96 C-28 -115 31 -111 65 -82 Q101 -54 82 -3 Q83 35 56 62 L-57 61 Q-75 52 -76 35 Z', '#30373d', C.ink, 3);
   oval(ctx, -65, 5, 15, 19, '#e09b80', C.ink, 3);
   oval(ctx, 65, 9, 14, 19, '#e09b80', C.ink, 3);
@@ -263,24 +308,21 @@ function attendant(ctx, t) {
     } else {
       const height = (6 + notice * 3) * (1 - .75 * blink);
       oval(ctx, 0, 0, 10.6, height, C.cream, C.ink, 1.6);
-      oval(ctx, -2 - 3.5 * notice + 5 * lift, -.75, 3.25, height * .72, C.ink);
+      oval(ctx, -2 + 5.1 * notice, -.8 + 2.3 * lift, 3.25, height * .68, C.ink);
     }
     ctx.restore();
   }
   shape(ctx, 'M1 -10 Q-4 3 -6 10 Q0 15 7 10', null, '#ac6a59', 2.5);
   oval(ctx, -36, 18, 12, 5, '#df8b77'); oval(ctx, 39, 18, 10, 5, '#df8b77');
-  if (talk > .06) {
-    const open = 2.5 + 3.3 * talk * (.5 + .5 * Math.sin(t * 15));
-    oval(ctx, 0, 35, 7.5, open, '#783c3c');
-  } else if (notice > .65 && lift < .25) {
-    oval(ctx, 0, 35, 5.2, 4.8, '#783c3c');
+  if (notice > .28 && lift < .68) {
+    oval(ctx, 1, 36, 5.2, 4.8, '#783c3c');
   } else {
-    shape(ctx, 'M-8 34 Q1 39 10 33', null, '#8d514b', 2.5);
+    shape(ctx, 'M-7 36 Q2 39 12 35', null, '#8d514b', 2.5);
   }
   ctx.restore();
 
-  const hx = mix(103, 77, lift);
-  const hy = mix(188, 24, lift);
+  const hx = mix(104, 100, lift);
+  const hy = mix(188, 112, lift);
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   ctx.beginPath(); ctx.moveTo(102, 134); ctx.quadraticCurveTo(134, 187, hx + 7, hy + 19);
@@ -288,92 +330,156 @@ function attendant(ctx, t) {
   ctx.lineWidth = 38; ctx.strokeStyle = '#dc896f'; ctx.stroke();
   ctx.save(); ctx.translate(hx, hy); ctx.rotate(.15 - .33 * lift);
   rounded(ctx, -11, -34, 27, 48, 6, '#273941', '#162c32', 2.5);
-  rounded(ctx, -7, -30, 19, 34, 3, '#73968d');
-  rect(ctx, -4, -27, 11, 2, '#b8c8b2');
+  rounded(ctx, -7, -30, 19, 34, 3, lift > .1 ? '#efce8e' : '#73968d');
+  rect(ctx, -4, -27, 11, 2, lift > .1 ? '#fff1c4' : '#b8c8b2');
   shape(ctx, 'M-12 16 Q-20 5 -14 -5 Q-9 -12 -6 -1 L-3 4 L11 3 Q21 7 14 18 L7 24 L-7 22 Z', '#f0ad8b', C.ink, 2.5);
   ctx.restore();
   ctx.restore();
 }
 
-function inside(ctx, t) {
-  rect(ctx, 0, 0, W, H, '#4c404c');
-  shape(ctx, 'M0 264 L540 279 V725 L0 704 Z', '#6a5058');
-  shape(ctx, 'M0 407 L540 222 V366 L0 529 Z', '#77575c');
-  shape(ctx, WINDOW, '#263f49', '#314348', 19);
-  ctx.save(); ctx.clip(svg(WINDOW));
-  rect(ctx, 65, 275, 287, 251, '#4c6a72');
-  oval(ctx, 116, 368, 49, 49, '#dbab77');
-  shape(ctx, 'M59 421 Q108 411 137 420 Q178 427 201 420 L219 431 Q142 446 57 437 Z', '#a8ab8f');
-  shape(ctx, 'M55 471 Q140 437 197 473 Q260 500 356 445 V528 H55 Z', '#6e8b81');
-  const drift = 4 * Math.sin(t * 1.7);
-  drone(ctx, 164 + 9 * Math.sin(t * .7), 386 + drift, .48, t + 5.6, -.04);
-  poly(ctx, [126, 275, 66, 433, 66, 459, 170, 275], '#f6e2cf2e');
+function alertCard(ctx, t) {
+  const pop = bounce((t - ALERT_AT) / .58);
+  if (pop <= .005) return;
+  ctx.save(); ctx.translate(373 + (1 - pop) * 97, 454 - (1 - pop) * 33);
+  ctx.rotate(-.065 + (1 - pop) * .12); ctx.scale(pop, pop);
+  rounded(ctx, -126 + 9, -65 + 10, 252, 130, 14, '#213f3d');
+  rounded(ctx, -126 + 5, -65 + 5, 252, 130, 14, '#da967b');
+  rounded(ctx, -126, -65, 252, 130, 14, '#f6e6bd', '#264c45', 3.2);
+  ctx.save(); ctx.beginPath(); ctx.roundRect(-124, -63, 248, 126, 12); ctx.clip();
+  rect(ctx, -124, -63, 248, 32, '#e4c18a');
+  rect(ctx, -124, -32, 248, 2, '#ba9b73');
   ctx.restore();
-  shape(ctx, WINDOW, null, '#d5b68f', 6);
-  rect(ctx, 210, 276, 7, 250, '#d5b68f');
-  rounded(ctx, 51, 518, 313, 16, 4, '#d0a980', C.ink, 3);
-  shape(ctx, 'M0 571 L540 556 V714 H0 Z', '#624e53');
-  rect(ctx, 0, 564, W, 6, '#96706d');
-  hatch(ctx, 408, 303, 63, 5, '#a47979', -2);
-  // Little potted plant, mug and notebook establish an ordinary staffed building.
-  shape(ctx, 'M101 675 Q99 631 80 601 M99 657 Q108 622 131 603 M98 649 Q97 619 102 589', null, '#233f42', 4);
-  shape(ctx, 'M92 626 Q66 634 59 598 Q85 598 92 626 Z M106 635 Q127 589 147 598 Q142 622 106 635 Z M98 620 Q80 595 102 582 Q121 604 98 620 Z', '#a1b49b', C.ink, 2.5);
-  poly(ctx, [79, 654, 123, 654, 118, 697, 84, 697], '#cc8a72', C.ink, 3);
+  oval(ctx, -104, -47, 4.2, 4.2, '#b76756');
+  text(ctx, 'УВЕДОМЛЕНИЕ', -91, -42, 13, '#5c5246', { tracking: 1.5 });
+  text(ctx, 'Обнаружен', -106, 5, 29, '#294c47');
+  text(ctx, 'дрон', -106, 44, 37, '#294c47');
+  ctx.save(); ctx.translate(82, 23);
+  oval(ctx, 0, 0, 28, 28, '#cfd7aa');
+  shape(ctx, 'M-13 9 Q-8 6 -8 1 V-4 Q-8 -12 0 -12 Q8 -12 8 -4 V1 Q8 6 13 9 Z M-4 13 Q0 18 4 13', null, '#47726a', 2.6);
+  ctx.restore();
+  ctx.restore();
+}
+
+function inside(ctx, t) {
+  rect(ctx, 0, 0, W, H, '#345451');
+  shape(ctx, 'M0 263 L540 280 V734 L0 709Z', '#668075');
+  shape(ctx, 'M0 384 L540 248 V381 L0 517Z', '#738f7f');
+  shape(ctx, WINDOW, '#3c5a56', '#3d615d', 17);
+  ctx.save(); ctx.clip(svg(WINDOW));
+  rect(ctx, 65, 275, 287, 251, '#597c7a');
+  oval(ctx, 114, 375, 52, 52, '#dbb77f');
+  shape(ctx, 'M59 459 Q118 411 190 458 Q255 494 352 430 V529 H59 Z', '#829c88');
+  factory(ctx, 112, 380, .58, 'b');
+  poly(ctx, [131, 274, 66, 439, 66, 462, 164, 274], '#fff0d432');
+  ctx.restore();
+  shape(ctx, WINDOW, null, '#e4cb9d', 6);
+  rect(ctx, 207, 277, 6, 248, '#e4cb9d');
+  rounded(ctx, 52, 520, 315, 15, 4, '#d8bf91', C.ink, 3);
+  shape(ctx, 'M0 570 L540 559 V718 H0 Z', '#55766c');
+  rect(ctx, 0, 565, W, 5, '#83a08a');
+  hatch(ctx, 410, 315, 69, 5, '#93ab94', -2);
+  // Warm personal details keep this a staffed civilian site.
+  shape(ctx, 'M452 673 Q448 621 430 607 M453 647 Q468 617 482 606 M452 645 Q452 612 455 591', null, '#284f46', 4);
+  shape(ctx, 'M446 629 Q424 639 413 601 Q439 602 446 629 Z M458 639 Q477 589 494 599 Q490 627 458 639 Z M453 623 Q434 595 456 585 Q474 604 453 623 Z', '#b2c19b', C.ink, 2.5);
+  poly(ctx, [432, 655, 472, 655, 467, 698, 437, 698], '#cf9376', C.ink, 3);
   attendant(ctx, t);
-  const cue = bounce((t - 2.5) / .44);
-  if (cue > .01) {
-    ctx.save(); ctx.translate(422, 393); ctx.scale(cue, cue);
-    shape(ctx, 'M-27 -18 Q-41 -17 -41 -3 V9 Q-41 22 -27 22 H-7 L-18 35 L5 22 H29 Q43 22 43 8 V-5 Q43 -18 28 -18Z',
-      C.cream, C.ink, 3);
-    for (let i = -1; i <= 1; i++) oval(ctx, i * 15 + 1, 3, 2.8, 3.4 + 1.2 * Math.sin(7 * t - i), '#b46e5b');
+  const ping = (t - ALERT_AT) / .68;
+  if (ping > 0 && ping < 1) {
+    ctx.save(); ctx.globalAlpha *= .55 * (1 - ping);
+    oval(ctx, 288, 617, 16 + 28 * ping, 17 + 28 * ping, null, '#fff1c0', 2.5);
     ctx.restore();
   }
-  poly(ctx, [-12, 687, 505, 665, 550, 716, 550, 759, -12, 762], '#b98573', C.ink, 4);
-  poly(ctx, [-15, 727, 552, 711, 552, 770, -15, 772], '#8a6363', C.ink, 4);
-  poly(ctx, [177, 695, 289, 685, 324, 704, 211, 717], '#637e73', C.ink, 2);
-  poly(ctx, [183, 692, 285, 683, 314, 700, 210, 710], '#f9dfb7', C.ink, 2);
-  poly(ctx, [234, 688, 266, 706], null, '#8d7765', 1.5);
-  poly(ctx, [218, 697, 248, 694, 255, 694], null, '#b59b7f', 1.5);
+  poly(ctx, [-12, 687, 503, 668, 550, 709, 550, 762, -12, 761], '#b19d7c', C.ink, 4);
+  poly(ctx, [-15, 726, 552, 711, 552, 770, -15, 772], '#7e826b', C.ink, 4);
+  poly(ctx, [303, 689, 407, 681, 442, 700, 335, 713], '#587c70', C.ink, 2);
+  poly(ctx, [309, 687, 403, 680, 432, 696, 334, 707], '#f9dfb7', C.ink, 2);
+  poly(ctx, [356, 685, 381, 701], null, '#908169', 1.5);
   rounded(ctx, 72, 672, 23, 14, 6, null, '#3a5253', 4);
   rounded(ctx, 51, 657, 35, 37, 6, '#8eab96', C.ink, 2.5);
   oval(ctx, 68.5, 658, 16, 4.8, '#554443', '#233f42', 2);
-  title(ctx, 1, C.cream, '#f5ab8d', [72, 72]);
-  caption(ctx, 1, t, '#493d4a', C.cream, '#f5ab8d');
+  alertCard(ctx, t);
+  title(ctx, 2, C.cream, '#f4d287', [87, 82]);
+  caption(ctx, 2, t, '#314d49', C.cream, '#f4d287');
 }
 
-const SHIELD = 'M0 -157 Q59 -127 125 -126 L125 -42 C123 36 58 104 0 133 C-63 102 -123 36 -125 -42 L-125 -126 Q-65 -128 0 -157 Z';
-function shield(ctx, t) {
-  rect(ctx, 0, 0, W, H, '#bfd0b3');
-  oval(ctx, 266, 500, 184, 204, '#cdd9b9');
-  oval(ctx, 266, 500, 188, 209, null, '#91aa98', 2);
-  oval(ctx, 266, 500, 200, 225, null, '#a8baa3', 1.6);
-  hatch(ctx, 46, 451, 73, 9, '#889e8b', 0);
-  hatch(ctx, 399, 437, 69, 10, '#889e8b', -1);
-  const reveal = bounce((t - .15) / .95);
-  ctx.save(); ctx.translate(270, 499 + 57 * (1 - reveal) + 4 * Math.sin(t * 1.45));
-  ctx.scale(.81 + .19 * reveal, .81 + .19 * reveal);
-  ctx.rotate(-.06 * (1 - reveal));
-  ctx.save(); ctx.translate(11, 15); shape(ctx, SHIELD, '#47736b'); ctx.restore();
-  shape(ctx, SHIELD, '#f2dfad', '#315451', 4);
-  ctx.save(); ctx.translate(0, -3); ctx.scale(.9, .9); shape(ctx, SHIELD, null, '#b3ae87', 2); ctx.restore();
-  ctx.save(); ctx.clip(svg(SHIELD));
-  oval(ctx, 4, -61, 55, 52, '#e3ba7e');
-  shape(ctx, 'M-128 24 Q-74 -9 -2 24 Q58 39 128 4 V146 H-128 Z', '#a0b298');
-  shape(ctx, 'M-128 59 Q-57 88 4 51 Q58 18 128 59 V146 H-128 Z', '#759487');
-  hatch(ctx, -94, 76, 174, 5, '#9fb39a', -2.5);
+function office(ctx, x, y, size) {
+  ctx.save(); ctx.translate(x, y); ctx.scale(size, size);
+  oval(ctx, 137, 216, 150, 15, '#486c65');
+  poly(ctx, [0, 41, 184, 52, 184, 214, 0, 206], '#9db7ad', C.ink, 3);
+  poly(ctx, [184, 52, 272, 27, 272, 188, 184, 214], '#6d9891', C.ink, 3);
+  poly(ctx, [-6, 39, 75, 14, 278, 27, 187, 54], '#c3cdb2', C.ink, 3);
+  poly(ctx, [-6, 39, 187, 54, 187, 66, -6, 51], '#669185', C.ink, 3);
+  poly(ctx, [187, 54, 278, 27, 278, 39, 187, 66], '#4b766e', C.ink, 3);
+  for (const y0 of [72, 108, 144]) {
+    for (let i = 0; i < 4; i++) {
+      const xx = 12 + i * 42;
+      poly(ctx, [xx, y0, xx + 31, y0 + 2, xx + 31, y0 + 27, xx, y0 + 25], '#efcd8d', C.ink, 2.2);
+      poly(ctx, [xx + 14, y0 + 1, xx + 14, y0 + 25], null, '#698776', 1.3);
+    }
+    for (const xx of [200, 230]) {
+      poly(ctx, [xx, y0, xx + 22, y0 - 7, xx + 22, y0 + 16, xx, y0 + 23], '#efc18c', C.ink, 2.1);
+    }
+  }
+  poly(ctx, [73, 174, 113, 176, 113, 211, 73, 209], '#506f6b', C.ink, 2.5);
+  rect(ctx, 81, 180, 24, 21, '#e4c388');
   ctx.restore();
-  const rise = ease((t - .73) / .65);
-  ctx.save(); ctx.globalAlpha *= rise;
-  building(ctx, -122, -47 + 19 * (1 - rise), .59);
+}
+
+function truck(ctx, x, y, size, wheelTurn) {
+  ctx.save(); ctx.translate(x, y); ctx.scale(size, size);
+  oval(ctx, 92, 62, 93, 8, '#41655f');
+  rounded(ctx, 8, 2, 112, 48, 4, '#f3d6a3', C.ink, 2.8);
+  rect(ctx, 13, 8, 102, 3, '#c49e72');
+  poly(ctx, [120, 16, 157, 16, 181, 36, 181, 55, 120, 55], '#b9806a', C.ink, 2.8);
+  poly(ctx, [141, 21, 155, 21, 172, 37, 141, 37], '#d1d0a6', C.ink, 2);
+  rect(ctx, 173, 44, 7, 4, '#f7e0aa');
+  rounded(ctx, 5, 49, 175, 8, 3, C.ink);
+  for (const wx of [37, 146]) {
+    ctx.save(); ctx.translate(wx, 56); ctx.rotate(wheelTurn);
+    oval(ctx, 0, 0, 12, 12, C.ink);
+    oval(ctx, 0, 0, 6, 6, '#b4b79a');
+    poly(ctx, [-4, 0, 4, 0], null, '#576b64', 1.6);
+    ctx.restore();
+  }
   ctx.restore();
+}
+
+function montage(ctx, t) {
+  rect(ctx, 0, 0, W, H, '#becdb0');
+  hatch(ctx, 44, 285, 102, 5, '#899e83', 2);
+  hatch(ctx, 406, 705, 71, 6, '#899e83', -3);
+  const marks = [0, 2.19, 4.39];
+  const shot = marks.findLastIndex((time) => t >= time);
+  const local = t - marks[shot];
+  const lift = ease((local + .08) / .49);
+  ctx.save(); ctx.translate(268 + 24 * (1 - lift), 511 + 10 * (1 - lift));
+  ctx.rotate(mix(-.12, [-.025, .022, -.021][shot], lift));
+  rounded(ctx, -214 + 7, -190 + 9, 429, 377, 10, '#7c9d8b');
+  rounded(ctx, -214, -190, 429, 377, 10, '#eee1b9', '#486b61', 3.2);
+  ctx.save(); ctx.beginPath(); ctx.roundRect(-203, -178, 407, 332, 5); ctx.clip();
+  rect(ctx, -205, -180, 411, 340, ['#81a297', '#8da99b', '#769a8e'][shot]);
+  oval(ctx, 108, -77, 60, 60, '#ead09b');
+  shape(ctx, 'M-208 7 Q-135 -78 -45 -5 Q38 47 99 -6 Q143 -46 208 -24 V176 H-208 Z', '#a5b99e');
+  shape(ctx, 'M-208 61 Q-85 19 23 68 Q134 109 207 51 V176 H-208 Z', '#739688');
+  shape(ctx, 'M-207 101 Q-88 90 12 114 Q109 126 209 97 V170 H-207 Z', '#5f8376');
+  const glide = 7 * smooth(local / 2.3);
+  if (shot === 0) {
+    office(ctx, -179 + glide, -120, 1.25);
+  } else if (shot === 1) {
+    factory(ctx, -164 + glide, -132, 1.21, 'b');
+    truck(ctx, mix(-239, 64, smooth(local / 2.5)), 74, .88, local * 8);
+  } else {
+    factory(ctx, -165 + glide, -143, 1.21, 'a');
+  }
   ctx.restore();
-  const glint = ease((t - .9) / .8);
-  star(ctx, 116, 351, 23 * glint, '#f9e5a6');
-  star(ctx, 415, 606, 19 * glint, '#f9e5a6');
-  star(ctx, 450, 362, 8 * glint, '#607f72');
-  star(ctx, 81, 626, 8 * glint, '#607f72');
-  title(ctx, 2, '#243f3d', '#39645b', [71, 83]);
-  caption(ctx, 2, t, '#d4dec0', '#263f3e', '#527d6c', 774);
+  text(ctx, ['ОФИС', 'СКЛАД', 'ПРОИЗВОДСТВО'][shot], -188, 176, 15, '#3f6157', { tracking: 2 });
+  for (let i = 0; i < 3; i++) {
+    rounded(ctx, 146 + i * 17, 166, 12, 5, 2, i === shot ? '#486f62' : '#b4bb9d');
+  }
+  ctx.restore();
+  star(ctx, 442, 320, 13, '#f6deb0');
+  title(ctx, 3, '#24423d', '#426b60', [64, 60]);
+  caption(ctx, 3, t, '#d6dfc0', '#304d44', '#557e6f');
 }
 
 const TICKET = 'M-198 -105 H198 Q208 -105 208 -95 V-24 C172 -24 172 24 208 24 V95 Q208 105 198 105 H-198 Q-208 105 -208 95 V24 C-172 24 -172 -24 -208 -24 V-95 Q-208 -105 -198 -105 Z';
@@ -401,12 +507,16 @@ function endCard(ctx, t) {
   star(ctx, 435, 367, 23 * ease((t - .7) / .7), C.amber);
   star(ctx, 103, 655, 17 * ease((t - 1) / .7), C.coral);
   star(ctx, 463, 641, 7, '#8ea894');
-  title(ctx, 3, C.cream, C.amber, [62, 70, 72]);
-  text(ctx, 'КОНЕЦ', 270, 813, 13, '#ebc994', { align: 'center', tracking: 4 });
-  rect(ctx, 241, 834, 58, 1, '#a79f7c');
+  title(ctx, 4, C.cream, C.amber, [68, 85]);
+  const tag = ease((t - 1.1) / .5);
+  ctx.save(); ctx.globalAlpha *= tag; ctx.translate(0, 12 * (1 - tag));
+  text(ctx, 'АВТОМАТИЧЕСКИЕ', 270, 787, 16, '#ebc994', { align: 'center', tracking: 2.7 });
+  text(ctx, 'ДЕТЕКТОРЫ ДРОНОВ', 270, 814, 16, C.cream, { align: 'center', tracking: 2.7 });
+  rect(ctx, 241, 838, 58, 1, '#a79f7c');
+  ctx.restore();
 }
 
-const scenes = [outside, inside, shield, endCard];
+const scenes = [outside, waiting, inside, montage, endCard];
 
 function paperTile() {
   const tile = createCanvas(173, 157);

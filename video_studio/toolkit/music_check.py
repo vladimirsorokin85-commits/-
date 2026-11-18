@@ -6,12 +6,13 @@
 
 Возвращает код 0, если трек ДРАЙВОВЫЙ, и 1, если нет — сборка звука обязана на этом падать.
 """
+import os
 import subprocess
 import sys
 
 import numpy as np
 
-FF = "/home/user/.local/bin/ffmpeg"
+FF = os.environ.get("FFMPEG_BIN", "/home/user/.local/bin/ffmpeg")
 SR = 22050
 
 # пороги из MUSIC_POLICY.md, п.3

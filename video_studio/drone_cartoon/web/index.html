@@ -4,25 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4ecd7">
-  <title>Дрон над объектом — мультфильм о безопасности</title>
+  <title>Знать вовремя — мультфильм об оповещении о дронах</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <header class="masthead">
     <span class="wordmark"><span class="stamp" aria-hidden="true"></span>МАГАЗИН «В ОКОПЕ»</span>
-    <span class="edition">КИНОЗАЛ <span aria-hidden="true">/</span> 01</span>
+    <span class="edition">КИНОЗАЛ <span aria-hidden="true">/</span> 02</span>
   </header>
   <main class="layout">
     <section class="intro" aria-labelledby="title">
-      <p class="kicker">МУЛЬТФИЛЬМ <span aria-hidden="true">/</span> <span id="running-time">00:24</span></p>
-      <h1 id="title">Дрон над <span>объектом.</span></h1>
-      <p class="lead">Обычный вечер в центре «Маяк» прерывает неизвестный дрон. Что сделает дежурная и какую роль в защите объектов играет РЭБ?</p>
+      <p class="kicker">МУЛЬТФИЛЬМ <span aria-hidden="true">/</span> <span id="running-time">00:30</span></p>
+      <h1 id="title">Знать <span>вовремя.</span></h1>
+      <p class="lead">Над заводом появляется неизвестный дрон. Короткая история о том, как автоматический детектор сообщает об этом ответственному за безопасность.</p>
       <div class="actions">
         <button type="button" id="watch" class="action action-primary">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6z" fill="currentColor"/></svg>
           <span id="watch-label">Смотреть</span>
         </button>
-        <a class="action action-download" id="download" href="./output/dron-nad-obektom.mp4" download="dron-nad-obektom.mp4">
+        <a class="action action-download" id="download" href="./film.mp4" download="v_okope_znat_vovremya.mp4">
           <svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10m-4-4 4 4 4-4M4 15v2h12v-2"/></svg>
           Скачать MP4
         </a>
@@ -30,8 +30,8 @@
       <p id="status" class="status" role="status" hidden></p>
     </section>
     <figure class="screen" id="screen">
-      <video id="film" controls playsinline preload="metadata" poster="./output/cover.jpg" aria-label="Мультфильм «Дрон над объектом»">
-        <source src="./output/dron-nad-obektom.mp4" type="video/mp4">
+      <video id="film" controls playsinline preload="metadata" poster="./output/znat-vovremya.jpg" aria-label="Мультфильм «Знать вовремя»">
+        <source src="./film.mp4" type="video/mp4">
         Ваш браузер не поддерживает встроенный плеер. Воспользуйтесь кнопкой «Скачать MP4».
       </video>
       <figcaption>
@@ -40,11 +40,11 @@
       </figcaption>
     </figure>
     <nav class="chapters" aria-label="Сцены мультфильма">
-      <div class="chapters-heading"><h2>Сцены</h2><span id="count" class="count">04</span></div>
+      <div class="chapters-heading"><h2>Сцены</h2><span id="count" class="count">05</span></div>
       <ol id="chapters"></ol>
     </nav>
     <details class="transcript">
-      <summary>Читать титры</summary>
+      <summary>Читать текст озвучки</summary>
       <div id="transcript"></div>
     </details>
   </main>
