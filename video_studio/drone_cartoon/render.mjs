@@ -54,7 +54,10 @@ async function render({ draft, prefix, posterAt }) {
     const { code, signal, error } = await exited;
     if (error) throw error;
     if (code !== 0) throw new Error(`FFmpeg завершился: ${signal || code}`);
-    if (!draft) await writeFile(new URL(`${SLUG}.jpg`, output), film.draw(posterAt).toBuffer('image/jpeg', 91));
+    if (!draft) {
+      const poster = film.drawCover ? film.drawCover() : film.draw(posterAt);
+      await writeFile(new URL(`${SLUG}.jpg`, output), poster.toBuffer('image/jpeg', 91));
+    }
     await rename(temp, destination);
     console.log(`Готово: ${fileURLToPath(destination)}`);
   } catch (error) {
@@ -74,11 +77,12 @@ const editions = {
   '--site-safety': { prefix: './site-safety/', posterAt: 1.7 },
   '--strizh': { prefix: './strizh/', posterAt: 4.1 },
   '--power': { prefix: './power-stations/', posterAt: 1.6 },
+  '--gongtex': { prefix: './gongtex/' },
 };
 const args = process.argv.slice(2);
 const selected = args.filter((flag) => Object.hasOwn(editions, flag));
 if (selected.length > 1 || args.some((arg) => arg !== '--draft' && !Object.hasOwn(editions, arg))) {
-  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 / render:site-safety / render:strizh / render:power [-- --draft]');
+  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 / render:site-safety / render:strizh / render:power / render:gongtex [-- --draft]');
   process.exitCode = 2;
 } else {
   try {

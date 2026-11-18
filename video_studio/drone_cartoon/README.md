@@ -6,6 +6,7 @@
 
 ## Видео и контакты
 
+- **GONGTEX Reversible Jacket** — [вертикальный MP4](./v_okope_gongtex_reversible_jacket.mp4), [описание и сборка](./gongtex/README.md), [текст для публикации](./gongtex/publish.txt). Плеер `/gongtex-reversible/`.
 - **«Электростанции в наличии»** — [минутный MP4](./v_okope_elektrostancii_v_nalichii.mp4), [22 позиции без цен](./power-stations/catalogue.txt) и [раскадровка](./power-stations/README.md). Плеер `/power-stations/`.
 - **«Стриж» — визуальный обзор** — [минутный MP4](./v_okope_strizh_obzor.mp4) из трёх фото с рисованными перебивками, [описание и сборка](./strizh/README.md). Плеер `/strizh/`.
 - **«XMETIX TAK710» — новый монтаж под DnB** — [MP4](./v_okope_xmetix_tak710.mp4), [описание](./tak710/README.md) и [тексты для Shorts и ВК](./tak710/publish.txt). Отдельный плеер `/tak710/`.

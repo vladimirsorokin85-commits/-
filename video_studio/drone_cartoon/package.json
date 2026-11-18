@@ -14,6 +14,7 @@
     "render:site-safety": "node render.mjs --site-safety",
     "render:strizh": "node render.mjs --strizh",
     "render:power": "node render.mjs --power",
+    "render:gongtex": "node render.mjs --gongtex",
     "preview": "node preview.mjs",
     "test": "node --test"
   },

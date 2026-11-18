@@ -10,6 +10,7 @@ import { FILE as TAK_FILE, SLUG as TAK_SLUG } from './tak710/story.mjs';
 import { FILE as SAFETY_FILE, SLUG as SAFETY_SLUG } from './site-safety/story.mjs';
 import { FILE as STRIZH_FILE, SLUG as STRIZH_SLUG } from './strizh/story.mjs';
 import { FILE as POWER_FILE, SLUG as POWER_SLUG } from './power-stations/story.mjs';
+import { FILE as GONGTEX_FILE, SLUG as GONGTEX_SLUG } from './gongtex/story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
@@ -36,6 +37,7 @@ const editions = new Map([
   [`/${SAFETY_SLUG}`, { page: 'site-safety', file: SAFETY_FILE, slug: SAFETY_SLUG, fallbackCover: 'site-safety/assets/cover.jpg' }],
   [`/${STRIZH_SLUG}`, { page: 'strizh', file: STRIZH_FILE, slug: STRIZH_SLUG, fallbackCover: 'strizh/assets/cover.jpg' }],
   [`/${POWER_SLUG}`, { page: 'power-stations', file: POWER_FILE, slug: POWER_SLUG, fallbackCover: 'power-stations/assets/cover.jpg' }],
+  [`/${GONGTEX_SLUG}`, { page: 'gongtex', file: GONGTEX_FILE, slug: GONGTEX_SLUG, fallbackCover: 'gongtex/assets/cover.jpg' }],
 ]);
 for (const [route, { page, file, slug, fallbackCover }] of editions) {
   routes.set(`${route}/`, [`web/${page}.html`, HTML]);
@@ -49,6 +51,7 @@ routes.set('/tak710/publish.txt', ['tak710/publish.txt', 'text/plain; charset=ut
 routes.set(`/${SAFETY_SLUG}/publish.txt`, ['site-safety/publish.txt', 'text/plain; charset=utf-8']);
 routes.set(`/${STRIZH_SLUG}/description.txt`, ['strizh/description.txt', 'text/plain; charset=utf-8']);
 routes.set(`/${POWER_SLUG}/catalogue.txt`, ['power-stations/catalogue.txt', 'text/plain; charset=utf-8']);
+routes.set(`/${GONGTEX_SLUG}/publish.txt`, ['gongtex/publish.txt', 'text/plain; charset=utf-8']);
 
 export function parseRange(value, size) {
   const match = /^bytes=(\d*)-(\d*)$/.exec(value);
