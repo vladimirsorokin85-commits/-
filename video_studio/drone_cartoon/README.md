@@ -6,6 +6,7 @@
 
 ## Видео и контакты
 
+- **«XMETIX TAK710 · автоматический жгут»** — [MP4](./v_okope_xmetix_tak710.mp4), [описание](./tak710/README.md) и [тексты для Shorts и ВК](./tak710/publish.txt). Отдельный плеер `/tak710/`.
 - **«Булат v4 · дрон-детектор»** — [MP4](./v_okope_bulat_v4_detektor.mp4) и [описание](./bulat/README.md). Плеер `/bulat/`.
 - **Сценарий №2 «Game Over для дрона»** — [MP4](./v_okope_game_over.mp4) и [описание](./game/README.md). Отдельный плеер `/game-over/`.
 - **[Готовый MP4 — новый монтаж](./v_okope_v_svoem_ritme_montazh.mp4)** — 30 секунд, 1080 × 1920, 30 кадров/с.

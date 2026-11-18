@@ -6,6 +6,7 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 import { FILE, SLUG } from './story.mjs';
 import { FILE as GAME_FILE, SLUG as GAME_SLUG } from './game/story.mjs';
 import { FILE as BULAT_FILE, SLUG as BULAT_SLUG } from './bulat/story.mjs';
+import { FILE as TAK_FILE, SLUG as TAK_SLUG } from './tak710/story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
@@ -28,15 +29,17 @@ const routes = new Map([
 const editions = new Map([
   ['/game-over', { page: 'game', file: GAME_FILE, slug: GAME_SLUG }],
   ['/bulat', { page: 'bulat', file: BULAT_FILE, slug: BULAT_SLUG }],
+  ['/tak710', { page: 'tak710', file: TAK_FILE, slug: TAK_SLUG, fallbackCover: 'tak710/assets/cover.jpg' }],
 ]);
-for (const [route, { page, file, slug }] of editions) {
+for (const [route, { page, file, slug, fallbackCover }] of editions) {
   routes.set(`${route}/`, [`web/${page}.html`, HTML]);
   routes.set(`${route}/player.mjs`, ['web/player.mjs', JS]);
   routes.set(`${route}/story.mjs`, [`${page}/story.mjs`, JS]);
-  routes.set(`${route}/cover.jpg`, [`output/${slug}.jpg`, 'image/jpeg']);
+  routes.set(`${route}/cover.jpg`, [`output/${slug}.jpg`, 'image/jpeg', fallbackCover]);
   routes.set(`${route}/film.mp4`, [`output/${slug}.mp4`, 'video/mp4', file]);
 }
 routes.set('/game-over/game.css', ['web/game.css', 'text/css; charset=utf-8']);
+routes.set('/tak710/publish.txt', ['tak710/publish.txt', 'text/plain; charset=utf-8']);
 
 export function parseRange(value, size) {
   const match = /^bytes=(\d*)-(\d*)$/.exec(value);

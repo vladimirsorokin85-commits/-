@@ -4,11 +4,15 @@ import { fileURLToPath } from 'node:url';
 import { BEEP_AT, BPM, CAT_AT, CHAPTERS, DURATION, SLUG, WORK_CUTS } from './story.mjs';
 
 const SR = 48000;
-const musicFile = fileURLToPath(new URL('../../StockTune-Storm Riders Unleashed_1794986419.mp3', import.meta.url));
-const checkMusic = fileURLToPath(new URL('../toolkit/music_check.py', import.meta.url));
 const asset = (path) => fileURLToPath(new URL(path, import.meta.url));
-// Owner-selected instrumental. The 30 s excerpt starts on the measured drum grid.
-const MUSIC_START = '55.154';
+const checkMusic = asset('../toolkit/music_check.py');
+// Owner-selected exception for the original, Game Over and Bulat cuts only.
+const STORM_RIDERS = {
+  file: asset('../../StockTune-Storm Riders Unleashed_1794986419.mp3'),
+  start: '55.154',
+  bpm: BPM,
+  bedFilter: 'equalizer=f=78:t=o:w=2.4:g=1.8,volume=1.4dB,alimiter=limit=.91:level=0',
+};
 const signalTime = CHAPTERS[1].start + BEEP_AT;
 const CUES = [
   [2.13, 'whoosh_short', .35],
@@ -44,7 +48,7 @@ function ff(ffmpeg, args, capture = false) {
 
 export function buildMaster(ffmpeg, outputDir, {
   chapters = CHAPTERS, cues = CUES, slug = SLUG, signalAt = signalTime,
-  musicStart = MUSIC_START, musicStartsInFullAt, peakTarget = -1.8,
+  music = STORM_RIDERS, musicStart = music.start, musicStartsInFullAt, peakTarget = -1.8,
 } = {}) {
   const signalDipStart = (signalAt - .07).toFixed(3);
   const signalDipEnd = (signalAt + .19).toFixed(3);
@@ -79,11 +83,10 @@ export function buildMaster(ffmpeg, outputDir, {
   try {
     // Trim and level a recorded excerpt, then verify the actual bed entering the mix.
     ff(ffmpeg, [
-      '-loglevel', 'warning', '-ss', musicStart, '-i', musicFile, '-t', String(DURATION),
-      '-map', '0:a:0', '-af', 'equalizer=f=78:t=o:w=2.4:g=1.8,volume=1.4dB,alimiter=limit=.91:level=0',
-      '-ar', String(SR), '-c:a', 'pcm_f32le', bed,
+      '-loglevel', 'warning', '-ss', musicStart, '-i', music.file, '-t', String(DURATION),
+      '-map', '0:a:0', '-af', music.bedFilter, '-ar', String(SR), '-c:a', 'pcm_f32le', bed,
     ]);
-    const verified = spawnSync(process.env.PYTHON || 'python3', [checkMusic, '--tempo-hint', String(BPM), bed], {
+    const verified = spawnSync(process.env.PYTHON || 'python3', [checkMusic, '--tempo-hint', String(music.bpm), bed], {
       env: { ...process.env, FFMPEG_BIN: ffmpeg }, stdio: 'inherit',
     });
     if (verified.error || verified.status !== 0) {

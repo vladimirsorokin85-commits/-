@@ -10,6 +10,7 @@
     "render": "node render.mjs",
     "render:game": "node render.mjs --game-over",
     "render:bulat": "node render.mjs --bulat",
+    "render:tak710": "node render.mjs --tak710",
     "preview": "node preview.mjs",
     "test": "node --test"
   },

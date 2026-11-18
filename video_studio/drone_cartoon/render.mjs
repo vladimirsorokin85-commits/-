@@ -70,11 +70,12 @@ async function render({ draft, prefix, posterAt }) {
 const editions = {
   '--game-over': { prefix: './game/', posterAt: 11.3 },
   '--bulat': { prefix: './bulat/', posterAt: 2.9 },
+  '--tak710': { prefix: './tak710/', posterAt: 2.7 },
 };
 const args = process.argv.slice(2);
 const selected = args.filter((flag) => Object.hasOwn(editions, flag));
 if (selected.length > 1 || args.some((arg) => arg !== '--draft' && !Object.hasOwn(editions, arg))) {
-  console.error('Использование: npm run render / render:game / render:bulat [-- --draft]');
+  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 [-- --draft]');
   process.exitCode = 2;
 } else {
   try {
