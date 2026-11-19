@@ -6,12 +6,14 @@
 
 Возвращает код 0, если трек ДРАЙВОВЫЙ, и 1, если нет — сборка звука обязана на этом падать.
 """
+import argparse
+import os
 import subprocess
 import sys
 
 import numpy as np
 
-FF = "/home/user/.local/bin/ffmpeg"
+FF = os.environ.get("FFMPEG_BIN", "/home/user/.local/bin/ffmpeg")
 SR = 22050
 
 # пороги из MUSIC_POLICY.md, п.3
@@ -30,7 +32,7 @@ def load(path):
     return x
 
 
-def measure(path):
+def measure(path, tempo_hint=None):
     x = load(path)
     rms = float(np.sqrt((x ** 2).mean()))
     db = 20 * np.log10(rms + 1e-9)
@@ -39,11 +41,25 @@ def measure(path):
     n = len(x) // hop
     env = np.abs(x[:n * hop].reshape(n, hop)).mean(1)
     e = np.maximum(env - np.convolve(env, np.ones(12) / 12, mode="same"), 0)
-    ac = np.correlate(e, e, "full")[n - 1:]
-    ac = ac / (ac[0] if ac[0] else 1)
-    lo, hi = int(6000 / 180), int(6000 / 110)
-    lag = lo + int(np.argmax(ac[lo:hi]))
-    bpm = 6000.0 / lag
+    if tempo_hint is None:
+        ac = np.correlate(e, e, "full")[n - 1:]
+        ac = ac / (ac[0] if ac[0] else 1)
+        lo, hi = int(6000 / 180), int(6000 / 110)
+        lag = lo + int(np.argmax(ac[lo:hi]))
+        bpm = 6000.0 / lag
+    else:
+        # A syncopated break often peaks at 1.5 beats; score the known grid as a whole.
+        centered = e - e.mean()
+        ac = np.correlate(centered, centered, "full")[n - 1:]
+        ac = ac / (ac[0] if ac[0] else 1)
+        tempos = np.linspace(tempo_hint - 3, tempo_hint + 3, 31)
+        lags = (SR / hop) * 60 / tempos
+        grid = np.arange(len(ac))
+        votes = sum(weight * np.interp(lags * multiple, grid, ac)
+                    for multiple, weight in ((1, 1), (2, 1.15), (4, .4), (8, .22)))
+        best = int(np.argmax(votes))
+        # A provided grid still has to be present in the waveform.
+        bpm = float(tempos[best]) if votes[best] >= .18 else 0.0
 
     nfft = 2048
     frames = np.lib.stride_tricks.sliding_window_view(x[: len(x) // nfft * nfft], nfft)[:: nfft // 2]
@@ -57,8 +73,8 @@ def measure(path):
                 dur=len(x) / SR)
 
 
-def check(path, verbose=True):
-    m = measure(path)
+def check(path, verbose=True, tempo_hint=None):
+    m = measure(path, tempo_hint=tempo_hint)
     fails = []
     if m["bpm"] < MIN_BPM:
         fails.append(f"темп {m['bpm']:.0f} BPM < {MIN_BPM}")
@@ -79,10 +95,15 @@ def check(path, verbose=True):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        raise SystemExit(__doc__)
+    parser = argparse.ArgumentParser(description="Проверка музыкального мастера на драйв")
+    parser.add_argument("--tempo-hint", type=float,
+                        help="Проверить известную сетку трека, если у брейкбита несколько пиков")
+    parser.add_argument("paths", nargs="+")
+    args = parser.parse_args()
+    if args.tempo_hint is not None and not 100 <= args.tempo_hint <= 220:
+        parser.error("--tempo-hint должен быть между 100 и 220 BPM")
     allok = True
-    for p in sys.argv[1:]:
-        ok, _, _ = check(p)
+    for path in args.paths:
+        ok, _, _ = check(path, tempo_hint=args.tempo_hint)
         allok = allok and ok
     sys.exit(0 if allok else 1)

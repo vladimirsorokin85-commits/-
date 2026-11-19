@@ -1,0 +1,32 @@
+{
+  "name": "vokope-drone-cartoon",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "render": "node render.mjs",
+    "render:game": "node render.mjs --game-over",
+    "render:bulat": "node render.mjs --bulat",
+    "render:tak710": "node render.mjs --tak710",
+    "render:site-safety": "node render.mjs --site-safety",
+    "render:strizh": "node render.mjs --strizh",
+    "render:power": "node render.mjs --power",
+    "render:gongtex": "node render.mjs --gongtex",
+    "render:runcam": "node render.mjs --runcam",
+    "render:incubator": "node render.mjs --incubator",
+    "render:fiber": "node render.mjs --fiber",
+    "render:saber": "node render.mjs --saber",
+    "preview": "node preview.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "0.1.100",
+    "qrcode": "1.5.4"
+  },
+  "optionalDependencies": {
+    "@ffmpeg-installer/ffmpeg": "1.1.0"
+  }
+}
