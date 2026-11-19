@@ -5,7 +5,7 @@ import test from 'node:test';
 import { buildMaster } from '../fiber/mix.mjs';
 import { STORM_RIDERS } from '../mix.mjs';
 import { createFilm } from '../fiber/film.mjs';
-import { BPM, CHAPTERS, DURATION, FPS, FRAME_COUNT, SHOTS, TITLE, WIPE, chapterAt } from '../fiber/story.mjs';
+import { BPM, CHAPTERS, DURATION, FPS, FRAME_COUNT, PACKSHOT, SHOTS, TITLE, WIPE, chapterAt } from '../fiber/story.mjs';
 
 const digest = (buffer) => createHash('sha256').update(buffer).digest('hex');
 
@@ -15,17 +15,17 @@ test('the fiber stock review follows the photographed packaging and details, not
   assert.ok(storyFiles[0].startsWith(`Заголовок\n${TITLE}\n\nОписание\n`));
   assert.match(storyFiles[0], /На складе — прозрачное оптоволокно/);
   assert.match(CHAPTERS[0].narration, /^Вот что у нас на складе/);
-  assert.deepEqual(SHOTS.map(({ kind }) => kind), ['hero','packed','open','winding','mark','end']);
+  assert.deepEqual(SHOTS.map(({ kind }) => kind), ['hero','packed','open','winding','mark','end','packshot']);
   for (const text of storyFiles) {
     assert.doesNotMatch(text, /карточк|50[.,]4 км|51[.,]395 км|0[.,]25 мм/iu);
   }
 });
 
-test('fiber has six shot beats, three voice takes and the approved track', () => {
-  assert.equal(FRAME_COUNT, 840);
+test('fiber has seven shot beats, three voice takes and the approved track', () => {
+  assert.equal(FRAME_COUNT, 930);
   assert.equal(FPS, 30);
   assert.equal(SHOTS[0].start, 0);
-  assert.equal(SHOTS.length, 6);
+  assert.equal(SHOTS.length, 7);
   assert.equal(typeof buildMaster, 'function');
   for (const [i, { start }] of SHOTS.entries()) {
     assert.ok(start >= 0 && start < DURATION);
@@ -40,6 +40,14 @@ test('fiber has six shot beats, three voice takes and the approved track', () =>
   }
   assert.equal(BPM, STORM_RIDERS.bpm);
   assert.equal(digest(readFileSync(STORM_RIDERS.file)), '85e506fcd419bc253b65ec0665946aab791d4e0f24e63e923bba694e273d196b');
+});
+
+test('the requested slogan holds on its own final packshot after the narration', () => {
+  assert.deepEqual(SHOTS.at(-1), { start: PACKSHOT.start, kind: 'packshot' });
+  assert.equal(PACKSHOT.lines.join(' '), 'Не будь мишенью. Будь «В окопе»');
+  const { start, voice } = CHAPTERS.at(-1);
+  assert.ok(PACKSHOT.start - (start + voice.offset + 8.14 / voice.tempo) > .20);
+  assert.ok(DURATION - PACKSHOT.start - WIPE >= 3.49);
 });
 
 test('fiber shot drawings are distinct and the elliptical transition preserves full-bleed framing', () => {

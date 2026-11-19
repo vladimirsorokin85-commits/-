@@ -5,7 +5,7 @@ export const MODEL = 'G.657.A2';
 export const TITLE = `Оптоволокно ${MODEL} на складе`;
 export const SLUG = 'fiber-g657a2';
 export const FILE = 'v_okope_fiber_g657a2.mp4';
-export const DURATION = 28;
+export const DURATION = 31;
 export const FPS = 30;
 export const FRAME_COUNT = DURATION * FPS;
 export const WIPE = 8 / FPS;
@@ -24,6 +24,10 @@ export const CHAPTERS = [
     narration: 'На этикетке — G657A2. Вот так оптоволокно выглядит в упаковке.',
     voice: take('03-marking', 1.11, .33) },
 ];
+export const PACKSHOT = Object.freeze({
+  start: beat(79),
+  lines: Object.freeze(['Не будь мишенью.', 'Будь «В окопе»']),
+});
 export const SHOTS = [
   { start: 0, kind: 'hero' },
   { start: beat(14), kind: 'packed' },
@@ -31,5 +35,6 @@ export const SHOTS = [
   { start: beat(43), kind: 'winding' },
   { start: CHAPTERS[2].start, kind: 'mark' },
   { start: beat(69), kind: 'end' },
+  { start: PACKSHOT.start, kind: 'packshot' },
 ];
 export function chapterAt(time) { return CHAPTERS.findLastIndex(({ start }) => time >= start); }

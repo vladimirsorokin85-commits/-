@@ -1,6 +1,6 @@
 import { createCanvas, GlobalFonts, loadImage } from '@napi-rs/canvas';
 import { fileURLToPath } from 'node:url';
-import { DURATION, MODEL, SHOTS, WIPE } from './story.mjs';
+import { DURATION, MODEL, PACKSHOT, SHOTS, WIPE } from './story.mjs';
 
 export const WIDTH = 540;
 export const HEIGHT = 960;
@@ -158,7 +158,20 @@ function end(ctx,t) {
   text(ctx,MODEL,42,832,75,PAPER);
 }
 
-const scenes={ hero,packed,open,winding,mark,end };
+function packshot(ctx,t) {
+  fill(ctx,PAPER);
+  const a=move(t/3.2);
+  disc(ctx,277,607,296,222,BERRY,-.08);
+  through(ctx,274,593,296,219,-.08,()=>image(ctx,'open',[-30,360,612,460],{
+    focusX:.52+.012*a,focusY:.49,zoom:1.02+.037*a,
+  }));
+  strand(ctx,.94+.1*a,274,596,305,231,INK,{width:2.9,phase:-.11,tail:50});
+  caption(ctx,`ОПТОВОЛОКНО ${MODEL}`,46,138);
+  text(ctx,PACKSHOT.lines[0],43,223,61,INK,447);
+  text(ctx,PACKSHOT.lines[1],42,309,78,BERRY,448);
+}
+
+const scenes={ hero,packed,open,winding,mark,end,packshot };
 const paint=(ctx,{kind,start},time)=>scenes[kind](ctx,Math.max(0,time-start));
 function loopCut(ctx,t,draw) {
   // Expand the contour of the reel into the next image, on the beat.

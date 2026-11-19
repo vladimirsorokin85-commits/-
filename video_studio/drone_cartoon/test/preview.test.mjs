@@ -360,6 +360,7 @@ test('fiber stock review serves an independent player, cover, publication copy a
   const html = await page.text();
   assert.ok(html.includes(`download="${FIBER_FILE}"`));
   assert.match(html, /Показываем прозрачное оптоволокно, которое есть у нас на складе/);
+  assert.match(html, /id="running-time">00:31/);
   assert.doesNotMatch(html, /карточк|51,395|50,4/iu);
   for (const [asset, type] of [['cover.jpg','image/jpeg'], ['fiber.css','text/css'], ['story.mjs','text/javascript']]) {
     const res = await fetch(url + asset, { method: 'HEAD', headers });
