@@ -1,12 +1,12 @@
 import { createCanvas, GlobalFonts, loadImage } from '@napi-rs/canvas';
 import { fileURLToPath } from 'node:url';
-import { DURATION, DETAILS, MODEL, SHOTS, WIPE } from './story.mjs';
+import { DURATION, MODEL, SHOTS, WIPE } from './story.mjs';
 
 export const WIDTH = 540;
 export const HEIGHT = 960;
 const W = WIDTH, H = HEIGHT, TAU = Math.PI * 2;
 const PAPER = '#f1ecde', INK = '#153f36', TEAL = '#0d5e51', BERRY = '#a62559', PINK = '#f2a2b7';
-const files = { rim: 'rim.png', open: 'open.jpg', winding: 'winding.jpg', cases: 'cases.jpg', type: 'type.jpg', length: 'length.jpg' };
+const files = { rim: 'rim.png', open: 'open.jpg', winding: 'winding.jpg', cases: 'cases.jpg', type: 'type.jpg' };
 const photos = Object.fromEntries(await Promise.all(Object.entries(files).map(async ([key,file]) => [
   key, await loadImage(fileURLToPath(new URL(`./assets/${file}`, import.meta.url))),
 ])));
@@ -105,64 +105,60 @@ function hero(ctx,t,cover=false) {
   // The fine edge of the same ink stroke stays visible where it passes in front of the print.
   ctx.beginPath(); ctx.ellipse(293,596,248,204,.04,.22,1.43);
   ctx.strokeStyle=BERRY;ctx.lineWidth=2.7;ctx.stroke();
-  caption(ctx,'ФОТООБЗОР',46,135);
+  caption(ctx,'ЧТО У НАС НА СКЛАДЕ',46,135);
   text(ctx,'ОПТОВОЛОКНО',42,226,89,INK,448);
   text(ctx,MODEL,41,335,109,BERRY);
-  caption(ctx,'КАТУШКА И МАРКИРОВКА',47,837);
+  caption(ctx,'ПРОЗРАЧНОЕ ВОЛОКНО',47,837);
 }
-function type(ctx,t) {
+function packed(ctx,t) {
   fill(ctx,TEAL);
-  const a=move(t/4.1);
-  disc(ctx,302,494,218,158,'#115144',.06);
-  strand(ctx,.88+.17*a,300,495,233,168,PINK,{width:3.6,tail:65});
-  labelStrip(ctx,'type',26+11*a,424-4*a,490,-.066+.015*a);
-  caption(ctx,'ТИП ВОЛОКНА',46,142,PAPER);
-  text(ctx,MODEL,42,255,105,PAPER);
-  text(ctx,'Одномодовое',45,730,57,PAPER);
-  text(ctx,'волокно',45,796,61,PAPER);
+  const a=move(t/4.2);
+  disc(ctx,268,562,316,240,PINK,.055);
+  through(ctx,270,555,316,240,.055,()=>image(ctx,'cases',[-49,311,638,488],{focusX:.51,focusY:.47,zoom:1+.045*a}));
+  strand(ctx,.90+.13*a,267,555,323,250,PINK,{width:3,phase:-.12,tail:64});
+  text(ctx,'В футлярах',44,229,86,PAPER);
 }
-function diameter(ctx,t) {
+function open(ctx,t) {
   fill(ctx,PAPER);
-  const a=move(t/4.6), y=567;
-  disc(ctx,268,y+9,303,213,BERRY,-.09);
-  through(ctx,270,y,302,210,-.09,()=>image(ctx,'open',[-37,348,620,432],{focusX:.52,focusY:.47,zoom:1+.045*a}));
-  strand(ctx,.87+.16*a,267,y,315,226,INK,{width:2.5,phase:-.12});
-  caption(ctx,'ДИАМЕТР ПО КАРТОЧКЕ',46,141);
-  text(ctx,DETAILS.diameter,41,282,132,BERRY);
-  caption(ctx,'ПРОЗРАЧНОЕ ВОЛОКНО',47,846);
+  const a=move(t/5.4);
+  disc(ctx,308,572,302,258,BERRY,-.10);
+  through(ctx,310,562,301,256,-.10,()=>image(ctx,'open',[-32,288,685,552],{
+    focusX:.58+.026*a,focusY:.46,zoom:1+.113*a,
+  }));
+  strand(ctx,.88+.16*a,313,565,312,270,INK,{width:2.6,phase:-.09,tail:64});
+  text(ctx,'Под плёнкой',44,227,83,INK);
 }
 function winding(ctx,t) {
-  const a=move(t/3.4);
-  image(ctx,'winding',[0,0,W,H],{focusX:.65+.025*a,focusY:.50,zoom:1.015+.09*a});
-  disc(ctx,240,60,402,263,BERRY,.045);
-  disc(ctx,236,48,402,263,PAPER,.045);
-  caption(ctx,'КРУПНЫЙ ПЛАН',46,140);
-  text(ctx,'НАМОТКА',41,237,100,INK);
+  const a=move(t/4.4);
+  image(ctx,'winding',[0,0,W,H],{focusX:.65+.027*a,focusY:.50,zoom:1.015+.104*a});
+  disc(ctx,240,47,402,240,BERRY,.045);
+  disc(ctx,236,36,402,240,PAPER,.045);
+  text(ctx,'Виток к витку',43,207,70,INK);
   ctx.beginPath(); ctx.ellipse(420,557,302,262,.09,.39,2.18);
   ctx.strokeStyle=PINK;ctx.lineWidth=4;ctx.stroke();
 }
-function listed(ctx,t) {
-  fill(ctx,TEAL);
-  const a=move(t/4), y=586;
-  disc(ctx,277,y+8,311,205,PINK,.055);
-  through(ctx,277,y,310,204,.055,()=>image(ctx,'cases',[-42,376,638,424],{focusX:.52,focusY:.46,zoom:1+.045*a}));
-  strand(ctx,.84+.17*a,279,y,318,222,PINK,{width:3.2,phase:-.14});
-  caption(ctx,'ДЛИНА ПО КАРТОЧКЕ',46,142,PAPER);
-  text(ctx,DETAILS.fromCard,40,288,141,PAPER);
-}
-function label(ctx,t) {
+function mark(ctx,t) {
   fill(ctx,PAPER);
-  const a=move(t/4.6);
-  disc(ctx,285,502,245,148,'#12473b13',.03);
-  strand(ctx,.87+.18*a,287,498,248,154,BERRY,{width:3.8});
-  labelStrip(ctx,'length',29+9*a,454-5*a,479,-.053+.010*a);
-  caption(ctx,'НА ЭТИКЕТКЕ ОДНОЙ КАТУШКИ',46,141);
-  text(ctx,DETAILS.fromLabel,40,280,128,BERRY);
-  caption(ctx,'В КАРТОЧКЕ',46,738);
-  text(ctx,DETAILS.fromCard,43,803,60,INK);
+  const a=move(t/4.1), photo=photos.rim;
+  strand(ctx,.88+.17*a,350,603,231,195,BERRY,{width:3.7,tail:54});
+  const width=407;
+  ctx.drawImage(photo,172-10*a,439-11*a,width,width*photo.height/photo.width);
+  labelStrip(ctx,'type',37+11*a,391-3*a,440,-.066+.015*a);
+  text(ctx,'На этикетке',44,227,84,INK);
+}
+function end(ctx,t) {
+  fill(ctx,TEAL);
+  const a=move(t/4);
+  disc(ctx,301,524,294,252,PINK,.09);
+  through(ctx,301,515,294,252,.09,()=>image(ctx,'cases',[-18,250,627,535],{
+    focusX:.62-.015*a,focusY:.51,zoom:1.065+.05*a,
+  }));
+  strand(ctx,.90+.15*a,300,519,308,261,PINK,{width:2.8,tail:47});
+  caption(ctx,'ОПТОВОЛОКНО',46,151,PAPER);
+  text(ctx,MODEL,42,832,75,PAPER);
 }
 
-const scenes={ hero,type,diameter,winding,listed,label };
+const scenes={ hero,packed,open,winding,mark,end };
 const paint=(ctx,{kind,start},time)=>scenes[kind](ctx,Math.max(0,time-start));
 function loopCut(ctx,t,draw) {
   // Expand the contour of the reel into the next image, on the beat.

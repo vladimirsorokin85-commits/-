@@ -5,20 +5,24 @@ import test from 'node:test';
 import { buildMaster } from '../fiber/mix.mjs';
 import { STORM_RIDERS } from '../mix.mjs';
 import { createFilm } from '../fiber/film.mjs';
-import { BPM, CHAPTERS, DETAILS, DURATION, FPS, FRAME_COUNT, SHOTS, TITLE, WIPE, chapterAt } from '../fiber/story.mjs';
+import { BPM, CHAPTERS, DURATION, FPS, FRAME_COUNT, SHOTS, TITLE, WIPE, chapterAt } from '../fiber/story.mjs';
 
 const digest = (buffer) => createHash('sha256').update(buffer).digest('hex');
 
-test('the fiber review distinguishes the card length from the photographed label', () => {
-  const copy = readFileSync(new URL('../fiber/publish.txt', import.meta.url), 'utf8');
-  assert.ok(copy.startsWith(`Заголовок\n${TITLE}\n\nОписание\n`));
-  assert.ok(copy.includes(`Диаметр по карточке — ${DETAILS.diameter}`));
-  assert.ok(copy.includes(`В карточке указано ${DETAILS.fromCard}, а на этикетке одной из катушек на фото — ${DETAILS.fromLabel}`));
-  assert.equal(CHAPTERS.at(-1).narration, `В карточке — ${DETAILS.fromCard}. На этикетке этой катушки — ${DETAILS.fromLabel}.`);
+test('the fiber stock review follows the photographed packaging and details, not the catalogue', () => {
+  const storyFiles = ['publish.txt','vo_text.txt','story.mjs','film.mjs'].map(name =>
+    readFileSync(new URL(`../fiber/${name}`, import.meta.url), 'utf8'));
+  assert.ok(storyFiles[0].startsWith(`Заголовок\n${TITLE}\n\nОписание\n`));
+  assert.match(storyFiles[0], /На складе — прозрачное оптоволокно/);
+  assert.match(CHAPTERS[0].narration, /^Вот что у нас на складе/);
+  assert.deepEqual(SHOTS.map(({ kind }) => kind), ['hero','packed','open','winding','mark','end']);
+  for (const text of storyFiles) {
+    assert.doesNotMatch(text, /карточк|50[.,]4 км|51[.,]395 км|0[.,]25 мм/iu);
+  }
 });
 
 test('fiber has six shot beats, three voice takes and the approved track', () => {
-  assert.equal(FRAME_COUNT, 870);
+  assert.equal(FRAME_COUNT, 840);
   assert.equal(FPS, 30);
   assert.equal(SHOTS[0].start, 0);
   assert.equal(SHOTS.length, 6);

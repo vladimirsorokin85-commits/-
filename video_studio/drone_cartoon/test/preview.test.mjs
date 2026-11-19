@@ -343,7 +343,7 @@ test('the Incubator photo review has its own proxy-safe player, styling, cover, 
   }
 });
 
-test('fiber overview serves an independent player, cover, attributed copy and playable byte ranges', async (t) => {
+test('fiber stock review serves an independent player, cover, publication copy and playable byte ranges', async (t) => {
   const server = makeServer();
   t.after(() => new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve())));
   server.listen(0, '127.0.0.1');
@@ -359,7 +359,8 @@ test('fiber overview serves an independent player, cover, attributed copy and pl
   assert.equal(page.status, 200);
   const html = await page.text();
   assert.ok(html.includes(`download="${FIBER_FILE}"`));
-  assert.match(html, /50,4 км в карточке и 51,395 км на этикетке одной катушки/);
+  assert.match(html, /Показываем прозрачное оптоволокно, которое есть у нас на складе/);
+  assert.doesNotMatch(html, /карточк|51,395|50,4/iu);
   for (const [asset, type] of [['cover.jpg','image/jpeg'], ['fiber.css','text/css'], ['story.mjs','text/javascript']]) {
     const res = await fetch(url + asset, { method: 'HEAD', headers });
     assert.equal(res.status, 200);
