@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f1ecde">
+  <title>Оптоволокно G.657.A2 — фотообзор</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./fiber.css">
+</head>
+<body class="fiber">
+  <header class="masthead">
+    <span class="wordmark">КИНОЗАЛ</span>
+    <span class="edition">ФОТООБЗОР</span>
+  </header>
+  <main class="layout">
+    <section class="intro" aria-labelledby="title">
+      <p class="kicker">НАМОТКА И ЭТИКЕТКА <span aria-hidden="true">/</span> <span id="running-time">00:29</span></p>
+      <h1 id="title">Оптоволокно <span>G.657.A2</span></h1>
+      <p class="lead">Катушка и прозрачное волокно крупным планом. Разбираем две цифры: 50,4 км в карточке и 51,395 км на этикетке одной катушки.</p>
+      <div class="actions">
+        <button type="button" id="watch" class="action action-primary">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6z" fill="currentColor"/></svg>
+          <span id="watch-label">Смотреть</span>
+        </button>
+        <a class="action action-download" href="./film.mp4" download="v_okope_fiber_g657a2.mp4">
+          <svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10m-4-4 4 4 4-4M4 15v2h12v-2"/></svg>
+          Скачать MP4
+        </a>
+      </div>
+      <div class="extras">
+        <a class="series-link" href="./cover.jpg" download="fiber-g657a2-cover.jpg">Обложка</a>
+        <a class="series-link" href="./publish.txt">Заголовок и описание</a>
+      </div>
+      <p id="status" class="status" role="status" hidden></p>
+    </section>
+    <figure class="screen" id="screen">
+      <video id="film" controls playsinline preload="metadata" poster="./cover.jpg" aria-label="Фотообзор оптоволокна G.657.A2">
+        <source src="./film.mp4" type="video/mp4">
+        Ваш браузер не поддерживает встроенный плеер. Воспользуйтесь кнопкой «Скачать MP4».
+      </video>
+      <figcaption>
+        <span>1080 × 1920 <span class="dot" aria-hidden="true">·</span> 9:16</span>
+        <span id="frame-rate">30 кадров/с</span>
+      </figcaption>
+    </figure>
+    <nav class="chapters" aria-label="Главы обзора">
+      <div class="chapters-heading"><h2>Главы</h2><span id="count" class="count">03</span></div>
+      <ol id="chapters"></ol>
+    </nav>
+    <details class="transcript">
+      <summary>Читать текст озвучки</summary>
+      <div id="transcript"></div>
+    </details>
+  </main>
+  <script type="module" src="./player.mjs"></script>
+</body>
+</html>

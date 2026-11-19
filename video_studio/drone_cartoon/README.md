@@ -6,6 +6,7 @@
 
 ## Видео и контакты
 
+- **Оптоволокно G.657.A2** — [вертикальный MP4](./v_okope_fiber_g657a2.mp4), [источники и сборка](./fiber/README.md), [заголовок и описание](./fiber/publish.txt). Плеер `/fiber-g657a2/`.
 - **«Инкубатор 3.30»** — [вертикальный MP4](./v_okope_incubator_330.mp4), [кадры и сборка](./incubator/README.md), [текст и заголовок](./incubator/publish.txt). Плеер `/incubator-330/`.
 - **RunCam Helmet Camera 2** — [вертикальный MP4](./v_okope_runcam_helmet_camera_2.mp4), [источники и сборка](./runcam/README.md), [текст для публикации](./runcam/publish.txt). Плеер `/runcam-helmet-2/`.
 - **GONGTEX Reversible Jacket** — [вертикальный MP4](./v_okope_gongtex_reversible_jacket.mp4), [описание и сборка](./gongtex/README.md), [текст для публикации](./gongtex/publish.txt). Плеер `/gongtex-reversible/`.

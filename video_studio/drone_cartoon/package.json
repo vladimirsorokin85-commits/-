@@ -17,6 +17,7 @@
     "render:gongtex": "node render.mjs --gongtex",
     "render:runcam": "node render.mjs --runcam",
     "render:incubator": "node render.mjs --incubator",
+    "render:fiber": "node render.mjs --fiber",
     "preview": "node preview.mjs",
     "test": "node --test"
   },
