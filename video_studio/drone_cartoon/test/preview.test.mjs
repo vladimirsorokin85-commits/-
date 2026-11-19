@@ -3,6 +3,7 @@ import { once } from 'node:events';
 import { open } from 'node:fs/promises';
 import test from 'node:test';
 import { makeServer, parseRange } from '../preview.mjs';
+import { FILE as INCUBATOR_FILE, SLUG as INCUBATOR_SLUG, TITLE as INCUBATOR_TITLE } from '../incubator/story.mjs';
 import { FILE as RUNCAM_FILE, SLUG as RUNCAM_SLUG, TITLE as RUNCAM_TITLE } from '../runcam/story.mjs';
 import { FILE as GONGTEX_FILE, SLUG as GONGTEX_SLUG, TITLE as GONGTEX_TITLE } from '../gongtex/story.mjs';
 import { FILE as TAK_FILE } from '../tak710/story.mjs';
@@ -296,6 +297,46 @@ test('RunCam loads on the preview host with independent artwork, copy and MP4 by
     const expected = Buffer.alloc(32);
     assert.equal((await master.read(expected, 0, 32, 4096)).bytesRead, 32);
     assert.deepEqual(Buffer.from(await response.arrayBuffer()), expected);
+  } finally {
+    await master.close();
+  }
+});
+
+test('the Incubator photo review has its own proxy-safe player, styling, cover, copy and exact media', async (t) => {
+  const server = makeServer();
+  t.after(() => new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve())));
+  server.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const root = `http://127.0.0.1:${server.address().port}`;
+  const path = `/${INCUBATOR_SLUG}`;
+  const headers = { Host: '8000-example.e2b.app' };
+  const redirect = await fetch(root + path, { headers, redirect: 'manual' });
+  assert.equal(redirect.status, 308);
+  assert.equal(redirect.headers.get('location'), `${path}/`);
+  const url = `${root}${path}/`;
+  const page = await fetch(url, { headers });
+  assert.equal(page.status, 200);
+  const html = await page.text();
+  assert.ok(html.includes(`download="${INCUBATOR_FILE}"`));
+  assert.match(html, /Инкубатор <span>3\.30<\/span>/);
+  assert.match(html, /<source src="\.\/film\.mp4"/);
+  for (const [asset, type] of [['cover.jpg', 'image/jpeg'], ['incubator.css','text/css'],
+    ['player.mjs','text/javascript'], ['story.mjs','text/javascript']]) {
+    const res = await fetch(url + asset, { method: 'HEAD', headers });
+    assert.equal(res.status, 200);
+    assert.ok(res.headers.get('content-type').startsWith(type));
+  }
+  const copy = await fetch(url + 'publish.txt', { headers });
+  assert.equal(copy.headers.get('content-type'), 'text/plain; charset=utf-8');
+  assert.ok((await copy.text()).startsWith(`Заголовок\n${INCUBATOR_TITLE}\n\nОписание\n`));
+  const range = await fetch(url + 'film.mp4', { headers: { ...headers, Range: 'bytes=4096-4127' } });
+  assert.equal(range.status, 206);
+  assert.match(range.headers.get('content-range'), /^bytes 4096-4127\/\d+$/);
+  const master = await open(new URL(`../${INCUBATOR_FILE}`, import.meta.url), 'r');
+  try {
+    const expected = Buffer.alloc(32);
+    assert.equal((await master.read(expected, 0, 32, 4096)).bytesRead, 32);
+    assert.deepEqual(Buffer.from(await range.arrayBuffer()), expected);
   } finally {
     await master.close();
   }

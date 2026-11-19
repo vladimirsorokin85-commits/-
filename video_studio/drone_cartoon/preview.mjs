@@ -12,6 +12,7 @@ import { FILE as STRIZH_FILE, SLUG as STRIZH_SLUG } from './strizh/story.mjs';
 import { FILE as POWER_FILE, SLUG as POWER_SLUG } from './power-stations/story.mjs';
 import { FILE as GONGTEX_FILE, SLUG as GONGTEX_SLUG } from './gongtex/story.mjs';
 import { FILE as RUNCAM_FILE, SLUG as RUNCAM_SLUG } from './runcam/story.mjs';
+import { FILE as INCUBATOR_FILE, SLUG as INCUBATOR_SLUG } from './incubator/story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
@@ -40,6 +41,7 @@ const editions = new Map([
   [`/${POWER_SLUG}`, { page: 'power-stations', file: POWER_FILE, slug: POWER_SLUG, fallbackCover: 'power-stations/assets/cover.jpg' }],
   [`/${GONGTEX_SLUG}`, { page: 'gongtex', file: GONGTEX_FILE, slug: GONGTEX_SLUG, fallbackCover: 'gongtex/assets/cover.jpg' }],
   [`/${RUNCAM_SLUG}`, { page: 'runcam', file: RUNCAM_FILE, slug: RUNCAM_SLUG, fallbackCover: 'runcam/assets/cover.jpg' }],
+  [`/${INCUBATOR_SLUG}`, { page: 'incubator', file: INCUBATOR_FILE, slug: INCUBATOR_SLUG, fallbackCover: 'incubator/assets/cover.jpg' }],
 ]);
 for (const [route, { page, file, slug, fallbackCover }] of editions) {
   routes.set(`${route}/`, [`web/${page}.html`, HTML]);
@@ -55,6 +57,8 @@ routes.set(`/${STRIZH_SLUG}/description.txt`, ['strizh/description.txt', 'text/p
 routes.set(`/${POWER_SLUG}/catalogue.txt`, ['power-stations/catalogue.txt', 'text/plain; charset=utf-8']);
 routes.set(`/${GONGTEX_SLUG}/publish.txt`, ['gongtex/publish.txt', 'text/plain; charset=utf-8']);
 routes.set(`/${RUNCAM_SLUG}/publish.txt`, ['runcam/publish.txt', 'text/plain; charset=utf-8']);
+routes.set(`/${INCUBATOR_SLUG}/incubator.css`, ['web/incubator.css', 'text/css; charset=utf-8']);
+routes.set(`/${INCUBATOR_SLUG}/publish.txt`, ['incubator/publish.txt', 'text/plain; charset=utf-8']);
 
 export function parseRange(value, size) {
   const match = /^bytes=(\d*)-(\d*)$/.exec(value);

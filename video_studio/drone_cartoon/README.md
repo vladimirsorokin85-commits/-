@@ -6,6 +6,7 @@
 
 ## Видео и контакты
 
+- **«Инкубатор 3.30»** — [вертикальный MP4](./v_okope_incubator_330.mp4), [кадры и сборка](./incubator/README.md), [текст и заголовок](./incubator/publish.txt). Плеер `/incubator-330/`.
 - **RunCam Helmet Camera 2** — [вертикальный MP4](./v_okope_runcam_helmet_camera_2.mp4), [источники и сборка](./runcam/README.md), [текст для публикации](./runcam/publish.txt). Плеер `/runcam-helmet-2/`.
 - **GONGTEX Reversible Jacket** — [вертикальный MP4](./v_okope_gongtex_reversible_jacket.mp4), [описание и сборка](./gongtex/README.md), [текст для публикации](./gongtex/publish.txt). Плеер `/gongtex-reversible/`.
 - **«Электростанции в наличии»** — [минутный MP4](./v_okope_elektrostancii_v_nalichii.mp4), [22 позиции без цен](./power-stations/catalogue.txt) и [раскадровка](./power-stations/README.md). Плеер `/power-stations/`.
