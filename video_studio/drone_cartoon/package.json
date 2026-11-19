@@ -15,6 +15,7 @@
     "render:strizh": "node render.mjs --strizh",
     "render:power": "node render.mjs --power",
     "render:gongtex": "node render.mjs --gongtex",
+    "render:runcam": "node render.mjs --runcam",
     "preview": "node preview.mjs",
     "test": "node --test"
   },

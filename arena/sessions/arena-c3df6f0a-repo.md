@@ -46,3 +46,5 @@ status: done
 [T-0009](../tasks/T-0009.md), начата 2026-11-18T11:38Z: вертикальный обзор GONGTEX Reversible Jacket по восьми фото владельца. Подготовлены пять реплик и монтаж на действующем MP3.
 
 [T-0009 готова](../tasks/T-0009.md): [GONGTEX Reversible Jacket](../../video_studio/drone_cartoon/v_okope_gongtex_reversible_jacket.mp4), 36 секунд, вертикаль, все восемь фото, рисованная смена цвета, русская озвучка и точный MP3 владельца. [Обложка](../../video_studio/drone_cartoon/gongtex/assets/cover.jpg), [отдельные заголовок и описание](../../video_studio/drone_cartoon/gongtex/publish.txt), плеер `/gongtex-reversible/`. Тот же PR #16; не опубликовано в соцсетях.
+
+[T-0010 готова](../tasks/T-0010.md): [RunCam Helmet Camera 2](../../video_studio/drone_cartoon/v_okope_runcam_helmet_camera_2.mp4), 47 секунд, девять фото, русская озвучка и точный MP3 владельца. Оценка записи привязана к аккумулятору и режиму из руководства производителя. [Обложка](../../video_studio/drone_cartoon/runcam/assets/cover.jpg), [отдельные заголовок и описание](../../video_studio/drone_cartoon/runcam/publish.txt), плеер `/runcam-helmet-2/`. PR #16; не опубликовано в соцсетях.

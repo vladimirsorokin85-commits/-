@@ -11,6 +11,7 @@ import { FILE as SAFETY_FILE, SLUG as SAFETY_SLUG } from './site-safety/story.mj
 import { FILE as STRIZH_FILE, SLUG as STRIZH_SLUG } from './strizh/story.mjs';
 import { FILE as POWER_FILE, SLUG as POWER_SLUG } from './power-stations/story.mjs';
 import { FILE as GONGTEX_FILE, SLUG as GONGTEX_SLUG } from './gongtex/story.mjs';
+import { FILE as RUNCAM_FILE, SLUG as RUNCAM_SLUG } from './runcam/story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
@@ -38,6 +39,7 @@ const editions = new Map([
   [`/${STRIZH_SLUG}`, { page: 'strizh', file: STRIZH_FILE, slug: STRIZH_SLUG, fallbackCover: 'strizh/assets/cover.jpg' }],
   [`/${POWER_SLUG}`, { page: 'power-stations', file: POWER_FILE, slug: POWER_SLUG, fallbackCover: 'power-stations/assets/cover.jpg' }],
   [`/${GONGTEX_SLUG}`, { page: 'gongtex', file: GONGTEX_FILE, slug: GONGTEX_SLUG, fallbackCover: 'gongtex/assets/cover.jpg' }],
+  [`/${RUNCAM_SLUG}`, { page: 'runcam', file: RUNCAM_FILE, slug: RUNCAM_SLUG, fallbackCover: 'runcam/assets/cover.jpg' }],
 ]);
 for (const [route, { page, file, slug, fallbackCover }] of editions) {
   routes.set(`${route}/`, [`web/${page}.html`, HTML]);
@@ -52,6 +54,7 @@ routes.set(`/${SAFETY_SLUG}/publish.txt`, ['site-safety/publish.txt', 'text/plai
 routes.set(`/${STRIZH_SLUG}/description.txt`, ['strizh/description.txt', 'text/plain; charset=utf-8']);
 routes.set(`/${POWER_SLUG}/catalogue.txt`, ['power-stations/catalogue.txt', 'text/plain; charset=utf-8']);
 routes.set(`/${GONGTEX_SLUG}/publish.txt`, ['gongtex/publish.txt', 'text/plain; charset=utf-8']);
+routes.set(`/${RUNCAM_SLUG}/publish.txt`, ['runcam/publish.txt', 'text/plain; charset=utf-8']);
 
 export function parseRange(value, size) {
   const match = /^bytes=(\d*)-(\d*)$/.exec(value);

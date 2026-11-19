@@ -3,6 +3,7 @@ import { once } from 'node:events';
 import { open } from 'node:fs/promises';
 import test from 'node:test';
 import { makeServer, parseRange } from '../preview.mjs';
+import { FILE as RUNCAM_FILE, SLUG as RUNCAM_SLUG, TITLE as RUNCAM_TITLE } from '../runcam/story.mjs';
 import { FILE as GONGTEX_FILE, SLUG as GONGTEX_SLUG, TITLE as GONGTEX_TITLE } from '../gongtex/story.mjs';
 import { FILE as TAK_FILE } from '../tak710/story.mjs';
 import { FILE as SAFETY_FILE, SLUG as SAFETY_SLUG } from '../site-safety/story.mjs';
@@ -253,6 +254,44 @@ test('GONGTEX preview serves the cover, copy and exact range from the jacket rel
   assert.match(response.headers.get('content-range'), /^bytes 4096-4127\/\d+$/);
   assert.equal(response.headers.get('content-type'), 'video/mp4');
   const master = await open(new URL(`../${GONGTEX_FILE}`, import.meta.url), 'r');
+  try {
+    const expected = Buffer.alloc(32);
+    assert.equal((await master.read(expected, 0, 32, 4096)).bytesRead, 32);
+    assert.deepEqual(Buffer.from(await response.arrayBuffer()), expected);
+  } finally {
+    await master.close();
+  }
+});
+
+test('RunCam loads on the preview host with independent artwork, copy and MP4 byte ranges', async (t) => {
+  const server = makeServer();
+  t.after(() => new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve())));
+  server.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const root = `http://127.0.0.1:${server.address().port}/`;
+  const url = `${root}${RUNCAM_SLUG}`;
+  const headers = { Host: '8000-example.e2b.app' };
+  const redirect = await fetch(url, { redirect: 'manual', headers });
+  assert.equal(redirect.status, 308);
+  assert.equal(redirect.headers.get('location'), `/${RUNCAM_SLUG}/`);
+  const page = await fetch(`${url}/`, { headers });
+  assert.equal(page.status, 200);
+  const html = await page.text();
+  assert.ok(html.includes(`download="${RUNCAM_FILE}"`));
+  assert.match(html, /RunCam <span>Helmet Camera/);
+  assert.ok((await (await fetch(root)).text()).includes(`href="./${RUNCAM_SLUG}/"`));
+  const cover = await fetch(`${url}/cover.jpg`, { method: 'HEAD' });
+  assert.equal(cover.status, 200);
+  assert.equal(cover.headers.get('content-type'), 'image/jpeg');
+  assert.match(await (await fetch(`${url}/story.mjs`)).text(), /Аккумулятор 18650/);
+  const copy = await fetch(`${url}/publish.txt`, { headers });
+  assert.equal(copy.headers.get('content-type'), 'text/plain; charset=utf-8');
+  assert.ok((await copy.text()).startsWith(`Заголовок\n${RUNCAM_TITLE}\n\nОписание\n`));
+  const response = await fetch(`${url}/film.mp4`, { headers: { ...headers, Range: 'bytes=4096-4127' } });
+  assert.equal(response.status, 206);
+  assert.match(response.headers.get('content-range'), /^bytes 4096-4127\/\d+$/);
+  assert.equal(response.headers.get('content-type'), 'video/mp4');
+  const master = await open(new URL(`../${RUNCAM_FILE}`, import.meta.url), 'r');
   try {
     const expected = Buffer.alloc(32);
     assert.equal((await master.read(expected, 0, 32, 4096)).bytesRead, 32);

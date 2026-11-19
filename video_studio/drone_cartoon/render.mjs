@@ -78,11 +78,12 @@ const editions = {
   '--strizh': { prefix: './strizh/', posterAt: 4.1 },
   '--power': { prefix: './power-stations/', posterAt: 1.6 },
   '--gongtex': { prefix: './gongtex/' },
+  '--runcam': { prefix: './runcam/' },
 };
 const args = process.argv.slice(2);
 const selected = args.filter((flag) => Object.hasOwn(editions, flag));
 if (selected.length > 1 || args.some((arg) => arg !== '--draft' && !Object.hasOwn(editions, arg))) {
-  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 / render:site-safety / render:strizh / render:power / render:gongtex [-- --draft]');
+  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 / render:site-safety / render:strizh / render:power / render:gongtex / render:runcam [-- --draft]');
   process.exitCode = 2;
 } else {
   try {
