@@ -19,6 +19,7 @@
     "render:incubator": "node render.mjs --incubator",
     "render:fiber": "node render.mjs --fiber",
     "render:saber": "node render.mjs --saber",
+    "render:vagabund": "node render.mjs --vagabund",
     "preview": "node preview.mjs",
     "test": "node --test"
   },

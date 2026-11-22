@@ -82,11 +82,12 @@ const editions = {
   '--incubator': { prefix: './incubator/' },
   '--fiber': { prefix: './fiber/' },
   '--saber': { prefix: './saber/' },
+  '--vagabund': { prefix: './vagabund/' },
 };
 const args = process.argv.slice(2);
 const selected = args.filter((flag) => Object.hasOwn(editions, flag));
 if (selected.length > 1 || args.some((arg) => arg !== '--draft' && !Object.hasOwn(editions, arg))) {
-  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 / render:site-safety / render:strizh / render:power / render:gongtex / render:runcam / render:incubator / render:fiber / render:saber [-- --draft]');
+  console.error('Использование: npm run render / render:game / render:bulat / render:tak710 / render:site-safety / render:strizh / render:power / render:gongtex / render:runcam / render:incubator / render:fiber / render:saber / render:vagabund [-- --draft]');
   process.exitCode = 2;
 } else {
   try {

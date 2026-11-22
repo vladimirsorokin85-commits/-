@@ -6,6 +6,7 @@
 
 ## Видео и контакты
 
+- **Prabos Vagabund Ankle Field** — [вертикальный MP4](./v_okope_prabos_vagabund_ankle.mp4), [источники и сборка](./vagabund/README.md), [заголовок и описание](./vagabund/publish.txt). Плеер `/prabos-vagabund-ankle/`.
 - **Wiley X Saber Advanced на складе** — [вертикальный MP4](./v_okope_wiley_x_saber_advanced.mp4), [источники и сборка](./saber/README.md), [заголовок и описание](./saber/publish.txt). Плеер `/wiley-x-saber-advanced/`.
 - **Оптоволокно G.657.A2 на складе** — [вертикальный MP4](./v_okope_fiber_g657a2.mp4), [источники и сборка](./fiber/README.md), [заголовок и описание](./fiber/publish.txt). Плеер `/fiber-g657a2/`.
 - **«Инкубатор 3.30»** — [вертикальный MP4](./v_okope_incubator_330.mp4), [кадры и сборка](./incubator/README.md), [текст и заголовок](./incubator/publish.txt). Плеер `/incubator-330/`.

@@ -15,6 +15,7 @@ import { FILE as RUNCAM_FILE, SLUG as RUNCAM_SLUG } from './runcam/story.mjs';
 import { FILE as INCUBATOR_FILE, SLUG as INCUBATOR_SLUG } from './incubator/story.mjs';
 import { FILE as FIBER_FILE, SLUG as FIBER_SLUG } from './fiber/story.mjs';
 import { FILE as SABER_FILE, SLUG as SABER_SLUG } from './saber/story.mjs';
+import { FILE as VAGABUND_FILE, SLUG as VAGABUND_SLUG } from './vagabund/story.mjs';
 
 const HTML = 'text/html; charset=utf-8';
 const JS = 'text/javascript; charset=utf-8';
@@ -46,6 +47,7 @@ const editions = new Map([
   [`/${INCUBATOR_SLUG}`, { page: 'incubator', file: INCUBATOR_FILE, slug: INCUBATOR_SLUG, fallbackCover: 'incubator/assets/cover.jpg' }],
   [`/${FIBER_SLUG}`, { page: 'fiber', file: FIBER_FILE, slug: FIBER_SLUG, fallbackCover: 'fiber/assets/cover.jpg' }],
   [`/${SABER_SLUG}`, { page: 'saber', file: SABER_FILE, slug: SABER_SLUG, fallbackCover: 'saber/assets/cover.jpg' }],
+  [`/${VAGABUND_SLUG}`, { page: 'vagabund', file: VAGABUND_FILE, slug: VAGABUND_SLUG, fallbackCover: 'vagabund/assets/cover.jpg' }],
 ]);
 for (const [route, { page, file, slug, fallbackCover }] of editions) {
   routes.set(`${route}/`, [`web/${page}.html`, HTML]);
@@ -67,6 +69,8 @@ routes.set(`/${FIBER_SLUG}/fiber.css`, ['web/fiber.css', 'text/css; charset=utf-
 routes.set(`/${FIBER_SLUG}/publish.txt`, ['fiber/publish.txt', 'text/plain; charset=utf-8']);
 routes.set(`/${SABER_SLUG}/saber.css`, ['web/saber.css', 'text/css; charset=utf-8']);
 routes.set(`/${SABER_SLUG}/publish.txt`, ['saber/publish.txt', 'text/plain; charset=utf-8']);
+routes.set(`/${VAGABUND_SLUG}/vagabund.css`, ['web/vagabund.css', 'text/css; charset=utf-8']);
+routes.set(`/${VAGABUND_SLUG}/publish.txt`, ['vagabund/publish.txt', 'text/plain; charset=utf-8']);
 
 export function parseRange(value, size) {
   const match = /^bytes=(\d*)-(\d*)$/.exec(value);

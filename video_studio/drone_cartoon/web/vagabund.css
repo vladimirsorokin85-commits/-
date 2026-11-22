@@ -1,0 +1,24 @@
+.vagabund {
+  --paper: #f3ecd9;
+  --ink: #25352b;
+  --washed-ink: #495648;
+  --line: #25352b38;
+  --coral: #973b27;
+  --amber: #e3a183;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+}
+.vagabund .wordmark svg { width: 24px; height: 17px; color: var(--coral); }
+.vagabund h1 { font-size: clamp(2.05rem, 5.65vw, 5rem); }
+.vagabund h1 span { margin-top: .07em; font-size: .82em; color: var(--coral); }
+.vagabund .action-primary:hover:enabled { background: #405649; }
+.vagabund .action-download:hover, .vagabund .chapter:hover:enabled { background: #e8dec3; }
+.vagabund .chapter[aria-current='true'] { background: #dbe2cf; }
+.vagabund .screen { box-shadow: 6px 7px 0 #9e4834; }
+.vagabund video { background: var(--ink); }
+.vagabund .extras { display: flex; flex-wrap: wrap; column-gap: 18px; }
+@media (max-width: 760px) {
+  .vagabund h1 { font-size: clamp(2rem, 9.6vw, 4.05rem); }
+  .vagabund h1 span { font-size: 1em; }
+}
