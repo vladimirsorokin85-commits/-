@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4ecda">
+  <title>Wiley X Saber Advanced на складе</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./saber.css">
+</head>
+<body class="saber">
+  <header class="masthead">
+    <span class="wordmark">
+      <svg viewBox="0 0 34 21" aria-hidden="true"><path d="M2 13C2 5 7 2 17 2s15 3 15 11c0 5-2 6-7 6-6 0-5-7-8-7s-2 7-8 7c-5 0-7-1-7-6Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      КИНОЗАЛ
+    </span>
+    <span class="edition">ФОТООБЗОР</span>
+  </header>
+  <main class="layout">
+    <section class="intro" aria-labelledby="title">
+      <p class="kicker">СО СКЛАДА <span aria-hidden="true">/</span> <span id="running-time">00:52</span></p>
+      <h1 id="title">Wiley X <span>Saber Advanced</span></h1>
+      <p class="lead">Показываем три расцветки оправы, три сменные линзы и детали комплекта — от выдвижных дужек до футляра с карабином.</p>
+      <div class="actions">
+        <button type="button" id="watch" class="action action-primary">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6z" fill="currentColor"/></svg>
+          <span id="watch-label">Смотреть</span>
+        </button>
+        <a class="action action-download" href="./film.mp4" download="v_okope_wiley_x_saber_advanced.mp4">
+          <svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10m-4-4 4 4 4-4M4 15v2h12v-2"/></svg>
+          Скачать MP4
+        </a>
+      </div>
+      <div class="extras">
+        <a class="series-link" href="./cover.jpg" download="wiley-x-saber-advanced-cover.jpg">Обложка</a>
+        <a class="series-link" href="./publish.txt">Заголовок и описание</a>
+      </div>
+      <p id="status" class="status" role="status" hidden></p>
+    </section>
+    <figure class="screen" id="screen">
+      <video id="film" controls playsinline preload="metadata" poster="./cover.jpg" aria-label="Фотообзор Wiley X Saber Advanced">
+        <source src="./film.mp4" type="video/mp4">
+        Ваш браузер не поддерживает встроенный плеер. Воспользуйтесь кнопкой «Скачать MP4».
+      </video>
+      <figcaption>
+        <span>1080 × 1920 <span class="dot" aria-hidden="true">·</span> 9:16</span>
+        <span id="frame-rate">30 кадров/с</span>
+      </figcaption>
+    </figure>
+    <nav class="chapters" aria-label="Главы обзора">
+      <div class="chapters-heading"><h2>Главы</h2><span id="count" class="count">04</span></div>
+      <ol id="chapters"></ol>
+    </nav>
+    <details class="transcript">
+      <summary>Читать текст озвучки</summary>
+      <div id="transcript"></div>
+    </details>
+  </main>
+  <script type="module" src="./player.mjs"></script>
+</body>
+</html>

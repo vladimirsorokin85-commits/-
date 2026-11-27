@@ -1,0 +1,23 @@
+.saber {
+  --paper: #f4ecda;
+  --ink: #352047;
+  --washed-ink: #58465f;
+  --line: #35204738;
+  --coral: #ab3925;
+  --amber: #ed976c;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+}
+.saber .wordmark svg { width: 23px; height: 16px; color: var(--coral); }
+.saber h1 { font-size: clamp(2.15rem, 5.8vw, 5.25rem); }
+.saber h1 span { margin-top: .08em; color: var(--coral); }
+.saber .action-primary:hover:enabled { background: #513669; }
+.saber .action-download:hover, .saber .chapter:hover:enabled { background: #eadeca; }
+.saber .chapter[aria-current='true'] { background: #e9dbed; }
+.saber .screen { box-shadow: 6px 7px 0 #bb472e; }
+.saber video { background: var(--ink); }
+.saber .extras { display: flex; flex-wrap: wrap; column-gap: 18px; }
+@media (max-width: 760px) {
+  .saber h1 { font-size: clamp(2rem, 10vw, 4.05rem); }
+}

@@ -1,0 +1,22 @@
+---
+from: arena:c3df6f0a-repo
+to: radio
+id: '0003'
+date: 2026-11-18T06:23Z
+topic: Готов мультфильм «Дрон над объектом»
+re: T-0004
+---
+
+По задаче [T-0004](../../tasks/T-0004.md) сделан рисованный кодом мультфильм, 24 с, 9:16. Финальная заставка: магазин «В Окопе». Готовый MP4 выдан через Arena. [Код и шаги сборки](../../../video_studio/drone_cartoon/README.md) в ветке arena/c3df6f0a-repo.
+
+Обновление сценария: [«Знать вовремя»](../../../video_studio/drone_cartoon/v_okope_znat_vovremya.mp4), 30 секунд. В новой версии детектор предупреждает ответственного, а звуковая дорожка включает диктора и трек Beat One. Обе версии видео входят в PR #16.
+
+Версия [«В своём ритме»](../../../video_studio/drone_cartoon/v_okope_v_svoem_ritme.mp4): сюжет об автоматическом оповещении и заводском коте, три контакта, настоящий jungle / DnB. [Источник и лицензия музыки](../../../video_studio/music_downloaded/FINAL-HOUR-CREDITS.md).
+
+[Финальный монтаж «В своём ритме»](../../../video_studio/drone_cartoon/v_okope_v_svoem_ritme_montazh.mp4): без прежней песни с вокалом; трек из загруженного MP3, новый диктор, местный звуковой сигнал и три проверенных QR-кода. Слоган: Не будь мишенью. Будь «В окопе»!
+
+[«Game Over для дрона», сценарий №2](../../../video_studio/drone_cartoon/v_okope_game_over.mp4) — аркадный POV, две роли, местный сигнал и фирменная заставка. Версии доступны отдельно в [PR #16](https://github.com/vladimirsorokin85-commits/-/pull/16).
+
+[«Булат v4 · дрон-детектор»](../../../video_studio/drone_cartoon/v_okope_bulat_v4_detektor.mp4) — рисованное объяснение для гражданских объектов с музыкой владельца и фирменной белой эмблемой. Отдельный MP4 в [PR #16](https://github.com/vladimirsorokin85-commits/-/pull/16).
+
+[Текущая версия «Булат v4»](../../../video_studio/drone_cartoon/v_okope_bulat_v4_detektor.mp4) использует рисунок по присланному фото и крупный план корпуса. Звук сохранён.
